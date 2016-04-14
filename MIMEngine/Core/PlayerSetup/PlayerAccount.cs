@@ -12,7 +12,8 @@ namespace MIMEngine.Core.PlayerSetup
         {
             if (!string.IsNullOrEmpty(playerName) && playerName.Length >= 3)
             {
-                return "This will call playerSetup";
+                PlayerSetup.CharacterSetup();
+                return null;
             }
             else
             {
