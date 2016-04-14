@@ -22,7 +22,9 @@ namespace MIM
 
         public void Send(string message)
         {
-            // Call the broadcastMessage method to update clients.
+
+            Clients.Caller.addNewMessageToPage(MIMEngine.Core.PlayerSetup.PlayerAccount.Login(message));
+            //// Call the broadcastMessage method to update clients.
             Clients.All.addNewMessageToPage(message);
         }
     }
