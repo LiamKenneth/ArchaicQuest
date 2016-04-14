@@ -47,6 +47,7 @@
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="LICENSE.md" />
     <None Include="motd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
