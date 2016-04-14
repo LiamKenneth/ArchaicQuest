@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIM", "MIM\MIM.csproj", "{94B00159-CF34-43BB-97EC-27E681C4B885}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIMEngine", "MIMEngine\MIMEngine.csproj", "{3C675AA5-D9BB-4C2E-BE95-048960BD866E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94B00159-CF34-43BB-97EC-27E681C4B885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94B00159-CF34-43BB-97EC-27E681C4B885}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94B00159-CF34-43BB-97EC-27E681C4B885}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94B00159-CF34-43BB-97EC-27E681C4B885}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C675AA5-D9BB-4C2E-BE95-048960BD866E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C675AA5-D9BB-4C2E-BE95-048960BD866E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C675AA5-D9BB-4C2E-BE95-048960BD866E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C675AA5-D9BB-4C2E-BE95-048960BD866E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
