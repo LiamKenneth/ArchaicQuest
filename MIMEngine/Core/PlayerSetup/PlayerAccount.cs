@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +12,11 @@ namespace MIMEngine.Core.PlayerSetup
     {
         public static string Login(string playerName)
         {
+          //  var hubClient = GlobalHost.ConnectionManager.GetHubContext<>();
+
+//hubClient.Clients.All.addNewMessageToPage("hey");
+
+            //hubClient.Clients.All
             if (!string.IsNullOrEmpty(playerName) && playerName.Length >= 3)
             {
                 PlayerSetup.CharacterSetup();

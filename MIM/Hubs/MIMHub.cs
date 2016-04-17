@@ -17,15 +17,68 @@ namespace MIM
             // Call the broadcastMessage method to update clients.
             Clients.Caller.addNewMessageToPage(motd);
 
-            Clients.Caller.addNewMessageToPage("Greetings, what is your name?");
+            Clients.Caller.addNewMessageToPage("Greetings, what is your name?");      
+
         }
 
-        public void Send(string message)
+
+        public void createPlayerName(string playerName)
+        {
+         
+            if (!string.IsNullOrEmpty(playerName) && playerName.Length >= 3)
+            {
+                Clients.All.addNewMessageToPage("Thanks, {0} what class will you want to be?", playerName);
+
+            }
+            else
+            {
+                SendToClient("You must enter a name with atleast 3 characters");
+            }
+        }
+
+        public void createPlayerClass(string playerClass)
         {
 
-            Clients.Caller.addNewMessageToPage(MIMEngine.Core.PlayerSetup.PlayerAccount.Login(message));
-            //// Call the broadcastMessage method to update clients.
+            if (!string.IsNullOrEmpty(playerClass) && playerClass.Length >= 3)
+            {
+                Clients.All.addNewMessageToPage("yep all good");
+
+            }
+            else
+            {
+                SendToClient("You must enter a name with atleast 3 characters");
+            }
+        }
+
+        public void recieveFromClient(string message)
+        {
+            //MIMEngine.Core.PlayerSetup.PlayerAccount.Login(message);
+            SendToClient(message);
+            bool commandParser = false;
+            bool loggedIn = false;
+
+            if (commandParser && loggedIn)
+            {
+                //check command
+            }
+            else
+            {
+                createPlayerName(message);
+                // sign player up
+            }
+           
+           
+        }
+
+
+        public void SendToClient(string message)
+        {
             Clients.All.addNewMessageToPage(message);
+        }
+
+        public void SendToClient(string message, bool caller)
+        {
+            Clients.Caller.addNewMessageToPage(message);
         }
     }
 }

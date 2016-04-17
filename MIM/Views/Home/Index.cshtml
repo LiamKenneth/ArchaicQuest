@@ -38,7 +38,7 @@
 
                 $('#sendmessage').click(function () {
                     // Call the Send method on the hub.
-                    chat.server.send($('#message').val());
+                    chat.server.recieveFromClient($('#message').val());
                     // Clear text box and reset focus for next comment.
                     $('#message').val('').focus();
                 });
