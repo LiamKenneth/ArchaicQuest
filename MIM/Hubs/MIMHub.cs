@@ -21,35 +21,44 @@ namespace MIM
 
         }
 
-
-        public void createPlayerName(string playerName)
+       static class playerSetup
         {
-         
-            if (!string.IsNullOrEmpty(playerName) && playerName.Length >= 3)
-            {
-                Clients.All.addNewMessageToPage("Thanks, {0} what class will you want to be?", playerName);
+            static bool playerNameSet = false;
 
-            }
-            else
+
+            public static void createPlayerName(string playerName)
             {
-                SendToClient("You must enter a name with atleast 3 characters");
+
+                if (playerNameSet == false)
+                {
+
+                    if (!string.IsNullOrEmpty(playerName) && playerName.Length >= 3)
+                    {
+                        Clients.All.addNewMessageToPage("Thanks, {0} what class will you want to be?", playerName);
+
+                    }
+                    else
+                    {
+                        SendToClient("You must enter a name with atleast 3 characters");
+                    }
+                }
             }
+
+            public void createPlayerClass(string playerClass)
+            {
+
+                if (!string.IsNullOrEmpty(playerClass) && playerClass.Length >= 3)
+                {
+                    Clients.All.addNewMessageToPage("yep all good");
+
+                }
+                else
+                {
+                    SendToClient("You must enter a name with atleast 3 characters");
+                }
+            }
+
         }
-
-        public void createPlayerClass(string playerClass)
-        {
-
-            if (!string.IsNullOrEmpty(playerClass) && playerClass.Length >= 3)
-            {
-                Clients.All.addNewMessageToPage("yep all good");
-
-            }
-            else
-            {
-                SendToClient("You must enter a name with atleast 3 characters");
-            }
-        }
-
         public void recieveFromClient(string message)
         {
             //MIMEngine.Core.PlayerSetup.PlayerAccount.Login(message);
@@ -63,7 +72,8 @@ namespace MIM
             }
             else
             {
-                createPlayerName(message);
+                playerSetup playerSetup = new playerSetup();
+                playerSetup.createPlayerName(message);
                 // sign player up
             }
            
