@@ -29,6 +29,23 @@
                 // Add the message to the page.
                 $('#discussion').append("<p>" + htmlEncode(message) + "</p>");
             };
+
+           
+            var name = "";
+            var sex = "male"
+            var selectedClass = "Mage"
+            var strength = 10;
+            var dexterity = 17;
+            var constitution = 16;
+            var wisdom = 18;
+            var intelligence = 19;
+            var charisma = 14;
+
+            chat.client.createCharacter = function () {
+                name = prompt("Please enter your name", "Malleus");
+
+
+            }
  
             // Set initial focus to message input box.
             $('#message').focus();
@@ -36,7 +53,13 @@
             $.connection.hub.start().done(function () {
                 chat.server.welcome();
 
+                 
+                    
+              
+               
+
                 $('#sendmessage').click(function () {
+                    chat.server.charSetup(name, sex, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
                     // Call the Send method on the hub.
                     chat.server.recieveFromClient($('#message').val());
                     // Clear text box and reset focus for next comment.

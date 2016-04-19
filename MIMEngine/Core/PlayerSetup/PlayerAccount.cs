@@ -12,20 +12,7 @@ namespace MIMEngine.Core.PlayerSetup
     {
         public static string Login(string playerName)
         {
-          //  var hubClient = GlobalHost.ConnectionManager.GetHubContext<>();
-
-//hubClient.Clients.All.addNewMessageToPage("hey");
-
-            //hubClient.Clients.All
-            if (!string.IsNullOrEmpty(playerName) && playerName.Length >= 3)
-            {
-                PlayerSetup.CharacterSetup();
-                return null;
-            }
-            else
-            {
-                return "You must enter a name with atleast 3 characters";
-            }
+            return null;
         }
     }
 }

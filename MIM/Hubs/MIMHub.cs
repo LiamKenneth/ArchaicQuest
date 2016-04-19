@@ -17,48 +17,18 @@ namespace MIM
             // Call the broadcastMessage method to update clients.
             Clients.Caller.addNewMessageToPage(motd);
 
-            Clients.Caller.addNewMessageToPage("Greetings, what is your name?");      
+            Clients.Caller.createCharacter();
 
         }
 
-       static class playerSetup
+        public void charSetup(string name, string sex, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
         {
-            static bool playerNameSet = false;
-
-
-            public static void createPlayerName(string playerName)
-            {
-
-                if (playerNameSet == false)
-                {
-
-                    if (!string.IsNullOrEmpty(playerName) && playerName.Length >= 3)
-                    {
-                        Clients.All.addNewMessageToPage("Thanks, {0} what class will you want to be?", playerName);
-
-                    }
-                    else
-                    {
-                        SendToClient("You must enter a name with atleast 3 characters");
-                    }
-                }
-            }
-
-            public void createPlayerClass(string playerClass)
-            {
-
-                if (!string.IsNullOrEmpty(playerClass) && playerClass.Length >= 3)
-                {
-                    Clients.All.addNewMessageToPage("yep all good");
-
-                }
-                else
-                {
-                    SendToClient("You must enter a name with atleast 3 characters");
-                }
-            }
+            MIMEngine.Core.PlayerSetup.PlayerSetup.CharacterSetup(name, sex, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
 
         }
+        
+
+       
         public void recieveFromClient(string message)
         {
             //MIMEngine.Core.PlayerSetup.PlayerAccount.Login(message);
@@ -72,9 +42,7 @@ namespace MIM
             }
             else
             {
-                playerSetup playerSetup = new playerSetup();
-                playerSetup.createPlayerName(message);
-                // sign player up
+             
             }
            
            
