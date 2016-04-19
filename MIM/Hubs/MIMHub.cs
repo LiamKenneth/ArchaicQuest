@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using MIMEngine;
+using MIMEngine.Core.PlayerSetup;
 
 namespace MIM
 {
@@ -15,7 +16,7 @@ namespace MIM
             
             var motd = MIMEngine.Data.loadFile("/motd");
             // Call the broadcastMessage method to update clients.
-            Clients.Caller.addNewMessageToPage(motd);
+           // Clients.Caller.addNewMessageToPage(motd);
 
             Clients.Caller.createCharacter();
 
@@ -23,8 +24,7 @@ namespace MIM
 
         public void charSetup(string name, string sex, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
         {
-            MIMEngine.Core.PlayerSetup.PlayerSetup.CharacterSetup(name, sex, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
-
+            PlayerSetup player = new PlayerSetup(name, sex, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
         }
         
 
