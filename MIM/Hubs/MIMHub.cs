@@ -6,6 +6,7 @@ using Microsoft.AspNet.SignalR;
 using MIMEngine;
 using MIMEngine.Core.PlayerSetup;
 
+
 namespace MIM
 {
     public class MIMHub : Hub
@@ -14,11 +15,11 @@ namespace MIM
         public void Welcome()
         {
             
-            var motd = MIMEngine.Data.loadFile("/motd");
+            var motd = Data.loadFile("/motd");
             // Call the broadcastMessage method to update clients.
-           // Clients.Caller.addNewMessageToPage(motd);
+        //    Clients.Caller.addNewMessageToPage(motd);
 
-            Clients.Caller.createCharacter();
+           // Clients.Caller.createCharacter();
 
         }
 
@@ -46,6 +47,11 @@ namespace MIM
             }
            
            
+        }
+
+        public int[] getStats()
+        {
+            return PlayerStats.rollStats();
         }
 
 

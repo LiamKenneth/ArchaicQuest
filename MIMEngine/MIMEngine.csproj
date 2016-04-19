@@ -71,6 +71,7 @@
     <Compile Include="Core\Command.cs" />
     <Compile Include="Core\PlayerSetup\PlayerAccount.cs" />
     <Compile Include="Core\PlayerSetup\PlayerSetup.cs" />
+    <Compile Include="Core\PlayerSetup\PlayerStats.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

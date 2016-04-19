@@ -34,17 +34,21 @@
             var name = "";
             var sex = "male"
             var selectedClass = "Mage"
-            var strength = 10;
-            var dexterity = 17;
-            var constitution = 16;
-            var wisdom = 18;
-            var intelligence = 19;
-            var charisma = 14;
+            var strength = 0;
+            var dexterity = 0;
+            var constitution = 0;
+            var wisdom = 0;
+            var intelligence = 0;
+            var charisma = 0;
 
             chat.client.createCharacter = function () {
                 name = prompt("Please enter your name", "Malleus");
-
-
+                strength = chat.server.getStats();
+                dexterity = chat.server.getStats();
+                constitution = chat.server.getStats();
+                wisdom = chat.server.getStats();
+                intelligence = chat.server.getStats();
+                charisma = chat.server.getStats();
             }
  
             // Set initial focus to message input box.
@@ -52,10 +56,7 @@
             // Start the connection.
             $.connection.hub.start().done(function () {
                 chat.server.welcome();
-
-                 
-                    
-              
+                chat.client.createCharacter();
                
 
                 $('#sendmessage').click(function () {

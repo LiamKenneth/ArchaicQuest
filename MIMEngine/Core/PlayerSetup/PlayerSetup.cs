@@ -49,25 +49,5 @@ namespace MIMEngine.Core.PlayerSetup
             string json = JsonConvert.SerializeObject(this);
             File.WriteAllText(AppDomain.CurrentDomain.RelativeSearchPath + "/" + this.name + ".json", json);
         }
-
-        //public static void CharacterSetup(string name, string sex, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
-        //{
-
-
-        //    PlayerSetup createPlayer = new PlayerSetup();
-
-        //    createPlayer.name = name;
-        //    createPlayer.sex = sex;
-        //    createPlayer.selectedClass = selectedClass;
-        //    createPlayer.strength = strength;
-        //    createPlayer.dexterity = dexterity;
-        //    createPlayer.constitution = constitution;
-        //    createPlayer.wisdom = wisdom;
-        //    createPlayer.intelligence = intelligence;
-        //    createPlayer.charisma = charisma;
-
-        //    string json = JsonConvert.SerializeObject(createPlayer, Formatting.Indented);
-        //    File.WriteAllText(@"c:\person.json", json);
-        //}
     }
 }
