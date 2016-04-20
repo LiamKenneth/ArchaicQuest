@@ -1,0 +1,25 @@
+﻿{
+  "id": 0,
+  "clean": false,
+  "modified": "",
+  "title": "Dungeon Room",
+  "description": "You are surrounded by 4 walls covered in grime made of large grey stone blocks. The stone floor is cold under your feet. The only possible way out seems to be the metal gate in front of you. A small wooden stool is in the corner behind you.",
+  "keywords": {
+    "look gate": "You look at the metal gate which leads north, apart from being the only exit you see nothing special",
+    "exam gate": "You look closely at the gate and notice the hinges and lock look weak, maybe you could bash the door down?"
+  },
+  "terrain": "city",
+  "exits": {
+    "North": {
+      "name": "North",
+      "locked": false,
+      "hidden": false
+
+    }
+  },
+  "players": [ ],
+  "mobs": [ ],
+  "items": [ ],
+  "corpses": [ ]
+}
+     

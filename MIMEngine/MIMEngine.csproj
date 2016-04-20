@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Command.cs" />
+    <Compile Include="Core\Events\LoadRoom.cs" />
     <Compile Include="Core\PlayerSetup\PlayerAccount.cs" />
     <Compile Include="Core\PlayerSetup\PlayerSetup.cs" />
     <Compile Include="Core\PlayerSetup\PlayerStats.cs" />
@@ -89,6 +90,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="World\Area\Valston\Town.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

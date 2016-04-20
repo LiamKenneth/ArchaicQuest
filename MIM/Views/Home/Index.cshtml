@@ -43,12 +43,23 @@
 
             chat.client.createCharacter = function () {
                 name = prompt("Please enter your name", "Malleus");
-                strength = chat.server.getStats();
-                dexterity = chat.server.getStats();
-                constitution = chat.server.getStats();
-                wisdom = chat.server.getStats();
-                intelligence = chat.server.getStats();
-                charisma = chat.server.getStats();
+
+                
+              
+            }
+
+            chat.client.setStats = function (stats) {
+                console.log("stats " + stats[0]);
+
+                strength = stats[0];
+                dexterity = stats[1];
+                constitution = stats[2];
+                wisdom = stats[3];
+                intelligence = stats[4];
+                charisma = stats[5];
+                prompt("str: " + strength + " dex:" + dexterity + " con:" + constitution + " wis:" + wisdom + " int:" + intelligence + " cha:" + charisma + " Are you hapy with these stats?");
+
+                chat.server.loadRoom();
             }
  
             // Set initial focus to message input box.
@@ -57,6 +68,22 @@
             $.connection.hub.start().done(function () {
                 chat.server.welcome();
                 chat.client.createCharacter();
+
+                var stats = chat.server.getStats();
+
+                if (stats) {
+                    console.log("stats " + stats[0])
+                }
+               
+
+                //console.log(stats)
+                //strength = stats[0];
+                //dexterity = stats[1];
+                //constitution = stats[2];
+                //wisdom = stats[3];
+                //intelligence = stats[4];
+                //charisma = stats[5];
+                //prompt("str: " + strength + " dex:" + dexterity + " con:" + constitution + " wis:" + wisdom + " int:" + intelligence + " cha:" + charisma + " Are you hapy with these stats?");
                
 
                 $('#sendmessage').click(function () {

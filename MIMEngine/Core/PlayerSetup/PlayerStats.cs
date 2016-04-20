@@ -8,8 +8,11 @@ namespace MIMEngine.Core.PlayerSetup
 {
     public class PlayerStats
     {
-                            
-        public static int[] rollStats()
+
+    
+       public static Random diceRoll = new Random((int)DateTime.Now.Ticks);
+    
+        public int[] rollStats()
         {
 
             int[] test = new int[6];
@@ -18,7 +21,7 @@ namespace MIMEngine.Core.PlayerSetup
             //List<int> test2 = new List<int>();
 
 
-            for (int i = 0; i <= 6; i++)
+            for (int i = 0; i < 6; i++)
             {
                 var result = dice(3, 6);
                 test[i] = result;
@@ -28,14 +31,13 @@ namespace MIMEngine.Core.PlayerSetup
             return test;
         }
 
-        public static int dice(int number, int size)
+        public int dice(int number, int size)
         {
             int sum = 0;
-            Random dice = new Random((int)DateTime.Now.Ticks);
-
+            
             for (int i = 0; i < number; i++)
             {
-                sum += dice.Next(1, size);
+                sum += diceRoll.Next(1, size);
             }
 
             return sum;

@@ -49,11 +49,20 @@ namespace MIM
            
         }
 
-        public int[] getStats()
+        public void getStats()
         {
-            return PlayerStats.rollStats();
+            PlayerStats playerStats = new PlayerStats();
+
+            int[] stats = playerStats.rollStats();
+            Clients.Caller.setStats(stats);
         }
 
+        public void loadRoom()
+        {
+            MIMEngine.Core.Events.LoadRoom room = new MIMEngine.Core.Events.LoadRoom();
+
+            Clients.Caller.addNewMessageToPage(room.DisplayRoom());
+        }
 
         public void SendToClient(string message)
         {
