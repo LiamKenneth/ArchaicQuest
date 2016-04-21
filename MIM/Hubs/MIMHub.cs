@@ -18,8 +18,9 @@ namespace MIM
             var motd = Data.loadFile("/motd");
             // Call the broadcastMessage method to update clients.
             Clients.Caller.addNewMessageToPage(selectedRace.name);
+            Clients.Caller.addNewMessageToPage(selectedRace.help);
 
-           // Clients.Caller.createCharacter();
+            // Clients.Caller.createCharacter();
 
         }
 

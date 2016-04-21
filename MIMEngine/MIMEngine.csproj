@@ -75,7 +75,6 @@
     <Compile Include="Core\PlayerSetup\PlayerSetup.cs" />
     <Compile Include="Core\PlayerSetup\PlayerStats.cs" />
     <Compile Include="Data.cs" />
-    <Compile Include="Manager\CharaterCreateManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

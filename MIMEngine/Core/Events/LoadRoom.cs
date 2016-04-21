@@ -18,7 +18,7 @@ namespace MIMEngine.Core.Events
           string roomTitle = (string)roomJson["title"];
           string roomDescription = (string)roomJson["description"];
 
-            string displayRoom = roomTitle + "/r/n" + roomDescription;
+            string displayRoom = "You look around " + "\r\n" + roomTitle + "\r\n" + roomDescription;
 
             return displayRoom;
 

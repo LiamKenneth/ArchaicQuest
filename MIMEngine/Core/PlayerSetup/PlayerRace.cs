@@ -16,8 +16,9 @@ namespace MIMEngine.Core.PlayerSetup
         private int inte { get; set; }
         private int wis { get; set; }
         private int cha { get; set; }
+        public string help { get; set; }
 
-        public PlayerRace(string name, int str)
+        public PlayerRace(string name, int str, int dex, int con, int inte, int wis, int cha, string help)
         {
             this.name = name;
             this.str = str;
@@ -26,6 +27,7 @@ namespace MIMEngine.Core.PlayerSetup
             this.inte = inte;
             this.wis = wis;
             this.cha = cha;
+            this.help = help;
             
 
         }
@@ -34,7 +36,14 @@ namespace MIMEngine.Core.PlayerSetup
         public static List<PlayerRace> GenerateRace()
         {
             var listOfRace = new List<PlayerRace>();
-            listOfRace.Add(new PlayerRace("Human", 0));
+
+            //help text to replace just testing
+            string humanHelp = "Humans are the most common race in the world, and make up the majority of adventurers. Although they have no special talents like the other races, they are more versatile, being skilled in all seven classes. Humans have no special skills, immunities or resistances but also have no vulnerabilities.\r\n";
+
+            string elfHelp = "Elves are slightly taller than humans, but have a much lighter build. They lack the strength and stamina of the other races, but are far more agile, both in body and mind. Elves are superb mages and thieves, but have at best fair talent as warriors or priests. Elves resist charm spells most effectively, due to their magical nature. They may see in the dark with infravision.";
+ 
+            listOfRace.Add(new PlayerRace("Human", 0, 0, 0, 0, 0, 0, humanHelp));
+            listOfRace.Add(new PlayerRace("Elf", 0, 0, -2, 2, 0, 0, elfHelp));
 
             return listOfRace;
         }
