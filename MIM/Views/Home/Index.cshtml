@@ -60,6 +60,8 @@
                 prompt("str: " + strength + " dex:" + dexterity + " con:" + constitution + " wis:" + wisdom + " int:" + intelligence + " cha:" + charisma + " Are you hapy with these stats?");
 
                 chat.server.loadRoom();
+               
+
             }
  
             // Set initial focus to message input box.
@@ -67,6 +69,7 @@
             // Start the connection.
             $.connection.hub.start().done(function () {
                 chat.server.welcome();
+
                 chat.client.createCharacter();
 
                 var stats = chat.server.getStats();
@@ -87,6 +90,7 @@
                
 
                 $('#sendmessage').click(function () {
+
                     chat.server.charSetup(name, sex, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
                     // Call the Send method on the hub.
                     chat.server.recieveFromClient($('#message').val());

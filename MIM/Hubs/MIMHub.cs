@@ -14,10 +14,10 @@ namespace MIM
 
         public void Welcome()
         {
-            
+            var selectedRace = PlayerRace.selectRace("hum");
             var motd = Data.loadFile("/motd");
             // Call the broadcastMessage method to update clients.
-        //    Clients.Caller.addNewMessageToPage(motd);
+            Clients.Caller.addNewMessageToPage(selectedRace.name);
 
            // Clients.Caller.createCharacter();
 
@@ -55,6 +55,14 @@ namespace MIM
 
             int[] stats = playerStats.rollStats();
             Clients.Caller.setStats(stats);
+        }
+
+        public void PickRace()
+        {
+
+            var selectedRace = PlayerRace.selectRace("hum");
+
+            Clients.Caller.addNewMessageToPage(selectedRace);
         }
 
         public void loadRoom()
