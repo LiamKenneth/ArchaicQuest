@@ -10,27 +10,80 @@
             <input type="text" id="message" class="" style="width:100%" />
             <input type="button" id="sendmessage" value="Send" class="" />
 
-            <div class="mim-model">
-                <div class="row">
-                    <div class="col-xs-12">
 
-                        <div id="mim-model-chooseName">
-                            <input type="text" name="name" value="" placeholder="Enter your character name" required />
 
-                            <input type="password" name="name" value="" placeholder="Enter your password" required />
-
-                            <input type="password" name="name" value="" placeholder="Confirm your password" required />
-
-                            <a href="#" class="btn btn-success">Pick Race</a>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+           
 
         </div>
     </div>
+    <div class="modal" tabindex="-1" role="dialog" data-show="true" style="display:block;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <div class="col-xs-4 active">Select your race</div>
+                        <div class="col-xs-4">Select your class</div>
+                        <div class="col-xs-4">Character info</div>
+                    </div>
+                </div>
+                <div class="modal-body">
+
+                    <div id="select-race">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <a href="#" title="Select Human" class="active text-center">
+                                    Human
+                                </a>
+                                <a href="#" title="Select Elf" class="text-center">
+                                Elf
+                                    </a>
+                                <a href="#" title="Select Dark Elf" class="text-center">
+                                    Dark Elf
+                                </a>
+                                <a href="#" title="Select Dwarf" class="text-center">
+                                    Dwarf
+                                </a>
+                                </div>
+
+                            <div class="col-xs-8">
+                                <img src="~/UI/img/humanPortLarge.jpg" alt="Select Human Race" class="img-responsive" />
+                            </div>
+                           </div>
+                     </div>
+
+                            <div class="row">
+                                <div class="col-xs-12">
+
+
+
+                                    @*<div class="form-group">
+                            <label>Character Name:</label>
+                            <input type="text" class="form-control" name="name" value="" placeholder="Enter your character name" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Password:</label>
+                            <input type="password" class="form-control" name="name" value="" placeholder="Enter your password" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Confirm Password:</label>
+                            <input type="password" class="form-control" name="name" value="" placeholder="Confirm your password" required />
+                        </div>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </div>
+
+
+
 @section scripts {
     <!--Script references. -->
     <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
