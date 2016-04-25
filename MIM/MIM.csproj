@@ -210,6 +210,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="UI\img\elfPort.jpg" />
+    <Content Include="UI\img\humanPort.jpg" />
+    <Content Include="UI\img\humanPortLarge.jpg" />
     <Content Include="UI\JS\MIM.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

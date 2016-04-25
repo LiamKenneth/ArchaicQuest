@@ -58,7 +58,7 @@ namespace MIM
             var selectedRace = PlayerRace.selectRace(race);
 
 
-            Clients.Caller.updateRaceInfo(selectedRace.name, selectedRace.help);
+            Clients.Caller.updateRaceInfo(selectedRace.name, selectedRace.help, selectedRace.imgUrl);
 
         }
 

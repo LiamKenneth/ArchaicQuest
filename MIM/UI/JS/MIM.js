@@ -7,8 +7,13 @@
         $('#discussion').append("<p>" + htmlEncode(message) + "</p>");
     };
 
-    chat.client.updateRaceInfo = function (dataName, dataHelp) {
-        $('#raceInfo').html() = dataName += '\n\r' + dataHelp;
+    chat.client.updateRaceInfo = function (dataName, dataHelp, dataImg) {
+
+        var raceInfo = "<h2>" + dataName + "</h2>" + "<p>" + dataHelp + "</p>";
+
+        $('#raceInfo').html(raceInfo);
+
+        $('#raceImg').attr('src', dataImg);
     }
 
 
@@ -49,6 +54,8 @@
     $('#message').focus();
     // Start the connection.
     $.connection.hub.start().done(function () {
+
+        getRaceInfo("hum"); //set default;
         chat.server.welcome();
 
         chat.client.createCharacter();
@@ -71,10 +78,9 @@
 
         function getRaceInfo(getValue) {
     
-            var raceInfo = chat.server.pickRace(getValue);
+          chat.server.pickRace(getValue);
 
-            console.log("raceInfo: " + raceInfo);
-            console.log("raceInfo: " + raceInfo.name);
+           
         }
 
 

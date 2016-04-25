@@ -78,9 +78,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Core\PlayerSetup\Data\" />
+    <Folder Include="Core\PlayerSetup\Data\Img\Avatar\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Core\PlayerSetup\Data\Img\RaceImg\darkElf.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Core\PlayerSetup\Data\Img\RaceImg\dwarf.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Core\PlayerSetup\Data\Img\RaceImg\elf.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Core\PlayerSetup\Data\Img\RaceImg\human.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="LICENSE.md" />
     <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
