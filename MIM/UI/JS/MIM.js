@@ -7,6 +7,10 @@
         $('#discussion').append("<p>" + htmlEncode(message) + "</p>");
     };
 
+    chat.client.updateRaceInfo = function (dataName, dataHelp) {
+        $('#raceInfo').html() = dataName += '\n\r' + dataHelp;
+    }
+
 
     var name = "";
     var sex = "male"
@@ -19,7 +23,7 @@
     var charisma = 0;
 
     chat.client.createCharacter = function () {
-        name = prompt("Please enter your name", "Malleus");
+      //  name = prompt("Please enter your name", "Malleus");
 
 
 
@@ -34,7 +38,7 @@
         wisdom = stats[3];
         intelligence = stats[4];
         charisma = stats[5];
-        prompt("str: " + strength + " dex:" + dexterity + " con:" + constitution + " wis:" + wisdom + " int:" + intelligence + " cha:" + charisma + " Are you hapy with these stats?");
+       // prompt("str: " + strength + " dex:" + dexterity + " con:" + constitution + " wis:" + wisdom + " int:" + intelligence + " cha:" + charisma + " Are you hapy with these stats?");
 
         chat.server.loadRoom();
 
@@ -48,7 +52,7 @@
         chat.server.welcome();
 
         chat.client.createCharacter();
-
+   
         var stats = chat.server.getStats();
 
         if (stats) {
@@ -58,16 +62,40 @@
 
         $('#sendmessage').click(function () {
 
-            chat.server.charSetup(name, sex, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
+            
             // Call the Send method on the hub.
             chat.server.recieveFromClient($('#message').val());
             // Clear text box and reset focus for next comment.
             $('#message').val('').focus();
         });
+
+        function getRaceInfo(getValue) {
+    
+            var raceInfo = chat.server.pickRace(getValue);
+
+            console.log("raceInfo: " + raceInfo);
+            console.log("raceInfo: " + raceInfo.name);
+        }
+
+
+        $(".modal-body a").click(function () {
+            $(".modal-body a").removeClass("active");
+            $(this).addClass("active");
+
+            var getValue = $(this).text().trim().toLowerCase().toString();
+
+            getRaceInfo(getValue)
+
+        });
+        
     });
+
+ 
+
 });
 // This optional function html-encodes messages for display in the page.
 function htmlEncode(value) {
     var encodedValue = $('<div />').text(value).html();
     return encodedValue;
 }
+

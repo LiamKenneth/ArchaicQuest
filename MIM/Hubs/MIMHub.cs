@@ -5,7 +5,7 @@ using System.Web;
 using Microsoft.AspNet.SignalR;
 using MIMEngine;
 using MIMEngine.Core.PlayerSetup;
-
+using Newtonsoft.Json;
 
 namespace MIM
 {
@@ -14,11 +14,11 @@ namespace MIM
 
         public void Welcome()
         {
-            var selectedRace = PlayerRace.selectRace("hum");
+           // var selectedRace = PlayerRace.selectRace("hum");
             var motd = Data.loadFile("/motd");
             // Call the broadcastMessage method to update clients.
-            Clients.Caller.addNewMessageToPage(selectedRace.name);
-            Clients.Caller.addNewMessageToPage(selectedRace.help);
+           // Clients.Caller.addNewMessageToPage(selectedRace.name);
+           // Clients.Caller.addNewMessageToPage(selectedRace.help);
 
             // Clients.Caller.createCharacter();
 
@@ -35,19 +35,13 @@ namespace MIM
         {
             //MIMEngine.Core.PlayerSetup.PlayerAccount.Login(message);
             SendToClient(message);
-            bool commandParser = false;
-            bool loggedIn = false;
+         //   MIMEngine.Core.Command.commands(message);
 
-            if (commandParser && loggedIn)
-            {
-                //check command
-            }
-            else
-            {
-             
-            }
-           
-           
+
+
+
+
+
         }
 
         public void getStats()
@@ -58,12 +52,14 @@ namespace MIM
             Clients.Caller.setStats(stats);
         }
 
-        public void PickRace()
+        public void pickRace(string race)
         {
 
-            var selectedRace = PlayerRace.selectRace("hum");
+            var selectedRace = PlayerRace.selectRace(race);
 
-            Clients.Caller.addNewMessageToPage(selectedRace);
+
+            Clients.Caller.updateRaceInfo(selectedRace.name, selectedRace.help);
+
         }
 
         public void loadRoom()
