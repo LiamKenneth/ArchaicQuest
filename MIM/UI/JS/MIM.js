@@ -50,6 +50,9 @@
 
     }
 
+ 
+    }
+
     // Set initial focus to message input box.
     $('#message').focus();
     // Start the connection.
@@ -79,18 +82,25 @@
         function getRaceInfo(getValue) {
     
           chat.server.pickRace(getValue);
-
            
         }
 
 
         $(".modal-body a").click(function () {
-            $(".modal-body a").removeClass("active");
-            $(this).addClass("active");
 
-            var getValue = $(this).text().trim().toLowerCase().toString();
+            if ($(this).hasClass("active")) {
 
-            getRaceInfo(getValue)
+                //don't call server if same tab
+                return false;
+            }
+            else {
+                $(".modal-body a").removeClass("active");
+                $(this).addClass("active");
+
+                var getValue = $(this).text().trim().toLowerCase().toString();
+
+                getRaceInfo(getValue)
+            }         
 
         });
         

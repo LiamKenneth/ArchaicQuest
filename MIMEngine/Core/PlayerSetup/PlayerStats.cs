@@ -17,9 +17,6 @@ namespace MIMEngine.Core.PlayerSetup
 
             int[] test = new int[6];
 
-            //todo wtf is a list
-            //List<int> test2 = new List<int>();
-
 
             for (int i = 0; i < 6; i++)
             {

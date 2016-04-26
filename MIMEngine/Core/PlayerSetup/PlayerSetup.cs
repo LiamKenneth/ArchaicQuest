@@ -12,8 +12,12 @@ namespace MIMEngine.Core.PlayerSetup
     {
         [JsonProperty("n")]
         public string name;
-        [JsonProperty("s")]
-        public string sex;
+        [JsonProperty("e")]
+        public string email;
+        [JsonProperty("p")]
+        public string password;
+        [JsonProperty("g")]
+        public string gender;
         [JsonProperty("sc")]
         public string selectedClass;
         [JsonProperty("as")]
@@ -29,10 +33,12 @@ namespace MIMEngine.Core.PlayerSetup
         [JsonProperty("ach")]
         public int charisma;
 
-        public PlayerSetup(string name, string sex, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
+        public PlayerSetup(string name, string email, string password, string gender, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
         {
             this.name = name;
-            this.sex = sex;
+            this.email = email;
+            this.password = password;
+            this.gender = gender;
             this.selectedClass = selectedClass;
             this.strength = strength;
             this.dexterity = dexterity;
