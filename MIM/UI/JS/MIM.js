@@ -30,8 +30,6 @@
     chat.client.createCharacter = function () {
       //  name = prompt("Please enter your name", "Malleus");
 
-
-
     }
 
     chat.client.setStats = function (stats) {
@@ -46,10 +44,6 @@
        // prompt("str: " + strength + " dex:" + dexterity + " con:" + constitution + " wis:" + wisdom + " int:" + intelligence + " cha:" + charisma + " Are you hapy with these stats?");
 
         chat.server.loadRoom();
-
-
-    }
-
  
     }
 

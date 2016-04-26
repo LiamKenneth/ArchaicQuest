@@ -24,9 +24,9 @@ namespace MIM
 
         }
 
-        public void charSetup(string name, string sex, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
+        public void charSetup(string name, string email, string password, string gender, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
         {
-            PlayerSetup player = new PlayerSetup(name, sex, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
+            PlayerSetup player = new PlayerSetup(name, email, password,  gender, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
         }
         
 
