@@ -30,8 +30,6 @@
     chat.client.createCharacter = function () {
       //  name = prompt("Please enter your name", "Malleus");
 
-
-
     }
 
     chat.client.setStats = function (stats) {
@@ -46,8 +44,7 @@
        // prompt("str: " + strength + " dex:" + dexterity + " con:" + constitution + " wis:" + wisdom + " int:" + intelligence + " cha:" + charisma + " Are you hapy with these stats?");
 
         chat.server.loadRoom();
-
-
+ 
     }
 
     // Set initial focus to message input box.
@@ -79,18 +76,25 @@
         function getRaceInfo(getValue) {
     
           chat.server.pickRace(getValue);
-
            
         }
 
 
         $(".modal-body a").click(function () {
-            $(".modal-body a").removeClass("active");
-            $(this).addClass("active");
 
-            var getValue = $(this).text().trim().toLowerCase().toString();
+            if ($(this).hasClass("active")) {
 
-            getRaceInfo(getValue)
+                //don't call server if same tab
+                return false;
+            }
+            else {
+                $(".modal-body a").removeClass("active");
+                $(this).addClass("active");
+
+                var getValue = $(this).text().trim().toLowerCase().toString();
+
+                getRaceInfo(getValue)
+            }         
 
         });
         
