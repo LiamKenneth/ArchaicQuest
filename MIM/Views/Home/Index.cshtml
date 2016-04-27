@@ -1,18 +1,14 @@
 ﻿@{
     ViewBag.Title = "Chat";
 }
-
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
             <pre id="discussion"></pre>
-           
+
             <input type="text" id="message" class="" style="width:100%" />
             <input type="button" id="sendmessage" value="Send" class="" />
 
-
-
-           
 
         </div>
     </div>
@@ -21,73 +17,24 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="row">
-                        <div class="col-xs-3 active">Select your race</div>
-                        <div class="col-xs-3">Select your class</div>
-                        <div class="col-xs-3">Select your stats</div>
+                        <div class="col-xs-3 active">Choose race</div>
+                        <div class="col-xs-3">Choose class</div>
+                        <div class="col-xs-3">Roll stats</div>
                         <div class="col-xs-3">Character info</div>
                     </div>
                 </div>
                 <div class="modal-body">
+                   
+                    @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/RaceSelection.cshtml"); }
 
-                    <div id="select-race">
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <a href="#" title="Select Human" class="active text-center Human-js">
-                                    Human
-                                </a>
-                                <a href="#" title="Select Elf" class="text-center">
-                                Elf
-                                    </a>
-                                <a href="#" title="Select Dark Elf" class="text-center">
-                                    Dark Elf
-                                </a>
-                                <a href="#" title="Select Dwarf" class="text-center">
-                                    Dwarf
-                                </a>
-                                </div>
+                    @*@{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/ClassSelection.cshtml"); }*@
 
-                            <div class="col-xs-8 infoSection">
-                                <div id="raceInfo">
+                </div>
 
-                                </div>
-                                <img id="raceImg" src="" alt="Select Human Race" class="img-responsive" width="500" height="400" />
-                               
-                            </div>
-                           </div>
-                        
-                        <button type="button" class="btn btn-primary pull-right">Next: Select your class</button>
-                        <button type="button" class="btn btn-default pull-right margin-right-10">Have an account? Log in now</button>
-                     </div>
-
-                            <div class="row">
-                                <div class="col-xs-12">
-
-
-
-                                    @*<div class="form-group">
-                            <label>Character Name:</label>
-                            <input type="text" class="form-control" name="name" value="" placeholder="Enter your character name" required />
-                        </div>
-
-                        <div class="form-group">
-                            <label>Password:</label>
-                            <input type="password" class="form-control" name="name" value="" placeholder="Enter your password" required />
-                        </div>
-
-                        <div class="form-group">
-                            <label>Confirm Password:</label>
-                            <input type="password" class="form-control" name="name" value="" placeholder="Confirm your password" required />
-                        </div>*@
-                                </div>
-                            </div>
-                        </div>
-                  
-                    </div><!-- /.modal-content -->
+            </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div>
-
-
 
 @section scripts {
     <!--Script references. -->
