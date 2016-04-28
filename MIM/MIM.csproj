@@ -248,6 +248,8 @@
     <Content Include="UI\Css\Sass\master.scss" />
     <Content Include="Views\Home\Partial\CharacterCreation\RaceSelection.cshtml" />
     <Content Include="Views\Home\Partial\CharacterCreation\ClassSelection.cshtml" />
+    <Content Include="Views\Home\Partial\CharacterCreation\StatSelection.cshtml" />
+    <Content Include="Views\Home\Partial\CharacterCreation\CharSelection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
