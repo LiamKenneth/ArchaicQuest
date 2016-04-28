@@ -28,7 +28,7 @@
         getClassInfo: function (getValue) {
             server.characterSetupWizard(getValue, "class");
         },
-        selectRace: function () {
+        selectOption: function () {
             $(".modal-body a").click(function () {
 
                 if ($(this).hasClass("active")) {
@@ -42,7 +42,14 @@
 
                     var getValue = $(this).text().trim().toLowerCase().toString();
 
-                    MIM.getRaceInfo(getValue)
+                    if ($('#select-race').is(':visible')) {
+                        MIM.getRaceInfo(getValue)
+                    }
+                    else if ($('#select-class').is(':visible')) {
+                        MIM.getClassInfo(getValue)
+                    }
+
+                   
                 }
             });
 
@@ -50,13 +57,53 @@
         CharacterNextStep: function () {
             var raceStep = document.getElementById('select-race');
             var classStep = document.getElementById('select-class');
+            var statsStep = document.getElementById('select-stats');
+            var infoStep = document.getElementById('select-char');
 
             $("#RaceSelectedBtn").click(function () {
                 MIM.getClassInfo("fighter");
                 raceStep.style.display = "none";
                 classStep.style.display = "block";
+                $(".modal-header div").removeClass("active");
+                $(".classBreadCrumb").addClass("active");
             });
- 
+
+            $("#backToRace").click(function () {         
+                raceStep.style.display = "block";
+                classStep.style.display = "none";
+                $(".modal-header div").removeClass("active");
+                $(".raceBreadCrumb").addClass("active");
+            });
+
+
+            $("#selectedClassBtn").click(function () {
+                server.getStats();
+                classStep.style.display = "none";
+                statsStep.style.display = "block";
+                $(".modal-header div").removeClass("active");
+                $(".statsBreadCrumb").addClass("active");
+            });
+
+            $("#backToClass").click(function () {
+                 
+                classStep.style.display = "block";
+                statsStep.style.display = "none";
+                $(".modal-header div").removeClass("active");
+                $(".classBreadCrumb").addClass("active");
+            });
+
+            $("#reRollStats").click(function() {
+                server.getStats();
+            });
+
+            $("#selectedStatsBtn").click(function () {
+               // server.getStats();
+                statsStep.style.display = "none";
+                infoStep.style.display = "block";
+                $(".modal-header div").removeClass("active");
+                $(".infoBreadCrumb").addClass("active");
+            });
+
         },
         sendMessageToServer: function() {
             $('#sendmessage').click(function () {
@@ -76,7 +123,7 @@
         init: function () {
             console.log("INIT")
             //init when signalr is ready
-            MIM.selectRace();
+            MIM.selectOption();
             MIM.CharacterNextStep();
         }
     }
@@ -122,7 +169,12 @@
 
     //// generate Stats ////
     client.setStats = function (stats) {
-        return stats;
+        $('#statStr').html(stats[0]);
+        $('#statDex').html(stats[1]);
+        $('#statCon').html(stats[2]);
+        $('#statInt').html(stats[3]);
+        $('#statWis').html(stats[4]);
+        $('#statCha').html(stats[5]);
     }
 
 

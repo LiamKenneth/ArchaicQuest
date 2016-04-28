@@ -1,4 +1,4 @@
-﻿<div id="select-class" class="notVisible">
+﻿<div id="select-class" class="notVisible select-option">
     <div class="row">
         <div class="col-xs-4">
             <a href="#" title="Select Fighter" class="active text-center Human-js">
@@ -15,13 +15,16 @@
             </a>
         </div>
         <div class="col-xs-8 infoSection">
-            <div class="classInfo">
+            <div class="classInfo selectionInfo">
             </div>
-            <img  src="" alt="Select Human Race" class="classImg img-responsive invisible" width="500" height="400" />
+            <img src="" alt="Select Human Race" class="classImg img-responsive" width="500" height="400" />
 
         </div>
     </div>
-
-    <button type="button" class="btn btn-primary pull-right">Next: Roll your stats</button>
-    <button type="button" class="btn btn-default pull-right margin-right-10">Prev: Change Race?</button>
+    <div class="row">
+        <div class="col-xs-12">
+            <button type="button" class="btn btn-success pull-right" id="selectedClassBtn">Next: Roll your stats</button>
+            <button type="button" class="btn btn-default pull-right margin-right-10" id="backToRace">Prev: Change Race?</button>
+        </div>
+    </div>
 </div>
