@@ -14,11 +14,11 @@ namespace MIM
 
         public void Welcome()
         {
-           // var selectedRace = PlayerRace.selectRace("hum");
+
             var motd = Data.loadFile("/motd");
             // Call the broadcastMessage method to update clients.
-           // Clients.Caller.addNewMessageToPage(selectedRace.name);
-           // Clients.Caller.addNewMessageToPage(selectedRace.help);
+            // Clients.Caller.addNewMessageToPage(selectedRace.name);
+            // Clients.Caller.addNewMessageToPage(selectedRace.help);
 
             // Clients.Caller.createCharacter();
 
@@ -26,21 +26,16 @@ namespace MIM
 
         public void charSetup(string name, string email, string password, string gender, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
         {
-            PlayerSetup player = new PlayerSetup(name, email, password,  gender, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
+            PlayerSetup player = new PlayerSetup(name, email, password, gender, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
         }
-        
 
-       
+
+
         public void recieveFromClient(string message)
         {
             //MIMEngine.Core.PlayerSetup.PlayerAccount.Login(message);
             SendToClient(message);
-         //   MIMEngine.Core.Command.commands(message);
-
-
-
-
-
+            //   MIMEngine.Core.Command.commands(message);
 
         }
 
@@ -52,15 +47,23 @@ namespace MIM
             Clients.Caller.setStats(stats);
         }
 
-        public void pickRace(string race)
+        public void characterSetupWizard(string value, string step)
         {
 
-            var selectedRace = PlayerRace.selectRace(race);
-
-
-            Clients.Caller.updateRaceInfo(selectedRace.name, selectedRace.help, selectedRace.imgUrl);
+         
+            if (step == "race")
+            {
+                var selectedRace = PlayerRace.selectRace(value);
+                Clients.Caller.updateCharacterSetupWizard("race", selectedRace.name, selectedRace.help, selectedRace.imgUrl);
+            }
+            else if (step == "class")
+            {
+                var selectedClass = PlayerClass.selectClass(value);
+                Clients.Caller.updateCharacterSetupWizard("class", selectedClass.name, selectedClass.description, selectedClass.imgUrl);
+            }
 
         }
+
 
         public void loadRoom()
         {

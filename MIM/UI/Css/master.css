@@ -1,4 +1,7 @@
-﻿.margin-right-10 {
+﻿.notVisible {
+  display: none; }
+
+.margin-right-10 {
   margin-right: 10px; }
 
 body {

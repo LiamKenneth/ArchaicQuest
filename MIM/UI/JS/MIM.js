@@ -9,11 +9,24 @@
     var server = chat.server;
 
     //================================================================================
+    // Global Variables for playerCreation
+    //================================================================================
+    var race = "Human";
+    var playerClass;
+    var gender;
+    var name;
+    var email;
+    var password;
+
+    //================================================================================
     // Helper Functions
     //================================================================================
     var MIM = {
         getRaceInfo: function (getValue) {
-            server.pickRace(getValue);
+            server.characterSetupWizard(getValue, "race");
+        },
+        getClassInfo: function (getValue) {
+            server.characterSetupWizard(getValue, "class");
         },
         selectRace: function () {
             $(".modal-body a").click(function () {
@@ -32,6 +45,18 @@
                     MIM.getRaceInfo(getValue)
                 }
             });
+
+        },
+        CharacterNextStep: function () {
+            var raceStep = document.getElementById('select-race');
+            var classStep = document.getElementById('select-class');
+
+            $("#RaceSelectedBtn").click(function () {
+                MIM.getClassInfo("fighter");
+                raceStep.style.display = "none";
+                classStep.style.display = "block";
+            });
+ 
         },
         sendMessageToServer: function() {
             $('#sendmessage').click(function () {
@@ -47,6 +72,12 @@
         htmlEncode: function (value) {
             var encodedValue = $('<div />').text(value).html();
             return encodedValue;
+        },
+        init: function () {
+            console.log("INIT")
+            //init when signalr is ready
+            MIM.selectRace();
+            MIM.CharacterNextStep();
         }
     }
 
@@ -65,13 +96,28 @@
     };
 
     //// Update Race Info ////
-    client.updateRaceInfo = function (dataName, dataHelp, dataImg) {
+    client.updateCharacterSetupWizard = function (step, dataName, dataHelp, dataImg) {
 
-        var raceInfo = "<h2>" + dataName + "</h2>" + "<p>" + dataHelp + "</p>";
+        var info = "<h2>" + dataName + "</h2>" + "<p>" + dataHelp + "</p>";
 
-        $('#raceInfo').html(raceInfo);
+        if (step === "race") {
+            race = dataName; //global Race
 
-        $('#raceImg').attr('src', dataImg);
+            $('.raceInfo').html(info);
+
+            $('.raceImg').attr('src', dataImg);
+        }
+        else if (step === "class") {
+            playerClass = dataName; //global player Class
+            $('.classInfo').html(info);
+
+            $('.classImg').attr('src', dataImg);
+        }
+
+        console.log(dataName + " " + dataHelp )
+
+     
+
     }
 
     //// generate Stats ////
@@ -95,8 +141,8 @@
         /// send info to server
         MIM.sendMessageToServer();
 
-        //// select race tabs
-            MIM.selectRace();
+        //// Start scripts
+        MIM.init();
 
         });
         
