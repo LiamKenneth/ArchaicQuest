@@ -1,28 +1,54 @@
-﻿<div id="select-char" class="notVisible">
-    <div class="row">
-        <div class="col-xs-12">
-            <p>Player Name</p>
-            <input type="text" id="playerName " name="name" value="" placeholder="PlayerName" />
-            <small>A good unique fantasy name, not from a book.</small>
-
-            <p>Gender</p>
-            <input type="radio" name="gender" value="male" checked> Male
-            <input type="radio" name="gender" value="female"> Female
-
-            <p>Email</p>
-            <input type="text" id="Email " name="name" value="" placeholder="Email" />
-
-            <p>Password</p>
-            <input type="password" id="password " name="name" value="" placeholder="Password" />
-            <input type="password" id="ConfirmPassword " name="name" value="" placeholder="Confirm Password" />
+﻿@model MIM.Models.createPlayer
 
 
+<div id="select-char" class="notVisible">
+    <form action="">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="form-group">
+                    <label for="playerName">Character Name</label> 
+                    <input type="text" class="form-control" id="playerName" placeholder="Character name" required>
+                    @*@{ 
+                        Html.TextBoxFor(m => m.Name);
+                    }*@
+                    <small>Choose a good unique fantasy name.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="male">Gender</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="gender" id="male" value="Male" checked> Male
+                    </label>
+
+                    <label class="radio-inline">
+                        <input type="radio" name="gender" id="female" value="Female" checked> Female
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Email address" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="text" class="form-control" id="password" placeholder="Password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Confirm Password</label>
+                    <input type="text" class="form-control" id="confirmPassword" placeholder="Confirm password" required>
+                    <p id="passwordMatchError" class="notVisible alert alert-danger">Your passwords do not match</p>
+                </div>
+
+            </div>
         </div>
-    </div>
-<div class="row">
-    <div class="col-xs-12">
-        <button type="button" class="btn btn-success pull-right" id="RaceSelectedBtn">Create Characters</button>
-        <button type="button" class="btn btn-default pull-right margin-right-10">Prev: Change stats?</button>
-    </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <button type="submit" class="btn btn-success pull-right" id="CreateCharBtn">Create Character</button>
+                <button type="button" class="btn btn-default pull-right margin-right-10">Prev: Change stats?</button>
+            </div>
+        </div>
+    </form>
 </div>
-    </div>

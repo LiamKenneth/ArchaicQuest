@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MIM.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,8 @@ namespace MIM.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var model = new createPlayer();
+            return View(model);
         }
     }
 }

@@ -13,6 +13,12 @@
     //================================================================================
     var race = "Human";
     var playerClass;
+    var str;
+    var dex;
+    var con;
+    var int;
+    var wis;
+    var cha;
     var gender;
     var name;
     var email;
@@ -59,19 +65,21 @@
             var classStep = document.getElementById('select-class');
             var statsStep = document.getElementById('select-stats');
             var infoStep = document.getElementById('select-char');
+            var modelHeaderDiv = $(".modal-header div");
+            var classBreadCrumb = $(".classBreadCrumb");
 
             $("#RaceSelectedBtn").click(function () {
                 MIM.getClassInfo("fighter");
                 raceStep.style.display = "none";
                 classStep.style.display = "block";
-                $(".modal-header div").removeClass("active");
-                $(".classBreadCrumb").addClass("active");
+                modelHeaderDiv.removeClass("active");
+                classBreadCrumb.addClass("active");
             });
 
             $("#backToRace").click(function () {         
                 raceStep.style.display = "block";
                 classStep.style.display = "none";
-                $(".modal-header div").removeClass("active");
+                modelHeaderDiv.removeClass("active");
                 $(".raceBreadCrumb").addClass("active");
             });
 
@@ -80,7 +88,7 @@
                 server.getStats();
                 classStep.style.display = "none";
                 statsStep.style.display = "block";
-                $(".modal-header div").removeClass("active");
+                modelHeaderDiv.removeClass("active");
                 $(".statsBreadCrumb").addClass("active");
             });
 
@@ -88,8 +96,8 @@
                  
                 classStep.style.display = "block";
                 statsStep.style.display = "none";
-                $(".modal-header div").removeClass("active");
-                $(".classBreadCrumb").addClass("active");
+                modelHeaderDiv.removeClass("active");
+                classBreadCrumb.addClass("active");
             });
 
             $("#reRollStats").click(function() {
@@ -100,10 +108,34 @@
                // server.getStats();
                 statsStep.style.display = "none";
                 infoStep.style.display = "block";
-                $(".modal-header div").removeClass("active");
+                modelHeaderDiv.removeClass("active");
                 $(".infoBreadCrumb").addClass("active");
             });
 
+
+            $("#CreateCharBtn").click(function () {
+
+               
+                name = document.getElementById('playerName').value.trim();
+                gender = $("input[name=gender]:checked").val();
+                email = document.getElementById('email').value.trim();
+                
+                var pass = document.getElementById('password').value;
+                var confirmPass = document.getElementById('confirmPassword').value;
+
+                if (pass == confirmPass && confirmPass != "") {
+                    password = confirmPass;
+                }
+                else {
+                    document.getElementById('passwordMatchError').style.display = "block";
+                    document.getElementById('confirmPassword').className += " has-error";
+                    alert("error")
+                    return false;
+                }
+
+                alert("create char")
+
+            });
         },
         sendMessageToServer: function() {
             $('#sendmessage').click(function () {
@@ -160,6 +192,7 @@
 
             $('.classImg').attr('src', dataImg);
         }
+      
 
         console.log(dataName + " " + dataHelp )
 
@@ -169,12 +202,20 @@
 
     //// generate Stats ////
     client.setStats = function (stats) {
-        $('#statStr').html(stats[0]);
-        $('#statDex').html(stats[1]);
-        $('#statCon').html(stats[2]);
-        $('#statInt').html(stats[3]);
-        $('#statWis').html(stats[4]);
-        $('#statCha').html(stats[5]);
+
+        str = stats[0];
+        dex = stats[1];
+        con = stats[2];
+        int = stats[3];
+        wis = stats[4];
+        cha = stats[5];
+
+        $('#statStr').html(str);
+        $('#statDex').html(dex);
+        $('#statCon').html(con);
+        $('#statInt').html(int);
+        $('#statWis').html(wis);
+        $('#statCha').html(cha);
     }
 
 

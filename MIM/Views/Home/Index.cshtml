@@ -1,4 +1,5 @@
-﻿@{
+﻿@model MIM.Models.createPlayer
+@{
     ViewBag.Title = "Chat";
 }
 <div class="container">
@@ -17,21 +18,21 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="row">
-                        <div class="col-xs-3 active raceBreadCrumb">Choose race</div>
-                        <div class="col-xs-3 classBreadCrumb">Choose class</div>
-                        <div class="col-xs-3 statsBreadCrumb">Roll stats</div>
-                        <div class="col-xs-3 infoBreadCrumb">Character info</div>
+                        <div class="col-xs-3 active raceBreadCrumb"><span class="hidden-xs">Choose</span> Race</div>
+                        <div class="col-xs-3 classBreadCrumb"><span class="hidden-xs">Choose</span> Class</div>
+                        <div class="col-xs-3 statsBreadCrumb"><span class="hidden-xs">Roll</span> Stats</div>
+                        <div class="col-xs-3 infoBreadCrumb"><span class="hidden-xs">Character</span> Info</div>
                     </div>
                 </div>
                 <div class="modal-body">
-                   
-                    @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/RaceSelection.cshtml"); }
+          
+                    @*@{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/RaceSelection.cshtml"); }
 
                     @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/ClassSelection.cshtml"); }
 
                     @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/StatSelection.cshtml"); }
 
-                    @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/CharSelection.cshtml"); }
+                    @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/CharSelection.cshtml"); }*@
 
                     <!-- TODO: Stat Partial & Char info partial -->
 
