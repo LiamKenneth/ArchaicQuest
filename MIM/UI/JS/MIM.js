@@ -237,6 +237,28 @@
         //// Start scripts
         MIM.init();
 
+        $("#createCharaterForm").on("submit", function (event) {
+            var $this = $(this);
+            var frmValues = $this.serialize();
+            $.ajax({
+                type: $this.attr('method'),
+                url: $this.attr('action'),
+                data: frmValues
+            })
+            .done(function () {
+                alert("sent");
+            })
+            .fail(function () {
+               alert("faild");
+            });
+            event.preventDefault();
+        });
+
+      
+
+        $.validator.unobtrusive.parse("#createCharaterForm");
+
+      
         });
         
     });

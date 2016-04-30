@@ -2,74 +2,75 @@
 
 
 <div id="select-char" class="notVisible">
-    @using (@Html.BeginForm("CreateCharacter", "Home", FormMethod.Post))
-    {
-        <div class="row">
-            <div class="col-xs-12">
+   @using (@Html.BeginForm("CreateCharacter", "Home", FormMethod.Post, new { id = "createCharaterForm" }))
+   {
+       <div class="row">
+           <div class="col-xs-12">
 
-                <div class="form-group">
-                    <label for="Name">Character Name</label>
-                    @{
-                        @Html.TextBoxFor(input => input.Name, Model.Name, new { @class = "form-control", placeholder = "Character name" })
-                        ;
-                    }
-                    <small>Choose a good unique fantasy name.</small>
-                </div>
+               <div class="form-group">
+                   <label for="Name">Character Name</label>
+                   @{
+                       @Html.TextBoxFor(input => input.Name, Model.Name, new { @class = "form-control", placeholder = "Character name" })
+                       @Html.ValidationMessageFor(input => input.Name)
 
-                <div class="form-group">
-                    <label for="male">Gender</label>
-                    <label class="radio-inline">
+                   }
+                   <small>Choose a good unique fantasy name.</small>
+               </div>
 
-                        @{
-                            @Html.RadioButtonFor(input => input.Gender, true, new { id = "male", @checked = true, name = "Male" })
-                            @:Male
-                        }
-                    </label>
+               <div class="form-group">
+                   <label for="male">Gender</label>
+                   <label class="radio-inline">
 
-                    <label class="radio-inline">
+                       @{
+                           @Html.RadioButtonFor(input => input.Gender, true, new { id = "male", @checked = true, name = "Male" })
+                           @:Male
+                       }
+                   </label>
 
-                        @{
-                            @Html.RadioButtonFor(input => input.Gender, false, new { id = "female", name = "Female" })
-                            @:Female
-                        }
-                    </label>
-                </div>
+                   <label class="radio-inline">
 
-                <div class="form-group">
-                    <label for="Email">Email</label>
-                    @{
-                        @Html.TextBoxFor(input => input.Email, Model.Email, new { type = "email", @class = "form-control", placeholder = "Email Address" })
-                        ;
-                    }
-                </div>
+                       @{
+                           @Html.RadioButtonFor(input => input.Gender, false, new { id = "female", name = "Female" })
+                           @:Female
+                       }
+                   </label>
+               </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    @{
-                        @Html.TextBoxFor(input => input.Password, Model.Password, new { id = "password", type = "password", @class = "form-control", placeholder = "Password" })
-                        ;
-                    }
-                </div>
+               <div class="form-group">
+                   <label for="Email">Email</label>
+                   @{
+                       @Html.TextBoxFor(input => input.Email, Model.Email, new { type = "email", @class = "form-control", placeholder = "Email Address" })
+                       @Html.ValidationMessageFor(input => input.Email)
+                   }
+               </div>
 
-                <div class="form-group">
-                    <label for="password">Confirm Password</label>
-                    @{
-                        @Html.TextBoxFor(input => input.ConfirmPassword, Model.ConfirmPassword, new { id = "confirmPassword", type = "password", @class = "form-control", placeholder = "Confirm Password" })
-                        ;
-                    }
-                    <p id="passwordMatchError" class="notVisible alert alert-danger">Your passwords do not match</p>
-                </div>
+               <div class="form-group">
+                   <label for="password">Password</label>
+                   @{
+                       @Html.TextBoxFor(input => input.Password, Model.Password, new { id = "password", type = "password", @class = "form-control", placeholder = "Password" })
+                       @Html.ValidationMessageFor(input => input.Password)
+                   }
+               </div>
 
-                @{
-                    //hidden fields for stats
-                }
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <button type="submit" class="btn btn-success pull-right" id="CreateCharBt">Create Character</button>
-                <button type="button" class="btn btn-default pull-right margin-right-10">Prev: Change stats?</button>
-            </div>
-        </div>
-    }
+               <div class="form-group">
+                   <label for="password">Confirm Password</label>
+                   @{
+                       @Html.TextBoxFor(input => input.ConfirmPassword, Model.ConfirmPassword, new { id = "confirmPassword", type = "password", @class = "form-control", placeholder = "Confirm Password" })
+                       @Html.ValidationMessageFor(input => input.ConfirmPassword)
+                   }
+                   <p id="passwordMatchError" class="notVisible alert alert-danger">Your passwords do not match</p>
+               </div>
+
+               @{
+                   //hidden fields for stats
+               }
+           </div>
+       </div>
+       <div class="row">
+           <div class="col-xs-12">
+               <button type="submit" class="btn btn-success pull-right" id="CreateCharBt">Create Character</button>
+               <button type="button" class="btn btn-default pull-right margin-right-10">Prev: Change stats?</button>
+           </div>
+       </div>
+   }
 </div>
