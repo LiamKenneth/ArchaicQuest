@@ -2,7 +2,7 @@
 
 namespace MIM.Models
 {
-    public class createPlayer
+    public class CreatePlayer
     {
         [Required]
         public string Name { get; set; }

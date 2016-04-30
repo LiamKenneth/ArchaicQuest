@@ -1,15 +1,17 @@
-﻿@model MIM.Models.createPlayer
+﻿@model MIM.Models.CreatePlayer
 
 
 <div id="select-char" class="notVisible">
-    <form action="">
+    @using (@Html.BeginForm("CreateCharacter", "Home", FormMethod.Post))
+    {
         <div class="row">
             <div class="col-xs-12">
 
                 <div class="form-group">
-                    <label for="Name">Character Name</label> 
+                    <label for="Name">Character Name</label>
                     @{
-                        @Html.TextBoxFor(input => input.Name, Model.Name,  new { @class = "form-control", placeholder = "Character name" });
+                        @Html.TextBoxFor(input => input.Name, Model.Name, new { @class = "form-control", placeholder = "Character name" })
+                        ;
                     }
                     <small>Choose a good unique fantasy name.</small>
                 </div>
@@ -19,14 +21,16 @@
                     <label class="radio-inline">
 
                         @{
-                            @Html.RadioButtonFor(input => input.Gender, true,  new { id = "male", @checked = true, name = "Male" }) @:Male
+                            @Html.RadioButtonFor(input => input.Gender, true, new { id = "male", @checked = true, name = "Male" })
+                            @:Male
                         }
                     </label>
 
                     <label class="radio-inline">
 
                         @{
-                            @Html.RadioButtonFor(input => input.Gender, false, new {id = "female",  name = "Female" }) @:Female
+                            @Html.RadioButtonFor(input => input.Gender, false, new { id = "female", name = "Female" })
+                            @:Female
                         }
                     </label>
                 </div>
@@ -34,27 +38,30 @@
                 <div class="form-group">
                     <label for="Email">Email</label>
                     @{
-                        @Html.TextBoxFor(input => input.Email, Model.Email, new { type = "email", @class = "form-control", placeholder = "Email Address" });
+                        @Html.TextBoxFor(input => input.Email, Model.Email, new { type = "email", @class = "form-control", placeholder = "Email Address" })
+                        ;
                     }
                 </div>
 
                 <div class="form-group">
                     <label for="password">Password</label>
                     @{
-                        @Html.TextBoxFor(input => input.Password, Model.Password, new { id = "password", type = "password", @class = "form-control", placeholder = "Password" });
+                        @Html.TextBoxFor(input => input.Password, Model.Password, new { id = "password", type = "password", @class = "form-control", placeholder = "Password" })
+                        ;
                     }
                 </div>
 
                 <div class="form-group">
                     <label for="password">Confirm Password</label>
                     @{
-                        @Html.TextBoxFor(input => input.ConfirmPassword, Model.ConfirmPassword, new {id = "confirmPassword", type = "password", @class = "form-control", placeholder = "Confirm Password" });
+                        @Html.TextBoxFor(input => input.ConfirmPassword, Model.ConfirmPassword, new { id = "confirmPassword", type = "password", @class = "form-control", placeholder = "Confirm Password" })
+                        ;
                     }
                     <p id="passwordMatchError" class="notVisible alert alert-danger">Your passwords do not match</p>
                 </div>
 
                 @{
-                   //hidden fields for stats
+                    //hidden fields for stats
                 }
             </div>
         </div>
@@ -64,5 +71,5 @@
                 <button type="button" class="btn btn-default pull-right margin-right-10">Prev: Change stats?</button>
             </div>
         </div>
-    </form>
+    }
 </div>
