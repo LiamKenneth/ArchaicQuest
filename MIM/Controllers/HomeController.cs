@@ -19,15 +19,10 @@ namespace MIM.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateCharacter(CreatePlayer createPlayer)
+        public JsonResult CreateCharacter(CreatePlayer createPlayer)
         {
-
-            var context = GlobalHost.ConnectionManager.GetHubContext<MIMHub>();
-
-            //save data
-    
-            string name = createPlayer.Name;
-            return null;
+             
+            return this.Json(createPlayer);
         }
     }
 

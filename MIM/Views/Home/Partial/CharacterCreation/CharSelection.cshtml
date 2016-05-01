@@ -2,75 +2,83 @@
 
 
 <div id="select-char" class="notVisible">
-   @using (@Html.BeginForm("CreateCharacter", "Home", FormMethod.Post, new { id = "createCharaterForm" }))
-   {
-       <div class="row">
-           <div class="col-xs-12">
+    @using (@Html.BeginForm("CreateCharacter", "Home", FormMethod.Post, new { id = "createCharaterForm" }))
+    {
+        <div class="row">
+            <div class="col-xs-12">
 
-               <div class="form-group">
-                   <label for="Name">Character Name</label>
-                   @{
-                       @Html.TextBoxFor(input => input.Name, Model.Name, new { @class = "form-control", placeholder = "Character name" })
-                       @Html.ValidationMessageFor(input => input.Name)
+                <div class="form-group">
+                    <label for="Name">Character Name</label>
+                    @{
+                        @Html.TextBoxFor(input => input.Name, Model.Name, new { @class = "form-control", placeholder = "Character name" })
+                        @Html.ValidationMessageFor(input => input.Name)
 
-                   }
-                   <small>Choose a good unique fantasy name.</small>
-               </div>
+                    }
+                    <small>Choose a good unique fantasy name.</small>
+                </div>
 
-               <div class="form-group">
-                   <label for="male">Gender</label>
-                   <label class="radio-inline">
+                <div class="form-group">
+                    <label for="male">Gender</label>
+                    <label class="radio-inline">
 
-                       @{
-                           @Html.RadioButtonFor(input => input.Gender, true, new { id = "male", @checked = true, name = "Male" })
-                           @:Male
-                       }
-                   </label>
+                        @{
+                            @Html.RadioButtonFor(input => input.Gender, "male", new { id = "male", @checked = true, name = "Male" })
+                            @:Male
+                        }
+                    </label>
 
-                   <label class="radio-inline">
+                    <label class="radio-inline">
 
-                       @{
-                           @Html.RadioButtonFor(input => input.Gender, false, new { id = "female", name = "Female" })
-                           @:Female
-                       }
-                   </label>
-               </div>
+                        @{
+                            @Html.RadioButtonFor(input => input.Gender, "female", new { id = "female", name = "Female" })
+                            @:Female
+                        }
+                    </label>
+                </div>
 
-               <div class="form-group">
-                   <label for="Email">Email</label>
-                   @{
-                       @Html.TextBoxFor(input => input.Email, Model.Email, new { type = "email", @class = "form-control", placeholder = "Email Address" })
-                       @Html.ValidationMessageFor(input => input.Email)
-                   }
-               </div>
+                <div class="form-group">
+                    <label for="Email">Email</label>
+                    @{
+                        @Html.TextBoxFor(input => input.Email, Model.Email, new { type = "email", @class = "form-control", placeholder = "Email Address" })
+                        @Html.ValidationMessageFor(input => input.Email)
+                    }
+                </div>
 
-               <div class="form-group">
-                   <label for="password">Password</label>
-                   @{
-                       @Html.TextBoxFor(input => input.Password, Model.Password, new { id = "password", type = "password", @class = "form-control", placeholder = "Password" })
-                       @Html.ValidationMessageFor(input => input.Password)
-                   }
-               </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    @{
+                        @Html.TextBoxFor(input => input.Password, Model.Password, new { id = "password", type = "password", @class = "form-control", placeholder = "Password" })
+                        @Html.ValidationMessageFor(input => input.Password)
+                    }
+                </div>
 
-               <div class="form-group">
-                   <label for="password">Confirm Password</label>
-                   @{
-                       @Html.TextBoxFor(input => input.ConfirmPassword, Model.ConfirmPassword, new { id = "confirmPassword", type = "password", @class = "form-control", placeholder = "Confirm Password" })
-                       @Html.ValidationMessageFor(input => input.ConfirmPassword)
-                   }
-                   <p id="passwordMatchError" class="notVisible alert alert-danger">Your passwords do not match</p>
-               </div>
+                <div class="form-group">
+                    <label for="password">Confirm Password</label>
+                    @{
+                        @Html.TextBoxFor(input => input.ConfirmPassword, Model.ConfirmPassword, new { id = "confirmPassword", type = "password", @class = "form-control", placeholder = "Confirm Password" })
+                        @Html.ValidationMessageFor(input => input.ConfirmPassword)
+                    }
+                    <p id="passwordMatchError" class="notVisible alert alert-danger">Your passwords do not match</p>
+                </div>
 
-               @{
-                   //hidden fields for stats
-               }
-           </div>
-       </div>
-       <div class="row">
-           <div class="col-xs-12">
-               <button type="submit" class="btn btn-success pull-right" id="CreateCharBt">Create Character</button>
-               <button type="button" class="btn btn-default pull-right margin-right-10">Prev: Change stats?</button>
-           </div>
-       </div>
-   }
+                @{
+//hidden fields for stats
+                    @Html.HiddenFor(input => input.Strength, Model.Strength);
+                    @Html.HiddenFor(input => input.Dexterity, Model.Dexterity);
+                    @Html.HiddenFor(input => input.Constitution, Model.Constitution);
+                    @Html.HiddenFor(input => input.Intelligence, Model.Intelligence);
+                    @Html.HiddenFor(input => input.Wisdom, Model.Wisdom);
+                    @Html.HiddenFor(input => input.Charisma, Model.Charisma);
+                    @Html.HiddenFor(input => input.Race, Model.Race);
+                    @Html.HiddenFor(input => input.Class, Model.Class);
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <button type="submit" class="btn btn-success pull-right" id="CreateCharBt">Create Character</button>
+                <button type="button" class="btn btn-default pull-right margin-right-10">Prev: Change stats?</button>
+            </div>
+        </div>
+                    }
 </div>

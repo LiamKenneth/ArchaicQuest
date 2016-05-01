@@ -18,6 +18,8 @@ namespace MIMEngine.Core.PlayerSetup
         public string password;
         [JsonProperty("g")]
         public string gender;
+        [JsonProperty("r")]
+        public string race;
         [JsonProperty("sc")]
         public string selectedClass;
         [JsonProperty("as")]
@@ -33,12 +35,13 @@ namespace MIMEngine.Core.PlayerSetup
         [JsonProperty("ach")]
         public int charisma;
 
-        public PlayerSetup(string name, string email, string password, string gender, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
+        public PlayerSetup(string name, string email, string password, string gender, string race, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
         {
             this.name = name;
             this.email = email;
             this.password = password;
             this.gender = gender;
+            this.race = race;
             this.selectedClass = selectedClass;
             this.strength = strength;
             this.dexterity = dexterity;
@@ -47,10 +50,10 @@ namespace MIMEngine.Core.PlayerSetup
             this.intelligence = intelligence;
             this.charisma = charisma;
 
-            this.saveUserInformation();
+            this.SaveUserInformation();
         }
 
-        public void saveUserInformation()
+        public void SaveUserInformation()
         {
             string json = JsonConvert.SerializeObject(this);
             File.WriteAllText(AppDomain.CurrentDomain.RelativeSearchPath + "/" + this.name + ".json", json);

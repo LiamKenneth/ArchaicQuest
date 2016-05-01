@@ -17,16 +17,15 @@ namespace MIM
 
             var motd = Data.loadFile("/motd");
             // Call the broadcastMessage method to update clients.
-            // Clients.Caller.addNewMessageToPage(selectedRace.name);
-            // Clients.Caller.addNewMessageToPage(selectedRace.help);
+            SendToClient(motd, true);
 
-            // Clients.Caller.createCharacter();
 
         }
 
-        public void charSetup(string name, string email, string password, string gender, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
+        public void charSetup(string name, string email, string password, string gender, string race, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
         {
-            PlayerSetup player = new PlayerSetup(name, email, password, gender, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
+            //Creates and saves player
+            PlayerSetup player = new PlayerSetup(name, email, password, gender, race, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
         }
 
 

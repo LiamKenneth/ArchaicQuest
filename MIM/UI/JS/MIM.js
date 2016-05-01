@@ -152,6 +152,20 @@
             var encodedValue = $('<div />').text(value).html();
             return encodedValue;
         },
+        createCharacter: function(char) {
+
+           // alert(char.name);
+            server.welcome();
+            server.loadRoom();
+            server.charSetup(char.Name, char.Email, char.Password, char.Gender, char.Race, char.Class, char.Strength, char.Dexterity, char.Constitution, char.Wisdom, char.Intelligence, char.Charisma);
+
+
+            document.getElementById('signUpModal').style.display = "none";
+
+           
+
+
+        },
         init: function () {
             console.log("INIT")
             //init when signalr is ready
@@ -185,12 +199,16 @@
             $('.raceInfo').html(info);
 
             $('.raceImg').attr('src', dataImg);
+
+            $('#Race').val(dataName);
         }
         else if (step === "class") {
             playerClass = dataName; //global player Class
             $('.classInfo').html(info);
 
             $('.classImg').attr('src', dataImg);
+
+            $('#Class').val(dataName);
         }
       
 
@@ -216,6 +234,14 @@
         $('#statInt').html(int);
         $('#statWis').html(wis);
         $('#statCha').html(cha);
+
+        $("#Strength").val(str);
+        $("#Dexterity").val(dex);
+        $("#Constitution").val(con);
+        $("#Intelligence").val(int);
+        $("#Wisdom").val(wis);
+        $("#Charisma").val(cha);
+
     }
 
 
@@ -228,9 +254,6 @@
         //// Load 1st race choice
          MIM.getRaceInfo("human"); //set default;
 
-        //server.welcome();
-        server.loadRoom();
-   
         /// send info to server
         MIM.sendMessageToServer();
 
@@ -245,9 +268,11 @@
                 url: $this.attr('action'),
                 data: frmValues
             })
-            .done(function () {
-                alert("sent");
-            })
+            .done(function (data) {
+
+                    MIM.createCharacter(data);
+
+                })
             .fail(function () {
                alert("faild");
             });
