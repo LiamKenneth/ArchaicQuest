@@ -9,8 +9,12 @@ using Newtonsoft.Json;
 
 namespace MIM
 {
+    using MIMEngine.Core;
+
     public class MIMHub : Hub
     {
+
+        public PlayerSetup PlayerData { get; set; }
 
         public void Welcome()
         {
@@ -25,7 +29,9 @@ namespace MIM
         public void charSetup(string name, string email, string password, string gender, string race, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
         {
             //Creates and saves player
-            PlayerSetup player = new PlayerSetup(name, email, password, gender, race, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
+            PlayerSetup playerData = new PlayerSetup(name, email, password, gender, race, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
+            this.PlayerData = playerData;
+            playerData.SavePlayerInformation();
         }
 
 
@@ -33,7 +39,8 @@ namespace MIM
         public void recieveFromClient(string message)
         {
             //MIMEngine.Core.PlayerSetup.PlayerAccount.Login(message);
-            SendToClient(message);
+            this.SendToClient(message);
+            Command.ParseCommand(message, PlayerData);
             //   MIMEngine.Core.Command.commands(message);
 
         }

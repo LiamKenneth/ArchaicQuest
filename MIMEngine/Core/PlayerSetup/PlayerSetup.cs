@@ -35,6 +35,7 @@ namespace MIMEngine.Core.PlayerSetup
         [JsonProperty("ach")]
         public int charisma;
 
+
         public PlayerSetup(string name, string email, string password, string gender, string race, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
         {
             this.name = name;
@@ -50,10 +51,11 @@ namespace MIMEngine.Core.PlayerSetup
             this.intelligence = intelligence;
             this.charisma = charisma;
 
-            this.SaveUserInformation();
+
+          
         }
 
-        public void SaveUserInformation()
+        public void SavePlayerInformation()
         {
             string json = JsonConvert.SerializeObject(this);
             File.WriteAllText(AppDomain.CurrentDomain.RelativeSearchPath + "/" + this.name + ".json", json);

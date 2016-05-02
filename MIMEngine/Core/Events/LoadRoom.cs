@@ -11,12 +11,16 @@ namespace MIMEngine.Core.Events
 {
    public class LoadRoom
     {
+
+    
+       
         public static JObject LoadRoomFile()
         {
             JObject roomJson = JObject.Parse(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "bin/World/Area/Valston/Town.json"));
 
             return roomJson;
         }
+
 
         public string DisplayRoom()
         {
