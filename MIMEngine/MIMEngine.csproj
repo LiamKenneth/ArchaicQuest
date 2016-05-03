@@ -76,6 +76,7 @@
     <Compile Include="Core\PlayerSetup\PlayerClass.cs" />
     <Compile Include="Core\PlayerSetup\PlayerLocation.cs" />
     <Compile Include="Core\PlayerSetup\PlayerRace.cs" />
+    <Compile Include="Core\PlayerSetup\Players.cs" />
     <Compile Include="Core\PlayerSetup\PlayerSetup.cs" />
     <Compile Include="Core\PlayerSetup\PlayerStats.cs" />
     <Compile Include="Data.cs" />

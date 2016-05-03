@@ -141,9 +141,10 @@
             $('#sendmessage').click(function () {
 
                 var message = $('#message');
+                var playerGuid = $.connection.hub.id;
 
                 // Call the Send method on the hub.
-                server.recieveFromClient(message.val());
+                server.recieveFromClient(message.val(), playerGuid);
 
                 message.select().focus();
             });
@@ -165,6 +166,10 @@
            
 
 
+        },
+        getGuid: function (guid) {
+            var guid = $.cookie("playerGuid");
+            return guid;
         },
         init: function () {
             console.log("INIT")
@@ -242,6 +247,10 @@
         $("#Wisdom").val(wis);
         $("#Charisma").val(cha);
 
+    }
+
+    client.savePlayerGuid = function (guid) {
+        $.cookie("playerGuid", guid);
     }
 
 

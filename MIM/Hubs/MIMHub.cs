@@ -14,34 +14,54 @@ namespace MIM
     public class MIMHub : Hub
     {
 
-        public PlayerSetup PlayerData { get; set; }
+        public static PlayerSetup PlayerData { get; set; }
+        // public Players Players = new Players();
+        //private Players player;
+
+        //public Players Player
+        //{
+        //    get
+        //    {
+        //        if (this.player == null)
+        //        {
+        //            this.player = new Players();
+        //            return player;
+        //        }else
+        //        {
+        //            return player;
+        //        }                
+        //    }           
+        //}
+
 
         public void Welcome()
         {
 
             var motd = Data.loadFile("/motd");
             // Call the broadcastMessage method to update clients.
-            SendToClient(motd, true);
-
-
+            //  SendToClient(motd, true);            
         }
 
         public void charSetup(string id, string name, string email, string password, string gender, string race, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
         {
             //Creates and saves player
-            PlayerSetup playerData = new PlayerSetup(id, name, email, password, gender, race, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
-            this.PlayerData = playerData;
-            playerData.SavePlayerInformation();
+            PlayerData = new PlayerSetup(id, name, email, password, gender, race, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
+
+            PlayerData.SavePlayerInformation();
+
+            Players.addPlayer(id, PlayerData);
+
+
         }
 
 
 
-        public void recieveFromClient(string message)
+        public void recieveFromClient(string message, String playerGuid)
         {
-            //MIMEngine.Core.PlayerSetup.PlayerAccount.Login(message);
+            PlayerData = Players.returnPlayer(playerGuid);
             this.SendToClient(message);
-            Command.ParseCommand(message, this.PlayerData);
-            //   MIMEngine.Core.Command.commands(message);
+            Command.ParseCommand(message, PlayerData);
+
 
         }
 
@@ -56,7 +76,7 @@ namespace MIM
         public void characterSetupWizard(string value, string step)
         {
 
-         
+
             if (step == "race")
             {
                 var selectedRace = PlayerRace.selectRace(value);
