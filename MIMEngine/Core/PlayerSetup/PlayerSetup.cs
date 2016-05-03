@@ -10,6 +10,8 @@ namespace MIMEngine.Core.PlayerSetup
 {
     public class PlayerSetup
     {
+        [JsonProperty("id")]
+        public string hubGuid;
         [JsonProperty("n")]
         public string name;
         [JsonProperty("e")]
@@ -36,8 +38,9 @@ namespace MIMEngine.Core.PlayerSetup
         public int charisma;
 
 
-        public PlayerSetup(string name, string email, string password, string gender, string race, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
+        public PlayerSetup(string id, string name, string email, string password, string gender, string race, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
         {
+            this.hubGuid = id;
             this.name = name;
             this.email = email;
             this.password = password;

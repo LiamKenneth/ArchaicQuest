@@ -26,10 +26,10 @@ namespace MIM
 
         }
 
-        public void charSetup(string name, string email, string password, string gender, string race, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
+        public void charSetup(string id, string name, string email, string password, string gender, string race, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
         {
             //Creates and saves player
-            PlayerSetup playerData = new PlayerSetup(name, email, password, gender, race, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
+            PlayerSetup playerData = new PlayerSetup(id, name, email, password, gender, race, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
             this.PlayerData = playerData;
             playerData.SavePlayerInformation();
         }
@@ -40,7 +40,7 @@ namespace MIM
         {
             //MIMEngine.Core.PlayerSetup.PlayerAccount.Login(message);
             this.SendToClient(message);
-            Command.ParseCommand(message, PlayerData);
+            Command.ParseCommand(message, this.PlayerData);
             //   MIMEngine.Core.Command.commands(message);
 
         }

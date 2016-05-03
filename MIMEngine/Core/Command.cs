@@ -29,7 +29,7 @@ namespace MIMEngine.Core
         {
 
             //testing
-            string enteredCommand = "N";
+            string enteredCommand = input;
             string[] commands = enteredCommand.Split(' ');
             string commandKey = commands[0];
             string commandOptions = string.Empty;

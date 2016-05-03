@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MIMEngine.Core.Events
 {
+
+    using Microsoft.AspNet.SignalR;
+    using Microsoft.AspNet.SignalR.Hubs;
     using MIMEngine.Core.PlayerSetup;
 
     using Newtonsoft.Json.Linq;
@@ -19,7 +22,8 @@ namespace MIMEngine.Core.Events
         {
             string scoreTest = "Score:\r\n Name: " + PlayerData.name + " Race: " + PlayerData.race;
 
-            //hub context?
+            //var hubContext = GlobalHost.ConnectionManager.GetHubContext<MIMHub>();
+            //hubContext.Clients.Client(playerData.hubGuid).SendToClient(scoreTest, true);
         }
     }
 }

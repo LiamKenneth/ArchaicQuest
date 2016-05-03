@@ -157,7 +157,7 @@
            // alert(char.name);
             server.welcome();
             server.loadRoom();
-            server.charSetup(char.Name, char.Email, char.Password, char.Gender, char.Race, char.Class, char.Strength, char.Dexterity, char.Constitution, char.Wisdom, char.Intelligence, char.Charisma);
+            server.charSetup($.connection.hub.id, char.Name, char.Email, char.Password, char.Gender, char.Race, char.Class, char.Strength, char.Dexterity, char.Constitution, char.Wisdom, char.Intelligence, char.Charisma);
 
 
             document.getElementById('signUpModal').style.display = "none";
