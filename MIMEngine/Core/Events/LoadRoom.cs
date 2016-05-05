@@ -16,7 +16,7 @@ namespace MIMEngine.Core.Events
        
         public static JObject LoadRoomFile()
         {
-            JObject roomJson = JObject.Parse(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "bin/World/Area/Valston/Town.json"));
+            JObject roomJson = JObject.Parse(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/World/Area/Valston/Town.json"));
 
             return roomJson;
         }

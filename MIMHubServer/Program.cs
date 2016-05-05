@@ -2,6 +2,7 @@
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
 using MIMEngine;
+using MIMEngine.Core;
 using MIMEngine.Core.PlayerSetup;
 using Owin;
 using System;
@@ -77,10 +78,15 @@ namespace MIMHubServer
         public void recieveFromClient(string message, String playerGuid)
         {
             
-            //      PlayerData = Players.returnPlayer(playerGuid);
-            this.SendToClient(message);
-            // Command.ParseCommand(message, PlayerData);
 
+     
+            this.SendToClient(message);
+
+            PlayerSetup PlayerData;
+            if (_cache.TryGetValue(playerGuid, out PlayerData))
+            {
+                Command.ParseCommand(message, PlayerData);
+            }
 
         }
 

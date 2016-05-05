@@ -10,20 +10,21 @@ namespace MIMEngine.Core.Events
     using Microsoft.AspNet.SignalR;
     using Microsoft.AspNet.SignalR.Hubs;
     using MIMEngine.Core.PlayerSetup;
+   
 
     using Newtonsoft.Json.Linq;
 
-    class Score
+    class Score : Hub
     {
-
-        public static PlayerSetup PlayerData { get; set; }
 
         public static void ReturnScore(PlayerSetup playerData)
         {
-            string scoreTest = "Score:\r\n Name: " + PlayerData.name + " Race: " + PlayerData.race;
+            string scoreTest = "Score:\r\n Name: " + playerData.name + " Race: " + playerData.race;
 
-            //var hubContext = GlobalHost.ConnectionManager.GetHubContext<MIMHub>();
-            //hubContext.Clients.Client(playerData.hubGuid).SendToClient(scoreTest, true);
+           
+         //   var hubContext = HubProxy//
+
+ 
         }
     }
 }
