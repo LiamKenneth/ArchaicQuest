@@ -1,45 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Microsoft.AspNet.SignalR;
+﻿using Microsoft.AspNet.SignalR;
+using Microsoft.Owin.Cors;
+using Microsoft.Owin.Hosting;
 using MIMEngine;
 using MIMEngine.Core.PlayerSetup;
-using Newtonsoft.Json;
+using Owin;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MIM
+namespace MIMHubServer
 {
-    using MIMEngine.Core;
-    using System.Runtime.Caching;
-
-    public class MIMHub : Hub
+    class Program
     {
-        ObjectCache cache = MemoryCache.Default;
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Loading Server...");
+
+            // This will *ONLY* bind to localhost, if you want to bind to all addresses
+            // use http://*:8080 to bind to all addresses. 
+            // See http://msdn.microsoft.com/en-us/library/system.net.httplistener.aspx 
+            // for more information.
+            string url = "http://localhost:4000";
+            using (WebApp.Start(url))
+            {
+                Console.WriteLine("Server running on {0}", url);
+                Console.ReadLine();
+            }
+        }
+    }
+
+    class Startup
+    {
+        public void Configuration(IAppBuilder app)
+        {
+            app.UseCors(CorsOptions.AllowAll);
+            app.MapSignalR();
+        }
+    }
+
+    public class MimHubServer : Hub
+    {
+        private static ConcurrentDictionary<string, PlayerSetup> _cache = new ConcurrentDictionary<string, PlayerSetup>();
         public static PlayerSetup PlayerData { get; set; }
-        // public Players Players = new Players();
-        //private Players player;
-
-        //public Players Player
-        //{
-        //    get
-        //    {
-        //        if (this.player == null)
-        //        {
-        //            this.player = new Players();
-        //            return player;
-        //        }else
-        //        {
-        //            return player;
-        //        }                
-        //    }           
-        //}
-
 
         public void Welcome()
         {
-            var listHolder = new List<string>();
-            listHolder.Add("test");
-            cache.Set("test", listHolder, null);
+ 
 
             var motd = Data.loadFile("/motd");
             // Call the broadcastMessage method to update clients.
@@ -48,13 +57,17 @@ namespace MIM
 
         public void charSetup(string id, string name, string email, string password, string gender, string race, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
         {
-           
+
             //Creates and saves player
             PlayerData = new PlayerSetup(id, name, email, password, gender, race, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
 
             PlayerData.SavePlayerInformation();
 
-            Players.addPlayer(id, PlayerData);
+            //Players.addPlayer(id, PlayerData);
+
+            _cache.TryAdd(id, PlayerData);
+
+
 
 
         }
@@ -63,12 +76,10 @@ namespace MIM
 
         public void recieveFromClient(string message, String playerGuid)
         {
-            var listHolder = cache["test"] as List<string>;
-            listHolder.Add(message);
-            cache.Set("test", listHolder, null);
-            PlayerData = Players.returnPlayer(playerGuid);
+            
+            //      PlayerData = Players.returnPlayer(playerGuid);
             this.SendToClient(message);
-            Command.ParseCommand(message, PlayerData);
+            // Command.ParseCommand(message, PlayerData);
 
 
         }
@@ -115,5 +126,7 @@ namespace MIM
         {
             Clients.Caller.addNewMessageToPage(message);
         }
+
+
     }
 }

@@ -1,4 +1,4 @@
-﻿@model MIM.Models.CreatePlayer
+﻿@model MIMWebClient.Models.CreatePlayer
 
 
 <div id="select-char" class="notVisible">
@@ -63,14 +63,14 @@
 
                 @{
 //hidden fields for stats
-                    @Html.HiddenFor(input => input.Strength, Model.Strength);
-                    @Html.HiddenFor(input => input.Dexterity, Model.Dexterity);
-                    @Html.HiddenFor(input => input.Constitution, Model.Constitution);
-                    @Html.HiddenFor(input => input.Intelligence, Model.Intelligence);
-                    @Html.HiddenFor(input => input.Wisdom, Model.Wisdom);
-                    @Html.HiddenFor(input => input.Charisma, Model.Charisma);
-                    @Html.HiddenFor(input => input.Race, Model.Race);
-                    @Html.HiddenFor(input => input.Class, Model.Class);
+                    @Html.HiddenFor(input => input.Strength, string.Empty);
+                    @Html.HiddenFor(input => input.Dexterity, string.Empty);
+                    @Html.HiddenFor(input => input.Constitution, string.Empty);
+                    @Html.HiddenFor(input => input.Intelligence, string.Empty);
+                    @Html.HiddenFor(input => input.Wisdom, string.Empty);
+                    @Html.HiddenFor(input => input.Charisma, string.Empty);
+                    @Html.HiddenFor(input => input.Race, string.Empty);
+                    @Html.HiddenFor(input => input.Class, string.Empty);
                 }
             </div>
         </div>

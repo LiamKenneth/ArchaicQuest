@@ -1,14 +1,11 @@
-﻿using Microsoft.Owin;
-using Owin;
-[assembly: OwinStartup(typeof(MIM.Startup))]
+﻿
 namespace MIM
 {
     public class Startup
     {
-        public void Configuration(IAppBuilder app)
+        public void Configuration()
         {
-            // Any connection or hub wire up and configuration should go here
-            app.MapSignalR();
+    
         }
     }
 }

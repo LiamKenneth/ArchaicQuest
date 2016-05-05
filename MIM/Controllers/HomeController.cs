@@ -7,8 +7,6 @@ using System.Web.Mvc;
 
 namespace MIM.Controllers
 {
-    using Microsoft.AspNet.SignalR;
-    using Microsoft.Owin.Security.Provider;
 
     public class HomeController : Controller
     {
