@@ -6,6 +6,8 @@ using System.Web.Mvc;
 
 namespace MIMWebClient.Controllers
 {
+    using MIMWebClient.Models;
+
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -25,6 +27,13 @@ namespace MIMWebClient.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult CreateCharacter(CreatePlayer createPlayer)
+        {
+
+            return this.Json(createPlayer);
         }
     }
 }
