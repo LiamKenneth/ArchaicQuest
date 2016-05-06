@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace MIMHubServer
 {
-    class Program
+    class Server
     {
         static void Main(string[] args)
         {
