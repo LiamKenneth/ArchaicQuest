@@ -1,31 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MIMEngine.Core.Events
+﻿namespace MIMEngine.Core.Events
 {
+    using PlayerSetup;
 
-    using Microsoft.AspNet.SignalR;
-    using Microsoft.AspNet.SignalR.Client;
-    using Microsoft.AspNet.SignalR.Hubs;
-    using MIMEngine.Core.PlayerSetup;
-   
-
-    using Newtonsoft.Json.Linq;
-
-    class Score : Hub
+    class Score
     {
 
         public static void ReturnScore(PlayerSetup playerData)
         {
             string scoreTest = "Score:\r\n Name: " + playerData.name + " Race: " + playerData.race;
+ 
 
-
-
-
-            HubProxy.HubContext().Invoke("SendToClient", scoreTest);
+           HubProxy.MimHubServer.Invoke("SendToClient", scoreTest);
 
         }
     }

@@ -9,17 +9,27 @@ namespace MIMEngine
 {
     class HubProxy
     {
+        private static IHubProxy mimHubServer;
 
-        public static IHubProxy HubContext()
+
+        public static IHubProxy MimHubServer
         {
-            var connection = new HubConnection("http://localhost:4000");
-            IHubProxy MimHubServer = connection.CreateHubProxy("MimHubServer");
+            get
+            {
+                if (mimHubServer == null)
+                {
+                    var connection = new HubConnection("http://localhost:4000");
+                    mimHubServer = connection.CreateHubProxy("MimHubServer");
+                    connection.Start().Wait(); 
+                }
 
-            connection.Start().Wait();
-
-            return MimHubServer;
+                return mimHubServer;
+            }
         }
 
-  
+
+
+
+
     }
 }
