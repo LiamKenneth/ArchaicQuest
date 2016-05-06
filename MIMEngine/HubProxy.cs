@@ -12,11 +12,12 @@ namespace MIMEngine
 
         public static IHubProxy HubContext()
         {
-            var hubConnection = new HubConnection("http://localhost:4000");
-            IHubProxy hubConnectionProxy = hubConnection.CreateHubProxy("MIMHubServer");
+            var connection = new HubConnection("http://localhost:4000");
+            IHubProxy MimHubServer = connection.CreateHubProxy("MimHubServer");
 
+            connection.Start().Wait();
 
-            return hubConnectionProxy;
+            return MimHubServer;
         }
 
   

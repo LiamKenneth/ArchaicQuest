@@ -8,6 +8,7 @@ namespace MIMEngine.Core.Events
 {
 
     using Microsoft.AspNet.SignalR;
+    using Microsoft.AspNet.SignalR.Client;
     using Microsoft.AspNet.SignalR.Hubs;
     using MIMEngine.Core.PlayerSetup;
    
@@ -21,10 +22,11 @@ namespace MIMEngine.Core.Events
         {
             string scoreTest = "Score:\r\n Name: " + playerData.name + " Race: " + playerData.race;
 
-           
-         //   var hubContext = HubProxy//
 
- 
+
+
+            HubProxy.HubContext().Invoke("SendToClient", scoreTest);
+
         }
     }
 }
