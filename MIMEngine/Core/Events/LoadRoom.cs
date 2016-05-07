@@ -31,8 +31,46 @@ namespace MIMEngine.Core.Events
 
           string roomTitle = (string)roomJson["title"];
           string roomDescription = (string)roomJson["description"];
+            var roomExitObj = roomJson.Property("exits").Children();
 
-            string displayRoom = "You look around " + "\r\n" + roomTitle + "\r\n" + roomDescription;
+          
+            string exitList = null;
+            foreach (var exit in roomExitObj)
+            {
+                if (exit["North"] != null)
+                {
+                    exitList += exit["North"]["name"];
+                }
+
+                if (exit["East"] != null)
+                {
+                    exitList += exit["East"]["name"];
+                }
+
+                if (exit["South"] != null)
+                {
+                    exitList += exit["South"]["name"];
+                }
+
+                if (exit["West"] != null)
+                {
+                    exitList += exit["West"]["name"];
+                }
+
+                if (exit["Up"] != null)
+                {
+                    exitList += exit["Up"]["name"];
+                }
+
+                if (exit["Down"] != null)
+                {
+                    exitList += exit["Down"]["name"];
+                }
+
+            }
+
+
+            string displayRoom = "You look around " + "\r\n" + roomTitle + "\r\n" + roomDescription + "\r\n" + "Obviuse Exits:\r\n" + exitList;
 
             return displayRoom;
 

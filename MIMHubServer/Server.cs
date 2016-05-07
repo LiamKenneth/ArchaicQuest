@@ -51,7 +51,8 @@ namespace MIMHubServer
     public class MimHubServer : Hub
     {
         private static ConcurrentDictionary<string, PlayerSetup> _PlayerCache = new ConcurrentDictionary<string, PlayerSetup>();
-        private static ConcurrentDictionary<int, JObject> _RoomCache = new ConcurrentDictionary<int, JObject>();
+        private static ConcurrentDictionary<int, JObject> _AreaCache = new ConcurrentDictionary<int, JObject>();
+        private static ConcurrentDictionary<int, string> _RoomCache = new ConcurrentDictionary<int, string>();
 
         public static PlayerSetup PlayerData { get; set; }
 
@@ -63,7 +64,7 @@ namespace MIMHubServer
             // Call the broadcastMessage method to update clients.
             //  SendToClient(motd, true);            
         }
-
+        
         public void charSetup(string id, string name, string email, string password, string gender, string race, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
         {
 
@@ -140,10 +141,26 @@ namespace MIMHubServer
                 roomJSON.Area = player.Area;
                 roomJSON.id = player.AreaId;
 
+                JObject roomData;
 
-               JObject roomData = roomJSON.LoadRoomFile();
+                if (_AreaCache.TryGetValue(roomJSON.id, out roomData))
+                {
 
-               room = roomJSON.DisplayRoom(roomData);
+                    room = roomJSON.DisplayRoom(roomData);
+
+                     
+
+                }
+                else
+                {
+                    
+                    roomData = roomJSON.LoadRoomFile();
+                    _AreaCache.TryAdd(roomJSON.id, roomData);
+                    room = roomJSON.DisplayRoom(roomData);
+                    _RoomCache.TryAdd(roomJSON.id, room);
+                }
+
+                 
 
                 this.Clients.Caller.addNewMessageToPage(room);
             }
