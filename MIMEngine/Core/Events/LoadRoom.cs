@@ -13,7 +13,7 @@ namespace MIMEngine.Core.Events
     {
        public string Region { get; set; }
         public string Area { get; set; }
-        public string id { get; set; }
+        public int id { get; set; }
 
 
         public JObject LoadRoomFile()

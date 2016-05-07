@@ -128,12 +128,24 @@ namespace MIMHubServer
         {
 
             PlayerSetup player;
+
+           
+
             if (_PlayerCache.TryGetValue(id, out player))
             {
+                string room = string.Empty;
                 LoadRoom roomJSON = new LoadRoom();
-                
-               // roomJSON.Region = pl
-               
+
+                roomJSON.Region = player.Region;
+                roomJSON.Area = player.Area;
+                roomJSON.id = player.AreaId;
+
+
+               JObject roomData = roomJSON.LoadRoomFile();
+
+               room = roomJSON.DisplayRoom(roomData);
+
+                this.Clients.Caller.addNewMessageToPage(room);
             }
            
          
@@ -155,7 +167,7 @@ namespace MIMHubServer
             //long memory = GC.GetTotalMemory(true);
 
 
-            // Clients.Caller.addNewMessageToPage( );
+           
         }
 
         public void SendToClient(string message)

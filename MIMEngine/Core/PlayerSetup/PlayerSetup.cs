@@ -110,7 +110,7 @@ namespace MIMEngine.Core.PlayerSetup
         [JsonProperty("re")]
         public string Region;
         [JsonProperty("ar")]
-        public int Area;
+        public string Area;
         [JsonProperty("ari")]
         public int AreaId;
 
@@ -201,7 +201,7 @@ namespace MIMEngine.Core.PlayerSetup
 
             //Location
             this.Region = "Valston";
-            this.Area = 0;
+            this.Area = "Town";
             this.AreaId = 0;
 
             //Equipment
