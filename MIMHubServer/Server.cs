@@ -14,6 +14,10 @@ using System.Threading.Tasks;
 
 namespace MIMHubServer
 {
+    using MIMEngine.Core.Events;
+
+    using Newtonsoft.Json.Linq;
+
     class Server
     {
         static void Main(string[] args)
@@ -30,6 +34,8 @@ namespace MIMHubServer
                 Console.WriteLine("Server running on {0}", url);
                 Console.ReadLine();
             }
+
+          
         }
     }
 
@@ -44,7 +50,9 @@ namespace MIMHubServer
 
     public class MimHubServer : Hub
     {
-        private static ConcurrentDictionary<string, PlayerSetup> _cache = new ConcurrentDictionary<string, PlayerSetup>();
+        private static ConcurrentDictionary<string, PlayerSetup> _PlayerCache = new ConcurrentDictionary<string, PlayerSetup>();
+        private static ConcurrentDictionary<int, JObject> _RoomCache = new ConcurrentDictionary<int, JObject>();
+
         public static PlayerSetup PlayerData { get; set; }
 
         public void Welcome()
@@ -66,7 +74,7 @@ namespace MIMHubServer
 
             //Players.addPlayer(id, PlayerData);
 
-            _cache.TryAdd(id, PlayerData);
+            _PlayerCache.TryAdd(id, PlayerData);
 
 
 
@@ -83,7 +91,7 @@ namespace MIMHubServer
             this.SendToClient(message);
 
             PlayerSetup PlayerData;
-            if (_cache.TryGetValue(playerGuid, out PlayerData))
+            if (_PlayerCache.TryGetValue(playerGuid, out PlayerData))
             {
                 Command.ParseCommand(message, PlayerData);
             }
@@ -116,11 +124,38 @@ namespace MIMHubServer
         }
 
 
-        public void loadRoom()
+        public void loadRoom(string id)
         {
-            MIMEngine.Core.Events.LoadRoom room = new MIMEngine.Core.Events.LoadRoom();
 
-            Clients.Caller.addNewMessageToPage(room.DisplayRoom());
+            PlayerSetup player;
+            if (_PlayerCache.TryGetValue(id, out player))
+            {
+                LoadRoom roomJSON = new LoadRoom();
+                
+               // roomJSON.Region = pl
+               
+            }
+           
+         
+            
+             
+
+            //    _RoomCache.TryAdd(i, roomFile);
+
+            //var watch = System.Diagnostics.Stopwatch.StartNew();
+
+            //for (int i = 0; i < 100000; i++)
+            //{
+            //    var roomFile = LoadRoom.LoadRoomFile();
+            //    _RoomCache.TryAdd(i, roomFile);
+            //}
+
+            //watch.Stop();
+            //var elapsedMs = watch.ElapsedMilliseconds;
+            //long memory = GC.GetTotalMemory(true);
+
+
+            // Clients.Caller.addNewMessageToPage( );
         }
 
         public void SendToClient(string message)

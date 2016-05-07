@@ -11,21 +11,23 @@ namespace MIMEngine.Core.Events
 {
    public class LoadRoom
     {
+       public string Region { get; set; }
+        public string Area { get; set; }
+        public string id { get; set; }
 
-    
-       
-        public static JObject LoadRoomFile()
+
+        public JObject LoadRoomFile()
         {
-            JObject roomJson = JObject.Parse(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/World/Area/Valston/Town.json"));
+            JObject roomJson = JObject.Parse(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/World/Area/" + this.Region + "/" + this.Area + ".json"));
 
             return roomJson;
         }
 
 
-        public string DisplayRoom()
+        public string DisplayRoom(JObject room)
         {
 
-          var roomJson = LoadRoomFile();
+            var roomJson = room;
 
           string roomTitle = (string)roomJson["title"];
           string roomDescription = (string)roomJson["description"];
