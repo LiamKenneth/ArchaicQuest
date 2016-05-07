@@ -70,7 +70,7 @@ namespace MIMEngine.Core.Events
             }
 
 
-            string displayRoom = "You look around " + "\r\n" + roomTitle + "\r\n" + roomDescription + "\r\n" + "Obviuse Exits:\r\n" + exitList;
+            string displayRoom = "You look around " + "\r\n" + roomTitle + "\r\n" + roomDescription + "\r\n" + "Obvious Exits:\r\n" + exitList;
 
             return displayRoom;
 
