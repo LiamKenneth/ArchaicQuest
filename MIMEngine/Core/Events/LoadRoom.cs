@@ -24,7 +24,7 @@ namespace MIMEngine.Core.Events
         }
 
 
-        public string DisplayRoom(JObject room)
+        public static string DisplayRoom(JObject room)
         {
 
             var roomJson = room;
@@ -74,6 +74,13 @@ namespace MIMEngine.Core.Events
 
             return displayRoom;
 
+        }
+
+       public static void ReturnRoom(JObject room)
+       {
+           var roomInfo = DisplayRoom(room);
+
+            HubProxy.MimHubServer.Invoke("SendToClient", roomInfo);
         }
     }
 }

@@ -92,10 +92,12 @@ namespace MIMHubServer
             this.SendToClient(message);
 
             PlayerSetup PlayerData;
-            if (_PlayerCache.TryGetValue(playerGuid, out PlayerData))
-            {
-                Command.ParseCommand(message, PlayerData);
-            }
+            JObject RoomData;
+            _PlayerCache.TryGetValue(playerGuid, out PlayerData);
+            _AreaCache.TryGetValue(0, out  RoomData);
+
+            Command.ParseCommand(message, PlayerData, RoomData);
+            
 
         }
 
@@ -124,13 +126,11 @@ namespace MIMHubServer
 
         }
 
-
-        public void loadRoom(string id)
+        public string ReturnRoom(string id)
         {
-
             PlayerSetup player;
 
-           
+
 
             if (_PlayerCache.TryGetValue(id, out player))
             {
@@ -143,32 +143,41 @@ namespace MIMHubServer
 
                 JObject roomData;
 
+
                 if (_AreaCache.TryGetValue(roomJSON.id, out roomData))
                 {
 
-                    room = roomJSON.DisplayRoom(roomData);
 
-                     
+                    room = LoadRoom.DisplayRoom(roomData);
 
                 }
                 else
                 {
-                    
+
                     roomData = roomJSON.LoadRoomFile();
                     _AreaCache.TryAdd(roomJSON.id, roomData);
-                    room = roomJSON.DisplayRoom(roomData);
-                    _RoomCache.TryAdd(roomJSON.id, room);
+                    room = LoadRoom.DisplayRoom(roomData);
+
                 }
 
+                return room;
+            }
+
+            return null;
+        }
+
+
+        public void loadRoom(string id)
+        {
+
+            string roomData = ReturnRoom(id);
+ 
                  
 
-                this.Clients.Caller.addNewMessageToPage(room);
-            }
-           
-         
+                this.Clients.Caller.addNewMessageToPage(roomData, true);
             
-             
 
+ 
             //    _RoomCache.TryAdd(i, roomFile);
 
             //var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -184,7 +193,7 @@ namespace MIMHubServer
             //long memory = GC.GetTotalMemory(true);
 
 
-           
+
         }
 
         public void SendToClient(string message)

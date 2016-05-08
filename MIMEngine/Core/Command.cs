@@ -8,12 +8,16 @@ namespace MIMEngine.Core
 {
     using MIMEngine.Core.Events;
 
+    using Newtonsoft.Json.Linq;
+
     public class Command
     {
 
-        public static Dictionary<string, Action> Commands(string commandOptions, PlayerSetup.PlayerSetup playerData)
+        public static Dictionary<string, Action> Commands(string commandOptions, PlayerSetup.PlayerSetup playerData, JObject room)
         {
             var commandList = new Dictionary<String, Action>(); 
+            commandList.Add("north", () => Move.MoveCharacter(playerData, room, "North"));
+            commandList.Add("look", () => LoadRoom.ReturnRoom(room));
             commandList.Add("score", () => Score.ReturnScore(playerData));
 //            commandList.Add("hello", sayHello);
 //            commandList.Add("Yo", () => sayHello(commandOptions));
@@ -25,7 +29,7 @@ namespace MIMEngine.Core
 
  
 
-        public static void ParseCommand(string input, PlayerSetup.PlayerSetup playerData)
+        public static void ParseCommand(string input, PlayerSetup.PlayerSetup playerData, JObject room = null)
         {
 
             //testing
@@ -41,7 +45,7 @@ namespace MIMEngine.Core
             }
  
  
-            var command = Commands(commandOptions, playerData);
+            var command = Commands(commandOptions, playerData, room);
  
             var fire = command.FirstOrDefault(x => x.Key.StartsWith(commandKey));
 
