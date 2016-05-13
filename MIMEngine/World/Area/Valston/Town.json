@@ -19,7 +19,47 @@
   },
   "players": [ ],
   "mobs": [ ],
-  "items": [ ],
+  "items": [
+    {
+      "type": "object",
+      "location": "room",
+      "equipable": true,
+      "slot": "hand",
+      "name": "Short Sword",
+      "actions": {
+        "container": false,
+        "wield": "wield"
+      },
+      "description": {
+        "look": "You look at a short sword",
+        "exam": "You look closely at a short sword",
+        "room": "A short Sword is here."
+      },
+      "stats": {
+        "damMin": 1,
+        "damMax": 5
+      }
+    },
+    {
+      "type": "object",
+      "location": "room",
+      "equipable": true,
+      "slot": "hand",
+      "name": "Long Sword",
+      "actions": {
+        "container": false,
+        "wield": "wield"
+      },
+      "description": {
+        "look": "You look at a short sword",
+        "exam": "You look closely at a short sword",
+        "room": "A short Sword is here."
+      },
+      "stats": {
+        "damMin": 1,
+        "damMax": 5
+      }
+    }
+  ],
   "corpses": [ ]
 }
-     

@@ -160,7 +160,7 @@
             server.welcome();
            
             server.charSetup($.connection.hub.id, char.Name, char.Email, char.Password, char.Gender, char.Race, char.Class, char.Strength, char.Dexterity, char.Constitution, char.Wisdom, char.Intelligence, char.Charisma);
-            server.loadRoom($.connection.hub.id);
+          //  server.loadRoom($.connection.hub.id);
 
             document.getElementById('signUpModal').style.display = "none";
 

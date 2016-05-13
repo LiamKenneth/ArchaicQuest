@@ -22,7 +22,7 @@ namespace MIMEngine.Core.Events
 
             return roomJson;
         }
-
+ 
 
         public static string DisplayRoom(JObject room)
         {
@@ -32,6 +32,7 @@ namespace MIMEngine.Core.Events
           string roomTitle = (string)roomJson["title"];
           string roomDescription = (string)roomJson["description"];
             var roomExitObj = roomJson.Property("exits").Children();
+    
 
           
             string exitList = null;
@@ -69,8 +70,17 @@ namespace MIMEngine.Core.Events
 
             }
 
+            var roomItems = string.Empty;
+            var itemList = roomJson["items"];
 
-            string displayRoom = "You look around " + "\r\n" + roomTitle + "\r\n" + roomDescription + "\r\n" + "Obvious Exits:\r\n" + exitList;
+            foreach (var item in itemList)
+            {
+                roomItems += item["name"] + "\r\n";
+            }
+
+
+
+                string displayRoom = roomTitle + "\r\n" + roomDescription + "\r\n" + "Obvious Exits:\r\n" + exitList + "\r\n Items:" + roomItems;
 
             return displayRoom;
 

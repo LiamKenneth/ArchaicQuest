@@ -77,7 +77,7 @@ namespace MIMHubServer
 
             _PlayerCache.TryAdd(id, PlayerData);
 
-
+            loadRoom(id);
 
 
         }
