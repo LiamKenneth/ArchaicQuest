@@ -9,7 +9,12 @@ using System.Threading.Tasks;
 
 namespace MIMEngine.Core.Events
 {
-   public class LoadRoom
+    using MIMEngine.Core.Room;
+
+    using MongoDB.Bson;
+    using MongoDB.Driver;
+
+    public class LoadRoom
     {
        public string Region { get; set; }
         public string Area { get; set; }
@@ -18,10 +23,29 @@ namespace MIMEngine.Core.Events
 
         public JObject LoadRoomFile()
         {
-            JObject roomJson = JObject.Parse(File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/World/Area/" + this.Region + "/" + this.Area + ".json"));
+            const string connectionString = "mongodb://localhost:27017";
+
+            // Create a MongoClient object by using the connection string
+            var client = new MongoClient(connectionString);
+
+            //Use the MongoClient to access the server
+            var database = client.GetDatabase("MIMDB");
+
+            var collection = database.GetCollection<Room>("Room");
+          
+            Room room = collection.AsQueryable<Room>().SingleOrDefault(x => x.title == "Dungeon Room");
+
+
+           // JObject roomJson = (JObject)File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/World/Area/" + this.Region + "/" + this.Area + ".json");
+
+            JObject roomJson = room.returnRoomJSON();
+
+           // var roomData = (JArray)roomJson;
 
             return roomJson;
         }
+
+
  
 
         public static string DisplayRoom(JObject room)
@@ -70,17 +94,53 @@ namespace MIMEngine.Core.Events
 
             }
 
+            //GEt Room Items
             var roomItems = string.Empty;
             var itemList = roomJson["items"];
 
-            foreach (var item in itemList)
+            if (itemList.Any())
             {
-                roomItems += item["name"] + "\r\n";
+                foreach (var item in itemList)
+                {
+                    roomItems += item["name"] + "\r\n";
+                }
+            }
+
+            //GEt Mobs
+            var roomMobs = string.Empty;
+            var mobList = roomJson["mobs"];
+
+            if (mobList.Any())
+            {
+                foreach (var mob in mobList)
+                {
+                    roomMobs += mob["name"] + "\r\n";
+                }
+            }
+            else
+            {
+                mobList = string.Empty;
+            }
+
+            //GEt players
+            var roomPlayers = string.Empty;
+            var playerList = roomJson["players"];
+
+            if (playerList.Any())
+            {
+                foreach (var player in playerList)
+                {
+                    roomPlayers += player["name"] + "\r\n";
+                }
+            }
+            else
+            {
+                playerList = string.Empty;
             }
 
 
 
-                string displayRoom = roomTitle + "\r\n" + roomDescription + "\r\n" + "Obvious Exits:\r\n" + exitList + "\r\n Items:" + roomItems;
+            string displayRoom = roomTitle + "\r\n" + roomDescription + "\r\n" + "[ Obvious Exits:" + exitList + " ]\r\n " + roomItems + mobList + playerList;
 
             return displayRoom;
 

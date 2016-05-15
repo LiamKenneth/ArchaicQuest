@@ -1,65 +1,99 @@
-﻿{
-  "id": 0,
-  "clean": false,
-  "modified": "",
-  "title": "Dungeon Room",
-  "description": "You are surrounded by 4 walls covered in grime made of large grey stone blocks. The stone floor is cold under your feet. The only possible way out seems to be the metal gate in front of you. A small wooden stool is in the corner behind you.",
-  "keywords": {
-    "look gate": "You look at the metal gate which leads north, apart from being the only exit you see nothing special",
-    "exam gate": "You look closely at the gate and notice the hinges and lock look weak, maybe you could bash the door down?"
-  },
-  "terrain": "city",
-  "exits": {
-    "North": {
-      "name": "North",
-      "locked": false,
-      "hidden": false
+﻿
+  0: {
+    "clean": false,
+    "modified": "",
+    "title": "Dungeon Room",
+    "description": "You are surrounded by 4 walls covered in grime made of large grey stone blocks. The stone floor is cold under your feet. The only possible way out seems to be the metal gate in front of you. A small wooden stool is in the corner behind you.",
+    "keywords": {
+      "look gate": "You look at the metal gate which leads north, apart from being the only exit you see nothing special",
+      "exam gate": "You look closely at the gate and notice the hinges and lock look weak, maybe you could bash the door down?"
+    },
+    "terrain": "city",
+    "exits": {
+      "North": {
+        "name": "North",
+        "locked": false,
+        "hidden": false,
+        "region": "Valston",
+        "area": "Town",
+        "areaId": 1
 
-    }
-  },
-  "players": [ ],
-  "mobs": [ ],
-  "items": [
-    {
-      "type": "object",
-      "location": "room",
-      "equipable": true,
-      "slot": "hand",
-      "name": "Short Sword",
-      "actions": {
-        "container": false,
-        "wield": "wield"
-      },
-      "description": {
-        "look": "You look at a short sword",
-        "exam": "You look closely at a short sword",
-        "room": "A short Sword is here."
-      },
-      "stats": {
-        "damMin": 1,
-        "damMax": 5
+
       }
     },
-    {
-      "type": "object",
-      "location": "room",
-      "equipable": true,
-      "slot": "hand",
-      "name": "Long Sword",
-      "actions": {
-        "container": false,
-        "wield": "wield"
+    "players": [ ],
+    "mobs": [ ],
+    "items": [
+      {
+        "type": "object",
+        "location": "room",
+        "equipable": true,
+        "slot": "hand",
+        "name": "Short Sword",
+        "actions": {
+          "container": false,
+          "wield": "wield"
+        },
+        "description": {
+          "look": "You look at a short sword",
+          "exam": "You look closely at a short sword",
+          "room": "A short Sword is here."
+        },
+        "stats": {
+          "damMin": 1,
+          "damMax": 5
+        }
       },
-      "description": {
-        "look": "You look at a short sword",
-        "exam": "You look closely at a short sword",
-        "room": "A short Sword is here."
-      },
-      "stats": {
-        "damMin": 1,
-        "damMax": 5
+      {
+        "type": "object",
+        "location": "room",
+        "equipable": true,
+        "slot": "hand",
+        "name": "Long Sword",
+        "actions": {
+          "container": false,
+          "wield": "wield"
+        },
+        "description": {
+          "look": "You look at a short sword",
+          "exam": "You look closely at a short sword",
+          "room": "A short Sword is here."
+        },
+        "stats": {
+          "damMin": 1,
+          "damMax": 5
+        }
       }
-    }
-  ],
-  "corpses": [ ]
-}
+    ],
+    "corpses": [ ]
+  },
+  {
+    "id": 1,
+    "clean": false,
+    "modified": "",
+    "title": "Dungeon Room 2",
+    "description": "You are surrounded by 4 walls covered in grime made of large grey stone blocks. The stone floor is cold under your feet. The only possible way out seems to be the metal gate in front of you. A small wooden stool is in the corner behind you.",
+    "keywords": {
+      "look gate": "You look at the metal gate which leads north, apart from being the only exit you see nothing special",
+      "exam gate": "You look closely at the gate and notice the hinges and lock look weak, maybe you could bash the door down?"
+    },
+    "terrain": "city",
+    "exits": {
+      "South": {
+        "name": "South",
+        "locked": false,
+        "hidden": false,
+        "region": "Valston",
+        "area": "Town",
+        "areaId": 0
+
+
+      }
+    },
+    "players": [ ],
+    "mobs": [ ],
+    "items": [
+
+    ],
+    "corpses": [ ]
+  }

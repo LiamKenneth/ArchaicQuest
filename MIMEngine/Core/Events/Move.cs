@@ -15,13 +15,13 @@ namespace MIMEngine.Core.Events
         public static void  MoveCharacter(PlayerSetup character, JObject room, string direction)
         {
             // char location
-            string regionName = character.Area;
+             string regionName = character.Area;
               string areaName = character.Area;
               int roomId = character.AreaId;
 
             // check direction exists for the room the player in
 
-            JToken nextRoomInfo =  findExit(room, direction);
+            var nextRoomInfo =  findExit(room, direction);
 
             
             // change char location to new room

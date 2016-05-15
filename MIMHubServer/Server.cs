@@ -35,7 +35,7 @@ namespace MIMHubServer
                 Console.ReadLine();
             }
 
-          
+
         }
     }
 
@@ -58,13 +58,13 @@ namespace MIMHubServer
 
         public void Welcome()
         {
- 
+
 
             var motd = Data.loadFile("/motd");
             // Call the broadcastMessage method to update clients.
             //  SendToClient(motd, true);            
         }
-        
+
         public void charSetup(string id, string name, string email, string password, string gender, string race, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
         {
 
@@ -86,18 +86,18 @@ namespace MIMHubServer
 
         public void recieveFromClient(string message, String playerGuid)
         {
-            
 
-     
+
+
             this.SendToClient(message);
 
             PlayerSetup PlayerData;
             JObject RoomData;
             _PlayerCache.TryGetValue(playerGuid, out PlayerData);
-            _AreaCache.TryGetValue(0, out  RoomData);
+            _AreaCache.TryGetValue(0, out RoomData);
 
             Command.ParseCommand(message, PlayerData, RoomData);
-            
+
 
         }
 
@@ -171,28 +171,8 @@ namespace MIMHubServer
         {
 
             string roomData = ReturnRoom(id);
- 
-                 
 
-                this.Clients.Caller.addNewMessageToPage(roomData, true);
-            
-
- 
-            //    _RoomCache.TryAdd(i, roomFile);
-
-            //var watch = System.Diagnostics.Stopwatch.StartNew();
-
-            //for (int i = 0; i < 100000; i++)
-            //{
-            //    var roomFile = LoadRoom.LoadRoomFile();
-            //    _RoomCache.TryAdd(i, roomFile);
-            //}
-
-            //watch.Stop();
-            //var elapsedMs = watch.ElapsedMilliseconds;
-            //long memory = GC.GetTotalMemory(true);
-
-
+            this.Clients.Caller.addNewMessageToPage(roomData, true);
 
         }
 
