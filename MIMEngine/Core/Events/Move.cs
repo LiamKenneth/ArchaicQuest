@@ -20,11 +20,21 @@ namespace MIMEngine.Core.Events
               int roomId = character.AreaId;
 
             // check direction exists for the room the player in
+            var roomExitObj = room.Property("exits").Children();
+            string newRegionName = string.Empty;
+            string newAreaName = string.Empty;
+            int newRoomId = 0;
+            foreach (var exit in roomExitObj)
+            {
+                if (exit["north"] != null)
+                {
+                   newRegionName = (string)exit["north"]["region"];
+                    newAreaName = (string)exit["north"]["area"];
+                    newRoomId = (int)exit["north"]["id"];
+                }
+            }
 
-            var nextRoomInfo =  findExit(room, direction);
-
-            
-            string nextRoomRegion = (string)nextRoomInfo["region"];
+           
 
 
             // change char location to new room
@@ -34,7 +44,7 @@ namespace MIMEngine.Core.Events
             {
                 if ((string)player["name"] == character.Name)
                 {
-                    
+                    player.Remove();
                 }
             }
 

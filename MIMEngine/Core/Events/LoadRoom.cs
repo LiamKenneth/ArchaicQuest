@@ -46,7 +46,6 @@ namespace MIMEngine.Core.Events
         }
 
 
- 
 
         public static string DisplayRoom(JObject room)
         {
