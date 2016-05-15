@@ -24,7 +24,19 @@ namespace MIMEngine.Core.Events
             var nextRoomInfo =  findExit(room, direction);
 
             
+            string nextRoomRegion = (string)nextRoomInfo["region"];
+
+
             // change char location to new room
+            var players = room["players"];
+
+            foreach (var player in players)
+            {
+                if ((string)player["name"] == character.Name)
+                {
+                    
+                }
+            }
 
             // remove char from current room
 

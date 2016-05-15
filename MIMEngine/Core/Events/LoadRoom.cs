@@ -33,16 +33,16 @@ namespace MIMEngine.Core.Events
 
             var collection = database.GetCollection<Room>("Room");
           
-            Room room = collection.AsQueryable<Room>().SingleOrDefault(x => x.title == "Dungeon Room");
+            Room room = collection.AsQueryable<Room>().SingleOrDefault(x => x.areaId == this.id);
 
+            if (room != null)
+            {
+                JObject roomJson = room.returnRoomJSON();
 
-           // JObject roomJson = (JObject)File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "/World/Area/" + this.Region + "/" + this.Area + ".json");
+                return roomJson;
+            }
 
-            JObject roomJson = room.returnRoomJSON();
-
-           // var roomData = (JArray)roomJson;
-
-            return roomJson;
+            throw new Exception("No Room found in the Database for areaId: " +  id);
         }
 
 
