@@ -15,7 +15,8 @@ using System.Threading.Tasks;
 namespace MIMHubServer
 {
     using MIMEngine.Core.Events;
-
+    using MIMEngine.Core.Room;
+    using MongoDB.Bson;
     using Newtonsoft.Json.Linq;
 
     class Server
@@ -31,6 +32,7 @@ namespace MIMHubServer
             string url = "http://localhost:4000";
             using (WebApp.Start(url))
             {
+    
                 Console.WriteLine("Server running on {0}", url);
                 Console.ReadLine();
             }
@@ -50,44 +52,50 @@ namespace MIMHubServer
 
     public class MimHubServer : Hub
     {
-        private static ConcurrentDictionary<string, PlayerSetup> _PlayerCache = new ConcurrentDictionary<string, PlayerSetup>();
-        private static ConcurrentDictionary<int, JObject> _AreaCache = new ConcurrentDictionary<int, JObject>();
-        private static ConcurrentDictionary<int, string> _RoomCache = new ConcurrentDictionary<int, string>();
+        public static ConcurrentDictionary<string, PlayerSetup> _PlayerCache = new ConcurrentDictionary<string, PlayerSetup>();
+        public static ConcurrentDictionary<int, JObject> _AreaCache = new ConcurrentDictionary<int, JObject>();
+        public static ConcurrentDictionary<int, string> _RoomCache = new ConcurrentDictionary<int, string>();
 
         public static PlayerSetup PlayerData { get; set; }
 
-        public void Welcome()
+
+        public void addToRoom(int roomId, JObject roomJson, object objectToAdd, string type)
         {
 
+            string region = (string)roomJson["region"];
+            string area = (string)roomJson["area"];
+            int areaId = (int)roomJson["areaId"];
+            bool clean = (bool)roomJson["clean"];
+            string modified = (string)roomJson["modified"];
+            string title = (string)roomJson["title"];
+            string description = (string)roomJson["description"];
+            string terrain = (string)roomJson["terrain"];
+            BsonDocument keywords = roomJson["keywords"].ToBsonDocument();
+            BsonDocument exits = roomJson["exits"].ToBsonDocument();
+            BsonArray players = roomJson["players"];
+            BsonArray mobs = (BsonArray)roomJson["mobs"].ToString();
+            BsonArray items = (BsonArray)roomJson["items"].ToString();
+            BsonArray corpses = (BsonArray)roomJson["corpses"].ToString();
 
+            var roomData = new Room(region, area, areaId, clean, title, description, terrain, keywords, exits, players, mobs, items, corpses);
+
+            var roomDataToSave = roomData.returnRoomJSON();
+
+            Console.WriteLine("hello");
+
+
+        }
+
+        public void Welcome()
+        {
             var motd = Data.loadFile("/motd");
             // Call the broadcastMessage method to update clients.
             //  SendToClient(motd, true);            
         }
 
-        public void charSetup(string id, string name, string email, string password, string gender, string race, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
-        {
-
-            //Creates and saves player
-            PlayerData = new PlayerSetup(id, name, email, password, gender, race, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
-
-            PlayerData.SavePlayerInformation();
-
-            //Players.addPlayer(id, PlayerData);
-
-            _PlayerCache.TryAdd(id, PlayerData);
-
-            loadRoom(id);
-
-
-        }
-
-
-
+        #region input from user
         public void recieveFromClient(string message, String playerGuid)
         {
-
-
 
             this.SendToClient(message);
 
@@ -98,39 +106,13 @@ namespace MIMHubServer
 
             Command.ParseCommand(message, PlayerData, RoomData);
 
-
         }
+        #endregion
 
-        public void getStats()
-        {
-            PlayerStats playerStats = new PlayerStats();
-
-            int[] stats = playerStats.rollStats();
-            Clients.Caller.setStats(stats);
-        }
-
-        public void characterSetupWizard(string value, string step)
-        {
-
-
-            if (step == "race")
-            {
-                var selectedRace = PlayerRace.selectRace(value);
-                Clients.Caller.updateCharacterSetupWizard("race", selectedRace.name, selectedRace.help, selectedRace.imgUrl);
-            }
-            else if (step == "class")
-            {
-                var selectedClass = PlayerClass.selectClass(value);
-                Clients.Caller.updateCharacterSetupWizard("class", selectedClass.name, selectedClass.description, selectedClass.imgUrl);
-            }
-
-        }
-
+        #region load and display room
         public string ReturnRoom(string id)
         {
             PlayerSetup player;
-
-
 
             if (_PlayerCache.TryGetValue(id, out player))
             {
@@ -166,7 +148,6 @@ namespace MIMHubServer
             return null;
         }
 
-
         public void loadRoom(string id)
         {
 
@@ -175,6 +156,10 @@ namespace MIMHubServer
             this.Clients.Caller.addNewMessageToPage(roomData, true);
 
         }
+
+        #endregion
+
+        #region send data to player
 
         public void SendToClient(string message)
         {
@@ -185,7 +170,51 @@ namespace MIMHubServer
         {
             Clients.Caller.addNewMessageToPage(message);
         }
+        #endregion
 
 
+        #region  Character Wizard & Setup
+
+        public void charSetup(string id, string name, string email, string password, string gender, string race, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
+        {
+
+            //Creates and saves player
+            PlayerData = new PlayerSetup(id, name, email, password, gender, race, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
+
+            PlayerData.SavePlayerInformation();
+
+            _PlayerCache.TryAdd(id, PlayerData);
+
+            loadRoom(id);
+
+
+        }
+
+        public void getStats()
+        {
+            PlayerStats playerStats = new PlayerStats();
+
+            int[] stats = playerStats.rollStats();
+            Clients.Caller.setStats(stats);
+        }
+
+        public void characterSetupWizard(string value, string step)
+        {
+
+
+            if (step == "race")
+            {
+                var selectedRace = PlayerRace.selectRace(value);
+                Clients.Caller.updateCharacterSetupWizard("race", selectedRace.name, selectedRace.help, selectedRace.imgUrl);
+            }
+            else if (step == "class")
+            {
+                var selectedClass = PlayerClass.selectClass(value);
+                Clients.Caller.updateCharacterSetupWizard("class", selectedClass.name, selectedClass.description, selectedClass.imgUrl);
+            }
+
+        }
+
+        #endregion
     }
 }

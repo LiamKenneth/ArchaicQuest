@@ -19,22 +19,34 @@ namespace MIMEngine.Core.Events
               string areaName = character.Area;
               int roomId = character.AreaId;
 
+
             // check direction exists for the room the player in
             var roomExitObj = room.Property("exits").Children();
             string newRegionName = string.Empty;
             string newAreaName = string.Empty;
             int newRoomId = 0;
+
             foreach (var exit in roomExitObj)
             {
-                if (exit["north"] != null)
+                if (exit["North"] != null)
                 {
-                   newRegionName = (string)exit["north"]["region"];
-                    newAreaName = (string)exit["north"]["area"];
-                    newRoomId = (int)exit["north"]["id"];
+                   newRegionName = (string)exit["North"]["region"];
+                    newAreaName = (string)exit["North"]["area"];
+                    newRoomId = (int)exit["North"]["areaId"];
+
                 }
             }
 
-           
+            //updates player location
+            PlayerSetup updateChar = character;
+            updateChar.Region = newRegionName;
+            updateChar.Area = newAreaName;
+            updateChar.AreaId = newRoomId;
+            //update player cache
+            HubProxy.MimHubServer.Invoke("updatePlayer", character.HubGuid, updateChar);
+
+
+            HubProxy.MimHubServer.Invoke("addToRoom", newRoomId, room, updateChar, "player");
 
 
             // change char location to new room
