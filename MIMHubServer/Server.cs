@@ -54,7 +54,7 @@ namespace MIMHubServer
     {
         public static ConcurrentDictionary<string, PlayerSetup> _PlayerCache = new ConcurrentDictionary<string, PlayerSetup>();
         public static ConcurrentDictionary<int, JObject> _AreaCache = new ConcurrentDictionary<int, JObject>();
-        public static ConcurrentDictionary<int, string> _RoomCache = new ConcurrentDictionary<int, string>();
+       // public static ConcurrentDictionary<int, string> _RoomCache = new ConcurrentDictionary<int, string>();
 
         public static PlayerSetup PlayerData { get; set; }
 
@@ -70,18 +70,52 @@ namespace MIMHubServer
             string title = (string)roomJson["title"];
             string description = (string)roomJson["description"];
             string terrain = (string)roomJson["terrain"];
-            BsonDocument keywords = roomJson["keywords"].ToBsonDocument();
-            BsonDocument exits = roomJson["exits"].ToBsonDocument();
-            BsonArray players = roomJson["players"];
-            BsonArray mobs = (BsonArray)roomJson["mobs"].ToString();
-            BsonArray items = (BsonArray)roomJson["items"].ToString();
-            BsonArray corpses = (BsonArray)roomJson["corpses"].ToString();
+            BsonDocument keywords = BsonDocument.Parse(roomJson["keywords"].ToString());
+            BsonDocument exits = BsonDocument.Parse(roomJson["exits"].ToString());
+            BsonArray players = new BsonArray();
+            BsonArray mobs = new BsonArray();
+            BsonArray items = new BsonArray();
+            BsonArray corpses = new BsonArray();
+
+            foreach (var item in roomJson["players"])
+            {
+                items.Add(BsonDocument.Parse(item.ToString()));
+            }
+
+            foreach (var item in roomJson["mobs"])
+            {
+                items.Add(BsonDocument.Parse(item.ToString()));
+            }
+
+            foreach (var item in roomJson["items"])
+            {
+                items.Add(BsonDocument.Parse(item.ToString()));
+            }
+
+            foreach (var item in roomJson["corpses"])
+            {
+                items.Add(BsonDocument.Parse(item.ToString()));
+            }
+
+            if (objectToAdd != null)
+            {
+                
+                players.Add(BsonDocument.Parse(objectToAdd.ToString()));
+            
+                SendToClient(PlayerData.Name + " enters");
+            }
 
             var roomData = new Room(region, area, areaId, clean, title, description, terrain, keywords, exits, players, mobs, items, corpses);
 
             var roomDataToSave = roomData.returnRoomJSON();
 
-            Console.WriteLine("hello");
+            JObject existingRoomData = null;
+            _AreaCache.TryGetValue(areaId, out existingRoomData);
+
+            if (existingRoomData != null)
+            {
+                _AreaCache.TryUpdate(areaId, roomDataToSave, existingRoomData);
+            }
 
 
         }
@@ -183,9 +217,16 @@ namespace MIMHubServer
 
             PlayerData.SavePlayerInformation();
 
+            JObject playerJson = PlayerData.ReturnPlayerInformation();
+
             _PlayerCache.TryAdd(id, PlayerData);
 
             loadRoom(id);
+            //add player to room
+            JObject roomData = null;
+            _AreaCache.TryGetValue(PlayerData.AreaId, out roomData);
+
+            addToRoom(PlayerData.AreaId, roomData, playerJson, "player");
 
 
         }

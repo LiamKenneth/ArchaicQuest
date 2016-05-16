@@ -15,148 +15,215 @@ namespace MIMEngine.Core.PlayerSetup
     public class PlayerSetup
     {
         [JsonProperty("id")]
-        public string HubGuid;    
+        public string HubGuid;
+
         [JsonProperty("e")]
         public string Email;
+
         [JsonProperty("p")]
         public string Password;
 
         // General Info
         [JsonProperty("n")]
         public string Name;
+
         [JsonProperty("g")]
         public string Gender;
+
         [JsonProperty("r")]
         public string Race;
+
         [JsonProperty("sc")]
         public string SelectedClass;
+
         [JsonProperty("lvl")]
         public int Level;
+
         [JsonProperty("ali")]
         public int AlignmentScore;
+
         [JsonProperty("xp")]
         public int Experience;
+
         [JsonProperty("tnl")]
         public int ExperienceToNextLevel;
+
         [JsonProperty("hp")]
         public int HitPoints;
+
         [JsonProperty("mhp")]
         public int MaxHitPoints;
+
         [JsonProperty("mp")]
         public int ManaPoints;
+
         [JsonProperty("mmp")]
         public int MaxManaPoints;
+
         [JsonProperty("mvp")]
         public int MovePoints;
+
         [JsonProperty("mmvp")]
         public int MaxMovePoints;
 
         [JsonProperty("in")]
-        public object [] Inventory;
+        public object[] Inventory;
 
         //Game stats
         [JsonProperty("ex")]
         public int Explored;
+
         [JsonProperty("hr")]
         public int HitRoll;
+
         [JsonProperty("dr")]
         public int DamRoll;
+
         [JsonProperty("wi")]
         public int Wimpy;
+
         [JsonProperty("hrs")]
         public int Hours;
+
         [JsonProperty("we")]
         public int Weight;
+
         [JsonProperty("mwe")]
         public int MaxWeight;
+
         [JsonProperty("st")]
         public int Status;
 
         //Kills
         [JsonProperty("mk")]
         public int MobKills;
+
         [JsonProperty("md")]
         public int MobDeaths;
+
         [JsonProperty("pk")]
         public int Pkills;
+
         [JsonProperty("pd")]
         public int PkDeaths;
+
         [JsonProperty("pkp")]
         public int PkPoints;
 
         //Money
         [JsonProperty("gp")]
         public int Gold;
+
         [JsonProperty("sp")]
         public int Silver;
+
         [JsonProperty("cp")]
         public int Copper;
 
         // attributes
         [JsonProperty("as")]
         public int Strength;
+
         [JsonProperty("ad")]
         public int Dexterity;
+
         [JsonProperty("ac")]
         public int Constitution;
+
         [JsonProperty("aw")]
         public int Wisdom;
+
         [JsonProperty("ai")]
         public int Intelligence;
+
         [JsonProperty("ach")]
         public int Charisma;
 
         //location
         [JsonProperty("re")]
         public string Region;
+
         [JsonProperty("ar")]
         public string Area;
+
         [JsonProperty("ari")]
         public int AreaId;
 
         //Equipment
         [JsonProperty("efl")]
         public object Floating;
+
         [JsonProperty("eli")]
         public object Light;
+
         [JsonProperty("eh")]
         public object Head;
+
         [JsonProperty("efa")]
         public object Face;
+
         [JsonProperty("ee")]
         public object Eyes;
+
         [JsonProperty("ele")]
         public object LeftEar;
+
         [JsonProperty("ere")]
         public object RightEar;
+
         [JsonProperty("en")]
         public object Neck;
+
         [JsonProperty("ec")]
         public object Cloak;
+
         [JsonProperty("ea")]
         public object AboutBody;
+
         [JsonProperty("eb")]
         public object Body;
+
         [JsonProperty("ew")]
         public object Waist;
+
         [JsonProperty("elw")]
         public object LeftWrist;
+
         [JsonProperty("erw")]
         public object RightWrist;
+
         [JsonProperty("elh")]
         public object LeftHand;
+
         [JsonProperty("erh")]
         public object RightHand;
+
         [JsonProperty("elf")]
         public object LeftFinger;
+
         [JsonProperty("erf")]
         public object RightFinger;
+
         [JsonProperty("el")]
         public object Legs;
+
         [JsonProperty("ef")]
         public object Feet;
 
-        public PlayerSetup(string id, string name, string email, string password, string gender, string race, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
+        public PlayerSetup(
+            string id,
+            string name,
+            string email,
+            string password,
+            string gender,
+            string race,
+            string selectedClass,
+            int strength,
+            int dexterity,
+            int constitution,
+            int wisdom,
+            int intelligence,
+            int charisma)
         {
             this.HubGuid = id;
             this.Email = email;
@@ -193,7 +260,7 @@ namespace MIMEngine.Core.PlayerSetup
             this.Pkills = 0;
             this.PkDeaths = 0;
             this.PkPoints = 0;
- 
+
             //Money
             this.Gold = 0;
             this.Silver = 5;
@@ -228,7 +295,7 @@ namespace MIMEngine.Core.PlayerSetup
 
 
             //attributes
-           
+
             this.Strength = strength;
             this.Dexterity = dexterity;
             this.Constitution = constitution;
@@ -237,13 +304,19 @@ namespace MIMEngine.Core.PlayerSetup
             this.Charisma = charisma;
 
 
-          
+
         }
 
         public void SavePlayerInformation()
         {
             string json = JsonConvert.SerializeObject(this);
             File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "/" + Name + ".json", json);
+        }
+
+        public JObject ReturnPlayerInformation()
+        {
+            JObject json = JObject.Parse(JsonConvert.SerializeObject(this));
+            return json;
         }
     }
 }

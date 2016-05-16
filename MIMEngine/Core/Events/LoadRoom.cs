@@ -33,7 +33,7 @@ namespace MIMEngine.Core.Events
 
             var collection = database.GetCollection<Room>("Room");
           
-            Room room = collection.AsQueryable<Room>().SingleOrDefault(x => x.areaId == this.id);
+            Room room = collection.AsQueryable<Room>().SingleOrDefault(x => x.areaId == this.id && x.area == Area && x.region == Region);
 
             if (room != null)
             {
@@ -129,7 +129,15 @@ namespace MIMEngine.Core.Events
             {
                 foreach (var player in playerList)
                 {
-                    roomPlayers += player["name"] + "\r\n";
+                    if (player["name"] != null)
+                    {
+                        roomPlayers += player["name"] + "\r\n";
+                    }
+                    else
+                    {
+                        roomPlayers += player["n"] + "\r\n";
+                    }
+                    
                 }
             }
             else
@@ -139,7 +147,7 @@ namespace MIMEngine.Core.Events
 
 
 
-            string displayRoom = roomTitle + "\r\n" + roomDescription + "\r\n" + "[ Obvious Exits:" + exitList + " ]\r\n " + roomItems + mobList + playerList;
+            string displayRoom = roomTitle + "\r\n" + roomDescription + "\r\n" + "[ Obvious Exits:" + exitList + " ]\r\n " + roomItems + roomMobs + roomPlayers;
 
             return displayRoom;
 
