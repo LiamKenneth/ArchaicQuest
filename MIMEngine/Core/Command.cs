@@ -13,11 +13,12 @@ namespace MIMEngine.Core
     public class Command
     {
 
-        public static Dictionary<string, Action> Commands(string commandOptions, PlayerSetup.PlayerSetup playerData, JObject room)
+        public static Dictionary<string, Action> Commands(string commandOptions, PlayerSetup.PlayerSetup playerData, Room.Room room)
         {
             var commandList = new Dictionary<String, Action>(); 
             commandList.Add("north", () => Move.MoveCharacter(playerData, room, "North"));
-            commandList.Add("look", () => LoadRoom.ReturnRoom(room));
+            commandList.Add("look", () => LoadRoom.ReturnRoom(room, commandOptions));
+            commandList.Add("exam", () => LoadRoom.ReturnRoom(room, commandOptions));
             commandList.Add("score", () => Score.ReturnScore(playerData));
 //            commandList.Add("hello", sayHello);
 //            commandList.Add("Yo", () => sayHello(commandOptions));
@@ -29,7 +30,7 @@ namespace MIMEngine.Core
 
  
 
-        public static void ParseCommand(string input, PlayerSetup.PlayerSetup playerData, JObject room = null)
+        public static void ParseCommand(string input, PlayerSetup.PlayerSetup playerData, Room.Room room = null)
         {
 
             //testing

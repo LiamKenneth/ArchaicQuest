@@ -30,39 +30,40 @@ namespace MIMEngine.Core.Room
 
         public string terrain { get; set; }
 
-        public BsonDocument keywords { get; set; }
-        public BsonDocument exits { get; set; }
+         public BsonDocument keywords { get; set; }
+         public List<Exit> exits { get; set; }
 
-        public BsonArray players { get; set; }
-        public BsonArray mobs { get; set; }
-        public BsonArray items { get; set; }
-        public BsonArray corpses { get; set; }
+        public List<PlayerSetup.PlayerSetup> players { get; set; }
+         public BsonArray mobs { get; set; }
+         public List<Item.Item> items { get; set; }
+         public BsonArray corpses { get; set; }
 
-        public Room(string region, string area, int areaId, bool clean, string title, string description, string terrain, BsonDocument keywords, BsonDocument exits, BsonArray players, BsonArray mobs, BsonArray items, BsonArray corpses)
-        {
+ 
+        //public Room(string region, string area, int areaId, bool clean, string title, string description, string terrain, BsonDocument keywords, List<Exit> exits, List<PlayerSetup.PlayerSetup> players, BsonArray mobs, BsonArray items, BsonArray corpses)
+        //{
 
-            this.region = region;
-            this.area = area;
-            this.areaId = areaId;
-            this.clean = clean;
-            this.title = title;
-            this.description = description;
-            this.terrain = terrain;
-            this.keywords = keywords;
-            this.exits = exits;
-            this.players = players;
-            this.mobs = mobs;
-            this.items = items;
-            this.corpses = corpses;
+        //    this.region = region;
+        //    this.area = area;
+        //    this.areaId = areaId;
+        //    this.clean = clean;
+        //    this.title = title;
+        //    this.description = description;
+        //    this.terrain = terrain;
+        //    this.keywords = keywords;
+        //    this.exits = exits;
+        //    this.players = players;
+        //    this.mobs = mobs;
+        //    this.items = items;
+        //    this.corpses = corpses;
 
-        }
+        //}
 
-        public JObject returnRoomJSON()
-        {
-            string json = this.ToJson();
-            JObject room = JObject.Parse(json);
-            return room;
-        }
+        //public JObject returnRoomJSON()
+        //{
+        //    string json = this.ToJson();
+        //    JObject room = JObject.Parse(json);
+        //    return room;
+        //}
     }
 
   

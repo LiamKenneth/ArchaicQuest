@@ -53,7 +53,7 @@ namespace MIMHubServer
     public class MimHubServer : Hub
     {
         public static ConcurrentDictionary<string, PlayerSetup> _PlayerCache = new ConcurrentDictionary<string, PlayerSetup>();
-        public static ConcurrentDictionary<int, JObject> _AreaCache = new ConcurrentDictionary<int, JObject>();
+        public static ConcurrentDictionary<int, Room> _AreaCache = new ConcurrentDictionary<int, Room>();
        // public static ConcurrentDictionary<int, string> _RoomCache = new ConcurrentDictionary<int, string>();
 
         public static PlayerSetup PlayerData { get; set; }
@@ -72,7 +72,7 @@ namespace MIMHubServer
             string terrain = (string)roomJson["terrain"];
             BsonDocument keywords = BsonDocument.Parse(roomJson["keywords"].ToString());
             BsonDocument exits = BsonDocument.Parse(roomJson["exits"].ToString());
-            BsonArray players = new BsonArray();
+          //  List<PlayerSetup> players = roomJson["players"];
             BsonArray mobs = new BsonArray();
             BsonArray items = new BsonArray();
             BsonArray corpses = new BsonArray();
@@ -97,25 +97,25 @@ namespace MIMHubServer
                 items.Add(BsonDocument.Parse(item.ToString()));
             }
 
-            if (objectToAdd != null)
-            {
+            //if (objectToAdd != null)
+            //{
                 
-                players.Add(BsonDocument.Parse(objectToAdd.ToString()));
+            //    players.Add(BsonDocument.Parse(objectToAdd.ToString()));
             
-                SendToClient(PlayerData.Name + " enters");
-            }
+            //    SendToClient(PlayerData.Name + " enters");
+            //}
 
-            var roomData = new Room(region, area, areaId, clean, title, description, terrain, keywords, exits, players, mobs, items, corpses);
+         //   var roomData = new Room(region, area, areaId, clean, title, description, terrain, keywords, exits, players, mobs, items, corpses);
 
-            var roomDataToSave = roomData.returnRoomJSON();
+            //var roomDataToSave = roomData.returnRoomJSON();
 
-            JObject existingRoomData = null;
-            _AreaCache.TryGetValue(areaId, out existingRoomData);
+            //JObject existingRoomData = null;
+            //_AreaCache.TryGetValue(areaId, out existingRoomData);
 
-            if (existingRoomData != null)
-            {
-                _AreaCache.TryUpdate(areaId, roomDataToSave, existingRoomData);
-            }
+            //if (existingRoomData != null)
+            //{
+            //    _AreaCache.TryUpdate(areaId, roomDataToSave, existingRoomData);
+            //}
 
 
         }
@@ -134,7 +134,7 @@ namespace MIMHubServer
             this.SendToClient(message);
 
             PlayerSetup PlayerData;
-            JObject RoomData;
+            Room RoomData;
             _PlayerCache.TryGetValue(playerGuid, out PlayerData);
             _AreaCache.TryGetValue(0, out RoomData);
 
@@ -157,7 +157,7 @@ namespace MIMHubServer
                 roomJSON.Area = player.Area;
                 roomJSON.id = player.AreaId;
 
-                JObject roomData;
+                Room roomData;
 
 
                 if (_AreaCache.TryGetValue(roomJSON.id, out roomData))
@@ -223,10 +223,10 @@ namespace MIMHubServer
 
             loadRoom(id);
             //add player to room
-            JObject roomData = null;
+            Room roomData = null;
             _AreaCache.TryGetValue(PlayerData.AreaId, out roomData);
 
-            addToRoom(PlayerData.AreaId, roomData, playerJson, "player");
+           // addToRoom(PlayerData.AreaId, roomData, PlayerData, "player");
 
 
         }

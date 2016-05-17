@@ -21,7 +21,7 @@ namespace MIMEngine.Core.Events
         public int id { get; set; }
 
 
-        public JObject LoadRoomFile()
+        public Room LoadRoomFile()
         {
             const string connectionString = "mongodb://localhost:27017";
 
@@ -37,9 +37,7 @@ namespace MIMEngine.Core.Events
 
             if (room != null)
             {
-                JObject roomJson = room.returnRoomJSON();
-
-                return roomJson;
+                return room;
             }
 
             throw new Exception("No Room found in the Database for areaId: " +  id);
@@ -47,117 +45,90 @@ namespace MIMEngine.Core.Events
 
 
 
-        public static string DisplayRoom(JObject room)
+        public static string DisplayRoom(Room room)
         {
 
             var roomJson = room;
 
-          string roomTitle = (string)roomJson["title"];
-          string roomDescription = (string)roomJson["description"];
-            var roomExitObj = roomJson.Property("exits").Children();
-    
+            string roomTitle = room.title;
+            string roomDescription = room.description;
 
+            var exitList = string.Empty;
+            foreach (var exit in room.exits)
+            {
+                exitList += exit.name + " ";
+                
+            };
           
-            string exitList = null;
-            foreach (var exit in roomExitObj)
+            var itemList = string.Empty;
+            foreach (var item in room.items)
             {
-                if (exit["North"] != null)
-                {
-                    exitList += exit["North"]["name"];
-                }
-
-                if (exit["East"] != null)
-                {
-                    exitList += exit["East"]["name"];
-                }
-
-                if (exit["South"] != null)
-                {
-                    exitList += exit["South"]["name"];
-                }
-
-                if (exit["West"] != null)
-                {
-                    exitList += exit["West"]["name"];
-                }
-
-                if (exit["Up"] != null)
-                {
-                    exitList += exit["Up"]["name"];
-                }
-
-                if (exit["Down"] != null)
-                {
-                    exitList += exit["Down"]["name"];
-                }
-
+                itemList += item.name + " ";
             }
 
-            //GEt Room Items
-            var roomItems = string.Empty;
-            var itemList = roomJson["items"];
+ 
+            ////GEt Mobs
+            //var roomMobs = string.Empty;
+            //var mobList = roomJson["mobs"];
 
-            if (itemList.Any())
-            {
-                foreach (var item in itemList)
-                {
-                    roomItems += item["name"] + "\r\n";
-                }
-            }
+            //if (mobList.Any())
+            //{
+            //    foreach (var mob in mobList)
+            //    {
+            //        roomMobs += mob["name"] + "\r\n";
+            //    }
+            //}
+            //else
+            //{
+            //    mobList = string.Empty;
+            //}
 
-            //GEt Mobs
-            var roomMobs = string.Empty;
-            var mobList = roomJson["mobs"];
+            ////GEt players
+            //var roomPlayers = string.Empty;
+            //var playerList = roomJson["players"];
 
-            if (mobList.Any())
-            {
-                foreach (var mob in mobList)
-                {
-                    roomMobs += mob["name"] + "\r\n";
-                }
-            }
-            else
-            {
-                mobList = string.Empty;
-            }
-
-            //GEt players
-            var roomPlayers = string.Empty;
-            var playerList = roomJson["players"];
-
-            if (playerList.Any())
-            {
-                foreach (var player in playerList)
-                {
-                    if (player["name"] != null)
-                    {
-                        roomPlayers += player["name"] + "\r\n";
-                    }
-                    else
-                    {
-                        roomPlayers += player["n"] + "\r\n";
-                    }
+            //if (playerList.Any())
+            //{
+            //    foreach (var player in playerList)
+            //    {
+            //        if (player["name"] != null)
+            //        {
+            //            roomPlayers += player["name"] + "\r\n";
+            //        }
+            //        else
+            //        {
+            //            roomPlayers += player["n"] + "\r\n";
+            //        }
                     
-                }
-            }
-            else
-            {
-                playerList = string.Empty;
-            }
+            //    }
+            //}
+            //else
+            //{
+            //    playerList = string.Empty;
+            //}
 
 
 
-            string displayRoom = roomTitle + "\r\n" + roomDescription + "\r\n" + "[ Obvious Exits:" + exitList + " ]\r\n " + roomItems + roomMobs + roomPlayers;
+            string displayRoom = roomTitle + "\r\n" + roomDescription + "\r\n Exits: " + exitList + "Items: " + itemList;
 
             return displayRoom;
 
         }
 
-       public static void ReturnRoom(JObject room)
+       public static void ReturnRoom(Room room, string commandOptions = "")
        {
-           var roomInfo = DisplayRoom(room);
 
-            HubProxy.MimHubServer.Invoke("SendToClient", roomInfo);
+            if (string.IsNullOrEmpty(commandOptions))
+            {
+                var roomInfo = DisplayRoom(room);
+                HubProxy.MimHubServer.Invoke("SendToClient", roomInfo);
+            }
+            else
+            {
+                //show room keywords
+
+
+            }
         }
     }
 }

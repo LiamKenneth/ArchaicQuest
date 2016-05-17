@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 namespace MIMEngine.Core.Events
 {
     using MIMEngine.Core.PlayerSetup;
+    using MIMEngine.Core.Room;
 
     using Newtonsoft.Json.Linq;
 
     class Move
     {
-        public static void  MoveCharacter(PlayerSetup character, JObject room, string direction)
+        public static void  MoveCharacter(PlayerSetup character, Room room, string direction)
         {
             // char location
              string regionName = character.Area;
@@ -20,45 +21,45 @@ namespace MIMEngine.Core.Events
               int roomId = character.AreaId;
 
 
-            // check direction exists for the room the player in
-            var roomExitObj = room.Property("exits").Children();
-            string newRegionName = string.Empty;
-            string newAreaName = string.Empty;
-            int newRoomId = 0;
+            //// check direction exists for the room the player in
+            //var roomExitObj = room.Property("exits").Children();
+            //string newRegionName = string.Empty;
+            //string newAreaName = string.Empty;
+            //int newRoomId = 0;
 
-            foreach (var exit in roomExitObj)
-            {
-                if (exit["North"] != null)
-                {
-                   newRegionName = (string)exit["North"]["region"];
-                    newAreaName = (string)exit["North"]["area"];
-                    newRoomId = (int)exit["North"]["areaId"];
+            //foreach (var exit in roomExitObj)
+            //{
+            //    if (exit["North"] != null)
+            //    {
+            //       newRegionName = (string)exit["North"]["region"];
+            //        newAreaName = (string)exit["North"]["area"];
+            //        newRoomId = (int)exit["North"]["areaId"];
 
-                }
-            }
+            //    }
+            //}
 
-            //updates player location
-            PlayerSetup updateChar = character;
-            updateChar.Region = newRegionName;
-            updateChar.Area = newAreaName;
-            updateChar.AreaId = newRoomId;
-            //update player cache
-            HubProxy.MimHubServer.Invoke("updatePlayer", character.HubGuid, updateChar);
-
-
-            HubProxy.MimHubServer.Invoke("addToRoom", newRoomId, room, updateChar, "player");
+            ////updates player location
+            //PlayerSetup updateChar = character;
+            //updateChar.Region = newRegionName;
+            //updateChar.Area = newAreaName;
+            //updateChar.AreaId = newRoomId;
+            ////update player cache
+            //HubProxy.MimHubServer.Invoke("updatePlayer", character.HubGuid, updateChar);
 
 
-            // change char location to new room
-            var players = room["players"];
+            //HubProxy.MimHubServer.Invoke("addToRoom", newRoomId, room, updateChar, "player");
 
-            foreach (var player in players)
-            {
-                if ((string)player["name"] == character.Name)
-                {
-                    player.Remove();
-                }
-            }
+
+            //// change char location to new room
+            //var players = room["players"];
+
+            //foreach (var player in players)
+            //{
+            //    if ((string)player["name"] == character.Name)
+            //    {
+            //        player.Remove();
+            //    }
+            //}
 
             // remove char from current room
 

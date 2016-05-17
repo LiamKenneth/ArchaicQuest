@@ -88,12 +88,17 @@
     <Compile Include="Core\Events\LoadRoom.cs" />
     <Compile Include="Core\Events\Move.cs" />
     <Compile Include="Core\Events\Score.cs" />
+    <Compile Include="Core\Item\Action.cs" />
+    <Compile Include="Core\Item\Description.cs" />
+    <Compile Include="Core\Item\Item.cs" />
+    <Compile Include="Core\Item\Stats.cs" />
     <Compile Include="Core\PlayerSetup\PlayerAccount.cs" />
     <Compile Include="Core\PlayerSetup\PlayerClass.cs" />
     <Compile Include="Core\PlayerSetup\PlayerLocation.cs" />
     <Compile Include="Core\PlayerSetup\PlayerRace.cs" />
     <Compile Include="Core\PlayerSetup\PlayerSetup.cs" />
     <Compile Include="Core\PlayerSetup\PlayerStats.cs" />
+    <Compile Include="Core\Room\Exit.cs" />
     <Compile Include="Core\Room\Room.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="HubProxy.cs" />
