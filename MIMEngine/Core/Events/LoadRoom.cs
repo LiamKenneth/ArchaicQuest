@@ -126,7 +126,9 @@ namespace MIMEngine.Core.Events
             else
             {
                 //show room keywords
+             var lookKeyword =  room.keywords.Find(x => x.name.Contains(commandOptions));
 
+                HubProxy.MimHubServer.Invoke("SendToClient", lookKeyword.look);
 
             }
         }

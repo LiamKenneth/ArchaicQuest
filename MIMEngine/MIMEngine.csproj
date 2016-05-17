@@ -99,6 +99,8 @@
     <Compile Include="Core\PlayerSetup\PlayerSetup.cs" />
     <Compile Include="Core\PlayerSetup\PlayerStats.cs" />
     <Compile Include="Core\Room\Exit.cs" />
+    <Compile Include="Core\Room\Keyword.cs" />
+    <Compile Include="Core\Room\RoomObject.cs" />
     <Compile Include="Core\Room\Room.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="HubProxy.cs" />

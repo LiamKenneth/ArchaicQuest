@@ -30,7 +30,7 @@ namespace MIMEngine.Core.Room
 
         public string terrain { get; set; }
 
-         public BsonDocument keywords { get; set; }
+         public List<RoomObject> keywords { get; set; }
          public List<Exit> exits { get; set; }
 
         public List<PlayerSetup.PlayerSetup> players { get; set; }
