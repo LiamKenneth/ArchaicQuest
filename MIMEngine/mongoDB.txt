@@ -1,4 +1,4 @@
-﻿/* 1 */
+﻿/* 0 */
 {
     "_id" : "573799b070b4e6eddd0bcbce",
     "region" : "Valston",
@@ -8,21 +8,36 @@
     "modified" : "",
     "title" : "Dungeon Room",
     "description" : "You are surrounded by 4 walls covered in grime made of large grey stone blocks. The stone floor is cold under your feet. The only possible way out seems to be the metal gate in front of you. A small wooden stool is in the corner behind you.",
-    "keywords" : {
-        "look gate" : "You look at the metal gate which leads north, apart from being the only exit you see nothing special",
-        "exam gate" : "You look closely at the gate and notice the hinges and lock look weak, maybe you could bash the door down?"
-    },
+    "keywords" : [ 
+        {
+            "name" : "Gate",
+            "look" : "You look at a gate",
+            "examine" : "You examine a gate",
+            "touch" : "You touch a gate",
+            "smell" : "You smell a gate",
+            "taste" : "You taste a gate",
+            "hp" : 10
+        }
+    ],
     "terrain" : "city",
-    "exits" : {
-        "North" : {
+    "exits" : [ 
+        {
             "name" : "North",
             "locked" : false,
             "hidden" : false,
             "region" : "Valston",
             "area" : "Town",
             "areaId" : 1
+        }, 
+        {
+            "name" : "South",
+            "locked" : true,
+            "hidden" : false,
+            "region" : "Valston",
+            "area" : "Town",
+            "areaId" : 2
         }
-    },
+    ],
     "players" : [],
     "mobs" : [],
     "items" : [ 
@@ -70,7 +85,7 @@
     "corpses" : []
 }
 
-/* 2 */
+/* 1 */
 {
     "_id" : "5738bca5c8ff8ea78a4f6bd8",
     "region" : "Valston",
@@ -80,21 +95,18 @@
     "modified" : "",
     "title" : "Dungeon Coridor",
     "description" : "A dark corridor",
-    "keywords" : {
-        "look gate" : "You look at the metal gate which leads north, apart from being the only exit you see nothing special",
-        "exam gate" : "You look closely at the gate and notice the hinges and lock look weak, maybe you could bash the door down?"
-    },
+    "keywords" : [],
     "terrain" : "city",
-    "exits" : {
-        "South" : {
-            "name" : "North",
+    "exits" : [ 
+        {
+            "name" : "South",
             "locked" : false,
             "hidden" : false,
             "region" : "Valston",
             "area" : "Town",
             "areaId" : 0
         }
-    },
+    ],
     "players" : [],
     "mobs" : [],
     "items" : [],

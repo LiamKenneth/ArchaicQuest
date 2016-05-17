@@ -126,7 +126,8 @@ namespace MIMEngine.Core.Events
             else
             {
                 //show room keywords
-             var lookKeyword =  room.keywords.Find(x => x.name.Contains(commandOptions));
+                //commandOptions needs triming, check for lowercase, do this client side?
+             var lookKeyword =  room.keywords.Find(x => x.name.Contains(commandOptions.Trim()));
 
                 HubProxy.MimHubServer.Invoke("SendToClient", lookKeyword.look);
 
