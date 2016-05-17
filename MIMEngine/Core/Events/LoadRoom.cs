@@ -16,7 +16,7 @@ namespace MIMEngine.Core.Events
 
     public class LoadRoom
     {
-       public string Region { get; set; }
+        public string Region { get; set; }
         public string Area { get; set; }
         public int id { get; set; }
 
@@ -32,7 +32,7 @@ namespace MIMEngine.Core.Events
             var database = client.GetDatabase("MIMDB");
 
             var collection = database.GetCollection<Room>("Room");
-          
+
             Room room = collection.AsQueryable<Room>().SingleOrDefault(x => x.areaId == this.id && x.area == Area && x.region == Region);
 
             if (room != null)
@@ -40,7 +40,7 @@ namespace MIMEngine.Core.Events
                 return room;
             }
 
-            throw new Exception("No Room found in the Database for areaId: " +  id);
+            throw new Exception("No Room found in the Database for areaId: " + id);
         }
 
 
@@ -57,16 +57,16 @@ namespace MIMEngine.Core.Events
             foreach (var exit in room.exits)
             {
                 exitList += exit.name + " ";
-                
+
             };
-          
+
             var itemList = string.Empty;
             foreach (var item in room.items)
             {
                 itemList += item.name + " ";
             }
 
- 
+
             ////GEt Mobs
             //var roomMobs = string.Empty;
             //var mobList = roomJson["mobs"];
@@ -99,7 +99,7 @@ namespace MIMEngine.Core.Events
             //        {
             //            roomPlayers += player["n"] + "\r\n";
             //        }
-                    
+
             //    }
             //}
             //else
@@ -115,21 +115,57 @@ namespace MIMEngine.Core.Events
 
         }
 
-       public static void ReturnRoom(Room room, string commandOptions = "")
-       {
+        public static void ReturnRoom(Room room, string commandOptions = "", string keyword = "")
+        {
 
-            if (string.IsNullOrEmpty(commandOptions))
+            if (string.IsNullOrEmpty(commandOptions) && keyword == "look")
             {
                 var roomInfo = DisplayRoom(room);
                 HubProxy.MimHubServer.Invoke("SendToClient", roomInfo);
             }
             else
             {
-                //show room keywords
-                //commandOptions needs triming, check for lowercase, do this client side?
-             var lookKeyword =  room.keywords.Find(x => x.name.Contains(commandOptions.Trim()));
+                var description = room.keywords.Find(x => x.name.Contains(commandOptions));
 
-                HubProxy.MimHubServer.Invoke("SendToClient", lookKeyword.look);
+                if (description != null && !string.IsNullOrWhiteSpace(commandOptions))
+                {
+                    string descriptionText = string.Empty;
+
+                    if (keyword.StartsWith("look"))
+                    {
+                        descriptionText = description.look;
+                    }
+                    else if (keyword.StartsWith("examine"))
+                    {
+                        descriptionText = description.examine;
+                    }
+                    else if (keyword.StartsWith("touch"))
+                    {
+                        descriptionText = description.touch;
+                    }
+                    else if (keyword.StartsWith("smell"))
+                    {
+                        descriptionText = description.smell;
+                    }
+                    else if (keyword.StartsWith("taste"))
+                    {
+                        descriptionText = description.taste;
+                    }
+
+                    if (!string.IsNullOrEmpty(descriptionText))
+                    {
+                        HubProxy.MimHubServer.Invoke("SendToClient", descriptionText);
+                    }
+                    else
+                    {
+                        HubProxy.MimHubServer.Invoke("SendToClient", "You can't do that to a " + description.name);
+                    }
+
+                }
+                else
+                {
+                    HubProxy.MimHubServer.Invoke("SendToClient", "You can't do that");
+                }
 
             }
         }

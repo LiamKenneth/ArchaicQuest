@@ -17,8 +17,11 @@ namespace MIMEngine.Core
         {
             var commandList = new Dictionary<String, Action>(); 
             commandList.Add("north", () => Move.MoveCharacter(playerData, room, "North"));
-            commandList.Add("look", () => LoadRoom.ReturnRoom(room, commandOptions));
-            commandList.Add("exam", () => LoadRoom.ReturnRoom(room, commandOptions));
+            commandList.Add("look", () => LoadRoom.ReturnRoom(room, commandOptions, "look"));
+            commandList.Add("examine", () => LoadRoom.ReturnRoom(room, commandOptions, "examine"));
+            commandList.Add("touch", () => LoadRoom.ReturnRoom(room, commandOptions, "touch"));
+            commandList.Add("smell", () => LoadRoom.ReturnRoom(room, commandOptions, "smell"));
+            commandList.Add("taste", () => LoadRoom.ReturnRoom(room, commandOptions, "taste"));
             commandList.Add("score", () => Score.ReturnScore(playerData));
 //            commandList.Add("hello", sayHello);
 //            commandList.Add("Yo", () => sayHello(commandOptions));
@@ -42,7 +45,7 @@ namespace MIMEngine.Core
  
             if (commands.Length >= 2)
             {
-                commandOptions = enteredCommand.Substring(enteredCommand.IndexOf(' ', 1));
+                commandOptions = enteredCommand.Substring(enteredCommand.IndexOf(' ', 1)).Trim();
             }
  
  
@@ -50,7 +53,15 @@ namespace MIMEngine.Core
  
             var fire = command.FirstOrDefault(x => x.Key.StartsWith(commandKey));
 
-            fire.Value();
+            if (fire.Value != null)
+            {
+                fire.Value();
+            }
+            else
+            {
+                HubProxy.MimHubServer.Invoke("SendToClient", "Sorry you can't do that.");
+            }
+           
         }
     }
 }
