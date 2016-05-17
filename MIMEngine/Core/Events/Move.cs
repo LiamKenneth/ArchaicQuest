@@ -13,7 +13,7 @@ namespace MIMEngine.Core.Events
 
     class Move
     {
-        public static void  MoveCharacter(PlayerSetup character, Room room, string direction)
+        public static void  MoveCharacter(Player character, Room room, string direction)
         {
             // char location
              string regionName = character.Area;

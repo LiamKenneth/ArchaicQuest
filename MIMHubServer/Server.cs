@@ -52,11 +52,11 @@ namespace MIMHubServer
 
     public class MimHubServer : Hub
     {
-        public static ConcurrentDictionary<string, PlayerSetup> _PlayerCache = new ConcurrentDictionary<string, PlayerSetup>();
+        public static ConcurrentDictionary<string, Player> _PlayerCache = new ConcurrentDictionary<string, Player>();
         public static ConcurrentDictionary<int, Room> _AreaCache = new ConcurrentDictionary<int, Room>();
        // public static ConcurrentDictionary<int, string> _RoomCache = new ConcurrentDictionary<int, string>();
 
-        public static PlayerSetup PlayerData { get; set; }
+        public static Player PlayerData { get; set; }
 
 
         public void addToRoom(int roomId, JObject roomJson, object objectToAdd, string type)
@@ -133,7 +133,7 @@ namespace MIMHubServer
 
             this.SendToClient(message);
 
-            PlayerSetup PlayerData;
+            Player PlayerData;
             Room RoomData;
             _PlayerCache.TryGetValue(playerGuid, out PlayerData);
             _AreaCache.TryGetValue(0, out RoomData);
@@ -146,7 +146,7 @@ namespace MIMHubServer
         #region load and display room
         public string ReturnRoom(string id)
         {
-            PlayerSetup player;
+            Player player;
 
             if (_PlayerCache.TryGetValue(id, out player))
             {
@@ -213,7 +213,7 @@ namespace MIMHubServer
         {
 
             //Creates and saves player
-            PlayerData = new PlayerSetup(id, name, email, password, gender, race, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
+            PlayerData = new Player(id, name, email, password, gender, race, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
 
             PlayerData.SavePlayerInformation();
 

@@ -12,7 +12,7 @@ namespace MIMEngine.Core.PlayerSetup
 
     using Newtonsoft.Json.Linq;
 
-    public class PlayerSetup
+    public class Player
     {
         [JsonProperty("id")]
         public string HubGuid;
@@ -210,7 +210,7 @@ namespace MIMEngine.Core.PlayerSetup
         [JsonProperty("ef")]
         public object Feet;
 
-        public PlayerSetup(
+        public Player(
             string id,
             string name,
             string email,

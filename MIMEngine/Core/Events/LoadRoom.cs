@@ -127,6 +127,22 @@ namespace MIMEngine.Core.Events
             {
                 var description = room.keywords.Find(x => x.name.Contains(commandOptions));
 
+                //Room item look/exam works but crap code
+                //if (description == null)
+                //{
+                //   var RoomItemDescription = room.items.Find(x => x.name.ToLower().Contains(commandOptions));
+                //    string descriptionText = string.Empty;
+                //    if (keyword.StartsWith("look"))
+                //    {
+                //        descriptionText = RoomItemDescription.description.look;
+                //    }
+
+                //    HubProxy.MimHubServer.Invoke("SendToClient", descriptionText);
+
+                //}
+                
+
+
                 if (description != null && !string.IsNullOrWhiteSpace(commandOptions))
                 {
                     string descriptionText = string.Empty;

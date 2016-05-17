@@ -96,10 +96,11 @@
     <Compile Include="Core\PlayerSetup\PlayerClass.cs" />
     <Compile Include="Core\PlayerSetup\PlayerLocation.cs" />
     <Compile Include="Core\PlayerSetup\PlayerRace.cs" />
-    <Compile Include="Core\PlayerSetup\PlayerSetup.cs" />
+    <Compile Include="Core\PlayerSetup\Player.cs" />
     <Compile Include="Core\PlayerSetup\PlayerStats.cs" />
     <Compile Include="Core\Room\Exit.cs" />
     <Compile Include="Core\Room\Keyword.cs" />
+    <Compile Include="Core\Room\Mob.cs" />
     <Compile Include="Core\Room\RoomObject.cs" />
     <Compile Include="Core\Room\Room.cs" />
     <Compile Include="Data.cs" />

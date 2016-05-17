@@ -7,7 +7,7 @@
     class Score
     {
 
-        public static void ReturnScore(PlayerSetup playerData)
+        public static void ReturnScore(Player playerData)
         {
             string scoreTest = "Score:\r\n Name: " + playerData.Name + " Race: " + playerData.Race;
 

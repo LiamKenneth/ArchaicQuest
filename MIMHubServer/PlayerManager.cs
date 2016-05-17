@@ -10,11 +10,11 @@ namespace MIMHubServer
     class PlayerManager : MimHubServer
     {
 
-        public static void updatePlayer(string id, PlayerSetup playerDataUpdated)
+        public static void updatePlayer(string id, Player playerDataUpdated)
         {
             Console.WriteLine("update palyer");
 
-            PlayerSetup existingPlayerData = null;
+            Player existingPlayerData = null;
             _PlayerCache.TryGetValue(id, out existingPlayerData);
 
             if (existingPlayerData != null)
@@ -23,9 +23,9 @@ namespace MIMHubServer
             }
         }
 
-        public static PlayerSetup getPlayer(string id)
+        public static Player getPlayer(string id)
         {
-            PlayerSetup player = null;
+            Player player = null;
             _PlayerCache.TryGetValue(id, out player);
 
             if (player != null)
