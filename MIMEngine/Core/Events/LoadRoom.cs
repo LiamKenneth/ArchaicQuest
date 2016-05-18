@@ -67,6 +67,12 @@ namespace MIMEngine.Core.Events
                 itemList += item.name + " ";
             }
 
+            var playerList = string.Empty;
+            foreach (var item in room.players)
+            {
+                playerList += item.Name + " ";
+            }
+
 
             ////GEt Mobs
             //var roomMobs = string.Empty;
@@ -110,7 +116,7 @@ namespace MIMEngine.Core.Events
 
 
 
-            string displayRoom = roomTitle + "\r\n" + roomDescription + "\r\n Exits: " + exitList + "Items: " + itemList;
+            string displayRoom = roomTitle + "\r\n" + roomDescription + "\r\n Exits: " + exitList + "Items: " + itemList + " " + playerList;
 
             return displayRoom;
 
@@ -122,7 +128,7 @@ namespace MIMEngine.Core.Events
             if (string.IsNullOrEmpty(commandOptions) && keyword == "look")
             {
                 var roomInfo = DisplayRoom(room);
-                HubProxy.MimHubServer.Invoke("SendToClient", roomInfo);
+                HubProxy.MimHubServer.Invoke("SendToClient", roomInfo, true);
             }
             else
             {

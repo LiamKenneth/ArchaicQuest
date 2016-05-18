@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace MIMEngine.Core
 {
     using MIMEngine.Core.Events;
+    using MIMEngine.Core.Room;
 
     using Newtonsoft.Json.Linq;
 
@@ -16,7 +17,7 @@ namespace MIMEngine.Core
         public static Dictionary<string, Action> Commands(string commandOptions, PlayerSetup.Player playerData, Room.Room room)
         {
             var commandList = new Dictionary<String, Action>(); 
-            commandList.Add("north", () => Move.MoveCharacter(playerData, room, "North"));
+            commandList.Add("north", () => Movement.Move(playerData, room, "North"));
             commandList.Add("look", () => LoadRoom.ReturnRoom(room, commandOptions, "look"));
             commandList.Add("examine", () => LoadRoom.ReturnRoom(room, commandOptions, "examine"));
             commandList.Add("touch", () => LoadRoom.ReturnRoom(room, commandOptions, "touch"));

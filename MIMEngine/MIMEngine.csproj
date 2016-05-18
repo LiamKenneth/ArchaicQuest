@@ -101,6 +101,8 @@
     <Compile Include="Core\Room\Exit.cs" />
     <Compile Include="Core\Room\Keyword.cs" />
     <Compile Include="Core\Room\Mob.cs" />
+    <Compile Include="Core\Room\Movement.cs" />
+    <Compile Include="Core\Room\PlayerManager.cs" />
     <Compile Include="Core\Room\RoomObject.cs" />
     <Compile Include="Core\Room\Room.cs" />
     <Compile Include="Data.cs" />

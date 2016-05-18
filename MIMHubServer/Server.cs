@@ -59,67 +59,6 @@ namespace MIMHubServer
         public static Player PlayerData { get; set; }
 
 
-        public void addToRoom(int roomId, JObject roomJson, object objectToAdd, string type)
-        {
-
-            string region = (string)roomJson["region"];
-            string area = (string)roomJson["area"];
-            int areaId = (int)roomJson["areaId"];
-            bool clean = (bool)roomJson["clean"];
-            string modified = (string)roomJson["modified"];
-            string title = (string)roomJson["title"];
-            string description = (string)roomJson["description"];
-            string terrain = (string)roomJson["terrain"];
-            BsonDocument keywords = BsonDocument.Parse(roomJson["keywords"].ToString());
-            BsonDocument exits = BsonDocument.Parse(roomJson["exits"].ToString());
-          //  List<PlayerSetup> players = roomJson["players"];
-            BsonArray mobs = new BsonArray();
-            BsonArray items = new BsonArray();
-            BsonArray corpses = new BsonArray();
-
-            foreach (var item in roomJson["players"])
-            {
-                items.Add(BsonDocument.Parse(item.ToString()));
-            }
-
-            foreach (var item in roomJson["mobs"])
-            {
-                items.Add(BsonDocument.Parse(item.ToString()));
-            }
-
-            foreach (var item in roomJson["items"])
-            {
-                items.Add(BsonDocument.Parse(item.ToString()));
-            }
-
-            foreach (var item in roomJson["corpses"])
-            {
-                items.Add(BsonDocument.Parse(item.ToString()));
-            }
-
-            //if (objectToAdd != null)
-            //{
-                
-            //    players.Add(BsonDocument.Parse(objectToAdd.ToString()));
-            
-            //    SendToClient(PlayerData.Name + " enters");
-            //}
-
-         //   var roomData = new Room(region, area, areaId, clean, title, description, terrain, keywords, exits, players, mobs, items, corpses);
-
-            //var roomDataToSave = roomData.returnRoomJSON();
-
-            //JObject existingRoomData = null;
-            //_AreaCache.TryGetValue(areaId, out existingRoomData);
-
-            //if (existingRoomData != null)
-            //{
-            //    _AreaCache.TryUpdate(areaId, roomDataToSave, existingRoomData);
-            //}
-
-
-        }
-
         public void Welcome()
         {
             var motd = Data.loadFile("/motd");
@@ -225,6 +164,9 @@ namespace MIMHubServer
             //add player to room
             Room roomData = null;
             _AreaCache.TryGetValue(PlayerData.AreaId, out roomData);
+
+            MIMEngine.Core.Room.PlayerManager.AddPlayerToRoom(roomData, PlayerData);
+            Movement.EnterRoom(PlayerData);
 
            // addToRoom(PlayerData.AreaId, roomData, PlayerData, "player");
 

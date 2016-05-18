@@ -38,8 +38,7 @@ namespace MIMEngine.Core.Room
          public List<Item.Item> items { get; set; }
          public List<PlayerSetup.Player> corpses { get; set; }
 
- 
- 
+       
     }
 
   
