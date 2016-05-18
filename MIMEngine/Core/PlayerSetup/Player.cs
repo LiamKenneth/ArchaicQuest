@@ -20,6 +20,9 @@ namespace MIMEngine.Core.PlayerSetup
         [JsonProperty("e")]
         public string Email;
 
+        [JsonProperty("de")]
+        public string Description;
+
         [JsonProperty("p")]
         public string Password;
 

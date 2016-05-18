@@ -16,6 +16,9 @@ namespace MIMEngine.Core.Room
         [JsonProperty("g")]
         public string Gender;
 
+        [JsonProperty("de")]
+        public string Description;
+
         [JsonProperty("r")]
         public string Race;
 

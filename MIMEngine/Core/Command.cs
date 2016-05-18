@@ -12,7 +12,7 @@ namespace MIMEngine.Core
 
     public class Command
     {
-
+    //public static Dictionary<string, Action> commandList { get; set; }
         public static Dictionary<string, Action> Commands(string commandOptions, PlayerSetup.Player playerData, Room.Room room)
         {
             var commandList = new Dictionary<String, Action>(); 
@@ -48,7 +48,7 @@ namespace MIMEngine.Core
                 commandOptions = enteredCommand.Substring(enteredCommand.IndexOf(' ', 1)).Trim();
             }
  
- 
+             //TODO: do this only once
             var command = Commands(commandOptions, playerData, room);
  
             var fire = command.FirstOrDefault(x => x.Key.StartsWith(commandKey));
