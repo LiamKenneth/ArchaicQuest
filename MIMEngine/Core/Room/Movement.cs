@@ -17,18 +17,29 @@ namespace MIMEngine.Core.Room
 
     public class Movement
     {
-        public static void EnterRoom(Player player)
+        public static void EnterRoom(Player player, Room room, string direction = "")
         {
             string name = player.Name;
             string movement = "walks in"; // runs, hovers, crawls. Steps out of a portal, appears?
-                                          // string prevDirection = "South";
-
-            string enterText = name + " " + movement;
-
-            HubProxy.MimHubServer.Invoke("SendToClient", enterText);
+            direction = oppositeDirection(direction);
+            string enterText = name + " " + movement + direction;
+ 
+            foreach (var players in room.players)
+            {
+                if (player.Name != players.Name)
+                {
+                    HubProxy.MimHubServer.Invoke("SendToClient", enterText, players.HubGuid);
+                }
+                else
+                {
+                    enterText = "You walk in " + direction;
+                    HubProxy.MimHubServer.Invoke("SendToClient", enterText, player.HubGuid);
+                }
+            }
+       
         }
 
-        public static void ExitRoom(Player player, string direction)
+        public static void ExitRoom(Player player, Room room, string direction)
         {
             string name = player.Name;
             string movement = "walks "; // runs, hovers, crawls. Steps out of a portal, appears?
@@ -36,7 +47,58 @@ namespace MIMEngine.Core.Room
 
             string exitText = name + " " + movement + exitDir;
 
-            HubProxy.MimHubServer.Invoke("SendToClient", exitText);
+            foreach (var players in room.players)
+            {
+                if (player.Name != players.Name)
+                {
+                    HubProxy.MimHubServer.Invoke("SendToClient", exitText, players.HubGuid);
+                }
+                else
+                {
+                    exitText = "You walk " + direction;
+                    HubProxy.MimHubServer.Invoke("SendToClient", exitText, player.HubGuid);
+                }
+            }
+        }
+
+        public static string oppositeDirection(string direction)
+        {
+
+
+            switch (direction)
+            {
+                case "North":
+                    {
+                        return " from the South";
+                    }
+                case "East":
+                    {
+                        return " from the West";
+                    }
+                case "West":
+                    {
+                        return " from the East";
+                    }
+                case "South":
+                    {
+                        return " from the North";
+                    }
+                case "Up":
+                    {
+                        return " from down the stairs";
+                    }
+                case "Down":
+                    {
+                        return " from Upstairs";
+                    }
+                default:
+                    {
+                        return string.Empty;
+
+                    }
+
+            }
+
         }
 
         public static void Move(Player player, Room room, string direction)
@@ -54,7 +116,7 @@ namespace MIMEngine.Core.Room
                 PlayerManager.RemovePlayerFromRoom(roomData, player);
 
                 //exit message
-                ExitRoom(player, direction);
+                ExitRoom(player, roomData, direction);
 
                 //change player Location
                 player.Area = exit.area;
@@ -70,11 +132,11 @@ namespace MIMEngine.Core.Room
                     PlayerManager.AddPlayerToRoom(getNewRoom, player);
 
                     //enter message
-                    EnterRoom(player);
+                    EnterRoom(player, getNewRoom, direction);
 
                     var roomDescription = LoadRoom.DisplayRoom(getNewRoom);
 
-                    HubProxy.MimHubServer.Invoke("SendToClient", roomDescription);
+                    HubProxy.MimHubServer.Invoke("SendToClient", roomDescription, player.HubGuid);
                 }
             }
             else

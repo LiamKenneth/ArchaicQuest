@@ -70,13 +70,13 @@ namespace MIMHubServer
         public void recieveFromClient(string message, String playerGuid)
         {
 
-            this.SendToClient(message);
-
+   
             Player PlayerData;
              Room RoomData;
             _PlayerCache.TryGetValue(playerGuid, out PlayerData);
              _AreaCache.TryGetValue(PlayerData.AreaId, out RoomData);
 
+            this.SendToClient(message, PlayerData.HubGuid);
             Command.ParseCommand(message, PlayerData, RoomData);
 
         }
@@ -193,9 +193,9 @@ namespace MIMHubServer
             Clients.All.addNewMessageToPage(message);
         }
 
-        public void SendToClient(string message, bool caller)
+        public void SendToClient(string message, string id)
         {
-            Clients.Caller.addNewMessageToPage(message);
+            Clients.Client(id).addNewMessageToPage(message);
         }
         #endregion
 
@@ -220,7 +220,7 @@ namespace MIMHubServer
             _AreaCache.TryGetValue(PlayerData.AreaId, out roomData);
 
             MIMEngine.Core.Room.PlayerManager.AddPlayerToRoom(roomData, PlayerData);
-            Movement.EnterRoom(PlayerData);
+            Movement.EnterRoom(PlayerData, roomData);
 
             // addToRoom(PlayerData.AreaId, roomData, PlayerData, "player");
 

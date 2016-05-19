@@ -98,6 +98,7 @@
     <Compile Include="Core\PlayerSetup\PlayerRace.cs" />
     <Compile Include="Core\PlayerSetup\Player.cs" />
     <Compile Include="Core\PlayerSetup\PlayerStats.cs" />
+    <Compile Include="Core\PlayerSetup\SavePlayer.cs" />
     <Compile Include="Core\Room\Exit.cs" />
     <Compile Include="Core\Room\Keyword.cs" />
     <Compile Include="Core\Room\Mob.cs" />

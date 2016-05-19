@@ -61,8 +61,7 @@ namespace MIMEngine.Core.Events
             foreach (var exit in room.exits)
             {
                 exitList += exit.name + " ";
-
-            };
+            }
 
             var itemList = string.Empty;
             foreach (var item in room.items)
@@ -73,53 +72,12 @@ namespace MIMEngine.Core.Events
             var playerList = string.Empty;
             foreach (var item in room.players)
             {
-                playerList += item.Name + " ";
+                playerList += item.Name + " is here";
             }
 
 
-            ////GEt Mobs
-            //var roomMobs = string.Empty;
-            //var mobList = roomJson["mobs"];
 
-            //if (mobList.Any())
-            //{
-            //    foreach (var mob in mobList)
-            //    {
-            //        roomMobs += mob["name"] + "\r\n";
-            //    }
-            //}
-            //else
-            //{
-            //    mobList = string.Empty;
-            //}
-
-            ////GEt players
-            //var roomPlayers = string.Empty;
-            //var playerList = roomJson["players"];
-
-            //if (playerList.Any())
-            //{
-            //    foreach (var player in playerList)
-            //    {
-            //        if (player["name"] != null)
-            //        {
-            //            roomPlayers += player["name"] + "\r\n";
-            //        }
-            //        else
-            //        {
-            //            roomPlayers += player["n"] + "\r\n";
-            //        }
-
-            //    }
-            //}
-            //else
-            //{
-            //    playerList = string.Empty;
-            //}
-
-
-
-            string displayRoom = roomTitle + "\r\n" + roomDescription + "\r\n Exits: " + exitList + "Items: " + itemList + " " + playerList;
+            string displayRoom = roomTitle + "\r\n" + roomDescription + "\r\n Exits: " + exitList + "\r\n Items: " + itemList + "\r\n " + playerList;
 
             return displayRoom;
 
@@ -136,7 +94,7 @@ namespace MIMEngine.Core.Events
             if (string.IsNullOrEmpty(commandOptions) && keyword == "look")
             {
                 var roomInfo = DisplayRoom(roomData);
-                HubProxy.MimHubServer.Invoke("SendToClient", roomInfo);
+                HubProxy.MimHubServer.Invoke("SendToClient", roomInfo, player.HubGuid);
             }
             else
             {
@@ -168,63 +126,88 @@ namespace MIMEngine.Core.Events
                 if (roomDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
                 {
                     string descriptionText = string.Empty;
-
+                    string broadcastAction = string.Empty;
                     if (keyword.StartsWith("look"))
                     {
                         descriptionText = roomDescription.look;
+                        broadcastAction = " looks at a " + roomDescription.name;
                     }
                     else if (keyword.StartsWith("examine"))
                     {
                         descriptionText = roomDescription.examine;
+                        broadcastAction = " looks closely at a " + roomDescription.name;
                     }
                     else if (keyword.StartsWith("touch"))
                     {
                         descriptionText = roomDescription.touch;
+                        broadcastAction = " touches closely a " + roomDescription.name;
                     }
                     else if (keyword.StartsWith("smell"))
                     {
                         descriptionText = roomDescription.smell;
+                        broadcastAction = " sniffs a " + roomDescription.name;
                     }
                     else if (keyword.StartsWith("taste"))
                     {
                         descriptionText = roomDescription.taste;
+                        broadcastAction = " licks a " + roomDescription.name;
                     }
 
                     if (!string.IsNullOrEmpty(descriptionText))
                     {
-                        HubProxy.MimHubServer.Invoke("SendToClient", descriptionText);
+                        HubProxy.MimHubServer.Invoke("SendToClient", descriptionText, player.HubGuid);
+
+
+                        foreach (var players in room.players)
+                        {
+                            if (player.Name != players.Name)
+                            {
+                                HubProxy.MimHubServer.Invoke("SendToClient", player.Name + broadcastAction, players.HubGuid);
+                            }
+                        }
                     }
                     else
                     {
                         HubProxy.MimHubServer.Invoke(
                             "SendToClient",
-                            "You can't do that to a " + roomDescription.name);
+                            "You can't do that to a " + roomDescription.name, player.HubGuid);
                     }
 
                 }
                 else if (itemDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
                 {
                     string descriptionText = string.Empty;
+                    string broadcastAction = string.Empty;
 
                     if (keyword.StartsWith("look"))
                     {
                         descriptionText = itemDescription.description.look;
+                        broadcastAction = " looks at a " + itemDescription.name;
                     }
                     else if (keyword.StartsWith("examine"))
                     {
                         descriptionText = itemDescription.description.exam;
+                        broadcastAction = " looks closely at a " + itemDescription.name;
                     }
 
 
                     if (!string.IsNullOrEmpty(descriptionText))
                     {
-                        HubProxy.MimHubServer.Invoke("SendToClient", descriptionText);
+                        HubProxy.MimHubServer.Invoke("SendToClient", descriptionText, player.HubGuid);
+
+                        foreach (var players in room.players)
+                        {
+                            if (player.Name != players.Name)
+                            {
+                                HubProxy.MimHubServer.Invoke("SendToClient", player.Name + broadcastAction, players.HubGuid);
+                            }
+                        }
                     }
                     else
                     {
                         HubProxy.MimHubServer.Invoke(
                             "SendToClient",
-                            "You can't do that to a " + roomDescription.name);
+                            "You can't do that to a " + roomDescription.name, player.HubGuid);
                     }
                 }
                 else if (mobDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
@@ -239,13 +222,13 @@ namespace MIMEngine.Core.Events
 
                     if (!string.IsNullOrEmpty(descriptionText))
                     {
-                        HubProxy.MimHubServer.Invoke("SendToClient", descriptionText);
+                        HubProxy.MimHubServer.Invoke("SendToClient", descriptionText, player.HubGuid);
                     }
                     else
                     {
                         HubProxy.MimHubServer.Invoke(
                             "SendToClient",
-                            "You can't do that to a " + roomDescription.name);
+                            "You can't do that to a " + roomDescription.name, player.HubGuid);
                     }
                 }
                 else if (playerDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
@@ -260,18 +243,18 @@ namespace MIMEngine.Core.Events
 
                     if (!string.IsNullOrEmpty(descriptionText))
                     {
-                        HubProxy.MimHubServer.Invoke("SendToClient", descriptionText);
+                        HubProxy.MimHubServer.Invoke("SendToClient", descriptionText, player.HubGuid);
                     }
                     else
                     {
                         HubProxy.MimHubServer.Invoke(
                             "SendToClient",
-                            "You can't do that to a " + roomDescription.name);
+                            "You can't do that to a " + roomDescription.name, player.HubGuid);
                     }
                 }
                 else
                 {
-                    HubProxy.MimHubServer.Invoke("SendToClient", "You don't see that here.");
+                    HubProxy.MimHubServer.Invoke("SendToClient", "You don't see that here.", player.HubGuid);
                 }
 
             }
