@@ -311,7 +311,7 @@
             event.preventDefault();
         });
 
-      
+        $.validator.unobtrusive.parse("#loginForm");
 
         $.validator.unobtrusive.parse("#createCharaterForm");
 
