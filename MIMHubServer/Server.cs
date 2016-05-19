@@ -32,7 +32,7 @@ namespace MIMHubServer
             string url = "http://localhost:4000";
             using (WebApp.Start(url))
             {
-    
+
                 Console.WriteLine("Server running on {0}", url);
                 Console.ReadLine();
             }
@@ -54,7 +54,7 @@ namespace MIMHubServer
     {
         public static ConcurrentDictionary<string, Player> _PlayerCache = new ConcurrentDictionary<string, Player>();
         public static ConcurrentDictionary<int, Room> _AreaCache = new ConcurrentDictionary<int, Room>();
-       // public static ConcurrentDictionary<int, string> _RoomCache = new ConcurrentDictionary<int, string>();
+        // public static ConcurrentDictionary<int, string> _RoomCache = new ConcurrentDictionary<int, string>();
 
         public static Player PlayerData { get; set; }
 
@@ -73,11 +73,11 @@ namespace MIMHubServer
             this.SendToClient(message);
 
             Player PlayerData;
-            Room RoomData;
+        //    Room RoomData;
             _PlayerCache.TryGetValue(playerGuid, out PlayerData);
-            _AreaCache.TryGetValue(0, out RoomData);
+           // _AreaCache.TryGetValue(0, out RoomData);
 
-            Command.ParseCommand(message, PlayerData, RoomData);
+            Command.ParseCommand(message, PlayerData, _AreaCache);
 
         }
         #endregion
@@ -119,6 +119,13 @@ namespace MIMHubServer
             }
 
             return null;
+        }
+
+        public void SaveRoom(Room room)
+        {
+
+            _AreaCache.TryAdd(room.areaId, room);
+
         }
 
         public void loadRoom(string id)
@@ -168,7 +175,7 @@ namespace MIMHubServer
             MIMEngine.Core.Room.PlayerManager.AddPlayerToRoom(roomData, PlayerData);
             Movement.EnterRoom(PlayerData);
 
-           // addToRoom(PlayerData.AreaId, roomData, PlayerData, "player");
+            // addToRoom(PlayerData.AreaId, roomData, PlayerData, "player");
 
 
         }
