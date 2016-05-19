@@ -222,9 +222,39 @@ namespace MIMHubServer
             MIMEngine.Core.Room.PlayerManager.AddPlayerToRoom(roomData, PlayerData);
             Movement.EnterRoom(PlayerData, roomData);
 
-            Save.savePlayer(PlayerData);
+            Save.SavePlayer(PlayerData);
 
             // addToRoom(PlayerData.AreaId, roomData, PlayerData, "player");
+
+
+        }
+
+        public void Login(string id, string name, string password)
+        {
+            Player player = Save.GetPlayer(name, password).Result;
+
+            if (player != null)
+            {
+                //update hubID
+                player.HubGuid = id;
+
+                _PlayerCache.TryAdd(id, player);
+
+                loadRoom(player.HubGuid);
+
+                //add player to room
+                Room roomData = null;
+                _AreaCache.TryGetValue(player.AreaId, out roomData);
+
+                MIMEngine.Core.Room.PlayerManager.AddPlayerToRoom(roomData, player);
+                Movement.EnterRoom(player, roomData);
+            }
+            else
+            {
+                //something went wrong
+            }
+
+           
 
 
         }

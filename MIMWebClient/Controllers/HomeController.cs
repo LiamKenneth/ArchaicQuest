@@ -35,5 +35,12 @@ namespace MIMWebClient.Controllers
 
             return this.Json(createPlayer);
         }
+
+        [HttpPost]
+        public JsonResult Login(Account login)
+        {
+
+            return this.Json(login);
+        }
     }
 }

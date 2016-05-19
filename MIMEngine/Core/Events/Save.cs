@@ -9,15 +9,18 @@ using System.Threading.Tasks;
 
 namespace MIMEngine.Core.Events
 {
+    using MongoDB.Driver.Linq;
+
     public class Save
     {
+        private const string DbServer = "mongodb://localhost:27017";
 
-        public async static Task savePlayer(Player player)
+        public static async Task SavePlayer(Player player)
         {
-            const string connectionString = "mongodb://localhost:27017";
+            const string ConnectionString = DbServer;
 
             // Create a MongoClient object by using the connection string
-            var client = new MongoClient(connectionString);
+            var client = new MongoClient(ConnectionString);
 
             //Use the MongoClient to access the server
             var database = client.GetDatabase("MIMDB");
@@ -28,12 +31,12 @@ namespace MIMEngine.Core.Events
           
         }
 
-        public async static Task UpdatePlayer(Player player)
+        public static async Task UpdatePlayer(Player player)
         {
-            const string connectionString = "mongodb://localhost:27017";
+            const string ConnectionString = DbServer;
 
             // Create a MongoClient object by using the connection string
-            var client = new MongoClient(connectionString);
+            var client = new MongoClient(ConnectionString);
 
             //Use the MongoClient to access the server
             var database = client.GetDatabase("MIMDB");
@@ -44,21 +47,24 @@ namespace MIMEngine.Core.Events
                 
         }
 
-        //public async static Task GetPlayer(string name, string password)
-        //{
-        //    const string connectionString = "mongodb://localhost:27017";
+        public static async Task<Player> GetPlayer(string name, string password)
+        {
+            const string ConnectionString = DbServer;
 
-        //    // Create a MongoClient object by using the connection string
-        //    var client = new MongoClient(connectionString);
+            // Create a MongoClient object by using the connection string
+            var client = new MongoClient(ConnectionString);
 
-        //    //Use the MongoClient to access the server
-        //    var database = client.GetDatabase("MIMDB");
+            //Use the MongoClient to access the server
+            var database = client.GetDatabase("MIMDB");
 
-        //    var collection = database.GetCollection<Player>("Player");
+            var collection = database.GetCollection<Player>("Player");
 
-        //    Player player = collection.FindAsync<Player>(x => x.Name == name && x.Password == password, new FindOptions<Player> { Limit = 1 });
- 
+            var returnPlayer = await collection.AsQueryable<Player>().SingleOrDefaultAsync(x => x.Name.Equals(name)); 
 
-        //}
+            return returnPlayer;
+
+
+
+        }
     }
 }

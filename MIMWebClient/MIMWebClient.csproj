@@ -152,6 +152,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Account.cs" />
     <Compile Include="Models\createPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -225,6 +226,7 @@
     <Content Include="Views\Home\Partial\CharacterCreation\ClassSelection.cshtml" />
     <Content Include="Views\Home\Partial\CharacterCreation\RaceSelection.cshtml" />
     <Content Include="Views\Home\Partial\CharacterCreation\StatSelection.cshtml" />
+    <Content Include="Views\Home\Partial\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

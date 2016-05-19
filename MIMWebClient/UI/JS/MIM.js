@@ -168,6 +168,9 @@
 
 
         },
+        login: function(char) {
+            server.Login($.connection.hub.id, char.Name, char.password);
+        },
         getGuid: function (guid) {
             var guid = $.cookie("playerGuid");
             return guid;
@@ -285,6 +288,25 @@
                 })
             .fail(function () {
                alert("faild");
+            });
+            event.preventDefault();
+        });
+
+        $("#loginForm").on("submit", function (event) {
+            var $this = $(this);
+            var frmValues = $this.serialize();
+            $.ajax({
+                type: $this.attr('method'),
+                url: $this.attr('action'),
+                data: frmValues
+            })
+            .done(function (data) {
+                alert(0)
+                MIM.login(data);
+
+            })
+            .fail(function () {
+                alert("faild");
             });
             event.preventDefault();
         });
