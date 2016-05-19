@@ -11,206 +11,209 @@ namespace MIMEngine.Core.PlayerSetup
     using System.Runtime.CompilerServices;
 
     using Newtonsoft.Json.Linq;
-
+    using MongoDB.Bson;
+    using MongoDB.Bson.Serialization.Attributes;
     public class Player
     {
-        [JsonProperty("id")]
+        public ObjectId _id { get; set; }
+
+        [BsonElement("id")]
         public string HubGuid;
 
-        [JsonProperty("e")]
+        [BsonElement("e")]
         public string Email;
 
-        [JsonProperty("de")]
+        [BsonElement("de")]
         public string Description;
 
-        [JsonProperty("p")]
+        [BsonElement("p")]
         public string Password;
 
         // General Info
-        [JsonProperty("n")]
+        [BsonElement("n")]
         public string Name;
 
-        [JsonProperty("g")]
+        [BsonElement("g")]
         public string Gender;
 
-        [JsonProperty("r")]
+        [BsonElement("r")]
         public string Race;
 
-        [JsonProperty("sc")]
+        [BsonElement("sc")]
         public string SelectedClass;
 
-        [JsonProperty("lvl")]
+        [BsonElement("lvl")]
         public int Level;
 
-        [JsonProperty("ali")]
+        [BsonElement("ali")]
         public int AlignmentScore;
 
-        [JsonProperty("xp")]
+        [BsonElement("xp")]
         public int Experience;
 
-        [JsonProperty("tnl")]
+        [BsonElement("tnl")]
         public int ExperienceToNextLevel;
 
-        [JsonProperty("hp")]
+        [BsonElement("hp")]
         public int HitPoints;
 
-        [JsonProperty("mhp")]
+        [BsonElement("mhp")]
         public int MaxHitPoints;
 
-        [JsonProperty("mp")]
+        [BsonElement("mp")]
         public int ManaPoints;
 
-        [JsonProperty("mmp")]
+        [BsonElement("mmp")]
         public int MaxManaPoints;
 
-        [JsonProperty("mvp")]
+        [BsonElement("mvp")]
         public int MovePoints;
 
-        [JsonProperty("mmvp")]
+        [BsonElement("mmvp")]
         public int MaxMovePoints;
 
-        [JsonProperty("in")]
+        [BsonElement("in")]
         public object[] Inventory;
 
         //Game stats
-        [JsonProperty("ex")]
+        [BsonElement("ex")]
         public int Explored;
 
-        [JsonProperty("hr")]
+        [BsonElement("hr")]
         public int HitRoll;
 
-        [JsonProperty("dr")]
+        [BsonElement("dr")]
         public int DamRoll;
 
-        [JsonProperty("wi")]
+        [BsonElement("wi")]
         public int Wimpy;
 
-        [JsonProperty("hrs")]
+        [BsonElement("hrs")]
         public int Hours;
 
-        [JsonProperty("we")]
+        [BsonElement("we")]
         public int Weight;
 
-        [JsonProperty("mwe")]
+        [BsonElement("mwe")]
         public int MaxWeight;
 
-        [JsonProperty("st")]
+        [BsonElement("st")]
         public int Status;
 
         //Kills
-        [JsonProperty("mk")]
+        [BsonElement("mk")]
         public int MobKills;
 
-        [JsonProperty("md")]
+        [BsonElement("md")]
         public int MobDeaths;
 
-        [JsonProperty("pk")]
+        [BsonElement("pk")]
         public int Pkills;
 
-        [JsonProperty("pd")]
+        [BsonElement("pd")]
         public int PkDeaths;
 
-        [JsonProperty("pkp")]
+        [BsonElement("pkp")]
         public int PkPoints;
 
         //Money
-        [JsonProperty("gp")]
+        [BsonElement("gp")]
         public int Gold;
 
-        [JsonProperty("sp")]
+        [BsonElement("sp")]
         public int Silver;
 
-        [JsonProperty("cp")]
+        [BsonElement("cp")]
         public int Copper;
 
         // attributes
-        [JsonProperty("as")]
+        [BsonElement("as")]
         public int Strength;
 
-        [JsonProperty("ad")]
+        [BsonElement("ad")]
         public int Dexterity;
 
-        [JsonProperty("ac")]
+        [BsonElement("ac")]
         public int Constitution;
 
-        [JsonProperty("aw")]
+        [BsonElement("aw")]
         public int Wisdom;
 
-        [JsonProperty("ai")]
+        [BsonElement("ai")]
         public int Intelligence;
 
-        [JsonProperty("ach")]
+        [BsonElement("ach")]
         public int Charisma;
 
         //location
-        [JsonProperty("re")]
+        [BsonElement("re")]
         public string Region;
 
-        [JsonProperty("ar")]
+        [BsonElement("ar")]
         public string Area;
 
-        [JsonProperty("ari")]
+        [BsonElement("ari")]
         public int AreaId;
 
         //Equipment
-        [JsonProperty("efl")]
+        [BsonElement("efl")]
         public object Floating;
 
-        [JsonProperty("eli")]
+        [BsonElement("eli")]
         public object Light;
 
-        [JsonProperty("eh")]
+        [BsonElement("eh")]
         public object Head;
 
-        [JsonProperty("efa")]
+        [BsonElement("efa")]
         public object Face;
 
-        [JsonProperty("ee")]
+        [BsonElement("ee")]
         public object Eyes;
 
-        [JsonProperty("ele")]
+        [BsonElement("ele")]
         public object LeftEar;
 
-        [JsonProperty("ere")]
+        [BsonElement("ere")]
         public object RightEar;
 
-        [JsonProperty("en")]
+        [BsonElement("en")]
         public object Neck;
 
-        [JsonProperty("ec")]
+        [BsonElement("ec")]
         public object Cloak;
 
-        [JsonProperty("ea")]
+        [BsonElement("ea")]
         public object AboutBody;
 
-        [JsonProperty("eb")]
+        [BsonElement("eb")]
         public object Body;
 
-        [JsonProperty("ew")]
+        [BsonElement("ew")]
         public object Waist;
 
-        [JsonProperty("elw")]
+        [BsonElement("elw")]
         public object LeftWrist;
 
-        [JsonProperty("erw")]
+        [BsonElement("erw")]
         public object RightWrist;
 
-        [JsonProperty("elh")]
+        [BsonElement("elh")]
         public object LeftHand;
 
-        [JsonProperty("erh")]
+        [BsonElement("erh")]
         public object RightHand;
 
-        [JsonProperty("elf")]
+        [BsonElement("elf")]
         public object LeftFinger;
 
-        [JsonProperty("erf")]
+        [BsonElement("erf")]
         public object RightFinger;
 
-        [JsonProperty("el")]
+        [BsonElement("el")]
         public object Legs;
 
-        [JsonProperty("ef")]
+        [BsonElement("ef")]
         public object Feet;
 
         public Player(
