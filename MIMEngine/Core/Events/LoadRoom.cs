@@ -125,157 +125,155 @@ namespace MIMEngine.Core.Events
 
         }
 
-        public static void ReturnRoom(Player player, ConcurrentDictionary<int, Core.Room.Room> room, string commandOptions = "", string keyword = "")
+        public static void ReturnRoom(Player player, Room room, string commandOptions = "", string keyword = "")
         {
 
-            Room roomData = null;
+            Room roomData = room;
 
-            if (room.TryGetValue(player.AreaId, out roomData))
+
+
+
+            if (string.IsNullOrEmpty(commandOptions) && keyword == "look")
+            {
+                var roomInfo = DisplayRoom(roomData);
+                HubProxy.MimHubServer.Invoke("SendToClient", roomInfo);
+            }
+            else
             {
 
+                int n = -1;
+                string item = string.Empty;
 
-                if (string.IsNullOrEmpty(commandOptions) && keyword == "look")
+                if (commandOptions.IndexOf('.') != -1)
                 {
-                    var roomInfo = DisplayRoom(roomData);
-                    HubProxy.MimHubServer.Invoke("SendToClient", roomInfo, true);
+                    n = Convert.ToInt32(commandOptions.Substring(0, commandOptions.IndexOf('.')));
+                    item = commandOptions.Substring(commandOptions.LastIndexOf('.') + 1);
                 }
-                else
+
+
+                var roomDescription = roomData.keywords.Find(x => x.name.ToLower().Contains(commandOptions));
+
+                var itemDescription = (n == -1)
+                                          ? roomData.items.Find(x => x.name.ToLower().Contains(commandOptions))
+                                          : roomData.items.FindAll(x => x.name.ToLower().Contains(item))
+                                                .Skip(n - 1)
+                                                .FirstOrDefault();
+
+                var mobDescription = roomData.mobs.Find(x => x.Name.ToLower().Contains(commandOptions));
+
+                var playerDescription = roomData.players.Find(x => x.Name.ToLower().Contains(commandOptions));
+
+
+                //Returns descriptions for important objects in the room
+                if (roomDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
                 {
+                    string descriptionText = string.Empty;
 
-                    int n = -1;
-                    string item = string.Empty;
-
-                    if (commandOptions.IndexOf('.') != -1)
+                    if (keyword.StartsWith("look"))
                     {
-                        n = Convert.ToInt32(commandOptions.Substring(0, commandOptions.IndexOf('.')));
-                        item = commandOptions.Substring(commandOptions.LastIndexOf('.') + 1);
+                        descriptionText = roomDescription.look;
+                    }
+                    else if (keyword.StartsWith("examine"))
+                    {
+                        descriptionText = roomDescription.examine;
+                    }
+                    else if (keyword.StartsWith("touch"))
+                    {
+                        descriptionText = roomDescription.touch;
+                    }
+                    else if (keyword.StartsWith("smell"))
+                    {
+                        descriptionText = roomDescription.smell;
+                    }
+                    else if (keyword.StartsWith("taste"))
+                    {
+                        descriptionText = roomDescription.taste;
                     }
 
-
-                    var roomDescription = roomData.keywords.Find(x => x.name.ToLower().Contains(commandOptions));
-
-                    var itemDescription = (n == -1)
-                                              ? roomData.items.Find(x => x.name.ToLower().Contains(commandOptions))
-                                              : roomData.items.FindAll(x => x.name.ToLower().Contains(item))
-                                                    .Skip(n - 1)
-                                                    .FirstOrDefault();
-
-                    var mobDescription = roomData.mobs.Find(x => x.Name.ToLower().Contains(commandOptions));
-
-                    var playerDescription = roomData.players.Find(x => x.Name.ToLower().Contains(commandOptions));
-
-
-                    //Returns descriptions for important objects in the room
-                    if (roomDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
+                    if (!string.IsNullOrEmpty(descriptionText))
                     {
-                        string descriptionText = string.Empty;
-
-                        if (keyword.StartsWith("look"))
-                        {
-                            descriptionText = roomDescription.look;
-                        }
-                        else if (keyword.StartsWith("examine"))
-                        {
-                            descriptionText = roomDescription.examine;
-                        }
-                        else if (keyword.StartsWith("touch"))
-                        {
-                            descriptionText = roomDescription.touch;
-                        }
-                        else if (keyword.StartsWith("smell"))
-                        {
-                            descriptionText = roomDescription.smell;
-                        }
-                        else if (keyword.StartsWith("taste"))
-                        {
-                            descriptionText = roomDescription.taste;
-                        }
-
-                        if (!string.IsNullOrEmpty(descriptionText))
-                        {
-                            HubProxy.MimHubServer.Invoke("SendToClient", descriptionText);
-                        }
-                        else
-                        {
-                            HubProxy.MimHubServer.Invoke(
-                                "SendToClient",
-                                "You can't do that to a " + roomDescription.name);
-                        }
-
-                    }
-                    else if (itemDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
-                    {
-                        string descriptionText = string.Empty;
-
-                        if (keyword.StartsWith("look"))
-                        {
-                            descriptionText = itemDescription.description.look;
-                        }
-                        else if (keyword.StartsWith("examine"))
-                        {
-                            descriptionText = itemDescription.description.exam;
-                        }
-
-
-                        if (!string.IsNullOrEmpty(descriptionText))
-                        {
-                            HubProxy.MimHubServer.Invoke("SendToClient", descriptionText);
-                        }
-                        else
-                        {
-                            HubProxy.MimHubServer.Invoke(
-                                "SendToClient",
-                                "You can't do that to a " + roomDescription.name);
-                        }
-                    }
-                    else if (mobDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
-                    {
-                        string descriptionText = string.Empty;
-
-                        if (keyword.StartsWith("look"))
-                        {
-                            descriptionText = mobDescription.Description;
-                        }
-
-
-                        if (!string.IsNullOrEmpty(descriptionText))
-                        {
-                            HubProxy.MimHubServer.Invoke("SendToClient", descriptionText);
-                        }
-                        else
-                        {
-                            HubProxy.MimHubServer.Invoke(
-                                "SendToClient",
-                                "You can't do that to a " + roomDescription.name);
-                        }
-                    }
-                    else if (playerDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
-                    {
-                        string descriptionText = string.Empty;
-
-                        if (keyword.StartsWith("look"))
-                        {
-                            descriptionText = playerDescription.Description;
-                        }
-
-
-                        if (!string.IsNullOrEmpty(descriptionText))
-                        {
-                            HubProxy.MimHubServer.Invoke("SendToClient", descriptionText);
-                        }
-                        else
-                        {
-                            HubProxy.MimHubServer.Invoke(
-                                "SendToClient",
-                                "You can't do that to a " + roomDescription.name);
-                        }
+                        HubProxy.MimHubServer.Invoke("SendToClient", descriptionText);
                     }
                     else
                     {
-                        HubProxy.MimHubServer.Invoke("SendToClient", "You don't see that here.");
+                        HubProxy.MimHubServer.Invoke(
+                            "SendToClient",
+                            "You can't do that to a " + roomDescription.name);
                     }
 
                 }
+                else if (itemDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
+                {
+                    string descriptionText = string.Empty;
+
+                    if (keyword.StartsWith("look"))
+                    {
+                        descriptionText = itemDescription.description.look;
+                    }
+                    else if (keyword.StartsWith("examine"))
+                    {
+                        descriptionText = itemDescription.description.exam;
+                    }
+
+
+                    if (!string.IsNullOrEmpty(descriptionText))
+                    {
+                        HubProxy.MimHubServer.Invoke("SendToClient", descriptionText);
+                    }
+                    else
+                    {
+                        HubProxy.MimHubServer.Invoke(
+                            "SendToClient",
+                            "You can't do that to a " + roomDescription.name);
+                    }
+                }
+                else if (mobDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
+                {
+                    string descriptionText = string.Empty;
+
+                    if (keyword.StartsWith("look"))
+                    {
+                        descriptionText = mobDescription.Description;
+                    }
+
+
+                    if (!string.IsNullOrEmpty(descriptionText))
+                    {
+                        HubProxy.MimHubServer.Invoke("SendToClient", descriptionText);
+                    }
+                    else
+                    {
+                        HubProxy.MimHubServer.Invoke(
+                            "SendToClient",
+                            "You can't do that to a " + roomDescription.name);
+                    }
+                }
+                else if (playerDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
+                {
+                    string descriptionText = string.Empty;
+
+                    if (keyword.StartsWith("look"))
+                    {
+                        descriptionText = playerDescription.Description;
+                    }
+
+
+                    if (!string.IsNullOrEmpty(descriptionText))
+                    {
+                        HubProxy.MimHubServer.Invoke("SendToClient", descriptionText);
+                    }
+                    else
+                    {
+                        HubProxy.MimHubServer.Invoke(
+                            "SendToClient",
+                            "You can't do that to a " + roomDescription.name);
+                    }
+                }
+                else
+                {
+                    HubProxy.MimHubServer.Invoke("SendToClient", "You don't see that here.");
+                }
+
             }
         }
     }

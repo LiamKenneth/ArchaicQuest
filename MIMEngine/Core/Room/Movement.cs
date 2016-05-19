@@ -21,7 +21,7 @@ namespace MIMEngine.Core.Room
         {
             string name = player.Name;
             string movement = "walks in"; // runs, hovers, crawls. Steps out of a portal, appears?
-           // string prevDirection = "South";
+                                          // string prevDirection = "South";
 
             string enterText = name + " " + movement;
 
@@ -39,87 +39,50 @@ namespace MIMEngine.Core.Room
             HubProxy.MimHubServer.Invoke("SendToClient", exitText);
         }
 
-        public static void Move(Player player, ConcurrentDictionary<int, Core.Room.Room> room, string direction)
+        public static void Move(Player player, Room room, string direction)
         {
 
-            Room roomData = null;
+            Room roomData = room;
 
-            if (room.TryGetValue(player.AreaId, out roomData))
+            //Find Exit
+            var exit = roomData.exits.Find(x => x.name == direction);
+
+            if (exit != null)
             {
-                //Find Exit
-                var exit = roomData.exits.Find(x => x.name == direction);
 
-                if (exit != null)
+                //remove player from old room
+                PlayerManager.RemovePlayerFromRoom(roomData, player);
+
+                //exit message
+                ExitRoom(player, direction);
+
+                //change player Location
+                player.Area = exit.area;
+                player.AreaId = exit.areaId;
+                player.Region = exit.region;
+
+                //GEt new room                  
+                Room getNewRoom = HubProxy.MimHubServer.Invoke<Room>("getRoom", player.HubGuid).Result; //returns string
+
+                if (getNewRoom != null)
                 {
+                    //add player to new room
+                    PlayerManager.AddPlayerToRoom(getNewRoom, player);
 
-                    //remove player from old room
-                    PlayerManager.RemovePlayerFromRoom(roomData, player);
+                    //enter message
+                    EnterRoom(player);
 
-                    //exit message
-                    ExitRoom(player, direction);
+                    var roomDescription = LoadRoom.DisplayRoom(getNewRoom);
 
-                    //change player Location
-                    player.Area = exit.area;
-                    player.AreaId = exit.areaId;
-                    player.Region = exit.region;
-
-                    //GEt new room                  
-
-                    Room getNewRoom = null;
-
-                    if (room.TryGetValue(player.AreaId, out getNewRoom))
-                    {
-
-                        //add player to new room
-                        PlayerManager.AddPlayerToRoom(getNewRoom, player);
-
-                        //enter message
-                        EnterRoom(player);
-
-                        //Display Room
-                        LoadRoom.DisplayRoom(getNewRoom);
-                    }
-                    else
-                    {
-                        //get room for DB
-                        LoadRoom getRoomFromDB = new LoadRoom();
-
-                        getRoomFromDB.id = player.AreaId;
-                        getRoomFromDB.Area = player.Area;
-                        getRoomFromDB.Region = player.Region;
-
-                        Room newRoom = getRoomFromDB.LoadRoomFile();
-
-                        //add player to new room
-                        PlayerManager.AddPlayerToRoom(newRoom, player);
-
-                        //enter message
-                        EnterRoom(player);
-
-                        //Display Room
-                       string newRoomData = LoadRoom.DisplayRoom(newRoom);
-
-                        HubProxy.MimHubServer.Invoke("SendToClient", newRoomData);
-
-                        //save new room to cache
-                        
-                             HubProxy.MimHubServer.Invoke("SaveRoom", newRoomData);
-                    }
-                }
-                else
-                {
-                    HubProxy.MimHubServer.Invoke("SendToClient", "There is no exit here");
+                    HubProxy.MimHubServer.Invoke("SendToClient", roomDescription);
                 }
             }
-
+            else
+            {
+                HubProxy.MimHubServer.Invoke("SendToClient", "There is no exit here");
+            }
         }
 
-        //private static async Task GetRoom(int exitID)
-        //{
-        //    //adding .ConfigureAwait(false) may NOT be what you want but google it.
-        //    return await Task.Run(() => HubProxy.MimHubServer.Invoke("ReturnRoom", exitID).ConfigureAwait(true));
-        //}
-
-       
     }
+
 }

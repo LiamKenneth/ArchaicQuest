@@ -73,16 +73,64 @@ namespace MIMHubServer
             this.SendToClient(message);
 
             Player PlayerData;
-        //    Room RoomData;
+             Room RoomData;
             _PlayerCache.TryGetValue(playerGuid, out PlayerData);
-           // _AreaCache.TryGetValue(0, out RoomData);
+             _AreaCache.TryGetValue(PlayerData.AreaId, out RoomData);
 
-            Command.ParseCommand(message, PlayerData, _AreaCache);
+            Command.ParseCommand(message, PlayerData, RoomData);
 
         }
         #endregion
 
         #region load and display room
+        public Room getRoom(string playerId)
+        {
+            Player player;
+
+            if (_PlayerCache.TryGetValue(playerId, out player))
+            {
+ 
+                LoadRoom RoomData = new LoadRoom();
+
+                RoomData.Region = player.Region;
+                RoomData.Area = player.Area;
+                RoomData.id = player.AreaId;
+
+                Room getRoomData = null;
+                if (_AreaCache.TryGetValue(RoomData.id, out getRoomData))
+                {
+
+                    return getRoomData;
+
+                }
+                else
+                {
+                    getRoomData = RoomData.LoadRoomFile();
+                    _AreaCache.TryAdd(RoomData.id, getRoomData);
+
+                    return getRoomData;
+                }
+            }
+
+            return null;
+        }
+
+        //public string showRoom(string playerId, Room roomData)
+        //{
+        //    Player player;
+
+        //    if (_PlayerCache.TryGetValue(playerId, out player))
+        //    {
+
+               
+        //    return  LoadRoom.DisplayRoom(roomData);
+              
+
+        //    }
+
+        //    return null;
+        //}
+
         public string ReturnRoom(string id)
         {
             Player player;
@@ -97,7 +145,6 @@ namespace MIMHubServer
                 roomJSON.id = player.AreaId;
 
                 Room roomData;
-
 
                 if (_AreaCache.TryGetValue(roomJSON.id, out roomData))
                 {

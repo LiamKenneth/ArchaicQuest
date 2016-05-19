@@ -16,7 +16,7 @@ namespace MIMEngine.Core
     public class Command
     {
     //public static Dictionary<string, Action> commandList { get; set; }
-        public static Dictionary<string, Action> Commands(string commandOptions, PlayerSetup.Player playerData, ConcurrentDictionary<int, Room.Room> room)
+        public static Dictionary<string, Action> Commands(string commandOptions, PlayerSetup.Player playerData, Room.Room room)
         {
             var commandList = new Dictionary<String, Action>(); 
             commandList.Add("north", () => Movement.Move(playerData, room, "North"));
@@ -41,7 +41,7 @@ namespace MIMEngine.Core
 
  
 
-        public static void ParseCommand(string input, PlayerSetup.Player playerData, ConcurrentDictionary<int, Room.Room> room = null)
+        public static void ParseCommand(string input, PlayerSetup.Player playerData, Room.Room room = null)
         {
 
             //testing
