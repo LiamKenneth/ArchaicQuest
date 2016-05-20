@@ -261,6 +261,7 @@ namespace MIMEngine.Core.PlayerSetup
             this.Weight = 0;
             this.MaxWeight = 70; // class to workout
             this.Status = 1; // enum property? 1 standing
+            this.Inventory = this.Inventory ?? (this.Inventory = new List<Item>());
 
             //kills
             this.MobKills = 0;

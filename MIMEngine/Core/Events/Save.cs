@@ -46,7 +46,10 @@ namespace MIMEngine.Core.Events
             var collection = database.GetCollection<Player>("Player");
 
             await collection.ReplaceOneAsync<Player>(x => x._id == player._id, player);
-                
+
+            HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("The gods take note of your progress");
+
+
         }
 
         public static async Task<Player> GetPlayer(string name, string password)
