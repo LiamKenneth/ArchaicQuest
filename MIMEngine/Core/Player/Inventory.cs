@@ -7,26 +7,28 @@ using System.Threading.Tasks;
 namespace MIMEngine.Core.Player
 {
     using MIMEngine.Core.Item;
+    using MIMEngine.Core.PlayerSetup;
 
     public class Inventory
     {
 
-        public static void ReturnInventory(List<Item> inventory)
+        public static void ReturnInventory(List<Item> inventory, Player player)
         {
             if (inventory != null)
             {
                 int inventoryCount = inventory.Count;
-                var inventoryItems = new StringBuilder();
+                var inventoryItems = new StringBuilder();;
+                inventoryItems.Append("You are carrying:").AppendLine();
                 for (int i = 0; i < inventoryCount; i++)
                 {
                     inventoryItems.Append(inventory[i].name).AppendLine();
                 }
 
-                HubContext.getHubContext.Clients.All.addNewMessageToPage(inventoryItems.ToString());
+                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(inventoryItems.ToString());
             }
             else
             {
-                HubContext.getHubContext.Clients.All.addNewMessageToPage("You are not carrying anything.");
+                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You are not carrying anything.");
             }
         }
     }

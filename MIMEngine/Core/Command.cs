@@ -32,8 +32,9 @@ namespace MIMEngine.Core
             commandList.Add("smell", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "smell"));
             commandList.Add("taste", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "taste"));
             commandList.Add("score", () => Score.ReturnScore(playerData));
-            commandList.Add("inventory", () => Inventory.ReturnInventory(playerData.Inventory));
+            commandList.Add("inventory", () => Inventory.ReturnInventory(playerData.Inventory, playerData));
             commandList.Add("get", () => ManipulateObject.GetItem(room, playerData, commandOptions));
+            commandList.Add("save", () =>  Save.UpdatePlayer(playerData));
 
             return commandList;
         }

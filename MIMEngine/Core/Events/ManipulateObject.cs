@@ -56,15 +56,20 @@ namespace MIMEngine.Core.Events
 
             if (item != null)
             {
+                room.items.Remove(item);
+                item.location = "Inventory";
                 player.Inventory.Add(item);
-                HubContext.getHubContext.Clients.Client(player.HubGuid)
-                    .addNewMessageToPage("You pick up a " + item.name);
-                HubContext.getHubContext.Clients.All.addNewMessageToPage(player.Name + " picks up a " + item.name);
+
+                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You pick up a " + item.name);
+                HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " picks up a " + item.name);
+
+                //save to cache
+                
             }
             else
             {
-                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("There is no sword " + item.name + " here to pick up.");
-                HubContext.getHubContext.Clients.All.addNewMessageToPage(player.Name + " is looking for a " + item.name + " to pick up.");
+                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("There is no " + itemToFind + " here to pick up.");
+                HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " is looking for a " + itemToFind + " to pick up.");
             }
            
 
