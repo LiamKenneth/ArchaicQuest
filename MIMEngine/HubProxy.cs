@@ -11,7 +11,6 @@ namespace MIMEngine
     {
         private static IHubProxy mimHubServer;
 
-
         public static IHubProxy MimHubServer
         {
             get

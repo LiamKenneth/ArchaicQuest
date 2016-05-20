@@ -13,7 +13,7 @@ namespace MIMEngine.Core
 
     using Newtonsoft.Json.Linq;
 
-    public class Command
+    public static class Command
     {
     //public static Dictionary<string, Action> commandList { get; set; }
         public static Dictionary<string, Action> Commands(string commandOptions, PlayerSetup.Player playerData, Room.Room room)
@@ -66,7 +66,8 @@ namespace MIMEngine.Core
                 fire.Value();
             }
             else
-            {
+            { 
+
                 HubProxy.MimHubServer.Invoke("SendToClient", "Sorry you can't do that.");
             }
            

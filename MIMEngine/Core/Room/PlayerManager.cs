@@ -8,7 +8,7 @@ namespace MIMEngine.Core.Room
 {
     using MIMEngine.Core.PlayerSetup;
 
-    public class PlayerManager
+    public static class PlayerManager
     {
 
        public static void AddPlayerToRoom(Room room, Player player)

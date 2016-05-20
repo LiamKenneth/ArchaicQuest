@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MIMEngine
 {
-    public class Data
+    public static class Data
     {
         public static string loadFile(string filePath)
         {

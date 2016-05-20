@@ -138,7 +138,22 @@
 
             });
         },
-        sendMessageToServer: function() {
+        sendMessageToServer: function () {
+            $('#sendmessage').keypress(function (e) {
+                var key = e.which;
+                if (key == 13)  // the enter key code
+                {
+                    var message = $('#message');
+                    var playerGuid = $.connection.hub.id;
+
+                    // Call the Send method on the hub.
+                    server.recieveFromClient(message.val(), playerGuid);
+
+                    message.select().focus();
+                    return false;
+                }
+            });
+
             $('#sendmessage').click(function () {
 
                 var message = $('#message');
@@ -168,8 +183,11 @@
 
 
         },
-        login: function(char) {
-            server.Login($.connection.hub.id, char.Name, char.password);
+        login: function (char) {
+ 
+            server.login($.connection.hub.id, char.Name, char.password);
+
+            document.getElementById('signUpModal').style.display = "none";
         },
         getGuid: function (guid) {
             var guid = $.cookie("playerGuid");
@@ -287,7 +305,7 @@
 
                 })
             .fail(function () {
-               alert("faild");
+               alert("failed");
             });
             event.preventDefault();
         });
@@ -301,12 +319,12 @@
                 data: frmValues
             })
             .done(function (data) {
-                alert(0)
+ 
                 MIM.login(data);
 
             })
             .fail(function () {
-                alert("faild");
+                alert("failed");
             });
             event.preventDefault();
         });

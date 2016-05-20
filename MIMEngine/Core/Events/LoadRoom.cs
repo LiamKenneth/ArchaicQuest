@@ -36,7 +36,7 @@ namespace MIMEngine.Core.Events
 
             var collection = database.GetCollection<Room>("Room");
 
-            Room room = collection.AsQueryable<Room>().SingleOrDefault(x => x.areaId == this.id && x.area == Area && x.region == Region);
+            Room room = collection.Find(x => x.areaId == this.id && x.area == Area && x.region == Region).FirstOrDefault();
 
 
             if (room != null)

@@ -14,7 +14,8 @@ namespace MIMEngine.Core.Room
     [BsonIgnoreExtraElements]
    public class Room
     {
-        public string _id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public ObjectId _id { get; set; }
 
         public string region { get; set; }
 

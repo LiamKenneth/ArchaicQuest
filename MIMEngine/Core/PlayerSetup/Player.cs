@@ -15,9 +15,10 @@ namespace MIMEngine.Core.PlayerSetup
     using MongoDB.Bson.Serialization.Attributes;
     public class Player
     {
+        [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId _id { get; set; }
 
-        [BsonElement("id")]
+        [BsonElement("hid")]
         public string HubGuid;
 
         [BsonElement("e")]

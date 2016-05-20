@@ -14,8 +14,8 @@ namespace MIMEngine.Core.Room
 
     using MIMEngine.Core.Events;
     using MIMEngine.Core.PlayerSetup;
-
-    public class Movement
+    using MIMHubServer;
+    public static class Movement
     {
         public static void EnterRoom(Player player, Room room, string direction = "")
         {
@@ -23,7 +23,7 @@ namespace MIMEngine.Core.Room
             string movement = "walks in"; // runs, hovers, crawls. Steps out of a portal, appears?
             direction = oppositeDirection(direction);
             string enterText = name + " " + movement + direction;
- 
+
             foreach (var players in room.players)
             {
                 if (player.Name != players.Name)
@@ -36,7 +36,7 @@ namespace MIMEngine.Core.Room
                     HubProxy.MimHubServer.Invoke("SendToClient", enterText, player.HubGuid);
                 }
             }
-       
+
         }
 
         public static void ExitRoom(Player player, Room room, string direction)
@@ -101,7 +101,7 @@ namespace MIMEngine.Core.Room
 
         }
 
-        public static void Move(Player player, Room room, string direction)
+        public async static void Move(Player player, Room room, string direction)
         {
 
             Room roomData = room;
@@ -123,20 +123,28 @@ namespace MIMEngine.Core.Room
                 player.AreaId = exit.areaId;
                 player.Region = exit.region;
 
-                //GEt new room                  
-                Room getNewRoom = HubProxy.MimHubServer.Invoke<Room>("getRoom", player.HubGuid).Result; //returns string
-
-                if (getNewRoom != null)
+                //Get new room  
+                try
                 {
-                    //add player to new room
-                    PlayerManager.AddPlayerToRoom(getNewRoom, player);
+                    //Room getNewRoom =  await HubProxy.MimHubServer.Invoke<Room>("getRoom", player.HubGuid);
+                    Room getNewRoom = MimHubServer.getRoom(player.HubGuid);
 
-                    //enter message
-                    EnterRoom(player, getNewRoom, direction);
+                    if (getNewRoom != null)
+                    {
+                        //add player to new room
+                        PlayerManager.AddPlayerToRoom(getNewRoom, player);
 
-                    var roomDescription = LoadRoom.DisplayRoom(getNewRoom);
+                        //enter message
+                        EnterRoom(player, getNewRoom, direction);
 
-                    HubProxy.MimHubServer.Invoke("SendToClient", roomDescription, player.HubGuid);
+                        var roomDescription = LoadRoom.DisplayRoom(getNewRoom);
+
+                        HubProxy.MimHubServer.Invoke("SendToClient", roomDescription, player.HubGuid);
+                    }
+                }
+                catch (Exception e)
+                {
+                    //log error
                 }
             }
             else
