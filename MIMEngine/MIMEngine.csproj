@@ -109,9 +109,10 @@
   <ItemGroup>
     <Compile Include="Core\Command.cs" />
     <Compile Include="Core\Events\LoadRoom.cs" />
-    <Compile Include="Core\Events\Move.cs" />
+    <Compile Include="Core\Events\ManipulateObject.cs" />
     <Compile Include="Core\Events\Save.cs" />
     <Compile Include="Core\Events\Score.cs" />
+    <Compile Include="Core\Player\Inventory.cs" />
     <Compile Include="HubContext.cs" />
     <Compile Include="Core\Item\Action.cs" />
     <Compile Include="Core\Item\Description.cs" />
@@ -120,7 +121,7 @@
     <Compile Include="Core\PlayerSetup\PlayerClass.cs" />
     <Compile Include="Core\PlayerSetup\PlayerLocation.cs" />
     <Compile Include="Core\PlayerSetup\PlayerRace.cs" />
-    <Compile Include="Core\PlayerSetup\Player.cs" />
+    <Compile Include="Core\Player\Player.cs" />
     <Compile Include="Core\PlayerSetup\PlayerStats.cs" />
     <Compile Include="Core\Room\Exit.cs" />
     <Compile Include="Core\Room\Keyword.cs" />

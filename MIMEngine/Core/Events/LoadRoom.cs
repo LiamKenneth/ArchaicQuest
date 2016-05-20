@@ -26,10 +26,10 @@ namespace MIMEngine.Core.Events
 
         public Room LoadRoomFile()
         {
-            const string connectionString = "mongodb://localhost:27017";
+            const string ConnectionString = "mongodb://localhost:27017";
 
             // Create a MongoClient object by using the connection string
-            var client = new MongoClient(connectionString);
+            var client = new MongoClient(ConnectionString);
 
             //Use the MongoClient to access the server
             var database = client.GetDatabase("MIMDB");
@@ -38,7 +38,7 @@ namespace MIMEngine.Core.Events
 
             Room room = collection.Find(x => x.areaId == this.id && x.area == Area && x.region == Region).FirstOrDefault();
 
-
+            
             if (room != null)
             {
                 return room;
@@ -49,10 +49,8 @@ namespace MIMEngine.Core.Events
 
 
 
-        public static string DisplayRoom(Room room)
+        public static string DisplayRoom(Room room, string playerName)
         {
-
-            var roomJson = room;
 
             string roomTitle = room.title;
             string roomDescription = room.description;
@@ -72,7 +70,11 @@ namespace MIMEngine.Core.Events
             var playerList = string.Empty;
             foreach (var item in room.players)
             {
-                playerList += item.Name + " is here";
+                if (item.Name != playerName)
+                {
+                    playerList += item.Name + " is here";
+                }
+               
             }
 
 
@@ -93,7 +95,7 @@ namespace MIMEngine.Core.Events
 
             if (string.IsNullOrEmpty(commandOptions) && keyword == "look")
             {
-                var roomInfo = DisplayRoom(roomData);
+                var roomInfo = DisplayRoom(roomData, player.Name);
                 HubProxy.MimHubServer.Invoke("SendToClient", roomInfo, player.HubGuid);
             }
             else

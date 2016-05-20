@@ -11,6 +11,8 @@ namespace MIMEngine.Core.Events
 {
     using MongoDB.Driver.Linq;
 
+    using Player = MIMEngine.Core.PlayerSetup.Player;
+
     public static class Save
     {
         private const string DbServer = "mongodb://localhost:27017";

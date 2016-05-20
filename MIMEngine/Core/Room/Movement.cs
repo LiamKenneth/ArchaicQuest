@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MIMEngine.Core.Room
 {
-    using System.Collections.Concurrent;
-    using System.Runtime.CompilerServices;
-    using System.Security.Cryptography.X509Certificates;
-
-    using Microsoft.AspNet.SignalR.Client;
-
     using MIMEngine.Core.Events;
     using MIMEngine.Core.PlayerSetup;
     using MIMHubServer;
@@ -28,12 +18,12 @@ namespace MIMEngine.Core.Room
             {
                 if (player.Name != players.Name)
                 {
-                    HubProxy.MimHubServer.Invoke("SendToClient", enterText, players.HubGuid);
+                    HubContext.getHubContext.Clients.Client(players.HubGuid).addNewMessageToPage(enterText);
                 }
                 else
                 {
                     enterText = "You walk in " + direction;
-                    HubProxy.MimHubServer.Invoke("SendToClient", enterText, player.HubGuid);
+                    HubContext.getHubContext.Clients.Client(players.HubGuid).addNewMessageToPage(enterText);
                 }
             }
 
@@ -51,12 +41,13 @@ namespace MIMEngine.Core.Room
             {
                 if (player.Name != players.Name)
                 {
-                    HubProxy.MimHubServer.Invoke("SendToClient", exitText, players.HubGuid);
+                    HubContext.getHubContext.Clients.Client(players.HubGuid).addNewMessageToPage(exitText);
+                    
                 }
                 else
                 {
                     exitText = "You walk " + direction;
-                    HubProxy.MimHubServer.Invoke("SendToClient", exitText, player.HubGuid);
+                    HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(exitText);
                 }
             }
         }
@@ -69,27 +60,27 @@ namespace MIMEngine.Core.Room
             {
                 case "North":
                     {
-                        return " from the South";
+                        return "from the South";
                     }
                 case "East":
                     {
-                        return " from the West";
+                        return "from the West";
                     }
                 case "West":
                     {
-                        return " from the East";
+                        return "from the East";
                     }
                 case "South":
                     {
-                        return " from the North";
+                        return "from the North";
                     }
                 case "Up":
                     {
-                        return " from down the stairs";
+                        return "from down the stairs";
                     }
                 case "Down":
                     {
-                        return " from Upstairs";
+                        return "" + "" + "rom Upstairs";
                     }
                 default:
                     {
@@ -127,7 +118,7 @@ namespace MIMEngine.Core.Room
                 try
                 {
                     //Room getNewRoom =  await HubProxy.MimHubServer.Invoke<Room>("getRoom", player.HubGuid);
-                    Room getNewRoom = MimHubServer.getRoom(player.HubGuid);
+                    Room getNewRoom =  MimHubServer.getRoom(player.HubGuid);
 
                     if (getNewRoom != null)
                     {
@@ -137,9 +128,9 @@ namespace MIMEngine.Core.Room
                         //enter message
                         EnterRoom(player, getNewRoom, direction);
 
-                        var roomDescription = LoadRoom.DisplayRoom(getNewRoom);
+                        var roomDescription = LoadRoom.DisplayRoom(getNewRoom, player.Name);
 
-                        HubProxy.MimHubServer.Invoke("SendToClient", roomDescription, player.HubGuid);
+                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(roomDescription);
                     }
                 }
                 catch (Exception e)
@@ -149,7 +140,8 @@ namespace MIMEngine.Core.Room
             }
             else
             {
-                HubProxy.MimHubServer.Invoke("SendToClient", "There is no exit here");
+                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("There is no exit here");
+              
             }
         }
 

@@ -134,7 +134,7 @@ namespace MIMHubServer
                 {
 
 
-                    room = LoadRoom.DisplayRoom(roomData);
+                    room = LoadRoom.DisplayRoom(roomData, player.Name);
 
                 }
                 else
@@ -142,7 +142,7 @@ namespace MIMHubServer
 
                     roomData = roomJSON.LoadRoomFile();
                     _AreaCache.TryAdd(roomJSON.id, roomData);
-                    room = LoadRoom.DisplayRoom(roomData);
+                    room = LoadRoom.DisplayRoom(roomData, player.Name);
 
                 }
 
