@@ -20,7 +20,7 @@ namespace MIMEngine.Core.PlayerSetup
 
             for (int i = 0; i < 6; i++)
             {
-                var result = dice(3, 6);
+                var result = dice(3, 6) + 3;
                 test[i] = result;
             }
 

@@ -10,14 +10,17 @@ namespace MIMEngine.Core.PlayerSetup
 {
     using System.Runtime.CompilerServices;
 
+    using MIMEngine.Core.Item;
+
     using Newtonsoft.Json.Linq;
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;
     public class Player
     {
+        [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId _id { get; set; }
 
-        [BsonElement("id")]
+        [BsonElement("hid")]
         public string HubGuid;
 
         [BsonElement("e")]
@@ -73,7 +76,7 @@ namespace MIMEngine.Core.PlayerSetup
         public int MaxMovePoints;
 
         [BsonElement("in")]
-        public object[] Inventory;
+        public List<Item> Inventory { get; set; }
 
         //Game stats
         [BsonElement("ex")]
@@ -250,7 +253,6 @@ namespace MIMEngine.Core.PlayerSetup
             this.MaxManaPoints = 50;
             this.MovePoints = 60;
             this.MaxMovePoints = 60;
-            this.Inventory = null;
             this.Explored = 1;
             this.HitRoll = 1;
             this.DamRoll = 1;

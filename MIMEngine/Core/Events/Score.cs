@@ -3,7 +3,8 @@
     using System.Text;
 
     using PlayerSetup;
-
+    using Microsoft.AspNet.SignalR;
+    using MIMHubServer;
     class Score
     {
 
@@ -11,10 +12,8 @@
         {
             string scoreTest = "Score:\r\n Name: " + playerData.Name + " Race: " + playerData.Race;
 
-
-
-           HubProxy.MimHubServer.Invoke("SendToClient", scoreTest);
-
+            var context = HubContext.getHubContext;
+            context.Clients.All.addNewMessageToPage(scoreTest);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace MIMHubServer
             // See http://msdn.microsoft.com/en-us/library/system.net.httplistener.aspx 
             // for more information.
             string url = "http://localhost:4000";
-            using (WebApp.Start(url))
+            using (WebApp.Start<Startup>(url))
             {
 
                 Console.WriteLine("Server running on {0}", url);
@@ -83,14 +83,14 @@ namespace MIMHubServer
         #endregion
 
         #region load and display room
-        public Room getRoom(string playerId)
+        public static Room getRoom(string playerId)
         {
             Player player;
 
             if (_PlayerCache.TryGetValue(playerId, out player))
             {
  
-                LoadRoom RoomData = new LoadRoom();
+                var RoomData = new LoadRoom();
 
                 RoomData.Region = player.Region;
                 RoomData.Area = player.Area;
@@ -115,22 +115,6 @@ namespace MIMHubServer
             return null;
         }
 
-        //public string showRoom(string playerId, Room roomData)
-        //{
-        //    Player player;
-
-        //    if (_PlayerCache.TryGetValue(playerId, out player))
-        //    {
-
-               
-        //    return  LoadRoom.DisplayRoom(roomData);
-              
-
-        //    }
-
-        //    return null;
-        //}
-
         public string ReturnRoom(string id)
         {
             Player player;
@@ -138,7 +122,7 @@ namespace MIMHubServer
             if (_PlayerCache.TryGetValue(id, out player))
             {
                 string room = string.Empty;
-                LoadRoom roomJSON = new LoadRoom();
+                var roomJSON = new LoadRoom();
 
                 roomJSON.Region = player.Region;
                 roomJSON.Area = player.Area;
@@ -150,7 +134,7 @@ namespace MIMHubServer
                 {
 
 
-                    room = LoadRoom.DisplayRoom(roomData);
+                    room = LoadRoom.DisplayRoom(roomData, player.Name);
 
                 }
                 else
@@ -158,7 +142,7 @@ namespace MIMHubServer
 
                     roomData = roomJSON.LoadRoomFile();
                     _AreaCache.TryAdd(roomJSON.id, roomData);
-                    room = LoadRoom.DisplayRoom(roomData);
+                    room = LoadRoom.DisplayRoom(roomData, player.Name);
 
                 }
 
@@ -172,6 +156,7 @@ namespace MIMHubServer
         {
 
             _AreaCache.TryAdd(room.areaId, room);
+         
 
         }
 
@@ -185,9 +170,8 @@ namespace MIMHubServer
         }
 
         #endregion
-
+ 
         #region send data to player
-
         public void SendToClient(string message)
         {
             Clients.All.addNewMessageToPage(message);
@@ -261,7 +245,7 @@ namespace MIMHubServer
 
         public void getStats()
         {
-            PlayerStats playerStats = new PlayerStats();
+            var playerStats = new PlayerStats();
 
             int[] stats = playerStats.rollStats();
             Clients.Caller.setStats(stats);
