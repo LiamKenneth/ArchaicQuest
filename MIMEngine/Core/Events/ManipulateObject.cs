@@ -20,6 +20,8 @@ namespace MIMEngine.Core.Events
         /// <param name="userInput">Text user entered</param>
         public static void GetItem(Room room, Player player, string userInput)
         {
+            //no check for 2.sword
+
           var roomItems = room.items;
            Item roomContainer = null;
             int indexOfSpaceInUserInput = userInput.IndexOf(" ");

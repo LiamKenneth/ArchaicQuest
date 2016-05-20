@@ -21,6 +21,7 @@ namespace MIMEngine.Core.Player
                 inventoryItems.Append("You are carrying:").AppendLine();
                 for (int i = 0; i < inventoryCount; i++)
                 {
+                    //should group items with same name?
                     inventoryItems.Append(inventory[i].name).AppendLine();
                 }
 
