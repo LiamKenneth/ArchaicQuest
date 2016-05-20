@@ -35,6 +35,7 @@ namespace MIMEngine.Core
             commandList.Add("inventory", () => Inventory.ReturnInventory(playerData.Inventory, playerData));
             commandList.Add("get", () => ManipulateObject.GetItem(room, playerData, commandOptions));
             commandList.Add("save", () =>  Save.UpdatePlayer(playerData));
+            commandList.Add("say", ()=> Communicate.Say(commandOptions, playerData, null));
 
             return commandList;
         }
