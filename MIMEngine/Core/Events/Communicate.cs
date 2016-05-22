@@ -7,21 +7,38 @@ using System.Threading.Tasks;
 namespace MIMEngine.Core.Events
 {
     using MIMEngine.Core.PlayerSetup;
+    
 
     public class Communicate
     {
-        public static void Say(string message, Player player, Player recipientPlayer = null)
+        public static void Say(string message, Player player, bool recipient = false)
         {
+            string playerId = player.HubGuid;
+            string recipientName = string.Empty;
+            Player recipientPlayer = null;
+            if (recipient != false)
+            {
+                 recipientPlayer = MIMHubServer.MimHubServer._PlayerCache.FirstOrDefault(x => x.Value.Name == recipientName).Value;
+            }
+
             if (recipientPlayer == null)
             {
-                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You say " + message);
-                HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " says " + message);
+                HubContext.SendToClient("You say " + message, playerId, null, false, false);
+                HubContext.SendToClient(player.Name + " says " + message, playerId, null, true, true);
+               
             }
             else
             {
-                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You say to " + recipientPlayer.Name + " " + message);
-                HubContext.getHubContext.Clients.Client(recipientPlayer.HubGuid).addNewMessageToPage(player.Name + " says to you " + message);
-                HubContext.getHubContext.Clients.All.addNewMessageToPage(player.Name + "says to " + recipientPlayer.Name + " " + message);
+                //self
+                HubContext.SendToClient("You say to " + recipientName + " " + message, playerId, null, false, false);
+                // to room
+                HubContext.SendToClient(player.Name + " says to " + recipientName + message, playerId, null, true, true, true);
+
+                string recipientPlayerId = MIMHubServer.MimHubServer._PlayerCache.FirstOrDefault(x => x.Value.Name == recipientName).Value.HubGuid;
+                // to recipient
+                HubContext.SendToClient(player.Name + " says to you " + message, playerId, recipientName, true, true);
+
+               
             }
         }
     }

@@ -17,7 +17,7 @@ namespace MIMEngine.Core
     public static class Command
     {
     //public static Dictionary<string, Action> commandList { get; set; }
-        public static Dictionary<string, Action> Commands(string commandOptions, PlayerSetup.Player playerData, Room.Room room)
+        public static Dictionary<string, Action> Commands(string commandOptions, string commandKey, PlayerSetup.Player playerData, Room.Room room)
         {
             var commandList = new Dictionary<String, Action>(); 
             commandList.Add("north", () => Movement.Move(playerData, room, "North"));
@@ -33,9 +33,12 @@ namespace MIMEngine.Core
             commandList.Add("taste", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "taste"));
             commandList.Add("score", () => Score.ReturnScore(playerData));
             commandList.Add("inventory", () => Inventory.ReturnInventory(playerData.Inventory, playerData));
-            commandList.Add("get", () => ManipulateObject.GetItem(room, playerData, commandOptions));
+            commandList.Add("get", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey));
             commandList.Add("save", () =>  Save.UpdatePlayer(playerData));
-            commandList.Add("say", ()=> Communicate.Say(commandOptions, playerData, null));
+            commandList.Add("'", () => Communicate.Say(commandOptions, playerData, false));
+            commandList.Add("say", ()=> Communicate.Say(commandOptions, playerData, false));
+            commandList.Add("sayto", () => Communicate.Say(commandOptions, playerData, true));
+            commandList.Add(">", () => Communicate.Say(commandOptions, playerData, true));
 
             return commandList;
         }
@@ -58,7 +61,7 @@ namespace MIMEngine.Core
             }
  
              //TODO: do this only once
-            var command = Commands(commandOptions, playerData, room);
+            var command = Commands(commandOptions, commandKey, playerData, room);
  
             var fire = command.FirstOrDefault(x => x.Key.StartsWith(commandKey));
 
