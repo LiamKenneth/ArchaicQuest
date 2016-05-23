@@ -9,6 +9,7 @@ namespace MIMEngine.Core.Item
     public class BaseItem
     {
         public string name { get; set; }
+        public List<string> keywords { get; set; }
         public bool locked { get; set; }
         public int? keyValue { get; set; }
         public bool hidden { get; set; }
