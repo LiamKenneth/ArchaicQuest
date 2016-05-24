@@ -33,11 +33,11 @@ namespace MIMEngine.Core
             commandList.Add("taste", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "taste"));
             commandList.Add("score", () => Score.ReturnScore(playerData));
             commandList.Add("inventory", () => Inventory.ReturnInventory(playerData.Inventory, playerData));
-            commandList.Add("get", () => ManipulateObject.FindObject(room, playerData, commandKey, commandOptions, "item"));
+            commandList.Add("get", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item"));
             commandList.Add("save", () =>  Save.UpdatePlayer(playerData));
             commandList.Add("'", () => Communicate.Say(commandOptions, playerData, false));
             commandList.Add("say", ()=> Communicate.Say(commandOptions, playerData, false));
-            commandList.Add("sayto", () => Communicate.Say(commandOptions, playerData, true));
+            commandList.Add("sayto", () => Communicate.SayTo(commandOptions, room, playerData));
             commandList.Add(">", () => Communicate.Say(commandOptions, playerData, true));
 
             return commandList;

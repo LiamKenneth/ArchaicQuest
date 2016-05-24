@@ -66,8 +66,35 @@ namespace MIMEngine.Core
                     {
                         HubContext.getHubContext.Clients.Client(playerId).addNewMessageToPage(message);
                     }
+
+
                 }
             }
+        }
+
+        public static void broadcastToRoom(string message, List<PlayerSetup.Player> players, string playerId, bool excludeCaller = false)
+        {
+            int playerCount = players.Count;
+
+            if (excludeCaller)
+            {
+                for (int i = 0; i < playerCount; i++)
+                {
+                    if (playerId != players[i].Name)
+                    {
+                        HubContext.getHubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(message);
+                    }                  
+                }
+            }
+            else
+            {
+                for (int i = 0; i < playerCount; i++)
+                {
+                    HubContext.getHubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(message);
+                }
+            }
+
+           
         }
     }
 }

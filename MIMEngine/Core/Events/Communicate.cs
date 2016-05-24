@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 namespace MIMEngine.Core.Events
 {
     using MIMEngine.Core.PlayerSetup;
-    
+    using MIMEngine.Core.Room;
+
+
 
     public class Communicate
     {
@@ -41,5 +43,34 @@ namespace MIMEngine.Core.Events
                
             }
         }
+
+        public static void SayTo(string message, Room room, Player player)
+        {
+            string playerName = message;
+            string actualMessage = string.Empty;
+            int indexOfSpaceInUserInput = message.IndexOf(" ", StringComparison.Ordinal);
+  
+            if (indexOfSpaceInUserInput > 0 )
+            {
+                playerName = message.Substring(0, indexOfSpaceInUserInput);
+            }
+         
+            string playerId = player.HubGuid;
+           
+             Player recipientPlayer = (Player)ManipulateObject.FindObject(room, player, "", playerName, "all");
+
+            if (recipientPlayer != null)
+            {
+                string recipientName = recipientPlayer.Name;
+                HubContext.SendToClient("You say to " + recipientName + " " + actualMessage, playerId, null, false, false);
+                HubContext.SendToClient(player.Name + " says to you " + actualMessage, playerId, recipientName, true, true);
+
+            }
+            else
+            {
+                HubContext.SendToClient("No one here by that name", playerId, null, false, false);
+            }
+        }
+
     }
 }
