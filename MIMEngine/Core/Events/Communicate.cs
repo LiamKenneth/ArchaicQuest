@@ -13,35 +13,13 @@ namespace MIMEngine.Core.Events
 
     public class Communicate
     {
-        public static void Say(string message, Player player, bool recipient = false)
+        public static void Say(string message, Player player)
         {
             string playerId = player.HubGuid;
-            string recipientName = string.Empty;
-            Player recipientPlayer = null;
-            if (recipient != false)
-            {
-                 recipientPlayer = MIMHubServer.MimHubServer._PlayerCache.FirstOrDefault(x => x.Value.Name == recipientName).Value;
-            }
 
-            if (recipientPlayer == null)
-            {
                 HubContext.SendToClient("You say " + message, playerId, null, false, false);
                 HubContext.SendToClient(player.Name + " says " + message, playerId, null, true, true);
                
-            }
-            else
-            {
-                //self
-                HubContext.SendToClient("You say to " + recipientName + " " + message, playerId, null, false, false);
-                // to room
-                HubContext.SendToClient(player.Name + " says to " + recipientName + message, playerId, null, true, true, true);
-
-                string recipientPlayerId = MIMHubServer.MimHubServer._PlayerCache.FirstOrDefault(x => x.Value.Name == recipientName).Value.HubGuid;
-                // to recipient
-                HubContext.SendToClient(player.Name + " says to you " + message, playerId, recipientName, true, true);
-
-               
-            }
         }
 
         public static void SayTo(string message, Room room, Player player)
@@ -53,7 +31,12 @@ namespace MIMEngine.Core.Events
             if (indexOfSpaceInUserInput > 0 )
             {
                 playerName = message.Substring(0, indexOfSpaceInUserInput);
-                actualMessage = message.Split(' ').First(); // message is everythign after the 1st space
+
+                if (indexOfSpaceInUserInput != -1)
+                {
+                    actualMessage = message.Substring(indexOfSpaceInUserInput, message.Length - indexOfSpaceInUserInput).TrimStart();
+                        // message is everythign after the 1st space
+                }
             }
          
             string playerId = player.HubGuid;
