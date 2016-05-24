@@ -53,6 +53,7 @@ namespace MIMEngine.Core.Events
             if (indexOfSpaceInUserInput > 0 )
             {
                 playerName = message.Substring(0, indexOfSpaceInUserInput);
+                actualMessage = message.Split(' ').First(); // message is everythign after the 1st space
             }
          
             string playerId = player.HubGuid;
