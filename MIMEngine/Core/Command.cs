@@ -38,7 +38,7 @@ namespace MIMEngine.Core
             commandList.Add("'", () => Communicate.Say(commandOptions, playerData));
             commandList.Add("say", ()=> Communicate.Say(commandOptions, playerData));
             commandList.Add("sayto", () => Communicate.SayTo(commandOptions, room, playerData));
-            commandList.Add(">", () => Communicate.Say(commandOptions, playerData));
+            commandList.Add(">", () => Communicate.SayTo(commandOptions, room, playerData));
 
             return commandList;
         }
