@@ -204,24 +204,28 @@ namespace MIMEngine.Core.Events
                         broadcastAction = " looks closely at a " + itemDescription.name;
                     }
 
-
-                    if (!string.IsNullOrEmpty(descriptionText))
+                    if (!keyword.Equals("look in", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        HubProxy.MimHubServer.Invoke("SendToClient", descriptionText, player.HubGuid);
 
-                        foreach (var players in room.players)
+                        if (!string.IsNullOrEmpty(descriptionText))
                         {
-                            if (player.Name != players.Name)
+                            HubProxy.MimHubServer.Invoke("SendToClient", descriptionText, player.HubGuid);
+
+                            foreach (var players in room.players)
                             {
-                                HubProxy.MimHubServer.Invoke("SendToClient", player.Name + broadcastAction, players.HubGuid);
+                                if (player.Name != players.Name)
+                                {
+                                    HubProxy.MimHubServer.Invoke(
+                                        "SendToClient",
+                                        player.Name + broadcastAction,
+                                        players.HubGuid);
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        HubProxy.MimHubServer.Invoke(
-                            "SendToClient",
-                            "You can't do that to a " + roomDescription.name, player.HubGuid);
+                        else
+                        {
+                            HubContext.SendToClient("You can't do that to a " + itemDescription.name, player.HubGuid);
+                        }
                     }
                 }
                 else if (mobDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
@@ -242,7 +246,7 @@ namespace MIMEngine.Core.Events
                     {
                         HubProxy.MimHubServer.Invoke(
                             "SendToClient",
-                            "You can't do that to a " + roomDescription.name, player.HubGuid);
+                            "You can't do that to a " + mobDescription.Name, player.HubGuid);
                     }
                 }
                 else if (playerDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
@@ -263,7 +267,7 @@ namespace MIMEngine.Core.Events
                     {
                         HubProxy.MimHubServer.Invoke(
                             "SendToClient",
-                            "You can't do that to a " + roomDescription.name, player.HubGuid);
+                            "You can't do that to a " + playerDescription.Name, player.HubGuid);
                     }
                 }
                 else

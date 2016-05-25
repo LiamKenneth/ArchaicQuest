@@ -69,7 +69,6 @@ namespace MIMEngine.Core.Events
             string item = thingToFind;
             //checks for spaces
 
-
             //get sword bag - text after the 1st space is the container
             int indexOfSpaceInUserInput = item.IndexOf(" ", StringComparison.Ordinal);
             int lastIndexOfSpaceInUserInput = item.LastIndexOf(" ", StringComparison.Ordinal);
@@ -134,21 +133,21 @@ namespace MIMEngine.Core.Events
                 {
 
                     //look in room
-                    foundItem = (nthContainer == -1) ? roomItems.Find(x => x.name.ToLower().Contains(comntainerToFind) && x.actions
+                  var foundContainer = (nthContainer == -1) ? roomItems.Find(x => x.name.ToLower().Contains(comntainerToFind) && x.actions
                     .container == true)
                                         : roomItems.FindAll(x => x.name.ToLower().Contains(comntainerToFind) && x.actions
                     .container == true).Skip(nthContainer - 1).FirstOrDefault();
 
 
 
-                    if (foundItem != null)
+                    if (foundContainer != null)
                     {
                         //inside found container
-                        if (foundItem.containerItems != null)
+                        if (foundContainer.containerItems != null)
                         {
                             foundItem = (nth == -1)
-                                            ? foundItem.containerItems.Find(x => x.name.ToLower().Contains(itemToFind))
-                                            : foundItem.containerItems.FindAll(
+                                            ? foundContainer.containerItems.Find(x => x.name.ToLower().Contains(itemToFind))
+                                            : foundContainer.containerItems.FindAll(
                                                 x => x.name.ToLower().Contains(itemToFind))
                                                   .Skip(nth - 1)
                                                   .FirstOrDefault();
@@ -171,7 +170,7 @@ namespace MIMEngine.Core.Events
                     //return item found in container
                     if (foundItem != null)
                     {
-                        return foundItem;
+                        return new KeyValuePair<Item, Item>(foundContainer, foundItem);
                     }
                     else
                     {
@@ -351,27 +350,68 @@ namespace MIMEngine.Core.Events
             else
             {
 
-                Item foundItem = (Item)FindObject(room, player, commandKey, userInput, type);
+                object foundItem = FindObject(room, player, commandKey, userInput, type);
 
-                if (foundItem != null)
+
+                if (foundItem.GetType() == typeof(Item))
                 {
-                    room.items.Remove(foundItem);
-                    foundItem.location = "Inventory";
-                    player.Inventory.Add(foundItem);
 
 
-                    //save to cache
+                    Item getItem = (Item)FindObject(room, player, commandKey, userInput, type);
 
 
-                    var roomUpdate = Cache.updateRoom(room, currentRoom);
-                    var playerUpdate = Cache.updatePlayer(player, currentPlayer);
+                    if (getItem != null)
+                    {
+                        room.items.Remove(getItem);
+                        getItem.location = "Inventory";
+                        player.Inventory.Add(getItem);
 
-                    HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You pick up a " + foundItem.name);
-                    HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " picks up a " + foundItem.name);
 
+                        //save to cache
+
+
+                        Cache.updateRoom(room, currentRoom);
+                        Cache.updatePlayer(player, currentPlayer);
+
+                        HubContext.getHubContext.Clients.Client(player.HubGuid)
+                            .addNewMessageToPage("You pick up a " + getItem.name);
+                        HubContext.getHubContext.Clients.AllExcept(player.HubGuid)
+                            .addNewMessageToPage(player.Name + " picks up a " + getItem.name);
+
+
+                    }
 
                 }
- 
+                else
+                {
+                    KeyValuePair<Item, Item> getItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, type);
+
+
+                    if (getItem.Value != null && getItem.Key != null)
+                    {
+                        Item contianer = getItem.Key;
+                        Item getItemFromContainer = getItem.Value;
+
+                        contianer.containerItems.Remove(getItemFromContainer);
+                        getItemFromContainer.location = "Inventory";
+                        player.Inventory.Add(getItemFromContainer);
+
+
+                        //save to cache
+
+
+                        Cache.updateRoom(room, currentRoom);
+                        Cache.updatePlayer(player, currentPlayer);
+
+                        HubContext.getHubContext.Clients.Client(player.HubGuid)
+                            .addNewMessageToPage("You pick up a " + getItemFromContainer.name);
+                        HubContext.getHubContext.Clients.AllExcept(player.HubGuid)
+                            .addNewMessageToPage(player.Name + " picks up a " + getItemFromContainer.name);
+
+
+                    }
+                }
+
             }
 
         }

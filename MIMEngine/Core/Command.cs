@@ -27,6 +27,7 @@ namespace MIMEngine.Core
             commandList.Add("down", () => Movement.Move(playerData, room, "Down"));
             commandList.Add("up", () => Movement.Move(playerData, room, "Up"));
             commandList.Add("look", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look"));
+            commandList.Add("l in", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look in"));
             commandList.Add("look in", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look in"));
             commandList.Add("examine", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "examine"));
             commandList.Add("touch", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "touch"));
@@ -55,19 +56,17 @@ namespace MIMEngine.Core
             string[] commands = enteredCommand.Split(' ');
             string commandKey = commands[0];
 
-            if (commands[1].Equals("in", StringComparison.InvariantCultureIgnoreCase) || commands[1].Equals("at", StringComparison.InvariantCultureIgnoreCase))
-            {
-                commandKey = commands[0] + " " + commands[1];
-            }
-           
+          
             string commandOptions = string.Empty;
             // testing
  
             if (commands.Length >= 2)
             {
+           
                 if ((commands[1].Equals("in", StringComparison.InvariantCultureIgnoreCase) || commands[1].Equals("at", StringComparison.InvariantCultureIgnoreCase)))
                 {
-                    commandOptions =  enteredCommand.Substring(enteredCommand.IndexOf((char)(commands[0] + ' ' + commands[1]).Length, 1), enteredCommand.Length).Trim(); // does not get everything after in or at
+                    commandKey = commands[0] + " " + commands[1];
+                    commandOptions =  enteredCommand.Substring(enteredCommand.IndexOf(commands[2], StringComparison.Ordinal)).Trim();  
                 }
                 else
                 {
