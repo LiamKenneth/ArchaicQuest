@@ -80,7 +80,7 @@ namespace MIMEngine.Core
             {
                 for (int i = 0; i < playerCount; i++)
                 {
-                    if (playerId != players[i].Name)
+                    if (playerId != players[i].HubGuid)
                     {
                         HubContext.getHubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(message);
                     }                  

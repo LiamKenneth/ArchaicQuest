@@ -69,7 +69,7 @@ namespace MIMEngine.Core.Events
             string item = thingToFind;
             //checks for spaces
 
-          
+
             //get sword bag - text after the 1st space is the container
             int indexOfSpaceInUserInput = item.IndexOf(" ", StringComparison.Ordinal);
             int lastIndexOfSpaceInUserInput = item.LastIndexOf(" ", StringComparison.Ordinal);
@@ -125,19 +125,10 @@ namespace MIMEngine.Core.Events
 
                     if (foundItem != null) { return foundItem; }
 
-                    //search player inv 1st
-                    foundItem = (nth == -1) ? playerInv.Find(x => x.name.ToLower().Contains(itemToFind))
-                                    : playerInv.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
 
-                    if (foundItem != null)
-                    {
-                        return foundItem;
-                    }
-                    else
-                    {
-                        HubContext.SendToClient("You don't see that item here and you are not carrying such an item", player.HubGuid);
-                        HubContext.broadcastToRoom(player.Name + " rummages around for an item but finds nothing", room.players, player.HubGuid, true);
-                    }
+                    HubContext.SendToClient("You don't see a " + itemToFind + " + here and you are not carrying such an item", player.HubGuid);
+                    HubContext.broadcastToRoom(player.Name + " rummages around for an item but finds nothing", room.players, player.HubGuid, true);
+
                 }
                 else
                 {
@@ -148,14 +139,6 @@ namespace MIMEngine.Core.Events
                                         : roomItems.FindAll(x => x.name.ToLower().Contains(comntainerToFind) && x.actions
                     .container == true).Skip(nthContainer - 1).FirstOrDefault();
 
-                    if (foundItem == null)
-                    {
-                        //look in inventory
-                        foundItem = (nthContainer == -1) ? playerInv.Find(x => x.name.ToLower().Contains(itemToFind) && x.actions
-                  .container == true)
-                                  : playerInv.FindAll(x => x.name.ToLower().Contains(itemToFind) && x.actions
-                  .container == true).Skip(nth - 1).FirstOrDefault();
-                    }
 
 
                     if (foundItem != null)
@@ -286,50 +269,50 @@ namespace MIMEngine.Core.Events
             else if (objectTypeToFind == "all")
             {
 
-                    //general stuff? sayto command? whsper? cast
+                //general stuff? sayto command? whsper? cast
 
-                    //search room items 1st
-                    foundItem = (nth == -1) ? roomItems.Find(x => x.name.ToLower().Contains(itemToFind))
-                                    : roomItems.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
+                //search room items 1st
+                foundItem = (nth == -1) ? roomItems.Find(x => x.name.ToLower().Contains(itemToFind))
+                                : roomItems.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
 
-                    if (foundItem != null) { return foundItem; }
+                if (foundItem != null) { return foundItem; }
 
-                    //search player inventory
-                    foundItem = (nth == -1) ? playerInv.Find(x => x.name.ToLower().Contains(itemToFind))
-                                    : playerInv.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
+                //search player inventory
+                foundItem = (nth == -1) ? playerInv.Find(x => x.name.ToLower().Contains(itemToFind))
+                                : playerInv.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
 
-                    if (foundItem != null)
-                    {
-                        return foundItem;
-                    }
-
-
-                    //search mob
-                    foundMob = (nth == -1) ? mobList.Find(x => x.Name.ToLower().Contains(itemToFind))
-                                   : mobList.FindAll(x => x.Name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
-
-                    if (foundMob != null)
-                    {
-                        return foundMob;
-                    }
-
-                    //search players
-                    foundPlayer = (nth == -1) ? playerList.Find(x => x.Name.ToLower().Contains(itemToFind))
-                                   : playerList.FindAll(x => x.Name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
-
-                    if (foundPlayer != null)
-                    {
-                        return foundPlayer;
-                    }
-                    else
-                    {
-                        HubContext.SendToClient("You don't see anything by that name here", player.HubGuid);
-                        HubContext.broadcastToRoom(player.Name + " something something...", room.players, player.HubGuid, true);
-                    }
-
+                if (foundItem != null)
+                {
+                    return foundItem;
                 }
-            
-            
+
+
+                //search mob
+                foundMob = (nth == -1) ? mobList.Find(x => x.Name.ToLower().Contains(itemToFind))
+                               : mobList.FindAll(x => x.Name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
+
+                if (foundMob != null)
+                {
+                    return foundMob;
+                }
+
+                //search players
+                foundPlayer = (nth == -1) ? playerList.Find(x => x.Name.ToLower().Contains(itemToFind))
+                               : playerList.FindAll(x => x.Name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
+
+                if (foundPlayer != null)
+                {
+                    return foundPlayer;
+                }
+                else
+                {
+                    HubContext.SendToClient("You don't see anything by that name here", player.HubGuid);
+                    HubContext.broadcastToRoom(player.Name + " something something...", room.players, player.HubGuid, true);
+                }
+
+            }
+
+
 
             return null;
         }
@@ -342,28 +325,112 @@ namespace MIMEngine.Core.Events
         /// <param name="userInput">Text user entered</param>
         public static void GetItem(Room room, Player player, string userInput, string commandKey, string type)
         {
-  
-            Item foundItem = (Item)FindObject(room, player, commandKey, userInput, type);   
 
-            if (foundItem != null)
+            var currentRoom = room;
+            var currentPlayer = player;
+
+            if (userInput.Equals("all", StringComparison.InvariantCultureIgnoreCase))
             {
-                room.items.Remove(foundItem);
-                foundItem.location = "Inventory";
-                player.Inventory.Add(foundItem);
+                var roomItems = room.items;
+                var roomItemsCount = roomItems.Count;
+               
 
-                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You pick up a " + foundItem.name);
-                HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " picks up a " + foundItem.name);
+                for (int i = roomItemsCount - 1; i >= 0; i--)
+                {
+                    roomItems[i].location = "Inventory";
+                    player.Inventory.Add(roomItems[i]);
+                    HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You pick up a " + roomItems[i].name);
+                    HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " picks up a " + roomItems[i].name);
+                    room.items.Remove(roomItems[i]);
+                }
 
                 //save to cache
-
+                Cache.updateRoom(room, currentRoom);
+                Cache.updatePlayer(player, currentPlayer);
             }
             else
             {
-                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("There is no x here to pick up.");
-                HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " is looking for a x to pick up.");
+
+                Item foundItem = (Item)FindObject(room, player, commandKey, userInput, type);
+
+                if (foundItem != null)
+                {
+                    room.items.Remove(foundItem);
+                    foundItem.location = "Inventory";
+                    player.Inventory.Add(foundItem);
+
+
+                    //save to cache
+
+
+                    var roomUpdate = Cache.updateRoom(room, currentRoom);
+                    var playerUpdate = Cache.updatePlayer(player, currentPlayer);
+
+                    HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You pick up a " + foundItem.name);
+                    HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " picks up a " + foundItem.name);
+
+
+                }
+ 
             }
 
+        }
 
+        /// <summary>
+        /// Drops item from player inventory
+        /// </summary>
+        /// <param name="room">room object</param>
+        /// <param name="player">player object</param>
+        /// <param name="userInput">text entered by user</param>
+        /// <param name="commandKey">command entered</param>
+        public static void DropItem(Room room, Player player, string userInput, string commandKey)
+        {
+
+            var currentRoom = room;
+            var currentPlayer = player;
+
+            if (userInput.Equals("all", StringComparison.InvariantCultureIgnoreCase))
+            {
+                var playerInv = player.Inventory;
+                var playerInvCount = player.Inventory.Count;
+                var roomItems = room.items;
+
+                for (int i = playerInvCount - 1; i >= 0; i--)
+                {
+                    playerInv[i].location = "Room";
+                    room.items.Add(playerInv[i]);
+                    HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You drop  a " + playerInv[i].name);
+                    HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " drops a " + playerInv[i].name);
+                    player.Inventory.Remove(playerInv[i]);
+                }
+
+
+                //save to cache
+                Cache.updateRoom(room, currentRoom);
+                Cache.updatePlayer(player, currentPlayer);
+            }
+            else
+            {
+                Item foundItem = (Item)FindObject(room, player, commandKey, userInput, "inventory");
+
+                if (foundItem != null)
+                {
+                    player.Inventory.Remove(foundItem);
+                    foundItem.location = "Room";
+                    room.items.Add(foundItem);
+
+                    HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You drop  a " + foundItem.name);
+                    HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " drops  a " + foundItem.name);
+
+                    //save to cache
+                    Cache.updateRoom(room, currentRoom);
+                    Cache.updatePlayer(player, currentPlayer);
+
+
+                }
+ 
+
+            }
         }
     }
 }

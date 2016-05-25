@@ -90,9 +90,6 @@ namespace MIMEngine.Core.Events
 
             Room roomData = room;
 
-
-
-
             if (string.IsNullOrEmpty(commandOptions) && keyword == "look")
             {
                 var roomInfo = DisplayRoom(roomData, player.Name);
@@ -181,7 +178,22 @@ namespace MIMEngine.Core.Events
                     string descriptionText = string.Empty;
                     string broadcastAction = string.Empty;
 
-                    if (keyword.StartsWith("look"))
+                    if(keyword.Equals("look in", StringComparison.InvariantCultureIgnoreCase)) {
+
+                        if (itemDescription.actions.container == true)
+                        {
+                            foreach (var containerItem in itemDescription.containerItems)
+                            {
+                                HubContext.SendToClient(containerItem.name, player.HubGuid);
+                            }
+                            HubContext.broadcastToRoom(player.Name + " looks in a " + itemDescription.name, room.players, player.HubGuid, true);
+                        }
+                        else
+                        {
+                            HubContext.SendToClient("That is not a container", player.HubGuid);
+                        }
+                    }
+                   else if (keyword.StartsWith("look"))
                     {
                         descriptionText = itemDescription.description.look;
                         broadcastAction = " looks at a " + itemDescription.name;

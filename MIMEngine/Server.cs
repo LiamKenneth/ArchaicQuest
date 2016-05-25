@@ -54,7 +54,6 @@ namespace MIMHubServer
     {
         public static ConcurrentDictionary<string, Player> _PlayerCache = new ConcurrentDictionary<string, Player>();
         public static ConcurrentDictionary<int, Room> _AreaCache = new ConcurrentDictionary<int, Room>();
-        // public static ConcurrentDictionary<int, string> _RoomCache = new ConcurrentDictionary<int, string>();
 
         public static Player PlayerData { get; set; }
 

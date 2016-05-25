@@ -27,6 +27,7 @@ namespace MIMEngine.Core
             commandList.Add("down", () => Movement.Move(playerData, room, "Down"));
             commandList.Add("up", () => Movement.Move(playerData, room, "Up"));
             commandList.Add("look", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look"));
+            commandList.Add("look in", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look in"));
             commandList.Add("examine", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "examine"));
             commandList.Add("touch", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "touch"));
             commandList.Add("smell", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "smell"));
@@ -34,6 +35,7 @@ namespace MIMEngine.Core
             commandList.Add("score", () => Score.ReturnScore(playerData));
             commandList.Add("inventory", () => Inventory.ReturnInventory(playerData.Inventory, playerData));
             commandList.Add("get", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item"));
+            commandList.Add("drop", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey));
             commandList.Add("save", () =>  Save.UpdatePlayer(playerData));
             commandList.Add("'", () => Communicate.Say(commandOptions, playerData));
             commandList.Add("say", ()=> Communicate.Say(commandOptions, playerData));
@@ -52,18 +54,32 @@ namespace MIMEngine.Core
             string enteredCommand = input;
             string[] commands = enteredCommand.Split(' ');
             string commandKey = commands[0];
+
+            if (commands[1].Equals("in", StringComparison.InvariantCultureIgnoreCase) || commands[1].Equals("at", StringComparison.InvariantCultureIgnoreCase))
+            {
+                commandKey = commands[0] + " " + commands[1];
+            }
+           
             string commandOptions = string.Empty;
             // testing
  
             if (commands.Length >= 2)
             {
-                commandOptions = enteredCommand.Substring(enteredCommand.IndexOf(' ', 1)).Trim();
+                if ((commands[1].Equals("in", StringComparison.InvariantCultureIgnoreCase) || commands[1].Equals("at", StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    commandOptions =  enteredCommand.Substring(enteredCommand.IndexOf((char)(commands[0] + ' ' + commands[1]).Length, 1), enteredCommand.Length).Trim(); // does not get everything after in or at
+                }
+                else
+                {
+                    commandOptions = enteredCommand.Substring(enteredCommand.IndexOf(' ', 1)).Trim();
+                }
+               
             }
  
              //TODO: do this only once
             var command = Commands(commandOptions, commandKey, playerData, room);
  
-            var fire = command.FirstOrDefault(x => x.Key.StartsWith(commandKey));
+            var fire = command.FirstOrDefault(x => x.Key.StartsWith(commandKey, StringComparison.InvariantCultureIgnoreCase));
 
             if (fire.Value != null)
             {

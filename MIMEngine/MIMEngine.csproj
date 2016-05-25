@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Command.cs" />
+    <Compile Include="Core\Events\Cache.cs" />
     <Compile Include="Core\Events\Communicate.cs" />
     <Compile Include="Core\Events\LoadRoom.cs" />
     <Compile Include="Core\Events\ManipulateObject.cs" />
