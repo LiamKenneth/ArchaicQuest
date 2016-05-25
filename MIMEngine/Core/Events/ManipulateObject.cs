@@ -122,7 +122,7 @@ namespace MIMEngine.Core.Events
                     foundItem = (nth == -1) ? roomItems.Find(x => x.name.ToLower().Contains(itemToFind))
                                         : roomItems.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
 
-                    if (foundItem != null) { return foundItem; }
+                    if (foundItem != null) { return new KeyValuePair<Item, Item>(null, foundItem); ; }
 
 
                     HubContext.SendToClient("You don't see a " + itemToFind + " + here and you are not carrying such an item", player.HubGuid);
@@ -325,6 +325,8 @@ namespace MIMEngine.Core.Events
         public static void GetItem(Room room, Player player, string userInput, string commandKey, string type)
         {
 
+            //TODO handle container
+
             var currentRoom = room;
             var currentPlayer = player;
 
@@ -350,66 +352,55 @@ namespace MIMEngine.Core.Events
             else
             {
 
-                object foundItem = FindObject(room, player, commandKey, userInput, type);
+                KeyValuePair<Item, Item> returnedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, type);
 
+                var container = returnedItem.Key;
+                var item = returnedItem.Value;
 
-                if (foundItem.GetType() == typeof(Item))
+                if (container == null)
                 {
-
-
-                    Item getItem = (Item)FindObject(room, player, commandKey, userInput, type);
-
-
-                    if (getItem != null)
+                    if (item == null)
                     {
-                        room.items.Remove(getItem);
-                        getItem.location = "Inventory";
-                        player.Inventory.Add(getItem);
-
-
-                        //save to cache
-
-
-                        Cache.updateRoom(room, currentRoom);
-                        Cache.updatePlayer(player, currentPlayer);
-
-                        HubContext.getHubContext.Clients.Client(player.HubGuid)
-                            .addNewMessageToPage("You pick up a " + getItem.name);
-                        HubContext.getHubContext.Clients.AllExcept(player.HubGuid)
-                            .addNewMessageToPage(player.Name + " picks up a " + getItem.name);
-
-
+                        return;
                     }
 
+                    room.items.Remove(item);
+                    item.location = "Inventory";
+                    player.Inventory.Add(item);
+
+
+                    //save to cache
+                    Cache.updateRoom(room, currentRoom);
+                    Cache.updatePlayer(player, currentPlayer);
+
+                    HubContext.getHubContext.Clients.Client(player.HubGuid)
+                        .addNewMessageToPage("You pick up a " + item.name);
+                    HubContext.getHubContext.Clients.AllExcept(player.HubGuid)
+                        .addNewMessageToPage(player.Name + " picks up a " + item.name);
                 }
                 else
                 {
-                    KeyValuePair<Item, Item> getItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, type);
-
-
-                    if (getItem.Value != null && getItem.Key != null)
+                    if (item == null)
                     {
-                        Item contianer = getItem.Key;
-                        Item getItemFromContainer = getItem.Value;
-
-                        contianer.containerItems.Remove(getItemFromContainer);
-                        getItemFromContainer.location = "Inventory";
-                        player.Inventory.Add(getItemFromContainer);
-
-
-                        //save to cache
-
-
-                        Cache.updateRoom(room, currentRoom);
-                        Cache.updatePlayer(player, currentPlayer);
-
-                        HubContext.getHubContext.Clients.Client(player.HubGuid)
-                            .addNewMessageToPage("You pick up a " + getItemFromContainer.name);
-                        HubContext.getHubContext.Clients.AllExcept(player.HubGuid)
-                            .addNewMessageToPage(player.Name + " picks up a " + getItemFromContainer.name);
-
-
+                        return;
                     }
+
+                    
+                    container.containerItems.Remove(item);
+                    container.location = "Inventory";
+                    player.Inventory.Add(item);
+
+
+                    //save to cache
+
+
+                    Cache.updateRoom(room, currentRoom);
+                    Cache.updatePlayer(player, currentPlayer);
+
+                    HubContext.getHubContext.Clients.Client(player.HubGuid)
+                        .addNewMessageToPage("You get a " + item.name + " from a " + container.name);
+                    HubContext.getHubContext.Clients.AllExcept(player.HubGuid)
+                        .addNewMessageToPage(player.Name + " gets a " + item.name + " from a " + container.name);
                 }
 
             }
