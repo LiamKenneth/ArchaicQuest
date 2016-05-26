@@ -455,23 +455,53 @@ namespace MIMEngine.Core.Events
 
             if (all[0].Equals("all", StringComparison.InvariantCultureIgnoreCase))
             {
+                KeyValuePair<Item, Item> returnedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, "Inventory");
+
+                var container = returnedItem.Key;
+                var item = returnedItem.Value;
                 var playerInv = player.Inventory;
-                var playerInvCount = player.Inventory.Count;
-                var roomItems = room.items;
 
-                for (int i = playerInvCount - 1; i >= 0; i--)
+                if (container == null)
                 {
-                    playerInv[i].location = "Room";
-                    room.items.Add(playerInv[i]);
-                    HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You drop  a " + playerInv[i].name);
-                    HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " drops a " + playerInv[i].name);
-                    player.Inventory.Remove(playerInv[i]);
+
+                 
+                    var playerInvCount = player.Inventory.Count;
+                    var roomItems = room.items;
+
+                    for (int i = playerInvCount - 1; i >= 0; i--)
+                    {
+                        playerInv[i].location = "Room";
+                        room.items.Add(playerInv[i]);
+                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You drop  a " + playerInv[i].name);
+                        HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " drops a " + playerInv[i].name);
+                        player.Inventory.Remove(playerInv[i]);
+                    }
+
+
+                    //save to cache
+                    Cache.updateRoom(room, currentRoom);
+                    Cache.updatePlayer(player, currentPlayer);
+
                 }
+                else
+                {
+                    var containerItems = container.containerItems;
+                    var containerCount = containerItems.Count;
+
+                    for (int i = containerCount - 1; i >= 0; i--)
+                    {
+                        item.location = "Room";
+                        containerItems.Add(playerInv[i]);
+                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You drop  a " + playerInv[i].name);
+                        HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " drops a " + playerInv[i].name);
+                        player.Inventory.Remove(playerInv[i]);
+                    }
 
 
-                //save to cache
-                Cache.updateRoom(room, currentRoom);
-                Cache.updatePlayer(player, currentPlayer);
+                    //save to cache
+                    Cache.updateRoom(room, currentRoom);
+                    Cache.updatePlayer(player, currentPlayer);
+                }
             }
             else
             {
