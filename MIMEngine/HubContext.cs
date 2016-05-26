@@ -9,6 +9,7 @@ using MIMEngine.Core.Player;
 
 namespace MIMEngine.Core
 {
+    using MIMEngine.Core.Events;
     using MIMEngine.Core.Player;
     public static class HubContext
     {
@@ -95,6 +96,19 @@ namespace MIMEngine.Core
             }
 
            
+        }
+
+        public static void Quit(string playerId)
+        {
+            SendToClient("See you soon!", playerId);
+
+            //remove player from room and player cache
+
+            
+
+            HubContext.getHubContext.Clients.Client(playerId).quit();
+
+            
         }
     }
 }

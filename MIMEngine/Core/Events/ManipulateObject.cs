@@ -14,6 +14,10 @@ namespace MIMEngine.Core.Events
 
     public class ManipulateObject
     {
+        private static string FindItem { get; } = "item";
+        private static string FindInventory { get; } = "inventory";
+        private static string Findkillable { get; } = "killable";
+        private static string FindAll { get; } = "all";
 
         public static KeyValuePair<int, string> FindNth(string thingToFind)
         {
@@ -113,7 +117,7 @@ namespace MIMEngine.Core.Events
             List<Player> playerList = room.players;
 
             #region find Item searching Room and Player Inventory
-            if (objectTypeToFind == "item")
+            if (objectTypeToFind == FindItem)
             {
                 // if its not a container
                 if (string.IsNullOrEmpty(itemContainer))
@@ -168,7 +172,7 @@ namespace MIMEngine.Core.Events
                     }
 
                     //return item found in container
-                    if (foundItem != null)
+                    if (foundItem != null || itemToFind.Equals("all", StringComparison.OrdinalIgnoreCase))
                     {
                         return new KeyValuePair<Item, Item>(foundContainer, foundItem);
                     }
@@ -184,7 +188,7 @@ namespace MIMEngine.Core.Events
             }
             #endregion
             #region find item in player inventory for commands such as drop, equip, wield etc
-            else if (objectTypeToFind == "inventory")
+            else if (objectTypeToFind == FindInventory)
             {
                 Item foundContainer = null;
                 if (string.IsNullOrEmpty(itemContainer))
@@ -193,7 +197,7 @@ namespace MIMEngine.Core.Events
                     foundItem = (nth == -1) ? playerInv.Find(x => x.name.ToLower().Contains(itemToFind))
                                     : playerInv.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
 
-                    if (foundItem != null)
+                    if (foundItem != null || itemToFind.Equals("all", StringComparison.OrdinalIgnoreCase))
                     {
                         return new KeyValuePair<Item, Item>(foundContainer, foundItem);
                     }
@@ -208,14 +212,14 @@ namespace MIMEngine.Core.Events
                     //look in inv
                     foundItem = (nthContainer == -1) ? playerInv.Find(x => x.name.ToLower().Contains(itemToFind))
                                         : playerInv.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nthContainer - 1).FirstOrDefault();
-                    if (foundItem != null)
+                    if (foundItem == null)
                     {
                         //find container
-                         foundContainer = (nth == -1)
-                                        ? roomItems.Find(x => x.name.ToLower().Contains(itemContainer))
-                                        : roomItems.FindAll(x => x.name.ToLower().Contains(itemContainer))
-                                              .Skip(nth - 1)
-                                              .FirstOrDefault();
+                        foundContainer = (nth == -1)
+                                       ? roomItems.Find(x => x.name.ToLower().Contains(itemContainer))
+                                       : roomItems.FindAll(x => x.name.ToLower().Contains(itemContainer))
+                                             .Skip(nth - 1)
+                                             .FirstOrDefault();
                     }
                     else
                     {
@@ -224,7 +228,7 @@ namespace MIMEngine.Core.Events
                     }
 
                     //return item found in container
-                    if (foundItem != null)
+                    if (foundItem != null || foundContainer != null)
                     {
                         return new KeyValuePair<Item, Item>(foundContainer, foundItem);
                     }
@@ -237,7 +241,7 @@ namespace MIMEngine.Core.Events
             }
             #endregion
             #region find killable mob or player
-            else if (objectTypeToFind == "killable")
+            else if (objectTypeToFind == Findkillable)
             {
 
 
@@ -266,7 +270,7 @@ namespace MIMEngine.Core.Events
 
             }
             #endregion
-            else if (objectTypeToFind == "all")
+            else if (objectTypeToFind == FindAll)
             {
 
                 //general stuff? sayto command? whsper? cast
@@ -342,7 +346,7 @@ namespace MIMEngine.Core.Events
 
                 if (container == null)
                 {
-              
+
                     var roomItems = room.items;
                     var roomItemsCount = roomItems.Count;
 
@@ -361,7 +365,7 @@ namespace MIMEngine.Core.Events
                 }
                 else
                 {
-                    
+
                     var containerItems = container.containerItems;
                     var containerCount = containerItems.Count;
 
@@ -370,8 +374,8 @@ namespace MIMEngine.Core.Events
                     {
                         containerItems[i].location = "Inventory";
                         player.Inventory.Add(containerItems[i]);
-                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You pick up a " + containerItems[i].name + " from a " + container.name);
-                        HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " picks up a " + containerItems[i].name + " from a " + container.name);
+                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You get a " + containerItems[i].name + " from a " + container.name);
+                        HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " get a " + containerItems[i].name + " from a " + container.name);
                         containerItems.Remove(containerItems[i]);
                     }
 
@@ -451,11 +455,11 @@ namespace MIMEngine.Core.Events
 
             var currentRoom = room;
             var currentPlayer = player;
-            string [] all = userInput.Split();
+            string[] all = userInput.Split();
 
             if (all[0].Equals("all", StringComparison.InvariantCultureIgnoreCase))
             {
-                KeyValuePair<Item, Item> returnedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, "Inventory");
+                var returnedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, FindInventory);
 
                 var container = returnedItem.Key;
                 var item = returnedItem.Value;
@@ -464,15 +468,14 @@ namespace MIMEngine.Core.Events
                 if (container == null)
                 {
 
-                 
-                    var playerInvCount = player.Inventory.Count;
-                    var roomItems = room.items;
 
+                    var playerInvCount = player.Inventory.Count;
+                    
                     for (int i = playerInvCount - 1; i >= 0; i--)
                     {
                         playerInv[i].location = "Room";
                         room.items.Add(playerInv[i]);
-                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You drop  a " + playerInv[i].name);
+                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You drop a " + playerInv[i].name);
                         HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " drops a " + playerInv[i].name);
                         player.Inventory.Remove(playerInv[i]);
                     }
@@ -485,15 +488,15 @@ namespace MIMEngine.Core.Events
                 }
                 else
                 {
-                    var containerItems = container.containerItems;
-                    var containerCount = containerItems.Count;
+                    
+                    var playerInvCount = playerInv.Count;
 
-                    for (int i = containerCount - 1; i >= 0; i--)
+                    for (int i = playerInvCount - 1; i >= 0; i--)
                     {
-                        item.location = "Room";
-                        containerItems.Add(playerInv[i]);
-                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You drop  a " + playerInv[i].name);
-                        HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " drops a " + playerInv[i].name);
+                        playerInv[i].location = "Room";
+                        container.containerItems.Add(playerInv[i]);
+                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You drop a " + playerInv[i].name + " into a " + container.name);
+                        HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " drops a " + playerInv[i].name + " into a " + container.name);
                         player.Inventory.Remove(playerInv[i]);
                     }
 

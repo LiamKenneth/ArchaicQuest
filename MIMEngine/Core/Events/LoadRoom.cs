@@ -184,6 +184,8 @@ namespace MIMEngine.Core.Events
                         {
                             if (itemDescription.containerItems.Count > 0)
                             {
+                                HubContext.SendToClient("You look into the " + itemDescription.name + " and see:", player.HubGuid);
+
                                 foreach (var containerItem in itemDescription.containerItems)
                                 {
                                     HubContext.SendToClient(containerItem.name, player.HubGuid);
@@ -193,11 +195,12 @@ namespace MIMEngine.Core.Events
                             {
                                 HubContext.SendToClient("You look into the " + itemDescription.name + " but it is empty", player.HubGuid);
                             }
+                           
                             HubContext.broadcastToRoom(player.Name + " looks in a " + itemDescription.name, room.players, player.HubGuid, true);
                         }
                         else
                         {
-                            HubContext.SendToClient("That is not a container", player.HubGuid);
+                            HubContext.SendToClient(itemDescription.name  + " is not a container", player.HubGuid);
                         }
                     }
                    else if (keyword.StartsWith("look"))

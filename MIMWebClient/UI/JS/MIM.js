@@ -209,7 +209,11 @@
     // Client Functions
     //================================================================================
 
-
+  
+    client.quit = function () {
+       
+        $.connection.hub.stop();
+    };
     //// Add a new message to the page ////
     client.addNewMessageToPage = function (message) {
         $('#discussion').append("<p>" + MIM.htmlEncode(message) + "</p>");

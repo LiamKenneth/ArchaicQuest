@@ -37,11 +37,13 @@ namespace MIMEngine.Core
             commandList.Add("inventory", () => Inventory.ReturnInventory(playerData.Inventory, playerData));
             commandList.Add("get", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item"));
             commandList.Add("drop", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey));
+            commandList.Add("put", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey));
             commandList.Add("save", () =>  Save.UpdatePlayer(playerData));
             commandList.Add("'", () => Communicate.Say(commandOptions, playerData));
             commandList.Add("say", ()=> Communicate.Say(commandOptions, playerData));
             commandList.Add("sayto", () => Communicate.SayTo(commandOptions, room, playerData));
             commandList.Add(">", () => Communicate.SayTo(commandOptions, room, playerData));
+            commandList.Add("quit", () => HubContext.Quit(playerData.HubGuid));
 
             return commandList;
         }
