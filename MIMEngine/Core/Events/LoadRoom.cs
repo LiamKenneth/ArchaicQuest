@@ -182,9 +182,16 @@ namespace MIMEngine.Core.Events
 
                         if (itemDescription.actions.container == true)
                         {
-                            foreach (var containerItem in itemDescription.containerItems)
+                            if (itemDescription.containerItems.Count > 0)
                             {
-                                HubContext.SendToClient(containerItem.name, player.HubGuid);
+                                foreach (var containerItem in itemDescription.containerItems)
+                                {
+                                    HubContext.SendToClient(containerItem.name, player.HubGuid);
+                                }
+                            }
+                            else
+                            {
+                                HubContext.SendToClient("You look into the " + itemDescription.name + " but it is empty", player.HubGuid);
                             }
                             HubContext.broadcastToRoom(player.Name + " looks in a " + itemDescription.name, room.players, player.HubGuid, true);
                         }
