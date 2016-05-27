@@ -35,6 +35,7 @@ namespace MIMEngine.Core
             commandList.Add("taste", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "taste"));
             commandList.Add("score", () => Score.ReturnScore(playerData));
             commandList.Add("inventory", () => Inventory.ReturnInventory(playerData.Inventory, playerData));
+            commandList.Add("equipment", () => Equipment.ShowEquipment(playerData));
             commandList.Add("get", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item"));
             commandList.Add("drop", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey));
             commandList.Add("put", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey));

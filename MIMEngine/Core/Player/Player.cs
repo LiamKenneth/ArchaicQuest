@@ -11,6 +11,7 @@ namespace MIMEngine.Core.PlayerSetup
     using System.Runtime.CompilerServices;
 
     using MIMEngine.Core.Item;
+    using MIMEngine.Core.Player;
 
     using Newtonsoft.Json.Linq;
     using MongoDB.Bson;
@@ -77,6 +78,9 @@ namespace MIMEngine.Core.PlayerSetup
 
         [BsonElement("in")]
         public List<Item> Inventory { get; set; }
+
+        [BsonElement("eq")]
+        public Equipment Equipment { get; set; }
 
         //Game stats
         [BsonElement("ex")]
@@ -158,67 +162,6 @@ namespace MIMEngine.Core.PlayerSetup
         [BsonElement("ari")]
         public int AreaId;
 
-        //Equipment
-        [BsonElement("efl")]
-        public object Floating;
-
-        [BsonElement("eli")]
-        public object Light;
-
-        [BsonElement("eh")]
-        public object Head;
-
-        [BsonElement("efa")]
-        public object Face;
-
-        [BsonElement("ee")]
-        public object Eyes;
-
-        [BsonElement("ele")]
-        public object LeftEar;
-
-        [BsonElement("ere")]
-        public object RightEar;
-
-        [BsonElement("en")]
-        public object Neck;
-
-        [BsonElement("ec")]
-        public object Cloak;
-
-        [BsonElement("ea")]
-        public object AboutBody;
-
-        [BsonElement("eb")]
-        public object Body;
-
-        [BsonElement("ew")]
-        public object Waist;
-
-        [BsonElement("elw")]
-        public object LeftWrist;
-
-        [BsonElement("erw")]
-        public object RightWrist;
-
-        [BsonElement("elh")]
-        public object LeftHand;
-
-        [BsonElement("erh")]
-        public object RightHand;
-
-        [BsonElement("elf")]
-        public object LeftFinger;
-
-        [BsonElement("erf")]
-        public object RightFinger;
-
-        [BsonElement("el")]
-        public object Legs;
-
-        [BsonElement("ef")]
-        public object Feet;
-
         public Player(
             string id,
             string name,
@@ -280,28 +223,33 @@ namespace MIMEngine.Core.PlayerSetup
             this.Area = "Town";
             this.AreaId = 0;
 
-            //Equipment
-            this.Floating = "Nothing";
-            this.Light = "Nothing";
-            this.Head = "Nothing";
-            this.Face = "Nothing";
-            this.Eyes = "Nothing";
-            this.LeftEar = "Nothing";
-            this.RightEar = "Nothing";
-            this.Neck = "Nothing";
-            this.Cloak = "Nothing";
-            this.AboutBody = "Nothing";
-            this.Body = "Nothing";
-            this.Waist = "Nothing";
-            this.LeftWrist = "Nothing";
-            this.RightWrist = "Nothing";
-            this.LeftHand = "Nothing";
-            this.RightHand = "Nothing";
-            this.LeftFinger = "Nothing";
-            this.RightFinger = "Nothing";
-            this.Legs = "Nothing";
-            this.Feet = "Nothing";
-
+            //Eq
+            this.Equipment = this.Equipment ?? (this.Equipment = new Equipment());
+            this.Equipment.Floating = this.Equipment.Floating;
+            this.Equipment.Head = Equipment.Head;
+            this.Equipment.Face = Equipment.Face;
+            this.Equipment.Eyes = Equipment.Eyes;
+            this.Equipment.LeftEar = Equipment.LeftEar;
+            this.Equipment.RightEar = Equipment.RightEar;
+            this.Equipment.Neck = Equipment.Neck;
+            this.Equipment.Neck2 = Equipment.Neck2;
+            this.Equipment.Cloak = Equipment.Cloak;
+            this.Equipment.AboutBody = Equipment.AboutBody;
+            this.Equipment.Body = Equipment.Body;
+            this.Equipment.Waist = Equipment.Waist;
+            this.Equipment.LeftSheath = Equipment.LeftSheath;
+            this.Equipment.RightSheath = Equipment.RightSheath;
+            this.Equipment.BackSheath = Equipment.BackSheath;
+            this.Equipment.Back = Equipment.Back;
+            this.Equipment.LeftWrist = Equipment.LeftWrist;
+            this.Equipment.RightWrist = Equipment.RightWrist;
+            this.Equipment.LeftHand = Equipment.LeftHand;
+            this.Equipment.RightHand = Equipment.RightHand;
+            this.Equipment.LeftRing = Equipment.LeftRing;
+            this.Equipment.RightRing = Equipment.RightRing;
+            this.Equipment.Legs = Equipment.Legs;
+            this.Equipment.Feet = Equipment.Feet;
+ 
 
             //attributes
 

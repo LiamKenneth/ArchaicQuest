@@ -216,7 +216,7 @@
     };
     //// Add a new message to the page ////
     client.addNewMessageToPage = function (message) {
-        $('#discussion').append("<p>" + MIM.htmlEncode(message) + "</p>");
+        $('#discussion').append("<p>" + message + "</p>");
     };
 
     //// Update Race Info ////
