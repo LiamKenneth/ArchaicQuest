@@ -46,6 +46,7 @@ namespace MIMEngine.Core
             commandList.Add(">", () => Communicate.SayTo(commandOptions, room, playerData));
             commandList.Add("quit", () => HubContext.Quit(playerData.HubGuid));
             commandList.Add("wear", () => Equipment.WearItem(playerData, commandOptions));
+            commandList.Add("remove", () => Equipment.RemoveItem(playerData, commandOptions));
 
             return commandList;
         }

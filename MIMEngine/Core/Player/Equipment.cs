@@ -112,6 +112,13 @@ namespace MIMEngine.Core.Player
 
             if (eqLocation == null){ return; }  // Log error?
 
+            var hasValue = eqLocation.GetValue(player.Equipment);
+
+            if (hasValue.ToString() != "Nothing")
+            {
+                RemoveItem(player, hasValue.ToString(), true);
+            }
+
             eqLocation.SetValue(player.Equipment, foundItem.name);
 
             HubContext.SendToClient("You wear." + foundItem.name, player.HubGuid);
@@ -143,17 +150,15 @@ namespace MIMEngine.Core.Player
 
             if (eqLocation == null) { return; }  // Log error?
 
-            if (replaceWithOtherEQ == false)
-            {
-                eqLocation.SetValue(player.Equipment, "Nothing");
+          
+             eqLocation.SetValue(player.Equipment, "Nothing");
 
-                HubContext.SendToClient("You Remove." + foundItem.name, player.HubGuid);
-            }
-            else
+             HubContext.SendToClient("You Remove." + foundItem.name, player.HubGuid);
+            if (replaceWithOtherEQ)
             {
-                //set what was worn back to inventory
+                return; // we don't need to update the cache
             }
-         
+       
 
             Cache.updatePlayer(player, oldPlayer);
 
