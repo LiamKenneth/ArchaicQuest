@@ -154,6 +154,7 @@ namespace MIMEngine.Core.Player
              eqLocation.SetValue(player.Equipment, "Nothing");
 
              HubContext.SendToClient("You Remove." + foundItem.name, player.HubGuid);
+
             if (replaceWithOtherEQ)
             {
                 return; // we don't need to update the cache
