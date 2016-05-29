@@ -44,9 +44,11 @@ namespace MIMEngine.Core
             commandList.Add("say", ()=> Communicate.Say(commandOptions, playerData));
             commandList.Add("sayto", () => Communicate.SayTo(commandOptions, room, playerData));
             commandList.Add(">", () => Communicate.SayTo(commandOptions, room, playerData));
-            commandList.Add("quit", () => HubContext.Quit(playerData.HubGuid));
+            commandList.Add("quit", () => HubContext.Quit(playerData.HubGuid, room));
             commandList.Add("wear", () => Equipment.WearItem(playerData, commandOptions));
             commandList.Add("remove", () => Equipment.RemoveItem(playerData, commandOptions));
+            commandList.Add("wield", () => Equipment.WearItem(playerData, commandOptions, true));
+            commandList.Add("unwield", () => Equipment.RemoveItem(playerData, commandOptions, false, true));
 
             return commandList;
         }
@@ -94,6 +96,8 @@ namespace MIMEngine.Core
 
                 HubProxy.MimHubServer.Invoke("SendToClient", "Sorry you can't do that.");
             }
+
+            Prompt.ShowPrompt(playerData);
            
         }
     }

@@ -9,6 +9,8 @@ using MIMEngine.Core.Player;
 
 namespace MIMEngine.Core
 {
+    using System.Security.Cryptography.X509Certificates;
+
     using MIMEngine.Core.Events;
     using MIMEngine.Core.Player;
     public static class HubContext
@@ -98,15 +100,35 @@ namespace MIMEngine.Core
            
         }
 
-        public static void Quit(string playerId)
+        public static async void Quit(string playerId, Room.Room room)
         {
-            SendToClient("See you soon!", playerId);
+           
 
             //remove player from room and player cache
 
-            
+            var oldRoom = room;
 
-            HubContext.getHubContext.Clients.Client(playerId).quit();
+           int playerIndex = room.players.FindIndex(x => x.HubGuid == playerId);
+            room.players.RemoveAt(playerIndex);
+
+            Cache.updateRoom(room, oldRoom);
+
+            PlayerSetup.Player playerData = null;
+            MIMHubServer.MimHubServer._PlayerCache.TryRemove(playerId, out playerData);
+
+            if (playerData != null)
+            {
+                SendToClient("See you soon!", playerId);
+                broadcastToRoom(playerData.Name + " has left the realm", room.players, playerId, true);
+
+                await Save.UpdatePlayer(playerData);
+
+                HubContext.getHubContext.Clients.Client(playerId).quit();
+            }
+           
+
+
+
 
             
         }

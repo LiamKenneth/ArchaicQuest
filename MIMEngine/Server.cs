@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 namespace MIMHubServer
 {
     using MIMEngine.Core.Events;
+    using MIMEngine.Core.Player;
     using MIMEngine.Core.Room;
     using MongoDB.Bson;
     using Newtonsoft.Json.Linq;
@@ -193,8 +194,6 @@ namespace MIMHubServer
 
             PlayerData.SavePlayerInformation();
 
-            JObject playerJson = PlayerData.ReturnPlayerInformation();
-
             _PlayerCache.TryAdd(id, PlayerData);
 
             loadRoom(id);
@@ -208,7 +207,7 @@ namespace MIMHubServer
             Save.SavePlayer(PlayerData);
 
             // addToRoom(PlayerData.AreaId, roomData, PlayerData, "player");
-
+            Prompt.ShowPrompt(PlayerData);
 
         }
 
@@ -231,6 +230,8 @@ namespace MIMHubServer
 
                 MIMEngine.Core.Room.PlayerManager.AddPlayerToRoom(roomData, player);
                 Movement.EnterRoom(player, roomData);
+
+                Prompt.ShowPrompt(player);
             }
             else
             {

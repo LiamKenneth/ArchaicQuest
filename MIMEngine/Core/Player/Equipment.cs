@@ -94,13 +94,19 @@ namespace MIMEngine.Core.Player
         /// </summary>
         /// <param name="player">The Player</param>
         /// <param name="itemToWear">Item to wear</param>
-        public static void WearItem(Player player, string itemToWear)
+        public static void WearItem(Player player, string itemToWear, bool wield = false)
         {
             var oldPlayer = player;
             var foundItem = player.Inventory.Find(i => i.name.Contains(itemToWear));
 
             if (foundItem == null)
             {
+                if (wield)
+                {
+                    HubContext.SendToClient("You do not have that item to wield.", player.HubGuid);
+                    return;
+                }
+
                 HubContext.SendToClient("You do not have that item to wear.", player.HubGuid);
                 return;
             }
@@ -121,7 +127,14 @@ namespace MIMEngine.Core.Player
 
             eqLocation.SetValue(player.Equipment, foundItem.name);
 
-            HubContext.SendToClient("You wear." + foundItem.name, player.HubGuid);
+            if (!wield)
+            {
+                HubContext.SendToClient("You wear." + foundItem.name, player.HubGuid);
+            }
+            else
+            {
+                HubContext.SendToClient("You wield." + foundItem.name, player.HubGuid);
+            }
 
             Cache.updatePlayer(player, oldPlayer);
 
@@ -132,13 +145,19 @@ namespace MIMEngine.Core.Player
         /// </summary>
         /// <param name="player">The Player</param>
         /// <param name="itemToRemove">Item to Remove</param>
-        public static void RemoveItem(Player player, string itemToRemove, bool replaceWithOtherEQ = false)
+        public static void RemoveItem(Player player, string itemToRemove, bool replaceWithOtherEQ = false, bool unwield = false)
         {
             var oldPlayer = player;
             var foundItem = player.Inventory.Find(i => i.name.Contains(itemToRemove) && i.location.Equals("worn"));
 
             if (foundItem == null)
             {
+                if (unwield)
+                {
+                    HubContext.SendToClient("You do not have that item to unwield.", player.HubGuid);
+                    return;
+                }
+
                 HubContext.SendToClient("You are not wearing that item.", player.HubGuid);
                 return;
             }
@@ -153,7 +172,15 @@ namespace MIMEngine.Core.Player
           
              eqLocation.SetValue(player.Equipment, "Nothing");
 
-             HubContext.SendToClient("You Remove." + foundItem.name, player.HubGuid);
+            if (!unwield)
+            {
+                HubContext.SendToClient("You Remove." + foundItem.name, player.HubGuid);
+            }
+            else
+            {
+                HubContext.SendToClient("You Unwield." + foundItem.name, player.HubGuid);
+            }
+             
 
             if (replaceWithOtherEQ)
             {

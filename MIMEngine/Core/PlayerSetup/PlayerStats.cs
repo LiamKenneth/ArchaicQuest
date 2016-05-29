@@ -39,5 +39,36 @@ namespace MIMEngine.Core.PlayerSetup
 
             return sum;
         }
+
+        public static int GetHp(Player player)
+        {
+            return player.HitPoints;
+        }
+
+        public static int GetMaxHp(Player player)
+        {
+            return player.MaxHitPoints;
+        }
+
+        public static int GetMana(Player player)
+        {
+            return player.ManaPoints;
+        }
+
+        public static int GetMaxMana(Player player)
+        {
+            return player.MaxManaPoints;
+        }
+
+        public static int GetMove(Player player)
+        {
+            return player.MovePoints;
+        }
+
+        public static int GetMaxMove(Player player)
+        {
+            return player.MaxMovePoints;
+        }
+
     }
 }

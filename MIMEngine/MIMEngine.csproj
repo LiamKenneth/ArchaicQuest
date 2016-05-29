@@ -117,6 +117,7 @@
     <Compile Include="Core\Item\BaseItem.cs" />
     <Compile Include="Core\Player\Equipment.cs" />
     <Compile Include="Core\Player\Inventory.cs" />
+    <Compile Include="Core\Player\Prompt.cs" />
     <Compile Include="HubContext.cs" />
     <Compile Include="Core\Item\Action.cs" />
     <Compile Include="Core\Item\Description.cs" />
