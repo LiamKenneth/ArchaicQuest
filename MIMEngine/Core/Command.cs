@@ -49,6 +49,7 @@ namespace MIMEngine.Core
             commandList.Add("remove", () => Equipment.RemoveItem(playerData, commandOptions));
             commandList.Add("wield", () => Equipment.WearItem(playerData, commandOptions, true));
             commandList.Add("unwield", () => Equipment.RemoveItem(playerData, commandOptions, false, true));
+            commandList.Add("kill", () => Fight.MeleeAttack(playerData, room, commandOptions);
 
             return commandList;
         }
