@@ -19,6 +19,9 @@ namespace MIMEngine.Core
     //public static Dictionary<string, Action> commandList { get; set; }
         public static Dictionary<string, Action> Commands(string commandOptions, string commandKey, PlayerSetup.Player playerData, Room.Room room)
         {
+
+            Fight2 x = new Fight2(playerData, room, commandOptions);
+
             var commandList = new Dictionary<String, Action>(); 
             commandList.Add("north", () => Movement.Move(playerData, room, "North"));
             commandList.Add("south", () => Movement.Move(playerData, room, "South"));
@@ -49,7 +52,7 @@ namespace MIMEngine.Core
             commandList.Add("remove", () => Equipment.RemoveItem(playerData, commandOptions));
             commandList.Add("wield", () => Equipment.WearItem(playerData, commandOptions, true));
             commandList.Add("unwield", () => Equipment.RemoveItem(playerData, commandOptions, false, true));
-            commandList.Add("kill", () => Fight.MeleeAttack(playerData, room, commandOptions);
+            commandList.Add("kill", () => x.StartFight(playerData, room, commandOptions));
 
             return commandList;
         }

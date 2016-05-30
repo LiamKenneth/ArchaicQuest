@@ -14,14 +14,14 @@ namespace MIMEngine.Core.Events
     using MIMEngine.Core.PlayerSetup;
     using MIMEngine.Core.Room;
 
-    public class Fight
+    public class Fight2
     {
 
         public static Player attacker { get; set; }
         public static Room room { get; set; }
         public static string attackOptions { get; set; }
 
-        public Fight(Player attackerData, Room roomData, string attackOptionsData)
+        public Fight2(Player attackerData, Room roomData, string attackOptionsData)
         {
             attacker = attackerData;
             room = roomData;
@@ -29,10 +29,11 @@ namespace MIMEngine.Core.Events
 
         }
 
-        public static void StartFight(Player attackerData, Room roomData, string attackOptionsData)
+        public  void StartFight(Player attackerData, Room roomData, string attackOptionsData)
         {
-            Fight2 kill = new Fight2(attackerData, roomData, attackOptionsData);
-            kill.StartFight(attackerData, roomData, attackOptionsData);
+           
+            Timer t = new Timer(this.MeleeAttack, null, 0, 1000);
+ 
         }
 
         public static Player FindTarget(Room room, string defender)
