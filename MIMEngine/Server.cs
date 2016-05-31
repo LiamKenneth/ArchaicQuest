@@ -19,7 +19,7 @@ namespace MIMHubServer
     using MIMEngine.Core.Room;
     using MongoDB.Bson;
     using Newtonsoft.Json.Linq;
-
+    using System.Threading;
     class Server
     {
         static void Main(string[] args)
@@ -75,9 +75,12 @@ namespace MIMHubServer
              Room RoomData;
             _PlayerCache.TryGetValue(playerGuid, out PlayerData);
              _AreaCache.TryGetValue(PlayerData.AreaId, out RoomData);
-
+ 
             this.SendToClient(message, PlayerData.HubGuid);
-            Command.ParseCommand(message, PlayerData, RoomData);
+            Command command = new Command();
+
+            command.ParseCommand(message, PlayerData, RoomData);
+ 
 
         }
         #endregion

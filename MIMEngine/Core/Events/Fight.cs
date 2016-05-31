@@ -32,7 +32,7 @@ namespace MIMEngine.Core.Events
         public static void StartFight(Player attackerData, Room roomData, string attackOptionsData)
         {
             Fight2 kill = new Fight2(attackerData, roomData, attackOptionsData);
-            kill.StartFight(attackerData, roomData, attackOptionsData);
+            kill.StartFight();
         }
 
         public static Player FindTarget(Room room, string defender)

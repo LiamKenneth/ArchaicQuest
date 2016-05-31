@@ -97,6 +97,11 @@
       <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.2.3.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Bin\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.2.3.3, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
@@ -177,6 +182,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Admin\Mob\AddMob.cs" />
+    <Compile Include="Models\Admin\Mob\UpdateMob.cs" />
+    <Compile Include="Models\Admin\Mob\ViewMob.cs" />
+    <Compile Include="Models\Admin\Object\AddObject.cs" />
+    <Compile Include="Models\Admin\Object\UpdateObject.cs" />
+    <Compile Include="Models\Admin\Object\ViewObject.cs" />
+    <Compile Include="Models\Admin\Rooms\ViewRooms.cs" />
     <Compile Include="Models\createPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -251,6 +263,7 @@
     <Content Include="Views\Home\Partial\CharacterCreation\RaceSelection.cshtml" />
     <Content Include="Views\Home\Partial\CharacterCreation\StatSelection.cshtml" />
     <Content Include="Views\Home\Partial\Account\Login.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

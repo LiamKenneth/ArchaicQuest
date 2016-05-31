@@ -1,6 +1,34 @@
-﻿/* 0 */
+﻿/* 1 */
 {
-    "_id" : "573799b070b4e6eddd0bcbce",
+    "_id" : ObjectId("5738bca5c8ff8ea78a4f6bd8"),
+    "region" : "Valston",
+    "area" : "Town",
+    "areaId" : 1,
+    "clean" : false,
+    "modified" : "",
+    "title" : "Dungeon Coridor",
+    "description" : "A dark corridor",
+    "keywords" : [],
+    "terrain" : "city",
+    "exits" : [ 
+        {
+            "name" : "South",
+            "locked" : false,
+            "hidden" : false,
+            "region" : "Valston",
+            "area" : "Town",
+            "areaId" : 0
+        }
+    ],
+    "players" : [],
+    "mobs" : [],
+    "items" : [],
+    "corpses" : []
+}
+
+/* 2 */
+{
+    "_id" : ObjectId("573799b070b4e6eddd0bcbce"),
     "region" : "Valston",
     "area" : "Town",
     "areaId" : 0,
@@ -10,12 +38,57 @@
     "description" : "You are surrounded by 4 walls covered in grime made of large grey stone blocks. The stone floor is cold under your feet. The only possible way out seems to be the metal gate in front of you. A small wooden stool is in the corner behind you.",
     "keywords" : [ 
         {
-            "name" : "Gate",
+            "name" : "gate",
             "look" : "You look at a gate",
             "examine" : "You examine a gate",
             "touch" : "You touch a gate",
             "smell" : "You smell a gate",
             "taste" : "You taste a gate",
+            "hp" : 10
+        }, 
+        {
+            "name" : "stool",
+            "look" : "You look at a stool",
+            "examine" : "You examine a stool",
+            "touch" : "You touch a stool",
+            "smell" : "You smell a stool",
+            "taste" : "You taste a stool",
+            "hp" : 10
+        }, 
+        {
+            "name" : "wall",
+            "look" : "You look at a wall",
+            "examine" : "You examine a wall",
+            "touch" : "You touch a wall",
+            "smell" : "You smell a wall",
+            "taste" : "You taste a wall",
+            "hp" : 10
+        }, 
+        {
+            "name" : "floor",
+            "look" : "You look at a floor",
+            "examine" : "You examine a floor",
+            "touch" : "You touch a floor",
+            "smell" : "You smell a floor",
+            "taste" : "You taste a floor",
+            "hp" : 10
+        }, 
+        {
+            "name" : "grime",
+            "look" : "You look at a grime",
+            "examine" : "You examine a grime",
+            "touch" : "You touch a grime",
+            "smell" : "You smell a grime",
+            "taste" : "You taste a grime",
+            "hp" : 10
+        }, 
+        {
+            "name" : "lock",
+            "look" : "You look at the gate lock it looks easy to pick",
+            "examine" : "You examine the gate lock it looks easy to pick",
+            "touch" : "You touch the gate lock it looks easy to pick",
+            "smell" : "You smell the gate lock it looks easy to pick",
+            "taste" : "You taste the gate lock it looks easy to pick",
             "hp" : 10
         }
     ],
@@ -28,14 +101,6 @@
             "region" : "Valston",
             "area" : "Town",
             "areaId" : 1
-        }, 
-        {
-            "name" : "South",
-            "locked" : true,
-            "hidden" : false,
-            "region" : "Valston",
-            "area" : "Town",
-            "areaId" : 2
         }
     ],
     "players" : [],
@@ -72,6 +137,66 @@
                 "wield" : "wield"
             },
             "description" : {
+                "look" : "You look at a long sword",
+                "exam" : "You look closely at a long sword",
+                "room" : "A long Sword is here."
+            },
+            "stats" : {
+                "damMin" : 1,
+                "damMax" : 5
+            }
+        }, 
+        {
+            "type" : "object",
+            "location" : "room",
+            "equipable" : true,
+            "slot" : "hand",
+            "name" : "Long Sword",
+            "actions" : {
+                "container" : false,
+                "wield" : "wield"
+            },
+            "description" : {
+                "look" : "You look at a long fiery sword",
+                "exam" : "You look closely at a long sword",
+                "room" : "A long Sword is here."
+            },
+            "stats" : {
+                "damMin" : 1,
+                "damMax" : 5
+            }
+        }, 
+        {
+            "type" : "object",
+            "location" : "room",
+            "equipable" : true,
+            "slot" : "hand",
+            "name" : "Long Sword",
+            "actions" : {
+                "container" : false,
+                "wield" : "wield"
+            },
+            "description" : {
+                "look" : "You look at a long ice sword",
+                "exam" : "You look closely at a long sword",
+                "room" : "A long Sword is here."
+            },
+            "stats" : {
+                "damMin" : 1,
+                "damMax" : 5
+            }
+        }, 
+        {
+            "type" : "object",
+            "location" : "room",
+            "equipable" : true,
+            "slot" : "hand",
+            "name" : "Chest",
+            "actions" : {
+                "container" : true,
+                "wield" : "wield"
+            },
+            "description" : {
                 "look" : "You look at a short sword",
                 "exam" : "You look closely at a short sword",
                 "room" : "A short Sword is here."
@@ -79,36 +204,30 @@
             "stats" : {
                 "damMin" : 1,
                 "damMax" : 5
-            }
+            },
+            "containerItems" : [ 
+                {
+                    "type" : "object",
+                    "location" : "room",
+                    "equipable" : true,
+                    "slot" : "hand",
+                    "name" : "Red Ruby",
+                    "actions" : {
+                        "container" : false,
+                        "wield" : "wield"
+                    },
+                    "description" : {
+                        "look" : "You look at a Red Ruby",
+                        "exam" : "You look closely at a Red Ruby",
+                        "room" : "A Red Ruby is here."
+                    },
+                    "stats" : {
+                        "damMin" : 1,
+                        "damMax" : 5
+                    }
+                }
+            ]
         }
     ],
-    "corpses" : []
-}
-
-/* 1 */
-{
-    "_id" : "5738bca5c8ff8ea78a4f6bd8",
-    "region" : "Valston",
-    "area" : "Town",
-    "areaId" : 1,
-    "clean" : false,
-    "modified" : "",
-    "title" : "Dungeon Coridor",
-    "description" : "A dark corridor",
-    "keywords" : [],
-    "terrain" : "city",
-    "exits" : [ 
-        {
-            "name" : "South",
-            "locked" : false,
-            "hidden" : false,
-            "region" : "Valston",
-            "area" : "Town",
-            "areaId" : 0
-        }
-    ],
-    "players" : [],
-    "mobs" : [],
-    "items" : [],
     "corpses" : []
 }

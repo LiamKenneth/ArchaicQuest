@@ -29,7 +29,7 @@ namespace MIMEngine.Core.Events
 
         }
 
-        public  void StartFight(Player attackerData, Room roomData, string attackOptionsData)
+        public void StartFight()
         {
            
             Timer t = new Timer(this.MeleeAttack, null, 0, 1000);
@@ -86,6 +86,7 @@ namespace MIMEngine.Core.Events
             if (toHit > chance)
             {
                 HubContext.SendToClient("You hit " + defender.Name, attacker.HubGuid);
+                HubContext.SendToClient(attacker.Name + " hits you ", attacker.HubGuid, defender.HubGuid, false, true);
             }
             else
             {
