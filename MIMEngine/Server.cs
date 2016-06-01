@@ -67,21 +67,20 @@ namespace MIMHubServer
         }
 
         #region input from user
-        public void recieveFromClient(string message, String playerGuid)
+        public void recieveFromClient(string message,String playerGuid)
         {
 
-   
+
             Player PlayerData;
-             Room RoomData;
+            Room RoomData;
             _PlayerCache.TryGetValue(playerGuid, out PlayerData);
-             _AreaCache.TryGetValue(PlayerData.AreaId, out RoomData);
- 
-            this.SendToClient(message, PlayerData.HubGuid);
-            Command command = new Command();
+            _AreaCache.TryGetValue(PlayerData.AreaId, out RoomData);
 
-            command.ParseCommand(message, PlayerData, RoomData);
- 
+            HubContext.SendToClient(message, PlayerData.HubGuid);
 
+             Command.ParseCommand(message, PlayerData, RoomData);
+
+      
         }
         #endregion
 

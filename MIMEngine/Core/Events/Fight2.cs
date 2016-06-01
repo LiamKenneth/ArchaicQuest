@@ -13,39 +13,22 @@ namespace MIMEngine.Core.Events
     using MIMEngine.Core.Item;
     using MIMEngine.Core.PlayerSetup;
     using MIMEngine.Core.Room;
-
+    using System.Timers;
     public class Fight2
     {
-
-        public static Player attacker { get; set; }
-        public static Room room { get; set; }
-        public static string attackOptions { get; set; }
-
-        public Fight2(Player attackerData, Room roomData, string attackOptionsData)
-        {
-            attacker = attackerData;
-            room = roomData;
-            attackOptions = attackOptionsData;
-
-        }
-
-        public void StartFight()
-        {
-           
-            Timer t = new Timer(this.MeleeAttack, null, 0, 1000);
  
-        }
-
-        public static Player FindTarget(Room room, string defender)
+        public static void StartFight(Player attacker, Room room, string attackOptions)
         {
-            Player target = room.players.Find(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase));
+ 
+            /* player can only attack one target
+             * if player gets attacked by something else they cannot fight back until
+             * they have ended the fight they are already in.
+             * player defence should be divided by the number of people they are being attacked by.
+             * 
+             */
 
-            return target;
-        }
-
-
-        public  void MeleeAttack(object state)
-        {
+            //automated Combat rounds for melee attacks
+            //kinda boring but this is mvp
 
             //find defender 
             Player defender = FindTarget(room, attackOptions);
@@ -93,7 +76,21 @@ namespace MIMEngine.Core.Events
                 HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
             }
 
+            //defender strieks back
+            Fight2.StartFight(defender, room, attacker.Name);
 
+            Thread.Sleep(1000);
+
+            StartFight(attacker, room, attackOptions);
+
+
+        }
+
+        public static Player FindTarget(Room room, string defender)
+        {
+            Player target = room.players.Find(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase));
+
+            return target;
         }
 
         public static int D100()
@@ -136,8 +133,6 @@ namespace MIMEngine.Core.Events
 
             return evade;
         }
-
-
 
         public static void Punch(Player attacker, Player defender, Room room)
         {

@@ -16,12 +16,12 @@ namespace MIMEngine.Core
     using System.Threading;
     public class Command
     {
-    //public static Dictionary<string, Action> commandList { get; set; }
-        public  Dictionary<string, Action> Commands(string commandOptions, string commandKey, PlayerSetup.Player playerData, Room.Room room)
+ 
+
+        //public static Dictionary<string, Action> commandList { get; set; }
+        public static Dictionary<string, Action> Commands(string commandOptions,string commandKey,PlayerSetup.Player playerData,Room.Room room)
         {
 
-            Fight2 x = new Fight2(playerData, room, commandOptions);
-            Thread thread1 = new Thread(new ThreadStart(x.StartFight));
             var commandList = new Dictionary<String, Action>(); 
             commandList.Add("north", () => Movement.Move(playerData, room, "North"));
             commandList.Add("south", () => Movement.Move(playerData, room, "South"));
@@ -52,14 +52,14 @@ namespace MIMEngine.Core
             commandList.Add("remove", () => Equipment.RemoveItem(playerData, commandOptions));
             commandList.Add("wield", () => Equipment.WearItem(playerData, commandOptions, true));
             commandList.Add("unwield", () => Equipment.RemoveItem(playerData, commandOptions, false, true));
-            commandList.Add("kill", () => thread1.Start());
+            commandList.Add("kill", () => Fight2.StartFight(playerData, room, commandOptions));
 
             return commandList;
         }
 
  
 
-        public void ParseCommand(string input, PlayerSetup.Player playerData, Room.Room room = null)
+        public static  void ParseCommand(string input, PlayerSetup.Player playerData, Room.Room room = null)
         {
 
             //testing
@@ -87,15 +87,13 @@ namespace MIMEngine.Core
             }
  
              //TODO: do this only once
-            var command = (new Command()).Commands(commandOptions, commandKey, playerData, room);
+            var command =  Command.Commands(commandOptions, commandKey, playerData, room);
  
             var fire = command.FirstOrDefault(x => x.Key.StartsWith(commandKey, StringComparison.InvariantCultureIgnoreCase));
  
             if (fire.Value != null)
             {
-                
-         
-                fire.Value();
+                 fire.Value();
             }
             else
             { 
