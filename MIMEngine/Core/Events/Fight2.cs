@@ -16,16 +16,20 @@ namespace MIMEngine.Core.Events
     using System.Timers;
     public class Fight2
     {
- 
-        public static void StartFight(Player attacker, Room room, string attackOptions)
+
+        public static async void StartFight(Player attacker, Room room, string attackOptions)
         {
- 
+            if (attacker == null)
+            {
+                return;
+            }
+
             /* player can only attack one target
-             * if player gets attacked by something else they cannot fight back until
-             * they have ended the fight they are already in.
-             * player defence should be divided by the number of people they are being attacked by.
-             * 
-             */
+         * if player gets attacked by something else they cannot fight back until
+         * they have ended the fight they are already in.
+         * player defence should be divided by the number of people they are being attacked by.
+         * 
+         */
 
             //automated Combat rounds for melee attacks
             //kinda boring but this is mvp
@@ -39,6 +43,12 @@ namespace MIMEngine.Core.Events
                 return;
 
             }
+
+            //get speed of attackr and defender?
+           // Defender(defender, attacker, room);
+
+            await Task.Delay(2000);
+
             //Get Attacker Weapon
             string RightHand = attacker.Equipment.RightHand;
             string LeftHand = attacker.Equipment.LeftHand;
@@ -69,7 +79,12 @@ namespace MIMEngine.Core.Events
             if (toHit > chance)
             {
                 HubContext.SendToClient("You hit " + defender.Name, attacker.HubGuid);
-                HubContext.SendToClient(attacker.Name + " hits you ", attacker.HubGuid, defender.HubGuid, false, true);
+                HubContext.SendToClient(
+                    attacker.Name + " hits you ",
+                    attacker.HubGuid,
+                    defender.HubGuid,
+                    false,
+                    true);
             }
             else
             {
@@ -77,13 +92,60 @@ namespace MIMEngine.Core.Events
             }
 
             //defender strieks back
-            Fight2.StartFight(defender, room, attacker.Name);
 
-            Thread.Sleep(1000);
+
+           
 
             StartFight(attacker, room, attackOptions);
 
 
+
+        }
+
+        public static async void Defender(Player defender, Player attacker, Room room)
+        {
+            //find defender 
+            // Thread.Sleep(1500);
+            await Task.Delay(1000);
+            //Get defender Weapon
+            string RightHand = defender.Equipment.RightHand;
+            string LeftHand = defender.Equipment.LeftHand;
+            Item RightHandWep = null;
+            Item LeftHandWep = null;
+            bool dualWield = false;
+            bool TwoHanded = false;
+            bool handToHand = false;
+
+
+            if (RightHand == "Nothing" && LeftHand == "Nothing")
+            {
+                handToHand = true;
+            }
+            else
+            {
+                RightHandWep = defender.Inventory.Find(x => x.name == RightHand && x.location == "Equipped");
+                LeftHandWep = defender.Inventory.Find(x => x.name == LeftHand && x.location == "Equipped");
+            }
+
+            double offense = Offense(defender);
+            double evasion = Evasion(attacker);
+
+            double toHit = (offense / evasion) * 100;
+            int chance = D100();
+
+
+            if (toHit > chance)
+            {
+                HubContext.SendToClient("You hit " + attacker.Name, defender.HubGuid);
+                HubContext.SendToClient(defender.Name + " hits you ", defender.HubGuid, attacker.HubGuid, false, true);
+            }
+            else
+            {
+                HubContext.SendToClient("You miss " + attacker.Name, defender.HubGuid);
+            }
+
+           
+            //Defender(defender, attacker, room);
         }
 
         public static Player FindTarget(Room room, string defender)
