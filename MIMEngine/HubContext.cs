@@ -53,7 +53,8 @@ namespace MIMEngine.Core
                 if (playerId != null)
                 {
                     //send a message to all but caller
-                    if (excludeCaller)
+                    // x hits you - Fight message is being sent to all instead of person who's being hit
+                    if (excludeCaller && sendToAll == false && excludeRecipient == false)
                     {
                         HubContext.getHubContext.Clients.AllExcept(playerId).addNewMessageToPage(message);
                     }
