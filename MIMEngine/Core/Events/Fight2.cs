@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace MIMEngine.Core.Events
 {
+    using System.Diagnostics;
     using System.Runtime.CompilerServices;
     using System.Security.Permissions;
     using System.Threading;
@@ -51,16 +52,108 @@ namespace MIMEngine.Core.Events
             //Check if players are alive
 
         
-                await Attacker(attacker, defender, room);
- 
-                await Defender(defender, attacker, room);
-       
- 
+                  HitTarget(attacker, defender, room);
+
+            if (attacker.HitPoints <= 0)
+            {
+                return;
+            }
+
+            if (defender.HitPoints <= 0)
+            {
+                return;
+            }
+
+            int attackerSpeed = 3000;
+            int defenderSpeed = 250;
+
+            while (defender.HitPoints > 0 && attacker.HitPoints > 0)
+            {
+                Task.Delay(3000);
+
+               
+                double offense = Offense(attacker);
+                double evasion = Evasion(defender);
+
+                double toHit = (offense / evasion) * 100;
+                int chance = D100();
+
+
+                if (toHit > chance)
+                {
+                    HubContext.SendToClient("You hit " + defender.Name, attacker.HubGuid);
+                    HubContext.SendToClient(
+                        attacker.Name + " hits you ",
+                        attacker.HubGuid,
+                        defender.HubGuid,
+                        false,
+                        true);
+
+                    attacker.HitPoints -= 1;
+                }
+                else
+                {
+                    HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
+                    HubContext.SendToClient(
+                        attacker.Name + " misses you ",
+                        attacker.HubGuid,
+                        defender.HubGuid,
+                        false,
+                        true);
+                }
+                
+
+
+
+            }
+
+
+           
+
+            //HitTarget(attacker, defender, room);
+
+        }
+
+        private static  Action<Task> HitTarget(Player attacker, Player defender, Room room)
+        {
+           
+            double offense = Offense(attacker);
+            double evasion = Evasion(defender);
+
+            double toHit = (offense / evasion) * 100;
+            int chance = D100();
+
+
+            if (toHit > chance)
+            {
+                HubContext.SendToClient("You hit " + defender.Name, attacker.HubGuid);
+                HubContext.SendToClient(
+                    attacker.Name + " hits you ",
+                    attacker.HubGuid,
+                    defender.HubGuid,
+                    false,
+                    true);
+
+                attacker.HitPoints -= 1;
+            }
+            else
+            {
+                HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
+                HubContext.SendToClient(
+                    attacker.Name + " misses you ",
+                    attacker.HubGuid,
+                    defender.HubGuid,
+                    false,
+                    true);
+            }
+
+            return null;
+
         }
 
         public static async Task Attacker(Player attacker, Player defender, Room room)
         {
-            await Task.Delay(1000);
+            await Task.Delay(3000);
             //Get Attacker Weapon
             string RightHand = attacker.Equipment.RightHand;
             string LeftHand = attacker.Equipment.LeftHand;
@@ -109,7 +202,7 @@ namespace MIMEngine.Core.Events
             if (defender.HitPoints > 0)
             {
                 //fight again
-                await StartFight(attacker, room, defender.Name, true);
+                  StartFight(attacker, room, defender.Name, true);
 
             }
             else
@@ -122,7 +215,7 @@ namespace MIMEngine.Core.Events
 
         public static async Task Defender(Player defender, Player attacker, Room room)
         {
-           await Task.Delay(1200);
+           await Task.Delay(3000);
             //Get Attacker Weapon
             string RightHand = defender.Equipment.RightHand;
             string LeftHand = defender.Equipment.LeftHand;
@@ -170,7 +263,7 @@ namespace MIMEngine.Core.Events
             if (attacker.HitPoints > 0)
             {
                 //fight again
-                await  StartFight(defender, room, attacker.Name, false);
+                   StartFight(defender, room, attacker.Name, false);
             }
             else
             {

@@ -13,12 +13,12 @@ namespace MIMEngine.Core.Events
 
     public class Communicate
     {
-        public static void Say(string message, Player player)
+        public static void Say(string message, Player player, Room room)
         {
             string playerId = player.HubGuid;
 
                 HubContext.SendToClient("You say " + message, playerId, null, false, false);
-                HubContext.SendToClient(player.Name + " says " + message, playerId, null, true, true);
+                HubContext.broadcastToRoom(player.Name + " says " + message, room.players, playerId, true);
                
         }
 
