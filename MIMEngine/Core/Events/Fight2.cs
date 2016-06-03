@@ -6,15 +6,10 @@ using System.Threading.Tasks;
 
 namespace MIMEngine.Core.Events
 {
-    using System.Diagnostics;
-    using System.Runtime.CompilerServices;
-    using System.Security.Permissions;
-    using System.Threading;
 
-    using MIMEngine.Core.Item;
     using MIMEngine.Core.PlayerSetup;
     using MIMEngine.Core.Room;
-    using System.Timers;
+
     public class Fight2
     {
 
@@ -58,6 +53,18 @@ namespace MIMEngine.Core.Events
             defender.Status = "Fighting";
             attacker.Status = "Fighting";
 
+            if (string.IsNullOrEmpty(attacker.Target))
+            {
+                attacker.Target = defender.Name;
+            }
+
+            if (string.IsNullOrEmpty(defender.Target))
+            {
+                defender.Target = attacker.Name;
+            }
+           
+           
+
             await Task.Delay(3000);
 
             double offense = Offense(attacker);
@@ -93,9 +100,9 @@ namespace MIMEngine.Core.Events
 
 
 
-            var attackTask = HitTarget(attacker, defender, room, 1000);
+            var attackTask = HitTarget(attacker, defender, room, 5000);
 
-            var defendTask = HitTarget(defender, attacker, room, 3000);
+            var defendTask = HitTarget(defender, attacker, room, 5000);
 
             Task.WaitAll(attackTask, defendTask);
 
@@ -124,7 +131,13 @@ namespace MIMEngine.Core.Events
 
             if (attacker.Status == "Standing")
             {
-                HubContext.SendToClient(attacker.Name + " flees", defender.HubGuid);
+                Player target = FindTarget(room, attacker.Name);
+
+                if (target == null)
+                {
+                    HubContext.SendToClient(attacker.Name + " flees", defender.HubGuid);
+                }
+               
  
             }
 
@@ -149,6 +162,11 @@ namespace MIMEngine.Core.Events
                     return;
                 }
 
+                if (attacker.Target != defender.Name)
+                {
+                    return;
+                }
+
                 double offense = Offense(attacker);
                 double evasion = Evasion(defender);
 
@@ -159,24 +177,14 @@ namespace MIMEngine.Core.Events
                 if (toHit > chance)
                 {
                     HubContext.SendToClient("You hit " + defender.Name, attacker.HubGuid);
-                    HubContext.SendToClient(
-                        attacker.Name + " hits you ",
-                        attacker.HubGuid,
-                        defender.HubGuid,
-                        false,
-                        true);
+                    HubContext.SendToClient(attacker.Name + " hits you ", defender.HubGuid);
 
                     defender.HitPoints -= 1;
                 }
                 else
                 {
                     HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
-                    HubContext.SendToClient(
-                        attacker.Name + " misses you ",
-                        attacker.HubGuid,
-                        defender.HubGuid,
-                        false,
-                        true);
+                    HubContext.SendToClient(attacker.Name + " misses you ", defender.HubGuid);
                 }
 
                 Core.Player.Prompt.ShowPrompt(attacker);

@@ -107,6 +107,9 @@ namespace MIMEngine.Core.PlayerSetup
         [BsonElement("st")]
         public string Status;
 
+        [BsonElement("ta")]
+        public string Target;
+
         //Kills
         [BsonElement("mk")]
         public int MobKills;
@@ -190,7 +193,7 @@ namespace MIMEngine.Core.PlayerSetup
             this.AlignmentScore = 0;
             this.Experience = 0;
             this.ExperienceToNextLevel = 1000; // create class to work out
-            this.HitPoints = 30; // class to workout
+            this.HitPoints = 100; // class to workout
             this.MaxHitPoints = 30;
             this.ManaPoints = 50;
             this.MaxManaPoints = 50;
@@ -204,6 +207,7 @@ namespace MIMEngine.Core.PlayerSetup
             this.Weight = 0;
             this.MaxWeight = 70; // class to workout
             this.Status = "Standing"; // enum property? 1 standing
+            this.Target = null;
             this.Inventory = this.Inventory ?? (this.Inventory = new List<Item>());
 
             //kills
