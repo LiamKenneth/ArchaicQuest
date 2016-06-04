@@ -76,6 +76,17 @@ namespace MIMEngine.Core
             }
         }
 
+        public static void SendToAllExcept(string message, string[] excludeThesePlayers)
+        {
+            if (message != null)
+            {
+
+                  HubContext.getHubContext.Clients.AllExcept(excludeThesePlayers).addNewMessageToPage(message);
+                
+                
+            }
+        }
+
         public static void broadcastToRoom(string message, List<PlayerSetup.Player> players, string playerId, bool excludeCaller = false)
         {
             int playerCount = players.Count;

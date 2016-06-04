@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace MIMEngine.Core.Events
 {
-    using System.Threading;
 
     using MIMEngine.Core.PlayerSetup;
     using MIMEngine.Core.Room;
@@ -74,11 +73,13 @@ namespace MIMEngine.Core.Events
 
             ShowAttack(attacker, defender, room, toHit, chance);
 
-            var attackTask = HitTarget(attacker, defender, room, 5000);
+             HitTarget(attacker, defender, room, 5000);
 
-            var defendTask = HitTarget(defender, attacker, room, 5000);
+              HitTarget(defender, attacker, room, 5000);
 
-            Task.WaitAll(attackTask, defendTask);
+            
+
+   
 
             IsDead(attacker, defender);
 
@@ -89,11 +90,8 @@ namespace MIMEngine.Core.Events
         private static async Task HitTarget(Player attacker, Player defender, Room room, int delay)
         {
 
-            new async Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
 
-                while (attacker.HitPoints > 0 && defender.HitPoints > 0 && attacker.Status == "Fighting" && defender.Status == "Fighting")
+            while (attacker.HitPoints > 0 && defender.HitPoints > 0 && attacker.Status == "Fighting" && defender.Status == "Fighting")
             {
                 await Task.Delay(delay);
 
@@ -120,7 +118,7 @@ namespace MIMEngine.Core.Events
                 Core.Player.Prompt.ShowPrompt(defender);
 
             }
-            }).Start();
+
 
 
         }
