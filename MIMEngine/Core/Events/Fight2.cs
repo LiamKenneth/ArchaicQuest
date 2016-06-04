@@ -75,11 +75,8 @@ namespace MIMEngine.Core.Events
 
              HitTarget(attacker, defender, room, 5000);
 
-              HitTarget(defender, attacker, room, 5000);
+             HitTarget(defender, attacker, room, 5000);
 
-            
-
-   
 
             IsDead(attacker, defender);
 
@@ -136,6 +133,7 @@ namespace MIMEngine.Core.Events
             {
                 HubContext.SendToClient("You hit " + defender.Name, attacker.HubGuid);
                 HubContext.SendToClient(attacker.Name + " hits you ", defender.HubGuid);
+                //BUG: this also broadcast to the players fighting
                 HubContext.broadcastToRoom(attacker.Name + " hits " + defender.Name, room.players, attacker.HubGuid, true);
 
                 defender.HitPoints -= 1;
