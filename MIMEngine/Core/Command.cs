@@ -52,7 +52,7 @@ namespace MIMEngine.Core
             commandList.Add("remove", () => Equipment.RemoveItem(playerData, commandOptions));
             commandList.Add("wield", () => Equipment.WearItem(playerData, commandOptions, true));
             commandList.Add("unwield", () => Equipment.RemoveItem(playerData, commandOptions, false, true));
-            commandList.Add("kill", () => Fight2.StartFight(playerData, room, commandOptions, true, true));
+            commandList.Add("kill", () => Fight2.StartFight(playerData, room, commandOptions));
             commandList.Add("flee", () => Flee.fleeCombat(playerData, room));
             return commandList;
         }

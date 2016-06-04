@@ -12,8 +12,16 @@ namespace MIMEngine.Core.Events
 
     public class Fight2
     {
-
-        public static async Task StartFight(Player attacker, Room room, string attackOptions, bool isAttacker, bool initFight)
+        /// <summary>
+        /// Starts a fight between two players or mobs
+        /// The defender can only fight it's original target 
+        /// so cant fight back at multiple targets
+        /// </summary>
+        /// <param name="attacker">The attacker</param>
+        /// <param name="room">The room</param>
+        /// <param name="attackOptions">The attackers Name for now</param>
+        /// <returns></returns>
+        public static async Task StartFight(Player attacker, Room room, string attackOptions)
         {
             if (attacker == null)
             {
@@ -92,15 +100,7 @@ namespace MIMEngine.Core.Events
             {
                 await Task.Delay(delay);
 
-                if (attacker.Status == "Standing" || defender.Status == "Standing")
-                {
-                    return;
-                }
-
-                if (attacker.Target.Name != defender.Name)
-                {
-                    return;
-                }
+                CanAttack(attacker, defender);
 
                 double offense = Offense(attacker);
                 double evasion = Evasion(defender);
@@ -125,6 +125,29 @@ namespace MIMEngine.Core.Events
             Player target = room.players.Find(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase));
 
             return target;
+        }
+
+        public static bool CanAttack(Player attacker, Player defender)
+        {
+
+            bool canAttack = true;
+
+            if (attacker.Status == "Standing" || defender.Status == "Standing")
+            {
+                canAttack = false;
+            }
+
+            if (attacker.Target.Name != defender.Name)
+            {
+                canAttack = false;
+            }
+
+            if (attacker.Status == "Sleeping")
+            {
+                canAttack = false;
+            }
+
+            return canAttack;
         }
 
         public static void ShowAttack(Player attacker, Player defender, Room room, double toHit, int chance)
