@@ -24,6 +24,7 @@ namespace MIMEngine.Core.Events
                //var exit = room.exits.Find(x => x.name.Equals("north", StringComparison.InvariantCultureIgnoreCase));
 
                 player.Status = "Standing";
+                HubContext.SendToClient(player.Name + " Flee's from combat", player.Target.HubGuid);
 
                 Room.Movement.Move(player, room, "North");
             }

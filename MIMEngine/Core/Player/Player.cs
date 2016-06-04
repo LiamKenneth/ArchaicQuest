@@ -108,7 +108,7 @@ namespace MIMEngine.Core.PlayerSetup
         public string Status;
 
         [BsonElement("ta")]
-        public string Target;
+        public Player Target;
 
         //Kills
         [BsonElement("mk")]

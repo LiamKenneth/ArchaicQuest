@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace MIMEngine.Core.Events
 {
+    using System.Threading;
 
     using MIMEngine.Core.PlayerSetup;
     using MIMEngine.Core.Room;
@@ -53,20 +54,17 @@ namespace MIMEngine.Core.Events
             defender.Status = "Fighting";
             attacker.Status = "Fighting";
 
-            if (string.IsNullOrEmpty(attacker.Target))
+            if (attacker.Target == null)
             {
-                attacker.Target = defender.Name;
+                attacker.Target = defender;
             }
 
-            if (string.IsNullOrEmpty(defender.Target))
+            if (defender.Target == null)
             {
-                defender.Target = attacker.Name;
+                defender.Target = attacker;
             }
            
-           
-
-            await Task.Delay(3000);
-
+   
             double offense = Offense(attacker);
             double evasion = Evasion(defender);
 
@@ -74,31 +72,7 @@ namespace MIMEngine.Core.Events
             int chance = D100();
 
 
-            if (toHit > chance)
-            {
-                HubContext.SendToClient("You hit " + defender.Name, attacker.HubGuid);
-                HubContext.SendToClient(
-                    attacker.Name + " hits you ",
-                    attacker.HubGuid,
-                    defender.HubGuid,
-                    false,
-                    true);
-
-
-                attacker.HitPoints -= 1;
-            }
-            else
-            {
-                HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
-                HubContext.SendToClient(
-                    attacker.Name + " misses you ",
-                    attacker.HubGuid,
-                    defender.HubGuid,
-                    false,
-                    true);
-            }
-
-
+            ShowAttack(attacker, defender, room, toHit, chance);
 
             var attackTask = HitTarget(attacker, defender, room, 5000);
 
@@ -106,6 +80,78 @@ namespace MIMEngine.Core.Events
 
             Task.WaitAll(attackTask, defendTask);
 
+            IsDead(attacker, defender);
+
+           
+
+        }
+
+        private static async Task HitTarget(Player attacker, Player defender, Room room, int delay)
+        {
+
+            new async Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                while (attacker.HitPoints > 0 && defender.HitPoints > 0 && attacker.Status == "Fighting" && defender.Status == "Fighting")
+            {
+                await Task.Delay(delay);
+
+                if (attacker.Status == "Standing" || defender.Status == "Standing")
+                {
+                    return;
+                }
+
+                if (attacker.Target.Name != defender.Name)
+                {
+                    return;
+                }
+
+                double offense = Offense(attacker);
+                double evasion = Evasion(defender);
+
+                double toHit = (offense / evasion) * 100;
+                int chance = D100();
+
+
+                ShowAttack(attacker, defender, room, toHit, chance);
+
+                Core.Player.Prompt.ShowPrompt(attacker);
+                Core.Player.Prompt.ShowPrompt(defender);
+
+            }
+            }).Start();
+
+
+        }
+
+        public static Player FindTarget(Room room, string defender)
+        {
+            Player target = room.players.Find(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase));
+
+            return target;
+        }
+
+        public static void ShowAttack(Player attacker, Player defender, Room room, double toHit, int chance)
+        {
+            if (toHit > chance)
+            {
+                HubContext.SendToClient("You hit " + defender.Name, attacker.HubGuid);
+                HubContext.SendToClient(attacker.Name + " hits you ", defender.HubGuid);
+                HubContext.broadcastToRoom(attacker.Name + " hits " + defender.Name, room.players, attacker.HubGuid, true);
+
+                defender.HitPoints -= 1;
+            }
+            else
+            {
+                HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
+                HubContext.SendToClient(attacker.Name + " misses you ", defender.HubGuid);
+                HubContext.broadcastToRoom(attacker.Name + " misses " + defender.Name, room.players, attacker.HubGuid, true);
+            }
+        }
+
+        public static void IsDead(Player attacker, Player defender)
+        {
             if (defender.HitPoints <= 0)
             {
                 HubContext.SendToClient(defender.Name + " dies", attacker.HubGuid);
@@ -128,79 +174,6 @@ namespace MIMEngine.Core.Events
 
                 //create corpse
             }
-
-            if (attacker.Status == "Standing")
-            {
-                Player target = FindTarget(room, attacker.Name);
-
-                if (target == null)
-                {
-                    HubContext.SendToClient(attacker.Name + " flees", defender.HubGuid);
-                }
-               
- 
-            }
-
-
-            if (defender.Status == "standing")
-            {
-                HubContext.SendToClient(defender.Name + " flees", attacker.HubGuid);
-
-            }
-
-        }
-
-        private static async Task HitTarget(Player attacker, Player defender, Room room, int delay)
-        {
-
-            while (attacker.HitPoints > 0 && defender.HitPoints > 0 && attacker.Status == "Fighting" && defender.Status == "Fighting")
-            {
-                await Task.Delay(delay);
-
-                if (attacker.Status == "Standing" || defender.Status == "Standing")
-                {
-                    return;
-                }
-
-                if (attacker.Target != defender.Name)
-                {
-                    return;
-                }
-
-                double offense = Offense(attacker);
-                double evasion = Evasion(defender);
-
-                double toHit = (offense / evasion) * 100;
-                int chance = D100();
-
-
-                if (toHit > chance)
-                {
-                    HubContext.SendToClient("You hit " + defender.Name, attacker.HubGuid);
-                    HubContext.SendToClient(attacker.Name + " hits you ", defender.HubGuid);
-
-                    defender.HitPoints -= 1;
-                }
-                else
-                {
-                    HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
-                    HubContext.SendToClient(attacker.Name + " misses you ", defender.HubGuid);
-                }
-
-                Core.Player.Prompt.ShowPrompt(attacker);
-                Core.Player.Prompt.ShowPrompt(defender);
-
-            }
-
-
-
-        }
-
-        public static Player FindTarget(Room room, string defender)
-        {
-            Player target = room.players.Find(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase));
-
-            return target;
         }
 
         public static int D100()
