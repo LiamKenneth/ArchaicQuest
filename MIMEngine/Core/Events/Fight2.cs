@@ -184,29 +184,31 @@ namespace MIMEngine.Core.Events
                 damage = weapon.stats.damMax;
             }
 
+          int ArmourRedux = ArmourReduction(defender);
+
              
-          return  damage * strength;
+          return  ArmourRedux / damage * strength;
         }
 
-        public static int ArmourReduction(Player attacker, Player defender)
+        public static int ArmourReduction(Player defender)
         {
-            //(1 + Target's Armor Rating / Damage)
-
-            return 0;
+            return defender.ArmorRating;
         }
 
         public static void ShowAttack(Player attacker, Player defender, Room room, double toHit, int chance)
         {
             if (toHit > chance)
             {
-                HubContext.SendToClient("You hit " + defender.Name, attacker.HubGuid);
-                HubContext.SendToClient(attacker.Name + " hits you ", defender.HubGuid);
-                //BUG: this also broadcast to the players fighting
-               
-                 HubContext.SendToAllExcept(attacker.Name + " hits " + defender.Name, room.fighting, room.players);
- 
+                int dam = Damage(attacker, defender);
 
-                defender.HitPoints -= 1;
+                HubContext.SendToClient("You hit " + defender.Name + "[" + dam +"]", attacker.HubGuid);
+                HubContext.SendToClient(attacker.Name + " hits you [" + dam +"]", defender.HubGuid);
+                //BUG: this also broadcast to the players fighting
+                defender.HitPoints -= dam;
+                HubContext.SendToAllExcept(attacker.Name + " hits " + defender.Name, room.fighting, room.players);
+
+
+                
             }
             else
             {

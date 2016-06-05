@@ -120,6 +120,8 @@
     <Compile Include="Core\Player\Equipment.cs" />
     <Compile Include="Core\Player\Inventory.cs" />
     <Compile Include="Core\Player\Prompt.cs" />
+    <Compile Include="Core\Player\Skill.cs" />
+    <Compile Include="Core\Player\Skills\Kick.cs" />
     <Compile Include="HubContext.cs" />
     <Compile Include="Core\Item\Action.cs" />
     <Compile Include="Core\Item\Description.cs" />
