@@ -10,10 +10,19 @@ namespace MIMEngine.Core.Player
     {
        public string Name { get; set; }
 
-       public int Knowledge { get; set; }
+       public int Skill { get; set; }
+    
+        //Says what status a skill can be used from
+        // Fighting means in a fight only
+        //Resting means everything
+        //standing means all but resting
+        //can't use skills while asleep
+       public string UsableFromStatus { get; set; }
 
-       public string usableFrom { get; set; }
+       public int LevelObtained { get; set; }
 
-       public int minLevel { get; set; }
+        public string HelpText { get; set; }
+
+        public string Syntax { get; set; }
     }
 }
