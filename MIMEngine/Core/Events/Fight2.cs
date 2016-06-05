@@ -40,7 +40,7 @@ namespace MIMEngine.Core.Events
 
             //find defender 
             Player defender = FindTarget(room, attackOptions);
-           
+
             if (defender == null)
             {
                 HubContext.SendToClient("No one here", attacker.HubGuid);
@@ -60,6 +60,8 @@ namespace MIMEngine.Core.Events
 
             defender.Status = "Fighting";
             attacker.Status = "Fighting";
+            room.fighting.Add(attacker.HubGuid);
+            room.fighting.Add(defender.HubGuid);
 
             if (attacker.Target == null)
             {
@@ -70,8 +72,8 @@ namespace MIMEngine.Core.Events
             {
                 defender.Target = attacker;
             }
-           
-   
+
+
             double offense = Offense(attacker);
             double evasion = Evasion(defender);
 
@@ -81,14 +83,14 @@ namespace MIMEngine.Core.Events
 
             ShowAttack(attacker, defender, room, toHit, chance);
 
-             HitTarget(attacker, defender, room, 5000);
+            HitTarget(attacker, defender, room, 5000);
 
-             HitTarget(defender, attacker, room, 5000);
+            HitTarget(defender, attacker, room, 5000);
 
 
             IsDead(attacker, defender);
 
-           
+
 
         }
 
@@ -98,25 +100,26 @@ namespace MIMEngine.Core.Events
 
             while (attacker.HitPoints > 0 && defender.HitPoints > 0 && attacker.Status == "Fighting" && defender.Status == "Fighting")
             {
-                await Task.Delay(delay);
+                bool canAttack = CanAttack(attacker, defender);
 
-                CanAttack(attacker, defender);
+                if (canAttack)
+                {
+                    await Task.Delay(delay);
 
-                double offense = Offense(attacker);
-                double evasion = Evasion(defender);
+                    double offense = Offense(attacker);
+                    double evasion = Evasion(defender);
 
-                double toHit = (offense / evasion) * 100;
-                int chance = D100();
+                    double toHit = (offense / evasion) * 100;
+                    int chance = D100();
 
 
-                ShowAttack(attacker, defender, room, toHit, chance);
+                    ShowAttack(attacker, defender, room, toHit, chance);
 
-                Core.Player.Prompt.ShowPrompt(attacker);
-                Core.Player.Prompt.ShowPrompt(defender);
+                    Core.Player.Prompt.ShowPrompt(attacker);
+                    Core.Player.Prompt.ShowPrompt(defender);
+                }
 
             }
-
-
 
         }
 
@@ -157,7 +160,9 @@ namespace MIMEngine.Core.Events
                 HubContext.SendToClient("You hit " + defender.Name, attacker.HubGuid);
                 HubContext.SendToClient(attacker.Name + " hits you ", defender.HubGuid);
                 //BUG: this also broadcast to the players fighting
-                HubContext.broadcastToRoom(attacker.Name + " hits " + defender.Name, room.players, attacker.HubGuid, true);
+               
+                 HubContext.SendToAllExcept(attacker.Name + " hits " + defender.Name, room.fighting, room.players);
+ 
 
                 defender.HitPoints -= 1;
             }
@@ -165,15 +170,15 @@ namespace MIMEngine.Core.Events
             {
                 HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
                 HubContext.SendToClient(attacker.Name + " misses you ", defender.HubGuid);
-                HubContext.broadcastToRoom(attacker.Name + " misses " + defender.Name, room.players, attacker.HubGuid, true);
+                HubContext.SendToAllExcept(attacker.Name + " misses " + defender.Name, room.fighting, room.players);
             }
         }
 
-        public static void IsDead(Player attacker, Player defender)
+        public static void IsDead(Player attacker, Player defender, Room room)
         {
             if (defender.HitPoints <= 0)
             {
-                HubContext.SendToClient(defender.Name + " dies", attacker.HubGuid);
+                HubContext.SendToAllExcept(defender.Name + " dies ", room.fighting, room.players);
                 HubContext.SendToClient("You die", defender.HubGuid);
 
                 defender.Status = "Standing";
@@ -184,7 +189,7 @@ namespace MIMEngine.Core.Events
 
             if (attacker.HitPoints <= 0)
             {
-                HubContext.SendToClient(attacker.Name + " dies", defender.HubGuid);
+                HubContext.SendToAllExcept(attacker.Name + " dies ", room.fighting, room.players);
                 HubContext.SendToClient("You die", attacker.HubGuid);
 
                 defender.Status = "Standing";
