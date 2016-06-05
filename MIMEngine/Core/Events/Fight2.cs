@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace MIMEngine.Core.Events
 {
+    using System.Security.Cryptography.X509Certificates;
 
+    using MIMEngine.Core.Item;
     using MIMEngine.Core.PlayerSetup;
     using MIMEngine.Core.Room;
 
@@ -88,7 +90,7 @@ namespace MIMEngine.Core.Events
             HitTarget(defender, attacker, room, 5000);
 
 
-            IsDead(attacker, defender);
+            IsDead(attacker, defender, room);
 
 
 
@@ -151,6 +153,46 @@ namespace MIMEngine.Core.Events
             }
 
             return canAttack;
+        }
+
+        /// <summary>
+        ///  (Weapon Damage * Strength Modifier * Condition Modifier * Critical Hit Modifier) / Armor Reduction.
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="defender"></param>
+        public static int Damage(Player attacker, Player defender)
+        {
+            // (Weapon Damage * Strength Modifier * Condition Modifier * Critical Hit Modifier) / Armor Reduction.
+            int strength = attacker.Strength;
+            int MaxDamage = 0;
+            int MinDamage = 0;
+            int damage = 0;
+            var wielded = attacker.Equipment.RightHand;
+            Item weapon = null;
+            if (wielded == "Nothing")
+            {
+                damage = 5;
+            }
+            else
+            {
+                //find weapon
+                weapon = attacker.Inventory.Find(x => x.name.Equals(weapon) && x.location.Equals("worn"));
+            }
+
+            if (weapon != null)
+            {
+                damage = weapon.stats.damMax;
+            }
+
+             
+          return  damage * strength;
+        }
+
+        public static int ArmourReduction(Player attacker, Player defender)
+        {
+            //(1 + Target's Armor Rating / Damage)
+
+            return 0;
         }
 
         public static void ShowAttack(Player attacker, Player defender, Room room, double toHit, int chance)

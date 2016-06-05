@@ -110,6 +110,12 @@ namespace MIMEngine.Core.PlayerSetup
         [BsonElement("ta")]
         public Player Target;
 
+        [BsonElement("ar")]
+        public int ArmorRating;
+
+        [BsonElement("s")]
+        public int Saves;
+
         //Kills
         [BsonElement("mk")]
         public int MobKills;

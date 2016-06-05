@@ -9,6 +9,8 @@ namespace MIMEngine.Core.Item
     public class Item :BaseItem
     {
         public List<Item> containerItems;
+ 
+ 
     }
 
 

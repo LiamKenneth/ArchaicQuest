@@ -6,20 +6,26 @@ using System.Threading.Tasks;
 
 namespace MIMEngine.Core.Player
 {
-   public class Skills
+    public class Skill
     {
-       public string Name { get; set; }
+        public string Name { get; set; }
 
-       public int Skill { get; set; }
-    
+        public int Proficiency { get; set; }
+
+        public bool Passive { get; set; }
+
+        public int Delay { get; set; }
+
+        public int CoolDown { get; set; }
+
         //Says what status a skill can be used from
         // Fighting means in a fight only
         //Resting means everything
         //standing means all but resting
         //can't use skills while asleep
-       public string UsableFromStatus { get; set; }
+        public string UsableFromStatus { get; set; }
 
-       public int LevelObtained { get; set; }
+        public int LevelObtained { get; set; }
 
         public string HelpText { get; set; }
 
