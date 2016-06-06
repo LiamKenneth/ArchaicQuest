@@ -87,7 +87,7 @@ namespace MIMEngine.Core.Events
 
             HitTarget(attacker, defender, room, 5000);
 
-            HitTarget(defender, attacker, room, 5000);
+            HitTarget(defender, attacker, room, 1000);
 
 
             IsDead(attacker, defender, room);
@@ -194,10 +194,10 @@ namespace MIMEngine.Core.Events
                 damage = helper.dice(1, weapon.stats.damMin, weapon.stats.damMax);
             }
 
-           int ArRating = ArmourRating(defender);
+            int ArRating = ArmourRating(defender);
 
-           
-          int armourReduction = ArRating / damage * strength;
+
+            int armourReduction = ArRating / damage * strength;
 
             if (armourReduction > 4)
             {
@@ -207,7 +207,7 @@ namespace MIMEngine.Core.Events
             {
                 armourReduction = 1;
             }
- 
+
             int totalDamage = damage * strength / armourReduction;
 
             return totalDamage;
@@ -215,23 +215,30 @@ namespace MIMEngine.Core.Events
 
         public static int ArmourRating(Player defender)
         {
-            return  1 + defender.ArmorRating;
+            return 1 + defender.ArmorRating;
         }
 
         public static void ShowAttack(Player attacker, Player defender, Room room, double toHit, int chance)
         {
+            bool alive = IsAlive(attacker, defender);
+
+            if (!alive)
+            {
+                return;
+            }
+       
             if (toHit > chance)
             {
                 int dam = Damage(attacker, defender);
 
-                HubContext.SendToClient("You hit " + defender.Name + "[" + dam +"]", attacker.HubGuid);
-                HubContext.SendToClient(attacker.Name + " hits you [" + dam +"]", defender.HubGuid);
+                HubContext.SendToClient("You hit " + defender.Name + "[" + dam + "]", attacker.HubGuid);
+                HubContext.SendToClient(attacker.Name + " hits you [" + dam + "]", defender.HubGuid);
                 //BUG: this also broadcast to the players fighting
                 defender.HitPoints -= dam;
                 HubContext.SendToAllExcept(attacker.Name + " hits " + defender.Name, room.fighting, room.players);
 
 
-                
+
             }
             else
             {
@@ -239,6 +246,7 @@ namespace MIMEngine.Core.Events
                 HubContext.SendToClient(attacker.Name + " misses you ", defender.HubGuid);
                 HubContext.SendToAllExcept(attacker.Name + " misses " + defender.Name, room.fighting, room.players);
             }
+
         }
 
         public static void IsDead(Player attacker, Player defender, Room room)
@@ -265,6 +273,21 @@ namespace MIMEngine.Core.Events
 
                 //create corpse
             }
+        }
+
+        public static bool IsAlive(Player attacker, Player defender)
+        {
+            if (defender.HitPoints <= 0)
+            {
+                return false;
+            }
+
+            if (attacker.HitPoints <= 0)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public static int D100()
