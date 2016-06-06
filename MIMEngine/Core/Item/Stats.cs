@@ -10,6 +10,7 @@ namespace MIMEngine.Core.Item
     {
         public int damMin { get; set; }
         public int damMax { get; set; }
+        public int damRoll { get; set; }
         public bool poisoned { get; set; }
         public bool flaming { get; set; }
         public bool frozen { get; set; }

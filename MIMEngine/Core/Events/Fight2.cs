@@ -152,6 +152,17 @@ namespace MIMEngine.Core.Events
                 canAttack = false;
             }
 
+            //using skill, casting. 
+            // probably should set busy when picking up items(disarmed weapon)
+            // wielding an item 
+            // getting potion
+            // quaffing
+            // disallow changing armour while in combat
+            if (attacker.Status == "Busy")
+            {
+                canAttack = false;
+            }
+
             return canAttack;
         }
 
@@ -164,8 +175,6 @@ namespace MIMEngine.Core.Events
         {
             // (Weapon Damage * Strength Modifier * Condition Modifier * Critical Hit Modifier) / Armor Reduction.
             int strength = attacker.Strength;
-            int MaxDamage = 0;
-            int MinDamage = 0;
             int damage = 0;
             var wielded = attacker.Equipment.RightHand;
             Item weapon = null;
@@ -181,18 +190,32 @@ namespace MIMEngine.Core.Events
 
             if (weapon != null)
             {
-                damage = weapon.stats.damMax;
+                Helpers helper = new Helpers();
+                damage = helper.dice(1, weapon.stats.damMin, weapon.stats.damMax);
             }
 
-          int ArmourRedux = ArmourReduction(defender);
+           int ArRating = ArmourRating(defender);
 
-             
-          return  ArmourRedux / damage * strength;
+           
+          int armourReduction = ArRating / damage * strength;
+
+            if (armourReduction > 4)
+            {
+                armourReduction = 4;
+            }
+            else if (armourReduction <= 0)
+            {
+                armourReduction = 1;
+            }
+ 
+            int totalDamage = damage * strength / armourReduction;
+
+            return totalDamage;
         }
 
-        public static int ArmourReduction(Player defender)
+        public static int ArmourRating(Player defender)
         {
-            return defender.ArmorRating;
+            return  1 + defender.ArmorRating;
         }
 
         public static void ShowAttack(Player attacker, Player defender, Room room, double toHit, int chance)

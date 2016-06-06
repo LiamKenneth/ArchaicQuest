@@ -110,7 +110,7 @@ namespace MIMEngine.Core.PlayerSetup
         [BsonElement("ta")]
         public Player Target;
 
-        [BsonElement("ar")]
+        [BsonElement("arr")]
         public int ArmorRating;
 
         [BsonElement("s")]
@@ -259,7 +259,7 @@ namespace MIMEngine.Core.PlayerSetup
             this.Equipment.RightRing = Equipment.RightRing;
             this.Equipment.Legs = Equipment.Legs;
             this.Equipment.Feet = Equipment.Feet;
- 
+
 
             //attributes
 

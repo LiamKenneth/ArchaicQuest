@@ -116,6 +116,7 @@
     <Compile Include="Core\Events\ManipulateObject.cs" />
     <Compile Include="Core\Events\Save.cs" />
     <Compile Include="Core\Events\Score.cs" />
+    <Compile Include="Core\Helpers.cs" />
     <Compile Include="Core\Item\BaseItem.cs" />
     <Compile Include="Core\Player\Equipment.cs" />
     <Compile Include="Core\Player\Inventory.cs" />

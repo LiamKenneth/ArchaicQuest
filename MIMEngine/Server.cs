@@ -206,7 +206,7 @@ namespace MIMHubServer
             MIMEngine.Core.Room.PlayerManager.AddPlayerToRoom(roomData, PlayerData);
             Movement.EnterRoom(PlayerData, roomData);
 
-            Save.SavePlayer(PlayerData);
+          Save.SavePlayer(PlayerData);
 
             // addToRoom(PlayerData.AreaId, roomData, PlayerData, "player");
             Prompt.ShowPrompt(PlayerData);

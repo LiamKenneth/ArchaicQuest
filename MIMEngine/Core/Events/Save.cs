@@ -17,19 +17,27 @@ namespace MIMEngine.Core.Events
     {
         private const string DbServer = "mongodb://localhost:27017";
 
-        public static async Task SavePlayer(Player player)
+        public static void SavePlayer(Player player)
         {
-            const string ConnectionString = DbServer;
 
-            // Create a MongoClient object by using the connection string
-            var client = new MongoClient(ConnectionString);
+            try
+            {
+                const string ConnectionString = DbServer;
 
-            //Use the MongoClient to access the server
-            var database = client.GetDatabase("MIMDB");
+                // Create a MongoClient object by using the connection string
+                var client = new MongoClient(ConnectionString);
 
-            var collection = database.GetCollection<Player>("Player");
+                //Use the MongoClient to access the server
+                var database = client.GetDatabase("MIMDB");
 
-             await collection.InsertOneAsync(player);            
+                var collection = database.GetCollection<Player>("Player");
+
+                collection.InsertOne(player);
+            }
+            catch(Exception e)
+            {
+              
+            }    
           
         }
 
