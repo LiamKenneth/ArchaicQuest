@@ -90,9 +90,6 @@ namespace MIMEngine.Core.Events
             HitTarget(defender, attacker, room, 1000);
 
 
-            IsDead(attacker, defender, room);
-
-
 
         }
 
@@ -106,19 +103,28 @@ namespace MIMEngine.Core.Events
 
                 if (canAttack)
                 {
-                    await Task.Delay(delay);
+                    bool alive = IsAlive(attacker, defender);
 
-                    double offense = Offense(attacker);
-                    double evasion = Evasion(defender);
+                    if (alive)
+                    {
+                        await Task.Delay(delay);
 
-                    double toHit = (offense / evasion) * 100;
-                    int chance = D100();
+                        double offense = Offense(attacker);
+                        double evasion = Evasion(defender);
+
+                        double toHit = (offense / evasion) * 100;
+                        int chance = D100();
 
 
-                    ShowAttack(attacker, defender, room, toHit, chance);
+                        ShowAttack(attacker, defender, room, toHit, chance);
 
-                    Core.Player.Prompt.ShowPrompt(attacker);
-                    Core.Player.Prompt.ShowPrompt(defender);
+                        Core.Player.Prompt.ShowPrompt(attacker);
+                        Core.Player.Prompt.ShowPrompt(defender);
+                    }
+                    else
+                    {
+                        IsDead(attacker, defender, room);
+                    }
                 }
 
             }
@@ -185,7 +191,7 @@ namespace MIMEngine.Core.Events
             else
             {
                 //find weapon
-                weapon = attacker.Inventory.Find(x => x.name.Equals(weapon) && x.location.Equals("worn"));
+                weapon = attacker.Inventory.Find(x => x.name.Equals(wielded) && x.location.Equals("worn"));
             }
 
             if (weapon != null)
@@ -222,29 +228,38 @@ namespace MIMEngine.Core.Events
         {
             bool alive = IsAlive(attacker, defender);
 
-            if (!alive)
+            if (alive)
             {
-                return;
-            }
-       
-            if (toHit > chance)
-            {
-                int dam = Damage(attacker, defender);
 
-                HubContext.SendToClient("You hit " + defender.Name + "[" + dam + "]", attacker.HubGuid);
-                HubContext.SendToClient(attacker.Name + " hits you [" + dam + "]", defender.HubGuid);
-                //BUG: this also broadcast to the players fighting
-                defender.HitPoints -= dam;
-                HubContext.SendToAllExcept(attacker.Name + " hits " + defender.Name, room.fighting, room.players);
+                if (toHit > chance)
+                {
+                    int dam = Damage(attacker, defender);
+
+                    HubContext.SendToClient("You hit " + defender.Name + "[" + dam + "]", attacker.HubGuid);
+                    HubContext.SendToClient(attacker.Name + " hits you [" + dam + "]", defender.HubGuid);
+                    //BUG: this also broadcast to the players fighting
+
+                    defender.HitPoints -= dam;
+
+                    if (defender.HitPoints < 0)
+                    {
+                        defender.HitPoints = 0;
+                    }
+                    HubContext.SendToAllExcept(attacker.Name + " hits " + defender.Name, room.fighting, room.players);
 
 
 
+                }
+                else
+                {
+                    HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
+                    HubContext.SendToClient(attacker.Name + " misses you ", defender.HubGuid);
+                    HubContext.SendToAllExcept(attacker.Name + " misses " + defender.Name, room.fighting, room.players);
+                }
             }
             else
             {
-                HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
-                HubContext.SendToClient(attacker.Name + " misses you ", defender.HubGuid);
-                HubContext.SendToAllExcept(attacker.Name + " misses " + defender.Name, room.fighting, room.players);
+                IsDead(attacker, defender, room);
             }
 
         }
