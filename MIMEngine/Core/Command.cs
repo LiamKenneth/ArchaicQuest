@@ -43,8 +43,8 @@ namespace MIMEngine.Core
             commandList.Add("drop", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey));
             commandList.Add("put", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey));
             commandList.Add("save", () =>  Save.UpdatePlayer(playerData));
-            commandList.Add("'", () => Communicate.Say(commandOptions, playerData));
-            commandList.Add("say", ()=> Communicate.Say(commandOptions, playerData));
+            commandList.Add("'", () => Communicate.Say(commandOptions, playerData, room));
+            commandList.Add("say", ()=> Communicate.Say(commandOptions, playerData, room));
             commandList.Add("sayto", () => Communicate.SayTo(commandOptions, room, playerData));
             commandList.Add(">", () => Communicate.SayTo(commandOptions, room, playerData));
             commandList.Add("quit", () => HubContext.Quit(playerData.HubGuid, room));
@@ -53,7 +53,7 @@ namespace MIMEngine.Core
             commandList.Add("wield", () => Equipment.WearItem(playerData, commandOptions, true));
             commandList.Add("unwield", () => Equipment.RemoveItem(playerData, commandOptions, false, true));
             commandList.Add("kill", () => Fight2.StartFight(playerData, room, commandOptions));
-
+            commandList.Add("flee", () => Flee.fleeCombat(playerData, room));
             return commandList;
         }
 

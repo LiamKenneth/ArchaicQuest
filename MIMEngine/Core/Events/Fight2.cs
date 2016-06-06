@@ -6,18 +6,24 @@ using System.Threading.Tasks;
 
 namespace MIMEngine.Core.Events
 {
-    using System.Runtime.CompilerServices;
-    using System.Security.Permissions;
-    using System.Threading;
+    using System.Security.Cryptography.X509Certificates;
 
     using MIMEngine.Core.Item;
     using MIMEngine.Core.PlayerSetup;
     using MIMEngine.Core.Room;
-    using System.Timers;
+
     public class Fight2
     {
-
-        public static async void StartFight(Player attacker, Room room, string attackOptions)
+        /// <summary>
+        /// Starts a fight between two players or mobs
+        /// The defender can only fight it's original target 
+        /// so cant fight back at multiple targets
+        /// </summary>
+        /// <param name="attacker">The attacker</param>
+        /// <param name="room">The room</param>
+        /// <param name="attackOptions">The attackers Name for now</param>
+        /// <returns></returns>
+        public static async Task StartFight(Player attacker, Room room, string attackOptions)
         {
             if (attacker == null)
             {
@@ -44,30 +50,31 @@ namespace MIMEngine.Core.Events
 
             }
 
-            //get speed of attackr and defender?
-           // Defender(defender, attacker, room);
-
-            await Task.Delay(2000);
-
-            //Get Attacker Weapon
-            string RightHand = attacker.Equipment.RightHand;
-            string LeftHand = attacker.Equipment.LeftHand;
-            Item RightHandWep = null;
-            Item LeftHandWep = null;
-            bool dualWield = false;
-            bool TwoHanded = false;
-            bool handToHand = false;
-
-
-            if (RightHand == "Nothing" && LeftHand == "Nothing")
+            if (attacker.HitPoints <= 0)
             {
-                handToHand = true;
+                return;
             }
-            else
+
+            if (defender.HitPoints <= 0)
             {
-                RightHandWep = attacker.Inventory.Find(x => x.name == RightHand && x.location == "Equipped");
-                LeftHandWep = attacker.Inventory.Find(x => x.name == LeftHand && x.location == "Equipped");
+                return;
             }
+
+            defender.Status = "Fighting";
+            attacker.Status = "Fighting";
+            room.fighting.Add(attacker.HubGuid);
+            room.fighting.Add(defender.HubGuid);
+
+            if (attacker.Target == null)
+            {
+                attacker.Target = defender;
+            }
+
+            if (defender.Target == null)
+            {
+                defender.Target = attacker;
+            }
+
 
             double offense = Offense(attacker);
             double evasion = Evasion(defender);
@@ -76,76 +83,46 @@ namespace MIMEngine.Core.Events
             int chance = D100();
 
 
-            if (toHit > chance)
-            {
-                HubContext.SendToClient("You hit " + defender.Name, attacker.HubGuid);
-                HubContext.SendToClient(
-                    attacker.Name + " hits you ",
-                    attacker.HubGuid,
-                    defender.HubGuid,
-                    false,
-                    true);
-            }
-            else
-            {
-                HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
-            }
+            ShowAttack(attacker, defender, room, toHit, chance);
 
-            //defender strieks back
+            HitTarget(attacker, defender, room, 5000);
+
+            HitTarget(defender, attacker, room, 5000);
 
 
-           
-
-            StartFight(attacker, room, attackOptions);
+            IsDead(attacker, defender, room);
 
 
 
         }
 
-        public static async void Defender(Player defender, Player attacker, Room room)
+        private static async Task HitTarget(Player attacker, Player defender, Room room, int delay)
         {
-            //find defender 
-            // Thread.Sleep(1500);
-            await Task.Delay(1000);
-            //Get defender Weapon
-            string RightHand = defender.Equipment.RightHand;
-            string LeftHand = defender.Equipment.LeftHand;
-            Item RightHandWep = null;
-            Item LeftHandWep = null;
-            bool dualWield = false;
-            bool TwoHanded = false;
-            bool handToHand = false;
 
 
-            if (RightHand == "Nothing" && LeftHand == "Nothing")
+            while (attacker.HitPoints > 0 && defender.HitPoints > 0 && attacker.Status == "Fighting" && defender.Status == "Fighting")
             {
-                handToHand = true;
-            }
-            else
-            {
-                RightHandWep = defender.Inventory.Find(x => x.name == RightHand && x.location == "Equipped");
-                LeftHandWep = defender.Inventory.Find(x => x.name == LeftHand && x.location == "Equipped");
-            }
+                bool canAttack = CanAttack(attacker, defender);
 
-            double offense = Offense(defender);
-            double evasion = Evasion(attacker);
+                if (canAttack)
+                {
+                    await Task.Delay(delay);
 
-            double toHit = (offense / evasion) * 100;
-            int chance = D100();
+                    double offense = Offense(attacker);
+                    double evasion = Evasion(defender);
+
+                    double toHit = (offense / evasion) * 100;
+                    int chance = D100();
 
 
-            if (toHit > chance)
-            {
-                HubContext.SendToClient("You hit " + attacker.Name, defender.HubGuid);
-                HubContext.SendToClient(defender.Name + " hits you ", defender.HubGuid, attacker.HubGuid, false, true);
-            }
-            else
-            {
-                HubContext.SendToClient("You miss " + attacker.Name, defender.HubGuid);
+                    ShowAttack(attacker, defender, room, toHit, chance);
+
+                    Core.Player.Prompt.ShowPrompt(attacker);
+                    Core.Player.Prompt.ShowPrompt(defender);
+                }
+
             }
 
-           
-            //Defender(defender, attacker, room);
         }
 
         public static Player FindTarget(Room room, string defender)
@@ -153,6 +130,118 @@ namespace MIMEngine.Core.Events
             Player target = room.players.Find(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase));
 
             return target;
+        }
+
+        public static bool CanAttack(Player attacker, Player defender)
+        {
+
+            bool canAttack = true;
+
+            if (attacker.Status == "Standing" || defender.Status == "Standing")
+            {
+                canAttack = false;
+            }
+
+            if (attacker.Target.Name != defender.Name)
+            {
+                canAttack = false;
+            }
+
+            if (attacker.Status == "Sleeping")
+            {
+                canAttack = false;
+            }
+
+            return canAttack;
+        }
+
+        /// <summary>
+        ///  (Weapon Damage * Strength Modifier * Condition Modifier * Critical Hit Modifier) / Armor Reduction.
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="defender"></param>
+        public static int Damage(Player attacker, Player defender)
+        {
+            // (Weapon Damage * Strength Modifier * Condition Modifier * Critical Hit Modifier) / Armor Reduction.
+            int strength = attacker.Strength;
+            int MaxDamage = 0;
+            int MinDamage = 0;
+            int damage = 0;
+            var wielded = attacker.Equipment.RightHand;
+            Item weapon = null;
+            if (wielded == "Nothing")
+            {
+                damage = 5;
+            }
+            else
+            {
+                //find weapon
+                weapon = attacker.Inventory.Find(x => x.name.Equals(weapon) && x.location.Equals("worn"));
+            }
+
+            if (weapon != null)
+            {
+                damage = weapon.stats.damMax;
+            }
+
+          int ArmourRedux = ArmourReduction(defender);
+
+             
+          return  ArmourRedux / damage * strength;
+        }
+
+        public static int ArmourReduction(Player defender)
+        {
+            return defender.ArmorRating;
+        }
+
+        public static void ShowAttack(Player attacker, Player defender, Room room, double toHit, int chance)
+        {
+            if (toHit > chance)
+            {
+                int dam = Damage(attacker, defender);
+
+                HubContext.SendToClient("You hit " + defender.Name + "[" + dam +"]", attacker.HubGuid);
+                HubContext.SendToClient(attacker.Name + " hits you [" + dam +"]", defender.HubGuid);
+                //BUG: this also broadcast to the players fighting
+                defender.HitPoints -= dam;
+                HubContext.SendToAllExcept(attacker.Name + " hits " + defender.Name, room.fighting, room.players);
+
+
+                
+            }
+            else
+            {
+                HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
+                HubContext.SendToClient(attacker.Name + " misses you ", defender.HubGuid);
+                HubContext.SendToAllExcept(attacker.Name + " misses " + defender.Name, room.fighting, room.players);
+            }
+        }
+
+        public static void IsDead(Player attacker, Player defender, Room room)
+        {
+            if (defender.HitPoints <= 0)
+            {
+                HubContext.SendToAllExcept(defender.Name + " dies ", room.fighting, room.players);
+                HubContext.SendToClient("You die", defender.HubGuid);
+
+                defender.Status = "Standing";
+                attacker.Status = "Standing";
+                //calc xp
+                //create corpse
+            }
+
+            if (attacker.HitPoints <= 0)
+            {
+                HubContext.SendToAllExcept(attacker.Name + " dies ", room.fighting, room.players);
+                HubContext.SendToClient("You die", attacker.HubGuid);
+
+                defender.Status = "Standing";
+                attacker.Status = "Standing";
+                //calc xp
+
+                //create corpse
+            }
         }
 
         public static int D100()

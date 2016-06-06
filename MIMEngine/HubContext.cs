@@ -76,6 +76,38 @@ namespace MIMEngine.Core
             }
         }
 
+        public static void SendToAllExcept(string message, List<string> excludeThesePlayers, List<PlayerSetup.Player> players)
+        {
+            if (message != null)
+            {
+                int playerCount = players.Count;
+
+                for (int i = 0; i < playerCount; i++)
+                {
+                    if (players[i].HubGuid != excludeThesePlayers.FirstOrDefault(x => x.Equals(players[i].HubGuid)))
+                    {
+                        HubContext.getHubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(message);
+                    }
+                    else
+                    {
+                        var playerInFight = players.FindAll(x => x.Status.Equals("Fighting"));
+
+                        foreach (var fighter in playerInFight)
+                        {
+                            if (players[i].Target != fighter.Target)
+                            {
+                                HubContext.getHubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(message);
+                            }
+                        }
+                    }
+                                     
+                }
+
+                
+                
+            }
+        }
+
         public static void broadcastToRoom(string message, List<PlayerSetup.Player> players, string playerId, bool excludeCaller = false)
         {
             int playerCount = players.Count;

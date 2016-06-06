@@ -105,7 +105,16 @@ namespace MIMEngine.Core.PlayerSetup
         public int MaxWeight;
 
         [BsonElement("st")]
-        public int Status;
+        public string Status;
+
+        [BsonElement("ta")]
+        public Player Target;
+
+        [BsonElement("ar")]
+        public int ArmorRating;
+
+        [BsonElement("s")]
+        public int Saves;
 
         //Kills
         [BsonElement("mk")]
@@ -190,7 +199,7 @@ namespace MIMEngine.Core.PlayerSetup
             this.AlignmentScore = 0;
             this.Experience = 0;
             this.ExperienceToNextLevel = 1000; // create class to work out
-            this.HitPoints = 30; // class to workout
+            this.HitPoints = 100; // class to workout
             this.MaxHitPoints = 30;
             this.ManaPoints = 50;
             this.MaxManaPoints = 50;
@@ -203,7 +212,8 @@ namespace MIMEngine.Core.PlayerSetup
             this.Hours = 0;
             this.Weight = 0;
             this.MaxWeight = 70; // class to workout
-            this.Status = 1; // enum property? 1 standing
+            this.Status = "Standing"; // enum property? 1 standing
+            this.Target = null;
             this.Inventory = this.Inventory ?? (this.Inventory = new List<Item>());
 
             //kills

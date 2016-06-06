@@ -72,7 +72,15 @@ namespace MIMEngine.Core.Events
             {
                 if (item.Name != playerName)
                 {
-                    playerList += item.Name + " is here";
+                    if (item.Status == "Standing")
+                    {
+                        playerList += item.Name + " is here\r\n";
+                    }
+                    else if (item.Status == "Fighting")
+                    {
+                        playerList += item.Name + " is fighting " + item.Target.Name +"\r\n";
+                    }
+                   
                 }
                
             }
