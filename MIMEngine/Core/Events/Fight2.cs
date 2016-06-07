@@ -238,10 +238,11 @@ namespace MIMEngine.Core.Events
                 if (toHit > chance)
                 {
                     int dam = Damage(attacker, defender);
+                    var damageText = DamageText(dam);
 
-                    HubContext.SendToClient("You hit " + defender.Name + "[" + dam + "]", attacker.HubGuid);
-                    HubContext.SendToClient(attacker.Name + " hits you [" + dam + "]", defender.HubGuid);
-                    //BUG: this also broadcast to the players fighting
+                    HubContext.SendToClient("Your hit " + damageText.Key + " " + defender.Name + "[" + dam + "]", attacker.HubGuid);
+                    HubContext.SendToClient(attacker.Name + "'s hit " + damageText.Value + " you [" + dam + "]", defender.HubGuid);
+                   
 
                     defender.HitPoints -= dam;
 
@@ -249,14 +250,12 @@ namespace MIMEngine.Core.Events
                     {
                         defender.HitPoints = 0;
                     }
-                    HubContext.SendToAllExcept(attacker.Name + " hits " + defender.Name, room.fighting, room.players);
+                    HubContext.SendToAllExcept(attacker.Name + "'s hit " + damageText.Key + " " + defender.Name, room.fighting, room.players);
 
                     if (!IsAlive(attacker, defender))
                     {
                         IsDead(attacker, defender, room);
                     }
-
-
 
                 }
                 else
@@ -270,78 +269,78 @@ namespace MIMEngine.Core.Events
 
         }
 
-        public static string DamageText(int damage)
+        public static KeyValuePair<string, string> DamageText(int damage)
         {
             switch (damage)
             {
-
+                case 0:
                 case 1:
                 case 2:
                 case 3:
                 case 4:
-                    return "scratch";
+                    return new KeyValuePair<string, string>("scratch", "scratches");
                 case 5:
                 case 6:
                 case 7:
                 case 8:
-                    return "graze";
+                    return new KeyValuePair<string, string>("graze", "grazes");
                 case 9:
                 case 10:
                 case 11:
                 case 12:
-                    return "hit";
+                    return new KeyValuePair<string, string>("hit", "hits");
                 case 13:
                 case 14:
                 case 15:
                 case 16:
-                    return "injure";
+                    return new KeyValuePair<string, string>("injure", "injures");
                 case 17:
                 case 18:
                 case 19:
                 case 20:
-                    return "wound";
+                    return new KeyValuePair<string, string>("wound", "wounds");
                 case 21:
                 case 22:
                 case 23:
                 case 24:
-                    return "maul";
+                    return new KeyValuePair<string, string>("maul", "mauls");
                 case 25:
                 case 26:
                 case 27:
                 case 28:
-                    return "decimate";
+                    return new KeyValuePair<string, string>("decimate", "decimates");
                 case 29:
                 case 30:
                 case 31:
                 case 32:
-                    return "devastate";
+                    return new KeyValuePair<string, string>("devastate", "devastates");
                 case 33:
                 case 34:
                 case 35:
                 case 36:
-                    return "maim";
+                    return new KeyValuePair<string, string>("maim", "maims");
                 case 37:
                 case 38:
                 case 39:
                 case 40:
-                    return "MUTILATE";
+                    return new KeyValuePair<string, string>("MUTILATE", "MUTILATES");
                 case 41:
                 case 42:
                 case 43:
                 case 44:
-                    return "DISEMBOWEL";
+                    return new KeyValuePair<string, string>("DISEMBOWEL", "DISEMBOWELS");
                 case 45:
                 case 46:
                 case 47:
                 case 48:
-                    return "MASSACRE";
+                    return new KeyValuePair<string, string>("MASSACRE", "MASSACRES");
                 case 49:
                 case 50:
                 case 51:
                 case 52:
-                    return "*** DEMOLISH ***";
+                    return new KeyValuePair<string, string>("*** DEMOLISH ***", "*** DEMOLISHS ***");
                 default:
-                    return "*** ANNIHILATES ***";
+                    return new KeyValuePair<string, string>("*** ANNIHILATES ***", "*** ANNIHILATES ***");;
             }
 
 
