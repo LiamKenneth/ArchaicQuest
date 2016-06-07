@@ -272,33 +272,79 @@ namespace MIMEngine.Core.Events
 
         public static string DamageText(int damage)
         {
+            switch (damage)
+            {
 
-            /*do this */
-            //if (dam == 0) { vs = "miss"; vp = "misses"; }
-            //else if (dam <= 4) { vs = "scratch"; vp = "scratches"; }
-            //else if (dam <= 8) { vs = "graze"; vp = "grazes"; }
-            //else if (dam <= 12) { vs = "hit"; vp = "hits"; }
-            //else if (dam <= 16) { vs = "injure"; vp = "injures"; }
-            //else if (dam <= 20) { vs = "wound"; vp = "wounds"; }
-            //else if (dam <= 24) { vs = "maul"; vp = "mauls"; }
-            //else if (dam <= 24) { vs = "decimate"; vp = "decimates"; }
-            //else if (dam <= 28) { vs = "devastate"; vp = "devastates"; }
-            //else if (dam <= 32) { vs = "maim"; vp = "maims"; }
-            //else if (dam <= 36) { vs = "MUTILATE"; vp = "MUTILATES"; }
-            //else if (dam <= 40) { vs = "DISEMBOWEL"; vp = "DISEMBOWELS"; }
-            //else if (dam <= 44) { vs = "EVISCERATE"; vp = "EVISCERATES"; }
-            //else if (dam <= 48) { vs = "MASSACRE"; vp = "MASSACRES"; }
-            //else if (dam <= 100)
-            //{
-            //    vs = "*** DEMOLISH ***";
-            //    vp = "*** DEMOLISHES ***";
-            //}
-            //else
-            //{
-            //    vs = "*** ANNIHILATE ***";
-            //    vp = "*** ANNIHILATES ***";
-            //}
-            return null;
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    return "scratch";
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                    return "graze";
+                case 9:
+                case 10:
+                case 11:
+                case 12:
+                    return "hit";
+                case 13:
+                case 14:
+                case 15:
+                case 16:
+                    return "injure";
+                case 17:
+                case 18:
+                case 19:
+                case 20:
+                    return "wound";
+                case 21:
+                case 22:
+                case 23:
+                case 24:
+                    return "maul";
+                case 25:
+                case 26:
+                case 27:
+                case 28:
+                    return "decimate";
+                case 29:
+                case 30:
+                case 31:
+                case 32:
+                    return "devastate";
+                case 33:
+                case 34:
+                case 35:
+                case 36:
+                    return "maim";
+                case 37:
+                case 38:
+                case 39:
+                case 40:
+                    return "MUTILATE";
+                case 41:
+                case 42:
+                case 43:
+                case 44:
+                    return "DISEMBOWEL";
+                case 45:
+                case 46:
+                case 47:
+                case 48:
+                    return "MASSACRE";
+                case 49:
+                case 50:
+                case 51:
+                case 52:
+                    return "*** DEMOLISH ***";
+                default:
+                    return "*** ANNIHILATES ***";
+            }
+
+
         }
 
         public static void IsDead(Player attacker, Player defender, Room room)
