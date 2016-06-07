@@ -121,10 +121,7 @@ namespace MIMEngine.Core.Events
                         Core.Player.Prompt.ShowPrompt(attacker);
                         Core.Player.Prompt.ShowPrompt(defender);
                     }
-                    else
-                    {
-                        IsDead(attacker, defender, room);
-                    }
+
                 }
 
             }
@@ -247,6 +244,11 @@ namespace MIMEngine.Core.Events
                     }
                     HubContext.SendToAllExcept(attacker.Name + " hits " + defender.Name, room.fighting, room.players);
 
+                    if (!IsAlive(attacker, defender))
+                    {
+                        IsDead(attacker, defender, room);
+                    }
+
 
 
                 }
@@ -257,10 +259,7 @@ namespace MIMEngine.Core.Events
                     HubContext.SendToAllExcept(attacker.Name + " misses " + defender.Name, room.fighting, room.players);
                 }
             }
-            else
-            {
-                IsDead(attacker, defender, room);
-            }
+      
 
         }
 

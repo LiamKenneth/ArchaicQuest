@@ -94,7 +94,7 @@ namespace MIMEngine.Core
 
                         foreach (var fighter in playerInFight)
                         {
-                            if (players[i].Target != fighter.Target)
+                            if (players[i].Target.Name != fighter.Name)
                             {
                                 HubContext.getHubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(message);
                             }
