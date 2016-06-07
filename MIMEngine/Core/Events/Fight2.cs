@@ -30,6 +30,12 @@ namespace MIMEngine.Core.Events
                 return;
             }
 
+            if (attacker.Name == attackOptions)
+            {
+                HubContext.SendToClient("You can't kill yourself", attacker.HubGuid);
+                return;
+            }
+
             /* player can only attack one target
          * if player gets attacked by something else they cannot fight back until
          * they have ended the fight they are already in.
@@ -90,6 +96,7 @@ namespace MIMEngine.Core.Events
             HitTarget(defender, attacker, room, 1000);
 
 
+          
 
         }
 
@@ -263,15 +270,45 @@ namespace MIMEngine.Core.Events
 
         }
 
+        public static string DamageText(int damage)
+        {
+
+            /*do this */
+            //if (dam == 0) { vs = "miss"; vp = "misses"; }
+            //else if (dam <= 4) { vs = "scratch"; vp = "scratches"; }
+            //else if (dam <= 8) { vs = "graze"; vp = "grazes"; }
+            //else if (dam <= 12) { vs = "hit"; vp = "hits"; }
+            //else if (dam <= 16) { vs = "injure"; vp = "injures"; }
+            //else if (dam <= 20) { vs = "wound"; vp = "wounds"; }
+            //else if (dam <= 24) { vs = "maul"; vp = "mauls"; }
+            //else if (dam <= 24) { vs = "decimate"; vp = "decimates"; }
+            //else if (dam <= 28) { vs = "devastate"; vp = "devastates"; }
+            //else if (dam <= 32) { vs = "maim"; vp = "maims"; }
+            //else if (dam <= 36) { vs = "MUTILATE"; vp = "MUTILATES"; }
+            //else if (dam <= 40) { vs = "DISEMBOWEL"; vp = "DISEMBOWELS"; }
+            //else if (dam <= 44) { vs = "EVISCERATE"; vp = "EVISCERATES"; }
+            //else if (dam <= 48) { vs = "MASSACRE"; vp = "MASSACRES"; }
+            //else if (dam <= 100)
+            //{
+            //    vs = "*** DEMOLISH ***";
+            //    vp = "*** DEMOLISHES ***";
+            //}
+            //else
+            //{
+            //    vs = "*** ANNIHILATE ***";
+            //    vp = "*** ANNIHILATES ***";
+            //}
+            return null;
+        }
+
         public static void IsDead(Player attacker, Player defender, Room room)
         {
             if (defender.HitPoints <= 0)
             {
                 HubContext.SendToAllExcept(defender.Name + " dies ", room.fighting, room.players);
                 HubContext.SendToClient("You die", defender.HubGuid);
+                HubContext.SendToClient( defender.Name + " dies", attacker.HubGuid);
 
-                defender.Status = "Standing";
-                attacker.Status = "Standing";
                 //calc xp
                 //create corpse
             }
@@ -280,9 +317,7 @@ namespace MIMEngine.Core.Events
             {
                 HubContext.SendToAllExcept(attacker.Name + " dies ", room.fighting, room.players);
                 HubContext.SendToClient("You die", attacker.HubGuid);
-
-                defender.Status = "Standing";
-                attacker.Status = "Standing";
+                HubContext.SendToClient(attacker.Name + " dies", defender.HubGuid);
                 //calc xp
 
                 //create corpse

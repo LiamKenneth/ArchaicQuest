@@ -94,17 +94,17 @@ namespace MIMEngine.Core
 
                         foreach (var fighter in playerInFight)
                         {
-                            if (players[i].Target.Name != fighter.Name)
-                            {
+                            if (players[i].Status != "Fighting")
+                            { 
                                 HubContext.getHubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(message);
                             }
                         }
                     }
-                                     
+
                 }
 
-                
-                
+
+
             }
         }
 
@@ -119,7 +119,7 @@ namespace MIMEngine.Core
                     if (playerId != players[i].HubGuid)
                     {
                         HubContext.getHubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(message);
-                    }                  
+                    }
                 }
             }
             else
@@ -130,18 +130,18 @@ namespace MIMEngine.Core
                 }
             }
 
-           
+
         }
 
         public static async void Quit(string playerId, Room.Room room)
         {
-           
+
 
             //remove player from room and player cache
 
             var oldRoom = room;
 
-           int playerIndex = room.players.FindIndex(x => x.HubGuid == playerId);
+            int playerIndex = room.players.FindIndex(x => x.HubGuid == playerId);
             room.players.RemoveAt(playerIndex);
 
             Cache.updateRoom(room, oldRoom);
@@ -158,12 +158,12 @@ namespace MIMEngine.Core
 
                 HubContext.getHubContext.Clients.Client(playerId).quit();
             }
-           
 
 
 
 
-            
+
+
         }
     }
 }
