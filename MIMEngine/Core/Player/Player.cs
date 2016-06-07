@@ -24,6 +24,9 @@ namespace MIMEngine.Core.PlayerSetup
         [BsonElement("hid")]
         public string HubGuid;
 
+        [BsonElement("ty")]
+        public string Type;
+
         [BsonElement("e")]
         public string Email;
 
@@ -187,6 +190,7 @@ namespace MIMEngine.Core.PlayerSetup
             int charisma)
         {
             this.HubGuid = id;
+            this.Type = "Player";
             this.Email = email;
             this.Password = password;
 

@@ -80,14 +80,24 @@ namespace MIMEngine.Core.Events
                     {
                         playerList += item.Name + " is fighting " + item.Target.Name +"\r\n";
                     }
-                   
+                    else if (item.Status == "Ghost")
+                    {
+                        playerList += item.Name + "(Ghost) (Translucent) (Invis)\r\n";
+                    }
+
                 }
                
             }
 
+            var corpseList = string.Empty;
+            foreach (var item in room.corpses)
+            {
+                corpseList += " The corpse of " + item.Name + " is here.";
+            }
 
 
-            string displayRoom = roomTitle + "\r\n" + roomDescription + "\r\n Exits: " + exitList + "\r\n Items: " + itemList + "\r\n " + playerList;
+
+            string displayRoom = roomTitle + "\r\n" + roomDescription + "\r\n Exits: " + exitList + "\r\n Items: " + itemList + "\r\n " + corpseList + "\r\n" + playerList;
 
             return displayRoom;
 

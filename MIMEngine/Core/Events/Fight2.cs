@@ -91,12 +91,11 @@ namespace MIMEngine.Core.Events
 
             ShowAttack(attacker, defender, room, toHit, chance);
 
-            HitTarget(attacker, defender, room, 5000);
+            HitTarget(attacker, defender, room, 1200);
 
-            HitTarget(defender, attacker, room, 1000);
+            HitTarget(defender, attacker, room, 1800);
 
 
-          
 
         }
 
@@ -190,7 +189,8 @@ namespace MIMEngine.Core.Events
             Item weapon = null;
             if (wielded == "Nothing")
             {
-                damage = 5;
+                //weapon skill * 0.075 * critical hit modifier
+                damage = (int)(50 * 0.025 * 1);
             }
             else
             {
@@ -218,7 +218,7 @@ namespace MIMEngine.Core.Events
                 armourReduction = 1;
             }
 
-            int totalDamage = damage * strength / armourReduction;
+            int totalDamage = damage + strength / armourReduction;
 
             return totalDamage;
         }
@@ -240,9 +240,14 @@ namespace MIMEngine.Core.Events
                     int dam = Damage(attacker, defender);
                     var damageText = DamageText(dam);
 
-                    HubContext.SendToClient("Your hit " + damageText.Key + " " + defender.Name + "[" + dam + "]", attacker.HubGuid);
-                    HubContext.SendToClient(attacker.Name + "'s hit " + damageText.Value + " you [" + dam + "]", defender.HubGuid);
-                   
+                    if (attacker.Type == "Player")
+                    {
+                        HubContext.SendToClient("Your hit " + damageText.Value + " " + defender.Name + "[" + dam + "]", attacker.HubGuid);
+                    }
+                    if (defender.Type == "Player")
+                    {
+                        HubContext.SendToClient(attacker.Name + "'s hit " + damageText.Value + " you [" + dam + "]", defender.HubGuid);
+                    }
 
                     defender.HitPoints -= dam;
 
@@ -250,7 +255,7 @@ namespace MIMEngine.Core.Events
                     {
                         defender.HitPoints = 0;
                     }
-                    HubContext.SendToAllExcept(attacker.Name + "'s hit " + damageText.Key + " " + defender.Name, room.fighting, room.players);
+                    HubContext.SendToAllExcept(attacker.Name + "'s hit " + damageText.Value + " " + defender.Name, room.fighting, room.players);
 
                     if (!IsAlive(attacker, defender))
                     {
@@ -260,12 +265,18 @@ namespace MIMEngine.Core.Events
                 }
                 else
                 {
-                    HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
-                    HubContext.SendToClient(attacker.Name + " misses you ", defender.HubGuid);
+                    if (attacker.Type == "Player")
+                    {
+                        HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
+                    }
+                    if (defender.Type == "Player")
+                    {
+                        HubContext.SendToClient(attacker.Name + " misses you ", defender.HubGuid);
+                    }
                     HubContext.SendToAllExcept(attacker.Name + " misses " + defender.Name, room.fighting, room.players);
                 }
             }
-      
+
 
         }
 
@@ -340,7 +351,7 @@ namespace MIMEngine.Core.Events
                 case 52:
                     return new KeyValuePair<string, string>("*** DEMOLISH ***", "*** DEMOLISHS ***");
                 default:
-                    return new KeyValuePair<string, string>("*** ANNIHILATES ***", "*** ANNIHILATES ***");;
+                    return new KeyValuePair<string, string>("*** ANNIHILATES ***", "*** ANNIHILATES ***"); ;
             }
 
 
@@ -350,9 +361,34 @@ namespace MIMEngine.Core.Events
         {
             if (defender.HitPoints <= 0)
             {
+
                 HubContext.SendToAllExcept(defender.Name + " dies ", room.fighting, room.players);
-                HubContext.SendToClient("You die", defender.HubGuid);
-                HubContext.SendToClient( defender.Name + " dies", attacker.HubGuid);
+
+                if (defender.Type == "Player")
+                {
+                    HubContext.SendToClient("You die", defender.HubGuid);
+                }
+                if (attacker.Type == "Player")
+                {
+                    HubContext.SendToClient(defender.Name + " dies", attacker.HubGuid);
+                }
+
+                var defenderCorpse = defender;
+
+                //unequip
+                foreach (var item in defenderCorpse.Inventory)
+                {
+                    item.location = "Inventory";
+                }
+                var oldRoom = room;
+                room.corpses.Add(defender);
+
+                attacker.Status = "Standing";
+
+                defender.Status = defender.Type == "Player" ? "Ghost" : "Dead";
+
+                Cache.updateRoom(room, oldRoom);
+
 
                 //calc xp
                 //create corpse
@@ -361,8 +397,32 @@ namespace MIMEngine.Core.Events
             if (attacker.HitPoints <= 0)
             {
                 HubContext.SendToAllExcept(attacker.Name + " dies ", room.fighting, room.players);
-                HubContext.SendToClient("You die", attacker.HubGuid);
-                HubContext.SendToClient(attacker.Name + " dies", defender.HubGuid);
+
+                if (attacker.Type == "Player")
+                {
+                    HubContext.SendToClient("You die", attacker.HubGuid);
+                }
+
+                if (defender.Type == "Player")
+                {
+                    HubContext.SendToClient(attacker.Name + " dies", defender.HubGuid);
+                }
+
+                var attackerCorpse = attacker;
+
+                //unequip
+                foreach (var item in attackerCorpse.Inventory)
+                {
+                    item.location = "Inventory";
+                }
+                var oldRoom = room;
+                room.corpses.Add(attacker);
+
+                defender.Status = "Standing";
+
+                attacker.Status = attacker.Type == "Player" ? "Ghost" : "Dead";
+
+                Cache.updateRoom(room, oldRoom);
                 //calc xp
 
                 //create corpse
