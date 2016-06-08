@@ -391,7 +391,9 @@ namespace MIMEngine.Core.Events
 
                 var xp = new Experience();
 
-                xp.MobXP(attacker, defender);
+                int xpGain = xp.MobXP(attacker, defender);
+                attacker.Experience += xpGain;
+                HubContext.SendToClient("You gain " + xpGain + "XP", attacker.HubGuid);
                 //calc xp
                 //create corpse
             }
@@ -428,7 +430,11 @@ namespace MIMEngine.Core.Events
 
                 var xp = new Experience();
 
-                xp.MobXP(defender, attacker);
+               int xpGain = xp.MobXP(defender, attacker);
+                defender.Experience += xpGain;
+                HubContext.SendToClient("You gain " + xpGain + "XP", defender.HubGuid);
+
+
                 //calc xp
 
                 //create corpse

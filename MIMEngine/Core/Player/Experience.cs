@@ -15,7 +15,12 @@ namespace MIMEngine.Core.Player
         //Green:   Mob Level <= Char Level - 3, but above Gray Level
         //Gray:    Mob Level <= Gray Level
 
-        public int CheckMobLevelBonus(PlayerSetup.Player player, PlayerSetup.Player mob)
+//        XP = (Char Level * 5) + 45, where Char Level = Mob Level, for mobs in Azeroth
+//XP = (Char Level* 5) + 235, where Char Level = Mob Level, for mobs in Outland
+//XP = (Char Level* 5) + 580, where Char Level = Mob Level, for mobs in Northrend
+//XP = (Char Level* 5) + 1878, where Char Level = Mob Level, for mobs in Cataclysm
+
+        private int CheckMobLevelBonus(PlayerSetup.Player player, PlayerSetup.Player mob)
         {
             int mobLevel = mob.Level;
             int playerLevel = player.Level;
@@ -26,10 +31,7 @@ namespace MIMEngine.Core.Player
                 {
                     return 5;
                 }
-                else
-                {
-                    return 4;
-                }
+                return 4;
             }
 
             switch (mobLevel - playerLevel)
@@ -69,6 +71,37 @@ namespace MIMEngine.Core.Player
 
                     return 1;
             }
+        }
+
+        private int XPLevelModifier(PlayerSetup.Player player)
+        {
+            if (player.Level < 10)
+            {
+                return 45;
+            }
+
+            if (player.Level < 20)
+            {
+                return 175;
+            }
+
+            if (player.Level < 30)
+            {
+                return 235;
+            }
+
+            if (player.Level < 40)
+            {
+                return 460;
+            }
+
+            if (player.Level < 50)
+            {
+                return 785;
+            }
+
+            return 935;
+
         }
 
         //The highest mob level that gives you no experience is the Gray Level. It varies based on your character level as follows: 
@@ -130,10 +163,24 @@ namespace MIMEngine.Core.Player
 
         //Elite XP = 2 * XP
 
-        public int MobXP()
+        public int MobXP(PlayerSetup.Player player, PlayerSetup.Player mob)
         {
+            int xpGained = 0;
+            int mobLvlBonus = CheckMobLevelBonus(player, mob);
+            int levelModifier = XPLevelModifier(player);
 
-            return 0;
+            /// XP = (Base XP) * (1 + 0.05 * (Mob Level - Char Level) ), where Mob Level > Char Level
+            /// 
+            if (mob.Level > player.Level)
+            {
+                xpGained = (int)Math.Floor((player.Level * mobLvlBonus) * (1 + 0.10 * (mob.Level - player.Level)) + levelModifier);
+            }
+            else
+            {
+                xpGained = (int)Math.Floor((player.Level * mobLvlBonus) * 1 + 0.05 + levelModifier);
+            }
+
+            return xpGained;
         }
     }
 }
