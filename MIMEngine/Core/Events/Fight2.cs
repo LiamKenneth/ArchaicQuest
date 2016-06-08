@@ -30,11 +30,7 @@ namespace MIMEngine.Core.Events
                 return;
             }
 
-            if (attacker.Name == attackOptions)
-            {
-                HubContext.SendToClient("You can't kill yourself", attacker.HubGuid);
-                return;
-            }
+            
 
             /* player can only attack one target
          * if player gets attacked by something else they cannot fight back until
@@ -54,6 +50,12 @@ namespace MIMEngine.Core.Events
                 HubContext.SendToClient("No one here", attacker.HubGuid);
                 return;
 
+            }
+
+            if (attacker.Name.Equals(defender.Name))
+            {
+                HubContext.SendToClient("You can't kill yourself", attacker.HubGuid);
+                return;
             }
 
             if (attacker.HitPoints <= 0)
@@ -226,6 +228,21 @@ namespace MIMEngine.Core.Events
         public static int ArmourRating(Player defender)
         {
             return 1 + defender.ArmorRating;
+        }
+
+        public static KeyValuePair<string, string> WeaponAttackName(Player attacker)
+        {
+            var wielded = attacker.Equipment.RightHand;
+            Item weapon = null;
+            if (wielded == "Nothing")
+            {
+               return new KeyValuePair<string, string>("punch", "punches");
+            }
+          
+            //find weapon
+            weapon = attacker.Inventory.Find(x => x.name.Equals(wielded) && x.location.Equals("worn"));
+            //add attack string to weapons
+            return new KeyValuePair<string, string>("","");
         }
 
         public static void ShowAttack(Player attacker, Player defender, Room room, double toHit, int chance)

@@ -36,6 +36,8 @@ namespace MIMEngine.Core.Player
 
             switch (mobLevel - playerLevel)
             {
+                case 4:
+                    return 4;
                 case 3:
                     return 3;
                 case 2:
@@ -181,6 +183,14 @@ namespace MIMEngine.Core.Player
             }
 
             return xpGained;
+        }
+
+        public int ToNextLevel(PlayerSetup.Player player)
+        {
+            int baseXP = 1250;
+            int tnl = player.Level * player.Level * baseXP;
+            
+            return tnl;
         }
     }
 }
