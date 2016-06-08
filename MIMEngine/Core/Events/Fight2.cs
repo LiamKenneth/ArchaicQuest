@@ -11,7 +11,7 @@ namespace MIMEngine.Core.Events
     using MIMEngine.Core.Item;
     using MIMEngine.Core.PlayerSetup;
     using MIMEngine.Core.Room;
-
+    using Player;
     public class Fight2
     {
         /// <summary>
@@ -389,7 +389,9 @@ namespace MIMEngine.Core.Events
 
                 Cache.updateRoom(room, oldRoom);
 
+                var xp = new Experience();
 
+                xp.MobXP(attacker, defender);
                 //calc xp
                 //create corpse
             }
@@ -423,6 +425,10 @@ namespace MIMEngine.Core.Events
                 attacker.Status = attacker.Type == "Player" ? "Ghost" : "Dead";
 
                 Cache.updateRoom(room, oldRoom);
+
+                var xp = new Experience();
+
+                xp.MobXP(defender, attacker);
                 //calc xp
 
                 //create corpse
