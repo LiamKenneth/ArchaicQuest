@@ -241,6 +241,8 @@ namespace MIMEngine.Core.Events
           
             //find weapon
             weapon = attacker.Inventory.Find(x => x.name.Equals(wielded) && x.location.Equals("worn"));
+
+           /// weapon.attackType = Item.AttackTypes.Slash;
             //add attack string to weapons
             return new KeyValuePair<string, string>("","");
         }
