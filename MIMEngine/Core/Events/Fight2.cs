@@ -299,6 +299,19 @@ namespace MIMEngine.Core.Events
 
         }
 
+        public string MissMessage(Player attacker, Player defender)
+        {
+            string[] missText = new[]
+                                    {
+                                        "You side step out of the way of " + defender.Name + "'s attack",
+                                        "You lean back out of the way of " + defender.Name + "'s attack",
+                                        "You duck out of the way of " + defender.Name + "'s attack",
+                                        "You weave out of the way of " + defender.Name + "'s attack"
+                                    };
+
+            return missText[0];
+        }
+
         public static KeyValuePair<string, string> DamageText(int damage)
         {
             switch (damage)
