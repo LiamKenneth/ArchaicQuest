@@ -17,8 +17,8 @@ namespace MIMEngine
             {
                 if (mimHubServer == null)
                 {
-                    var connection = new HubConnection("http://localhost:4000");
-                    mimHubServer = connection.CreateHubProxy("MimHubServer");
+                    var connection = new HubConnection("http://localhost:61752");
+                    mimHubServer = connection.CreateHubProxy("MIMHub");
                     connection.Start().Wait(); 
                 }
 

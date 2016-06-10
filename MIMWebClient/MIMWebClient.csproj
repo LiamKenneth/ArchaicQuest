@@ -97,11 +97,22 @@
       <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MongoDB.Driver, Version=2.2.3.3, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Bin\MongoDB.Driver.dll</HintPath>
+    <Reference Include="MongoDB.Bson, Version=2.2.4.26, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Bson.2.2.4\lib\net45\MongoDB.Bson.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="MongoDB.Driver.Core, Version=2.2.3.3, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="MongoDB.Driver, Version=2.2.4.26, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.2.2.4\lib\net45\MongoDB.Driver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.2.4.26, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.2.4\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Legacy, Version=2.2.4.26, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\mongocsharpdriver.2.2.4\lib\net45\MongoDB.Driver.Legacy.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
@@ -178,9 +189,44 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Core\Command.cs" />
+    <Compile Include="Core\Events\Cache.cs" />
+    <Compile Include="Core\Events\Communicate.cs" />
+    <Compile Include="Core\Events\Fight2.cs" />
+    <Compile Include="Core\Events\Flee.cs" />
+    <Compile Include="Core\Events\LoadRoom.cs" />
+    <Compile Include="Core\Events\ManipulateObject.cs" />
+    <Compile Include="Core\Events\Save.cs" />
+    <Compile Include="Core\Events\Score.cs" />
+    <Compile Include="Core\Helpers.cs" />
+    <Compile Include="Core\HubContext.cs" />
+    <Compile Include="Core\Item\Action.cs" />
+    <Compile Include="Core\Item\BaseItem.cs" />
+    <Compile Include="Core\Item\Description.cs" />
+    <Compile Include="Core\Item\Item.cs" />
+    <Compile Include="Core\Item\Stats.cs" />
+    <Compile Include="Core\PlayerSetup\PlayerClass.cs" />
+    <Compile Include="Core\PlayerSetup\PlayerLocation.cs" />
+    <Compile Include="Core\PlayerSetup\PlayerRace.cs" />
+    <Compile Include="Core\PlayerSetup\PlayerStats.cs" />
+    <Compile Include="Core\Player\Equipment.cs" />
+    <Compile Include="Core\Player\Experience.cs" />
+    <Compile Include="Core\Player\Inventory.cs" />
+    <Compile Include="Core\Player\Player.cs" />
+    <Compile Include="Core\Player\Prompt.cs" />
+    <Compile Include="Core\Player\Skill.cs" />
+    <Compile Include="Core\Player\Skills\Kick.cs" />
+    <Compile Include="Core\Room\Exit.cs" />
+    <Compile Include="Core\Room\Keyword.cs" />
+    <Compile Include="Core\Room\Mob.cs" />
+    <Compile Include="Core\Room\Movement.cs" />
+    <Compile Include="Core\Room\PlayerManager.cs" />
+    <Compile Include="Core\Room\Room.cs" />
+    <Compile Include="Core\Room\RoomObject.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\MIMHub.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Admin\Mob\AddMob.cs" />
     <Compile Include="Models\Admin\Mob\UpdateMob.cs" />
@@ -191,10 +237,23 @@
     <Compile Include="Models\Admin\Rooms\ViewRooms.cs" />
     <Compile Include="Models\createPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Core\PlayerSetup\Data\Img\RaceImg\darkElf.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Core\PlayerSetup\Data\Img\RaceImg\dwarf.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Core\PlayerSetup\Data\Img\RaceImg\elf.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Core\PlayerSetup\Data\Img\RaceImg\human.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -211,6 +270,7 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
     <Content Include="motd" />
+    <Content Include="app.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -267,6 +327,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Core\PlayerSetup\Data\Img\Avatar\" />
+    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

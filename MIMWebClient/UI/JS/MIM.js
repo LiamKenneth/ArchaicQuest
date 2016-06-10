@@ -3,9 +3,9 @@
     //================================================================================
     // Setup the auto-generated proxy for the hub.
     //================================================================================
-    $.connection.hub.url = "http://localhost:4000/signalr";
+    $.connection.hub.url = "/signalr";
 
-    var chat = $.connection.mimHubServer;
+    var chat = $.connection.mIMHub;
     var client = chat.client;
     var server = chat.server;
 

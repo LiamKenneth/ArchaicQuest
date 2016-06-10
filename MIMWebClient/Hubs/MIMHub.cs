@@ -1,57 +1,19 @@
-﻿using Microsoft.AspNet.SignalR;
-using Microsoft.Owin.Cors;
-using Microsoft.Owin.Hosting;
-using MIMEngine;
-using MIMEngine.Core;
-using MIMEngine.Core.PlayerSetup;
-using Owin;
-using System;
-using System.Collections.Concurrent;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
+using Microsoft.AspNet.SignalR;
+using System.Collections.Concurrent;
+using MIMEngine.Core.PlayerSetup;
+using MIMEngine.Core.Room;
+using MIMEngine.Core.Events;
+using MIMEngine.Core.Player;
+using MIMEngine.Core;
+using MIMEngine;
 
-namespace MIMHubServer
+namespace MIMWebClient.Hubs
 {
-    using MIMEngine.Core.Events;
-    using MIMEngine.Core.Player;
-    using MIMEngine.Core.Room;
-    using MongoDB.Bson;
-    using Newtonsoft.Json.Linq;
-    using System.Threading;
-    class Server
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Loading Server...");
-
-            // This will *ONLY* bind to localhost, if you want to bind to all addresses
-            // use http://*:8080 to bind to all addresses. 
-            // See http://msdn.microsoft.com/en-us/library/system.net.httplistener.aspx 
-            // for more information.
-            string url = "http://localhost:4000";
-            using (WebApp.Start<Startup>(url))
-            {
-
-                Console.WriteLine("Server running on {0}", url);
-                Console.ReadLine();
-            }
-
-
-        }
-    }
-
-    class Startup
-    {
-        public void Configuration(IAppBuilder app)
-        {
-            app.UseCors(CorsOptions.AllowAll);
-            app.MapSignalR();
-        }
-    }
-
-    public class MimHubServer1 : Hub
+    public class MIMHub : Hub
     {
         public static ConcurrentDictionary<string, Player> _PlayerCache = new ConcurrentDictionary<string, Player>();
         public static ConcurrentDictionary<int, Room> _AreaCache = new ConcurrentDictionary<int, Room>();
@@ -67,7 +29,7 @@ namespace MIMHubServer
         }
 
         #region input from user
-        public void recieveFromClient(string message,String playerGuid)
+        public void recieveFromClient(string message, String playerGuid)
         {
 
 
@@ -78,9 +40,9 @@ namespace MIMHubServer
 
             HubContext.SendToClient(message, PlayerData.HubGuid);
 
-             Command.ParseCommand(message, PlayerData, RoomData);
+            Command.ParseCommand(message, PlayerData, RoomData);
 
-      
+
         }
         #endregion
 
@@ -91,7 +53,7 @@ namespace MIMHubServer
 
             if (_PlayerCache.TryGetValue(playerId, out player))
             {
- 
+
                 var RoomData = new LoadRoom();
 
                 RoomData.Region = player.Region;
@@ -158,7 +120,7 @@ namespace MIMHubServer
         {
 
             _AreaCache.TryAdd(room.areaId, room);
-         
+
 
         }
 
@@ -172,7 +134,7 @@ namespace MIMHubServer
         }
 
         #endregion
- 
+
         #region send data to player
         public void SendToClient(string message)
         {
@@ -206,7 +168,7 @@ namespace MIMHubServer
             MIMEngine.Core.Room.PlayerManager.AddPlayerToRoom(roomData, PlayerData);
             Movement.EnterRoom(PlayerData, roomData);
 
-          Save.SavePlayer(PlayerData);
+            Save.SavePlayer(PlayerData);
 
             // addToRoom(PlayerData.AreaId, roomData, PlayerData, "player");
             Prompt.ShowPrompt(PlayerData);
@@ -240,7 +202,7 @@ namespace MIMHubServer
                 //something went wrong
             }
 
-           
+
 
 
         }
@@ -273,3 +235,4 @@ namespace MIMHubServer
         #endregion
     }
 }
+ 
