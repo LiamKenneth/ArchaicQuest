@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MIMEngine.Core.Player.Skills
+namespace MIMWebClient.Core.Player.Skills
 {
     using System.Runtime.CompilerServices;
 
-    using MIMEngine.Core.PlayerSetup;
-    using MIMEngine.Core.Room;
+    using MIMWebClient.Core.PlayerSetup;
+    using MIMWebClient.Core.Room;
 
     public class Kick: Skill
     {

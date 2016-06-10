@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MIMEngine
+namespace MIMWebClient
 {
     public static class Data
     {

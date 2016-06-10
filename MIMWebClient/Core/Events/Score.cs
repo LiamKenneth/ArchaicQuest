@@ -1,10 +1,9 @@
-﻿namespace MIMEngine.Core.Events
+﻿namespace MIMWebClient.Core.Events
 {
     using System.Text;
 
     using PlayerSetup;
-    using Microsoft.AspNet.SignalR;
-    using MIMHubServer;
+
     class Score
     {
 

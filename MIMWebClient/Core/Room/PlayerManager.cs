@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MIMEngine.Core.Room
+namespace MIMWebClient.Core.Room
 {
-    using MIMEngine.Core.PlayerSetup;
+    using MIMWebClient.Core.PlayerSetup;
 
     public static class PlayerManager
     {

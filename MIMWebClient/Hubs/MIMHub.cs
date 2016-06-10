@@ -4,12 +4,12 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using System.Collections.Concurrent;
-using MIMEngine.Core.PlayerSetup;
-using MIMEngine.Core.Room;
-using MIMEngine.Core.Events;
-using MIMEngine.Core.Player;
-using MIMEngine.Core;
-using MIMEngine;
+using MIMWebClient.Core.PlayerSetup;
+using MIMWebClient.Core.Room;
+using MIMWebClient.Core.Events;
+using MIMWebClient.Core.Player;
+using MIMWebClient.Core;
+using MIMWebClient;
 
 namespace MIMWebClient.Hubs
 {
@@ -165,7 +165,7 @@ namespace MIMWebClient.Hubs
             Room roomData = null;
             _AreaCache.TryGetValue(PlayerData.AreaId, out roomData);
 
-            MIMEngine.Core.Room.PlayerManager.AddPlayerToRoom(roomData, PlayerData);
+            MIMWebClient.Core.Room.PlayerManager.AddPlayerToRoom(roomData, PlayerData);
             Movement.EnterRoom(PlayerData, roomData);
 
             Save.SavePlayer(PlayerData);
@@ -192,7 +192,7 @@ namespace MIMWebClient.Hubs
                 Room roomData = null;
                 _AreaCache.TryGetValue(player.AreaId, out roomData);
 
-                MIMEngine.Core.Room.PlayerManager.AddPlayerToRoom(roomData, player);
+                MIMWebClient.Core.Room.PlayerManager.AddPlayerToRoom(roomData, player);
                 Movement.EnterRoom(player, roomData);
 
                 Prompt.ShowPrompt(player);

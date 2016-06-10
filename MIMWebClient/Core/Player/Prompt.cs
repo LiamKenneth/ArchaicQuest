@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MIMEngine.Core.Player
+namespace MIMWebClient.Core.Player
 {
-    using MIMEngine.Core.PlayerSetup;
+    using MIMWebClient.Core.PlayerSetup;
 
     public class Prompt
     {

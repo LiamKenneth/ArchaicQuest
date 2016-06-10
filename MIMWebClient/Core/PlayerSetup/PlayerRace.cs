@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MIMEngine.Core.PlayerSetup
+namespace MIMWebClient.Core.PlayerSetup
 {
     public class PlayerRace
     {

@@ -190,6 +190,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Core\Command.cs" />
+    <Compile Include="Core\Data.cs" />
     <Compile Include="Core\Events\Cache.cs" />
     <Compile Include="Core\Events\Communicate.cs" />
     <Compile Include="Core\Events\Fight2.cs" />
@@ -271,6 +272,7 @@
     </Content>
     <Content Include="motd" />
     <Content Include="app.config" />
+    <Content Include="LICENSE.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -337,12 +339,6 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MIMEngine\MIMEngine.csproj">
-      <Project>{3c675aa5-d9bb-4c2e-be95-048960bd866e}</Project>
-      <Name>MIMEngine</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

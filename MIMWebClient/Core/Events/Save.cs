@@ -1,4 +1,4 @@
-﻿using MIMEngine.Core.PlayerSetup;
+﻿using MIMWebClient.Core.PlayerSetup;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -7,11 +7,11 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MIMEngine.Core.Events
+namespace MIMWebClient.Core.Events
 {
     using MongoDB.Driver.Linq;
 
-    using Player = MIMEngine.Core.PlayerSetup.Player;
+    using Player = MIMWebClient.Core.PlayerSetup.Player;
 
     public static class Save
     {

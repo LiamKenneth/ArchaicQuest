@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MIMEngine.Core.Events
+namespace MIMWebClient.Core.Events
 {
     using System.Security.Cryptography.X509Certificates;
 
-    using MIMEngine.Core.Item;
-    using MIMEngine.Core.PlayerSetup;
-    using MIMEngine.Core.Room;
+    using MIMWebClient.Core.Item;
+    using MIMWebClient.Core.PlayerSetup;
+    using MIMWebClient.Core.Room;
     using Player;
     public class Fight2
     {

@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace MIMEngine.Core.Room
+namespace MIMWebClient.Core.Room
 {
-    using MIMEngine.Core.Events;
-    using MIMEngine.Core.PlayerSetup;
-    using MIMHubServer;
+    using MIMWebClient.Core.Events;
+    using MIMWebClient.Core.PlayerSetup;
     public static class Movement
     {
         public static void EnterRoom(Player player, Room room, string direction = "")

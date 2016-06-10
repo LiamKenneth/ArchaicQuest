@@ -1,11 +1,11 @@
-﻿using MIMEngine.Core.Item;
+﻿using MIMWebClient.Core.Item;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MIMEngine.Core.Room
+namespace MIMWebClient.Core.Room
 {
     public class Exit : BaseItem
     {

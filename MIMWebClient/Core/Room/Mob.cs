@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MIMEngine.Core.Room
+namespace MIMWebClient.Core.Room
 {
-    using MIMEngine.Core.Item;
-    using MIMEngine.Core.Player;
-    using MIMEngine.Core.PlayerSetup;
+    using MIMWebClient.Core.Item;
+    using MIMWebClient.Core.Player;
+    using MIMWebClient.Core.PlayerSetup;
 
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;

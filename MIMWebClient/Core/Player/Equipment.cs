@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MIMEngine.Core.Player
+namespace MIMWebClient.Core.Player
 {
     using Events;
-    using MIMEngine.Core.PlayerSetup;
+    using MIMWebClient.Core.PlayerSetup;
     public class Equipment
     {
         public string Floating { get; set; } = "Nothing";

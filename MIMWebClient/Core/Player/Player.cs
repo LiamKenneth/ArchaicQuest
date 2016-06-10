@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MIMEngine.Core.PlayerSetup
+namespace MIMWebClient.Core.PlayerSetup
 {
     using System.Runtime.CompilerServices;
 
-    using MIMEngine.Core.Item;
-    using MIMEngine.Core.Player;
+    using MIMWebClient.Core.Item;
+    using MIMWebClient.Core.Player;
 
     using Newtonsoft.Json.Linq;
     using MongoDB.Bson;

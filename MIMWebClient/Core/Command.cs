@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MIMEngine.Core
+namespace MIMWebClient.Core
 {
     using System.Collections.Concurrent;
 
-    using MIMEngine.Core.Events;
-    using MIMEngine.Core.Player;
-    using MIMEngine.Core.Room;
+    using MIMWebClient.Core.Events;
+    using MIMWebClient.Core.Player;
+    using MIMWebClient.Core.Room;
 
     using Newtonsoft.Json.Linq;
     using System.Threading;

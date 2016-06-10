@@ -1,18 +1,17 @@
 ﻿using Microsoft.AspNet.SignalR;
-using MIMHubServer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MIMEngine.Core.Player;
+using MIMWebClient.Core.Player;
 
-namespace MIMEngine.Core
+namespace MIMWebClient.Core
 {
     using System.Security.Cryptography.X509Certificates;
 
-    using MIMEngine.Core.Events;
-    using MIMEngine.Core.Player;
+    using MIMWebClient.Core.Events;
+    using MIMWebClient.Core.Player;
     using MIMWebClient.Hubs;
     public static class HubContext
     {

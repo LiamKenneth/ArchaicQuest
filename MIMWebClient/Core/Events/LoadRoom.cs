@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MIMEngine.Core.Events
+namespace MIMWebClient.Core.Events
 {
     using System.Collections.Concurrent;
 
-    using MIMEngine.Core.PlayerSetup;
-    using MIMEngine.Core.Room;
+    using MIMWebClient.Core.PlayerSetup;
+    using MIMWebClient.Core.Room;
 
     using MongoDB.Bson;
     using MongoDB.Driver;

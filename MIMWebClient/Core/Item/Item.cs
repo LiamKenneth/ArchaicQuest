@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MIMEngine.Core.Item
+namespace MIMWebClient.Core.Item
 {
     using System.ComponentModel;
     using System.Runtime.Serialization;
