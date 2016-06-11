@@ -2,17 +2,14 @@
 @{
     ViewBag.Title = "Chat";
 }
-<div class="container" >
+<div class="container" style="height: 100%; max-height: 100%; border: 1px solid rgb(255, 255, 255); overflow-y: scroll;">
     <div class="row">
         <div class="col-xs-12">
-            <pre id="discussion"></pre>
-
-            <input type="text" id="message" class="" style="width:100%" />
-            <input type="button" id="sendmessage" value="Send" class="" />
-
-
+            <pre id="discussion" ></pre>
         </div>
     </div>
+    
+  
     <div class="modal" tabindex="-1" role="dialog" data-show="true" style="display:block;" id="signUpModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -43,6 +40,14 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+</div>
+<div class="container" style="height: 100%; max-height: 100%;">
+    <div class="row">
+        <div class="col-xs-12">
+            <input type="text" id="message" class="" style="width:100%" />
+            <input type="button" id="sendmessage" value="Send" class="" />
+        </div>
+    </div>
 </div>
 
 @section scripts {

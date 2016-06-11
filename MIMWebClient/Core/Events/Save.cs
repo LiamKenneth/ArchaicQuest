@@ -60,7 +60,7 @@ namespace MIMWebClient.Core.Events
 
         }
 
-        public static async Task<Player> GetPlayer(string name, string password)
+        public static Player GetPlayer(string name, string password)
         {
             const string ConnectionString = DbServer;
 
@@ -72,7 +72,7 @@ namespace MIMWebClient.Core.Events
 
             var collection = database.GetCollection<Player>("Player");
 
-            var returnPlayer = await collection.AsQueryable<Player>().SingleOrDefaultAsync(x => x.Name.Equals(name)); 
+            var returnPlayer = collection.AsQueryable<Player>().SingleOrDefault(x => x.Name.Equals(name)); 
 
             return returnPlayer;
 

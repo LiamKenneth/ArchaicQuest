@@ -177,7 +177,7 @@ namespace MIMWebClient.Hubs
 
         public void Login(string id, string name, string password)
         {
-            Player player = Save.GetPlayer(name, password).Result;
+            var player = Save.GetPlayer(name, password);
 
             if (player != null)
             {
@@ -186,13 +186,13 @@ namespace MIMWebClient.Hubs
 
                 _PlayerCache.TryAdd(id, player);
 
-                loadRoom(player.HubGuid);
+                this.loadRoom(player.HubGuid);
 
                 //add player to room
                 Room roomData = null;
                 _AreaCache.TryGetValue(player.AreaId, out roomData);
 
-                MIMWebClient.Core.Room.PlayerManager.AddPlayerToRoom(roomData, player);
+                PlayerManager.AddPlayerToRoom(roomData, player);
                 Movement.EnterRoom(player, roomData);
 
                 Prompt.ShowPrompt(player);
