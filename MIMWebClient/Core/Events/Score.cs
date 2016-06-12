@@ -1,6 +1,9 @@
 ﻿namespace MIMWebClient.Core.Events
 {
     using System.Text;
+    using System.Web.Helpers;
+
+    using MongoDB.Bson;
 
     using PlayerSetup;
 
@@ -13,6 +16,11 @@
 
             var context = HubContext.getHubContext;
             context.Clients.All.addNewMessageToPage(scoreTest);
+        }
+
+        public static string ReturnScoreUI(Player playerData)
+        {
+            return playerData.ToJson();
         }
     }
 }

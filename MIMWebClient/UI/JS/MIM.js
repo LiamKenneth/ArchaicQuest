@@ -188,6 +188,11 @@
             server.login($.connection.hub.id, char.Name, char.password);
 
             document.getElementById('signUpModal').style.display = "none";
+
+            var score = server.getChar($.connection.hub.id, char.Name);
+          //  console.log(JSON.parse(score))
+            console.log(score)
+           // $("#js-score").html(JSON.parse(score));
         },
         getGuid: function (guid) {
             var guid = $.cookie("playerGuid");
@@ -325,8 +330,10 @@
             .done(function (data) {
  
                 MIM.login(data);
+               
 
-            })
+
+                })
             .fail(function () {
                 alert("failed");
             });
