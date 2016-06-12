@@ -93,3 +93,6 @@ pre {
   width: 100%;
   height: 70px; }
 
+#score ul li {
+  white-space: pre; }
+

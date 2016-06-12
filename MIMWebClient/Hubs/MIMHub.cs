@@ -234,24 +234,16 @@ namespace MIMWebClient.Hubs
 
         #endregion
 
-        public string getChar(string hubId, string name)
+        public void getChar(string hubId, string name)
         {
             var player = Cache.getPlayer(hubId);
 
             if (player == null)
             {
-                return string.Empty;
+                return;
             }
 
-            var score = Score.ReturnScoreUI(player);
-
-            if (score != null)
-            {
-                return score;
-            }
-
-            return string.Empty;
-
+            Score.ReturnScoreUI(player);
         }
     }
 }

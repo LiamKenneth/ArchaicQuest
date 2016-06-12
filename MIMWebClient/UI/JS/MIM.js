@@ -189,10 +189,8 @@
 
             document.getElementById('signUpModal').style.display = "none";
 
-            var score = server.getChar($.connection.hub.id, char.Name);
-          //  console.log(JSON.parse(score))
-            console.log(score)
-           // $("#js-score").html(JSON.parse(score));
+          server.getChar($.connection.hub.id, char.Name);
+          
         },
         getGuid: function (guid) {
             var guid = $.cookie("playerGuid");
@@ -222,6 +220,11 @@
     //// Add a new message to the page ////
     client.addNewMessageToPage = function (message) {
         $('#discussion').append("<p>" + message + "</p>");
+    };
+
+    //// Add a new message to the page ////
+    client.updateScore = function (score) {
+      //  $('#js-score').html(score);
     };
 
     //// Update Race Info ////

@@ -3,6 +3,8 @@
     using System.Text;
     using System.Web.Helpers;
 
+    using Microsoft.ApplicationInsights.Extensibility.Implementation;
+
     using MongoDB.Bson;
 
     using PlayerSetup;
@@ -18,9 +20,11 @@
             context.Clients.All.addNewMessageToPage(scoreTest);
         }
 
-        public static string ReturnScoreUI(Player playerData)
+        public static void ReturnScoreUI(Player playerData)
         {
-            return playerData.ToJson();
+            var score = playerData.ToJson();
+            var context = HubContext.getHubContext;
+            context.Clients.All.updateScore(score);
         }
     }
 }
