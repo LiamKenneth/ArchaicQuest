@@ -196,13 +196,35 @@
             var guid = $.cookie("playerGuid");
             return guid;
         },
+        UI: {
+            setWindowHeight: function() {
+                var viewPort = $(window).height() - 60;
+                $("#discussion").css({"height": viewPort, "max-height": viewPort});
+            }
+        },
         init: function () {
             console.log("INIT")
             //init when signalr is ready
             MIM.selectOption();
             MIM.CharacterNextStep();
+            MIM.UI.setWindowHeight();
+
+            var resizeTimer;
+
+            $(window).on('resize', function (e) {
+
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function () {
+
+                    MIM.UI.setWindowHeight();
+
+                }, 250);
+
+            });
         }
     }
+
+
 
 
     //// Set focus to input box ////
