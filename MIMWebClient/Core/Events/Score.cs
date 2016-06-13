@@ -17,14 +17,14 @@
             string scoreTest = "Score:\r\n Name: " + playerData.Name + " Race: " + playerData.Race;
 
             var context = HubContext.getHubContext;
-            context.Clients.All.addNewMessageToPage(scoreTest);
+            context.Clients.Client(playerData.HubGuid).addNewMessageToPage(scoreTest);
         }
 
         public static void ReturnScoreUI(Player playerData)
         {
-            var score = playerData.ToJson();
+   
             var context = HubContext.getHubContext;
-            context.Clients.All.updateScore(score);
+            context.Clients.Client(playerData.HubGuid).updateScore(playerData);
         }
     }
 }

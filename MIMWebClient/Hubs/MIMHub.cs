@@ -196,6 +196,8 @@ namespace MIMWebClient.Hubs
                 Movement.EnterRoom(player, roomData);
 
                 Prompt.ShowPrompt(player);
+
+                Score.ReturnScoreUI(player);
             }
             else
             {
