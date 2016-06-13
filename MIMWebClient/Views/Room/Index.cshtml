@@ -1,0 +1,28 @@
+﻿@model List<MIMWebClient.Core.Room.Room>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+
+<div>
+    <h4>ViewRooms</h4>
+    <hr />
+    @{
+        foreach (var room in Model)
+        {
+            <a href="/Admin/Details/@room.area/@room.areaId">
+                Edit
+            </a>
+                <p>@room.area - @room.title</p>
+
+            
+        }
+    }
+</div>
+<p>
+  
+</p>

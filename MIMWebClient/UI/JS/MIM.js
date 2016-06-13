@@ -3,9 +3,9 @@
     //================================================================================
     // Setup the auto-generated proxy for the hub.
     //================================================================================
-    $.connection.hub.url = "http://localhost:4000/signalr";
+    $.connection.hub.url = "/signalr";
 
-    var chat = $.connection.mimHubServer;
+    var chat = $.connection.mIMHub;
     var client = chat.client;
     var server = chat.server;
 
@@ -188,6 +188,9 @@
             server.login($.connection.hub.id, char.Name, char.password);
 
             document.getElementById('signUpModal').style.display = "none";
+
+          //server.getChar($.connection.hub.id, char.Name);
+          
         },
         getGuid: function (guid) {
             var guid = $.cookie("playerGuid");
@@ -217,6 +220,59 @@
     //// Add a new message to the page ////
     client.addNewMessageToPage = function (message) {
         $('#discussion').append("<p>" + message + "</p>");
+    };
+
+    //// Add a new message to the page ////
+    client.updateScore = function (score) {
+     console.log("score: " + score)
+        var playerData = score;
+
+     
+        $('#player-name').html(score.Name);
+        $('#player-level').html(score.Level);
+        $('#player-race').html(playerData.Race);
+        $('#player-class').html(playerData.SelectedClass);
+        $('#player-gender').html(playerData.Gender);
+        $('#player-alignment').html(playerData.AlignmentScore);
+
+        $('#player-str').html(score.Strength);
+        $('#player-max-str').html(score.Strength);
+        $('#player-dex').html(score.Dexterity);
+        $('#player-max-dex').html(score.Dexterity);
+        $('#player-con').html(score.Constitution);
+        $('#player-max-con').html(score.Constitution);
+        $('#player-wis').html(score.Wisdom);
+        $('#player-max-wis').html(score.Wisdom);
+        $('#player-int').html(score.Intelligence);
+        $('#player-max-int').html(score.Intelligence);
+        $('#player-cha').html(score.Charisma);
+        $('#player-max-cha').html(score.Charisma);
+
+        $('#player-hp').html(score.HitPoints);
+        $('#player-max-hp').html(score.MaxHitPoints);
+
+        $('#player-mana').html(score.ManaPoints);
+        $('#player-max-mana').html(score.MaxManaPoints);
+
+        $('#player-end').html(score.MovePoints);
+        $('#player-max-end').html(score.MaxMovePoints);
+
+        $('#player-hitroll').html(score.HitRoll);
+        $('#player-damroll').html(score.DamRoll);
+        $('#player-wimpy').html(score.Wimpy);
+
+        $('#player-weight').html(score.Weight);
+        $('#player-max-weight').html(score.MaxWeight);
+        $('#player-status').html(score.Status);
+
+        $('#player-hours').html(score.Hours);
+        $('#player-experience').html(score.Experience);
+
+        $('#player-copper').html(score.Copper);
+        $('#player-silver').html(score.Silver);
+        $('#player-gold').html(score.Gold);
+
+
     };
 
     //// Update Race Info ////
@@ -325,8 +381,10 @@
             .done(function (data) {
  
                 MIM.login(data);
+               
 
-            })
+
+                })
             .fail(function () {
                 alert("failed");
             });
