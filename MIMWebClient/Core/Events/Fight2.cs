@@ -126,8 +126,10 @@ namespace MIMWebClient.Core.Events
 
                         ShowAttack(attacker, defender, room, toHit, chance);
 
-                        Core.Player.Prompt.ShowPrompt(attacker);
-                        Core.Player.Prompt.ShowPrompt(defender);
+                        Prompt.ShowPrompt(attacker);
+                        Prompt.ShowPrompt(defender);
+                        Score.UpdateUiPrompt(attacker);
+                            Score.UpdateUiPrompt(defender);
                     }
 
                 }

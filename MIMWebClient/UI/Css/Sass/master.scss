@@ -118,3 +118,13 @@ height: 70px;
 #score ul li {
     white-space: pre;
 }
+
+.stat {
+    height: 20px;
+    border: 1px solid #000;
+    border-radius:3px;
+    margin-bottom:5px;
+    .tnl {
+        height:15px;
+    }
+}

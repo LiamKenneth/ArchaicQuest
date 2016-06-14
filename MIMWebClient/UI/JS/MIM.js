@@ -198,7 +198,7 @@
         },
         UI: {
             setWindowHeight: function() {
-                var viewPort = $(window).height() - 60;
+                var viewPort = $(window).height() - 120;
                 $("#discussion").css({"height": viewPort, "max-height": viewPort});
             }
         },
@@ -271,13 +271,19 @@
         $('#player-max-cha').html(score.Charisma);
 
         $('#player-hp').html(score.HitPoints);
+        $('#stat-HP').html(score.HitPoints);
         $('#player-max-hp').html(score.MaxHitPoints);
+        $('#stat-max-HP').html(score.MaxHitPoints);
 
         $('#player-mana').html(score.ManaPoints);
+        $('#stat-mana').html(score.ManaPoints);
         $('#player-max-mana').html(score.MaxManaPoints);
+        $('#stat-max-mana').html(score.MaxManaPoints);
 
         $('#player-end').html(score.MovePoints);
+        $('#stat-endurance').html(score.MovePoints);
         $('#player-max-end').html(score.MaxMovePoints);
+        $('#stat-max-endurance').html(score.MaxMovePoints);
 
         $('#player-hitroll').html(score.HitRoll);
         $('#player-damroll').html(score.DamRoll);
@@ -295,6 +301,53 @@
         $('#player-gold').html(score.Gold);
 
 
+    };
+
+    client.updateStat = function (stat, maxStat, statType) {
+
+        if (isNaN(stat) || isNaN(maxStat)) {
+            return;
+        }
+
+        var statPercentage = ((maxStat / stat) * 100);
+
+        var stats = {
+            "hp": function() {
+                document.getElementById('HP-bar').style.width = statPercentage + "%";
+            },
+            "mana": function() {
+                document.getElementById('mana-bar').style.width = statPercentage + "%";
+            },
+            "endurance": function() {
+                document.getElementById('end-bar').style.width = statPercentage + "%";
+            }
+        };
+
+        stats[statType]();
+
+    };
+
+    client.updateRoom = function (room) {
+
+        var description = room.description;
+        var mobs = room.mobs;
+        var items = room.items;
+        var players = room.players;
+
+        //description a string
+        //rest are arrys
+
+        for (var i = 0; i < mobs.length; i++) {
+            
+        }
+
+        for (var i = 0; i < items.length; i++) {
+
+        }
+
+        for (var i = 0; i < players.length; i++) {
+
+        }
     };
 
     //// Update Race Info ////

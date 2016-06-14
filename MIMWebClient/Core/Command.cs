@@ -102,6 +102,7 @@ namespace MIMWebClient.Core
             }
 
             Prompt.ShowPrompt(playerData);
+            Score.UpdateUiPrompt(playerData);
            
         }
     }

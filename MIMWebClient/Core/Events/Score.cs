@@ -26,5 +26,14 @@
             var context = HubContext.getHubContext;
             context.Clients.Client(playerData.HubGuid).updateScore(playerData);
         }
+
+        public static void UpdateUiPrompt(Player playerData)
+        {
+
+            var context = HubContext.getHubContext;
+            context.Clients.Client(playerData.HubGuid).updateStat(playerData.HitPoints, playerData.MaxHitPoints, "hp");
+            context.Clients.Client(playerData.HubGuid).updateStat(playerData.ManaPoints, playerData.MaxManaPoints, "mana");
+            context.Clients.Client(playerData.HubGuid).updateStat(playerData.MovePoints, playerData.MaxMovePoints, "end");
+        }
     }
 }
