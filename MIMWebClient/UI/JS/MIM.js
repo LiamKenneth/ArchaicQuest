@@ -106,7 +106,7 @@
             });
 
             $("#selectedStatsBtn").click(function () {
-               // server.getStats();
+                // server.getStats();
                 statsStep.style.display = "none";
                 infoStep.style.display = "block";
                 modelHeaderDiv.removeClass("active");
@@ -171,11 +171,11 @@
         },
         createCharacter: function(char) {
 
-           // alert(char.name);
+            // alert(char.name);
             server.welcome();
            
             server.charSetup($.connection.hub.id, char.Name, char.Email, char.Password, char.Gender, char.Race, char.Class, char.Strength, char.Dexterity, char.Constitution, char.Wisdom, char.Intelligence, char.Charisma);
-          //  server.loadRoom($.connection.hub.id);
+            //  server.loadRoom($.connection.hub.id);
 
             document.getElementById('signUpModal').style.display = "none";
 
@@ -189,7 +189,7 @@
 
             document.getElementById('signUpModal').style.display = "none";
 
-          //server.getChar($.connection.hub.id, char.Name);
+            //server.getChar($.connection.hub.id, char.Name);
           
         },
         getGuid: function (guid) {
@@ -246,7 +246,7 @@
 
     //// Add a new message to the page ////
     client.updateScore = function (score) {
-     console.log("score: " + score)
+        console.log("score: " + score)
         var playerData = score;
 
      
@@ -311,179 +311,186 @@
 
         var statPercentage = ((maxStat / stat) * 100);
 
-        var stats = {
-            "hp": function() {
-                document.getElementById('HP-bar').style.width = statPercentage + "%";
-            },
-            "mana": function() {
-                document.getElementById('mana-bar').style.width = statPercentage + "%";
-            },
-            "endurance": function() {
-                document.getElementById('end-bar').style.width = statPercentage + "%";
-            }
-        };
+        if (statType == "hp") {
+            document.getElementById('HP-bar').style.width = statPercentage + "%";
+        }
 
-        stats[statType];
 
-    };
+        if (statType == "mana") {
+            document.getElementById('mana-bar').style.width = statPercentage + "%";
+        }
 
-    client.updateRoom = function (room) {
+        if (statType == "endurance") {
+            document.getElementById('end-bar').style.width = statPercentage + "%";
+        }
+    
+           
+};
 
-        var description = room.description;
-        var mobs = room.mobs;
-        var items = room.items;
-        var players = room.players;
 
-        //description a string
-        //rest are arrys
+client.updateRoom = function (room) {
 
-        for (var i = 0; i < mobs.length; i++) {
+    var description = room.description;
+    var mobs = room.mobs;
+    var items = room.items;
+    var players = room.players;
+
+    //description a string
+    //rest are arrys
+
+    for (var i = 0; i < mobs.length; i++) {
             
-        }
+    }
 
-        for (var i = 0; i < items.length; i++) {
+    for (var i = 0; i < items.length; i++) {
 
-        }
+    }
 
-        for (var i = 0; i < players.length; i++) {
+    for (var i = 0; i < players.length; i++) {
 
-        }
-    };
+    }
+};
 
-    client.updateInventory = function (inventory) {
-        console.log(inventory);
+client.updateInventory = function (inventory) {
+    console.log(inventory);
 
-        var inventoryCount = inventory.length;
-        for (var i = 0; i < inventoryCount; i++) {
-            $("#invList").append(inventory[i].name);
-        }
+    var inventoryCount = inventory.length;
+
+    if (inventory == 0) {
+        $("#invList").html("You are not carrying anything");
+        return;
+    }
+    $("#invList").empty();
+    for (var i = 0; i < inventoryCount; i++) {
+        $("#invList").append(inventory[i].name);
+    }
 
      
-    };
+};
 
-    //// Update Race Info ////
-    client.updateCharacterSetupWizard = function (step, dataName, dataHelp, dataImg) {
+//// Update Race Info ////
+client.updateCharacterSetupWizard = function (step, dataName, dataHelp, dataImg) {
 
-        var info = "<h2>" + dataName + "</h2>" + "<p>" + dataHelp + "</p>";
+    var info = "<h2>" + dataName + "</h2>" + "<p>" + dataHelp + "</p>";
 
-        if (step === "race") {
-            race = dataName; //global Race
+    if (step === "race") {
+        race = dataName; //global Race
 
-            $('.raceInfo').html(info);
+        $('.raceInfo').html(info);
 
-            $('.raceImg').attr('src', dataImg);
+        $('.raceImg').attr('src', dataImg);
 
-            $('#Race').val(dataName);
-        }
-        else if (step === "class") {
-            playerClass = dataName; //global player Class
-            $('.classInfo').html(info);
+        $('#Race').val(dataName);
+    }
+    else if (step === "class") {
+        playerClass = dataName; //global player Class
+        $('.classInfo').html(info);
 
-            $('.classImg').attr('src', dataImg);
+        $('.classImg').attr('src', dataImg);
 
-            $('#Class').val(dataName);
-        }
+        $('#Class').val(dataName);
+    }
       
 
-        console.log(dataName + " " + dataHelp )
+    console.log(dataName + " " + dataHelp )
 
      
 
-    }
+}
 
-    //// generate Stats ////
-    client.setStats = function (stats) {
+//// generate Stats ////
+client.setStats = function (stats) {
 
-        str = stats[0];
-        dex = stats[1];
-        con = stats[2];
-        int = stats[3];
-        wis = stats[4];
-        cha = stats[5];
+    str = stats[0];
+    dex = stats[1];
+    con = stats[2];
+    int = stats[3];
+    wis = stats[4];
+    cha = stats[5];
 
-        $('#statStr').html(str);
-        $('#statDex').html(dex);
-        $('#statCon').html(con);
-        $('#statInt').html(int);
-        $('#statWis').html(wis);
-        $('#statCha').html(cha);
+    $('#statStr').html(str);
+    $('#statDex').html(dex);
+    $('#statCon').html(con);
+    $('#statInt').html(int);
+    $('#statWis').html(wis);
+    $('#statCha').html(cha);
 
-        $("#Strength").val(str);
-        $("#Dexterity").val(dex);
-        $("#Constitution").val(con);
-        $("#Intelligence").val(int);
-        $("#Wisdom").val(wis);
-        $("#Charisma").val(cha);
+    $("#Strength").val(str);
+    $("#Dexterity").val(dex);
+    $("#Constitution").val(con);
+    $("#Intelligence").val(int);
+    $("#Wisdom").val(wis);
+    $("#Charisma").val(cha);
 
-    }
+}
 
-    client.savePlayerGuid = function (guid) {
-        $.cookie("playerGuid", guid);
-    }
+client.savePlayerGuid = function (guid) {
+    $.cookie("playerGuid", guid);
+}
 
 
 
-    //================================================================================
-    // Hub has loaded & Server functions
-    //================================================================================
-    $.connection.hub.start().done(function () {
+//================================================================================
+// Hub has loaded & Server functions
+//================================================================================
+$.connection.hub.start().done(function () {
 
-        //// Load 1st race choice
-         MIM.getRaceInfo("human"); //set default;
+    //// Load 1st race choice
+    MIM.getRaceInfo("human"); //set default;
 
-        /// send info to server
-        MIM.sendMessageToServer();
+    /// send info to server
+    MIM.sendMessageToServer();
 
-        //// Start scripts
-        MIM.init();
+    //// Start scripts
+    MIM.init();
 
-        $("#createCharaterForm").on("submit", function (event) {
-            var $this = $(this);
-            var frmValues = $this.serialize();
-            $.ajax({
-                type: $this.attr('method'),
-                url: $this.attr('action'),
-                data: frmValues
-            })
-            .done(function (data) {
+    $("#createCharaterForm").on("submit", function (event) {
+        var $this = $(this);
+        var frmValues = $this.serialize();
+        $.ajax({
+            type: $this.attr('method'),
+            url: $this.attr('action'),
+            data: frmValues
+        })
+        .done(function (data) {
 
-                    MIM.createCharacter(data);
+            MIM.createCharacter(data);
 
-                })
-            .fail(function () {
-               alert("failed");
-            });
-            event.preventDefault();
+        })
+        .fail(function () {
+            alert("failed");
         });
+        event.preventDefault();
+    });
 
-        $("#loginForm").on("submit", function (event) {
-            var $this = $(this);
-            var frmValues = $this.serialize();
-            $.ajax({
-                type: $this.attr('method'),
-                url: $this.attr('action'),
-                data: frmValues
-            })
-            .done(function (data) {
+    $("#loginForm").on("submit", function (event) {
+        var $this = $(this);
+        var frmValues = $this.serialize();
+        $.ajax({
+            type: $this.attr('method'),
+            url: $this.attr('action'),
+            data: frmValues
+        })
+        .done(function (data) {
  
-                MIM.login(data);
+            MIM.login(data);
                
 
 
-                })
-            .fail(function () {
-                alert("failed");
-            });
-            event.preventDefault();
+        })
+        .fail(function () {
+            alert("failed");
         });
+        event.preventDefault();
+    });
 
-        $.validator.unobtrusive.parse("#loginForm");
+    $.validator.unobtrusive.parse("#loginForm");
 
-        $.validator.unobtrusive.parse("#createCharaterForm");
+    $.validator.unobtrusive.parse("#createCharaterForm");
 
       
-        });
+});
         
-    });
+});
 
  

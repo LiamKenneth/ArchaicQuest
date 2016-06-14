@@ -47,7 +47,7 @@ namespace MIMWebClient.Controllers.Admin.Room
 
             var rooms = collection.Find(x => x.area.Equals(area) && x.areaId.Equals(areaid)).FirstOrDefault();
 
-            return this.View(rooms);
+            return this.View("Details", rooms);
         }
     }
 }
