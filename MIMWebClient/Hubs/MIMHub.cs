@@ -199,6 +199,7 @@ namespace MIMWebClient.Hubs
 
                 Score.ReturnScoreUI(player);
                 Score.UpdateUiPrompt(player);
+                Score.UpdateUiInventory(player);
             }
             else
             {

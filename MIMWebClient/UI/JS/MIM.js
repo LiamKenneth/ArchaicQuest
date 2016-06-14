@@ -323,7 +323,7 @@
             }
         };
 
-        stats[statType]();
+        stats[statType];
 
     };
 
@@ -348,6 +348,17 @@
         for (var i = 0; i < players.length; i++) {
 
         }
+    };
+
+    client.updateInventory = function (inventory) {
+        console.log(inventory);
+
+        var inventoryCount = inventory.length;
+        for (var i = 0; i < inventoryCount; i++) {
+            $("#invList").append(inventory[i].name);
+        }
+
+     
     };
 
     //// Update Race Info ////

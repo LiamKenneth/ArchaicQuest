@@ -35,5 +35,13 @@
             context.Clients.Client(playerData.HubGuid).updateStat(playerData.ManaPoints, playerData.MaxManaPoints, "mana");
             context.Clients.Client(playerData.HubGuid).updateStat(playerData.MovePoints, playerData.MaxMovePoints, "end");
         }
+
+        public static void UpdateUiInventory(Player playerData)
+        {
+
+            var context = HubContext.getHubContext;
+            context.Clients.Client(playerData.HubGuid).updateInventory(playerData.Inventory);
+       
+        }
     }
 }
