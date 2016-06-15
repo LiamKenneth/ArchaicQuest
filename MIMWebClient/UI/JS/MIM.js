@@ -212,6 +212,13 @@
             setWindowHeight: function() {
                 var viewPort = $(window).height() - 120;
                 $("#discussion").css({"height": viewPort, "max-height": viewPort});
+            },
+            openPanels: function() {
+                $("#open-left-panel").click(function () {
+                   
+                    $("#left-panel").show();
+                    $("#discussion").hide();
+                });
             }
         },
         init: function () {
@@ -220,7 +227,10 @@
             MIM.selectOption();
             MIM.CharacterNextStep();
             MIM.UI.setWindowHeight();
+            MIM.UI.openPanels();
 
+           
+             
             var resizeTimer;
 
             $(window).on('resize', function (e) {
@@ -254,6 +264,7 @@
     //// Add a new message to the page ////
     client.addNewMessageToPage = function (message) {
         $('#discussion').append("<p>" + message + "</p>");
+        $("#discussion").scrollTop = $("#discussion").scrollHeight;
     };
 
     //// Add a new message to the page ////

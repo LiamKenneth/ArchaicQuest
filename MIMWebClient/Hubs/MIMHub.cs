@@ -171,7 +171,9 @@ namespace MIMWebClient.Hubs
             Save.SavePlayer(PlayerData);
 
             // addToRoom(PlayerData.AreaId, roomData, PlayerData, "player");
-            Prompt.ShowPrompt(PlayerData);
+            Score.ReturnScoreUI(PlayerData);
+            Score.UpdateUiPrompt(PlayerData);
+            Score.UpdateUiInventory(PlayerData);
 
         }
 
@@ -195,7 +197,7 @@ namespace MIMWebClient.Hubs
                 PlayerManager.AddPlayerToRoom(roomData, player);
                 Movement.EnterRoom(player, roomData);
 
-                Prompt.ShowPrompt(player);
+              //  Prompt.ShowPrompt(player);
 
                 Score.ReturnScoreUI(player);
                 Score.UpdateUiPrompt(player);
