@@ -113,6 +113,18 @@
                 $(".infoBreadCrumb").addClass("active");
             });
 
+            $("#createCharWizard").click(function () {
+                document.getElementById('login').style.display = "none";
+                raceStep.style.display = "block";
+                $(".modal-header").show();
+            });
+
+            $("#goToLogin").click(function () {
+                
+                document.getElementById('login').style.display = "block";
+                raceStep.style.display = "none";
+                $(".modal-header").hide();
+            });
 
             $("#CreateCharBtn").click(function () {
 
@@ -134,7 +146,7 @@
                     return false;
                 }
 
-                alert("create char")
+       
 
             });
         },
@@ -308,6 +320,7 @@
         if (isNaN(stat) || isNaN(maxStat)) {
             return;
         }
+      
 
         var statPercentage = ((maxStat / stat) * 100);
 
@@ -324,6 +337,10 @@
             document.getElementById('end-bar').style.width = statPercentage + "%";
         }
     
+        if (statType == "tnl") {
+
+            document.getElementById('tnl-bar').style.width = statPercentage + "%";
+        }
            
 };
 

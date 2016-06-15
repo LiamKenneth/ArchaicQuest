@@ -33,7 +33,8 @@
             var context = HubContext.getHubContext;
             context.Clients.Client(playerData.HubGuid).updateStat(playerData.HitPoints, playerData.MaxHitPoints, "hp");
             context.Clients.Client(playerData.HubGuid).updateStat(playerData.ManaPoints, playerData.MaxManaPoints, "mana");
-            context.Clients.Client(playerData.HubGuid).updateStat(playerData.MovePoints, playerData.MaxMovePoints, "end");
+            context.Clients.Client(playerData.HubGuid).updateStat(playerData.MovePoints, playerData.MaxMovePoints, "endurance");
+            context.Clients.Client(playerData.HubGuid).updateStat(playerData.ExperienceToNextLevel, playerData.Experience, "tnl");
         }
 
         public static void UpdateUiInventory(Player playerData)

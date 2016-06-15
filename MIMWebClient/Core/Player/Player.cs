@@ -201,10 +201,10 @@ namespace MIMWebClient.Core.PlayerSetup
             this.SelectedClass = selectedClass;
             this.Level = 1;
             this.AlignmentScore = 0;
-            this.Experience = 0;
+            this.Experience = 500;
             this.ExperienceToNextLevel = 1000; // create class to work out
             this.HitPoints = 100; // class to workout
-            this.MaxHitPoints = 30;
+            this.MaxHitPoints = 100;
             this.ManaPoints = 50;
             this.MaxManaPoints = 50;
             this.MovePoints = 60;
