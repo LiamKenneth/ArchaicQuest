@@ -7,7 +7,7 @@
 body {
   background: #272624;
   color: #f1f1f1;
-  font-size: 14px;
+  font-size: 10px;
   font-family: "Slabo 27px", serif !important; }
 
 h1, h2, h3, h4, h5, h6 {
@@ -15,11 +15,15 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 16px;
   font-family: "Slabo 27px", serif !important; }
 
+#discussion {
+  font-size: 10px !important; }
+
 pre {
   background: #272624;
   color: #f1f1f1;
   border: 0 none;
-  padding: 10px; }
+  padding: 10px;
+  font-size: 10px !important; }
 
 .modal-content {
   background: #272624;
@@ -107,5 +111,6 @@ pre {
 .window {
   padding: 15px;
   border: 4px solid #525045;
-  box-shadow: inset 0 0 15px 2px #000; }
+  box-shadow: inset 0 0 15px 2px #000;
+  font-size: 10px !important; }
 
