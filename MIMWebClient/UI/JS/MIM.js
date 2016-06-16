@@ -306,7 +306,8 @@
     //// Add a new message to the page ////
     client.addNewMessageToPage = function (message) {
         $('#discussion').append("<p>" + message + "</p>");
-        $("#discussion").scrollTop = $("#discussion").scrollHeight;
+ 
+        $("#discussion").scrollTop($("#discussion")[0].scrollHeight);
     };
 
     //// Add a new message to the page ////
