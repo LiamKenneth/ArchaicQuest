@@ -101,7 +101,7 @@ namespace MIMWebClient.Core
                 HubContext.SendToClient("Sorry you can't do that.", playerData.HubGuid);
             }
 
-            Prompt.ShowPrompt(playerData);
+          //  Prompt.ShowPrompt(playerData);
             Score.UpdateUiPrompt(playerData);
            
         }
