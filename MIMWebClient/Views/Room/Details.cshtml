@@ -9,13 +9,55 @@
 
 
 <div>
-    <h4>details</h4>
+    <a href="/Room/Edit/@Model.region/@Model.area/@Model.areaId">Edit Room</a>
+    <h1>@Model.title</h1>
     <hr />
+    <p>Terrain: @Model.terrain</p><br />
+    <p>@Model.description</p>
+
+    <h2>Items</h2>
+
+    <ul>
+        @{
+            foreach (var item in Model.items)
+            {
+                <li>@item.name</li>
+            }
+        }
+    </ul>
+
+    <h2>Mobs</h2>
+
     @{
-       @Model.title
-           
+        if (Model.mobs.Count > 0)
+        {
+
+            <ul>
+                @{
+                    foreach (var item in Model.mobs)
+                    {
+                        <li>@item.Name</li>
+                    }
+                }
+            </ul>
+
+        }
+        else
+        {
+            <p>None</p>
+        }
     }
+
+    <h2>Exits</h2>
+
+    <ul>
+        @{
+            foreach (var item in Model.exits)
+            {
+                <li><a href="/Room/Details/@item.region/@item.area/@item.areaId">@item.name</a></li>
+            }
+        }
+    </ul>
+
+
 </div>
-<p>
-  
-</p>

@@ -14,6 +14,12 @@ namespace MIMWebClient
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Room",
+                url: "{controller}/{action}/{region}/{area}/{areaId}",
+                defaults: new { controller = "Room", action = "Index", region = UrlParameter.Optional, area = UrlParameter.Optional, areaId = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

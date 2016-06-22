@@ -9,20 +9,44 @@
 
 
 <div>
-    <h4>ViewRooms</h4>
-    <hr />
-    @{
-        foreach (var room in Model)
-        {
-            <a href="/Room/@room.area/@room.areaId">
-                Edit
-            </a>
-                <p>@room.area - @room.title</p>
+    <h1>Rooms</h1>
 
-            
-        }
-    }
-</div>
-<p>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-6">
+                <h2>Region</h2>
+
+                @{
+                    foreach (var room in Model)
+                    {
+                        <a href="/Room/Details/@room.region">
+                            Edit
+                        </a>
+                        <p>@room.region</p>
+
+                        //find all rooms in region
+                    }
+                }
+
+            </div>
+            <div class="col-xs-6">
+                <h2>Area</h2>
+                @{
+                    foreach (var room in Model)
+                    {
+                        <a href="/Room/Details/@room.region/@room.area/@room.areaId">
+                            Edit
+                        </a>
+                        <p>@room.area - @room.title</p>
+
+
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+ 
   
-</p>
+</div>
+ 
