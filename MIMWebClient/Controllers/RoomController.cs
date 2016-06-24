@@ -65,17 +65,52 @@ namespace MIMWebClient.Controllers.Admin.Room
 
             try
             {
-                // TODO: Add update logic here
+                var room = this.roomCollection.Find(x => x.areaId.Equals(areaId) && x.region.Equals(region) && x.area.Equals(area)).FirstOrDefault();
 
-          //      var rooms = this.roomCollection.Find(x => x.areaId.Equals(areaId) && x.region.Equals(region) && x.area.Equals(area)).FirstOrDefault();
+                room.region = collection["region"];
+                room.area = collection["area"];
+                room.areaId = Convert.ToInt32(collection["areaId"]);
+                room.terrain = collection["terrain"];
 
+                if (room.title != collection["title"])
+                {
+                    room.title = collection["title"];
+
+                }
+
+                room.description = collection["description"];
+
+                 this.roomCollection.ReplaceOne<Room>(x => x.areaId.Equals(areaId) && x.region.Equals(region) && x.area.Equals(area), room);
+
+                return RedirectToAction("Index");
+            }
+            catch(Exception e)
+            {
+                var rooms = this.roomCollection.Find(x => x.areaId.Equals(areaId) && x.region.Equals(region) && x.area.Equals(area)).FirstOrDefault();
+                return View(rooms);
+            }
+        }
+
+        // GET: Default/Create
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return this.View();
+        }
+
+        // POST: Default/Create
+        [HttpPost]
+        public ActionResult Create(FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add insert logic here
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                var rooms = this.roomCollection.Find(x => x.areaId.Equals(areaId) && x.region.Equals(region) && x.area.Equals(area)).FirstOrDefault();
-                return View(rooms);
+                return View();
             }
         }
 
