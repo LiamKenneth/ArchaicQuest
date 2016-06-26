@@ -4,8 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using MIMWebClient.Core.Item;
+using MIMWebClient.Core.Room;
+
 namespace MIMWebClient.Controllers.Admin.Room
 {
+    using MIMWebClient.Core.Item;
     using MIMWebClient.Core.Room;
 
     using MongoDB.Driver;
@@ -95,7 +99,10 @@ namespace MIMWebClient.Controllers.Admin.Room
         [HttpGet]
         public ActionResult Create()
         {
-            return this.View();
+           var pageModel = new ToPage();
+
+            
+            return this.View(pageModel);
         }
 
         // POST: Default/Create
@@ -115,5 +122,17 @@ namespace MIMWebClient.Controllers.Admin.Room
         }
 
         public IMongoCollection<Room> roomCollection { get; set; }
+    }
+}
+
+public class ToPage
+{
+    public Room roomModel { get; set; }
+    public Item itemModel { get; set; }
+
+    public ToPage()
+    {
+        roomModel = new Room();
+        itemModel = new Item();
     }
 }
