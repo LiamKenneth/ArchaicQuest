@@ -12,6 +12,27 @@ namespace MIMWebClient.Core.Item
     public class Item :BaseItem
     {
 
+        public enum EqSlot
+        {
+            Floating,
+            Head,
+            Face,
+            Eyes,
+            Ear,
+            Neck,
+            Cloak,
+            AboutBody,
+            Body,
+            Waist,
+            Sheath,
+            Back,
+            Wrist,
+            Hand,
+            Ring,
+            Legs,
+            Feet
+        }
+
         public enum AttackType
         {
             Slash,
@@ -80,6 +101,7 @@ namespace MIMWebClient.Core.Item
 
         public List<Item> containerItems;
         public AttackType attackType { get; set; }
+        public EqSlot eqSlot { get; set; }
         public string weaponType { get; set; }
         public int weaponSpeed { get; set; }
 

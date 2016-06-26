@@ -68,7 +68,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.roomModel.description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.roomModel.description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.roomModel.description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.roomModel.description, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -90,6 +90,57 @@
                 @Html.ValidationMessageFor(model => model.itemModel.name, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <div class="form-group">
+            //Always an object
+            @Html.LabelFor(model => model.itemModel.type, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.itemModel.type, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.itemModel.type, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            // true / false
+            @Html.LabelFor(model => model.itemModel.equipable, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.itemModel.equipable, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.itemModel.equipable, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.itemModel.slot, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.itemModel, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.itemModel.slot, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.itemModel.description.look, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.itemModel.description.look, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.itemModel.description.look, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.itemModel.description.exam, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.itemModel.description.exam, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.itemModel.description.exam, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.itemModel.description.room, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.itemModel.description.room, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.itemModel.description.room, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

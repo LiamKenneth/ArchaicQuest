@@ -109,16 +109,24 @@ namespace MIMWebClient.Controllers.Admin.Room
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
-            try
-            {
-                // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
+            if (ModelState.IsValid)
             {
-                return View();
+
+
+                try
+                {
+                    // TODO: Add insert logic here
+
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View();
+                }
             }
+
+            return View();
         }
 
         public IMongoCollection<Room> roomCollection { get; set; }
