@@ -9,8 +9,37 @@ namespace MIMWebClient.Core.Item
     using System.ComponentModel;
     using System.Runtime.Serialization;
 
-    public class Item :BaseItem
+    public class Item : BaseItem
     {
+
+        public enum ItemFlags
+        {
+            glow, //affect n/a
+            hum,  //affect n/a
+            dark, //affect n/a
+            evil, //glow on det.evil
+            bless, // +20% resist dam. 2 x duration poison
+            invis, //invisible
+            hidden, //hidden
+            nodrop, // cannot drop
+            noremove, //cannot remove w/o remove curse
+            antievil, //zap if align -350 & lower
+            antigood, //zap if align +350 & lower
+            antineutral, //zap if align -350 to +350
+            nolocate,   //locate spell fails
+            equipable, // can be equipped
+            container, // isContainer
+            locked // container only
+        }
+
+
+        public enum ItemLocation
+        {
+            Room,
+            Inventory,
+            Worn
+        }
+
 
         public enum EqSlot
         {
@@ -100,9 +129,12 @@ namespace MIMWebClient.Core.Item
         }
 
         public List<Item> containerItems;
+        public DamageType damageType { get; set; }
+        public ArmourType armourType { get; set; }
+        public ItemFlags itemFlags { get; set; }
         public AttackType attackType { get; set; }
         public EqSlot eqSlot { get; set; }
-        public string weaponType { get; set; }
+        public WeaponType weaponType { get; set; }
         public int weaponSpeed { get; set; }
 
     }

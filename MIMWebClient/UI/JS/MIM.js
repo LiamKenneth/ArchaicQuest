@@ -263,6 +263,36 @@
 
             }
         },
+        addItem: function() {
+            $("#js-AddItem").click(function () {
+                alert("Handler for .click() called.");
+
+                var data = {
+                    "type": "object",
+                    "location": "room",
+                    "equipable": true,
+                    "slot": "RightHand",
+                    "name": "test Sword",
+                    "actions": {
+                        "container": false,
+                        "wield": "wield"
+                    },
+                    "description": {
+                        "look": "You look at a short sword",
+                        "exam": "You look closely at a short sword",
+                        "room": "A short Sword is here."
+                    },
+                    "stats": {
+                        "damMin": 1,
+                        "damMax": 5
+                    }
+                };
+                
+                $.post("/Room/Create/addItem", function (data) {
+                  alert("success")
+                });
+            });
+        },
         init: function () {
             console.log("INIT")
             //init when signalr is ready
@@ -270,8 +300,7 @@
             MIM.CharacterNextStep();
             MIM.UI.setWindowHeight();
             MIM.UI.openPanels();
-
-
+            MIM.addItem();
 
             var resizeTimer;
 

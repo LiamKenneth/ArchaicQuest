@@ -28,7 +28,7 @@ namespace MIMWebClient.Controllers.Admin.Room
                 var database = client.GetDatabase("MIMDB");
 
                 this.roomCollection = database.GetCollection<Room>("Room");
-            
+                this.itemCollection = database.GetCollection<Item>("Item");
         }
 
         // GET: Room
@@ -76,11 +76,7 @@ namespace MIMWebClient.Controllers.Admin.Room
                 room.areaId = Convert.ToInt32(collection["areaId"]);
                 room.terrain = collection["terrain"];
 
-                if (room.title != collection["title"])
-                {
-                    room.title = collection["title"];
-
-                }
+                room.title = collection["title"];
 
                 room.description = collection["description"];
 
@@ -95,13 +91,26 @@ namespace MIMWebClient.Controllers.Admin.Room
             }
         }
 
+        // POST: addItem
+        [HttpPost]
+        public void addItem(Item model)
+        {
+            try
+            {
+                this.itemCollection.InsertOne(model);                
+            }
+            catch (Exception e)
+            {
+                 
+            }
+        }
+
         // GET: Default/Create
         [HttpGet]
         public ActionResult Create()
         {
            var pageModel = new ToPage();
 
-            
             return this.View(pageModel);
         }
 
@@ -130,6 +139,7 @@ namespace MIMWebClient.Controllers.Admin.Room
         }
 
         public IMongoCollection<Room> roomCollection { get; set; }
+        public IMongoCollection<Item> itemCollection { get; set; }
     }
 }
 
@@ -137,10 +147,16 @@ public class ToPage
 {
     public Room roomModel { get; set; }
     public Item itemModel { get; set; }
+    public List<Item> itemSelect { get; set; }
 
     public ToPage()
     {
         roomModel = new Room();
         itemModel = new Item();
     }
+}
+
+public class dummy
+{
+    public string name { get; set; }
 }
