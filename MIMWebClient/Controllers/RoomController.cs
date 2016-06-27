@@ -111,6 +111,10 @@ namespace MIMWebClient.Controllers.Admin.Room
         {
            var pageModel = new ToPage();
 
+            var itemList = this.itemCollection.Find(_ => true).ToList();
+
+            pageModel.itemSelect = itemList;
+
             return this.View(pageModel);
         }
 

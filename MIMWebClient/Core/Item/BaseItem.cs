@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +10,9 @@ namespace MIMWebClient.Core.Item
 {
     public class BaseItem
     {
+        [BsonRepresentation(BsonType.ObjectId)]
+        public ObjectId _id { get; set; }
+
         public string name { get; set; }
         public List<string> keywords { get; set; }
         public bool locked { get; set; }
