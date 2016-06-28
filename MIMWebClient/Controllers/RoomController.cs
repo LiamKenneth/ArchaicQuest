@@ -117,16 +117,30 @@ namespace MIMWebClient.Controllers.Admin.Room
 
             pageModel.itemSelect = itemList;
 
-
-
             return this.View(pageModel);
         }
 
         // POST: Default/Create
         [HttpPost]
-        public ActionResult Create(Room newRoom)
+        public ActionResult Create(FormCollection RoomData)
         {
+
+            var newRoom = new Room();
+
+            newRoom.region = RoomData["roomModel.title"];
+            newRoom.area = RoomData["roomModel.area"];
+            newRoom.areaId = Convert.ToInt32(RoomData["roomModel.areaId"]);
+
+            newRoom.title = RoomData["roomModel.title"];
+            newRoom.description = RoomData["roomModel.description"];
+
+            Room.Terrain terrain;
+            Enum.TryParse(RoomData["roomModel.terrain"], out terrain);
+            newRoom.terrain = terrain;
+    
+
             this.roomCollection.InsertOne(newRoom);
+
             if (ModelState.IsValid)
             {
 
@@ -155,12 +169,14 @@ public class ToPage
 {
     public Room roomModel { get; set; }
     public Item itemModel { get; set; }
+    public Exit exitModel { get; set; }
     public List<Item> itemSelect { get; set; }
 
     public ToPage()
     {
         roomModel = new Room();
         itemModel = new Item();
+        exitModel = new Exit();
     }
 }
 
