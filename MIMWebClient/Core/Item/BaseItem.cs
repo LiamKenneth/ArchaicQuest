@@ -18,7 +18,6 @@ namespace MIMWebClient.Core.Item
         public bool locked { get; set; }
         public int? keyValue { get; set; }
         public bool hidden { get; set; }
-        public string type { get; set; }
         public string location { get; set; }
         public bool equipable { get; set; }
         public string slot { get; set; }

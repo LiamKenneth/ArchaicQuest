@@ -2,303 +2,296 @@
 @{
     ViewBag.Title = "Create";
 }
-<h2>Create</h2>
+
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Room</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.roomModel.region, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.roomModel.region, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.roomModel.region, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.roomModel.area, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.roomModel.area, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.roomModel.area, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.roomModel.areaId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.roomModel.areaId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.roomModel.areaId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.roomModel.clean, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.roomModel.clean)
-                    @Html.ValidationMessageFor(model => model.roomModel.clean, "", new { @class = "text-danger" })
+    <div class="container">
+        <div class="row">
+
+            <h4>Create Room</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.roomModel.region)
+
+                    @Html.EditorFor(model => model.roomModel.region, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.roomModel.region, "", new { @class = "text-danger" })
+                </div>
+
+
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.roomModel.area)
+                    @Html.EditorFor(model => model.roomModel.area, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.roomModel.area, "", new { @class = "text-danger" })
+                </div>
+
+
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.roomModel.areaId)
+                    @Html.EditorFor(model => model.roomModel.areaId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.roomModel.areaId, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.roomModel.modified, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.roomModel.modified, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.roomModel.modified, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.roomModel.title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.roomModel.title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.roomModel.title, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.roomModel.description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.roomModel.description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.roomModel.description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.roomModel.terrain, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.roomModel.terrain, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.roomModel.terrain, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
+        <div class="row">
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.LabelFor(model => model.roomModel.title)
+                    @Html.EditorFor(model => model.roomModel.title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.roomModel.title, "", new { @class = "text-danger" })
+
+                    @Html.LabelFor(model => model.roomModel.description, htmlAttributes: new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.roomModel.description, 10, 20, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.roomModel.description, "", new { @class = "text-danger" })
+
+                    @Html.LabelFor(model => model.roomModel.terrain)
+                    @Html.EnumDropDownListFor(model => model.roomModel.terrain, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.roomModel.terrain, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
         <h2>Items in Room</h2>
 
 
-        <!-- ITEM -->
-        <h2>Add Items</h2>
 
-        <!-- Select ITem-->
-        <div class="form-group">
-          <p>Select ITem</p>
-            <div class="col-md-10">
-                <select name="listbox" id="listbox">
-                    @foreach (var item in Model.itemSelect)
-                    {
+        <div class="row">
+            <!-- ITEM -->
+            <h2>Add Items</h2>
 
-                        <option value="@item.name">
-                            @item.name
-                        </option>
-                    }
-                </select>
+            <!-- Select ITem-->
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label for="listbox">Select Item</label>
 
-                <a href="javascript:void(0)">Add Item</a>
+                    <select name="listbox" id="listbox" class="form-control">
+                        <option>Select item to add</option>
+                        @foreach (var item in Model.itemSelect)
+                        {
+
+                            <option value="@item.name">
+                                @item.name
+                            </option>
+                        }
+                    </select>
+
+                    <a href="javascript:void(0)">Add Item</a>
+                </div>
             </div>
         </div>
 
-        <!-- item name -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.itemModel.name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.itemModel.name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-  
-        <!-- item type -->
-        <div class="form-group">
-            //Always an object
-            @Html.LabelFor(model => model.itemModel.type, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.itemModel.type, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.itemModel.type, "", new { @class = "text-danger" })
+        <div class="row">
+            <!-- item name -->
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.LabelFor(model => model.itemModel.name)
+
+                    @Html.EditorFor(model => model.itemModel.name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.itemModel.name, "", new { @class = "text-danger" })
+
+
+                    <!-- item type -->
+                    //Always an object
+                    @Html.LabelFor(model => model.itemModel.type)
+
+                    @Html.EnumDropDownListFor(model => model.itemModel.type, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.itemModel.type, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
 
-        <!-- item Keywords -->
-        <div class="form-group">
-        //comma seperated?
-            @Html.LabelFor(model => model.itemModel.keywords, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.itemModel.keywords, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.itemModel.keywords, "", new { @class = "text-danger" })
+        <!-- If weapon show -->
+
+        <div class="row">
+            <!-- item dam min -->
+            <div class="form-group">
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.itemModel.stats.damMin)
+
+                    @Html.EditorFor(model => model.itemModel.stats.damMin, new { htmlAttributes = new { @class = "form-control", @value = 0 } })
+                    @Html.ValidationMessageFor(model => model.itemModel.stats.damMin, "", new { @class = "text-danger" })
+                </div>
+
+
+                <!-- item dam max -->
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.itemModel.stats.damMax)
+
+                    @Html.EditorFor(model => model.itemModel.stats.damMax, new { htmlAttributes = new { @class = "form-control", @value = 0 } })
+                    @Html.ValidationMessageFor(model => model.itemModel.stats.damMax, "", new { @class = "text-danger" })
+                </div>
+
+
+                <!-- item dam roll -->
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.itemModel.stats.damRoll)
+                    @Html.EditorFor(model => model.itemModel.stats.damRoll, new { htmlAttributes = new { @class = "form-control", @value = 0 } })
+                    @Html.ValidationMessageFor(model => model.itemModel.stats.damRoll, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
 
-        <!-- item dam min -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.stats.damMin, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.itemModel.stats.damMin, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.itemModel.stats.damMin, "", new { @class = "text-danger" })
+        <div class="row">
+            <!-- item attack type -->
+            <div class="form-group">
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.itemModel.attackType)
+
+                    @Html.EnumDropDownListFor(model => model.itemModel.attackType, "- Please select attack Type -", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.itemModel.attackType, "", new { @class = "text-danger" })
+                </div>
+
+
+                <!-- item weapon type -->
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.itemModel.weaponType)
+
+                    @Html.EnumDropDownListFor(model => model.itemModel.weaponType, "- Please select attack Type -", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.itemModel.weaponType, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.itemModel.slot)
+
+                    @Html.EnumDropDownListFor(model => model.itemModel.eqSlot, "- Please select equipment slot -", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.itemModel.slot, "", new { @class = "text-danger" })
+
+
+                </div>
+            </div>
+        </div>
+        <!-- /If weapon show -->
+
+        <div class="row">
+            <!-- item min usage level -->
+            <div class="form-group">
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.itemModel.stats.minUsageLevel)
+
+                    @Html.EditorFor(model => model.itemModel.stats.minUsageLevel, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.itemModel.stats.minUsageLevel, "", new { @class = "text-danger" })
+                </div>
+
+
+                <!-- item Equipable -->
+
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.itemModel.equipable)
+
+                    @Html.CheckBoxFor(model => model.itemModel.equipable, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.itemModel.equipable, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
 
-        <!-- item dam max -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.stats.damMax, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.itemModel.stats.damMax, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.itemModel.stats.damMax, "", new { @class = "text-danger" })
+        <div class="row">
+            <!-- item flags -->
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.LabelFor(model => model.itemModel.itemFlags)
+                    <hr />
+                    <div class="row">
+                        @{
+
+                            foreach (var item in Enum.GetValues(Model.itemModel.itemFlags.GetType()))
+                            {
+                                <div class="col-xs-3">
+                                    <div class="checkbox">
+                                        <input type="checkbox" name="SelectedSources" value="@item">@item
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="row">
+            <!-- item damage type -->
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.LabelFor(model => model.itemModel.damageType)
+                    <hr />
+                    <div class="row">
+                        @{
 
-        <!-- item dam roll -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.stats.damRoll, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.itemModel.stats.damRoll, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.itemModel.stats.damRoll, "", new { @class = "text-danger" })
+                            foreach (var item in Enum.GetValues(Model.itemModel.damageType.GetType()))
+                            {
+                                <div class="col-xs-3">
+                                    <div class="checkbox">
+                                        <input type="checkbox" name="SelectedSources" value="@item">@item
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- item min usage level -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.stats.minUsageLevel, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.itemModel.stats.minUsageLevel, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.itemModel.stats.minUsageLevel, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <!-- item Equipable -->
-        <div class="form-group">
-            // true / false
-            @Html.LabelFor(model => model.itemModel.equipable, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.CheckBoxFor(model => model.itemModel.equipable, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.itemModel.equipable, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <!-- item slot -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.slot, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.itemModel.eqSlot, "- Please select equipment slot -", new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.itemModel.slot, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <!-- item attack type -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.attackType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.itemModel.attackType, "- Please select attack Type -", new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.itemModel.attackType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <!-- item weapon type -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.weaponType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.itemModel.weaponType, "- Please select attack Type -", new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.itemModel.weaponType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <!-- item flags -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.itemFlags, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @{
-  
-                   foreach (var item in Enum.GetValues(Model.itemModel.itemFlags.GetType()))
-                    {
-                        <div class="checkbox">
-                            <input type="checkbox" name="SelectedSources" value="@item">@item
-                        </div>
-                    }
-                }   
-            </div>
-        </div>
-
-        <!-- item damage type -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.damageType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @{
-
-                    foreach (var item in Enum.GetValues(Model.itemModel.damageType.GetType()))
-                    {
-                        <div class="checkbox">
-                            <input type="checkbox" name="SelectedSources" value="@item">@item
-                        </div>
-                    }
-                }
-            </div>
-        </div>
-
-        <!-- item armour type -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.armourType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.itemModel.armourType, "- Please select armour type -", new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.itemModel.armourType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <!-- item worth -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.stats.worth, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.itemModel.stats.worth, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.itemModel.stats.worth, "", new { @class = "text-danger" })
-            </div>
-        </div>
+ 
 
         <!-- descriptions -->
-
         <!-- item description look -->
         <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.description.look, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.itemModel.description.look, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.itemModel.description.look)
+
+                @Html.TextAreaFor(model => model.itemModel.description.look, 5, 5, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.itemModel.description.look, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <!-- item description examine -->
         <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.description.exam, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.itemModel.description.exam, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.itemModel.description.exam)
+
+                @Html.TextAreaFor(model => model.itemModel.description.exam, 5, 5, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.itemModel.description.exam, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <!-- item description room -->
         <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.description.room, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.itemModel.description.room, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.itemModel.description.room)
+
+                @Html.TextAreaFor(model => model.itemModel.description.room, 5, 5, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.itemModel.description.room, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <!-- item description taste -->
         <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.description.taste, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.itemModel.description.taste, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.itemModel.description.taste)
+
+                @Html.TextAreaFor(model => model.itemModel.description.taste, 5, 5, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.itemModel.description.taste, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <!-- item description touch -->
         <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.description.touch, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.itemModel.description.touch, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.itemModel.description.touch)
+
+                @Html.TextAreaFor(model => model.itemModel.description.touch, 5, 5, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.itemModel.description.touch, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <!-- item description smell -->
         <div class="form-group">
-            @Html.LabelFor(model => model.itemModel.description.smell, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.itemModel.description.smell, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.itemModel.description.smell)
+
+                @Html.TextAreaFor(model => model.itemModel.description.smell, 5, 5, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.itemModel.description.smell, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -311,56 +304,58 @@
             </div>
         </div>
     </div>
-}
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
- 
-   <script>
-       $("#js-AddItem").click(function () {
-           alert("Handler for .click() called.");
 
-           var data = {
-               type: "object",
-               location: "room",
-               equipable: true,
-               slot: "RightHand",
-               name: "test Sword",
-               actions: {
-                   container: false,
-                   wield: "wield"
-               },
-               description: {
-                   look: "You look at a short sword",
-                   exam: "You look closely at a short sword",
-                   room: "A short Sword is here."
-               },
-               stats: {
-                   damMin: 1,
-                   damMax: 5
-               }
-           };
 
- 
+        @Html.ActionLink("Back to List", "Index")
+                  @section Scripts {
+                                @Scripts.Render("~/bundles/jqueryval")
 
-           $.ajax({
-               type: "POST",
-               url: "/Room/addItem",
-               content: "application/json; charset=utf-8",
-               dataType: "json",
-               data: data,
-               success: function (d) {
-                   if (d.success == true)
-                       alert("yay")
-                   else { }
-               },
-               error: function (xhr, textStatus, errorThrown) {
-                   // TODO: Show error
-               }
-           });
+                                <script>
+                                    $("#js-AddItem").click(function () {
+                                        alert("Handler for .click() called.");
 
-       });
-    </script>
-}
+                                        var data = {
+                                            type: "object",
+                                            location: "room",
+                                            equipable: true,
+                                            slot: "RightHand",
+                                            name: "test Sword",
+                                            actions: {
+                                                container: false,
+                                                wield: "wield"
+                                            },
+                                            description: {
+                                                look: "You look at a short sword",
+                                                exam: "You look closely at a short sword",
+                                                room: "A short Sword is here."
+                                            },
+                                            stats: {
+                                                damMin: 1,
+                                                damMax: 5
+                                            }
+                                        };
+
+
+
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "/Room/addItem",
+                                            content: "application/json; charset=utf-8",
+                                            dataType: "json",
+                                            data: data,
+                                            success: function (d) {
+                                                if (d.success == true)
+                                                    alert("yay")
+                                                else { }
+                                            },
+                                            error: function (xhr, textStatus, errorThrown) {
+                                                // TODO: Show error
+                                            }
+                                        });
+
+                                    });
+                                </script>
+                            }
+
+
+                            }

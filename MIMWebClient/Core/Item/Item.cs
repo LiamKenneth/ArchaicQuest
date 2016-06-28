@@ -12,24 +12,53 @@ namespace MIMWebClient.Core.Item
     public class Item : BaseItem
     {
 
+
+  //      None Light     Scroll Wand        Staff Weapon
+  //Fireweapon Missile   Treasure Armor       Potion Worn
+  //Furniture Trash     Oldtrap Container   Note Drink_con
+  //Key Food      Money Pen         Boat Corpse_npc
+  //Corpse_pc Fountain  Pill Blood       Bloodstain Scraps
+  //Pipe Herb_con  Herb Incense     Fire Book
+  //Switch Lever     Pullchain Button      Dial Rune
+  //Runepouch Match     Trap Map         Portal Paper
+  //Tinder Lockpick  Spike Disease     Oil Fuel
+  //Short_bow Long_bow  Crossbow Projectile  Quiver Shovel
+  //Salve
+
+        public enum ItemType
+        {
+            Armour,
+            Book,
+            Container,
+            Food,
+            Key,
+            light,
+            Misc,
+            note,
+            Potion,
+            Weapon          
+        }
+
         public enum ItemFlags
         {
-            glow, //affect n/a
-            hum,  //affect n/a
-            dark, //affect n/a
-            evil, //glow on det.evil
-            bless, // +20% resist dam. 2 x duration poison
-            invis, //invisible
-            hidden, //hidden
-            nodrop, // cannot drop
-            noremove, //cannot remove w/o remove curse
             antievil, //zap if align -350 & lower
             antigood, //zap if align +350 & lower
             antineutral, //zap if align -350 to +350
-            nolocate,   //locate spell fails
-            equipable, // can be equipped
+            bless, // +20% resist dam. 2 x duration poison
             container, // isContainer
-            locked // container only
+            dark, //affect n/a
+            equipable, // can be equipped
+            evil, //glow on det.evil
+            glow, //affect n/a
+            hidden, //hidden
+            hum,  //affect n/a
+            invis, //invisible
+            locked, // container only
+            nodrop, // cannot drop
+            nolocate,   //locate spell fails
+            noremove, //cannot remove w/o remove curse
+
+
         }
 
 
@@ -132,6 +161,7 @@ namespace MIMWebClient.Core.Item
         public DamageType damageType { get; set; }
         public ArmourType armourType { get; set; }
         public ItemFlags itemFlags { get; set; }
+        public ItemType type { get; set; }
         public AttackType attackType { get; set; }
         public EqSlot eqSlot { get; set; }
         public WeaponType weaponType { get; set; }
