@@ -18,24 +18,24 @@ namespace MIMWebClient.Controllers.Admin.Room
     {
         public RoomController()
         {
-           
-                const string ConnectionString = "mongodb://localhost:27017";
 
-                // Create a MongoClient object by using the connection string
-                var client = new MongoClient(ConnectionString);
+            const string ConnectionString = "mongodb://localhost:27017";
 
-                //Use the MongoClient to access the server
-                var database = client.GetDatabase("MIMDB");
+            // Create a MongoClient object by using the connection string
+            var client = new MongoClient(ConnectionString);
 
-                this.roomCollection = database.GetCollection<Room>("Room");
-                this.itemCollection = database.GetCollection<Item>("Item");
+            //Use the MongoClient to access the server
+            var database = client.GetDatabase("MIMDB");
+
+            this.roomCollection = database.GetCollection<Room>("Room");
+            this.itemCollection = database.GetCollection<Item>("Item");
         }
 
         // GET: Room
         [HttpGet]
         public ActionResult Index()
         {
-          
+
             var rooms = this.roomCollection.Find(_ => true).ToList();
 
             return this.View(rooms);
@@ -44,7 +44,7 @@ namespace MIMWebClient.Controllers.Admin.Room
         // GET: Room/Details/valston/Town/1
 
         public ActionResult Details(string region, string area, int areaId)
-        { 
+        {
 
             var rooms = this.roomCollection.Find(x => x.areaId.Equals(areaId) && x.region.Equals(region) && x.area.Equals(area)).FirstOrDefault();
 
@@ -65,7 +65,7 @@ namespace MIMWebClient.Controllers.Admin.Room
         [HttpPost]
         public ActionResult Edit(string region, string area, int areaId, FormCollection collection)
         {
-           
+
 
             try
             {
@@ -74,17 +74,19 @@ namespace MIMWebClient.Controllers.Admin.Room
                 room.region = collection["region"];
                 room.area = collection["area"];
                 room.areaId = Convert.ToInt32(collection["areaId"]);
-                room.terrain = collection["terrain"];
+                Room.Terrain terrain;
+                Enum.TryParse(collection["terrain"], out terrain);
+                room.terrain = terrain;
 
                 room.title = collection["title"];
 
                 room.description = collection["description"];
 
-                 this.roomCollection.ReplaceOne<Room>(x => x.areaId.Equals(areaId) && x.region.Equals(region) && x.area.Equals(area), room);
+                this.roomCollection.ReplaceOne<Room>(x => x.areaId.Equals(areaId) && x.region.Equals(region) && x.area.Equals(area), room);
 
                 return RedirectToAction("Index");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 var rooms = this.roomCollection.Find(x => x.areaId.Equals(areaId) && x.region.Equals(region) && x.area.Equals(area)).FirstOrDefault();
                 return View(rooms);
@@ -97,11 +99,11 @@ namespace MIMWebClient.Controllers.Admin.Room
         {
             try
             {
-                this.itemCollection.InsertOne(model);                
+                this.itemCollection.InsertOne(model);
             }
             catch (Exception e)
             {
-                 
+
             }
         }
 
@@ -109,20 +111,22 @@ namespace MIMWebClient.Controllers.Admin.Room
         [HttpGet]
         public ActionResult Create()
         {
-           var pageModel = new ToPage();
+            var pageModel = new ToPage();
 
             var itemList = this.itemCollection.Find(_ => true).ToList();
 
             pageModel.itemSelect = itemList;
+
+
 
             return this.View(pageModel);
         }
 
         // POST: Default/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Room newRoom)
         {
-
+            this.roomCollection.InsertOne(newRoom);
             if (ModelState.IsValid)
             {
 

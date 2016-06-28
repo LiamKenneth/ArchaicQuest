@@ -33,6 +33,7 @@ namespace MIMWebClient.Core.Room
         public enum Terrain
         {
             Inside, //no weather
+            City,
             Field,
             Forest,
             Hills,

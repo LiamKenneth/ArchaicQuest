@@ -350,7 +350,6 @@
     <Content Include="Views\Room\Index.cshtml" />
     <Content Include="Views\Room\Details.cshtml" />
     <Content Include="Views\Room\Edit.cshtml" />
-    <Content Include="Views\Room\Create1.cshtml" />
     <Content Include="Views\Room\Create.cshtml" />
     <Content Include="UI\Css\Sass\builder.scss" />
   </ItemGroup>

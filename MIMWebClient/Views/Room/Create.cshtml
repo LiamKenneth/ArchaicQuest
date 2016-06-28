@@ -58,7 +58,7 @@
         </div>
         <h2>Items in Room</h2>
 
-
+        <p>None</p>
 
         <div class="row">
             <!-- ITEM -->
@@ -233,7 +233,7 @@
                 </div>
             </div>
         </div>
- 
+
 
         <!-- descriptions -->
         <!-- item description look -->
@@ -306,8 +306,8 @@
     </div>
 
 
-        @Html.ActionLink("Back to List", "Index")
-                  @section Scripts {
+    @Html.ActionLink("Back to List", "Index")
+                            @section Scripts {
                                 @Scripts.Render("~/bundles/jqueryval")
 
                                 <script>
@@ -335,7 +335,9 @@
                                             }
                                         };
 
-
+                                        /*
+                                            Push item data to an array and display under added Items
+                                         */
 
                                         $.ajax({
                                             type: "POST",
