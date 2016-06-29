@@ -58,33 +58,75 @@
         </div>
 
         <div class="row">
-            <h2>Exits</h2>
-            <div class="form-group">
-                <div class="col-md-3">
-                    @Html.LabelFor(model => model.exitModel.name)
-                    @Html.EditorFor(model => model.exitModel.name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.exitModel.name, "", new { @class = "text-danger" })
-                </div>
+            <div class="col-md-12">
+                <h2 class="page-header">Exits</h2>
+                <p>Exits must have a name and can only be North, East, South, West, Up and Down. Double Check Region and Area Spelling. AreaId should be generated dynamically.</p>
+             
+                <a id="js-addExit-btn" href="javascript:void(0)" class="btn btn-sm btn-success">Add new exit</a>
+                <br />
+                <br />
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Region</th>
+                            <th>Area</th>
+                            <th>AreaId</th>
+                        </tr>
+                    </thead>
+                    <tbody id="js-exit-table"></tbody>
+                </table>
 
-                <div class="col-md-3">
-                    @Html.LabelFor(model => model.exitModel.region, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.exitModel.region, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.exitModel.region, "", new { @class = "text-danger" })
-</div>
-                <div class="col-md-3">
-                    @Html.LabelFor(model => model.exitModel.area)
-                    @Html.EditorFor(model => model.exitModel.area, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.exitModel.area, "", new { @class = "text-danger" })
-                    </div>
-
-                <div class="col-md-3">
-                    @Html.LabelFor(model => model.exitModel.areaId)
-                    @Html.EditorFor(model => model.exitModel.areaId, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.exitModel.areaId, "", new { @class = "text-danger" })
-                </div>
                 </div>
             </div>
-      
+        <div class="row">
+            <div id="js-addExit" style="display:none;">
+                
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.exitModel.name)
+                            @Html.EditorFor(model => model.exitModel.name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.exitModel.name, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.exitModel.region, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.exitModel.region, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.exitModel.region, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.exitModel.area)
+                            @Html.EditorFor(model => model.exitModel.area, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.exitModel.area, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.exitModel.areaId)
+                            @Html.EditorFor(model => model.exitModel.areaId, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.exitModel.areaId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+             
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.exitModel.locked)
+                            @Html.CheckBoxFor(model => model.exitModel.locked)
+                            @Html.ValidationMessageFor(model => model.exitModel.locked, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.exitModel.keyId)
+                            @Html.EditorFor(model => model.exitModel.keyId, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.exitModel.keyId, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+                    
+                    <a id="js-addExit-save" href="javascript:void(0)" class="btn btn-success">Add exit</a>
+                </div>
+        </div>
+
 
         <h2>Items in Room</h2>
 
@@ -111,6 +153,7 @@
                     </select>
 
                     <a href="javascript:void(0)">Add Item</a>
+                    <a href="javascript:void(0)">Add a new Item</a>
                 </div>
             </div>
         </div>
@@ -339,6 +382,57 @@
     @Html.ActionLink("Back to List", "Index")
                             @section Scripts {
                                 @Scripts.Render("~/bundles/jqueryval")
+
+                                <script>
+                                    $(function () {
+                                        console.log("Loaded");
+
+                                        //Add a new exit
+                                        $("#js-addExit-btn").click(function () {
+
+                                            console.log("Exit add button click");
+                                            console.log("addExit is it visible: " + $('#js-addExit').is(":visible"));
+                                            //Show / hide hidden Exit fields
+
+                                            $("#js-addExit").toggle();
+
+
+                                        });
+
+                                        var exitsArray = [];
+
+                                        //add exit to array and to table
+                                        $("#js-addExit-save").click(function () {
+
+
+                                            var exitData = {
+                                                name: $("#exitModel_name").val(),
+                                                region: $("#exitModel_region").val(),
+                                                area: $("#exitModel_area").val(),
+                                                areaId: $("#exitModel_areaId").val(),
+                                            }
+
+                                            exitsArray.push(exitData);
+
+                                            var exitRow = '<tr class="js-exit-row"><td class="js-exit-name">' + exitData.name + '</td><td class="js-exit-Region">' + exitData.region + '</td><td class="js-exit-Area">' + exitData.area + '</td><td class="js-exit-AreaId">' + exitData.areaId + '</td></tr>';
+
+
+
+                                            $("#js-exit-table").append(exitRow);
+
+                                            $("#js-addExit").hide();
+
+                                            //reset fields and hide Add exit section
+                                            $("#exitModel_name").val('');
+                                            $("#exitModel_region").val('');
+                                            $("#exitModel_area").val('');
+                                            $("#exitModel_areaId").val('');
+
+
+
+                                        });
+                                    });
+                                </script>
 
                                 <script>
                                     $("#js-AddItem").click(function () {
