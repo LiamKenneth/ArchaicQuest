@@ -116,23 +116,17 @@ namespace MIMWebClient.Controllers.Admin.Room
             var pageModel = new ToPage();
 
             var itemList = this.itemCollection.Find(_ => true).ToList();
+
             pageModel.itemModel.itemFlags = new List<Item.ItemFlags>();
-            pageModel.itemModel.itemFlags.Add(Item.ItemFlags.antievil);
-            pageModel.itemModel.itemFlags.Add(Item.ItemFlags.antigood);
-            pageModel.itemModel.itemFlags.Add(Item.ItemFlags.antineutral);
-            pageModel.itemModel.itemFlags.Add(Item.ItemFlags.bless);
-            pageModel.itemModel.itemFlags.Add(Item.ItemFlags.container);
-            pageModel.itemModel.itemFlags.Add(Item.ItemFlags.dark);
-            pageModel.itemModel.itemFlags.Add(Item.ItemFlags.equipable);
-            pageModel.itemModel.itemFlags.Add(Item.ItemFlags.evil);
-            pageModel.itemModel.itemFlags.Add(Item.ItemFlags.glow);
-            pageModel.itemModel.itemFlags.Add(Item.ItemFlags.hidden);
-            pageModel.itemModel.itemFlags.Add(Item.ItemFlags.hum);
-            pageModel.itemModel.itemFlags.Add(Item.ItemFlags.invis);
-            pageModel.itemModel.itemFlags.Add(Item.ItemFlags.locked);
-            pageModel.itemModel.itemFlags.Add(Item.ItemFlags.nodrop);
-            pageModel.itemModel.itemFlags.Add(Item.ItemFlags.nolocate);
-            pageModel.itemModel.itemFlags.Add(Item.ItemFlags.noremove);
+
+            var itemFlagValues = Enum.GetValues(typeof(Item.ItemFlags)).Cast<Item.ItemFlags>();
+            pageModel.itemModel.itemFlags.AddRange(itemFlagValues);
+
+            pageModel.itemModel.damageType = new List<Item.DamageType>();
+
+            var damageTypeValues = Enum.GetValues(typeof(Item.DamageType)).Cast<Item.DamageType>();
+            pageModel.itemModel.damageType.AddRange(damageTypeValues);
+
 
             pageModel.itemSelect = itemList;
 

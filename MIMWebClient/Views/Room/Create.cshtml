@@ -272,7 +272,7 @@
             <div class="row">
                 <!-- item min usage level -->
                 <div class="form-group">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         @Html.LabelFor(model => model.itemModel.stats.minUsageLevel)
 
                         @Html.EditorFor(model => model.itemModel.stats.minUsageLevel, new { htmlAttributes = new { @class = "form-control" } })
@@ -282,11 +282,18 @@
 
                     <!-- item Equipable -->
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         @Html.LabelFor(model => model.itemModel.equipable)
 
                         @Html.CheckBoxFor(model => model.itemModel.equipable, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.itemModel.equipable, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.itemModel.container)
+
+                        @Html.CheckBoxFor(model => model.itemModel.container, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.itemModel.container, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -322,7 +329,7 @@
                         <div class="row">
                             @{
 
-                                foreach (var item in Enum.GetValues(Model.itemModel.damageType.GetType()))
+                                foreach (var item in Model.itemModel.damageType)
                                 {
                                     <div class="col-xs-3">
                                         <div class="checkbox">
@@ -548,10 +555,10 @@
                                             type: $("#itemModel_type").val(),
                                             location: "room",
                                             equipable: $("#itemModel_equipable").val(),
-                                            slot: $("#itemModel_eqSlot option:selected").text(),
+                                            slot: $("#itemModel_eqSlot option:selected").val(),
                                             name: $("#itemModel_name").val(),
+                                            container: $("#itemModel_container").val(),
                                             actions: {
-                                                container: false,
                                                 wield: "wield"
                                             },
                                             description: {
@@ -566,7 +573,8 @@
                                                 damMin: $("#itemModel_stats_damMin").val(),
                                                 damMax: $("#itemModel_stats_damMax").val()
                                             },
-                                            itemFlags: itemFlagValues
+                                            itemFlags: itemFlagValues,
+                                            damageType: itemDamTypeValues
                                         };
 
                                         /*

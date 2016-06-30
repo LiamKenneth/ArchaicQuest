@@ -159,7 +159,7 @@ namespace MIMWebClient.Core.Item
         }
 
         public List<Item> containerItems;
-        public DamageType damageType { get; set; }
+        public List<DamageType> damageType { get; set; }
         public ArmourType armourType { get; set; }
         public List<ItemFlags> itemFlags { get; set; }
         public ItemType type { get; set; }
