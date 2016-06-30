@@ -137,9 +137,8 @@ namespace MIMWebClient.Core.Events
                 {
 
                     //look in room
-                    var foundContainer = (nthContainer == -1) ? roomItems.Find(x => x.name.ToLower().Contains(comntainerToFind) && x.actions
-                      .container == true)
-                                          : roomItems.FindAll(x => x.name.ToLower().Contains(comntainerToFind) && x.actions
+                    var foundContainer = (nthContainer == -1) ? roomItems.Find(x => x.name.ToLower().Contains(comntainerToFind) && x.container == true)
+                                          : roomItems.FindAll(x => x.name.ToLower().Contains(comntainerToFind) && x
                       .container == true).Skip(nthContainer - 1).FirstOrDefault();
 
 

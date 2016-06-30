@@ -196,7 +196,7 @@ namespace MIMWebClient.Core.Events
 
                     if(keyword.Equals("look in", StringComparison.InvariantCultureIgnoreCase)) {
 
-                        if (itemDescription.actions.container == true)
+                        if (itemDescription.container == true)
                         {
                             if (itemDescription.containerItems.Count > 0)
                             {

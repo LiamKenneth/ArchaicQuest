@@ -300,11 +300,11 @@
                         <div class="row">
                             @{
 
-                                foreach (var item in Enum.GetValues(Model.itemModel.itemFlags.GetType()))
+                                foreach (var item in Model.itemModel.itemFlags)
                                 {
                                     <div class="col-xs-3">
                                         <div class="checkbox">
-                                            <input type="checkbox" name="SelectedSources" value="@item">@item
+                                            <input class="js-itemFlags" type="checkbox" name="SelectedSources" value="@item">@item
                                         </div>
                                     </div>
                                 }
@@ -326,7 +326,7 @@
                                 {
                                     <div class="col-xs-3">
                                         <div class="checkbox">
-                                            <input type="checkbox" name="SelectedSources" value="@item">@item
+                                            <input class="js-damTypeFlags" type="checkbox" name="SelectedSources" value="@item">@item
                                         </div>
                                     </div>
                                 }
@@ -467,27 +467,106 @@
 
                                     //add a new item
                                     $("#js-AddItem").click(function() {
-                                        alert("Handler for .click() called.");
+                                   
+                       //var itemRow = "<tr><td>" + $("#itemModel_name").val() + "</td>" +
+                       //"<td>" + $("#itemModel_type").val() + "</td>" +
+                       //"<td>" + $("#itemModel_stats_damMin").val() + "</td>" +
+                       //"<td>" + $("#itemModel_stats_damMax").val() + "</td>" +
+                       //"<td>" + $("#itemModel_stats_damRoll").val() + "</td>" +
+                       //"<td>" + $("#itemModel_attackType option:selected").text() + "</td>" +
+                       //"<td>" + $("#itemModel_weaponType option:selected").text() + "</td>" +
+                       //"<td>" + $("#itemModel_eqSlot option:selected").text() + "</td>" +
+                       //"<td>" + $("#itemModel_stats_minUsageLevel").val() + "</td>" +
+                       //"<td>" + $("#itemModel_equipable").val() + "</td>" +
+                       //"<td>" + itemFlagValues + "</td>" +
+                       //"<td>" + itemDamTypeValues + "</td>" +
+                       //"<td>" + $("#itemModel_description_look").val() + "</td>" +
+                       //"<td>" + $("#itemModel_description_exam").val() + "</td>" +
+                       //"<td>" + $("#itemModel_description_room").val() + "</td>" +
+                       //"<td>" + $("#itemModel_description_taste").val() + "</td>" +
+                       //"<td>" + $("#itemModel_description_touch").val() + "</td>" +
+                                        //"<td>" + $("#itemModel_description_smell").val() + "</td></tr>";
+
+                                        //{
+                                        //    "_id" : ObjectId("5774e50ffa58fa4f84b6a5e0"),
+                                        //    "name" : "test Sword",
+                                        //    "keywords" : null,
+                                        //    "locked" : false,
+                                        //    "keyValue" : null,
+                                        //    "hidden" : false,
+                                        //    "location" : "room",
+                                        //    "equipable" : true,
+                                        //    "slot" : "RightHand",
+                                        //    "actions" : {
+                                        //        "container" : false,
+                                        //        "wield" : "wield"
+                                        //    },
+                                        //    "description" : {
+                                        //        "taste" : null,
+                                        //        "touch" : null,
+                                        //        "smell" : null,
+                                        //        "look" : "You look at a short sword",
+                                        //        "exam" : "You look closely at a short sword",
+                                        //        "room" : "A short Sword is here."
+                                        //    },
+                                        //    "stats" : {
+                                        //        "damMin" : 1,
+                                        //        "damMax" : 5,
+                                        //        "damRoll" : 0,
+                                        //        "poisoned" : false,
+                                        //        "flaming" : false,
+                                        //        "frozen" : false,
+                                        //        "acid" : false,
+                                        //        "lightning" : false,
+                                        //        "cursed" : false,
+                                        //        "blessed" : false,
+                                        //        "invisible" : false,
+                                        //        "enchantedLevel" : 0,
+                                        //        "minUsageLevel" : 0,
+                                        //        "worth" : 0
+                                        //    },
+                                        //    "containerItems" : null,
+                                        //    "damageType" : 0,
+                                        //    "armourType" : 0,
+                                        //    "itemFlags" : 0,
+                                        //    "type" : 0,
+                                        //    "attackType" : 0,
+                                        //    "eqSlot" : 0,
+                                        //    "weaponType" : 0,
+                                        //    "weaponSpeed" : 0
+                                        //}
+                                        var itemFlagValues = $('.js-itemFlags:checked').map(function () {
+                                            return this.value;
+                                        }).get();
+
+                                        var itemDamTypeValues = $('.js-damTypeFlags:checked').map(function () {
+                                            return this.value;
+                                        }).get();
+
 
                                         var data = {
-                                            type: "object",
+                                            type: $("#itemModel_type").val(),
                                             location: "room",
-                                            equipable: true,
-                                            slot: "RightHand",
-                                            name: "test Sword",
+                                            equipable: $("#itemModel_equipable").val(),
+                                            slot: $("#itemModel_eqSlot option:selected").text(),
+                                            name: $("#itemModel_name").val(),
                                             actions: {
                                                 container: false,
                                                 wield: "wield"
                                             },
                                             description: {
-                                                look: "You look at a short sword",
-                                                exam: "You look closely at a short sword",
-                                                room: "A short Sword is here."
+                                                look: $("#itemModel_description_look").val(),
+                                                exam: $("#itemModel_description_exam").val(),
+                                                room: $("#itemModel_description_room").val(),
+                                                taste: $("#itemModel_description_taste").val(),
+                                                touch: $("#itemModel_description_touch").val(),
+                                                smell: $("#itemModel_description_smell").val(),
                                             },
                                             stats: {
-                                                damMin: 1,
-                                                damMax: 5
-                                            }
+                                                damMin: $("#itemModel_stats_damMin").val(),
+                                                damMax: $("#itemModel_stats_damMax").val()
+                                            },
+                                            itemFlags: itemFlagValues
                                         };
 
                                         /*
@@ -502,34 +581,31 @@
                                             data: data,
                                             success: function(d) {
 
-                                                if (d.success) {
-
-
-                                                  alert("yay")
-                                                }
                                             },
                                             error: function(xhr, textStatus, errorThrown) {
                                                 // TODO: Show error
                                             },
-                                            complete: function() {
-                                                var itemRow = "<tr><td>" + $("#itemModel_name").val() + "</td>" +
-                                                      "<td>" + $("#itemModel_type").val() + "</td>" +
-                                                      "<td>" + $("#itemModel_stats_damMin").val() + "</td>" +
-                                                      "<td>" + $("#itemModel_stats_damMax").val() + "</td>" +
+                                            complete: function () {
+
+                                              
+                                                var itemRow = "<tr><td>" + data.name + "</td>" +
+                                                      "<td>" + data.type + "</td>" +
+                                                      "<td>" + data.stats.damMin + "</td>" +
+                                                      "<td>" + data.stats.damMax + "</td>" +
                                                       "<td>" + $("#itemModel_stats_damRoll").val() + "</td>" +
-                                                      "<td>" + $("#itemModel_attackType").val() + "</td>" +
-                                                      "<td>" + $("#itemModel_weaponType").val() + "</td>" +
-                                                      "<td>" + $("#itemModel_eqSlot").val() + "</td>" +
+                                                      "<td>" + $("#itemModel_attackType option:selected").text() + "</td>" +
+                                                      "<td>" + $("#itemModel_weaponType option:selected").text() + "</td>" +
+                                                      "<td>" + $("#itemModel_eqSlot option:selected").text() + "</td>" +
                                                       "<td>" + $("#itemModel_stats_minUsageLevel").val() + "</td>" +
-                                                      "<td>" + $("#itemModel_equipable").val() + "</td>" +
-                                                      "<td> Flags</td>" +
-                                                      "<td>Dam Type</td>" +
-                                                      "<td>" + $("#itemModel_description_look").val() + "</td>" +
-                                                      "<td>" + $("#itemModel_description_exam").val() + "</td>" +
-                                                      "<td>" + $("#itemModel_description_room").val() + "</td>" +
-                                                      "<td>" + $("#itemModel_description_taste").val() + "</td>" +
-                                                      "<td>" + $("#itemModel_description_touch").val() + "</td>" +
-                                                      "<td>" + $("#itemModel_description_smell").val() + "</td></tr>";
+                                                      "<td>" + data.equipable + "</td>" +
+                                                      "<td>" + itemFlagValues + "</td>" +
+                                                      "<td>" + itemDamTypeValues + "</td>" +
+                                                      "<td>" + data.description.look + "</td>" +
+                                                      "<td>" + data.description.exam + "</td>" +
+                                                      "<td>" + data.description.room + "</td>" +
+                                                      "<td>" + data.description.taste + "</td>" +
+                                                      "<td>" + data.description.touch + "</td>" +
+                                                      "<td>" + data.description.smell + "</td></tr>";
 
                                                 $("#js-item-table").append(itemRow);
                                             }

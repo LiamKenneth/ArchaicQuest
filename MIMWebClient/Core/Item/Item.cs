@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace MIMWebClient.Core.Item
 {
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using System.Runtime.Serialization;
 
     public class Item : BaseItem
@@ -72,7 +73,7 @@ namespace MIMWebClient.Core.Item
 
         public enum EqSlot
         {
-            Floating,
+            Floating = 1,
             Head,
             Face,
             Eyes,
@@ -93,7 +94,7 @@ namespace MIMWebClient.Core.Item
 
         public enum AttackType
         {
-            Slash,
+            Slash = 1,
             Slice,
             Stab,
             Thrust,
@@ -129,7 +130,7 @@ namespace MIMWebClient.Core.Item
 
         public enum WeaponType
         {
-            Axe,
+            Axe = 1,
             Dagger,
             Exotic,
             Flail,
@@ -145,13 +146,13 @@ namespace MIMWebClient.Core.Item
 
         public enum ArmourType
         {
-            Cloth,
+            Cloth = 1,
             Leather,
-            [Description("Studded Leather")]
+            [Display(Name = "Studded Leather")]
             StuddedLeather,
-            [Description("Chain Mail")]
+            [Display(Name = "Chain Mail")]
             ChainMail,
-            [Description("Plate Mail")]
+            [Display(Name = "Plate Mail")]
             PlateMail,
 
 
@@ -160,7 +161,7 @@ namespace MIMWebClient.Core.Item
         public List<Item> containerItems;
         public DamageType damageType { get; set; }
         public ArmourType armourType { get; set; }
-        public ItemFlags itemFlags { get; set; }
+        public List<ItemFlags> itemFlags { get; set; }
         public ItemType type { get; set; }
         public AttackType attackType { get; set; }
         public EqSlot eqSlot { get; set; }

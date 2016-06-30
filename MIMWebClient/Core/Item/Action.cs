@@ -8,7 +8,7 @@ namespace MIMWebClient.Core.Item
 {
    public class Action
     {
-        public bool container { get; set; }
+       
         public string wield { get; set; }
     }
 }

@@ -15,7 +15,6 @@ namespace MIMWebClient.Core.Item
 
         public string name { get; set; }
         public List<string> keywords { get; set; }
-        public bool locked { get; set; }
         public int? keyValue { get; set; }
         public bool hidden { get; set; }
         public string location { get; set; }
@@ -25,6 +24,8 @@ namespace MIMWebClient.Core.Item
         public Action actions { get; set; }
         public Description description { get; set; }
         public Stats stats { get; set; }
+        public bool container { get; set; }
+        public bool locked { get; set; }
 
     }
 }
