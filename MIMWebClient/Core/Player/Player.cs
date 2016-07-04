@@ -193,10 +193,21 @@ namespace MIMWebClient.Core.PlayerSetup
         //NPC Properties
         [BsonElement("ng")]
         public bool Greet;
+        //NPC Properties
+
+        [BsonElement("ngm")]
+        public string GreetMessage;
 
         //NPC Properties
         [BsonElement("ns")]
         public bool Shop;
+
+        [BsonElement("nsm")]
+        public string sellerMessage;
+
+        //NPC Properties
+        [BsonElement("nsi")]
+        public List<Item> itemsToSell;
 
         //NPC Properties
         [BsonElement("nt")]

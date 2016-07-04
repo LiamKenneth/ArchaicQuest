@@ -7,6 +7,6 @@ namespace MIMWebClient.Core.Mob.Events
 {
     public class Aggro
     {
-
+        
     }
 }
