@@ -108,12 +108,12 @@ namespace MIMWebClient.Core.Events
             }
 
             Item foundItem = null;
-            Mob foundMob = null;
+            Player foundMob = null;
             Player foundPlayer = null;
 
             List<Item> roomItems = room.items;
             List<Item> playerInv = player.Inventory;
-            List<Mob> mobList = room.mobs;
+            List<Player> mobList = room.mobs;
             List<Player> playerList = room.players;
 
             #region find Item searching Room and Player Inventory

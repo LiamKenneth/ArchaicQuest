@@ -130,6 +130,21 @@ namespace MIMWebClient.Core.Room
                         var roomDescription = LoadRoom.DisplayRoom(getNewRoom, player.Name);
 
                         HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(roomDescription);
+
+                        //NPC Enter event here
+                        foreach (var mob in getNewRoom.mobs)
+                        {
+
+                            if (mob.Greet)
+                            {
+                                Event.ParseCommand("greet", player, mob, getNewRoom);
+                            }
+                            else
+                            {
+                                //mob might be aggro
+                            }
+
+                        }
                     }
                 }
                 catch (Exception e)

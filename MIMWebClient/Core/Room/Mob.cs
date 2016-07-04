@@ -19,7 +19,7 @@ namespace MIMWebClient.Core.Room
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId _id { get; set; }
 
-        [BsonElement("hid")]
+        [BsonElement("hidd")]
         public string HubGuid;
 
         [BsonElement("ty")]

@@ -228,6 +228,10 @@
     <Compile Include="Core\Item\Description.cs" />
     <Compile Include="Core\Item\Item.cs" />
     <Compile Include="Core\Item\Stats.cs" />
+    <Compile Include="Core\Mob\Event.cs" />
+    <Compile Include="Core\Mob\Events\Aggro.cs" />
+    <Compile Include="Core\Mob\Events\Greeting.cs" />
+    <Compile Include="Core\Mob\Npc.cs" />
     <Compile Include="Core\PlayerSetup\PlayerClass.cs" />
     <Compile Include="Core\PlayerSetup\PlayerLocation.cs" />
     <Compile Include="Core\PlayerSetup\PlayerRace.cs" />

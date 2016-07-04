@@ -68,7 +68,7 @@ namespace MIMWebClient.Core.Room
 
         public List<PlayerSetup.Player> players { get; set; }
         public List<string> fighting { get; set; }
-        public List<Mob> mobs { get; set; }
+        public List<PlayerSetup.Player> mobs { get; set; }
          public List<Item.Item> items { get; set; }
          public List<PlayerSetup.Player> corpses { get; set; }
 

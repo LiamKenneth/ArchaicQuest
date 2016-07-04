@@ -174,6 +174,38 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("ari")]
         public int AreaId;
 
+        //NPC Properties
+        [BsonElement("ne")]
+        public List<string> Emotes;
+
+        //NPC Properties
+        [BsonElement("nid")]
+        public Guid NPCId;
+
+        //NPC Properties
+        [BsonElement("nr")]
+        public bool Roam;
+
+        //NPC Properties
+        [BsonElement("na")]
+        public bool Aggro;
+
+        //NPC Properties
+        [BsonElement("ng")]
+        public bool Greet;
+
+        //NPC Properties
+        [BsonElement("ns")]
+        public bool Shop;
+
+        //NPC Properties
+        [BsonElement("nt")]
+        public bool Trainer;
+
+        //NPC Properties
+        [BsonElement("ngu")]
+        public bool Guard;
+
         public Player(
             string id,
             string name,
