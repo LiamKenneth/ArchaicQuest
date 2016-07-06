@@ -410,6 +410,7 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Create" class="btn btn-default" />
+                    <a href="#">Add Room</a>
                 </div>
             </div>
         </div>
@@ -616,6 +617,30 @@
                                                       "<td>" + data.description.smell + "</td></tr>";
 
                                                 $("#js-item-table").append(itemRow);
+                                            }
+                                        });
+
+                                    });
+                                </script>
+
+                                <script>
+                                    $("#js-AddItem").click(function () {
+
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "/Room/create",
+                                            content: "application/json; charset=utf-8",
+                                            dataType: "json",
+                                            data: room,
+                                            success: function (d) {
+
+                                            },
+                                            error: function (xhr, textStatus, errorThrown) {
+                                                // TODO: Show error
+                                            },
+                                            complete: function () {
+
+ 
                                             }
                                         });
 

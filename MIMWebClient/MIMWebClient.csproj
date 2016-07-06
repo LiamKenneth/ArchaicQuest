@@ -300,6 +300,7 @@
     <Content Include="motd" />
     <Content Include="app.config" />
     <Content Include="LICENSE.md" />
+    <Content Include="Database\room.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
