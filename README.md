@@ -1,5 +1,5 @@
 #[M]edieval [I]mmersive [M]ulti User Dungeon    
-A text based MMORPG inspired by the [MUDs of the 90s](https://en.wikipedia.org/wiki/DikuMUD) built in C# using ASP.net MVC, SignalR and MongoDB. Unlike a traditional MUD MIM runs in the browser instead of Telnet. Telnet support could be added so make a pull request :WINK: 
+A text based MMORPG inspired by the [MUDs of the 90s](https://en.wikipedia.org/wiki/DikuMUD) built in C# using ASP.net MVC, SignalR and MongoDB. Unlike a traditional MUD MIM runs in the browser instead of Telnet. Telnet support could be added so make a pull request :wink: 
 
 ##Prerequisities
 1. The project is using C# 6 so you will need Visual Studio 2015 or add the Roslyn compiler to [Visual Studio 2013](http://stackoverflow.com/a/33848006)
