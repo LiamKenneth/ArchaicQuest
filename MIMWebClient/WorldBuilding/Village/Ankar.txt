@@ -9,27 +9,59 @@ Buildings
 -Village Hall
 -Church/temple
 
-Blacksmith
-Farms
-Homes
+-Blacksmith
+-Farms
+-Homes
 
 Potential Layout
 ---------
+                                                                                                  
+					                                                                                                                                              aNKAR wOODS          cAVE       aNKAR wOODS
+						                                                                                                                                              |                 |           |
+					    Stable--------Tavern       General Store                                                                                                      |                 |           |
+					       |		    |              |                                                          Ankar Woods----Ankar Woods----Ankar Woods--------Ankar Woods-----aNKAR wOODS---anKAR wOODS
+					Square Walk-----Square Walk---Square Walk-----Black Smith                                                      |                 |                |
+							|			 |              |                                                                          |                 |                |
+							|			 |              |                                                                     Ankar Woods-------Ankar Woods------AnkarWoods-----Cabin---ANkarwoods
+							|	         |              |                       Graveyard-----Graveyard----Graveyard               |                 |               |
+							|		  Village           |                            |                      |                      |                 |               |
+					 Square Walk-------Square------Square WAlk-----Village Hall      |       Church         |                  Ankar Woods-------Ankar Woods-------Ankar woods
+				            |            |              |                            |          |           |                      |
+							|            |              |                         Graveyard-----|----------Graveyard               |
+							|            |    			|		                                |                             Path to the woods
+							|			 |				|                                       |                                  |
+					 Square Walk------Square Walk-------Square Walk-------------Church Road---Church Road                          |
+			  |											|                                                                   Path to the woods
+			  | 	    House			House	     	|             House        House             House                         |
+       		  |	         |                |             |              |             |               |                             |
+          Ankar Lane---Ankar Lane-----Ankar Lane-------Ankar Lane-----Ankar LaNe----Ankar Lane---- Ankar Lane----------------Ankar Lane----ELSEWHERE  
+              |          |                |              |              |            |                 |                           |                                   Crops--crops---crops
+            House      House            House            |             House       House             House                         |                                     |      |       |
+														 |                                                                      fARMERS wALK                            Farm   crops---crops
+                                                      Sea Road                                                                     |                                     |
+														 |                                                                         |                                     |
+														 |	                                                                     fARMERS wALK-----------------------fARMERS Walk------Barn
+													  Sea Road---Sea Road                                                           |                                    |
+													                 |                                                              |                                    |
+																	 |                                                             Farm                        Pasture----Pasture----pasture
+															      Sea Road                                                           |                            |        |          |
+																     |                                                        Crops--Crops--crops              Pasture---Pasture----pasture
+																	 |                                                          |      |      |                   |         |          |
+																	 |                                                         Crops--crops--crops              Pasture---Pasture----pasture
+																    Beach
+																	 |
+																	 |
+																	Sea
+																	
 
-					     
+Village Square
+---------------			
+A large circular stone well is built in the centre of the Square providing
+fresh water for the village. A tall oak tree provides shade for some benches.
+A wooden notice board with overlapping parchment pinned to it lists the latest 
+Ankar News. Towards the north is the Tarven, to the East is the Village Hall
 
-					    Stable--------Tavern       General Store
-					       |		    |              |
-					Square Walk-----Square Walk---Square Walk
-							|			 |	            |                      Graveyard-----Graveyard-----Graveyard
-							|		  Village           |                            |                      |            
-					 Square Walk-------Square------Square WAlk-----Village Hall      |       Church         |            
-							|            |              |                         Graveyard-----|----------Graveyard
-							|            |    			|		                                |
-							|			 |				|                                       |
-					 Square Walk------Square Walk-------Square Walk-------------Church Road---Church Road
-					 
 
-Room Descriptions
------------------
-																											
+Exits
+-----
+North, East, South, West 
