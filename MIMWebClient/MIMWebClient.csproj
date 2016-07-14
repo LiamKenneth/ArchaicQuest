@@ -301,6 +301,7 @@
     <Content Include="app.config" />
     <Content Include="LICENSE.md" />
     <Content Include="Database\room.json" />
+    <Content Include="WorldBuilding\Village\Ankar.txt" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -363,6 +364,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Core\PlayerSetup\Data\Img\Avatar\" />
     <Folder Include="Views\Default\" />
+    <Folder Include="WorldBuilding\City\" />
+    <Folder Include="WorldBuilding\Town\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
