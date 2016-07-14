@@ -1,0 +1,35 @@
+﻿Ankar - Starting Village Idea
+==============================
+
+Buildings
+-----------
+-Tavern/Inn
+- Stable
+-General store
+-Village Hall
+-Church/temple
+
+Blacksmith
+Farms
+Homes
+
+Potential Layout
+---------
+
+					     
+
+					    Stable--------Tavern       General Store
+					       |		    |              |
+					Square Walk-----Square Walk---Square Walk
+							|			 |	            |                      Graveyard-----Graveyard-----Graveyard
+							|		  Village           |                            |                      |            
+					 Square Walk-------Square------Square WAlk-----Village Hall      |       Church         |            
+							|            |              |                         Graveyard-----|----------Graveyard
+							|            |    			|		                                |
+							|			 |				|                                       |
+					 Square Walk------Square Walk-------Square Walk-------------Church Road---Church Road
+					 
+
+Room Descriptions
+-----------------
+																											
