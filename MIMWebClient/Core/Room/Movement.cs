@@ -91,7 +91,7 @@ namespace MIMWebClient.Core.Room
 
         }
 
-        public async static void Move(Player player, Room room, string direction)
+        public  static void Move(Player player, Room room, string direction)
         {
 
             Room roomData = room;
