@@ -15,7 +15,7 @@ namespace MIMWebClient.Core.Events
 
     public static class Save
     {
-        private const string DbServer = "mongodb://localhost:27017";
+        private const string DbServer = "mongodb://testuser:password@ds052968.mlab.com:52968/mimdb";
 
         public static void SavePlayer(Player player)
         {
@@ -28,7 +28,7 @@ namespace MIMWebClient.Core.Events
                 var client = new MongoClient(ConnectionString);
 
                 //Use the MongoClient to access the server
-                var database = client.GetDatabase("MIMDB");
+                var database = client.GetDatabase("mimdb");
 
                 var collection = database.GetCollection<Player>("Player");
 
@@ -49,7 +49,7 @@ namespace MIMWebClient.Core.Events
             var client = new MongoClient(ConnectionString);
 
             //Use the MongoClient to access the server
-            var database = client.GetDatabase("MIMDB");
+            var database = client.GetDatabase("mimdb");
 
             var collection = database.GetCollection<Player>("Player");
 
@@ -68,7 +68,7 @@ namespace MIMWebClient.Core.Events
             var client = new MongoClient(ConnectionString);
 
             //Use the MongoClient to access the server
-            var database = client.GetDatabase("MIMDB");
+            var database = client.GetDatabase("mimdb");
 
             var collection = database.GetCollection<Player>("Player");
 
