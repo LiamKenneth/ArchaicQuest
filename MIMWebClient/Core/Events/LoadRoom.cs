@@ -99,7 +99,7 @@ namespace MIMWebClient.Core.Events
 
 
 
-            string displayRoom = roomTitle + "\r\n" + roomDescription + "\r\n Exits: " + exitList + "\r\n Items: " + itemList + "\r\n " + corpseList + "\r\n" + playerList;
+            string displayRoom = "<p class='roomTitle'>" + roomTitle + "<p> <p class='roomDescription'>" + roomDescription + "</p>  <p class='RoomExits'>Exits: " + exitList + "</p> Items: " + itemList + "\r\n " + corpseList + "\r\n" + playerList;
 
             return displayRoom;
 

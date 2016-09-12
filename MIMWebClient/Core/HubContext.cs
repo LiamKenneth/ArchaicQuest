@@ -133,7 +133,7 @@ namespace MIMWebClient.Core
 
         }
 
-        public static async void Quit(string playerId, Room.Room room)
+        public static void Quit(string playerId, Room.Room room)
         {
 
 
@@ -154,7 +154,7 @@ namespace MIMWebClient.Core
                 SendToClient("See you soon!", playerId);
                 broadcastToRoom(playerData.Name + " has left the realm", room.players, playerId, true);
 
-                await Save.UpdatePlayer(playerData);
+                Save.UpdatePlayer(playerData);
 
                 HubContext.getHubContext.Clients.Client(playerId).quit();
             }

@@ -18,6 +18,16 @@ h1, h2, h3, h4, h5, h6 {margin-top:0; font-size:16px;  font-family: 'Slabo 27px'
 
 #discussion {
        font-size:10px!important;
+
+       .roomTitle {
+           color: #2ecc71;
+    border-bottom: 1px dashed #555;
+    padding-bottom: 5px;
+    }
+
+       .roomExits {
+           color:#999;
+       }
 }
 pre {
     background: #272624;

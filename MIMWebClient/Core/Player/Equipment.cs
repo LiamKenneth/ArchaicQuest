@@ -97,7 +97,7 @@ namespace MIMWebClient.Core.Player
         public static void WearItem(Player player, string itemToWear, bool wield = false)
         {
             var oldPlayer = player;
-            var foundItem = player.Inventory.Find(i => i.name.Contains(itemToWear));
+            var foundItem = player.Inventory.Find(i => i.name.ToLower().Contains(itemToWear.ToLower()));
 
             if (foundItem == null)
             {
@@ -148,7 +148,7 @@ namespace MIMWebClient.Core.Player
         public static void RemoveItem(Player player, string itemToRemove, bool replaceWithOtherEQ = false, bool unwield = false)
         {
             var oldPlayer = player;
-            var foundItem = player.Inventory.Find(i => i.name.Contains(itemToRemove) && i.location.Equals("worn"));
+            var foundItem = player.Inventory.Find(i => i.name.ToLower().Contains(itemToRemove.ToLower()) && i.location.Equals("worn"));
 
             if (foundItem == null)
             {

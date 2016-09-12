@@ -41,7 +41,7 @@ namespace MIMWebClient.Core.Events
           
         }
 
-        public static async Task UpdatePlayer(Player player)
+        public static void UpdatePlayer(Player player)
         {
             const string ConnectionString = DbServer;
 
@@ -53,7 +53,7 @@ namespace MIMWebClient.Core.Events
 
             var collection = database.GetCollection<Player>("Player");
 
-            await collection.ReplaceOneAsync<Player>(x => x._id == player._id, player);
+             collection.ReplaceOne<Player>(x => x._id == player._id, player);
 
             HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("The gods take note of your progress");
 
