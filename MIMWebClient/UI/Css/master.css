@@ -16,7 +16,19 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Slabo 27px", serif !important; }
 
 #discussion {
-  font-size: 10px !important; }
+  font-size: 15px !important; }
+  #discussion p {
+    max-width: 560px; }
+  #discussion .roomTitle {
+    color: #2ecc71;
+    border-bottom: 1px dashed #555;
+    padding-bottom: 5px; }
+  #discussion .RoomExits {
+    color: #2ecc71; }
+  #discussion .roomItems {
+    margin: 0; }
+  #discussion .roomItems:first-letter {
+    text-transform: uppercase; }
 
 pre {
   background: #272624;

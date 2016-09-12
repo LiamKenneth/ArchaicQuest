@@ -66,7 +66,10 @@ namespace MIMWebClient.Core.Events
             var itemList = string.Empty;
             foreach (var item in room.items)
             {
-                itemList += item.name + " ";
+                var result = AvsAnLib.AvsAn.Query(item.name);
+                string article = result.Article;
+
+                itemList += "<p class='roomItems'>" + article + " " + item.name + " is on the floor here.<p>";
             }
 
             var playerList = string.Empty;
@@ -99,7 +102,7 @@ namespace MIMWebClient.Core.Events
 
 
 
-            string displayRoom = "<p class='roomTitle'>" + roomTitle + "<p> <p class='roomDescription'>" + roomDescription + "</p>  <p class='RoomExits'>Exits: " + exitList + "</p> Items: " + itemList + "\r\n " + corpseList + "\r\n" + playerList;
+            string displayRoom = "<p class='roomTitle'>" + roomTitle + "<p><p class='roomDescription'>" + roomDescription + "</p> <p class='RoomExits'>[ Exits: " + exitList.ToLower() + " ]</p>" + itemList + corpseList + "\r\n" + playerList;
 
             return displayRoom;
 

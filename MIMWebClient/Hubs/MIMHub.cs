@@ -38,7 +38,7 @@ namespace MIMWebClient.Hubs
             _PlayerCache.TryGetValue(playerGuid, out PlayerData);
             _AreaCache.TryGetValue(PlayerData.AreaId, out RoomData);
 
-            HubContext.SendToClient(message, PlayerData.HubGuid);
+            HubContext.SendToClient("<p style='color:#999'>" + message + "<p/>", PlayerData.HubGuid);
 
             Command.ParseCommand(message, PlayerData, RoomData);
 

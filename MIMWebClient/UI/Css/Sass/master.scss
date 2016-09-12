@@ -17,7 +17,9 @@ body {
 h1, h2, h3, h4, h5, h6 {margin-top:0; font-size:16px;  font-family: 'Slabo 27px', serif!important;}
 
 #discussion {
-       font-size:10px!important;
+       font-size:15px!important;
+
+       p{ max-width:560px;}
 
        .roomTitle {
            color: #2ecc71;
@@ -25,9 +27,15 @@ h1, h2, h3, h4, h5, h6 {margin-top:0; font-size:16px;  font-family: 'Slabo 27px'
     padding-bottom: 5px;
     }
 
-       .roomExits {
-           color:#999;
+       .RoomExits {
+           color:#2ecc71;
        }
+
+       .roomItems {margin:0;}
+       .roomItems:first-letter {
+ text-transform:uppercase;
+}
+
 }
 pre {
     background: #272624;
@@ -35,6 +43,7 @@ pre {
     border: 0 none;
     padding: 10px;
       font-size:10px!important;
+     
 }
 
 .modal-content {
