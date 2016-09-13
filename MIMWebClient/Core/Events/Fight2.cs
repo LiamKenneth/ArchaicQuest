@@ -142,6 +142,11 @@ namespace MIMWebClient.Core.Events
         {
             Player target = room.players.Find(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase));
 
+            if (true)
+            {
+
+            }
+
             return target;
         }
 

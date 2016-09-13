@@ -119,13 +119,20 @@ pre {
   margin-bottom: 5px; }
   .stat .tnl {
     height: 15px; }
+  .window-inner {
+    padding:15px;
+    border: 2px solid #525045;
+box-shadow: inset 0 0 15px 2px #000;
 
+}
 .window {
   padding: 15px;
   border: 4px solid #525045;
   box-shadow: inset 0 0 15px 2px #000;
-  font-size: 10px !important; }
+  font-size: 14px !important; }
 
 .form-control {
   margin-bottom: 10px; }
+
+
 

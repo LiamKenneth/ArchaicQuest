@@ -25,5 +25,6 @@ namespace MIM.Test.Core.Player
             Assert.That(pc.Inventory.Count, Is.EqualTo(0));
 
         }
+
     }
 }

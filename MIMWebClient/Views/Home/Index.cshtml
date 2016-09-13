@@ -13,197 +13,194 @@
     <div id="score" style="display: table-cell; width: 100%;" class="window">
 
         <div class="js-score" style="overflow-y: scroll; max-height: 40vh;">
-            <h3 id="player-name" class="text-center">Malleus</h3>
+            <h3 id="player-name" class="text-center">Malleus - </h3>
+
+            <p class="text-center"><span id="player-gender"></span> <span id="player-race"></span> <span id="player-class"></span> Level <span id="player-level"></span></p>
+            <p class="text-center">HP <span id="player-hp"></span>/<span id="player-max-hp"></span> Mana <span id="player-mana"></span>/<span id="player-max-mana"></span> Fatigue <span id="player-end"></span>/<span id="player-max-end"></span> </p>
+
             <div class="container">
                 <div class="row">
-                    <div class="pull-left" style="margin-right: 20px;">
-                        <table>
-                            <tr>
-                                <td>Level</td>
-                                <td>: <span id="player-level"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Race</td>
-                                <td>: <span id="player-race"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Class</td>
-                                <td>: <span id="player-class"></span></td>
-                            </tr>
-                            @*<tr>
-                                                <td>Reclass</td>
-                                                <td>: <span id="player-sub-class"></span></td>
-                                            </tr>*@
-                            <tr>
-                                <td>Gender</td>
-                                <td>: <span id="player-gender"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Alignment</td>
-                                <td>: <span id="player-alignment"></span></td>
-                            </tr>
-                        </table>
+                    <div class="col-xs-6">
+                        <div class="scoreContainer window-inner">
+                            <h3 class="text-center">Attributes</h3>
 
-
+                            <table width="100%">
+                                <tr>
+                                    <td>Strength</td>
+                                    <td> <span class="pull-right"> <span id="player-str"></span> / <span id="player-max-str"></span> </span> </td>
+                                </tr>
+                                <tr>
+                                    <td>Dexterity</td>
+                                    <td> <span class="pull-right"><span id="player-dex"></span> / <span id="player-max-dex"></span></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Constitution</td>
+                                    <td> <span class="pull-right"> <span id="player-con"></span> / <span id="player-max-con"></span></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Intelligence</td>
+                                    <td> <span class="pull-right"><span id="player-int"></span> / <span id="player-max-int"></span></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Wisdom</td>
+                                    <td><span class="pull-right"><span id="player-wis"></span> / <span id="player-max-wis"></span></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Charisma</td>
+                                    <td> <span class="pull-right"><span id="player-cha"></span> / <span id="player-max-cha"></span></span></td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
-                    <div class="pull-left">
-                        <table>
-                            <tr>
-                                <td>Strength</td>
-                                <td>: [<span id="player-str"></span>/<span id="player-max-str"></span>]</td>
-                            </tr>
-                            <tr>
-                                <td>Dexterity</td>
-                                <td>: [<span id="player-dex"></span>/<span id="player-max-dex"></span>]</td>
-                            </tr>
-                            <tr>
-                                <td>Constitution</td>
-                                <td>: [<span id="player-con"></span>/<span id="player-max-con"></span>]</td>
-                            </tr>
-                            <tr>
-                                <td>Intelligence</td>
-                                <td>: [<span id="player-int"></span>/<span id="player-max-int"></span>]</td>
-                            </tr>
-                            <tr>
-                                <td>Wisdom</td>
-                                <td>: [<span id="player-wis"></span>/<span id="player-max-wis"></span>]</td>
-                            </tr>
-                            <tr>
-                                <td>Charisma</td>
-                                <td>: [<span id="player-cha"></span>/<span id="player-max-cha"></span>]</td>
-                            </tr>
-                        </table>
+                    <div class="col-xs-6">
+                        <div class="scoreContainer window-inner">
+                            <h3 class="text-center">Armour</h3>
 
+                            <table width="100%">
+                                <tr>
+                                    <td>Armour</td>
+                                    <td><span class="pull-right">N/A</span></td>
+                                </tr>
 
-                    </div>
-                </div>
-            </div>
+                                <tr>
+                                    <td>Pierce</td>
+                                    <td><span class="pull-right">N/A</span></td>
+                                </tr>
 
-            <div class="container" style="margin-top: 20px">
-                <div class="row">
-                    <div class="pull-left " style="margin-right: 20px;">
-                        <table>
-                            <tr>
-                                <td>HP</td>
-                                <td>: [<span id="player-hp"></span>/<span id="player-max-hp"></span>]</td>
-                            </tr>
-                            <tr>
-                                <td>Mana</td>
-                                <td>: [<span id="player-mana"></span>/<span id="player-max-mana"></span>]</td>
-                            </tr>
-                            <tr>
-                                <td>Fatigue</td>
-                                <td>: [<span id="player-end"></span>/<span id="player-max-end"></span>]</td>
-                            </tr>
-                            <tr>
-                                <td>Hit Roll</td>
-                                <td>: <span id="player-hitroll"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Dam Roll</td>
-                                <td>: <span id="player-damroll"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Wimpy</td>
-                                <td>: <span id="player-wimpy"></span></td>
-                            </tr>
-                        </table>
+                                <tr>
+                                    <td>Slash</td>
+                                    <td><span class="pull-right">N/A</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Bash</td>
+                                    <td><span class="pull-right">N/A</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Magic</td>
+                                    <td><span class="pull-right">N/A</span></td>
+                                </tr>
 
-
-                    </div>
-                    <div class="pull-left">
-                        <table>
-                            <tr>
-                                <td>Weight</td>
-                                <td>: <span id="player-weight"></span> of <span id="player-max-weight"></span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Status</td>
-                                <td>: <span id="player-status"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Age</td>
-                                <td>: N/A</td>
-                            </tr>
-                            <tr>
-                                <td>Hours</td>
-                                <td>: <span id="player-hours"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Quest Points</td>
-                                <td>: N/A</td>
-                            </tr>
-                            <tr>
-                                <td>Experience</td>
-                                <td>: <span id="player-experience"></span></td>
-                            </tr>
-                        </table>
-
-
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
+</div>
+                <div class="container">
+                    <div class="row">
+                        <div class="pull-left" style="margin-right: 20px;">
+                            <table>
 
-            <div class="container" style="margin-top: 20px">
-                <div class="row">
-                    <div class="pull-left" style="margin-right: 20px;">
-                        <table>
-                            <tr>
-                                <td>Copper</td>
-                                <td>: <span id="player-copper"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Silver</td>
-                                <td>: <span id="player-silver"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Gold</td>
-                                <td>: <span id="player-gold"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Platinum</td>
-                                <td>: N/A</td>
-                            </tr>
+                                @*<tr>
+                                <td>Reclass</td>
+                                <td>: <span id="player-sub-class"></span></td>
+                            </tr>*@
 
-                        </table>
+                                <tr>
+                                    <td>Alignment</td>
+                                    <td>: <span id="player-alignment"></span></td>
+                                </tr>
+                            </table>
 
 
-                    </div>
-                    <div class="pull-left">
-
-                        <table>
-                            <tr>
-                                <td>Armour</td>
-                                <td>:N/A</td>
-                            </tr>
-
-                            <tr>
-                                <td>Pierce</td>
-                                <td>:N/A</td>
-                            </tr>
-
-                            <tr>
-                                <td>Slash</td>
-                                <td>:N/A</td>
-                            </tr>
-                            <tr>
-                                <td>Bash</td>
-                                <td>:N/A</td>
-                            </tr>
-                            <tr>
-                                <td>Magic</td>
-                                <td>:N/A</td>
-                            </tr>
-
-                        </table>
+                        </div>
+                        <div class="pull-left">
 
 
+
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </div>
+                <div class="container" style="margin-top: 20px">
+                    <div class="row">
+                        <div class="pull-left " style="margin-right: 20px;">
+                            <table>
+                              
+                                <tr>
+                                    <td>Hit Roll</td>
+                                    <td>: <span id="player-hitroll"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Dam Roll</td>
+                                    <td>: <span id="player-damroll"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Wimpy</td>
+                                    <td>: <span id="player-wimpy"></span></td>
+                                </tr>
+                            </table>
+
+
+                        </div>
+                        <div class="pull-left">
+                            <table>
+                                <tr>
+                                    <td>Weight</td>
+                                    <td>: <span id="player-weight"></span> of <span id="player-max-weight"></span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Status</td>
+                                    <td>: <span id="player-status"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Age</td>
+                                    <td>: N/A</td>
+                                </tr>
+                                <tr>
+                                    <td>Hours</td>
+                                    <td>: <span id="player-hours"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Quest Points</td>
+                                    <td>: N/A</td>
+                                </tr>
+                                <tr>
+                                    <td>Experience</td>
+                                    <td>: <span id="player-experience"></span></td>
+                                </tr>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container" style="margin-top: 20px">
+                    <div class="row">
+                        <div class="pull-left" style="margin-right: 20px;">
+                            <table>
+                                <tr>
+                                    <td>Copper</td>
+                                    <td>: <span id="player-copper"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Silver</td>
+                                    <td>: <span id="player-silver"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Gold</td>
+                                    <td>: <span id="player-gold"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Platinum</td>
+                                    <td>: N/A</td>
+                                </tr>
+
+                            </table>
+
+
+                        </div>
+                        <div class="pull-left">
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
     </div>
 </div>
 
