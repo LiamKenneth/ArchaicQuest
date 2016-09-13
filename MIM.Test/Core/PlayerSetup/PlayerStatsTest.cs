@@ -20,6 +20,18 @@ namespace MIM.Test.Core.PlayerSetup
             var stat = playerStats.rollStats();
 
             Assert.That(stat[0], Is.GreaterThan(6));
+
+        }
+
+        [Test]
+        public void ShouldRollSixStats()
+        {
+
+            var playerStats = new MIMWebClient.Core.PlayerSetup.PlayerStats();
+
+
+            var stat = playerStats.rollStats();
+
             Assert.That(stat.Length, Is.EqualTo(6));
 
         }
@@ -34,7 +46,9 @@ namespace MIM.Test.Core.PlayerSetup
             var diceRoll = playerStats.dice(2, 6);
 
             Assert.That(diceRoll, Is.GreaterThan(2));
-
+            Assert.That(diceRoll, Is.LessThan(13));
         }
+
+
     }
 }

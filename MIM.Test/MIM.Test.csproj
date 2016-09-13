@@ -72,6 +72,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Events\CommunicateTest.cs" />
+    <Compile Include="Core\PlayerSetup\PlayerClassTest.cs" />
+    <Compile Include="Core\PlayerSetup\PlayerRaceTest.cs" />
     <Compile Include="Core\PlayerSetup\PlayerStatsTest.cs" />
     <Compile Include="Core\Player\PlayerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,9 +89,7 @@
       <Name>MIMWebClient</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Events\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
