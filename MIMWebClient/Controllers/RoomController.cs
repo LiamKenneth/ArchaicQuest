@@ -19,13 +19,13 @@ namespace MIMWebClient.Controllers.Admin.Room
         public RoomController()
         {
 
-            const string ConnectionString = "mongodb://localhost:27017";
+            const string ConnectionString = "mongodb://testuser:password@ds052968.mlab.com:52968/mimdb";
 
             // Create a MongoClient object by using the connection string
             var client = new MongoClient(ConnectionString);
 
             //Use the MongoClient to access the server
-            var database = client.GetDatabase("MIMDB");
+            var database = client.GetDatabase("mimdb");
 
             this.roomCollection = database.GetCollection<Room>("Room");
             this.itemCollection = database.GetCollection<Item>("Item");
