@@ -13,6 +13,8 @@ using MIMWebClient;
 
 namespace MIMWebClient.Hubs
 {
+    using Castle.Core.Logging;
+
     public class MIMHub : Hub
     {
         public static ConcurrentDictionary<string, Player> _PlayerCache = new ConcurrentDictionary<string, Player>();
@@ -130,6 +132,7 @@ namespace MIMWebClient.Hubs
             string roomData = ReturnRoom(id);
 
             this.Clients.Caller.addNewMessageToPage(roomData, true);
+          //  Score.UpdateUiRoom(PlayerData, roomData);
 
         }
 
@@ -185,6 +188,21 @@ namespace MIMWebClient.Hubs
             {
                 //update hubID
                 player.HubGuid = id;
+
+                //check for duplicates
+               var alreadyLogged = _PlayerCache.FirstOrDefault(x => x.Value.Name.Equals(name));
+
+                if (alreadyLogged.Value != null)
+                {
+
+                    if (alreadyLogged.Value.Name == name)
+                    {
+                        //broken
+                       // player oldPlayer = null;
+                      //  _PlayerCache.TryRemove(alreadyLogged.Value.HubGuid, out oldPlayer);
+                        this.Clients.Caller.addNewMessageToPage("You have been logged in elsewhere, goodbye", true);
+                    }
+                }
 
                 _PlayerCache.TryAdd(id, player);
 

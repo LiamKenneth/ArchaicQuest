@@ -5,6 +5,8 @@
 
     using Microsoft.ApplicationInsights.Extensibility.Implementation;
 
+    using MIMWebClient.Core.Room;
+
     using MongoDB.Bson;
 
     using PlayerSetup;
@@ -43,6 +45,17 @@
             var context = HubContext.getHubContext;
             context.Clients.Client(playerData.HubGuid).updateInventory(playerData.Inventory);
        
+        }
+
+
+        public static void UpdateUiRoom(Player playerData, string room)
+        {
+            //var room = new Room.Room();
+            //var currentRoom = p
+            var context = HubContext.getHubContext;
+            context.Clients.Client(playerData.HubGuid).updateRoom(playerData, room);
+            //context.Clients.Client(playerData.HubGuid).updateRoom(playerData.Inventory);
+
         }
     }
 }

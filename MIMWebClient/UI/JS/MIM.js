@@ -68,6 +68,7 @@
             var infoStep = document.getElementById('select-char');
             var modelHeaderDiv = $(".modal-header div");
             var classBreadCrumb = $(".classBreadCrumb");
+            var statsBreadCrumb = $(".statsBreadCrumb");
 
             $("#RaceSelectedBtn").click(function () {
                 MIM.getClassInfo("fighter");
@@ -99,6 +100,14 @@
                 statsStep.style.display = "none";
                 modelHeaderDiv.removeClass("active");
                 classBreadCrumb.addClass("active");
+            });
+
+            $("#backToStats").click(function () {
+
+                statsStep.style.display = "block";
+                infoStep.style.display = "none";
+                modelHeaderDiv.removeClass("active");
+                statsBreadCrumb.addClass("active");
             });
 
             $("#reRollStats").click(function () {
@@ -428,8 +437,10 @@
     };
 
 
-    client.updateRoom = function (room) {
+    client.UpdateUiRoom = function (room) {
 
+        console.log(room)
+        var title = room.title;
         var description = room.description;
         var mobs = room.mobs;
         var items = room.items;
@@ -449,6 +460,9 @@
         for (var i = 0; i < players.length; i++) {
 
         }
+
+        $("#roomTitleInfo").html(room);
+        $("#roomDescInfo").html(description);
     };
 
     client.updateInventory = function (inventory) {
