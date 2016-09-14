@@ -227,6 +227,7 @@
     <Compile Include="Core\Data.cs" />
     <Compile Include="Core\Events\Cache.cs" />
     <Compile Include="Core\Events\Communicate.cs" />
+    <Compile Include="Core\Events\Fight.cs" />
     <Compile Include="Core\Events\Fight2.cs" />
     <Compile Include="Core\Events\Flee.cs" />
     <Compile Include="Core\Events\LoadRoom.cs" />

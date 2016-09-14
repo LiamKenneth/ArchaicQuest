@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace MIMWebClient.Core.Events
 {
     using System.Security.Cryptography.X509Certificates;
+    using System.Threading;
 
     using MIMWebClient.Core.Item;
     using MIMWebClient.Core.PlayerSetup;
@@ -23,7 +24,7 @@ namespace MIMWebClient.Core.Events
         /// <param name="room">The room</param>
         /// <param name="attackOptions">The attackers Name for now</param>
         /// <returns></returns>
-        public static async Task StartFight(Player attacker, Room room, string attackOptions)
+        public static void StartFight(Player attacker, Room room, string attackOptions)
         {
             if (attacker == null)
             {
@@ -92,20 +93,26 @@ namespace MIMWebClient.Core.Events
 
 
             ShowAttack(attacker, defender, room, toHit, chance);
+ 
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+                HitTarget(attacker, defender, room, 1200);
 
-             HitTarget(attacker, defender, room, 1200);
+                HitTarget(defender, attacker, room, 1800);
+            }).Start();
 
-             HitTarget(defender, attacker, room, 1800);
+          
 
-
+            
 
         }
 
-        private static async Task HitTarget(Player attacker, Player defender, Room room, int delay)
+        private static void HitTarget(Player attacker, Player defender, Room room, int delay)
         {
 
 
-            while (attacker.HitPoints > 0 && defender.HitPoints > 0 && attacker.Status == "Fighting" && defender.Status == "Fighting")
+            while (attacker.Status == "Fighting" && defender.Status == "Fighting")
             {
                 bool canAttack = CanAttack(attacker, defender);
 
@@ -115,7 +122,7 @@ namespace MIMWebClient.Core.Events
 
                     if (alive)
                     {
-                        await Task.Delay(delay);
+                       Thread.Sleep(delay);
 
                         double offense = Offense(attacker);
                         double evasion = Evasion(defender);
@@ -140,12 +147,8 @@ namespace MIMWebClient.Core.Events
 
         public static Player FindTarget(Room room, string defender)
         {
-            Player target = room.players.Find(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase));
-
-            if (true)
-            {
-
-            }
+            Player target = room.players.Find(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
+                            ?? room.mobs.Find(x => x.Name.ToLower().Contains(defender.ToLower()));
 
             return target;
         }
@@ -153,12 +156,7 @@ namespace MIMWebClient.Core.Events
         public static bool CanAttack(Player attacker, Player defender)
         {
 
-            bool canAttack = true;
-
-            if (attacker.Status == "Standing" || defender.Status == "Standing")
-            {
-                canAttack = false;
-            }
+            bool canAttack = !(attacker.Status == "Standing" || defender.Status == "Standing");
 
             if (attacker.Target.Name != defender.Name)
             {
