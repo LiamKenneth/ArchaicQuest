@@ -30,7 +30,7 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
-            
+
 
             /* player can only attack one target
          * if player gets attacked by something else they cannot fight back until
@@ -93,9 +93,9 @@ namespace MIMWebClient.Core.Events
 
             ShowAttack(attacker, defender, room, toHit, chance);
 
-            HitTarget(attacker, defender, room, 1200);
+             HitTarget(attacker, defender, room, 1200);
 
-            HitTarget(defender, attacker, room, 1800);
+             HitTarget(defender, attacker, room, 1800);
 
 
 
@@ -129,7 +129,7 @@ namespace MIMWebClient.Core.Events
                         Prompt.ShowPrompt(attacker);
                         Prompt.ShowPrompt(defender);
                         Score.UpdateUiPrompt(attacker);
-                            Score.UpdateUiPrompt(defender);
+                        Score.UpdateUiPrompt(defender);
                     }
 
                 }

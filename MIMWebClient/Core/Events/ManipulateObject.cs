@@ -96,6 +96,7 @@ namespace MIMWebClient.Core.Events
             int nth = findObject.Key;
             string itemToFind = findObject.Value;
 
+
             //get container
             KeyValuePair<int, string> findContainer = new KeyValuePair<int, string>();
             int nthContainer = 0;
@@ -117,7 +118,7 @@ namespace MIMWebClient.Core.Events
             List<Player> playerList = room.players;
 
             #region find Item searching Room and Player Inventory
-            if (objectTypeToFind == FindItem)
+            if (objectTypeToFind == FindItem && itemToFind != "all")
             {
                 // if its not a container
                 if (string.IsNullOrEmpty(itemContainer))
@@ -129,7 +130,7 @@ namespace MIMWebClient.Core.Events
                     if (foundItem != null) { return new KeyValuePair<Item, Item>(null, foundItem); ; }
 
 
-                    HubContext.SendToClient("You don't see a " + itemToFind + " + here and you are not carrying such an item", player.HubGuid);
+                    HubContext.SendToClient("You don't see " + AvsAnLib.AvsAn.Query(itemToFind) + " " + itemToFind + " here and you are not carrying " + AvsAnLib.AvsAn.Query(itemToFind) + " " + itemToFind, player.HubGuid);
                     HubContext.broadcastToRoom(player.Name + " rummages around for an item but finds nothing", room.players, player.HubGuid, true);
 
                 }
@@ -184,7 +185,16 @@ namespace MIMWebClient.Core.Events
                 }
 
 
+
             }
+            else if(itemToFind == "all" && roomItems.Count == 0 && command == "get") {
+                HubContext.SendToClient("There is nothing here to get", player.HubGuid);
+            }
+            else if (itemToFind == "all" && playerInv.Count == 0 && command == "drop" || itemToFind == "all" && playerInv.Count == 0 && command == "put")
+            {
+                HubContext.SendToClient("You have nothing to drop", player.HubGuid);
+            }
+
             #endregion
             #region find item in player inventory for commands such as drop, equip, wield etc
             else if (objectTypeToFind == FindInventory)
@@ -209,9 +219,17 @@ namespace MIMWebClient.Core.Events
                 else
                 {
                     //look in inv
-                    foundItem = (nthContainer == -1) ? playerInv.Find(x => x.name.ToLower().Contains(itemToFind))
-                                        : playerInv.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nthContainer - 1).FirstOrDefault();
-                    if (foundItem == null)
+                    if (itemToFind != "all")
+                    {
+                        foundItem = (nthContainer == -1) ? playerInv.Find(x => x.name.ToLower().Contains(itemToFind))
+                                       : playerInv.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nthContainer - 1).FirstOrDefault();
+                    }
+                    else
+                    {
+                        // foundItem = playerInv;
+                    }
+
+                    if (foundItem != null || itemContainer != null && itemToFind == "all")
                     {
                         //find container
                         foundContainer = (nth == -1)
@@ -469,7 +487,7 @@ namespace MIMWebClient.Core.Events
 
 
                     var playerInvCount = player.Inventory.Count;
-                    
+
                     for (int i = playerInvCount - 1; i >= 0; i--)
                     {
                         playerInv[i].location = "Room";
@@ -487,7 +505,7 @@ namespace MIMWebClient.Core.Events
                 }
                 else
                 {
-                    
+
                     var playerInvCount = playerInv.Count;
 
                     for (int i = playerInvCount - 1; i >= 0; i--)

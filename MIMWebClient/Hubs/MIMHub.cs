@@ -197,10 +197,18 @@ namespace MIMWebClient.Hubs
 
                     if (alreadyLogged.Value.Name == name)
                     {
-                        //broken
-                       // player oldPlayer = null;
-                      //  _PlayerCache.TryRemove(alreadyLogged.Value.HubGuid, out oldPlayer);
-                        this.Clients.Caller.addNewMessageToPage("You have been logged in elsewhere, goodbye", true);
+                
+                         var oldPlayer = alreadyLogged.Value;
+                          _PlayerCache.TryRemove(alreadyLogged.Value.HubGuid, out oldPlayer);
+
+                       _AreaCache.FirstOrDefault(x => x.Value.players.Remove(oldPlayer));
+
+                        //update room cache
+
+                        SendToClient("You have been logged in elsewhere, goodbye", alreadyLogged.Value.HubGuid);
+                        SendToClient("Kicking off your old connection", id);
+                        HubContext.getHubContext.Clients.Client(alreadyLogged.Value.HubGuid).quit();
+
                     }
                 }
 
