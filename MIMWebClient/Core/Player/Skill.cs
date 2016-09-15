@@ -10,7 +10,7 @@ namespace MIMWebClient.Core.Player
     {
         public string Name { get; set; }
 
-        public int Proficiency { get; set; }
+        public double Proficiency { get; set; }
 
         public bool Passive { get; set; }
 

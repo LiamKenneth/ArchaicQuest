@@ -256,6 +256,7 @@
     <Compile Include="Core\Player\Player.cs" />
     <Compile Include="Core\Player\Prompt.cs" />
     <Compile Include="Core\Player\Skill.cs" />
+    <Compile Include="Core\Player\Skills\HandtoHand.cs" />
     <Compile Include="Core\Player\Skills\Kick.cs" />
     <Compile Include="Core\Room\Exit.cs" />
     <Compile Include="Core\Room\Keyword.cs" />

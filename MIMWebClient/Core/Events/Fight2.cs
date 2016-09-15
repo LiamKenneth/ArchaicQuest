@@ -501,7 +501,8 @@ namespace MIMWebClient.Core.Events
 
         public static double Offense(Player player)
         {
-            double handToHandSkill = 0.75;
+            var HandToHand = player.Skills.Find(x => x.Name == "Hand to Hand");
+            double handToHandSkill = HandToHand.Proficiency;
             int wieldedWeaponSkill = 0;
             int dexterity = player.Dexterity;
             int strength = player.Strength;

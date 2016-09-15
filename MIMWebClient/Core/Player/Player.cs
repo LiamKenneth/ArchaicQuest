@@ -16,6 +16,8 @@ namespace MIMWebClient.Core.PlayerSetup
     using Newtonsoft.Json.Linq;
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;
+    using Core.Player.Skills;
+
     public class Player
     {
         [BsonRepresentation(BsonType.ObjectId)]
@@ -84,6 +86,9 @@ namespace MIMWebClient.Core.PlayerSetup
 
         [BsonElement("eq")]
         public Equipment Equipment { get; set; }
+
+        [BsonElement("sk")]
+        public List<Skill> Skills { get; set; }
 
         //Game stats
         [BsonElement("ex")]
@@ -262,6 +267,16 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Status = "Standing"; // enum property? 1 standing
             this.Target = null;
             this.Inventory = this.Inventory ?? (this.Inventory = new List<Item>());
+            this.Skills = this.Skills = new List<Skill>();
+
+            var h2h = new Skill();
+            h2h.Name = "Hand to Hand";
+            h2h.Proficiency = 0.1;
+
+            this.Skills.Add(h2h);
+          
+
+        
 
             //kills
             this.MobKills = 0;
