@@ -24,7 +24,7 @@ namespace MIMWebClient.Core.Events
         /// <param name="room">The room</param>
         /// <param name="attackOptions">The attackers Name for now</param>
         /// <returns></returns>
-        public static void StartFight(Player attacker, Room room, string attackOptions)
+        public static async Task StartFight(Player attacker, Room room, string attackOptions)
         {
             if (attacker == null)
             {
@@ -93,22 +93,19 @@ namespace MIMWebClient.Core.Events
 
 
             ShowAttack(attacker, defender, room, toHit, chance);
+
+
+            Task.Run(() => HitTarget(attacker, defender, room, 1200));
+            Task.Run(() => HitTarget(defender, attacker, room, 1800));
+
+            
  
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-                HitTarget(attacker, defender, room, 1200);
-
-                HitTarget(defender, attacker, room, 1800);
-            }).Start();
-
-          
-
+     
             
 
         }
 
-        private static void HitTarget(Player attacker, Player defender, Room room, int delay)
+        private static async Task HitTarget(Player attacker, Player defender, Room room, int delay)
         {
 
 
@@ -122,7 +119,8 @@ namespace MIMWebClient.Core.Events
 
                     if (alive)
                     {
-                       Thread.Sleep(delay);
+
+                           await Task.Delay(delay);
 
                         double offense = Offense(attacker);
                         double evasion = Evasion(defender);
