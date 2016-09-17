@@ -369,7 +369,7 @@ namespace MIMWebClient.Core.Events
 
                     for (int i = roomItemsCount - 1; i >= 0; i--)
                     {
-                        roomItems[i].location = "Inventory";
+                        roomItems[i].location = Item.ItemLocation.Inventory;
                         player.Inventory.Add(roomItems[i]);
                         HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You pick up a " + roomItems[i].name);
                         HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " picks up a " + roomItems[i].name);
@@ -389,7 +389,7 @@ namespace MIMWebClient.Core.Events
 
                     for (int i = containerCount - 1; i >= 0; i--)
                     {
-                        containerItems[i].location = "Inventory";
+                        containerItems[i].location = Item.ItemLocation.Inventory;
                         player.Inventory.Add(containerItems[i]);
                         HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You get a " + containerItems[i].name + " from a " + container.name);
                         HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " get a " + containerItems[i].name + " from a " + container.name);
@@ -418,7 +418,7 @@ namespace MIMWebClient.Core.Events
                     }
 
                     room.items.Remove(item);
-                    item.location = "Inventory";
+                    item.location = Item.ItemLocation.Inventory;
                     player.Inventory.Add(item);
 
 
@@ -440,7 +440,7 @@ namespace MIMWebClient.Core.Events
 
 
                     container.containerItems.Remove(item);
-                    container.location = "Inventory";
+                    container.location = Item.ItemLocation.Inventory;
                     player.Inventory.Add(item);
 
 
@@ -490,7 +490,7 @@ namespace MIMWebClient.Core.Events
 
                     for (int i = playerInvCount - 1; i >= 0; i--)
                     {
-                        playerInv[i].location = "Room";
+                        playerInv[i].location = Item.ItemLocation.Room;
                         room.items.Add(playerInv[i]);
                         HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You drop a " + playerInv[i].name);
                         HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " drops a " + playerInv[i].name);
@@ -510,7 +510,7 @@ namespace MIMWebClient.Core.Events
 
                     for (int i = playerInvCount - 1; i >= 0; i--)
                     {
-                        playerInv[i].location = "Room";
+                        playerInv[i].location = Item.ItemLocation.Room;
                         container.containerItems.Add(playerInv[i]);
                         HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You drop a " + playerInv[i].name + " into a " + container.name);
                         HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " drops a " + playerInv[i].name + " into a " + container.name);
@@ -539,7 +539,7 @@ namespace MIMWebClient.Core.Events
                     }
 
                     player.Inventory.Remove(item);
-                    item.location = "Room";
+                    item.location = Item.ItemLocation.Room;
                     room.items.Add(item);
 
                     HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You drop  a " + item.name);
@@ -559,7 +559,7 @@ namespace MIMWebClient.Core.Events
                     }
 
                     player.Inventory.Remove(item);
-                    item.location = "Room";
+                    item.location = Item.ItemLocation.Room;
                     container.containerItems.Add(item);
 
                     HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You put a " + item.name + " inside the " + container.name);

@@ -67,7 +67,8 @@ namespace MIMWebClient.Core.Item
         {
             Room,
             Inventory,
-            Worn
+            Worn,
+            Wield
         }
 
 
@@ -89,7 +90,8 @@ namespace MIMWebClient.Core.Item
             Hand,
             Ring,
             Legs,
-            Feet
+            Feet,
+            Wield
         }
 
         public enum AttackType
@@ -131,17 +133,20 @@ namespace MIMWebClient.Core.Item
         public enum WeaponType
         {
             Axe = 1,
-            Dagger,
-            Exotic,
-            Flail,
-            Blunt,
-            Polearm,
+            Exotic = 2,
+            Flail = 3,
+            Blunt = 4,
+            Polearm = 5,
             Spear,
             Staff,
-            Sword,
+            LongBlades,
+            ShortBlades,
             Whip,
             Bows,
-            Arrows
+            Arrows,
+            Crossbow,
+            Bolt,
+            HandToHand
         }
 
         public enum ArmourType

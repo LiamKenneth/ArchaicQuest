@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace MIMWebClient.Core.Player
 {
     using Events;
+
+    using MIMWebClient.Core.Item;
     using MIMWebClient.Core.PlayerSetup;
     public class Equipment
     {
@@ -111,7 +113,7 @@ namespace MIMWebClient.Core.Player
                 return;
             }
 
-            foundItem.location = "worn";
+            foundItem.location = Item.ItemLocation.Worn;
             var slot = foundItem.slot;
 
             var eqLocation = player.Equipment.GetType().GetProperty(slot);
@@ -162,7 +164,7 @@ namespace MIMWebClient.Core.Player
                 return;
             }
 
-            foundItem.location = "inventory";
+            foundItem.location = Item.ItemLocation.Inventory;
             var slot = foundItem.slot;
 
             var eqLocation = player.Equipment.GetType().GetProperty(slot);

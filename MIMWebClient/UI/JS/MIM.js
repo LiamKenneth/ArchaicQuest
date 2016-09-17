@@ -414,10 +414,13 @@
         }
 
 
-        var statPercentage = ((maxStat / stat) * 100);
+        var statPercentage = (stat / maxStat) * 100;
+
+        console.log("update stat " + statPercentage);
 
         if (statType == "hp") {
             document.getElementById('HP-bar').style.width = statPercentage + "%";
+            document.getElementById('stat-HP').innerHTML = stat;
         }
 
 

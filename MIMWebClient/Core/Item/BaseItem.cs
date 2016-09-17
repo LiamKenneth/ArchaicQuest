@@ -17,7 +17,10 @@ namespace MIMWebClient.Core.Item
         public List<string> keywords { get; set; }
         public int? keyValue { get; set; }
         public bool hidden { get; set; }
-        public string location { get; set; }
+        /// <summary>
+        /// Wear is this item? Room, Inventory, worn
+        /// </summary>
+        public Item.ItemLocation? location { get; set; }
         public bool equipable { get; set; }
         public string slot { get; set; }
 

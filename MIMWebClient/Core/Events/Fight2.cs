@@ -95,8 +95,8 @@ namespace MIMWebClient.Core.Events
             ShowAttack(attacker, defender, room, toHit, chance);
 
 
-            Task.Run(() => HitTarget(attacker, defender, room, 1200));
-            Task.Run(() => HitTarget(defender, attacker, room, 1800));
+            Task.Run(() => HitTarget(attacker, defender, room, 1000));
+            Task.Run(() => HitTarget(defender, attacker, room, 1000));
 
             
  
@@ -131,8 +131,8 @@ namespace MIMWebClient.Core.Events
 
                         ShowAttack(attacker, defender, room, toHit, chance);
 
-                        Prompt.ShowPrompt(attacker);
-                        Prompt.ShowPrompt(defender);
+                        //Prompt.ShowPrompt(attacker);
+                        //Prompt.ShowPrompt(defender);
                         Score.UpdateUiPrompt(attacker);
                         Score.UpdateUiPrompt(defender);
                     }
@@ -413,7 +413,7 @@ namespace MIMWebClient.Core.Events
                 //unequip
                 foreach (var item in defenderCorpse.Inventory)
                 {
-                    item.location = "Inventory";
+                    item.location = Item.ItemLocation.Inventory;
                 }
                 var oldRoom = room;
                 room.corpses.Add(defender);
@@ -452,7 +452,7 @@ namespace MIMWebClient.Core.Events
                 //unequip
                 foreach (var item in attackerCorpse.Inventory)
                 {
-                    item.location = "Inventory";
+                    item.location = Item.ItemLocation.Inventory;
                 }
                 var oldRoom = room;
                 room.corpses.Add(attacker);
@@ -501,16 +501,37 @@ namespace MIMWebClient.Core.Events
 
         public static double Offense(Player player)
         {
-            var HandToHand = player.Skills.Find(x => x.Name == "Hand to Hand");
-            double handToHandSkill = HandToHand.Proficiency;
-            int wieldedWeaponSkill = 0;
+            //need error checking
+            //workout wepean type check weapon skill
+            //var weapon = player.Inventory.Find(x => x.location.Equals(Item.ItemLocation.Worn.ToString() && x.eqSlot.Equals(Item.EqSlot.Hand)));
+
+            var weapon = player.Inventory.Find(x => x.location == Item.ItemLocation.Wield);
+            Item.WeaponType weaponType;
+            double weaponSkill = 0;
+
+            if (weapon != null)
+            {
+                 weaponType = weapon.weaponType;
+                 weaponSkill = player.Skills.Find(x => x.Name == weaponType.ToString())?.Proficiency ?? 0;
+
+            }
+            else
+            {
+                //Hand To Hand
+
+                weaponType = Item.WeaponType.HandToHand;
+                weaponSkill = player.Skills.Find(x => x.Name == "Hand to Hand")?.Proficiency ?? 0;
+ 
+            }
+
+
             int dexterity = player.Dexterity;
             int strength = player.Strength;
 
 
             //(Weapon Skill + (Agility / 5) + (Luck / 10)) * (0.75 + 0.5 * Current Fatigue / Maximum Fatigue);
 
-            double off = handToHandSkill + (dexterity / 5) * (0.75 + 0.5 * player.MovePoints / player.MaxMovePoints);
+            double off = weaponSkill + (dexterity / 5) * (0.75 + 0.5 * player.MovePoints / player.MaxMovePoints);
 
             //Based on skill and a random number, an Offensive Force / Factor(OF) is generated.
             //This number is bonused by the user's Agility as modified by the weapon's balance.
