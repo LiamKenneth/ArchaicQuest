@@ -273,7 +273,10 @@ namespace MIMWebClient.Core.PlayerSetup
             h2h.Name = "Hand to Hand";
             h2h.Proficiency = 0.1;
 
+            var shortBlades = new Skill() { Name = "Short Blade", Proficiency = 0 };
+
             this.Skills.Add(h2h);
+            this.Skills.Add(shortBlades);
           
 
         
