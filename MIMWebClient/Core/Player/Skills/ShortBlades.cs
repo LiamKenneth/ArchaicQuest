@@ -32,10 +32,12 @@ namespace MIMWebClient.Core.Player.Skills
                     Delay = 0,
                     LevelObtained = 1,
                     Passive = true,
+                    UsableFromStatus = "Fighting",
                     Syntax = "Passive command"
                 };
 
 
+                skill.HelpText = skill.Syntax + " Some help text about Short Bladess";
 
                 ShortBladesSkill = skill;
             }
