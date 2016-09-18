@@ -150,6 +150,23 @@ namespace MIMWebClient.Controllers.Admin.Room
             Room.Terrain terrain;
             Enum.TryParse(RoomData["roomModel.terrain"], out terrain);
             newRoom.terrain = terrain;
+
+            var addExit = new Exit();
+
+     
+
+            //foreach (var exit in RoomData.)
+            //{
+                
+            //}
+
+            //newRoom.exits.Add(addExit);
+
+            //addExit.
+
+
+
+            var addItem = new Item();
     
 
             this.roomCollection.InsertOne(newRoom);

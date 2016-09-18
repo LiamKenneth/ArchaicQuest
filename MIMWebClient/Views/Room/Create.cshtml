@@ -626,12 +626,66 @@
                                 <script>
                                     $("#js-AddItem").click(function () {
 
+                                        var data = {
+                                      
+                                            "region": "Valston",
+                                            "area": "Town",
+                                            "areaId": 0,
+                                            "clean": false,
+                                            "modified": "",
+                                            "title": "Dungeon Coridor 3",
+                                            "description": "A dark dark corridor",
+                                            "terrain": "City",
+                                            "keywords": [],
+                                            "exits": [
+                                                {
+                                                    "name": "South",
+                                                    "keywords": null,
+                                                    "locked": false,
+                                                    "keyValue": null,
+                                                    "hidden": false,
+                                                    "location": null,
+                                                    "equipable": false,
+                                                    "slot": null,
+                                                    "actions": null,
+                                                    "description": null,
+                                                    "stats": null,
+                                                    "keyId": 0,
+                                                    "areaId": 0,
+                                                    "area": "Town",
+                                                    "region": "Valston"
+                                                },
+                                                  {
+                                                      "name": "East",
+                                                      "keywords": null,
+                                                      "locked": false,
+                                                      "keyValue": null,
+                                                      "hidden": false,
+                                                      "location": null,
+                                                      "equipable": false,
+                                                      "slot": null,
+                                                      "actions": null,
+                                                      "description": null,
+                                                      "stats": null,
+                                                      "keyId": 0,
+                                                      "areaId": 0,
+                                                      "area": "Town",
+                                                      "region": "Valston"
+                                                  }
+                                            ],
+                                            "players": [],
+                                            "fighting": [],
+                                            "mobs": [],
+                                            "items": [],
+                                            "corpses": []
+                                        }
+
                                         $.ajax({
                                             type: "POST",
                                             url: "/Room/create",
                                             content: "application/json; charset=utf-8",
                                             dataType: "json",
-                                            data: room,
+                                            data: data,
                                             success: function (d) {
 
                                             },
