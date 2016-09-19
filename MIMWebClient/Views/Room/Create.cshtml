@@ -410,7 +410,7 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Create" class="btn btn-default" />
-                    <a href="#">Add Room</a>
+                    <a href="#" id="js-add-room" class="btn btn-success">Add Room</a>
                 </div>
             </div>
         </div>
@@ -624,60 +624,61 @@
                                 </script>
 
                                 <script>
-                                    $("#js-AddItem").click(function () {
+                                    $("#js-add-room").click(function () {
 
-                                        var data = {
-                                      
-                                            "region": "Valston",
-                                            "area": "Town",
-                                            "areaId": 0,
-                                            "clean": false,
-                                            "modified": "",
-                                            "title": "Dungeon Coridor 3",
-                                            "description": "A dark dark corridor",
-                                            "terrain": "City",
-                                            "keywords": [],
-                                            "exits": [
-                                                {
-                                                    "name": "South",
-                                                    "keywords": null,
-                                                    "locked": false,
-                                                    "keyValue": null,
-                                                    "hidden": false,
-                                                    "location": null,
-                                                    "equipable": false,
-                                                    "slot": null,
-                                                    "actions": null,
-                                                    "description": null,
-                                                    "stats": null,
-                                                    "keyId": 0,
-                                                    "areaId": 0,
-                                                    "area": "Town",
-                                                    "region": "Valston"
-                                                },
-                                                  {
-                                                      "name": "East",
-                                                      "keywords": null,
-                                                      "locked": false,
-                                                      "keyValue": null,
-                                                      "hidden": false,
-                                                      "location": null,
-                                                      "equipable": false,
-                                                      "slot": null,
-                                                      "actions": null,
-                                                      "description": null,
-                                                      "stats": null,
-                                                      "keyId": 0,
-                                                      "areaId": 0,
-                                                      "area": "Town",
-                                                      "region": "Valston"
-                                                  }
-                                            ],
-                                            "players": [],
-                                            "fighting": [],
-                                            "mobs": [],
-                                            "items": [],
-                                            "corpses": []
+                                        var roomModel = {
+                                            "roomModel": {
+                                                "region": "Valston",
+                                                "area": "Town",
+                                                "areaId": 0,
+                                                "clean": false,
+                                                "modified": "",
+                                                "title": "Dungeon Coridor 3",
+                                                "description": "A dark dark corridor",
+                                                "terrain": "City",
+                                                "keywords": [],
+                                                "exits": [
+                                                    {
+                                                        "name": "South",
+                                                        "keywords": null,
+                                                        "locked": false,
+                                                        "keyValue": null,
+                                                        "hidden": false,
+                                                        "location": null,
+                                                        "equipable": false,
+                                                        "slot": null,
+                                                        "actions": null,
+                                                        "description": null,
+                                                        "stats": null,
+                                                        "keyId": 0,
+                                                        "areaId": 0,
+                                                        "area": "Town",
+                                                        "region": "Valston"
+                                                    },
+                                                      {
+                                                          "name": "East",
+                                                          "keywords": null,
+                                                          "locked": false,
+                                                          "keyValue": null,
+                                                          "hidden": false,
+                                                          "location": null,
+                                                          "equipable": false,
+                                                          "slot": null,
+                                                          "actions": null,
+                                                          "description": null,
+                                                          "stats": null,
+                                                          "keyId": 0,
+                                                          "areaId": 0,
+                                                          "area": "Town",
+                                                          "region": "Valston"
+                                                      }
+                                                ],
+                                                "players": [],
+                                                "fighting": [],
+                                                "mobs": [],
+                                                "items": [],
+                                                "corpses": []
+                                            }
                                         }
 
                                         $.ajax({
@@ -685,7 +686,7 @@
                                             url: "/Room/create",
                                             content: "application/json; charset=utf-8",
                                             dataType: "json",
-                                            data: data,
+                                            data: roomModel,
                                             success: function (d) {
 
                                             },

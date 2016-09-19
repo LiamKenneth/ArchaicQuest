@@ -135,30 +135,29 @@ namespace MIMWebClient.Controllers.Admin.Room
 
         // POST: Default/Create
         [HttpPost]
-        public ActionResult Create(FormCollection RoomData)
+        public ActionResult Create(ToPage RoomData)
         {
 
             var newRoom = new Room();
 
-            newRoom.region = RoomData["roomModel.title"];
-            newRoom.area = RoomData["roomModel.area"];
-            newRoom.areaId = Convert.ToInt32(RoomData["roomModel.areaId"]);
+            newRoom.region = RoomData.roomModel.region;
+            newRoom.area = RoomData.roomModel.area;
+            newRoom.areaId = RoomData.roomModel.areaId;
 
-            newRoom.title = RoomData["roomModel.title"];
-            newRoom.description = RoomData["roomModel.description"];
+            newRoom.title = RoomData.roomModel.title;
+            newRoom.description = RoomData.roomModel.description;
 
             Room.Terrain terrain;
-            Enum.TryParse(RoomData["roomModel.terrain"], out terrain);
+            Enum.TryParse(RoomData.roomModel.terrain.ToString(), out terrain);
             newRoom.terrain = terrain;
 
-            var addExit = new Exit();
 
-     
-
-            //foreach (var exit in RoomData.)
-            //{
-                
-            //}
+            newRoom.exits = new List<Exit>();
+            foreach (var exit in RoomData.roomModel.exits)
+            {
+               
+                newRoom.exits.Add(exit);
+            }
 
             //newRoom.exits.Add(addExit);
 
@@ -167,7 +166,7 @@ namespace MIMWebClient.Controllers.Admin.Room
 
 
             var addItem = new Item();
-    
+ 
 
             this.roomCollection.InsertOne(newRoom);
 
