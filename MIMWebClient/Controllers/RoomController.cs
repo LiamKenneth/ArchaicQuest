@@ -9,6 +9,7 @@ using MIMWebClient.Core.Room;
 
 namespace MIMWebClient.Controllers.Admin.Room
 {
+    using Core.PlayerSetup;
     using MIMWebClient.Core.Item;
     using MIMWebClient.Core.Room;
 
@@ -151,40 +152,70 @@ namespace MIMWebClient.Controllers.Admin.Room
             Enum.TryParse(RoomData.roomModel.terrain.ToString(), out terrain);
             newRoom.terrain = terrain;
 
+            newRoom.keywords = new List<RoomObject>();
+
+            newRoom.keywords = RoomData.roomModel.keywords;
+
 
             newRoom.exits = new List<Exit>();
-            foreach (var exit in RoomData.roomModel.exits)
+
+            if (RoomData.roomModel.exits != null)
             {
-               
-                newRoom.exits.Add(exit);
-            }
-
-            //newRoom.exits.Add(addExit);
-
-            //addExit.
-
-
-
-            var addItem = new Item();
- 
-
-            this.roomCollection.InsertOne(newRoom);
-
-            if (ModelState.IsValid)
-            {
-
-
-                try
+                foreach (var exit in RoomData.roomModel.exits)
                 {
-                    // TODO: Add insert logic here
 
-                    return RedirectToAction("Index");
-                }
-                catch
-                {
-                    return View();
+                    newRoom.exits.Add(exit);
                 }
             }
+
+
+            newRoom.items = new List<Item>();
+
+            if (RoomData.roomModel.items != null)
+            {
+                foreach (var item in RoomData.roomModel.items)
+                {
+
+                    newRoom.items.Add(item);
+                }
+
+            }
+
+
+            newRoom.mobs = new List<Player>();
+
+            if (RoomData.roomModel.mobs != null)
+            {
+
+                foreach (var mob in RoomData.roomModel.mobs)
+                {
+
+                    newRoom.mobs.Add(mob);
+                }
+            }
+
+            newRoom.corpses = new List<Player>();
+
+            if (RoomData.roomModel.corpses != null)
+            {
+                foreach (var corpse in RoomData.roomModel.corpses)
+                {
+
+                    newRoom.corpses.Add(corpse);
+                }
+            }
+
+            try
+            {
+                this.roomCollection.InsertOne(newRoom);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+
+            }
+
 
             return View();
         }
@@ -199,6 +230,8 @@ public class ToPage
     public Room roomModel { get; set; }
     public Item itemModel { get; set; }
     public Exit exitModel { get; set; }
+
+    public RoomObject roomKeywords { get; set; }
     public List<Item> itemSelect { get; set; }
 
     public ToPage()
