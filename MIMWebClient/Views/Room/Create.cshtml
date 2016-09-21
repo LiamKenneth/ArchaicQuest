@@ -119,7 +119,7 @@
                 </div>
 
             </div>
-            </div>
+        </div>
 
         <div class="row">
             <div class="col-md-12">
@@ -191,647 +191,786 @@
             </div>
         </div>
 
- 
-    <div class="row">
-        <!-- ITEM -->
-        <h2 class="heading">Add Items</h2>
-        <hr/>
-        If you want an item to be in the room but hidden. check the don't display box. but remmeber to inlude the item in the description for observant players. for containers, select the container and add to container button instead of room.
+        <div class="row">
 
-        <br/>
-        <div class="table-responsive">
+            <h2 class="page-header">Mobs</h2>
+            <p>Here we add mobs</p>
+
             <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Type</th>
-                        <th>Dam min</th>
-                        <th>Dam Max</th>
-                        <th>Dam Roll</th>
-                        <th>Attack Type</th>
-                        <th>Weapon Type</th>
-                        <th>EQ Slot</th>
-                        <th>Min Usage lvl</th>
-                        <th>Equipable</th>
-                        <th>Item Flags</th>
-                        <th>Dam Type</th>
-                        <th>Look</th>
-                        <th>Examine</th>
-                        <th>Room</th>
-                        <th>Taste</th>
-                        <th>Touch</th>
-                        <th>Smell</th>
+                        <th>Gender</th>
+                        <th>Race</th>
+                        <th>Class</th>
+                        <th>Stats</th>
+                        <th>Level</th>
+                        <th>Alignment</th>
+                        <th>HP</th>
+                        <th>Mana</th>
+                        <th>Movs</th>
+                        <th>Hit / Dam</th>
+                        <th>Status</th>
+                        <th>Gold</th>
+                        <th>Silver</th>
+                        <th>Copper</th>
+ 
                     </tr>
                 </thead>
-                <tbody id="js-item-table"></tbody>
+                <tbody id="js-exit-table"></tbody>
             </table>
+
+            <div class="form-group">
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.mobModel.Name)
+                    @Html.EditorFor(model => model.mobModel.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.Name, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.mobModel.Gender)
+                    @Html.EditorFor(model => model.mobModel.Gender, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.Gender, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.mobModel.Race)
+                    @Html.EditorFor(model => model.mobModel.Race, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.Race, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.mobModel.SelectedClass)
+                    @Html.EditorFor(model => model.mobModel.SelectedClass, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.SelectedClass, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.mobModel.Strength)
+                    @Html.EditorFor(model => model.mobModel.Strength, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.Strength, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.mobModel.Dexterity)
+                    @Html.EditorFor(model => model.mobModel.Dexterity, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.Dexterity, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.mobModel.Constitution)
+                    @Html.EditorFor(model => model.mobModel.Constitution, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.Constitution, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.mobModel.Wisdom)
+                    @Html.EditorFor(model => model.mobModel.Wisdom, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.Wisdom, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.mobModel.Intelligence)
+                    @Html.EditorFor(model => model.mobModel.Intelligence, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.Intelligence, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.mobModel.Charisma)
+                    @Html.EditorFor(model => model.mobModel.Charisma, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.Charisma, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.mobModel.Level)
+                    @Html.EditorFor(model => model.mobModel.Level, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.Level, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.mobModel.AlignmentScore)
+                    @Html.EditorFor(model => model.mobModel.AlignmentScore, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.AlignmentScore, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.mobModel.MaxHitPoints)
+                    @Html.EditorFor(model => model.mobModel.MaxHitPoints, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.MaxHitPoints, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.mobModel.MaxManaPoints)
+                    @Html.EditorFor(model => model.mobModel.MaxManaPoints, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.MaxManaPoints, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.mobModel.MaxMovePoints)
+                    @Html.EditorFor(model => model.mobModel.MaxMovePoints, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.MaxMovePoints, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.mobModel.HitRoll)
+                    @Html.EditorFor(model => model.mobModel.HitRoll, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.HitRoll, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.mobModel.DamRoll)
+                    @Html.EditorFor(model => model.mobModel.DamRoll, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.DamRoll, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.mobModel.Status)
+                    @Html.EditorFor(model => model.mobModel.Status, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.Status, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.mobModel.Gold)
+                    @Html.EditorFor(model => model.mobModel.Gold, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.Gold, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.mobModel.Silver)
+                    @Html.EditorFor(model => model.mobModel.Silver, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.Silver, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.mobModel.Copper)
+                    @Html.EditorFor(model => model.mobModel.Copper, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mobModel.Copper, "", new { @class = "text-danger" })
+                </div>
+ 
+            </div>
+
+            <a id="js-addMob-btn" href="javascript:void(0)" class="btn btn-sm btn-success">Add new mob</a>
         </div>
+                    <div class="row">
+                        <!-- ITEM -->
+                        <h2 class="heading">Add Items</h2>
+                        <hr />
+                        If you want an item to be in the room but hidden. check the don't display box. but remmeber to inlude the item in the description for observant players. for containers, select the container and add to container button instead of room.
 
-        <br />
-        <br />
-        <a href="javascript:void(0)" id="js-addItem-btn" class="btn btn-success">Add a new Item</a>
-    </div>
+                        <br />
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Dam min</th>
+                                        <th>Dam Max</th>
+                                        <th>Dam Roll</th>
+                                        <th>Attack Type</th>
+                                        <th>Weapon Type</th>
+                                        <th>EQ Slot</th>
+                                        <th>Min Usage lvl</th>
+                                        <th>Equipable</th>
+                                        <th>Item Flags</th>
+                                        <th>Dam Type</th>
+                                        <th>Look</th>
+                                        <th>Examine</th>
+                                        <th>Room</th>
+                                        <th>Taste</th>
+                                        <th>Touch</th>
+                                        <th>Smell</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="js-item-table"></tbody>
+                            </table>
+                        </div>
 
-
-    <div id="js-toggle-item" style="display: none;">
-
-        <!-- Select ITem-->
-        <div class="form-group">
-            <div class="col-md-12">
-                <label for="listbox">Select Item</label>
-
-                <select name="listbox" id="listbox" class="form-control">
-                    <option>Select item to add</option>
-                    @foreach (var item in Model.itemSelect)
-                    {
-
-                        <option value="@item.name">
-                            @item.name
-                        </option>
-                    }
-                </select>
-
-                <a href="javascript:void(0)">Add Item</a>
-                
-            </div>
-        </div>
-
-    <div class="row">
-        <!-- item name -->
-        <div class="form-group">
-            <div class="col-md-12">
-                @Html.LabelFor(model => model.itemModel.name)
-
-                @Html.EditorFor(model => model.itemModel.name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.itemModel.name, "", new { @class = "text-danger" })
-
-
-                <!-- item type -->
-                //Always an object
-                @Html.LabelFor(model => model.itemModel.type)
-
-                @Html.EnumDropDownListFor(model => model.itemModel.type, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.itemModel.type, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-
-    <!-- If weapon show -->
-
-    <div class="row">
-        <!-- item dam min -->
-        <div class="form-group">
-            <div class="col-md-4">
-                @Html.LabelFor(model => model.itemModel.stats.damMin)
-
-                @Html.EditorFor(model => model.itemModel.stats.damMin, new { htmlAttributes = new { @class = "form-control", @value = 0 } })
-                @Html.ValidationMessageFor(model => model.itemModel.stats.damMin, "", new { @class = "text-danger" })
-            </div>
+                        <br />
+                        <br />
+                        <a href="javascript:void(0)" id="js-addItem-btn" class="btn btn-success">Add a new Item</a>
+                    </div>
 
 
-            <!-- item dam max -->
-            <div class="col-md-4">
-                @Html.LabelFor(model => model.itemModel.stats.damMax)
+                    <div id="js-toggle-item" style="display: none;">
 
-                @Html.EditorFor(model => model.itemModel.stats.damMax, new { htmlAttributes = new { @class = "form-control", @value = 0 } })
-                @Html.ValidationMessageFor(model => model.itemModel.stats.damMax, "", new { @class = "text-danger" })
-            </div>
+                        <!-- Select ITem-->
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label for="listbox">Select Item</label>
 
+                                <select name="listbox" id="listbox" class="form-control">
+                                    <option>Select item to add</option>
+                                    @foreach (var item in Model.itemSelect)
+                                    {
 
-            <!-- item dam roll -->
-            <div class="col-md-4">
-                @Html.LabelFor(model => model.itemModel.stats.damRoll)
-                @Html.EditorFor(model => model.itemModel.stats.damRoll, new { htmlAttributes = new { @class = "form-control", @value = 0 } })
-                @Html.ValidationMessageFor(model => model.itemModel.stats.damRoll, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
+                                        <option value="@item.name">
+                                            @item.name
+                                        </option>
+                                    }
+                                </select>
 
-    <div class="row">
-        <!-- item attack type -->
-        <div class="form-group">
-            <div class="col-md-4">
-                @Html.LabelFor(model => model.itemModel.attackType)
+                                <a href="javascript:void(0)">Add Item</a>
 
-                @Html.EnumDropDownListFor(model => model.itemModel.attackType, "- Please select attack Type -", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.itemModel.attackType, "", new { @class = "text-danger" })
-            </div>
+                            </div>
+                        </div>
 
+                        <div class="row">
+                            <!-- item name -->
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(model => model.itemModel.name)
 
-            <!-- item weapon type -->
-            <div class="col-md-4">
-                @Html.LabelFor(model => model.itemModel.weaponType)
-
-                @Html.EnumDropDownListFor(model => model.itemModel.weaponType, "- Please select attack Type -", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.itemModel.weaponType, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="col-md-4">
-                @Html.LabelFor(model => model.itemModel.slot)
-
-                @Html.EnumDropDownListFor(model => model.itemModel.eqSlot, "- Please select equipment slot -", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.itemModel.slot, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.itemModel.name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.itemModel.name, "", new { @class = "text-danger" })
 
 
-            </div>
-        </div>
-    </div>
-    <!-- /If weapon show -->
+                                    <!-- item type -->
+                                    //Always an object
+                                    @Html.LabelFor(model => model.itemModel.type)
 
-    <div class="row">
-        <!-- item min usage level -->
-        <div class="form-group">
-            <div class="col-md-4">
-                @Html.LabelFor(model => model.itemModel.stats.minUsageLevel)
-
-                @Html.EditorFor(model => model.itemModel.stats.minUsageLevel, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.itemModel.stats.minUsageLevel, "", new { @class = "text-danger" })
-            </div>
-
-
-            <!-- item Equipable -->
-
-            <div class="col-md-4">
-                @Html.LabelFor(model => model.itemModel.equipable)
-
-                @Html.CheckBoxFor(model => model.itemModel.equipable, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.itemModel.equipable, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="col-md-4">
-                @Html.LabelFor(model => model.itemModel.container)
-
-                @Html.CheckBoxFor(model => model.itemModel.container, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.itemModel.container, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <!-- item flags -->
-        <div class="form-group">
-            <div class="col-md-12">
-                @Html.LabelFor(model => model.itemModel.itemFlags)
-                <hr/>
-                <div class="row">
-                    @{
-
-                        foreach (var item in Model.itemModel.itemFlags)
-                        {
-                            <div class="col-xs-3">
-                                <div class="checkbox">
-                                    <input class="js-itemFlags" type="checkbox" name="SelectedSources" value="@item">@item
+                                    @Html.EnumDropDownListFor(model => model.itemModel.type, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.itemModel.type, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                        }
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <!-- item damage type -->
-        <div class="form-group">
-            <div class="col-md-12">
-                @Html.LabelFor(model => model.itemModel.damageType)
-                <hr/>
-                <div class="row">
-                    @{
+                        </div>
 
-                        foreach (var item in Model.itemModel.damageType)
-                        {
-                            <div class="col-xs-3">
-                                <div class="checkbox">
-                                    <input id="stats_@item" class="js-damTypeFlags" type="checkbox" name="SelectedSources" value="@item">@item
+                        <!-- If weapon show -->
+
+                        <div class="row">
+                            <!-- item dam min -->
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.itemModel.stats.damMin)
+
+                                    @Html.EditorFor(model => model.itemModel.stats.damMin, new { htmlAttributes = new { @class = "form-control", @value = 0 } })
+                                    @Html.ValidationMessageFor(model => model.itemModel.stats.damMin, "", new { @class = "text-danger" })
+                                </div>
+
+
+                                <!-- item dam max -->
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.itemModel.stats.damMax)
+
+                                    @Html.EditorFor(model => model.itemModel.stats.damMax, new { htmlAttributes = new { @class = "form-control", @value = 0 } })
+                                    @Html.ValidationMessageFor(model => model.itemModel.stats.damMax, "", new { @class = "text-danger" })
+                                </div>
+
+
+                                <!-- item dam roll -->
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.itemModel.stats.damRoll)
+                                    @Html.EditorFor(model => model.itemModel.stats.damRoll, new { htmlAttributes = new { @class = "form-control", @value = 0 } })
+                                    @Html.ValidationMessageFor(model => model.itemModel.stats.damRoll, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                        }
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- descriptions -->
-    <!-- item description look -->
-    <div class="form-group">
-        <div class="col-md-12">
-            @Html.LabelFor(model => model.itemModel.description.look)
-
-            @Html.TextAreaFor(model => model.itemModel.description.look, 5, 5, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.itemModel.description.look, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <!-- item description examine -->
-    <div class="form-group">
-        <div class="col-md-12">
-            @Html.LabelFor(model => model.itemModel.description.exam)
-
-            @Html.TextAreaFor(model => model.itemModel.description.exam, 5, 5, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.itemModel.description.exam, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <!-- item description room -->
-    <div class="form-group">
-        <div class="col-md-12">
-            @Html.LabelFor(model => model.itemModel.description.room)
-
-            @Html.TextAreaFor(model => model.itemModel.description.room, 5, 5, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.itemModel.description.room, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <!-- item description taste -->
-    <div class="form-group">
-        <div class="col-md-12">
-            @Html.LabelFor(model => model.itemModel.description.taste)
-
-            @Html.TextAreaFor(model => model.itemModel.description.taste, 5, 5, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.itemModel.description.taste, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <!-- item description touch -->
-    <div class="form-group">
-        <div class="col-md-12">
-            @Html.LabelFor(model => model.itemModel.description.touch)
-
-            @Html.TextAreaFor(model => model.itemModel.description.touch, 5, 5, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.itemModel.description.touch, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <!-- item description smell -->
-    <div class="form-group">
-        <div class="col-md-12">
-            @Html.LabelFor(model => model.itemModel.description.smell)
-
-            @Html.TextAreaFor(model => model.itemModel.description.smell, 5, 5, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.itemModel.description.smell, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <a id="js-AddItem" href="javascript:void(0)">Add Item</a>
-    </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-                <a href="#" id="js-add-room" class="btn btn-success">Add Room</a>
-            </div>
-        </div>
-    </div>
-
-
-            @Html.ActionLink("Back to List", "Index")
-                            @section Scripts {
-                                @Scripts.Render("~/bundles/jqueryval")
-
-
-<script>
-    $(function () {
-        console.log("Loaded");
-
-        //Add a new exit
-        $("#js-addKeyword-btn").click(function () {
-
-            console.log("keyword add button click");
-                                           
-
-            $("#js-addKeyword").toggle();
-
-
-        });
-
-        window.keywordArray = [];
-
-        //add exit to array and to table
-        $("#js-addKeyword-save").click(function () {
-
-
-            var keywordData = {
-
-                "name": $("#roomKeywords_name").val(),
-                "look": $("#roomKeywords_look").val(),
-                "examine": $("#roomKeywords_examine").val(),
-                "smell": $("#roomKeywords_smell").val(),
-                "taste": $("#roomKeywords_taste").val(),
-                "touch": $("#roomKeywords_touch").val(),
-                                                
-            }
-
-            keywordArray.push(keywordData);
-
-            var keywordRow = '<tr class="js-exit-row">' +
-                '<td class="js-exit-name">' + keywordData.name + '</td>' +
-                '<td class="js-exit-Region">' + keywordData.look + '</td>' +
-                '<td class="js-exit-Area">' + keywordData.examine + '</td>' +
-                '<td class="js-exit-AreaId">' + keywordData.smell + '</td>' +
-                '<td class="js-exit-Area">' + keywordData.taste + '</td>' +
-                '<td class="js-exit-AreaId">' + keywordData.touch + '</td>' +
-                '' +
-                '</tr>';
-
-
-            $("#js-keyword-table").append(keywordRow);
-
-            $("#js-addKeyword").hide();
-
-            //reset fields and hide Add exit section
-            $("#roomKeywords_name").val('');
-            $("#roomKeywords_look").val('');
-            $("#roomKeywords_examine").val('');
-            $("#roomKeywords_smell").val('');
-            $("#roomKeywords_taste").val('');
-            $("#roomKeywords_touch").val('');
-
-
-        });
-    });
-
-    //add a
-</script>
-
-                                <script>
-                                    $(function () {
-                                        console.log("Loaded");
-
-                                        //Add a new exit
-                                        $("#js-addExit-btn").click(function () {
-
-                                            console.log("Exit add button click");
-                                            console.log("addExit is it visible: " + $('#js-addExit').is(":visible"));
-                                            //Show / hide hidden Exit fields
-
-                                            $("#js-addExit").toggle();
-
-
-                                        });
-
-                                        window.exitsArray = [];
-
-                                        //add exit to array and to table
-                                        $("#js-addExit-save").click(function () {
-
-
-                                            var exitData = {
-
-                                                "name": $("#exitModel_name").val(),
-                                                "areaId": $("#exitModel_areaId").val(),
-                                                "area": $("#exitModel_area").val(),
-                                                "region": $("#exitModel_region").val(),
-                                                "keywords": null,
-                                                "locked": $("#exitModel_locked").val(),
-                                                "keyValue": null,
-                                                "hidden": false,
-                                                "location": null,
-                                                "equipable": false,
-                                                "slot": null,
-                                                "actions": null,
-                                                "description": null,
-                                                "stats": null,
-                                                "keyId": $("#exitModel.keyId").val(),
-
-                                            }
-
-                                            exitsArray.push(exitData);
-
-                                            var exitRow = '<tr class="js-exit-row"><td class="js-exit-name">' + exitData.name + '</td><td class="js-exit-Region">' + exitData.region + '</td><td class="js-exit-Area">' + exitData.area + '</td><td class="js-exit-AreaId">' + exitData.areaId + '</td></tr>';
-
-
-                                            $("#js-exit-table").append(exitRow);
-
-                                            $("#js-addExit").hide();
-
-                                            //reset fields and hide Add exit section
-                                            $("#exitModel_name").val('');
-                                            $("#exitModel_region").val('');
-                                            $("#exitModel_area").val('');
-                                            $("#exitModel_areaId").val('');
-
-
-                                        });
-                                    });
-
-                                    //add a
-                                </script>
-
-                                <script>
-                                    
-                                    //Add a new exit
-                                    $("#js-addItem-btn").click(function () {
-
-                                        console.log("Exit add button click");
-                                        console.log("addExit is it visible: " + $('#js-addExit').is(":visible"));
-                                        //Show / hide hidden Exit fields
-
-                                        $("#js-toggle-item").toggle();
-
-
-                                    });
-
-                                    //add a new item
-                                    $("#js-AddItem").click(function () {
-
-                                        //var itemRow = "<tr><td>" + $("#itemModel_name").val() + "</td>" +
-                                        //"<td>" + $("#itemModel_type").val() + "</td>" +
-                                        //"<td>" + $("#itemModel_stats_damMin").val() + "</td>" +
-                                        //"<td>" + $("#itemModel_stats_damMax").val() + "</td>" +
-                                        //"<td>" + $("#itemModel_stats_damRoll").val() + "</td>" +
-                                        //"<td>" + $("#itemModel_attackType option:selected").text() + "</td>" +
-                                        //"<td>" + $("#itemModel_weaponType option:selected").text() + "</td>" +
-                                        //"<td>" + $("#itemModel_eqSlot option:selected").text() + "</td>" +
-                                        //"<td>" + $("#itemModel_stats_minUsageLevel").val() + "</td>" +
-                                        //"<td>" + $("#itemModel_equipable").val() + "</td>" +
-                                        //"<td>" + itemFlagValues + "</td>" +
-                                        //"<td>" + itemDamTypeValues + "</td>" +
-                                        //"<td>" + $("#itemModel_description_look").val() + "</td>" +
-                                        //"<td>" + $("#itemModel_description_exam").val() + "</td>" +
-                                        //"<td>" + $("#itemModel_description_room").val() + "</td>" +
-                                        //"<td>" + $("#itemModel_description_taste").val() + "</td>" +
-                                        //"<td>" + $("#itemModel_description_touch").val() + "</td>" +
-                                        //"<td>" + $("#itemModel_description_smell").val() + "</td></tr>";
-
-                                        //{
-                                        //    "_id" : ObjectId("5774e50ffa58fa4f84b6a5e0"),
-                                        //    "name" : "test Sword",
-                                        //    "keywords" : null,
-                                        //    "locked" : false,
-                                        //    "keyValue" : null,
-                                        //    "hidden" : false,
-                                        //    "location" : "room",
-                                        //    "equipable" : true,
-                                        //    "slot" : "RightHand",
-                                        //    "actions" : {
-                                        //        "container" : false,
-                                        //        "wield" : "wield"
-                                        //    },
-                                        //    "description" : {
-                                        //        "taste" : null,
-                                        //        "touch" : null,
-                                        //        "smell" : null,
-                                        //        "look" : "You look at a short sword",
-                                        //        "exam" : "You look closely at a short sword",
-                                        //        "room" : "A short Sword is here."
-                                        //    },
-                                        //    "stats" : {
-                                        //        "damMin" : 1,
-                                        //        "damMax" : 5,
-                                        //        "damRoll" : 0,
-                                        //        "poisoned" : false,
-                                        //        "flaming" : false,
-                                        //        "frozen" : false,
-                                        //        "acid" : false,
-                                        //        "lightning" : false,
-                                        //        "cursed" : false,
-                                        //        "blessed" : false,
-                                        //        "invisible" : false,
-                                        //        "enchantedLevel" : 0,
-                                        //        "minUsageLevel" : 0,
-                                        //        "worth" : 0
-                                        //    },
-                                        //    "containerItems" : null,
-                                        //    "damageType" : 0,
-                                        //    "armourType" : 0,
-                                        //    "itemFlags" : 0,
-                                        //    "type" : 0,
-                                        //    "attackType" : 0,
-                                        //    "eqSlot" : 0,
-                                        //    "weaponType" : 0,
-                                        //    "weaponSpeed" : 0
-                                        //}
-                                        var itemFlagValues = $('.js-itemFlags:checked').map(function () {
-                                            return this.value;
-                                        }).get();
-
-                                        var itemDamTypeValues = $('.js-damTypeFlags:checked').map(function () {
-                                            return this.value;
-                                        }).get();
-
-                                        window.item = [];
-
-                                        var data = {
-                                            type: $("#itemModel_type").val(),
-                                            location: "room",
-                                            equipable: $("#itemModel_equipable").val(),
-                                            slot: $("#itemModel_eqSlot option:selected").val(),
-                                            name: $("#itemModel_name").val(),
-                                            container: $("#itemModel_container").val(),
-                                            actions: {
-                                                wield: "wield"
-                                            },
-                                            description: {
-                                                look: $("#itemModel_description_look").val(),
-                                                exam: $("#itemModel_description_exam").val(),
-                                                room: $("#itemModel_description_room").val(),
-                                                taste: $("#itemModel_description_taste").val(),
-                                                touch: $("#itemModel_description_touch").val(),
-                                                smell: $("#itemModel_description_smell").val(),
-                                            },
-                                            stats: {
-                                                damMin: $("#itemModel_stats_damMin").val(),
-                                                damMax: $("#itemModel_stats_damMax").val(),
-                                                damRoll: $("#itemModel_stats_damRoll").val(),
-                                                minUsageLevel: $("#itemModel_stats_minUsageLevel").val(),
-                                                worth: 0
-                                            },
-                                            containerItems: null,
-                                            itemFlags: itemFlagValues,
-                                            damageType: itemDamTypeValues
-                                        };
-
-                                        window.item.push(data);
-                                        /*
-                                            Push item data to an array and display under added Items
-                                         */
-
-                                        $.ajax({
-                                            type: "POST",
-                                            url: "/Room/addItem",
-                                            content: "application/json; charset=utf-8",
-                                            dataType: "json",
-                                            data: data,
-                                            success: function (d) {
-
-                                            },
-                                            error: function (xhr, textStatus, errorThrown) {
-                                                // TODO: Show error
-                                            },
-                                            complete: function () {
-
-
-                                                var itemRow = "<tr><td>" + data.name + "</td>" +
-                                                    "<td>" + data.type + "</td>" +
-                                                    "<td>" + data.stats.damMin + "</td>" +
-                                                    "<td>" + data.stats.damMax + "</td>" +
-                                                    "<td>" + $("#itemModel_stats_damRoll").val() + "</td>" +
-                                                    "<td>" + $("#itemModel_attackType option:selected").text() + "</td>" +
-                                                    "<td>" + $("#itemModel_weaponType option:selected").text() + "</td>" +
-                                                    "<td>" + $("#itemModel_eqSlot option:selected").text() + "</td>" +
-                                                    "<td>" + $("#itemModel_stats_minUsageLevel").val() + "</td>" +
-                                                    "<td>" + data.equipable + "</td>" +
-                                                    "<td>" + itemFlagValues + "</td>" +
-                                                    "<td>" + itemDamTypeValues + "</td>" +
-                                                    "<td>" + data.description.look + "</td>" +
-                                                    "<td>" + data.description.exam + "</td>" +
-                                                    "<td>" + data.description.room + "</td>" +
-                                                    "<td>" + data.description.taste + "</td>" +
-                                                    "<td>" + data.description.touch + "</td>" +
-                                                    "<td>" + data.description.smell + "</td></tr>";
-
-                                                $("#js-item-table").append(itemRow);
-                                            }
-                                        });
-
-                                    });
-                                </script>
-
-                                <script>
-                                    $("#js-add-room").click(function () {
-
-                                        var roomModel = {
-                                            "roomModel": {
-                                                "region": $('#roomModel_region').val(),
-                                                "area": $('#roomModel_area').val(),
-                                                "areaId": $('#roomModel_areaId').val(),
-                                                "clean": true,
-                                                "modified": "",
-                                                "title": $('#roomModel_title').val(),
-                                                "description": $('#roomModel_description').val(),
-                                                "terrain": $('#roomModel.terrain').val(),
-                                                "keywords": keywordArray,
-                                                "exits": window.exitsArray,
-                                                "players": [],
-                                                "fighting": [],
-                                                "mobs": [],
-                                                "items": window.item,
-                                                "corpses": []
+                        </div>
+
+                        <div class="row">
+                            <!-- item attack type -->
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.itemModel.attackType)
+
+                                    @Html.EnumDropDownListFor(model => model.itemModel.attackType, "- Please select attack Type -", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.itemModel.attackType, "", new { @class = "text-danger" })
+                                </div>
+
+
+                                <!-- item weapon type -->
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.itemModel.weaponType)
+
+                                    @Html.EnumDropDownListFor(model => model.itemModel.weaponType, "- Please select attack Type -", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.itemModel.weaponType, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.itemModel.slot)
+
+                                    @Html.EnumDropDownListFor(model => model.itemModel.eqSlot, "- Please select equipment slot -", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.itemModel.slot, "", new { @class = "text-danger" })
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /If weapon show -->
+
+                        <div class="row">
+                            <!-- item min usage level -->
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.itemModel.stats.minUsageLevel)
+
+                                    @Html.EditorFor(model => model.itemModel.stats.minUsageLevel, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.itemModel.stats.minUsageLevel, "", new { @class = "text-danger" })
+                                </div>
+
+
+                                <!-- item Equipable -->
+
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.itemModel.equipable)
+
+                                    @Html.CheckBoxFor(model => model.itemModel.equipable, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.itemModel.equipable, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.itemModel.container)
+
+                                    @Html.CheckBoxFor(model => model.itemModel.container, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.itemModel.container, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- item flags -->
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(model => model.itemModel.itemFlags)
+                                    <hr />
+                                    <div class="row">
+                                        @{
+
+                                            foreach (var item in Model.itemModel.itemFlags)
+                                            {
+                                                <div class="col-xs-3">
+                                                    <div class="checkbox">
+                                                        <input class="js-itemFlags" type="checkbox" name="SelectedSources" value="@item">@item
+                                                    </div>
+                                                </div>
                                             }
                                         }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- item damage type -->
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(model => model.itemModel.damageType)
+                                    <hr />
+                                    <div class="row">
+                                        @{
 
-                                        $.ajax({
-                                            type: "POST",
-                                            url: "/Room/create",
-                                            content: "application/json; charset=utf-8",
-                                            dataType: "json",
-                                            data: roomModel,
-                                            success: function (d) {
-
-                                            },
-                                            error: function (xhr, textStatus, errorThrown) {
-                                                // TODO: Show error
-                                            },
-                                            complete: function () {
-
-
+                                            foreach (var item in Model.itemModel.damageType)
+                                            {
+                                                <div class="col-xs-3">
+                                                    <div class="checkbox">
+                                                        <input id="stats_@item" class="js-damTypeFlags" type="checkbox" name="SelectedSources" value="@item">@item
+                                                    </div>
+                                                </div>
                                             }
-                                        });
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                                    });
-                                </script>
+
+                        <!-- descriptions -->
+                        <!-- item description look -->
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @Html.LabelFor(model => model.itemModel.description.look)
+
+                                @Html.TextAreaFor(model => model.itemModel.description.look, 5, 5, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.itemModel.description.look, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- item description examine -->
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @Html.LabelFor(model => model.itemModel.description.exam)
+
+                                @Html.TextAreaFor(model => model.itemModel.description.exam, 5, 5, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.itemModel.description.exam, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- item description room -->
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @Html.LabelFor(model => model.itemModel.description.room)
+
+                                @Html.TextAreaFor(model => model.itemModel.description.room, 5, 5, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.itemModel.description.room, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- item description taste -->
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @Html.LabelFor(model => model.itemModel.description.taste)
+
+                                @Html.TextAreaFor(model => model.itemModel.description.taste, 5, 5, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.itemModel.description.taste, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- item description touch -->
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @Html.LabelFor(model => model.itemModel.description.touch)
+
+                                @Html.TextAreaFor(model => model.itemModel.description.touch, 5, 5, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.itemModel.description.touch, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- item description smell -->
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @Html.LabelFor(model => model.itemModel.description.smell)
+
+                                @Html.TextAreaFor(model => model.itemModel.description.smell, 5, 5, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.itemModel.description.smell, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <a id="js-AddItem" href="javascript:void(0)">Add Item</a>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                            <a href="#" id="js-add-room" class="btn btn-success">Add Room</a>
+                        </div>
+                    </div>
+                </div>
+
+
+                @Html.ActionLink("Back to List", "Index")
+                @section Scripts {
+                    @Scripts.Render("~/bundles/jqueryval")
+
+
+                    <script>
+                        $(function () {
+                            console.log("Loaded");
+
+                            //Add a new exit
+                            $("#js-addKeyword-btn").click(function () {
+
+                                console.log("keyword add button click");
+
+
+                                $("#js-addKeyword").toggle();
+
+
+                            });
+
+                            window.keywordArray = [];
+
+                            //add exit to array and to table
+                            $("#js-addKeyword-save").click(function () {
+
+
+                                var keywordData = {
+
+                                    "name": $("#roomKeywords_name").val(),
+                                    "look": $("#roomKeywords_look").val(),
+                                    "examine": $("#roomKeywords_examine").val(),
+                                    "smell": $("#roomKeywords_smell").val(),
+                                    "taste": $("#roomKeywords_taste").val(),
+                                    "touch": $("#roomKeywords_touch").val(),
+
+                                }
+
+                                keywordArray.push(keywordData);
+
+                                var keywordRow = '<tr class="js-exit-row">' +
+                                    '<td class="js-exit-name">' + keywordData.name + '</td>' +
+                                    '<td class="js-exit-Region">' + keywordData.look + '</td>' +
+                                    '<td class="js-exit-Area">' + keywordData.examine + '</td>' +
+                                    '<td class="js-exit-AreaId">' + keywordData.smell + '</td>' +
+                                    '<td class="js-exit-Area">' + keywordData.taste + '</td>' +
+                                    '<td class="js-exit-AreaId">' + keywordData.touch + '</td>' +
+                                    '' +
+                                    '</tr>';
+
+
+                                $("#js-keyword-table").append(keywordRow);
+
+                                $("#js-addKeyword").hide();
+
+                                //reset fields and hide Add exit section
+                                $("#roomKeywords_name").val('');
+                                $("#roomKeywords_look").val('');
+                                $("#roomKeywords_examine").val('');
+                                $("#roomKeywords_smell").val('');
+                                $("#roomKeywords_taste").val('');
+                                $("#roomKeywords_touch").val('');
+
+
+                            });
+                        });
+
+                        //add a
+                    </script>
+
+                    <script>
+                        $(function () {
+                            console.log("Loaded");
+
+                            //Add a new exit
+                            $("#js-addExit-btn").click(function () {
+
+                                console.log("Exit add button click");
+                                console.log("addExit is it visible: " + $('#js-addExit').is(":visible"));
+                                //Show / hide hidden Exit fields
+
+                                $("#js-addExit").toggle();
+
+
+                            });
+
+                            window.exitsArray = [];
+
+                            //add exit to array and to table
+                            $("#js-addExit-save").click(function () {
+
+
+                                var exitData = {
+
+                                    "name": $("#exitModel_name").val(),
+                                    "areaId": $("#exitModel_areaId").val(),
+                                    "area": $("#exitModel_area").val(),
+                                    "region": $("#exitModel_region").val(),
+                                    "keywords": null,
+                                    "locked": $("#exitModel_locked").val(),
+                                    "keyValue": null,
+                                    "hidden": false,
+                                    "location": null,
+                                    "equipable": false,
+                                    "slot": null,
+                                    "actions": null,
+                                    "description": null,
+                                    "stats": null,
+                                    "keyId": $("#exitModel.keyId").val(),
+
+                                }
+
+                                exitsArray.push(exitData);
+
+                                var exitRow = '<tr class="js-exit-row"><td class="js-exit-name">' + exitData.name + '</td><td class="js-exit-Region">' + exitData.region + '</td><td class="js-exit-Area">' + exitData.area + '</td><td class="js-exit-AreaId">' + exitData.areaId + '</td></tr>';
+
+
+                                $("#js-exit-table").append(exitRow);
+
+                                $("#js-addExit").hide();
+
+                                //reset fields and hide Add exit section
+                                $("#exitModel_name").val('');
+                                $("#exitModel_region").val('');
+                                $("#exitModel_area").val('');
+                                $("#exitModel_areaId").val('');
+
+
+                            });
+                        });
+
+                        //add a
+                    </script>
+
+                    <script>
+
+                        //Add a new exit
+                        $("#js-addItem-btn").click(function () {
+
+                            console.log("Exit add button click");
+                            console.log("addExit is it visible: " + $('#js-addExit').is(":visible"));
+                            //Show / hide hidden Exit fields
+
+                            $("#js-toggle-item").toggle();
+
+
+                        });
+
+                        //add a new item
+                        $("#js-AddItem").click(function () {
+
+                            //var itemRow = "<tr><td>" + $("#itemModel_name").val() + "</td>" +
+                            //"<td>" + $("#itemModel_type").val() + "</td>" +
+                            //"<td>" + $("#itemModel_stats_damMin").val() + "</td>" +
+                            //"<td>" + $("#itemModel_stats_damMax").val() + "</td>" +
+                            //"<td>" + $("#itemModel_stats_damRoll").val() + "</td>" +
+                            //"<td>" + $("#itemModel_attackType option:selected").text() + "</td>" +
+                            //"<td>" + $("#itemModel_weaponType option:selected").text() + "</td>" +
+                            //"<td>" + $("#itemModel_eqSlot option:selected").text() + "</td>" +
+                            //"<td>" + $("#itemModel_stats_minUsageLevel").val() + "</td>" +
+                            //"<td>" + $("#itemModel_equipable").val() + "</td>" +
+                            //"<td>" + itemFlagValues + "</td>" +
+                            //"<td>" + itemDamTypeValues + "</td>" +
+                            //"<td>" + $("#itemModel_description_look").val() + "</td>" +
+                            //"<td>" + $("#itemModel_description_exam").val() + "</td>" +
+                            //"<td>" + $("#itemModel_description_room").val() + "</td>" +
+                            //"<td>" + $("#itemModel_description_taste").val() + "</td>" +
+                            //"<td>" + $("#itemModel_description_touch").val() + "</td>" +
+                            //"<td>" + $("#itemModel_description_smell").val() + "</td></tr>";
+
+                            //{
+                            //    "_id" : ObjectId("5774e50ffa58fa4f84b6a5e0"),
+                            //    "name" : "test Sword",
+                            //    "keywords" : null,
+                            //    "locked" : false,
+                            //    "keyValue" : null,
+                            //    "hidden" : false,
+                            //    "location" : "room",
+                            //    "equipable" : true,
+                            //    "slot" : "RightHand",
+                            //    "actions" : {
+                            //        "container" : false,
+                            //        "wield" : "wield"
+                            //    },
+                            //    "description" : {
+                            //        "taste" : null,
+                            //        "touch" : null,
+                            //        "smell" : null,
+                            //        "look" : "You look at a short sword",
+                            //        "exam" : "You look closely at a short sword",
+                            //        "room" : "A short Sword is here."
+                            //    },
+                            //    "stats" : {
+                            //        "damMin" : 1,
+                            //        "damMax" : 5,
+                            //        "damRoll" : 0,
+                            //        "poisoned" : false,
+                            //        "flaming" : false,
+                            //        "frozen" : false,
+                            //        "acid" : false,
+                            //        "lightning" : false,
+                            //        "cursed" : false,
+                            //        "blessed" : false,
+                            //        "invisible" : false,
+                            //        "enchantedLevel" : 0,
+                            //        "minUsageLevel" : 0,
+                            //        "worth" : 0
+                            //    },
+                            //    "containerItems" : null,
+                            //    "damageType" : 0,
+                            //    "armourType" : 0,
+                            //    "itemFlags" : 0,
+                            //    "type" : 0,
+                            //    "attackType" : 0,
+                            //    "eqSlot" : 0,
+                            //    "weaponType" : 0,
+                            //    "weaponSpeed" : 0
+                            //}
+                            var itemFlagValues = $('.js-itemFlags:checked').map(function () {
+                                return this.value;
+                            }).get();
+
+                            var itemDamTypeValues = $('.js-damTypeFlags:checked').map(function () {
+                                return this.value;
+                            }).get();
+
+                            window.item = [];
+
+                            var data = {
+                                type: $("#itemModel_type").val(),
+                                location: "room",
+                                equipable: $("#itemModel_equipable").val(),
+                                slot: $("#itemModel_eqSlot option:selected").val(),
+                                name: $("#itemModel_name").val(),
+                                container: $("#itemModel_container").val(),
+                                actions: {
+                                    wield: "wield"
+                                },
+                                description: {
+                                    look: $("#itemModel_description_look").val(),
+                                    exam: $("#itemModel_description_exam").val(),
+                                    room: $("#itemModel_description_room").val(),
+                                    taste: $("#itemModel_description_taste").val(),
+                                    touch: $("#itemModel_description_touch").val(),
+                                    smell: $("#itemModel_description_smell").val(),
+                                },
+                                stats: {
+                                    damMin: $("#itemModel_stats_damMin").val(),
+                                    damMax: $("#itemModel_stats_damMax").val(),
+                                    damRoll: $("#itemModel_stats_damRoll").val(),
+                                    minUsageLevel: $("#itemModel_stats_minUsageLevel").val(),
+                                    worth: 0
+                                },
+                                containerItems: null,
+                                itemFlags: itemFlagValues,
+                                damageType: itemDamTypeValues
+                            };
+
+                            window.item.push(data);
+                            /*
+                                Push item data to an array and display under added Items
+                             */
+
+                            $.ajax({
+                                type: "POST",
+                                url: "/Room/addItem",
+                                content: "application/json; charset=utf-8",
+                                dataType: "json",
+                                data: data,
+                                success: function (d) {
+
+                                },
+                                error: function (xhr, textStatus, errorThrown) {
+                                    // TODO: Show error
+                                },
+                                complete: function () {
+
+
+                                    var itemRow = "<tr><td>" + data.name + "</td>" +
+                                        "<td>" + data.type + "</td>" +
+                                        "<td>" + data.stats.damMin + "</td>" +
+                                        "<td>" + data.stats.damMax + "</td>" +
+                                        "<td>" + $("#itemModel_stats_damRoll").val() + "</td>" +
+                                        "<td>" + $("#itemModel_attackType option:selected").text() + "</td>" +
+                                        "<td>" + $("#itemModel_weaponType option:selected").text() + "</td>" +
+                                        "<td>" + $("#itemModel_eqSlot option:selected").text() + "</td>" +
+                                        "<td>" + $("#itemModel_stats_minUsageLevel").val() + "</td>" +
+                                        "<td>" + data.equipable + "</td>" +
+                                        "<td>" + itemFlagValues + "</td>" +
+                                        "<td>" + itemDamTypeValues + "</td>" +
+                                        "<td>" + data.description.look + "</td>" +
+                                        "<td>" + data.description.exam + "</td>" +
+                                        "<td>" + data.description.room + "</td>" +
+                                        "<td>" + data.description.taste + "</td>" +
+                                        "<td>" + data.description.touch + "</td>" +
+                                        "<td>" + data.description.smell + "</td></tr>";
+
+                                    $("#js-item-table").append(itemRow);
+                                }
+                            });
+
+                        });
+                    </script>
+
+                    <script>
+                        $("#js-add-room").click(function () {
+
+                            var roomModel = {
+                                "roomModel": {
+                                    "region": $('#roomModel_region').val(),
+                                    "area": $('#roomModel_area').val(),
+                                    "areaId": $('#roomModel_areaId').val(),
+                                    "clean": true,
+                                    "modified": "",
+                                    "title": $('#roomModel_title').val(),
+                                    "description": $('#roomModel_description').val(),
+                                    "terrain": $('#roomModel.terrain').val(),
+                                    "keywords": keywordArray,
+                                    "exits": window.exitsArray,
+                                    "players": [],
+                                    "fighting": [],
+                                    "mobs": [],
+                                    "items": window.item,
+                                    "corpses": []
+                                }
                             }
 
+                            $.ajax({
+                                type: "POST",
+                                url: "/Room/create",
+                                content: "application/json; charset=utf-8",
+                                dataType: "json",
+                                data: roomModel,
+                                success: function (d) {
 
-                            }
+                                },
+                                error: function (xhr, textStatus, errorThrown) {
+                                    // TODO: Show error
+                                },
+                                complete: function () {
+
+
+                                }
+                            });
+
+                        });
+                    </script>
+                }
+
+
+                }

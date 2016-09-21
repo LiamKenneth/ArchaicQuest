@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 using MIMWebClient.Core.Item;
 using MIMWebClient.Core.Room;
+using MIMWebClient.Core.PlayerSetup;
 
 namespace MIMWebClient.Controllers.Admin.Room
 {
@@ -230,6 +231,7 @@ public class ToPage
     public Room roomModel { get; set; }
     public Item itemModel { get; set; }
     public Exit exitModel { get; set; }
+    public Player mobModel { get; set; }
 
     public RoomObject roomKeywords { get; set; }
     public List<Item> itemSelect { get; set; }
@@ -240,6 +242,7 @@ public class ToPage
         itemModel = new Item();
         exitModel = new Exit();
     }
+        
 }
 
 public class dummy

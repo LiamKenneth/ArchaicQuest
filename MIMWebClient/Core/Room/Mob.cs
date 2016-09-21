@@ -19,7 +19,7 @@ namespace MIMWebClient.Core.Room
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId _id { get; set; }
 
-        [BsonElement("hidd")]
+        [BsonElement("hid")]
         public string HubGuid;
 
         [BsonElement("ty")]
@@ -82,6 +82,9 @@ namespace MIMWebClient.Core.Room
 
         [BsonElement("eq")]
         public Equipment Equipment { get; set; }
+
+        [BsonElement("sk")]
+        public List<Skill> Skills { get; set; }
 
         //Game stats
         [BsonElement("ex")]
@@ -172,108 +175,49 @@ namespace MIMWebClient.Core.Room
         [BsonElement("ari")]
         public int AreaId;
 
-        public Mob(
-            string id,
-            string name,
-            string email,
-            string password,
-            string gender,
-            string race,
-            string selectedClass,
-            int strength,
-            int dexterity,
-            int constitution,
-            int wisdom,
-            int intelligence,
-            int charisma)
-        {
-            this.HubGuid = id;
-            this.Type = "Mob";
-            this.Email = email;
-            this.Password = password;
+        //NPC Properties
+        [BsonElement("ne")]
+        public List<string> Emotes;
 
-            //info
-            this.Name = name;
-            this.Gender = gender;
-            this.Race = race;
-            this.SelectedClass = selectedClass;
-            this.Level = 1;
-            this.AlignmentScore = 0;
-            this.Experience = 0;
-            this.ExperienceToNextLevel = 1000; // create class to work out
-            this.HitPoints = 100; // class to workout
-            this.MaxHitPoints = 30;
-            this.ManaPoints = 50;
-            this.MaxManaPoints = 50;
-            this.MovePoints = 60;
-            this.MaxMovePoints = 60;
-            this.Explored = 1;
-            this.HitRoll = 1;
-            this.DamRoll = 1;
-            this.Wimpy = 10;
-            this.Hours = 0;
-            this.Weight = 0;
-            this.MaxWeight = 70; // class to workout
-            this.Status = "Standing"; // enum property? 1 standing
-            this.Target = null;
-            this.Inventory = this.Inventory ?? (this.Inventory = new List<Item>());
+        //NPC Properties
+        [BsonElement("nid")]
+        public Guid NPCId;
 
-            //kills
-            this.MobKills = 0;
-            this.MobDeaths = 0;
-            this.Pkills = 0;
-            this.PkDeaths = 0;
-            this.PkPoints = 0;
+        //NPC Properties
+        [BsonElement("nr")]
+        public bool Roam;
 
-            //Money
-            this.Gold = 0;
-            this.Silver = 5;
-            this.Copper = 100;
+        //NPC Properties
+        [BsonElement("na")]
+        public bool Aggro;
 
-            //Location
-            this.Region = "Valston";
-            this.Area = "Town";
-            this.AreaId = 0;
+        //NPC Properties
+        [BsonElement("ng")]
+        public bool Greet;
+        //NPC Properties
 
-            //Eq
-            this.Equipment = this.Equipment ?? (this.Equipment = new Equipment());
-            this.Equipment.Floating = this.Equipment.Floating;
-            this.Equipment.Head = Equipment.Head;
-            this.Equipment.Face = Equipment.Face;
-            this.Equipment.Eyes = Equipment.Eyes;
-            this.Equipment.LeftEar = Equipment.LeftEar;
-            this.Equipment.RightEar = Equipment.RightEar;
-            this.Equipment.Neck = Equipment.Neck;
-            this.Equipment.Neck2 = Equipment.Neck2;
-            this.Equipment.Cloak = Equipment.Cloak;
-            this.Equipment.AboutBody = Equipment.AboutBody;
-            this.Equipment.Body = Equipment.Body;
-            this.Equipment.Waist = Equipment.Waist;
-            this.Equipment.LeftSheath = Equipment.LeftSheath;
-            this.Equipment.RightSheath = Equipment.RightSheath;
-            this.Equipment.BackSheath = Equipment.BackSheath;
-            this.Equipment.Back = Equipment.Back;
-            this.Equipment.LeftWrist = Equipment.LeftWrist;
-            this.Equipment.RightWrist = Equipment.RightWrist;
-            this.Equipment.LeftHand = Equipment.LeftHand;
-            this.Equipment.RightHand = Equipment.RightHand;
-            this.Equipment.LeftRing = Equipment.LeftRing;
-            this.Equipment.RightRing = Equipment.RightRing;
-            this.Equipment.Legs = Equipment.Legs;
-            this.Equipment.Feet = Equipment.Feet;
+        [BsonElement("ngm")]
+        public string GreetMessage;
 
+        //NPC Properties
+        [BsonElement("ns")]
+        public bool Shop;
 
-            //attributes
+        [BsonElement("nsm")]
+        public string sellerMessage;
 
-            this.Strength = strength;
-            this.Dexterity = dexterity;
-            this.Constitution = constitution;
-            this.Wisdom = wisdom;
-            this.Intelligence = intelligence;
-            this.Charisma = charisma;
+        //NPC Properties
+        [BsonElement("nsi")]
+        public List<Item> itemsToSell;
 
+        //NPC Properties
+        [BsonElement("nt")]
+        public bool Trainer;
 
+        //NPC Properties
+        [BsonElement("ngu")]
+        public bool Guard;
 
-        }
+ 
     }
 }
