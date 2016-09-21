@@ -17,7 +17,7 @@ namespace MIM.Test.Core.Events
             //var isConDict = RoomCache.try
             //Assert.That(expectedResult, Is.EqualTo(15));
 
-            var mockPlayer = new MIMWebClient.Core.PlayerSetup.Player("test", "Liam", "liam@email.com", "123", "Male", "Human", "Mage", 10, 13, 16, 17, 20, 15);
+          //  var mockPlayer = new MIMWebClient.Core.PlayerSetup.Player("test", "Liam", "liam@email.com", "123", "Male", "Human", "Mage", 10, 13, 16, 17, 20, 15);
             var mockRoom = new MIMWebClient.Core.Room.Room();
 
 

@@ -222,32 +222,20 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("ngu")]
         public bool Guard;
 
-        public Player(
-            string id,
-            string name,
-            string email,
-            string password,
-            string gender,
-            string race,
-            string selectedClass,
-            int strength,
-            int dexterity,
-            int constitution,
-            int wisdom,
-            int intelligence,
-            int charisma)
+        public Player()
         {
-            this.HubGuid = id;
-            this.Type = "Player";
-            this.Email = email;
-            this.Password = password;
+            //this.HubGuid = id;
+            //this.Type = "Player";
+            //this.Email = email;
+            //this.Password = password;
 
-            //info
-            this.Name = name;
-            this.Gender = gender;
-            this.Race = race;
-            this.SelectedClass = selectedClass;
+            ////info
+            //this.Name = name;
+            //this.Gender = gender;
+            //this.Race = race;
+            //this.SelectedClass = selectedClass;
             this.Level = 1;
+            this.Description = this.Description ?? string.Empty;
             this.AlignmentScore = 0;
             this.Experience = 500;
             this.ExperienceToNextLevel = 1000; // create class to work out
@@ -328,12 +316,12 @@ namespace MIMWebClient.Core.PlayerSetup
 
             //attributes
 
-            this.Strength = strength;
-            this.Dexterity = dexterity;
-            this.Constitution = constitution;
-            this.Wisdom = wisdom;
-            this.Intelligence = intelligence;
-            this.Charisma = charisma;
+            //this.Strength = strength;
+            //this.Dexterity = dexterity;
+            //this.Constitution = constitution;
+            //this.Wisdom = wisdom;
+            //this.Intelligence = intelligence;
+            //this.Charisma = charisma;
 
 
 

@@ -217,120 +217,121 @@
  
                     </tr>
                 </thead>
-                <tbody id="js-exit-table"></tbody>
+                <tbody id="js-mob-table"></tbody>
             </table>
+            <div id="js-toggle-mob" style="display: none;">
+                <div class="form-group">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.mobModel.Name)
+                        @Html.EditorFor(model => model.mobModel.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.Name, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.mobModel.Gender)
+                        @Html.EditorFor(model => model.mobModel.Gender, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.Gender, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.mobModel.Race)
+                        @Html.EditorFor(model => model.mobModel.Race, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.Race, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.mobModel.SelectedClass)
+                        @Html.EditorFor(model => model.mobModel.SelectedClass, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.SelectedClass, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.mobModel.Strength)
+                        @Html.EditorFor(model => model.mobModel.Strength, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.Strength, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.mobModel.Dexterity)
+                        @Html.EditorFor(model => model.mobModel.Dexterity, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.Dexterity, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.mobModel.Constitution)
+                        @Html.EditorFor(model => model.mobModel.Constitution, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.Constitution, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.mobModel.Wisdom)
+                        @Html.EditorFor(model => model.mobModel.Wisdom, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.Wisdom, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.mobModel.Intelligence)
+                        @Html.EditorFor(model => model.mobModel.Intelligence, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.Intelligence, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.mobModel.Charisma)
+                        @Html.EditorFor(model => model.mobModel.Charisma, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.Charisma, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.mobModel.Level)
+                        @Html.EditorFor(model => model.mobModel.Level, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.Level, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.mobModel.AlignmentScore)
+                        @Html.EditorFor(model => model.mobModel.AlignmentScore, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.AlignmentScore, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.mobModel.MaxHitPoints)
+                        @Html.EditorFor(model => model.mobModel.MaxHitPoints, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.MaxHitPoints, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.mobModel.MaxManaPoints)
+                        @Html.EditorFor(model => model.mobModel.MaxManaPoints, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.MaxManaPoints, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.mobModel.MaxMovePoints)
+                        @Html.EditorFor(model => model.mobModel.MaxMovePoints, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.MaxMovePoints, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.mobModel.HitRoll)
+                        @Html.EditorFor(model => model.mobModel.HitRoll, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.HitRoll, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.mobModel.DamRoll)
+                        @Html.EditorFor(model => model.mobModel.DamRoll, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.DamRoll, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.mobModel.Status)
+                        @Html.EditorFor(model => model.mobModel.Status, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.Status, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.mobModel.Gold)
+                        @Html.EditorFor(model => model.mobModel.Gold, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.Gold, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.mobModel.Silver)
+                        @Html.EditorFor(model => model.mobModel.Silver, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.Silver, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.mobModel.Copper)
+                        @Html.EditorFor(model => model.mobModel.Copper, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mobModel.Copper, "", new { @class = "text-danger" })
+                    </div>
 
-            <div class="form-group">
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.mobModel.Name)
-                    @Html.EditorFor(model => model.mobModel.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.Name, "", new { @class = "text-danger" })
                 </div>
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.mobModel.Gender)
-                    @Html.EditorFor(model => model.mobModel.Gender, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.Gender, "", new { @class = "text-danger" })
                 </div>
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.mobModel.Race)
-                    @Html.EditorFor(model => model.mobModel.Race, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.Race, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.mobModel.SelectedClass)
-                    @Html.EditorFor(model => model.mobModel.SelectedClass, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.SelectedClass, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-3">
-                    @Html.LabelFor(model => model.mobModel.Strength)
-                    @Html.EditorFor(model => model.mobModel.Strength, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.Strength, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-3">
-                    @Html.LabelFor(model => model.mobModel.Dexterity)
-                    @Html.EditorFor(model => model.mobModel.Dexterity, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.Dexterity, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-3">
-                    @Html.LabelFor(model => model.mobModel.Constitution)
-                    @Html.EditorFor(model => model.mobModel.Constitution, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.Constitution, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-3">
-                    @Html.LabelFor(model => model.mobModel.Wisdom)
-                    @Html.EditorFor(model => model.mobModel.Wisdom, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.Wisdom, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-3">
-                    @Html.LabelFor(model => model.mobModel.Intelligence)
-                    @Html.EditorFor(model => model.mobModel.Intelligence, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.Intelligence, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-3">
-                    @Html.LabelFor(model => model.mobModel.Charisma)
-                    @Html.EditorFor(model => model.mobModel.Charisma, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.Charisma, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.mobModel.Level)
-                    @Html.EditorFor(model => model.mobModel.Level, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.Level, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.mobModel.AlignmentScore)
-                    @Html.EditorFor(model => model.mobModel.AlignmentScore, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.AlignmentScore, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.mobModel.MaxHitPoints)
-                    @Html.EditorFor(model => model.mobModel.MaxHitPoints, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.MaxHitPoints, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.mobModel.MaxManaPoints)
-                    @Html.EditorFor(model => model.mobModel.MaxManaPoints, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.MaxManaPoints, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.mobModel.MaxMovePoints)
-                    @Html.EditorFor(model => model.mobModel.MaxMovePoints, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.MaxMovePoints, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.mobModel.HitRoll)
-                    @Html.EditorFor(model => model.mobModel.HitRoll, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.HitRoll, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.mobModel.DamRoll)
-                    @Html.EditorFor(model => model.mobModel.DamRoll, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.DamRoll, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.mobModel.Status)
-                    @Html.EditorFor(model => model.mobModel.Status, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.Status, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.mobModel.Gold)
-                    @Html.EditorFor(model => model.mobModel.Gold, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.Gold, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.mobModel.Silver)
-                    @Html.EditorFor(model => model.mobModel.Silver, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.Silver, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-6">
-                    @Html.LabelFor(model => model.mobModel.Copper)
-                    @Html.EditorFor(model => model.mobModel.Copper, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobModel.Copper, "", new { @class = "text-danger" })
-                </div>
- 
+                <a id="js-addMob-btn" href="javascript:void(0)" class="btn btn-sm btn-success">Add new mob</a>
+            <a href="javascript:void(0)" id="js-addMob-save">Add Mob</a>
             </div>
-
-            <a id="js-addMob-btn" href="javascript:void(0)" class="btn btn-sm btn-success">Add new mob</a>
-        </div>
                     <div class="row">
                         <!-- ITEM -->
                         <h2 class="heading">Add Items</h2>
@@ -693,6 +694,110 @@
                         //add a
                     </script>
 
+<script>
+                        $(function () {
+                            console.log("Loaded");
+
+                            //Add a new exit
+                            $("#js-addMob-btn").click(function () {
+
+                                console.log("keyword add button click");
+
+
+                                $("#js-toggle-mob").toggle();
+
+
+                            });
+
+                            window.mobArray = [];
+
+                            //add exit to array and to table
+                            $("#js-addMob-save").click(function () {
+
+
+                                var mobData = {
+
+                                    "name": $("#mobModel_Name").val(),
+                                    "gender": $("#mobModel_Gender").val(),
+                                    "race": $("#mobModel_Race").val(),
+                                    "class": $("#mobModel_SelectedClass").val(),
+                                    "strength": $("#mobModel_Strength").val(),
+                                    "dexterity": $("#mobModel_Dexterity").val(),
+                                    "constitution": $("#mobModel_Constitution").val(),
+                                    "wisdom": $("#mobModel_Wisdom").val(),
+                                    "intelligence": $("#mobModel_Intelligence").val(),
+                                    "charisma": $("#mobModel_Charisma").val(),
+                                    "level": $("#mobModel_Level").val(),
+                                    "alignment": $("#mobModel_AlignmentScore").val(),
+                                    "hp": $("#mobModel_MaxHitPoints").val(),
+                                    "mana": $("#mobModel_MaxManaPoints").val(),
+                                    "moves": $("#mobModel_MaxMovePoints").val(),
+                                    "hit": $("#mobModel_HitRoll").val(),
+                                    "dam": $("#mobModel_DamRoll").val(),
+                                    "status": $("#mobModel_Status").val(),
+                                    "gold": $("#mobModel_Gold").val(),
+                                    "silver": $("#mobModel_Silver").val(),
+                                    "copper": $("#mobModel_Copper").val(),
+
+                                }
+
+                                mobArray.push(mobData);
+
+                                var mobRow = '<tr>' +
+                                    '<td class="">' + mobData.name + '</td>' +
+                                    '<td class="">' + mobData.gender + '</td>' +
+                                    '<td class="">' + mobData.race + '</td>' +
+                                    '<td class="">' + mobData.class + '</td>' +
+                                    '<td class="">' + "str: " + mobData.strength + " dex: " + mobData.dexterity
+                                                    + " con: " + mobData.constitution + " wis: " + mobData.wisdom
+                                                    + " int: " + mobData.intelligence + " cha: " + mobData.charisma
+                                   + '</td>' + '<td class="">' + mobData.level + '</td>' +
+                                 '<td class="">' + mobData.alignment + '</td>' +
+                                 '<td class="">' + mobData.hp + '</td>' +
+                                 '<td class="">' + mobData.mana + '</td>' +
+                                 '<td class="">' + mobData.moves + '</td>' +
+                                 '<td class="">' + mobData.hit +"/"+ mobData.dam  + '</td>' +
+                                 '<td class="">' + mobData.status + '</td>' +
+                                 '<td class="">' + mobData.gold + '</td>' +
+                                 '<td class="">' + mobData.silver + '</td>' +
+                                 '<td class="">' + mobData.copper + '</td>' +
+                                    '</tr>';
+
+
+                                $("#js-mob-table").append(mobRow);
+
+                                $("#js-addMob").hide();
+
+                                //reset fields and hide Add exit section
+                                $("#mobModel_Name").val(''),
+                                $("#mobModel_Gender").val('');
+                                $("#mobModel_Race").val('');
+                                $("#mobModel_SelectedClass").val('');
+                                $("#mobModel_Strength").val('');
+                                $("#mobModel_Dexterity").val('');
+                                $("#mobModel_Constitution").val('');
+                                $("#mobModel_Wisdom").val('');
+                                $("#mobModel_Intelligence").val('');
+                                $("#mobModel_Charisma").val('');
+                                $("#mobModel_Level").val('');
+                                $("#mobModel_AlignmentScore").val('');
+                                $("#mobModel_MaxHitPoints").val('');
+                                $("#mobModel_MaxManaPoints").val('');
+                                $("#mobModel_MaxMovePoints").val('');
+                                $("#mobModel_HitRoll").val('');
+                                $("#mobModel_DamRoll").val('');
+                                $("#mobModel_Status").val('');
+                                $("#mobModel_Gold").val('');
+                                $("#mobModel_Silver").val('');
+                                $("#mobModel_Copper").val('');
+
+
+                            });
+                        });
+
+                    
+</script>
+
                     <script>
                         $(function () {
                             console.log("Loaded");
@@ -929,7 +1034,7 @@
 
                     <script>
                         $("#js-add-room").click(function () {
-
+                         
                             var roomModel = {
                                 "roomModel": {
                                     "region": $('#roomModel_region').val(),
@@ -944,11 +1049,13 @@
                                     "exits": window.exitsArray,
                                     "players": [],
                                     "fighting": [],
-                                    "mobs": [],
+                                    "mobs": mobArray,
                                     "items": window.item,
                                     "corpses": []
                                 }
                             }
+                            console.log(roomModel)
+                            console.log(JSON.stringify(roomModel))
 
                             $.ajax({
                                 type: "POST",

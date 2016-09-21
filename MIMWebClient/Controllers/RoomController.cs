@@ -190,7 +190,7 @@ namespace MIMWebClient.Controllers.Admin.Room
 
                 foreach (var mob in RoomData.roomModel.mobs)
                 {
-
+              
                     newRoom.mobs.Add(mob);
                 }
             }

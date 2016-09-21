@@ -157,7 +157,21 @@ namespace MIMWebClient.Hubs
         {
 
             //Creates and saves player
-            PlayerData = new Player(id, name, email, password, gender, race, selectedClass, strength, dexterity, constitution, wisdom, intelligence, charisma);
+            PlayerData = new Player();
+
+            PlayerData.HubGuid = id;
+            PlayerData.Name = name;
+            PlayerData.Email = email;
+            PlayerData.Password = password;
+            PlayerData.Gender = gender;
+            PlayerData.Race = race;
+            PlayerData.SelectedClass = selectedClass;
+            PlayerData.Strength = strength;
+            PlayerData.Dexterity = dexterity;
+            PlayerData.Wisdom = wisdom;
+            PlayerData.Intelligence = intelligence;
+            PlayerData.Charisma = charisma;
+         
 
             PlayerData.SavePlayerInformation();
 
