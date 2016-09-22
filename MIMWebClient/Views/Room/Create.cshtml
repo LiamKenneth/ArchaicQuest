@@ -214,7 +214,8 @@
                         <th>Gold</th>
                         <th>Silver</th>
                         <th>Copper</th>
- 
+                        <th>Description</th>
+                        <th>Inventory</th>
                     </tr>
                 </thead>
                 <tbody id="js-mob-table"></tbody>
@@ -313,7 +314,7 @@
                     </div>
                     <div class="col-md-6">
                         @Html.LabelFor(model => model.mobModel.Status)
-                        @Html.EditorFor(model => model.mobModel.Status, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EnumDropDownListFor(model => model.mobModel.Status, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.mobModel.Status, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-md-6">
@@ -619,6 +620,12 @@
                             </div>
                         </div>
 
+                        Add Item to:
+                        <select id="js-add-item-to-where">
+                            <option value="room">Room</option>
+                            <!-- mobs, corpses, containers -->
+                        </select>
+
                         <a id="js-AddItem" href="javascript:void(0)">Add Item</a>
                     </div>
                     <div class="form-group">
@@ -745,6 +752,11 @@
                                     "copper": $("#mobModel_Copper").val(),
 
                                 }
+
+                                $("#js-add-item-to-where").append($('<option/>', {
+                                    value: mobData.name,
+                                    text: mobData.name
+                                }));
 
                                 mobArray.push(mobData);
 
@@ -884,73 +896,7 @@
                         //add a new item
                         $("#js-AddItem").click(function () {
 
-                            //var itemRow = "<tr><td>" + $("#itemModel_name").val() + "</td>" +
-                            //"<td>" + $("#itemModel_type").val() + "</td>" +
-                            //"<td>" + $("#itemModel_stats_damMin").val() + "</td>" +
-                            //"<td>" + $("#itemModel_stats_damMax").val() + "</td>" +
-                            //"<td>" + $("#itemModel_stats_damRoll").val() + "</td>" +
-                            //"<td>" + $("#itemModel_attackType option:selected").text() + "</td>" +
-                            //"<td>" + $("#itemModel_weaponType option:selected").text() + "</td>" +
-                            //"<td>" + $("#itemModel_eqSlot option:selected").text() + "</td>" +
-                            //"<td>" + $("#itemModel_stats_minUsageLevel").val() + "</td>" +
-                            //"<td>" + $("#itemModel_equipable").val() + "</td>" +
-                            //"<td>" + itemFlagValues + "</td>" +
-                            //"<td>" + itemDamTypeValues + "</td>" +
-                            //"<td>" + $("#itemModel_description_look").val() + "</td>" +
-                            //"<td>" + $("#itemModel_description_exam").val() + "</td>" +
-                            //"<td>" + $("#itemModel_description_room").val() + "</td>" +
-                            //"<td>" + $("#itemModel_description_taste").val() + "</td>" +
-                            //"<td>" + $("#itemModel_description_touch").val() + "</td>" +
-                            //"<td>" + $("#itemModel_description_smell").val() + "</td></tr>";
-
-                            //{
-                            //    "_id" : ObjectId("5774e50ffa58fa4f84b6a5e0"),
-                            //    "name" : "test Sword",
-                            //    "keywords" : null,
-                            //    "locked" : false,
-                            //    "keyValue" : null,
-                            //    "hidden" : false,
-                            //    "location" : "room",
-                            //    "equipable" : true,
-                            //    "slot" : "RightHand",
-                            //    "actions" : {
-                            //        "container" : false,
-                            //        "wield" : "wield"
-                            //    },
-                            //    "description" : {
-                            //        "taste" : null,
-                            //        "touch" : null,
-                            //        "smell" : null,
-                            //        "look" : "You look at a short sword",
-                            //        "exam" : "You look closely at a short sword",
-                            //        "room" : "A short Sword is here."
-                            //    },
-                            //    "stats" : {
-                            //        "damMin" : 1,
-                            //        "damMax" : 5,
-                            //        "damRoll" : 0,
-                            //        "poisoned" : false,
-                            //        "flaming" : false,
-                            //        "frozen" : false,
-                            //        "acid" : false,
-                            //        "lightning" : false,
-                            //        "cursed" : false,
-                            //        "blessed" : false,
-                            //        "invisible" : false,
-                            //        "enchantedLevel" : 0,
-                            //        "minUsageLevel" : 0,
-                            //        "worth" : 0
-                            //    },
-                            //    "containerItems" : null,
-                            //    "damageType" : 0,
-                            //    "armourType" : 0,
-                            //    "itemFlags" : 0,
-                            //    "type" : 0,
-                            //    "attackType" : 0,
-                            //    "eqSlot" : 0,
-                            //    "weaponType" : 0,
-                            //    "weaponSpeed" : 0
-                            //}
+              
                             var itemFlagValues = $('.js-itemFlags:checked').map(function () {
                                 return this.value;
                             }).get();
@@ -991,7 +937,41 @@
                                 damageType: itemDamTypeValues
                             };
 
-                            window.item.push(data);
+                            if (data.container == true) {
+
+                                $("#js-add-item-to-where").append($('<option/>', {
+                                    value: data.name,
+                                    text: data.name
+                                }));
+                            }
+
+                            //push item to container/ mob
+
+                            var addItemToWhere = $("#js-add-item-to-where");
+
+                            if (addItemToWhere.val() === "room") {
+                                window.item.push(data);
+                            }
+                            else {
+                                var mobArrayLen = window.mobArray.length;
+                                var itemArrayLen = window.item.length;
+
+                                for (var i = 0; i < mobArrayLen; i++) {
+
+                                    if (window.mobArray[i].name === addItemToWhere.val()) {
+                                        window.mobArray[i].inventory = data;
+                                        
+                                    }
+
+                                    if (window.itemArrayLen[i].name === addItemToWhere.val()) {
+                                        window.itemArrayLen[i].containerItems = data;
+                                        
+                                    }
+                                }
+                            }
+
+
+                           
                             /*
                                 Push item data to an array and display under added Items
                              */
