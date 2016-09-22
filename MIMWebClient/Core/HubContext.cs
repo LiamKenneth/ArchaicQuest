@@ -90,11 +90,11 @@ namespace MIMWebClient.Core
                     }
                     else
                     {
-                        var playerInFight = players.FindAll(x => x.Status.Equals("Fighting"));
+                        var playerInFight = players.FindAll(x => x.Status.Equals(PlayerSetup.Player.PlayerStatus.Fighting));
 
                         foreach (var fighter in playerInFight)
                         {
-                            if (players[i].Status != "Fighting")
+                            if (players[i].Status != PlayerSetup.Player.PlayerStatus.Fighting)
                             { 
                                 HubContext.getHubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(message);
                             }

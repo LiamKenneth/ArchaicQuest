@@ -77,15 +77,15 @@ namespace MIMWebClient.Core.Events
             {
                 if (item.Name != playerName)
                 {
-                    if (item.Status == "Standing")
+                    if (item.Status == Player.PlayerStatus.Standing)
                     {
                         playerList += item.Name + " is here\r\n";
                     }
-                    else if (item.Status == "Fighting")
+                    else if (item.Status == Player.PlayerStatus.Fighting)
                     {
                         playerList += item.Name + " is fighting " + item.Target.Name +"\r\n";
                     }
-                    else if (item.Status == "Ghost")
+                    else if (item.Status == PlayerSetup.Player.PlayerStatus.Ghost)
                     {
                         playerList += item.Name + "(Ghost) (Translucent) (Invis)\r\n";
                     }

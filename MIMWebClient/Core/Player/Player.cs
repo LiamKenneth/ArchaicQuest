@@ -20,6 +20,20 @@ namespace MIMWebClient.Core.PlayerSetup
 
     public class Player
     {
+
+        public enum PlayerStatus
+        {
+            Standing = 1,
+            Resting = 2,
+            Sleeping = 3,
+            Fighting = 4,
+            Incapitated = 5,
+            Dead = 6,
+            Ghost = 7,
+            Busy = 8,
+ 
+        }
+
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId _id { get; set; }
 
@@ -113,7 +127,7 @@ namespace MIMWebClient.Core.PlayerSetup
         public int MaxWeight;
 
         [BsonElement("st")]
-        public string Status;
+        public PlayerStatus Status;
 
         [BsonElement("ta")]
         public Player Target;
@@ -252,7 +266,7 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Hours = 0;
             this.Weight = 0;
             this.MaxWeight = 70; // class to workout
-            this.Status = "Standing"; // enum property? 1 standing
+            this.Status = PlayerStatus.Standing; // enum property? 1 standing
             this.Target = null;
             this.Inventory = this.Inventory ?? (this.Inventory = new List<Item>());
             this.Skills = this.Skills = new List<Skill>();

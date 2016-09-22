@@ -190,8 +190,35 @@ namespace MIMWebClient.Controllers.Admin.Room
 
                 foreach (var mob in RoomData.roomModel.mobs)
                 {
-              
-                    newRoom.mobs.Add(mob);
+
+                    var addMob = new Player();
+
+                    addMob.Name = mob.Name;
+                    addMob.Gender = mob.Gender;
+                    addMob.Race = mob.Race;
+                    addMob.Description = mob.Description;
+                    addMob.SelectedClass = mob.SelectedClass;
+                    addMob.Strength = mob.Strength;
+                    addMob.Dexterity = mob.Dexterity;
+                    addMob.Constitution = mob.Constitution;
+                    addMob.Intelligence = mob.Intelligence;
+                    addMob.Wisdom = mob.Wisdom;
+                    addMob.Charisma = mob.Charisma;
+                    addMob.Level = mob.Level;
+                    addMob.AlignmentScore = mob.AlignmentScore;
+                    addMob.HitPoints = mob.HitPoints;
+                    addMob.MaxHitPoints = mob.HitPoints;
+                    addMob.ManaPoints = mob.ManaPoints;
+                    addMob.MaxManaPoints = mob.ManaPoints;
+                    addMob.MovePoints = mob.MovePoints;
+                    addMob.MaxMovePoints = mob.MovePoints;
+                    addMob.Status = mob.Status;
+                    addMob.Gold = mob.Gold;
+                    addMob.Silver = mob.Silver;
+                    addMob.Copper = mob.Copper;
+                    addMob.Inventory = mob.Inventory;
+
+                    newRoom.mobs.Add(addMob);
                 }
             }
 
@@ -202,7 +229,35 @@ namespace MIMWebClient.Controllers.Admin.Room
                 foreach (var corpse in RoomData.roomModel.corpses)
                 {
 
-                    newRoom.corpses.Add(corpse);
+                    var addCorpse = new Player();
+
+     
+                    addCorpse.Name = corpse.Name;
+                    addCorpse.Gender = corpse.Gender;
+                    addCorpse.Race = corpse.Race;
+                    addCorpse.Description = corpse.Description;
+                    addCorpse.SelectedClass = corpse.SelectedClass;
+                    addCorpse.Strength = corpse.Strength;
+                    addCorpse.Dexterity = corpse.Dexterity;
+                    addCorpse.Constitution = corpse.Constitution;
+                    addCorpse.Intelligence = corpse.Intelligence;
+                    addCorpse.Wisdom = corpse.Wisdom;
+                    addCorpse.Charisma = corpse.Charisma;
+                    addCorpse.Level = corpse.Level;
+                    addCorpse.AlignmentScore = corpse.AlignmentScore;
+                    addCorpse.HitPoints = 0;
+                    addCorpse.MaxHitPoints = 0;
+                    addCorpse.ManaPoints = corpse.ManaPoints;
+                    addCorpse.MaxManaPoints = corpse.ManaPoints;
+                    addCorpse.MovePoints = corpse.MovePoints;
+                    addCorpse.MaxMovePoints = corpse.MovePoints;
+                    addCorpse.Status = corpse.Status;
+                    addCorpse.Gold = corpse.Gold;
+                    addCorpse.Silver = corpse.Silver;
+                    addCorpse.Copper = corpse.Copper;
+                    addCorpse.Inventory = corpse.Inventory;
+
+                    newRoom.corpses.Add(addCorpse);
                 }
             }
 

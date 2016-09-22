@@ -69,8 +69,8 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
-            defender.Status = "Fighting";
-            attacker.Status = "Fighting";
+            defender.Status = Player.PlayerStatus.Fighting;
+            attacker.Status = Player.PlayerStatus.Fighting;
             room.fighting.Add(attacker.HubGuid);
             room.fighting.Add(defender.HubGuid);
 
@@ -109,7 +109,7 @@ namespace MIMWebClient.Core.Events
         {
 
 
-            while (attacker.Status == "Fighting" && defender.Status == "Fighting")
+            while (attacker.Status == PlayerSetup.Player.PlayerStatus.Fighting && defender.Status == PlayerSetup.Player.PlayerStatus.Fighting)
             {
                 bool canAttack = CanAttack(attacker, defender);
 
@@ -154,14 +154,14 @@ namespace MIMWebClient.Core.Events
         public static bool CanAttack(Player attacker, Player defender)
         {
 
-            bool canAttack = !(attacker.Status == "Standing" || defender.Status == "Standing");
+            bool canAttack = !(attacker.Status == PlayerSetup.Player.PlayerStatus.Standing || defender.Status == PlayerSetup.Player.PlayerStatus.Standing);
 
             if (attacker.Target.Name != defender.Name)
             {
                 canAttack = false;
             }
 
-            if (attacker.Status == "Sleeping")
+            if (attacker.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
             {
                 canAttack = false;
             }
@@ -172,7 +172,7 @@ namespace MIMWebClient.Core.Events
             // getting potion
             // quaffing
             // disallow changing armour while in combat
-            if (attacker.Status == "Busy")
+            if (attacker.Status == PlayerSetup.Player.PlayerStatus.Busy)
             {
                 canAttack = false;
             }
@@ -418,9 +418,9 @@ namespace MIMWebClient.Core.Events
                 var oldRoom = room;
                 room.corpses.Add(defender);
 
-                attacker.Status = "Standing";
+                attacker.Status = PlayerSetup.Player.PlayerStatus.Standing;
 
-                defender.Status = defender.Type == "Player" ? "Ghost" : "Dead";
+                defender.Status = defender.Type == "Player" ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;
 
                 Cache.updateRoom(room, oldRoom);
 
@@ -457,9 +457,9 @@ namespace MIMWebClient.Core.Events
                 var oldRoom = room;
                 room.corpses.Add(attacker);
 
-                defender.Status = "Standing";
+                defender.Status = PlayerSetup.Player.PlayerStatus.Standing;
 
-                attacker.Status = attacker.Type == "Player" ? "Ghost" : "Dead";
+                attacker.Status = attacker.Type == "Player" ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;
 
                 Cache.updateRoom(room, oldRoom);
 

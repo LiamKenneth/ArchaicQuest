@@ -17,13 +17,13 @@ namespace MIMWebClient.Core.Events
         };
         public static void fleeCombat(PlayerSetup.Player player, Room.Room room)
         {
-            if (player.Status == "Fighting")
+            if (player.Status == PlayerSetup.Player.PlayerStatus.Fighting)
             {
                 HubContext.SendToClient("You Flee", player.HubGuid);
 
                //var exit = room.exits.Find(x => x.name.Equals("north", StringComparison.InvariantCultureIgnoreCase));
 
-                player.Status = "Standing";
+                player.Status = PlayerSetup.Player.PlayerStatus.Standing;
                 HubContext.SendToClient(player.Name + " Flee's from combat", player.Target.HubGuid);
 
                 Room.Movement.Move(player, room, "North");
