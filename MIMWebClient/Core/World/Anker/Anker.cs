@@ -10,7 +10,7 @@ namespace MIMWebClient.Core.World.Anker
 
     public class Anker
     {
-        public Room AnkerArea()
+        public static Room AnkerArea()
         {
             var room = new Room
             {
