@@ -750,6 +750,8 @@
                                     "gold": $("#mobModel_Gold").val(),
                                     "silver": $("#mobModel_Silver").val(),
                                     "copper": $("#mobModel_Copper").val(),
+                                    "inventory": [],
+                                    "description":""
 
                                 }
 
@@ -953,20 +955,17 @@
                                 window.item.push(data);
                             }
                             else {
-                                var mobArrayLen = window.mobArray.length;
+                                var mobArrayLen = mobArray.length;
                                 var itemArrayLen = window.item.length;
 
                                 for (var i = 0; i < mobArrayLen; i++) {
-
-                                    if (window.mobArray[i].name === addItemToWhere.val()) {
-                                        window.mobArray[i].inventory = data;
-                                        
+                                   
+                                    if (mobArray[i].name === addItemToWhere.val()) {
+                                        data.location = "Inventory";
+                                        mobArray[i].inventory = data;
+                                        return;
                                     }
-
-                                    if (window.itemArrayLen[i].name === addItemToWhere.val()) {
-                                        window.itemArrayLen[i].containerItems = data;
-                                        
-                                    }
+ 
                                 }
                             }
 
