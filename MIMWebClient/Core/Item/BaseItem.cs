@@ -28,6 +28,17 @@ namespace MIMWebClient.Core.Item
         public Description description { get; set; }
         public Stats stats { get; set; }
         public bool container { get; set; }
+
+        /// <summary>
+        ///  How many items fit in the container
+        /// </summary>
+        public int containerSize { get; set; }
+        public bool waterContainer { get; set; }
+
+        /// <summary>
+        /// How many times a player can drink from it
+        /// </summary>
+        public int waterContainerSize { get; set; }
         public bool locked { get; set; }
 
     }

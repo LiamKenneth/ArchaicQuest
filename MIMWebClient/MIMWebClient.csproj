@@ -237,6 +237,7 @@
     <Compile Include="Core\Helpers.cs" />
     <Compile Include="Core\HubContext.cs" />
     <Compile Include="Core\Item\Action.cs" />
+    <Compile Include="Core\Item\Actions\use.cs" />
     <Compile Include="Core\Item\BaseItem.cs" />
     <Compile Include="Core\Item\Description.cs" />
     <Compile Include="Core\Item\Item.cs" />

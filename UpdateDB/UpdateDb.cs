@@ -30,6 +30,8 @@ namespace UpdateDB
 
             var roomCollection = database.GetCollection<Room>("Room");
 
+            Console.WriteLine("Cleaning DB");
+
             Console.WriteLine("Compiling Areas.");
 
             var areaSpeed = new Stopwatch();
