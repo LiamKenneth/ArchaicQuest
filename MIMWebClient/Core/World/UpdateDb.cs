@@ -9,13 +9,6 @@ namespace MIMWebClient.Core.World
 
     public class UpdateDb
     {
-        public void SaveRooms()
-        {
-            var rooms = new List<Room>();
-            var anker = Anker.Anker.AnkerArea();
-            rooms.Add(anker);
-
-           //Add or edit
-        }
+       
     }
 }
