@@ -13,6 +13,10 @@ namespace MIMWebClient.Core.Room
 
        public static void AddPlayerToRoom(Room room, Player player)
        {
+            if (room.players == null)
+            {
+                room.players = new List<Player>();
+            }
            room.players.Add(player);
        }
 

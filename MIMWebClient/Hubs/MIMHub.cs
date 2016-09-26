@@ -173,7 +173,7 @@ namespace MIMWebClient.Hubs
             PlayerData.Charisma = charisma;
          
 
-            PlayerData.SavePlayerInformation();
+           // PlayerData.SavePlayerInformation();
 
             _PlayerCache.TryAdd(id, PlayerData);
 

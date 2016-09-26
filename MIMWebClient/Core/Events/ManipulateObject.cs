@@ -369,8 +369,34 @@ namespace MIMWebClient.Core.Events
 
                     for (int i = roomItemsCount - 1; i >= 0; i--)
                     {
-                        roomItems[i].location = Item.ItemLocation.Inventory;
-                        player.Inventory.Add(roomItems[i]);
+                        if (roomItems[i].type != Item.ItemType.Gold || roomItems[i].type != Item.ItemType.Silver
+                            || roomItems[i].type != Item.ItemType.Copper)
+                        {
+
+
+
+                            roomItems[i].location = Item.ItemLocation.Inventory;
+                            player.Inventory.Add(roomItems[i]);
+
+                        }
+                        else
+                        {
+                            if (roomItems[i].type == Item.ItemType.Gold)
+                            {
+                                player.Gold += roomItems[i].count;
+                            }
+
+                            if (roomItems[i].type == Item.ItemType.Silver)
+                            {
+                                player.Silver += roomItems[i].count;
+                            }
+
+                            if (roomItems[i].type == Item.ItemType.Copper)
+                            {
+                                player.Copper += roomItems[i].count;
+                            }
+
+                        }
                         HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You pick up a " + roomItems[i].name);
                         HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " picks up a " + roomItems[i].name);
                         room.items.Remove(roomItems[i]);
