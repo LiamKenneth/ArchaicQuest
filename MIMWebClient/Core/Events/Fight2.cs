@@ -71,6 +71,12 @@ namespace MIMWebClient.Core.Events
 
             defender.Status = Player.PlayerStatus.Fighting;
             attacker.Status = Player.PlayerStatus.Fighting;
+
+            if (room.fighting == null)
+            {
+                room.fighting = new List<string>();
+            }
+
             room.fighting.Add(attacker.HubGuid);
             room.fighting.Add(defender.HubGuid);
 

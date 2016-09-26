@@ -73,43 +73,52 @@ namespace MIMWebClient.Core.Events
             }
 
             var playerList = string.Empty;
-            foreach (var item in room.players)
+            if (room.players != null)
             {
-                if (item.Name != playerName)
+
+
+                foreach (var item in room.players)
                 {
-                    if (item.Status == Player.PlayerStatus.Standing)
+                    if (item.Name != playerName)
                     {
-                        playerList += item.Name + " is here\r\n";
-                    }
-                    else if (item.Status == Player.PlayerStatus.Fighting)
-                    {
-                        playerList += item.Name + " is fighting " + item.Target.Name +"\r\n";
-                    }
-                    else if (item.Status == PlayerSetup.Player.PlayerStatus.Ghost)
-                    {
-                        playerList += item.Name + "(Ghost) (Translucent) (Invis)\r\n";
+                        if (item.Status == Player.PlayerStatus.Standing)
+                        {
+                            playerList += item.Name + " is here\r\n";
+                        }
+                        else if (item.Status == Player.PlayerStatus.Fighting)
+                        {
+                            playerList += item.Name + " is fighting " + item.Target.Name + "\r\n";
+                        }
+                        else if (item.Status == PlayerSetup.Player.PlayerStatus.Ghost)
+                        {
+                            playerList += item.Name + "(Ghost) (Translucent) (Invis)\r\n";
+                        }
+
                     }
 
                 }
-               
             }
 
             var mobList = string.Empty;
-            foreach (var item in room.mobs)
+            if (room.mobs != null)
             {
-                var result = AvsAnLib.AvsAn.Query(item.Name);
-                string article = result.Article;
+                foreach (var item in room.mobs)
+                {
+                    var result = AvsAnLib.AvsAn.Query(item.Name);
+                    string article = result.Article;
 
-                mobList += "<p class='roomItems'>" + article + " " + item.Name + " is here.<p>";
+                    mobList += "<p class='roomItems'>" + article + " " + item.Name + " is here.<p>";
+                }
             }
-
             var corpseList = string.Empty;
-            foreach (var item in room.corpses)
+            if (room.corpses != null)
             {
-                corpseList += " The corpse of " + item.Name + " is here.";
+                foreach (var item in room.corpses)
+                {
+                    corpseList += " The corpse of " + item.Name + " is here.";
+                }
+
             }
-
-
 
             string displayRoom = "<p class='roomTitle'>" + roomTitle + "<p><p class='roomDescription'>" + roomDescription + "</p> <p class='RoomExits'>[ Exits: " + exitList.ToLower() + " ]</p>" + itemList + corpseList + "\r\n" + playerList + "\r\n" + mobList;
 
@@ -139,8 +148,17 @@ namespace MIMWebClient.Core.Events
                     item = commandOptions.Substring(commandOptions.LastIndexOf('.') + 1);
                 }
 
+                if (roomData.keywords == null)
+                {
+                    roomData.keywords = new List<RoomObject>();
+                }
 
                 var roomDescription = roomData.keywords.Find(x => x.name.ToLower().Contains(commandOptions));
+
+                if (roomData.items == null)
+                {
+                    roomData.items = new List<Item.Item>();
+                }
 
                 var itemDescription = (n == -1)
                                           ? roomData.items.Find(x => x.name.ToLower().Contains(commandOptions))
@@ -148,9 +166,31 @@ namespace MIMWebClient.Core.Events
                                                 .Skip(n - 1)
                                                 .FirstOrDefault();
 
+                if (roomData.mobs == null)
+                {
+                    roomData.mobs = new List<Player>();
+                }
+
                 var mobDescription = roomData.mobs.Find(x => x.Name.ToLower().Contains(commandOptions));
 
+                if (roomData.players == null)
+                {
+                    roomData.players = new List<Player>();
+                }
+
                 var playerDescription = roomData.players.Find(x => x.Name.ToLower().Contains(commandOptions));
+                var targetPlayerId = string.Empty;
+                if (playerDescription != null)
+                {
+                    var isPlayer = playerDescription.Type.Equals("Player");
+
+                    if (isPlayer)
+                    {
+                          targetPlayerId = playerDescription.HubGuid;
+                    }
+
+
+                }
 
 
                 //Returns descriptions for important objects in the room
@@ -298,6 +338,7 @@ namespace MIMWebClient.Core.Events
                     if (!string.IsNullOrEmpty(descriptionText))
                     {
                         HubContext.SendToClient(descriptionText, player.HubGuid);
+                        HubContext.SendToClient(player.Name + " looks at you", targetPlayerId);
                     }
                     else
                     {

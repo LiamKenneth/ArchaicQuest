@@ -7,5 +7,7 @@ namespace MIMWebClient.Core.World
 {
     public class UpdateDb
     {
+
+
     }
 }

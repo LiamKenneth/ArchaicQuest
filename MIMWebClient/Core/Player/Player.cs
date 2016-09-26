@@ -17,6 +17,7 @@ namespace MIMWebClient.Core.PlayerSetup
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;
     using Core.Player.Skills;
+    using MongoDB.Driver;
 
     public class Player
     {
@@ -239,7 +240,7 @@ namespace MIMWebClient.Core.PlayerSetup
         public Player()
         {
             //this.HubGuid = id;
-            //this.Type = "Player";
+            this.Type = "Player";
             //this.Email = email;
             //this.Password = password;
 
@@ -249,7 +250,7 @@ namespace MIMWebClient.Core.PlayerSetup
             //this.Race = race;
             //this.SelectedClass = selectedClass;
             this.Level = 1;
-            this.Description = this.Description ?? string.Empty;
+            this.Description = this.Description ?? "You see nothing special about them.";
             this.AlignmentScore = 0;
             this.Experience = 500;
             this.ExperienceToNextLevel = 1000; // create class to work out
@@ -296,8 +297,8 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Copper = 100;
 
             //Location
-            this.Region = "Valston";
-            this.Area = "Town";
+            this.Region = "Anker";
+            this.Area = "Anker";
             this.AreaId = 0;
 
             //Eq
@@ -343,8 +344,22 @@ namespace MIMWebClient.Core.PlayerSetup
 
         public void SavePlayerInformation()
         {
-            string json = JsonConvert.SerializeObject(this);
-            File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "/" + Name + ".json", json);
+            //string json = JsonConvert.SerializeObject(this);
+            //File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "/" + Name + ".json", json);
+
+
+            const string ConnectionString = "mongodb://testuser:password@ds052968.mlab.com:52968/mimdb";
+
+            // Create a MongoClient object by using the connection string
+            var client = new MongoClient(ConnectionString);
+
+            //Use the MongoClient to access the server
+            var database = client.GetDatabase("mimdb");
+
+            var playerCollection = database.GetCollection<Player>("Player");
+
+            playerCollection.InsertOne(this);
+
         }
 
         public JObject ReturnPlayerInformation()

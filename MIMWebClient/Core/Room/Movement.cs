@@ -4,6 +4,8 @@ namespace MIMWebClient.Core.Room
 {
     using MIMWebClient.Core.Events;
     using MIMWebClient.Core.PlayerSetup;
+    using System.Collections.Generic;
+
     public static class Movement
     {
         public static void EnterRoom(Player player, Room room, string direction = "")
@@ -95,6 +97,11 @@ namespace MIMWebClient.Core.Room
         {
 
             Room roomData = room;
+
+            if (roomData.exits == null)
+            {
+                room.exits = new List<Exit>();
+            }
 
             //Find Exit
             var exit = roomData.exits.Find(x => x.name == direction);
