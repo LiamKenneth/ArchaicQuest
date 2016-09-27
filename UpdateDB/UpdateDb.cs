@@ -39,7 +39,7 @@ namespace UpdateDB
 
             var areas = new List<Room>();
             areas.Add(Anker.VillageSquare());
-
+            areas.Add(Anker.SquareWalkOutsideTavern());
             areaSpeed.Stop();
             Console.WriteLine("Compiling Areas Completed in {0}ms.", areaSpeed.Elapsed.Milliseconds);
 

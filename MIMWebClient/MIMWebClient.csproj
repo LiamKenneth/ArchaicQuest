@@ -268,7 +268,6 @@
     <Compile Include="Core\Room\Room.cs" />
     <Compile Include="Core\Room\RoomObject.cs" />
     <Compile Include="Core\World\Anker\Anker.cs" />
-    <Compile Include="Core\World\UpdateDb.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
