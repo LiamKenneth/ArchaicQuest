@@ -229,6 +229,7 @@
     <Compile Include="Core\Events\Communicate.cs" />
     <Compile Include="Core\Events\Fight.cs" />
     <Compile Include="Core\Events\Fight2.cs" />
+    <Compile Include="Core\Events\FindNth.cs" />
     <Compile Include="Core\Events\Flee.cs" />
     <Compile Include="Core\Events\LoadRoom.cs" />
     <Compile Include="Core\Events\ManipulateObject.cs" />
@@ -287,6 +288,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Compile Include="Core\Events\FindFirstAndLast.cs" />
     <Content Include="Core\PlayerSetup\Data\Img\RaceImg\darkElf.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -379,6 +381,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Core\NewFolder1\" />
     <Folder Include="Core\PlayerSetup\Data\Img\Avatar\" />
     <Folder Include="Views\Default\" />
     <Folder Include="WorldBuilding\City\" />

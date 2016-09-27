@@ -19,21 +19,6 @@ namespace MIMWebClient.Core.Events
         private static string Findkillable { get; } = "killable";
         private static string FindAll { get; } = "all";
 
-        public static KeyValuePair<int, string> FindNth(string thingToFind)
-        {
-
-            int containsNth = thingToFind.IndexOf('.');
-            var itemToFind = thingToFind;
-            if (containsNth != -1)
-            {
-                containsNth = Convert.ToInt32(thingToFind.Substring(0, containsNth));
-                itemToFind = thingToFind.Substring(thingToFind.LastIndexOf('.') + 1);
-            }
-
-            return new KeyValuePair<int, string>(containsNth, itemToFind);
-
-        }
-
         /// <summary>
         /// Finds Objects!!
         /// </summary>
@@ -71,39 +56,26 @@ namespace MIMWebClient.Core.Events
             // gets if it;s 2.sword or not and returns the item
 
             string item = thingToFind;
+            var itemContainer = string.Empty;
             //checks for spaces
 
             //get sword bag - text after the 1st space is the container
-            int indexOfSpaceInUserInput = item.IndexOf(" ", StringComparison.Ordinal);
-            int lastIndexOfSpaceInUserInput = item.LastIndexOf(" ", StringComparison.Ordinal);
-
-            var itemContainer = string.Empty;
-
-            if (indexOfSpaceInUserInput > 0 && lastIndexOfSpaceInUserInput == -1)
-            {
-                item = thingToFind.Substring(0, indexOfSpaceInUserInput);
-            }
-
-
-            if (lastIndexOfSpaceInUserInput != -1)
-            {
-                item = thingToFind.Substring(0, indexOfSpaceInUserInput);
-                itemContainer = thingToFind.Substring(lastIndexOfSpaceInUserInput).TrimStart();
-            }
+            item = FindFirstAndLast.FindFirstAndLastIndex(thingToFind).Key;
+            itemContainer = FindFirstAndLast.FindFirstAndLastIndex(thingToFind).Value;
 
             //get Item
-            var findObject = FindNth(item);
+            var findObject = Events.FindNth.Findnth(item);
             int nth = findObject.Key;
             string itemToFind = findObject.Value;
 
 
             //get container
-            KeyValuePair<int, string> findContainer = new KeyValuePair<int, string>();
+            var findContainer = new KeyValuePair<int, string>();
             int nthContainer = 0;
             string comntainerToFind = string.Empty;
             if (!string.IsNullOrEmpty(itemContainer))
             {
-                findContainer = FindNth(itemContainer);
+                findContainer = Events.FindNth.Findnth(itemContainer);
                 nthContainer = findContainer.Key;
                 comntainerToFind = findContainer.Value;
             }
