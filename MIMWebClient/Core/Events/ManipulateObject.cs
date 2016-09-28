@@ -102,8 +102,9 @@ namespace MIMWebClient.Core.Events
                     if (foundItem != null) { return new KeyValuePair<Item, Item>(null, foundItem); ; }
 
 
-                    HubContext.SendToClient("You don't see " + AvsAnLib.AvsAn.Query(itemToFind) + " " + itemToFind + " here and you are not carrying " + AvsAnLib.AvsAn.Query(itemToFind) + " " + itemToFind, player.HubGuid);
-                    HubContext.broadcastToRoom(player.Name + " rummages around for an item but finds nothing", room.players, player.HubGuid, true);
+                    string msgToPlayer = "You don't see " + AvsAnLib.AvsAn.Query(itemToFind) + " " + itemToFind + " here and you are not carrying " + AvsAnLib.AvsAn.Query(itemToFind) + " " + itemToFind;
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, msgToPlayer, player.Name + " rummages around for an item but finds nothing");
+
 
                 }
                 else
@@ -111,8 +112,7 @@ namespace MIMWebClient.Core.Events
 
                     //look in room
                     var foundContainer = (nthContainer == -1) ? roomItems.Find(x => x.name.ToLower().Contains(comntainerToFind) && x.container == true)
-                                          : roomItems.FindAll(x => x.name.ToLower().Contains(comntainerToFind) && x
-                      .container == true).Skip(nthContainer - 1).FirstOrDefault();
+                                          : roomItems.FindAll(x => x.name.ToLower().Contains(comntainerToFind) && x.container == true).Skip(nthContainer - 1).FirstOrDefault();
 
 
 
@@ -123,23 +123,22 @@ namespace MIMWebClient.Core.Events
                         {
                             foundItem = (nth == -1)
                                             ? foundContainer.containerItems.Find(x => x.name.ToLower().Contains(itemToFind))
-                                            : foundContainer.containerItems.FindAll(
-                                                x => x.name.ToLower().Contains(itemToFind))
-                                                  .Skip(nth - 1)
-                                                  .FirstOrDefault();
+                                            : foundContainer.containerItems.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
                         }
                         else
                         {
-                            HubContext.SendToClient("You don't see that inside the container", player.HubGuid);
-                            HubContext.broadcastToRoom(player.Name + " searches around inside the container but finds nothing", room.players, player.HubGuid, true);
+
+                            BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't see that inside the container", player.Name + " searches around inside the container but finds nothing");
+
 
                             return null;
                         }
                     }
                     else
                     {
-                        HubContext.SendToClient("You don't see that container here and you are not carrying such an item", player.HubGuid);
-                        HubContext.broadcastToRoom(player.Name + " searches for a container but finds nothing", room.players, player.HubGuid, true);
+
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't see that container here and you are not carrying such an item", player.Name + " searches for a container but finds nothing");
+
                         return null;
                     }
 
@@ -150,16 +149,16 @@ namespace MIMWebClient.Core.Events
                     }
                     else
                     {
-                        HubContext.SendToClient("You don't see that item inside the container", player.HubGuid);
-                        HubContext.broadcastToRoom(player.Name + " searches around inside the container but finds nothing", room.players, player.HubGuid, true);
 
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't see that item inside the container", player.Name + " searches around inside the container but finds nothing");
                     }
                 }
 
 
 
             }
-            else if (itemToFind == "all" && roomItems.Count == 0 && command == "get") {
+            else if (itemToFind == "all" && roomItems.Count == 0 && command == "get")
+            {
                 HubContext.SendToClient("There is nothing here to get", player.HubGuid);
             }
             else if (itemToFind == "all" && playerInv.Count == 0 && command == "drop" || itemToFind == "all" && playerInv.Count == 0 && command == "put")
@@ -178,14 +177,17 @@ namespace MIMWebClient.Core.Events
                     foundItem = (nth == -1) ? playerInv.Find(x => x.name.ToLower().Contains(itemToFind))
                                     : playerInv.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
 
+
+
                     if (foundItem != null || itemToFind.Equals("all", StringComparison.OrdinalIgnoreCase))
                     {
                         return new KeyValuePair<Item, Item>(foundContainer, foundItem);
                     }
                     else
                     {
-                        HubContext.SendToClient("you are not carrying such an item", player.HubGuid);
-                        HubContext.broadcastToRoom(player.Name + " tries to get an item but can't find it.", room.players, player.HubGuid, true);
+
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "you are not carrying such an item", player.Name + " tries to get an item but can't find it.");
+
                     }
                 }
                 else
@@ -212,8 +214,10 @@ namespace MIMWebClient.Core.Events
                     }
                     else
                     {
-                        HubContext.SendToClient("You are not carrying such an item", player.HubGuid);
-                        HubContext.broadcastToRoom(player.Name + " tries to get an item but can't find it.", room.players, player.HubGuid, true);
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "you are not carrying such an item", player.Name + " tries to get an item but can't find it.");
+
+
+
                     }
 
                     //return item found in container
@@ -223,8 +227,9 @@ namespace MIMWebClient.Core.Events
                     }
                     else
                     {
-                        HubContext.SendToClient("You don't see that item inside the container", player.HubGuid);
-                        HubContext.broadcastToRoom(player.Name + " tries to get an item from a container but can't find it.", room.players, player.HubGuid, true);
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't see that item inside the container", player.Name + " tries to get an item from a container but can't find it.");
+
+
                     }
                 }
             }
@@ -252,8 +257,9 @@ namespace MIMWebClient.Core.Events
                 }
                 else
                 {
-                    HubContext.SendToClient("you don't see " + itemToFind + " here", player.HubGuid);
-                    HubContext.broadcastToRoom(player.Name + " tries to kill x but can't find them.", room.players, player.HubGuid, true);
+
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "you don't see " + itemToFind + " here", player.Name + " tries to kill x but can't find them.");
+
                 }
 
 
@@ -303,8 +309,8 @@ namespace MIMWebClient.Core.Events
                     }
                     else
                     {
-                        HubContext.SendToClient("You don't see anything by that name here", player.HubGuid);
-                        HubContext.broadcastToRoom(player.Name + " something something...", room.players, player.HubGuid, true);
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't see anything by that name here", player.Name + " something something...");
+
                     }
                 }
                 else
@@ -321,7 +327,7 @@ namespace MIMWebClient.Core.Events
                         //inside found container
                         if (foundContainer.containerItems != null)
                         {
-                            
+
 
                             var containerItemsCount = foundContainer.containerItems.Count;
 
@@ -355,22 +361,25 @@ namespace MIMWebClient.Core.Events
                                     }
 
                                 }
-                                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You pick up a " + foundContainer.containerItems[i].name);
-                                HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " picks up a " + foundContainer.containerItems[i].name);
+
+
+                                BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You pick up a " + foundContainer.containerItems[i].name, player.Name + " picks up a " + foundContainer.containerItems[i].name);
+
                                 foundContainer.containerItems.Remove(foundContainer.containerItems[i]);
                             }
                         }
                         else
                         {
-                            HubContext.SendToClient("You don't see that inside the container", player.HubGuid);
-                            HubContext.broadcastToRoom(player.Name + " searches around inside the container but finds nothing", room.players, player.HubGuid, true);
+
+                            BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't see that inside the container", player.Name + " searches around inside the container but finds nothing");
+
 
                             return null;
                         }
                     }
 
 
-                    }
+                }
 
             }
 
@@ -438,8 +447,9 @@ namespace MIMWebClient.Core.Events
                             }
 
                         }
-                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You pick up a " + roomItems[i].name);
-                        HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " picks up a " + roomItems[i].name);
+
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You pick up a " + roomItems[i].name, player.Name + " picks up a " + roomItems[i].name);
+
                         room.items.Remove(roomItems[i]);
                     }
 
@@ -458,8 +468,9 @@ namespace MIMWebClient.Core.Events
                     {
                         containerItems[i].location = Item.ItemLocation.Inventory;
                         player.Inventory.Add(containerItems[i]);
-                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You get a " + containerItems[i].name + " from a " + container.name);
-                        HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " get a " + containerItems[i].name + " from a " + container.name);
+
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You get a " + containerItems[i].name + " from a " + container.name, player.Name + " get a " + containerItems[i].name + " from a " + container.name);
+
                         containerItems.Remove(containerItems[i]);
                     }
 
@@ -493,10 +504,8 @@ namespace MIMWebClient.Core.Events
                     Cache.updateRoom(room, currentRoom);
                     Cache.updatePlayer(player, currentPlayer);
 
-                    HubContext.getHubContext.Clients.Client(player.HubGuid)
-                        .addNewMessageToPage("You pick up a " + item.name);
-                    HubContext.getHubContext.Clients.AllExcept(player.HubGuid)
-                        .addNewMessageToPage(player.Name + " picks up a " + item.name);
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You pick up a " + item.name, player.Name + " picks up a " + item.name);
+
                 }
                 else
                 {
@@ -517,10 +526,8 @@ namespace MIMWebClient.Core.Events
                     Cache.updateRoom(room, currentRoom);
                     Cache.updatePlayer(player, currentPlayer);
 
-                    HubContext.getHubContext.Clients.Client(player.HubGuid)
-                        .addNewMessageToPage("You get a " + item.name + " from a " + container.name);
-                    HubContext.getHubContext.Clients.AllExcept(player.HubGuid)
-                        .addNewMessageToPage(player.Name + " gets a " + item.name + " from a " + container.name);
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You get a " + item.name + " from a " + container.name, player.Name + " gets a " + item.name + " from a " + container.name);
+
                 }
 
             }
@@ -536,110 +543,65 @@ namespace MIMWebClient.Core.Events
         /// <param name="commandKey">command entered</param>
         public static void DropItem(Room room, Player player, string userInput, string commandKey)
         {
-
             var currentRoom = room;
             var currentPlayer = player;
             string[] all = userInput.Split();
+            var returnedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, FindInventory);
+            var container = returnedItem.Key;
+            var item = returnedItem.Value;
 
             if (all[0].Equals("all", StringComparison.InvariantCultureIgnoreCase))
             {
-                var returnedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, FindInventory);
-
-                var container = returnedItem.Key;
-                var item = returnedItem.Value;
                 var playerInv = player.Inventory;
+                var playerInvCount = player.Inventory.Count;
 
-                if (container == null)
+                for (int i = playerInvCount - 1; i >= 0; i--)
                 {
+                    playerInv[i].location = Item.ItemLocation.Room;
+                   
 
-
-                    var playerInvCount = player.Inventory.Count;
-
-                    for (int i = playerInvCount - 1; i >= 0; i--)
+                    if (container == null)
                     {
-                        playerInv[i].location = Item.ItemLocation.Room;
                         room.items.Add(playerInv[i]);
-                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You drop a " + playerInv[i].name);
-                        HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " drops a " + playerInv[i].name);
-                        player.Inventory.Remove(playerInv[i]);
+
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You drop a " + playerInv[i].name, player.Name + " drops a " + playerInv[i].name);
                     }
-
-
-                    //save to cache
-                    Cache.updateRoom(room, currentRoom);
-                    Cache.updatePlayer(player, currentPlayer);
-
-                }
-                else
-                {
-
-                    var playerInvCount = playerInv.Count;
-
-                    for (int i = playerInvCount - 1; i >= 0; i--)
+                    else
                     {
-                        playerInv[i].location = Item.ItemLocation.Room;
                         container.containerItems.Add(playerInv[i]);
-                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You drop a " + playerInv[i].name + " into a " + container.name);
-                        HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " drops a " + playerInv[i].name + " into a " + container.name);
-                        player.Inventory.Remove(playerInv[i]);
+
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You drop a " + playerInv[i].name + " into a " + container.name, player.Name + " drops a " + playerInv[i].name + " into a " + container.name);
                     }
 
-
-                    //save to cache
-                    Cache.updateRoom(room, currentRoom);
-                    Cache.updatePlayer(player, currentPlayer);
+                    player.Inventory.Remove(playerInv[i]);
                 }
             }
             else
             {
-                KeyValuePair<Item, Item> returnedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, "inventory");
+                if (item == null)
+                {
+                    return;
+                }
 
-                var container = returnedItem.Key;
-                var item = returnedItem.Value;
+                player.Inventory.Remove(item);
+                item.location = Item.ItemLocation.Room;
 
                 if (container == null)
                 {
-
-                    if (item == null)
-                    {
-                        return;
-                    }
-
-                    player.Inventory.Remove(item);
-                    item.location = Item.ItemLocation.Room;
                     room.items.Add(item);
 
-                    HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You drop  a " + item.name);
-                    HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " drops  a " + item.name);
-
-                    //save to cache
-                    Cache.updateRoom(room, currentRoom);
-                    Cache.updatePlayer(player, currentPlayer);
-
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You drop  a " + item.name, player.Name + " drops  a " + item.name);
                 }
                 else
                 {
-
-                    if (item == null)
-                    {
-                        return;
-                    }
-
-                    player.Inventory.Remove(item);
-                    item.location = Item.ItemLocation.Room;
                     container.containerItems.Add(item);
 
-                    HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You put a " + item.name + " inside the " + container.name);
-                    HubContext.getHubContext.Clients.AllExcept(player.HubGuid).addNewMessageToPage(player.Name + " puts a " + item.name + " inside the " + container.name);
-
-                    //save to cache
-                    Cache.updateRoom(room, currentRoom);
-                    Cache.updatePlayer(player, currentPlayer);
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You put a " + item.name + " inside the " + container.name, player.Name + " puts a " + item.name + " inside the " + container.name);
                 }
 
-
-
-
+                //save to cache
+                Cache.updateRoom(room, currentRoom);
+                Cache.updatePlayer(player, currentPlayer);
             }
         }
     }
