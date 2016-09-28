@@ -7,8 +7,13 @@ namespace MIMWebClient.Core.Events
 {
     public class FindItem
     {
-        public object Item (List<Item.Item> collection, int findNth, string itemToFind)
+        public static Item.Item Item (List<Item.Item> collection, int findNth, string itemToFind)
         {
+
+            if (collection == null)
+            {
+                return null;
+            }
 
             if (findNth == -1)
             {
@@ -20,8 +25,13 @@ namespace MIMWebClient.Core.Events
 
         }
 
-        public object Player(List<PlayerSetup.Player> collection, int findNth, string itemToFind)
+        public static PlayerSetup.Player Player(List<PlayerSetup.Player> collection, int findNth, string itemToFind)
         {
+
+            if (collection == null)
+            {
+                return null;
+            }
 
             if (findNth == -1)
             {

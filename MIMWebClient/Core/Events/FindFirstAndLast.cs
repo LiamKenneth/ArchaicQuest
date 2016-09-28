@@ -7,7 +7,7 @@
     {
         public  static KeyValuePair<string, string> FindFirstAndLastIndex(string thingToFind)
         {
-            string item = null;
+            string item = thingToFind;
             string itemContainer = null;
 
             int indexOfSpaceInUserInput = thingToFind.IndexOf(" ", StringComparison.Ordinal);

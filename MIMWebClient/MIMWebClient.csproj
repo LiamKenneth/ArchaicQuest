@@ -232,6 +232,7 @@
     <Compile Include="Core\Events\Fight2.cs" />
     <Compile Include="Core\Events\FindItem.cs" />
     <Compile Include="Core\Events\FindNth.cs" />
+    <Compile Include="Core\Events\FindWhere.cs" />
     <Compile Include="Core\Events\Flee.cs" />
     <Compile Include="Core\Events\LoadRoom.cs" />
     <Compile Include="Core\Events\ManipulateObject.cs" />

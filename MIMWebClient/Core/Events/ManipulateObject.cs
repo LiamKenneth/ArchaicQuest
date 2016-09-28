@@ -14,13 +14,14 @@ namespace MIMWebClient.Core.Events
 
     public class ManipulateObject
     {
-        private static string FindItem { get; } = "item";
+        private static string lookItem { get; } = "item";
         private static string FindInventory { get; } = "inventory";
         private static string Findkillable { get; } = "killable";
         private static string FindAll { get; } = "all";
 
+     
         /// <summary>
-        /// Finds Objects!!
+        /// Finds Objects in room, inventory, containers or mobs and players
         /// </summary>
         /// <param name="room">the room the player is in</param>
         /// <param name="player">the player calling the method</param>
@@ -30,30 +31,6 @@ namespace MIMWebClient.Core.Events
         /// <returns></returns>
         public static object FindObject(Room room, Player player, string command, string thingToFind, string objectTypeToFind = "")
         {
-            /*words to stripout
-             * 
-             *  from / in / inside / the  ?
-            /*
-             *  sayto geof good morning
-             *  say to geof good morning <- nah
-             *  > geof hello
-             *  
-             *  get 'long sword' / "long sword" / long_sword
-             *  get sword -done
-             *  get sword chest - done
-             *  get 2.dagger -done
-             *  
-             *  drop potion
-             *  give dagger geof
-             *  put dagger chest - done
-             *  
-             *  open north
-             *  lock chest
-             *  
-             * */
-
-
-            // gets if it;s 2.sword or not and returns the item
 
             string item = thingToFind;
             var itemContainer = string.Empty;
@@ -90,21 +67,19 @@ namespace MIMWebClient.Core.Events
             List<Player> playerList = room.players;
 
             #region find Item searching Room and Player Inventory
-            if (objectTypeToFind == FindItem && itemToFind != "all")
+            if (objectTypeToFind == lookItem && itemToFind != "all")
             {
                 // if its not a container
                 if (string.IsNullOrEmpty(itemContainer))
                 {
                     //search room items 1st
-                    foundItem = (nth == -1) ? roomItems.Find(x => x.name.ToLower().Contains(itemToFind))
-                                        : roomItems.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
+                    foundItem = FindItem.Item(room.items, nth, itemToFind);
 
-                    if (foundItem != null) { return new KeyValuePair<Item, Item>(null, foundItem); ; }
+                    if (foundItem != null) { return new KeyValuePair<Item, Item>(null, foundItem); }
 
 
                     string msgToPlayer = "You don't see " + AvsAnLib.AvsAn.Query(itemToFind) + " " + itemToFind + " here and you are not carrying " + AvsAnLib.AvsAn.Query(itemToFind) + " " + itemToFind;
                     BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, msgToPlayer, player.Name + " rummages around for an item but finds nothing");
-
 
                 }
                 else
@@ -115,31 +90,11 @@ namespace MIMWebClient.Core.Events
                                           : roomItems.FindAll(x => x.name.ToLower().Contains(comntainerToFind) && x.container == true).Skip(nthContainer - 1).FirstOrDefault();
 
 
-
                     if (foundContainer != null)
                     {
-                        //inside found container
-                        if (foundContainer.containerItems != null)
-                        {
-                            foundItem = (nth == -1)
-                                            ? foundContainer.containerItems.Find(x => x.name.ToLower().Contains(itemToFind))
-                                            : foundContainer.containerItems.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
-                        }
-                        else
-                        {
+                   
+                      foundItem = FindItem.Item(foundContainer.containerItems, nth, itemToFind);
 
-                            BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't see that inside the container", player.Name + " searches around inside the container but finds nothing");
-
-
-                            return null;
-                        }
-                    }
-                    else
-                    {
-
-                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't see that container here and you are not carrying such an item", player.Name + " searches for a container but finds nothing");
-
-                        return null;
                     }
 
                     //return item found in container
@@ -149,12 +104,14 @@ namespace MIMWebClient.Core.Events
                     }
                     else
                     {
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't see that inside the container", player.Name + " searches around inside the container but finds nothing");
 
-                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't see that item inside the container", player.Name + " searches around inside the container but finds nothing");
                     }
+
+ 
                 }
 
-
+               
 
             }
             else if (itemToFind == "all" && roomItems.Count == 0 && command == "get")
@@ -174,8 +131,7 @@ namespace MIMWebClient.Core.Events
                 if (string.IsNullOrEmpty(itemContainer))
                 {
 
-                    foundItem = (nth == -1) ? playerInv.Find(x => x.name.ToLower().Contains(itemToFind))
-                                    : playerInv.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
+                    foundItem = FindItem.Item(player.Inventory, nth, itemToFind);
 
 
 
@@ -195,12 +151,7 @@ namespace MIMWebClient.Core.Events
                     //look in inv
                     if (itemToFind != "all")
                     {
-                        foundItem = (nthContainer == -1) ? playerInv.Find(x => x.name.ToLower().Contains(itemToFind))
-                                       : playerInv.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nthContainer - 1).FirstOrDefault();
-                    }
-                    else
-                    {
-                        // foundItem = playerInv;
+                        foundItem = FindItem.Item(player.Inventory, nth, itemToFind);
                     }
 
                     if (foundItem != null || itemContainer != null && itemToFind == "all")
@@ -216,8 +167,6 @@ namespace MIMWebClient.Core.Events
                     {
                         BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "you are not carrying such an item", player.Name + " tries to get an item but can't find it.");
 
-
-
                     }
 
                     //return item found in container
@@ -229,7 +178,6 @@ namespace MIMWebClient.Core.Events
                     {
                         BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't see that item inside the container", player.Name + " tries to get an item from a container but can't find it.");
 
-
                     }
                 }
             }
@@ -240,16 +188,14 @@ namespace MIMWebClient.Core.Events
 
 
                 //search mob 
-                foundMob = (nth == -1) ? mobList.Find(x => x.Name.ToLower().Contains(itemToFind))
-                                      : mobList.FindAll(x => x.Name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
+                foundMob = FindItem.Player(room.mobs, nth, itemToFind);
 
                 if (foundMob != null)
                 {
                     return foundMob;
                 }
                 //search player
-                foundPlayer = (nth == -1) ? playerList.Find(x => x.Name.ToLower().Contains(itemToFind))
-                                    : playerList.FindAll(x => x.Name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
+                foundPlayer = FindItem.Player(room.players, nth, itemToFind);
 
                 if (foundPlayer != null)
                 {
@@ -271,47 +217,7 @@ namespace MIMWebClient.Core.Events
                 if (comntainerToFind == null)
                 {
 
-
-                    //general stuff? sayto command? whsper? cast
-
-                    //search room items 1st
-                    foundItem = (nth == -1) ? roomItems.Find(x => x.name.ToLower().Contains(itemToFind))
-                                    : roomItems.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
-
-                    if (foundItem != null) { return foundItem; }
-
-                    //search player inventory
-                    foundItem = (nth == -1) ? playerInv.Find(x => x.name.ToLower().Contains(itemToFind))
-                                    : playerInv.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
-
-                    if (foundItem != null)
-                    {
-                        return foundItem;
-                    }
-
-
-                    //search mob
-                    foundMob = (nth == -1) ? mobList.Find(x => x.Name.ToLower().Contains(itemToFind))
-                                   : mobList.FindAll(x => x.Name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
-
-                    if (foundMob != null)
-                    {
-                        return foundMob;
-                    }
-
-                    //search players
-                    foundPlayer = (nth == -1) ? playerList.Find(x => x.Name.ToLower().Contains(itemToFind))
-                                   : playerList.FindAll(x => x.Name.ToLower().Contains(itemToFind)).Skip(nth - 1).FirstOrDefault();
-
-                    if (foundPlayer != null)
-                    {
-                        return foundPlayer;
-                    }
-                    else
-                    {
-                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't see anything by that name here", player.Name + " something something...");
-
-                    }
+                    FindWhere.find(room, player, nth, itemToFind);
                 }
                 else
                 {
@@ -453,9 +359,6 @@ namespace MIMWebClient.Core.Events
                         room.items.Remove(roomItems[i]);
                     }
 
-                    //save to cache
-                    Cache.updateRoom(room, currentRoom);
-                    Cache.updatePlayer(player, currentPlayer);
                 }
                 else
                 {
@@ -473,10 +376,6 @@ namespace MIMWebClient.Core.Events
 
                         containerItems.Remove(containerItems[i]);
                     }
-
-                    //save to cache
-                    Cache.updateRoom(room, currentRoom);
-                    Cache.updatePlayer(player, currentPlayer);
 
                 }
             }
@@ -500,9 +399,6 @@ namespace MIMWebClient.Core.Events
                     player.Inventory.Add(item);
 
 
-                    //save to cache
-                    Cache.updateRoom(room, currentRoom);
-                    Cache.updatePlayer(player, currentPlayer);
 
                     BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You pick up a " + item.name, player.Name + " picks up a " + item.name);
 
@@ -520,15 +416,14 @@ namespace MIMWebClient.Core.Events
                     player.Inventory.Add(item);
 
 
-                    //save to cache
-
-
-                    Cache.updateRoom(room, currentRoom);
-                    Cache.updatePlayer(player, currentPlayer);
-
                     BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You get a " + item.name + " from a " + container.name, player.Name + " gets a " + item.name + " from a " + container.name);
 
                 }
+
+
+                //save to cache
+                Cache.updateRoom(room, currentRoom);
+                Cache.updatePlayer(player, currentPlayer);
 
             }
 
