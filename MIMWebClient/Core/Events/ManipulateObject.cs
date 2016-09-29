@@ -19,7 +19,7 @@ namespace MIMWebClient.Core.Events
         private static string Findkillable { get; } = "killable";
         private static string FindAll { get; } = "all";
 
-     
+
         /// <summary>
         /// Finds Objects in room, inventory, containers or mobs and players
         /// </summary>
@@ -58,6 +58,7 @@ namespace MIMWebClient.Core.Events
             }
 
             Item foundItem = null;
+            Item foundContainer = null;
             Player foundMob = null;
             Player foundPlayer = null;
 
@@ -86,14 +87,14 @@ namespace MIMWebClient.Core.Events
                 {
 
                     //look in room
-                    var foundContainer = (nthContainer == -1) ? roomItems.Find(x => x.name.ToLower().Contains(comntainerToFind) && x.container == true)
+                     foundContainer = (nthContainer == -1) ? roomItems.Find(x => x.name.ToLower().Contains(comntainerToFind) && x.container == true)
                                           : roomItems.FindAll(x => x.name.ToLower().Contains(comntainerToFind) && x.container == true).Skip(nthContainer - 1).FirstOrDefault();
 
 
                     if (foundContainer != null)
                     {
-                   
-                      foundItem = FindItem.Item(foundContainer.containerItems, nth, itemToFind);
+
+                        foundItem = FindItem.Item(foundContainer.containerItems, nth, itemToFind);
 
                     }
 
@@ -108,10 +109,10 @@ namespace MIMWebClient.Core.Events
 
                     }
 
- 
+
                 }
 
-               
+
 
             }
             else if (itemToFind == "all" && roomItems.Count == 0 && command == "get")
@@ -127,7 +128,7 @@ namespace MIMWebClient.Core.Events
             #region find item in player inventory for commands such as drop, equip, wield etc
             else if (objectTypeToFind == FindInventory)
             {
-                Item foundContainer = null;
+              
                 if (string.IsNullOrEmpty(itemContainer))
                 {
 
@@ -222,7 +223,7 @@ namespace MIMWebClient.Core.Events
                 else
                 {
                     //look in room
-                    var foundContainer = (nthContainer == -1) ? roomItems.Find(x => x.name.ToLower().Contains(comntainerToFind) && x.container == true)
+                     foundContainer = (nthContainer == -1) ? roomItems.Find(x => x.name.ToLower().Contains(comntainerToFind) && x.container == true)
                                           : roomItems.FindAll(x => x.name.ToLower().Contains(comntainerToFind) && x
                       .container == true).Skip(nthContainer - 1).FirstOrDefault();
 
@@ -291,7 +292,7 @@ namespace MIMWebClient.Core.Events
 
 
 
-            return new KeyValuePair<Item, Item>(null, null);
+            return new KeyValuePair<Item, Item>(foundContainer, foundItem);
         }
 
         /// <summary>
@@ -304,100 +305,66 @@ namespace MIMWebClient.Core.Events
         {
 
             //TODO handle container
-
             var currentRoom = room;
             var currentPlayer = player;
             string[] all = userInput.Split();
+            var returnedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, type);
+            var container = returnedItem.Key;
+            var item = returnedItem.Value;
 
-            if (all[0].Equals("all", StringComparison.InvariantCultureIgnoreCase))
+            if (item == null)
             {
-
-                var returnedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, type);
-                var container = returnedItem.Key;
-                var item = returnedItem.Value;
-
-
-                if (container == null)
-                {
-
-                    var roomItems = room.items;
-                    var roomItemsCount = roomItems.Count;
-
-                    for (int i = roomItemsCount - 1; i >= 0; i--)
-                    {
-                        if (roomItems[i].type != Item.ItemType.Gold || roomItems[i].type != Item.ItemType.Silver
-                            || roomItems[i].type != Item.ItemType.Copper)
-                        {
-
-
-
-                            roomItems[i].location = Item.ItemLocation.Inventory;
-                            player.Inventory.Add(roomItems[i]);
-
-                        }
-                        else
-                        {
-                            if (roomItems[i].type == Item.ItemType.Gold)
-                            {
-                                player.Gold += roomItems[i].count;
-                            }
-
-                            if (roomItems[i].type == Item.ItemType.Silver)
-                            {
-                                player.Silver += roomItems[i].count;
-                            }
-
-                            if (roomItems[i].type == Item.ItemType.Copper)
-                            {
-                                player.Copper += roomItems[i].count;
-                            }
-
-                        }
-
-                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You pick up a " + roomItems[i].name, player.Name + " picks up a " + roomItems[i].name);
-
-                        room.items.Remove(roomItems[i]);
-                    }
-
-                }
-                else
-                {
-
-                    var containerItems = container.containerItems;
-                    var containerCount = containerItems.Count;
-
-
-                    for (int i = containerCount - 1; i >= 0; i--)
-                    {
-                        containerItems[i].location = Item.ItemLocation.Inventory;
-                        player.Inventory.Add(containerItems[i]);
-
-                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You get a " + containerItems[i].name + " from a " + container.name, player.Name + " get a " + containerItems[i].name + " from a " + container.name);
-
-                        containerItems.Remove(containerItems[i]);
-                    }
-
-                }
+                return;
             }
-            else
+
+            if (all[0].Equals("all", StringComparison.InvariantCultureIgnoreCase) && container == null)
             {
+                var roomItems = room.items;
+                var roomItemsCount = roomItems.Count;
 
-                KeyValuePair<Item, Item> returnedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, type);
+                for (int i = roomItemsCount - 1; i >= 0; i--)
+                {
 
-                var container = returnedItem.Key;
-                var item = returnedItem.Value;
+                    //Get all Items from the room
+                    roomItems[i].location = Item.ItemLocation.Inventory;
+                    player.Inventory.Add(roomItems[i]);
+                    room.items.Remove(roomItems[i]);
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You pick up a " + roomItems[i].name, player.Name + " picks up a " + roomItems[i].name);
+
+
+                }
+
+
+            }
+            else if (all[0].Equals("all", StringComparison.InvariantCultureIgnoreCase) && container != null)
+            {
+                //get all from container
+                var containerItems = container.containerItems;
+                var containerCount = containerItems.Count;
+
+                for (int i = containerCount - 1; i >= 0; i--)
+                {
+                    containerItems[i].location = Item.ItemLocation.Inventory;
+                    player.Inventory.Add(containerItems[i]);
+
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You get a " + containerItems[i].name + " from a " + container.name, player.Name + " get a " + containerItems[i].name + " from a " + container.name);
+
+                    containerItems.Remove(containerItems[i]);
+                }
+
+
+            }
+
+            else if (item != null)
+            {
+                //get single Item       
 
                 if (container == null)
                 {
-                    if (item == null)
-                    {
-                        return;
-                    }
 
                     room.items.Remove(item);
                     item.location = Item.ItemLocation.Inventory;
                     player.Inventory.Add(item);
-
 
 
                     BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You pick up a " + item.name, player.Name + " picks up a " + item.name);
@@ -405,12 +372,7 @@ namespace MIMWebClient.Core.Events
                 }
                 else
                 {
-                    if (item == null)
-                    {
-                        return;
-                    }
-
-
+                    //Get item from container
                     container.containerItems.Remove(item);
                     container.location = Item.ItemLocation.Inventory;
                     player.Inventory.Add(item);
@@ -453,11 +415,13 @@ namespace MIMWebClient.Core.Events
                 for (int i = playerInvCount - 1; i >= 0; i--)
                 {
                     playerInv[i].location = Item.ItemLocation.Room;
-                   
+
 
                     if (container == null)
                     {
+                        playerInv[i].location = Item.ItemLocation.Room;
                         room.items.Add(playerInv[i]);
+                        
 
                         BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You drop a " + playerInv[i].name, player.Name + " drops a " + playerInv[i].name);
                     }
