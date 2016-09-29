@@ -54,6 +54,8 @@ namespace MIMWebClient.Core
             commandList.Add("unwield", () => Equipment.RemoveItem(playerData, commandOptions, false, true));
             commandList.Add("kill",  () =>  Fight2.StartFight(playerData, room, commandOptions));
             commandList.Add("flee", () => Flee.fleeCombat(playerData, room));
+            commandList.Add("unlock", () => ManipulateObject.UnlockItem(room, playerData, commandOptions, commandKey));
+            commandList.Add("lock", () => ManipulateObject.LockItem(room, playerData, commandOptions, commandKey));
             return commandList;
         }
 

@@ -15,7 +15,9 @@ namespace MIMWebClient.Core.Item
 
         public string name { get; set; }
         public List<string> keywords { get; set; }
-        public int? keyValue { get; set; }
+        public bool open { get; set; }
+        public string keyId { get; set; }
+        public string keyValue { get; set; }
         public bool hidden { get; set; }
         /// <summary>
         /// Wear is this item? Room, Inventory, worn

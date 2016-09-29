@@ -81,7 +81,7 @@ namespace MIMWebClient.Core.Events
 
                     string msgToPlayer = "You don't see " + AvsAnLib.AvsAn.Query(itemToFind) + " " + itemToFind + " here and you are not carrying " + AvsAnLib.AvsAn.Query(itemToFind) + " " + itemToFind;
                     BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, msgToPlayer, player.Name + " rummages around for an item but finds nothing");
-
+                    return new KeyValuePair<Item, Item>(null, null);
                 }
                 else
                 {
@@ -106,7 +106,6 @@ namespace MIMWebClient.Core.Events
                     else
                     {
                         BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't see that inside the container", player.Name + " searches around inside the container but finds nothing");
-
                     }
 
 
@@ -238,6 +237,13 @@ namespace MIMWebClient.Core.Events
 
                             var containerItemsCount = foundContainer.containerItems.Count;
 
+                            if (containerItemsCount == 0)
+                            {
+                                BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "The " + foundContainer.name + " is empty", player.Name + " looks in " + foundContainer.name + " but finds nothing");
+
+                                return new KeyValuePair<Item, Item>(foundContainer, foundItem);
+                            }
+
                             for (int i = containerItemsCount - 1; i >= 0; i--)
                             {
                                 if (foundContainer.containerItems[i].type != Item.ItemType.Gold || foundContainer.containerItems[i].type != Item.ItemType.Silver
@@ -279,9 +285,8 @@ namespace MIMWebClient.Core.Events
                         {
 
                             BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't see that inside the container", player.Name + " searches around inside the container but finds nothing");
+                            return new KeyValuePair<Item, Item>(foundContainer, foundItem);  
 
-
-                            return null;
                         }
                     }
 
@@ -308,14 +313,16 @@ namespace MIMWebClient.Core.Events
             var currentRoom = room;
             var currentPlayer = player;
             string[] all = userInput.Split();
+
+            if (all[0] == "all")
+            {
+                type = "all";
+            }
+
             var returnedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, type);
             var container = returnedItem.Key;
             var item = returnedItem.Value;
 
-            if (item == null)
-            {
-                return;
-            }
 
             if (all[0].Equals("all", StringComparison.InvariantCultureIgnoreCase) && container == null)
             {
@@ -328,9 +335,9 @@ namespace MIMWebClient.Core.Events
                     //Get all Items from the room
                     roomItems[i].location = Item.ItemLocation.Inventory;
                     player.Inventory.Add(roomItems[i]);
-                    room.items.Remove(roomItems[i]);
+                 
                     BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You pick up a " + roomItems[i].name, player.Name + " picks up a " + roomItems[i].name);
-
+                    room.items.Remove(roomItems[i]);
 
                 }
 
@@ -338,6 +345,13 @@ namespace MIMWebClient.Core.Events
             }
             else if (all[0].Equals("all", StringComparison.InvariantCultureIgnoreCase) && container != null)
             {
+
+                if (container.locked == true)
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "Container is locked", player.Name + " container is locked");
+
+                    return;
+                }
                 //get all from container
                 var containerItems = container.containerItems;
                 var containerCount = containerItems.Count;
@@ -372,6 +386,13 @@ namespace MIMWebClient.Core.Events
                 }
                 else
                 {
+                    if (container.locked == true)
+                    {
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "Container is locked", player.Name + " container is locked");
+
+                        return;
+                    }
+
                     //Get item from container
                     container.containerItems.Remove(item);
                     container.location = Item.ItemLocation.Inventory;
@@ -383,12 +404,16 @@ namespace MIMWebClient.Core.Events
                 }
 
 
-                //save to cache
-                Cache.updateRoom(room, currentRoom);
-                Cache.updatePlayer(player, currentPlayer);
-
+            }
+            else
+            {
+                BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "There is nothing here to pick up", player.Name + " searches for something to pick up");
+                return;
             }
 
+            //save to cache
+            Cache.updateRoom(room, currentRoom);
+            Cache.updatePlayer(player, currentPlayer);
         }
 
         /// <summary>
@@ -447,12 +472,22 @@ namespace MIMWebClient.Core.Events
 
                 if (container == null)
                 {
+
+ 
+
                     room.items.Add(item);
 
                     BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You drop  a " + item.name, player.Name + " drops  a " + item.name);
                 }
                 else
                 {
+
+                    if (container.locked == true)
+                    {
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "Container is locked", player.Name + " container is locked");
+
+                        return;
+                    }
                     container.containerItems.Add(item);
 
                     BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You put a " + item.name + " inside the " + container.name, player.Name + " puts a " + item.name + " inside the " + container.name);
@@ -462,6 +497,126 @@ namespace MIMWebClient.Core.Events
                 Cache.updateRoom(room, currentRoom);
                 Cache.updatePlayer(player, currentPlayer);
             }
+        }
+
+
+        /// <summary>
+        /// Unlock Item
+        /// </summary>
+        /// <param name="room">room object</param>
+        /// <param name="player">player object</param>
+        /// <param name="userInput">text entered by user</param>
+        /// <param name="commandKey">command entered</param>
+        public static void UnlockItem(Room room, Player player, string userInput, string commandKey)
+        {
+            var currentRoom = room;
+            var currentPlayer = player;
+            string[] all = userInput.Split();
+            // var lockedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, FindInventory);
+            // var container = lockedItem.Key;
+            //  var item = lockedItem.Value;
+
+            var findObject = Events.FindNth.Findnth(userInput);
+            int nth = findObject.Key;
+            var foundItem = FindItem.Item(room.items, nth, userInput);
+            // find key matching chest lock id
+            var hasKey = false;
+
+            foreach (var key in player.Inventory)
+            {
+                if (key.keyValue == foundItem.keyId)
+                {
+                    hasKey = true;
+                }
+            }
+
+            if (hasKey == false)
+            {
+                BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't have a key for that", player.Name + " tries to unlock the " + foundItem.name + " without the key");
+                return;
+            }
+
+
+            if (foundItem != null)
+            {
+                if (foundItem.locked != true)
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "IT is already unlocked", player.Name + " tries to unlock the..." + foundItem.name);
+                    return;
+                }
+                else
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You unlock " + foundItem.name, player.Name + " unlocks the..." + foundItem.name);
+                    foundItem.locked = false;
+                    return;
+                }
+            }
+
+
+         
+            //save to cache
+            Cache.updateRoom(room, currentRoom);
+   
+        }
+
+        /// <summary>
+        /// lock Item
+        /// </summary>
+        /// <param name="room">room object</param>
+        /// <param name="player">player object</param>
+        /// <param name="userInput">text entered by user</param>
+        /// <param name="commandKey">command entered</param>
+        public static void LockItem(Room room, Player player, string userInput, string commandKey)
+        {
+            var currentRoom = room;
+            var currentPlayer = player;
+            string[] all = userInput.Split();
+            // var lockedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, FindInventory);
+            // var container = lockedItem.Key;
+            //  var item = lockedItem.Value;
+
+            var findObject = Events.FindNth.Findnth(userInput);
+            int nth = findObject.Key;
+            var foundItem = FindItem.Item(room.items, nth, userInput);
+            // find key matching chest lock id
+            var hasKey = false;
+
+            foreach (var key in player.Inventory)
+            {
+                if (key.keyValue == foundItem.keyId)
+                {
+                    hasKey = true;
+                }
+            }
+
+            if (hasKey == false)
+            {
+                BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't have a key for that", player.Name + " tries to lock the " + foundItem.name + " without the key");
+                return;
+            }
+
+
+            if (foundItem != null)
+            {
+                if (foundItem.locked != true)
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You lock chest", player.Name + " locks the " + foundItem.name);
+                    foundItem.locked = true;
+                    return;
+                }
+                else
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "the chest is already locked  " + foundItem.name, player.Name + " tries to locked the already locked chest" + foundItem.name);
+                   
+                    return;
+                }
+            }
+
+
+
+            //save to cache
+            Cache.updateRoom(room, currentRoom);
+
         }
     }
 }
