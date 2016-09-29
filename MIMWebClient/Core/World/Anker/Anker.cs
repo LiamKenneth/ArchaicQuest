@@ -74,6 +74,7 @@ namespace MIMWebClient.Core.World.Anker
 
                 name = "Wooden Chest",
                 containerItems = new List<Item.Item>(),
+                canLock = true,
                 containerSize = 10,
                 container = true,
                 isVisibleToRoom = true,
@@ -148,6 +149,7 @@ namespace MIMWebClient.Core.World.Anker
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false,
+                canLock = true,
                 description = new Item.Description
                 {
                     look = "To the north you see the inn of the drunken sailor.", //return mobs / players?

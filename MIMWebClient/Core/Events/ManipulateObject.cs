@@ -518,41 +518,111 @@ namespace MIMWebClient.Core.Events
 
             var findObject = Events.FindNth.Findnth(userInput);
             int nth = findObject.Key;
-            var foundItem = FindItem.Item(room.items, nth, userInput);
-            // find key matching chest lock id
-            var hasKey = false;
 
-            foreach (var key in player.Inventory)
+            Item foundItem = null;
+            Exit foundExit = null;
+
+            foundItem = FindItem.Item(room.items, nth, userInput);
+
+           
+
+            if (foundItem == null)
             {
-                if (key.keyValue == foundItem.keyId)
+                foundExit = FindItem.Exit(room.exits, nth, userInput);
+
+                if (foundExit.canLock == false)
                 {
-                    hasKey = true;
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You can't ynlock that", player.Name + " tries to lock the " + foundItem.name);
+                    return;
                 }
             }
-
-            if (hasKey == false)
-            {
-                BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't have a key for that", player.Name + " tries to unlock the " + foundItem.name + " without the key");
-                return;
-            }
-
 
             if (foundItem != null)
             {
-                if (foundItem.locked != true)
+
+                if (foundItem.canLock == false)
                 {
-                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "IT is already unlocked", player.Name + " tries to unlock the..." + foundItem.name);
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You can't ynlock that", player.Name + " tries to lock the " + foundItem.name);
                     return;
                 }
-                else
+
+                // find key matching chest lock id
+                var hasKey = false;
+
+                foreach (var key in player.Inventory)
                 {
-                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You unlock " + foundItem.name, player.Name + " unlocks the..." + foundItem.name);
-                    foundItem.locked = false;
+                    if (key.keyValue != null)
+                    {
+                        if (key.keyValue == foundItem.keyId)
+                        {
+                            hasKey = true;
+                        }
+                    }
+                }
+
+                if (hasKey == false)
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't have a key for that", player.Name + " tries to unlock the " + foundItem.name + " without the key");
                     return;
+                }
+
+
+                if (foundItem != null)
+                {
+                    if (foundItem.locked != true)
+                    {
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "IT is already unlocked", player.Name + " tries to unlock the..." + foundItem.name);
+                        return;
+                    }
+                    else
+                    {
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You unlock " + foundItem.name, player.Name + " unlocks the..." + foundItem.name);
+                        foundItem.locked = false;
+                        return;
+                    }
+                }
+
+            }
+            else
+            {
+
+                // find key matching chest lock id
+                var hasKey = false;
+
+                foreach (var key in player.Inventory)
+                {
+                    if (key.keyValue != null)
+                    {
+                        if (key.keyValue == foundExit.keyId)
+                        {
+                            hasKey = true;
+                        }
+                    }
+                   
+                }
+
+                if (hasKey == false)
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't have a key for that", player.Name + " tries to unlock the " + foundExit.name + " without the key");
+                    return;
+                }
+
+
+                if (foundExit != null)
+                {
+                    if (foundExit.locked != true)
+                    {
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "IT is already unlocked", player.Name + " tries to unlock the..." + foundExit.name);
+                        return;
+                    }
+                    else
+                    {
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You unlock " + foundExit.name, player.Name + " unlocks the..." + foundExit.name);
+                        foundExit.locked = false;
+                        return;
+                    }
                 }
             }
-
-
          
             //save to cache
             Cache.updateRoom(room, currentRoom);
@@ -577,38 +647,198 @@ namespace MIMWebClient.Core.Events
 
             var findObject = Events.FindNth.Findnth(userInput);
             int nth = findObject.Key;
-            var foundItem = FindItem.Item(room.items, nth, userInput);
-            // find key matching chest lock id
-            var hasKey = false;
 
-            foreach (var key in player.Inventory)
+            Item foundItem = null;
+            Exit foundExit = null;
+
+            foundItem = FindItem.Item(room.items, nth, userInput);
+
+          
+
+            if (foundItem == null)
             {
-                if (key.keyValue == foundItem.keyId)
+                foundExit = FindItem.Exit(room.exits, nth, userInput);
+
+                if (foundExit.canLock == false)
                 {
-                    hasKey = true;
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You can't lock that", player.Name + " tries to lock the " + foundItem.name);
+                    return;
                 }
             }
-
-            if (hasKey == false)
-            {
-                BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't have a key for that", player.Name + " tries to lock the " + foundItem.name + " without the key");
-                return;
-            }
-
 
             if (foundItem != null)
             {
-                if (foundItem.locked != true)
+
+                if (foundItem.canLock == false)
                 {
-                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You lock chest", player.Name + " locks the " + foundItem.name);
-                    foundItem.locked = true;
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You can't lock that", player.Name + " tries to lock the " + foundItem.name);
                     return;
                 }
-                else
+
+                // find key matching chest lock id
+                var hasKey = false;
+
+                foreach (var key in player.Inventory)
                 {
-                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "the chest is already locked  " + foundItem.name, player.Name + " tries to locked the already locked chest" + foundItem.name);
-                   
+                    if (key.keyValue != null)
+                    {
+                        if (key.keyValue == foundItem.keyId)
+                        {
+                            hasKey = true;
+                        }
+                    }
+                }
+
+                if (hasKey == false)
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't have a key for that", player.Name + " tries to lock the " + foundItem.name + " without the key");
                     return;
+                }
+
+
+                if (foundItem != null)
+                {
+                    if (foundItem.locked != true)
+                    {
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You lock chest", player.Name + " locks the " + foundItem.name);
+                        foundItem.locked = true;
+                        return;
+                    }
+                    else
+                    {
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "the chest is already locked  " + foundItem.name, player.Name + " tries to locked the already locked chest" + foundItem.name);
+
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                // find key matching chest lock id
+                var hasKey = false;
+
+                foreach (var key in player.Inventory)
+                {
+                    if (key.keyValue != null)
+                    {
+                        if (key.keyValue == foundExit.keyId)
+                        {
+                            hasKey = true;
+                        }
+                    }
+                }
+
+                if (hasKey == false)
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't have a key for that", player.Name + " tries to lock the " + foundExit.name + " without the key");
+                    return;
+                }
+
+
+                if (foundExit != null)
+                {
+                    if (foundExit.locked != true)
+                    {
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You lock chest", player.Name + " locks the " + foundExit.name);
+                        foundExit.locked = true;
+                        return;
+                    }
+                    else
+                    {
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "the chest is already locked  " + foundExit.name, player.Name + " tries to locked the already locked chest" + foundExit.name);
+
+                        return;
+                    }
+                }
+            }
+
+
+
+            //save to cache
+            Cache.updateRoom(room, currentRoom);
+
+        }
+
+        /// <summary>
+        /// Open
+        /// </summary>
+        /// <param name="room">room object</param>
+        /// <param name="player">player object</param>
+        /// <param name="userInput">text entered by user</param>
+        /// <param name="commandKey">command entered</param>
+        public static void Open(Room room, Player player, string userInput, string commandKey)
+        {
+            var currentRoom = room;
+            var currentPlayer = player;
+            string[] all = userInput.Split();
+            // var lockedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, FindInventory);
+            // var container = lockedItem.Key;
+            //  var item = lockedItem.Value;
+
+            var findObject = Events.FindNth.Findnth(userInput);
+            int nth = findObject.Key;
+
+            Item foundItem = null;
+            Exit foundExit = null;
+
+            foundItem = FindItem.Item(room.items, nth, userInput);
+
+
+
+            if (foundItem == null)
+            {
+                foundExit = FindItem.Exit(room.exits, nth, userInput);
+
+                if (foundExit.canOpen == false)
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You can't open that", player.Name + " tries to open the " + foundItem.name);
+                    return;
+                }
+            }
+
+            if (foundItem != null)
+            {
+
+                if (foundItem.canOpen == false)
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You can't open that", player.Name + " tries to open the " + foundItem.name);
+                    return;
+                }
+
+                if (foundItem != null)
+                {
+                    if (foundItem.open != true)
+                    {
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You open chest", player.Name + " open the " + foundItem.name);
+                        foundItem.open = true;
+                        return;
+                    }
+                    else
+                    {
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "the chest is already open  " + foundItem.name, player.Name + " tries to open the already open chest" + foundItem.name);
+
+                        return;
+                    }
+                }
+            }
+            else
+            {
+
+
+                if (foundExit != null)
+                {
+                    if (foundExit.open != true)
+                    {
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You open chest", player.Name + " open the " + foundExit.name);
+                        foundExit.open = true;
+                        return;
+                    }
+                    else
+                    {
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "the chest is already open  " + foundExit.name, player.Name + " tries to open the already open chest" + foundExit.name);
+
+                        return;
+                    }
                 }
             }
 

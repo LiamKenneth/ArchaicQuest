@@ -56,6 +56,8 @@ namespace MIMWebClient.Core
             commandList.Add("flee", () => Flee.fleeCombat(playerData, room));
             commandList.Add("unlock", () => ManipulateObject.UnlockItem(room, playerData, commandOptions, commandKey));
             commandList.Add("lock", () => ManipulateObject.LockItem(room, playerData, commandOptions, commandKey));
+            commandList.Add("open", () => ManipulateObject.Open(room, playerData, commandOptions, commandKey));
+            //commandList.Add("close", () => ManipulateObject.Close(room, playerData, commandOptions, commandKey));
             return commandList;
         }
 
