@@ -43,6 +43,12 @@ Here are the commands currently supported, all commands are checked using starts
 
 To create a room, items or mobs check the example [room](https://github.com/LiamKenneth/MIM/blob/master/MIMWebClient/Core/World/Anker/Anker.cs)
 
-That should be all, all contributions and feedback welcomed :smile:
+Once you have added a new room you need to open up UpdateDB.cs and add your new area methods to the area lists. Save and compile, before you run the UpdateDB.exe to update the database
+You need to manually delete the DB records (Could add this to UpdateDB or make it update existing records).
+
+Connection details are: url: ds052968.mlab.com port: 52968 DB:mimdb username:testuser pass: password
+
+
+That should be it, all contributions and feedback welcomed :smile:
 
 
