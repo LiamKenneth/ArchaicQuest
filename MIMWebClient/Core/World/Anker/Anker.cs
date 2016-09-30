@@ -81,6 +81,7 @@ namespace MIMWebClient.Core.World.Anker
                 location = Item.Item.ItemLocation.Room,
                 description = new Item.Description { look = "Small Chest by the well" },
                 open = false,
+                canOpen = true,
                 locked = true,
                 keyId = Guid.NewGuid().ToString()
             };
@@ -140,7 +141,7 @@ namespace MIMWebClient.Core.World.Anker
             room.keywords.Add(bench);
 
             // Create Exits
-            var North = new Exit
+            var north = new Exit
             {
                 name = "North",
                 area = "Anker",
@@ -150,6 +151,9 @@ namespace MIMWebClient.Core.World.Anker
                 hidden = false,
                 locked = false,
                 canLock = true,
+                canOpen = true,
+                open = true,
+                doorName = "wooden door",
                 description = new Item.Description
                 {
                     look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
@@ -158,11 +162,13 @@ namespace MIMWebClient.Core.World.Anker
                 }
             };
 
+            
+
             //create items
 
             room.items.Add(bucketObj);
 
-            room.exits.Add(North);
+            room.exits.Add(north);
 
             //Create Mobs
             var cat = new Player { Name = "Black and White cat", Type = "Mob", Description = "This black cat's fur looks in pristine condition despite being a stray." };
@@ -205,7 +211,7 @@ namespace MIMWebClient.Core.World.Anker
 
 
             // Create Exits
-            var North = new Exit
+            var north = new Exit
             {
                 name = "North",
                 area = "Anker",
@@ -223,7 +229,7 @@ namespace MIMWebClient.Core.World.Anker
             };
 
             // Create Exits
-            var South = new Exit
+            var south = new Exit
             {
                 name = "South",
                 area = "Anker",
@@ -242,7 +248,7 @@ namespace MIMWebClient.Core.World.Anker
 
 
             // Create Exits
-            var East = new Exit
+            var east = new Exit
             {
                 name = "East",
                 area = "Anker",
@@ -261,7 +267,7 @@ namespace MIMWebClient.Core.World.Anker
 
 
             // Create Exits
-            var West = new Exit
+            var west = new Exit
             {
                 name = "West",
                 area = "Anker",
@@ -279,10 +285,10 @@ namespace MIMWebClient.Core.World.Anker
             };
 
             #endregion
-            room.exits.Add(North);
-            room.exits.Add(East);
-            room.exits.Add(South);         
-            room.exits.Add(West);
+            room.exits.Add(north);
+            room.exits.Add(east);
+            room.exits.Add(south);         
+            room.exits.Add(west);
 
 
 

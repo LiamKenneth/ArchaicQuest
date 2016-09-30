@@ -255,6 +255,12 @@ namespace MIMWebClient.Core.Events
 
                     if(keyword.Equals("look in", StringComparison.InvariantCultureIgnoreCase)) {
 
+                        if (itemDescription.open == false)
+                        {
+                            HubContext.SendToClient("You to to open the " + itemDescription.name + " before you can look inside", player.HubGuid);
+                            return;
+                        }
+
                         if (itemDescription.container == true)
                         {
                             if (itemDescription.containerItems.Count > 0)

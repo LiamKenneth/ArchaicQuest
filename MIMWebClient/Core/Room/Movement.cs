@@ -104,65 +104,73 @@ namespace MIMWebClient.Core.Room
             }
 
             //Find Exit
-            var exit = roomData.exits.Find(x => x.name == direction);
-
-            if (exit != null)
+            if (roomData.exits != null)
             {
+                var exit = roomData.exits.Find(x => x.name == direction);
 
-                //remove player from old room
-                PlayerManager.RemovePlayerFromRoom(roomData, player);
-
-                //exit message
-                ExitRoom(player, roomData, direction);
-
-                //change player Location
-                player.Area = exit.area;
-                player.AreaId = exit.areaId;
-                player.Region = exit.region;
-
-                //Get new room  
-                try
+                if (exit.open == false)
                 {
-                    //Room getNewRoom =  await HubProxy.MimHubServer.Invoke<Room>("getRoom", player.HubGuid);
-                    Room getNewRoom =  MIMWebClient.Hubs.MIMHub.getRoom(player.HubGuid);
+                    HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("The "+ exit.doorName + " is close");
+                }
 
-                    if (getNewRoom != null)
+                if (exit != null)
+                {
+
+                    //remove player from old room
+                    PlayerManager.RemovePlayerFromRoom(roomData, player);
+
+                    //exit message
+                    ExitRoom(player, roomData, direction);
+
+                    //change player Location
+                    player.Area = exit.area;
+                    player.AreaId = exit.areaId;
+                    player.Region = exit.region;
+
+                    //Get new room  
+                    try
                     {
-                        //add player to new room
-                        PlayerManager.AddPlayerToRoom(getNewRoom, player);
+                        //Room getNewRoom =  await HubProxy.MimHubServer.Invoke<Room>("getRoom", player.HubGuid);
+                        Room getNewRoom =  MIMWebClient.Hubs.MIMHub.getRoom(player.HubGuid);
 
-                        //enter message
-                        EnterRoom(player, getNewRoom, direction);
-
-                        var roomDescription = LoadRoom.DisplayRoom(getNewRoom, player.Name);
-
-                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(roomDescription);
-
-                        //NPC Enter event here
-                        foreach (var mob in getNewRoom.mobs)
+                        if (getNewRoom != null)
                         {
+                            //add player to new room
+                            PlayerManager.AddPlayerToRoom(getNewRoom, player);
 
-                            if (mob.Greet)
-                            {
-                                Event.ParseCommand("greet", player, mob, getNewRoom);
-                            }
-                            else
-                            {
-                                //mob might be aggro
-                            }
+                            //enter message
+                            EnterRoom(player, getNewRoom, direction);
 
+                            var roomDescription = LoadRoom.DisplayRoom(getNewRoom, player.Name);
+
+                            HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(roomDescription);
+
+                            //NPC Enter event here
+                            foreach (var mob in getNewRoom.mobs)
+                            {
+
+                                if (mob.Greet)
+                                {
+                                    Event.ParseCommand("greet", player, mob, getNewRoom);
+                                }
+                                else
+                                {
+                                    //mob might be aggro
+                                }
+
+                            }
                         }
                     }
+                    catch (Exception e)
+                    {
+                        //log error
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    //log error
-                }
-            }
-            else
-            {
-                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("There is no exit here");
+                    HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("There is no exit here");
               
+                }
             }
         }
 

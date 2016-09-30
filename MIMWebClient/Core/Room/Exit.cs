@@ -13,6 +13,6 @@ namespace MIMWebClient.Core.Room
         public int areaId { get; set; }
         public string area { get; set; }
         public string region { get; set; }
-
+        public string doorName { get; set; }
     }
 }

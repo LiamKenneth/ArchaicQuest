@@ -452,6 +452,20 @@ namespace MIMWebClient.Core.Events
                     }
                     else
                     {
+
+                        if (container.locked == true)
+                        {
+                            BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "Container is locked", player.Name + " container is locked");
+
+                            return;
+                        }
+
+                        if (container.open == false)
+                        {
+                            HubContext.SendToClient("You have to open the " + container.name + " before you can put somthing inside", player.HubGuid);
+                            return;
+                        }
+
                         container.containerItems.Add(playerInv[i]);
 
                         BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You drop a " + playerInv[i].name + " into a " + container.name, player.Name + " drops a " + playerInv[i].name + " into a " + container.name);
@@ -488,6 +502,13 @@ namespace MIMWebClient.Core.Events
 
                         return;
                     }
+
+                    if (container.open == false)
+                    {
+                        HubContext.SendToClient("You have to open the " + container.name + " before you can put somthing inside", player.HubGuid);
+                        return;
+                    }
+
                     container.containerItems.Add(item);
 
                     BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You put a " + item.name + " inside the " + container.name, player.Name + " puts a " + item.name + " inside the " + container.name);
@@ -532,7 +553,7 @@ namespace MIMWebClient.Core.Events
 
                 if (foundExit.canLock == false)
                 {
-                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You can't ynlock that", player.Name + " tries to lock the " + foundItem.name);
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You can't lock that", player.Name + " tries to lock the " + foundItem.name);
                     return;
                 }
             }
@@ -542,7 +563,7 @@ namespace MIMWebClient.Core.Events
 
                 if (foundItem.canLock == false)
                 {
-                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You can't ynlock that", player.Name + " tries to lock the " + foundItem.name);
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You can't lock that", player.Name + " tries to lock the " + foundItem.name);
                     return;
                 }
 
@@ -576,7 +597,7 @@ namespace MIMWebClient.Core.Events
                     }
                     else
                     {
-                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You unlock " + foundItem.name, player.Name + " unlocks the..." + foundItem.name);
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You unlock the " + foundItem.name, player.Name + " unlocks the..." + foundItem.name);
                         foundItem.locked = false;
                         return;
                     }
@@ -695,21 +716,17 @@ namespace MIMWebClient.Core.Events
                     return;
                 }
 
-
-                if (foundItem != null)
+                if (foundItem.locked != true)
                 {
-                    if (foundItem.locked != true)
-                    {
-                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You lock chest", player.Name + " locks the " + foundItem.name);
-                        foundItem.locked = true;
-                        return;
-                    }
-                    else
-                    {
-                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "the chest is already locked  " + foundItem.name, player.Name + " tries to locked the already locked chest" + foundItem.name);
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You lock the chest", player.Name + " locks the " + foundItem.name);
+                    foundItem.locked = true;
+                     
+                }
+                else
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "the chest is already locked  " + foundItem.name, player.Name + " tries to locked the already locked chest" + foundItem.name);
 
-                        return;
-                    }
+                    return;
                 }
             }
             else
@@ -717,15 +734,9 @@ namespace MIMWebClient.Core.Events
                 // find key matching chest lock id
                 var hasKey = false;
 
-                foreach (var key in player.Inventory)
+                foreach (var key in player.Inventory.Where(key => key.keyValue != null).Where(key => key.keyValue == foundExit.keyId))
                 {
-                    if (key.keyValue != null)
-                    {
-                        if (key.keyValue == foundExit.keyId)
-                        {
-                            hasKey = true;
-                        }
-                    }
+                    hasKey = true;
                 }
 
                 if (hasKey == false)
@@ -734,21 +745,17 @@ namespace MIMWebClient.Core.Events
                     return;
                 }
 
-
-                if (foundExit != null)
+                if (foundExit.locked != true)
                 {
-                    if (foundExit.locked != true)
-                    {
-                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You lock chest", player.Name + " locks the " + foundExit.name);
-                        foundExit.locked = true;
-                        return;
-                    }
-                    else
-                    {
-                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "the chest is already locked  " + foundExit.name, player.Name + " tries to locked the already locked chest" + foundExit.name);
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You lock the chest", player.Name + " locks the " + foundExit.name);
+                    foundExit.locked = true;
+                    
+                }
+                else
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "the chest is already locked  " + foundExit.name, player.Name + " tries to locked the already locked chest" + foundExit.name);
 
-                        return;
-                    }
+                    return;
                 }
             }
 
@@ -769,12 +776,7 @@ namespace MIMWebClient.Core.Events
         public static void Open(Room room, Player player, string userInput, string commandKey)
         {
             var currentRoom = room;
-            var currentPlayer = player;
-            string[] all = userInput.Split();
-            // var lockedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, FindInventory);
-            // var container = lockedItem.Key;
-            //  var item = lockedItem.Value;
-
+           
             var findObject = Events.FindNth.Findnth(userInput);
             int nth = findObject.Key;
 
@@ -791,7 +793,7 @@ namespace MIMWebClient.Core.Events
 
                 if (foundExit.canOpen == false)
                 {
-                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You can't open that", player.Name + " tries to open the " + foundItem.name);
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You can't open that", player.Name + " tries to open the " + foundExit.name);
                     return;
                 }
             }
@@ -805,48 +807,208 @@ namespace MIMWebClient.Core.Events
                     return;
                 }
 
-                if (foundItem != null)
+                if (foundItem.open)
                 {
-                    if (foundItem.open != true)
-                    {
-                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You open chest", player.Name + " open the " + foundItem.name);
-                        foundItem.open = true;
-                        return;
-                    }
-                    else
-                    {
-                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "the chest is already open  " + foundItem.name, player.Name + " tries to open the already open chest" + foundItem.name);
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "It's already open", player.Name + " tries to open the " + foundItem.name + "but it's already open");
+                    return;
+                }
 
-                        return;
-                    }
+                if (foundItem.locked)
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You need to unlock that before you can open it", player.Name + " tries to open the " + foundItem.name + "without a key");
+                    return;
+                }
+
+
+                if (foundItem.open != true)
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(
+                        player.HubGuid,
+                        player.Name,
+                        room.players,
+                        "You open the " + foundItem.name,
+                        player.Name + " open the " + foundItem.name);
+                    foundItem.open = true;
+
+                }
+                else
+                {
+
+                    BroadcastPlayerAction.BroadcastPlayerActions(
+                        player.HubGuid,
+                        player.Name,
+                        room.players,
+                        "the" + foundItem.name + " is already open",
+                        player.Name + " tries to open the already open chest" + foundItem.name);
+
+                    return;
                 }
             }
-            else
+            else if (foundExit != null)
             {
 
 
-                if (foundExit != null)
+                if (foundExit.open != true)
                 {
-                    if (foundExit.open != true)
-                    {
-                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You open chest", player.Name + " open the " + foundExit.name);
-                        foundExit.open = true;
-                        return;
-                    }
-                    else
-                    {
-                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "the chest is already open  " + foundExit.name, player.Name + " tries to open the already open chest" + foundExit.name);
 
+                    if (foundExit.locked)
+                    {
+                        BroadcastPlayerAction.BroadcastPlayerActions(
+                            player.HubGuid,
+                            player.Name,
+                            room.players,
+                            "You need to unlock that before you can open it",
+                            player.Name + " tries to open the " + foundExit.name + "without a key");
                         return;
                     }
+
+                    BroadcastPlayerAction.BroadcastPlayerActions(
+                        player.HubGuid,
+                        player.Name,
+                        room.players,
+                        "You open the " + foundExit.name,
+                        player.Name + " open the " + foundExit.name);
+                    foundExit.open = true;
+
+                }
+                else
+                {
+                   
+                        BroadcastPlayerAction.BroadcastPlayerActions(
+                            player.HubGuid,
+                            player.Name,
+                            room.players,
+                            "the " + foundExit.name + "is already open ",
+                            player.Name + " tries to open the already open chest" + foundExit.name);
+                    
+                    return;
                 }
             }
-
-
-
             //save to cache
             Cache.updateRoom(room, currentRoom);
 
         }
-    }
+
+
+        /// <summary>
+        /// Close
+        /// </summary>
+        /// <param name="room">room object</param>
+        /// <param name="player">player object</param>
+        /// <param name="userInput">text entered by user</param>
+        /// <param name="commandKey">command entered</param>
+        public static void Close(Room room, Player player, string userInput, string commandKey)
+        {
+            var currentRoom = room;
+           
+            var findObject = Events.FindNth.Findnth(userInput);
+            int nth = findObject.Key;
+
+            Item foundItem = null;
+            Exit foundExit = null;
+
+            foundItem = FindItem.Item(room.items, nth, userInput);
+
+
+            if (foundItem == null)
+            {
+                foundExit = FindItem.Exit(room.exits, nth, userInput);
+
+                if (foundExit.canOpen == false)
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You can't close that", player.Name + " tries to close the " + foundExit.name);
+                    return;
+                }
+            }
+
+            if (foundItem != null)
+            {
+
+                if (foundItem.canOpen == false)
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You can't close that", player.Name + " tries to close the " + foundItem.name);
+                    return;
+                }
+
+                if (foundItem.open == false)
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "It's already closed", player.Name + " tries to close the " + foundItem.name + " which is already closed");
+                    return;
+                }
+
+                if (foundItem.locked)
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You need to unlock that before you can close it", player.Name + " tries to close the " + foundItem.name + "without a key");
+                    return;
+                }
+
+
+                if (foundItem.open)
+                {
+                    BroadcastPlayerAction.BroadcastPlayerActions(
+                        player.HubGuid,
+                        player.Name,
+                        room.players,
+                        "You close the chest",
+                        player.Name + " close the " + foundItem.name);
+                    foundItem.open = false;
+
+                }
+                else
+                {
+
+                    BroadcastPlayerAction.BroadcastPlayerActions(
+                        player.HubGuid,
+                        player.Name,
+                        room.players,
+                        "the " + foundItem.name + " is already close  " + foundItem.name,
+                        player.Name + " tries to close the already close chest" + foundItem.name);
+
+                    return;
+                }
+            }
+            else if (foundExit != null)
+            {
+                if (foundExit.open != true)
+                {
+
+                    if (foundExit.locked)
+                    {
+                        BroadcastPlayerAction.BroadcastPlayerActions(
+                            player.HubGuid,
+                            player.Name,
+                            room.players,
+                            "You need to unlock that before you can close it",
+                            player.Name + " tries to close the " + foundExit.name + "without a key");
+                        return;
+                    }
+
+                    BroadcastPlayerAction.BroadcastPlayerActions(
+                        player.HubGuid,
+                        player.Name,
+                        room.players,
+                        "You close " + foundExit.name,
+                        player.Name + " closes the " + foundExit.name);
+                    foundExit.open = false;
+
+                }
+                else
+                {
+
+                    BroadcastPlayerAction.BroadcastPlayerActions(
+                        player.HubGuid,
+                        player.Name,
+                        room.players,
+                        "the " + foundExit.name + " is already closed  " + foundExit.name,
+                        player.Name + " tries to close the already closed chest" + foundExit.name);
+                    return;
+                }
+
+            }
+            //save to cache
+            Cache.updateRoom(room, currentRoom);
+
+        }
+    
+}
 }

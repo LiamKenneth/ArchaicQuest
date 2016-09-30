@@ -24,7 +24,7 @@ namespace MIMWebClient.Core.Events
         /// <param name="room">The room</param>
         /// <param name="attackOptions">The attackers Name for now</param>
         /// <returns></returns>
-        public static async Task StartFight(Player attacker, Room room, string attackOptions)
+        public static void StartFight(Player attacker, Room room, string attackOptions)
         {
             if (attacker == null)
             {
