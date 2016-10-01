@@ -175,6 +175,7 @@ namespace MIMWebClient.Core.World.Anker
             var cat = new Player
                           {
                               Name = "Black and White cat", Type = "Mob", Description = "This black cat's fur looks in pristine condition despite being a stray.",
+                              Strength = 1, Dexterity = 1, Constitution = 1, Intelligence = 1, Wisdom = 1, Charisma = 1, MaxHitPoints = 100, HitPoints = 100, Level = 1, Status = Player.PlayerStatus.Standing, 
               Skills = new List<Skill>(),
 
            
