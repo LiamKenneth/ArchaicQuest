@@ -139,8 +139,15 @@ namespace MIMWebClient.Core.Events
 
                         //Prompt.ShowPrompt(attacker);
                         //Prompt.ShowPrompt(defender);
-                        Score.UpdateUiPrompt(attacker);
-                        Score.UpdateUiPrompt(defender);
+
+                        if (attacker.Type == "player")
+                        {
+                            Score.UpdateUiPrompt(attacker);
+                        }
+                        if (defender.Type == "player")
+                        {
+                            Score.UpdateUiPrompt(defender);
+                        }
                     }
 
                 }
@@ -268,14 +275,11 @@ namespace MIMWebClient.Core.Events
                     int dam = Damage(attacker, defender);
                     var damageText = DamageText(dam);
 
-                    if (attacker.Type == "Player")
-                    {
+
                         HubContext.SendToClient("Your hit " + damageText.Value + " " + defender.Name + "[" + dam + "]", attacker.HubGuid);
-                    }
-                    if (defender.Type == "Player")
-                    {
+                  
                         HubContext.SendToClient(attacker.Name + "'s hit " + damageText.Value + " you [" + dam + "]", defender.HubGuid);
-                    }
+                    
 
                     defender.HitPoints -= dam;
 
@@ -293,14 +297,11 @@ namespace MIMWebClient.Core.Events
                 }
                 else
                 {
-                    if (attacker.Type == "Player")
-                    {
+                    
                         HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
-                    }
-                    if (defender.Type == "Player")
-                    {
+                    
                         HubContext.SendToClient(attacker.Name + " misses you ", defender.HubGuid);
-                    }
+                    
                     HubContext.SendToAllExcept(attacker.Name + " misses " + defender.Name, room.fighting, room.players);
                 }
             }
@@ -405,15 +406,11 @@ namespace MIMWebClient.Core.Events
 
                 HubContext.SendToAllExcept(defender.Name + " dies ", room.fighting, room.players);
 
-                if (defender.Type == "Player")
-                {
+                
                     HubContext.SendToClient("You die", defender.HubGuid);
-                }
-                if (attacker.Type == "Player")
-                {
+                
                     HubContext.SendToClient(defender.Name + " dies", attacker.HubGuid);
-                }
-
+               
                 var defenderCorpse = defender;
 
                 //unequip
@@ -443,16 +440,11 @@ namespace MIMWebClient.Core.Events
             {
                 HubContext.SendToAllExcept(attacker.Name + " dies ", room.fighting, room.players);
 
-                if (attacker.Type == "Player")
-                {
+               
                     HubContext.SendToClient("You die", attacker.HubGuid);
-                }
-
-                if (defender.Type == "Player")
-                {
+               
                     HubContext.SendToClient(attacker.Name + " dies", defender.HubGuid);
-                }
-
+               
                 var attackerCorpse = attacker;
 
                 //unequip
@@ -526,8 +518,9 @@ namespace MIMWebClient.Core.Events
                 //Hand To Hand
 
                 weaponType = Item.WeaponType.HandToHand;
-                weaponSkill = player.Skills.Find(x => x.Name == "Hand to Hand")?.Proficiency ?? 0;
- 
+                weaponSkill = player.Skills.Find(x => x.Name == "Hand to Hand").Proficiency;
+
+
             }
 
 

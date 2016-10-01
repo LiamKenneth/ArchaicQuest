@@ -5,6 +5,7 @@ using System.Web;
 
 namespace MIMWebClient.Core.World.Anker
 {
+    using MIMWebClient.Core.Player;
     using MIMWebClient.Core.PlayerSetup;
     using MIMWebClient.Core.Room;
 
@@ -171,7 +172,20 @@ namespace MIMWebClient.Core.World.Anker
             room.exits.Add(north);
 
             //Create Mobs
-            var cat = new Player { Name = "Black and White cat", Type = "Mob", Description = "This black cat's fur looks in pristine condition despite being a stray." };
+            var cat = new Player
+                          {
+                              Name = "Black and White cat", Type = "Mob", Description = "This black cat's fur looks in pristine condition despite being a stray.",
+              Skills = new List<Skill>(),
+
+           
+        };
+
+            var h2h = new Skill();
+            h2h.Name = "Hand to Hand";
+            h2h.Proficiency = 0.1;
+
+            cat.Skills.Add(h2h);
+            
 
             room.mobs.Add(cat);
 
