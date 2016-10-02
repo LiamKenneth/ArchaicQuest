@@ -13,6 +13,26 @@ namespace MIMWebClient.Core.World.Anker
     {
         public static Room VillageSquare()
         {
+
+            /*
+             *  Region: the province the area is in
+             *  Area : Name of area in Region
+             *  AreaId: Must be unique and used to for finding the room. Entering a room using Region + area + id
+             *  Title: Title of room
+             *  description: Description of room can use HTML (No defined classes yet for colour output)
+             *  exits = new List<Exit>(), 
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true, sets the room as untouched. gets set to false with interation like get, mob death etc
+             * 
+             * 
+             */
+
             var room = new Room
             {
                 region = "Anker",
@@ -33,11 +53,22 @@ namespace MIMWebClient.Core.World.Anker
                 corpses = new List<Player>(),
                 players = new List<Player>(),
                 fighting = new List<string>(),
-                clean = true
+                clean = true,
+                
 
             };
 
             //Room Keywords
+
+            /*
+             *  All items mentioned in the description should have keywords
+             *  name: name of object, this is used to find the object.
+             *  look: basic description
+             *  examine: more in depth description
+             *  touch: touch description
+             *  smell: smell description
+             * 
+             */
 
             var well = new RoomObject
             {
@@ -68,6 +99,22 @@ namespace MIMWebClient.Core.World.Anker
                 touch = "The notice board is wooden and smooth to touch",
                 smell = "The notice board has no obvious smell "
             };
+
+            /* Adding Items
+             *  Name: of Item
+             *  Conainer Items: is a list of Item
+             *  contianer: true, means it's a container
+             *  container size: how many items it can fit
+             *  Can lock: true, means lockable/unlockable
+             *  isvisible: can the player see it? This is good if you want items to be hidden unless a player examines say a stool and finds a lock pick under it.
+             *  location: has to be room, if it's in a room. Inventory for if it's being carried, wield if it's wielded and worn if the player/mob is wearing it
+             *  description: Look, exam etc same as room descriptions
+             *  open: for doors and containers. false means shut.
+             *  canOpen: Means it's a container that's openable
+             *  locked: true = locked.
+             *  Keyid: is a newGuid, and the generated ID is then given to a keyvalue on another item which is used to unlock the item
+             *  keyvalue: = keyId if set
+             */
 
             //add some gold to bucket
             var woodenChestObj = new Item.Item
@@ -141,6 +188,28 @@ namespace MIMWebClient.Core.World.Anker
             room.keywords.Add(well);
             room.keywords.Add(bench);
 
+            /*
+             * 
+             * name: "North", East, South, West. List must be added in that order. To have another exit suchas a portal or hidden crevice we need an enter commande: Enter portal for example
+                area = "Anker", - The area the exit leads to
+                region = "Anker", - The region the exit leads to
+                areaId = 1, - THe room id the exit leads too
+                keywords = new List<string>(), - this may be obsolete or should be used as description below does not work
+                hidden = false, - is the exit hidden?
+                locked = false, - is the exit locked?
+                canLock = true, - can it be locked?
+                canOpen = true, - is it openable?
+                open = true, - is it open
+                doorName = "wooden door", - name of door/exit
+                description = new Item.Description - doesn't seem to work
+                {
+                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
+                    exam = "To the north you see the inn of the drunken sailor.",
+
+                },
+             * 
+             */
+
             // Create Exits
             var north = new Exit
             {
@@ -160,7 +229,8 @@ namespace MIMWebClient.Core.World.Anker
                     look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
                     exam = "To the north you see the inn of the drunken sailor.",
 
-                }
+                },
+               
             };
 
             
@@ -181,12 +251,13 @@ namespace MIMWebClient.Core.World.Anker
            
         };
 
+            /* how to add skills but think this needs rethinking */
+
             var h2h = new Skill();
             h2h.Name = "Hand to Hand";
             h2h.Proficiency = 0.1;
 
-            cat.Skills.Add(h2h);
-            
+            cat.Skills.Add(h2h);          
 
             room.mobs.Add(cat);
 
