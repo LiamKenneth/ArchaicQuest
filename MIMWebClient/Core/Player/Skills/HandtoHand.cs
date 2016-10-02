@@ -28,7 +28,7 @@ namespace MIMWebClient.Core.Player.Skills
             {
                 var skill = new Skill
                 {
-                    Name = "Hand to Hand",
+                    Name = Skill.HandToHand,
                     CoolDown = 0,
                     Delay = 0,
                     LevelObtained = 1,

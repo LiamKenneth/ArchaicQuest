@@ -251,13 +251,12 @@ namespace MIMWebClient.Core.World.Anker
            
         };
 
-            /* how to add skills but think this needs rethinking */
+            /* how to add skills but think this needs rethinking */         
+            //var h2h = Skill.Skills().Find(x => x.Name.Equals(Skill.HandToHand));
+           
+            //h2h.Proficiency = 1;
 
-            var h2h = new Skill();
-            h2h.Name = "Hand to Hand";
-            h2h.Proficiency = 0.1;
-
-            cat.Skills.Add(h2h);          
+            //cat.Skills.Add(h2h);          
 
             room.mobs.Add(cat);
 
