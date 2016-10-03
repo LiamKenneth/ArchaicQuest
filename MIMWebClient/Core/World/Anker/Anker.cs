@@ -245,11 +245,26 @@ namespace MIMWebClient.Core.World.Anker
             var cat = new Player
                           {
                               Name = "Black and White cat", Type = "Mob", Description = "This black cat's fur looks in pristine condition despite being a stray.",
-                              Strength = 1, Dexterity = 1, Constitution = 1, Intelligence = 1, Wisdom = 1, Charisma = 1, MaxHitPoints = 100, HitPoints = 100, Level = 1, Status = Player.PlayerStatus.Standing, 
+                              Strength = 1, Dexterity = 1, Constitution = 1, Intelligence = 1, Wisdom = 1, Charisma = 1, MaxHitPoints = 10, HitPoints = 10, Level = 1, Status = Player.PlayerStatus.Standing, 
               Skills = new List<Skill>(),
+              Inventory = new List<Item.Item>()
 
            
         };
+
+            var dagger = new Item.Item
+            {
+                name = "Blunt dagger",
+                eqSlot = Item.Item.EqSlot.Wield,
+                weaponType = Item.Item.WeaponType.ShortBlades,
+                stats = new Item.Stats { damMin = 2, damMax = 4, minUsageLevel = 1 },
+                type = Item.Item.ItemType.Weapon,
+                equipable = true,
+                attackType = Item.Item.AttackType.Pierce,
+                slot = "wield"
+            };
+
+            cat.Inventory.Add(dagger);
 
             /* how to add skills but think this needs rethinking */         
             //var h2h = Skill.Skills().Find(x => x.Name.Equals(Skill.HandToHand));

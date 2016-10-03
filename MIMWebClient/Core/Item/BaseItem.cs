@@ -15,7 +15,7 @@ namespace MIMWebClient.Core.Item
 
         public string name { get; set; }
         public List<string> keywords { get; set; }
-        public bool open { get; set; }
+        public bool open { get; set; } = true;
         public bool canOpen{ get; set; }
         public bool canLock { get; set; }
         public string keyId { get; set; }

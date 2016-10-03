@@ -101,8 +101,8 @@ namespace MIMWebClient.Core.Events
             ShowAttack(attacker, defender, room, toHit, chance);
 
 
-            Task.Run(() => HitTarget(attacker, defender, room, 1000));
-            Task.Run(() => HitTarget(defender, attacker, room, 1000));
+            Task.Run(() => HitTarget(attacker, defender, room, 5000));
+            Task.Run(() => HitTarget(defender, attacker, room, 5000));
 
             
  
@@ -126,7 +126,7 @@ namespace MIMWebClient.Core.Events
                     if (alive)
                     {
 
-                           await Task.Delay(delay);
+                         await Task.Delay(delay);
 
                         double offense = Offense(attacker);
                         double evasion = Evasion(defender);
@@ -137,8 +137,6 @@ namespace MIMWebClient.Core.Events
 
                         ShowAttack(attacker, defender, room, toHit, chance);
 
-                        //Prompt.ShowPrompt(attacker);
-                        //Prompt.ShowPrompt(defender);
 
                         if (attacker.Type == "player")
                         {
@@ -198,17 +196,29 @@ namespace MIMWebClient.Core.Events
         /// </summary>
         /// <param name="attacker"></param>
         /// <param name="defender"></param>
-        public static int Damage(Player attacker, Player defender)
+        public static int Damage(Player attacker, Player defender, bool criticalHit)
         {
             // (Weapon Damage * Strength Modifier * Condition Modifier * Critical Hit Modifier) / Armor Reduction.
             int strength = attacker.Strength;
             int damage = 0;
             var wielded = attacker.Equipment.RightHand;
             Item weapon = null;
+            var die = new PlayerStats();
+            var handToHand = die.dice(1, 6);
+            double HandToHandSkill = attacker.Skills.Find(x => x.Name.Equals(Skill.HandToHand))?.Proficiency ?? 0;
+
             if (wielded == "Nothing")
             {
                 //weapon skill * 0.075 * critical hit modifier
-                damage = (int)(50 * 0.025 * 1);
+                if (criticalHit)
+                {
+                    damage = (int)((HandToHandSkill + handToHand) * 2);
+                }
+                else
+                {
+                    damage = (int)((HandToHandSkill + handToHand) * 1);
+                }
+              
             }
             else
             {
@@ -225,7 +235,7 @@ namespace MIMWebClient.Core.Events
             int ArRating = ArmourRating(defender);
 
 
-            int armourReduction = ArRating / damage * strength;
+            int armourReduction = ArRating / damage;
 
             if (armourReduction > 4)
             {
@@ -236,7 +246,7 @@ namespace MIMWebClient.Core.Events
                 armourReduction = 1;
             }
 
-            int totalDamage = damage + strength / armourReduction;
+            int totalDamage = damage / armourReduction;
 
             return totalDamage;
         }
@@ -263,16 +273,30 @@ namespace MIMWebClient.Core.Events
             return new KeyValuePair<string, string>("","");
         }
 
+        public static bool CriticalHit(double toHit, int chance)
+        {
+            var die = new PlayerStats();
+            var chanceMod = die.dice(1, 4);
+            var critical = chance * chanceMod;
+        
+            if (toHit >= chance)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static void ShowAttack(Player attacker, Player defender, Room room, double toHit, int chance)
         {
             bool alive = IsAlive(attacker, defender);
+            bool ISCritical = CriticalHit(toHit, chance);
 
             if (alive)
             {
 
                 if (toHit > chance)
                 {
-                    int dam = Damage(attacker, defender);
+                    int dam = Damage(attacker, defender, ISCritical);
                     var damageText = DamageText(dam);
 
 
@@ -410,16 +434,36 @@ namespace MIMWebClient.Core.Events
                     HubContext.SendToClient("You die", defender.HubGuid);
                 
                     HubContext.SendToClient(defender.Name + " dies", attacker.HubGuid);
-               
-                var defenderCorpse = defender;
 
-                //unequip
-                foreach (var item in defenderCorpse.Inventory)
+
+                //Turn corpse into room item
+                var defenderCorpse = new Item
                 {
-                    item.location = Item.ItemLocation.Inventory;
-                }
+                    name = "The corpse of " + defender.Name,
+                    container = true,
+                    containerItems = new List<Item>(),
+                    description = new Description { look = "The slain corpse of " + defender.Name + " is here.", room = "The slain corpse of " + defender.Name },
+                    isVisibleToRoom = true
+                };
+
+                foreach (var invItem in defender.Inventory)
+                {
+                    invItem.location = Item.ItemLocation.Inventory;
+                    defenderCorpse.containerItems.Add(invItem);
+                }        
+
                 var oldRoom = room;
-                room.corpses.Add(defender);
+                room.items.Add(defenderCorpse);
+
+                if (defender.Type == "Mob")
+                {
+                    room.mobs.Remove(defender);
+                }
+                else
+                {
+                    //room.players.Remove(defender);
+                    //Add slain player to recall
+                }
 
                 attacker.Status = PlayerSetup.Player.PlayerStatus.Standing;
 
@@ -454,6 +498,16 @@ namespace MIMWebClient.Core.Events
                 }
                 var oldRoom = room;
                 room.corpses.Add(attacker);
+
+                if (attacker.Type == "Mob")
+                {
+                    room.mobs.Remove(attacker);
+                }
+                else
+                {
+                    //room.players.Remove(attacker);
+                    //Add slain player to recall
+                }
 
                 defender.Status = PlayerSetup.Player.PlayerStatus.Standing;
 
