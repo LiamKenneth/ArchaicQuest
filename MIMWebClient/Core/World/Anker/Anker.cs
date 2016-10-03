@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using MIMWebClient.Core.Item;
 
 namespace MIMWebClient.Core.World.Anker
 {
@@ -252,8 +253,20 @@ namespace MIMWebClient.Core.World.Anker
            
         };
 
+            var key = new Item.Item
+            {
+
+                name = "gold key",
+                isVisibleToRoom = true,
+                location = Item.Item.ItemLocation.Inventory,
+                description = new Item.Description { look = "gold Key" },
+                keyValue = woodenChestObj.keyId,
+
+            };
+
             var dagger = new Item.Item
             {
+                actions = new Item.Action(),
                 name = "Blunt dagger",
                 eqSlot = Item.Item.EqSlot.Wield,
                 weaponType = Item.Item.WeaponType.ShortBlades,
@@ -261,8 +274,12 @@ namespace MIMWebClient.Core.World.Anker
                 type = Item.Item.ItemType.Weapon,
                 equipable = true,
                 attackType = Item.Item.AttackType.Pierce,
-                slot = "wield"
+                slot = "wield",
+                location = Item.Item.ItemLocation.Inventory
             };
+
+
+            cat.Inventory.Add(key);
 
             cat.Inventory.Add(dagger);
 

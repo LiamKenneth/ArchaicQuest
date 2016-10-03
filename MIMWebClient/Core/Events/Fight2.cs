@@ -101,8 +101,8 @@ namespace MIMWebClient.Core.Events
             ShowAttack(attacker, defender, room, toHit, chance);
 
 
-            Task.Run(() => HitTarget(attacker, defender, room, 5000));
-            Task.Run(() => HitTarget(defender, attacker, room, 5000));
+            Task.Run(() => HitTarget(attacker, defender, room, 3000));
+            Task.Run(() => HitTarget(defender, attacker, room, 3000));
 
             
  
@@ -447,9 +447,10 @@ namespace MIMWebClient.Core.Events
                 };
 
                 foreach (var invItem in defender.Inventory)
-                {
+                {            
                     invItem.location = Item.ItemLocation.Inventory;
                     defenderCorpse.containerItems.Add(invItem);
+
                 }        
 
                 var oldRoom = room;

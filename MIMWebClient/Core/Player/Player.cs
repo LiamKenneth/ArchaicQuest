@@ -270,6 +270,26 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Status = PlayerStatus.Standing; // enum property? 1 standing
             this.Target = null;
             this.Inventory = this.Inventory ?? (this.Inventory = new List<Item>());
+
+
+
+            var dagger = new Core.Item.Item
+            {
+                actions = new Core.Item.Action(),
+                name = "Blunt dagger",
+                eqSlot = Core.Item.Item.EqSlot.Wield,
+                weaponType = Core.Item.Item.WeaponType.ShortBlades,
+                stats = new Core.Item.Stats { damMin = 2, damMax = 4, minUsageLevel = 1, damRoll = 0},
+                type = Core.Item.Item.ItemType.Weapon,
+                equipable = true,
+                attackType = Core.Item.Item.AttackType.Pierce,
+                slot = "wield",
+                location = Item.ItemLocation.Inventory
+                
+            };
+
+            this.Inventory.Add(dagger);
+
             this.Skills = this.Skills = new List<Skill>();
 
             var h2h = new Skill();

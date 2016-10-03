@@ -11,6 +11,7 @@ namespace MIMWebClient.Core.Item
     public class BaseItem
     {
         [BsonRepresentation(BsonType.ObjectId)]
+        [BsonId]
         public ObjectId _id { get; set; }
 
         public string name { get; set; }
