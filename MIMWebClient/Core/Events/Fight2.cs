@@ -435,6 +435,8 @@ namespace MIMWebClient.Core.Events
                 
                     HubContext.SendToClient(defender.Name + " dies", attacker.HubGuid);
 
+                defender.Target = null;
+
 
                 //Turn corpse into room item
                 var defenderCorpse = new Item
@@ -489,7 +491,8 @@ namespace MIMWebClient.Core.Events
                     HubContext.SendToClient("You die", attacker.HubGuid);
                
                     HubContext.SendToClient(attacker.Name + " dies", defender.HubGuid);
-               
+
+                attacker.Target = null;
                 var attackerCorpse = attacker;
 
                 //unequip
