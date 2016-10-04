@@ -29,6 +29,7 @@ namespace MIMWebClient.Core
             commandList.Add("west", () => Movement.Move(playerData, room, "West"));
             commandList.Add("down", () => Movement.Move(playerData, room, "Down"));
             commandList.Add("up", () => Movement.Move(playerData, room, "Up"));
+            //commandList.Add("look at", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look"));
             commandList.Add("look", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look"));
             commandList.Add("l in", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look in"));
             commandList.Add("look in", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look in"));
@@ -39,7 +40,9 @@ namespace MIMWebClient.Core
             commandList.Add("score", () => Score.ReturnScore(playerData));
             commandList.Add("inventory", () => Inventory.ReturnInventory(playerData.Inventory, playerData));
             commandList.Add("equipment", () => Equipment.ShowEquipment(playerData));
+            commandList.Add("garb", () => Equipment.ShowEquipment(playerData));
             commandList.Add("get", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item"));
+            commandList.Add("take", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item"));
             commandList.Add("drop", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey));
             commandList.Add("put", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey));
             commandList.Add("save", () =>  Save.UpdatePlayer(playerData));
@@ -58,6 +61,7 @@ namespace MIMWebClient.Core
             commandList.Add("lock", () => ManipulateObject.LockItem(room, playerData, commandOptions, commandKey));
             commandList.Add("open", () => ManipulateObject.Open(room, playerData, commandOptions, commandKey));
             commandList.Add("close", () => ManipulateObject.Close(room, playerData, commandOptions, commandKey));
+            commandList.Add("punch", () => Fight2.Punch(playerData, room));
             return commandList;
         }
 

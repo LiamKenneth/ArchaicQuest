@@ -35,11 +35,12 @@ namespace MIMWebClient.Core.Player
 
         /* List of skills, use this for skill names and finding skills */
         public static readonly string HandToHand = "Hand to hand";
+        public static readonly string Kick = "Kick";
 
         public static List<Skill> Skills ()
         {
             var skillList =  new List<Skill>();
-            skillList.Add(Kick.KickSkill);
+            skillList.Add(Player.Skills.Kick.KickSkill);
             skillList.Add(Player.Skills.HandToHand.HandToHandSkill);
 
             return skillList;

@@ -574,11 +574,8 @@ namespace MIMWebClient.Core.Events
             else
             {
                 //Hand To Hand
-
                 weaponType = Item.WeaponType.HandToHand;
                 weaponSkill = player.Skills.Find(x => x.Name == "Hand to Hand").Proficiency;
-
-
             }
 
 
@@ -611,19 +608,43 @@ namespace MIMWebClient.Core.Events
             return evade;
         }
 
-        public static void Punch(Player attacker, Player defender, Room room)
+        public static void Punch(Player attacker, Room room)
         {
+
+           //Fight2 needs refactoring so the below skills can use the same methods for damage, damage output, working out chance to hit etc. same for spells
+          
+
+
             HubContext.SendToClient("You clench your fist and pull your arm back", attacker.HubGuid);
-            HubContext.SendToClient(attacker.Name + " Pulls his arm back aiming a punch at you.", attacker.HubGuid, defender.HubGuid, false, true);
-            HubContext.broadcastToRoom(attacker.Name + " clenches his fist and pulls his arm back aiming for " + defender.Name, room.players, attacker.HubGuid, true);
+            HubContext.SendToClient(attacker.Name + " Pulls his arm back aiming a punch at you.", attacker.HubGuid, attacker.Target.HubGuid, false, true);
+            HubContext.broadcastToRoom(attacker.Name + " clenches his fist and pulls his arm back aiming for " + attacker.Target.Name, room.players, attacker.HubGuid, true);
 
             //get attacker strength
+            var die = new PlayerStats();
+            var dam = die.dice(1, attacker.Strength);
+            var toHit = 0.5 * 95; // always 5% chance to miss
+            int chance = D100();
 
-            //get attacker attack points
 
-            //get defender defece points
+            if (toHit > chance)
+            {
+                HubContext.SendToClient("Your punch hits", attacker.HubGuid);
+                HubContext.SendToClient(attacker.Name + " punch hits you", attacker.HubGuid,
+                    attacker.Target.HubGuid, false, true);
+                HubContext.broadcastToRoom(
+                    attacker.Name + " punches " + attacker.Target.Name,
+                    room.players, attacker.HubGuid, true);
 
-            //hit them!
+                attacker.Target.HitPoints -= dam;
+            }
+            else
+            {
+                HubContext.SendToClient("You swing a punch at " + attacker.Target.Name + " but miss", attacker.HubGuid);
+                HubContext.SendToClient(attacker.Name + " swings a punch at you but misses", attacker.HubGuid, attacker.Target.HubGuid, false, true);
+                HubContext.broadcastToRoom(attacker.Name + " swings at " + attacker.Target.Name + " but misses", room.players, attacker.HubGuid, true);
+            }
+            
+ 
         }
     }
 }

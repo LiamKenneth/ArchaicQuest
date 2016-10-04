@@ -46,8 +46,37 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (attacker.Level >= kick.LevelObtained)
             {
-                HubContext.SendToClient("You kick " + defender.Name, attacker.HubGuid);
-                HubContext.SendToClient(attacker.Name + " kicks you", defender.HubGuid);
+                if (attacker.Target != null)
+                {
+                    if (attacker.Status == Player.PlayerStatus.Standing ||  attacker.Status == Player.PlayerStatus.Fighting)
+                    {
+                        return;
+                    }
+
+                    var die = new PlayerStats();
+                     var dam = die.dice(1, attacker.Strength);
+
+                    if (defender.HitPoints > 0)
+                    {
+                        defender.HitPoints -= dam;
+                    }
+
+                    if (defender.HitPoints <= 0)
+                    {
+                        defender.HitPoints = 0;
+                      
+                    }
+
+
+                    HubContext.SendToClient("You kick " + defender.Name, attacker.HubGuid);
+                        HubContext.SendToClient(attacker.Name + " kicks you", defender.HubGuid);
+                    
+                }
+                else
+                {
+                    HubContext.SendToClient("You are not fighting anyone ", attacker.HubGuid);
+                }
+
             }
 
             
