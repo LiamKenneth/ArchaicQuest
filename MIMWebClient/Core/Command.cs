@@ -14,6 +14,9 @@ namespace MIMWebClient.Core
 
     using Newtonsoft.Json.Linq;
     using System.Threading;
+
+    using MIMWebClient.Core.Player.Skills;
+
     public class Command
     {
  
@@ -61,7 +64,7 @@ namespace MIMWebClient.Core
             commandList.Add("lock", () => ManipulateObject.LockItem(room, playerData, commandOptions, commandKey));
             commandList.Add("open", () => ManipulateObject.Open(room, playerData, commandOptions, commandKey));
             commandList.Add("close", () => ManipulateObject.Close(room, playerData, commandOptions, commandKey));
-            commandList.Add("punch", () => Fight2.Punch(playerData, room));
+            commandList.Add("punch", () =>  Punch.StartPunch(playerData, room));
             return commandList;
         }
 
