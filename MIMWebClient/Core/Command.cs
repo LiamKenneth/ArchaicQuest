@@ -55,7 +55,7 @@ namespace MIMWebClient.Core
             commandList.Add("remove", () => Equipment.RemoveItem(playerData, commandOptions));
             commandList.Add("wield", () => Equipment.WearItem(playerData, commandOptions, true));
             commandList.Add("unwield", () => Equipment.RemoveItem(playerData, commandOptions, false, true));
-            commandList.Add("kill",  () =>  Fight2.StartFight(playerData, room, commandOptions));
+            commandList.Add("kill",  () =>  Fight2.PerpareToFight(playerData, room, commandOptions));
             commandList.Add("flee", () => Flee.fleeCombat(playerData, room));
             commandList.Add("unlock", () => ManipulateObject.UnlockItem(room, playerData, commandOptions, commandKey));
             commandList.Add("lock", () => ManipulateObject.LockItem(room, playerData, commandOptions, commandKey));

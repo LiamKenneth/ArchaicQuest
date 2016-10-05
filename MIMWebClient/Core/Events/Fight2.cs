@@ -22,18 +22,16 @@ namespace MIMWebClient.Core.Events
         /// </summary>
         /// <param name="attacker">The attacker</param>
         /// <param name="room">The room</param>
-        /// <param name="attackOptions">The attackers Name for now</param>
+        /// <param name="defenderName">The defenders Name for now</param>
         /// <returns></returns>
-        public static void StartFight(Player attacker, Room room, string attackOptions)
+        public static void PerpareToFight(Player attacker, Room room, string defenderName)
         {
             if (attacker == null)
             {
                 return;
             }
 
-
-
-            /* player can only attack one target
+          /* player can only attack one target
          * if player gets attacked by something else they cannot fight back until
          * they have ended the fight they are already in.
          * player defence should be divided by the number of people they are being attacked by.
@@ -41,36 +39,28 @@ namespace MIMWebClient.Core.Events
          */
 
             //automated Combat rounds for melee attacks
-            //kinda boring but this is mvp
 
             //find defender 
-            Player defender = FindTarget(room, attackOptions);
+            Player defender = FindValidTarget(room, defenderName, attacker);
+
 
             if (defender == null)
             {
-                HubContext.SendToClient("No one here", attacker.HubGuid);
-                return;
-
-            }
-
-            if (attacker.Name.Equals(defender.Name))
-            {
-                HubContext.SendToClient("You can't kill yourself", attacker.HubGuid);
-                return;
-            }
-
-            if (attacker.HitPoints <= 0)
-            {
-                return;
-            }
-
-            if (defender.HitPoints <= 0)
-            {
+                HubContext.SendToClient("No one here by that name", attacker.HubGuid);
                 return;
             }
 
             defender.Status = Player.PlayerStatus.Fighting;
             attacker.Status = Player.PlayerStatus.Fighting;
+
+            AddFightersIdtoRoom(attacker, defender, room);
+
+            StartFight(attacker, defender, room);
+          
+        }
+
+        public static void AddFightersIdtoRoom(Player attacker, Player defender, Room room)
+        {
 
             if (room.fighting == null)
             {
@@ -79,6 +69,12 @@ namespace MIMWebClient.Core.Events
 
             room.fighting.Add(attacker.HubGuid);
             room.fighting.Add(defender.HubGuid);
+
+        }
+
+
+        public static void StartFight(Player attacker, Player defender, Room room)
+        {
 
             if (attacker.Target == null)
             {
@@ -101,14 +97,44 @@ namespace MIMWebClient.Core.Events
             ShowAttack(attacker, defender, room, toHit, chance);
 
 
+            //3000, 3 second timer needs to be a method taking in players dexterity, condition and spells to determine speed.
+
             Task.Run(() => HitTarget(attacker, defender, room, 3000));
             Task.Run(() => HitTarget(defender, attacker, room, 3000));
 
-            
- 
-     
-            
+        }
 
+        public static Player FindValidTarget(Room room, string defender, Player attacker)
+        {
+            Player defendingPlayer = room.players.Find(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
+                            ?? room.mobs.Find(x => x.Name.ToLower().Contains(defender.ToLower()));
+
+            if (defendingPlayer == null)
+            {
+                HubContext.SendToClient("No one here", attacker.HubGuid);
+                return null;
+            }
+
+            if (attacker.Name.Equals(defendingPlayer.Name))
+            {
+                HubContext.SendToClient("You can't kill yourself", attacker.HubGuid);
+                return null;
+            }
+
+ 
+            if (attacker.HitPoints <= 0)
+            {
+                HubContext.SendToClient("You cannot attack anything while dead", attacker.HubGuid);
+                return null;
+            }
+
+            if (defendingPlayer.HitPoints <= 0)
+            {
+                HubContext.SendToClient("They are already dead.", attacker.HubGuid);
+                return null;
+            }
+
+            return defendingPlayer;
         }
 
         private static async Task HitTarget(Player attacker, Player defender, Room room, int delay)
@@ -575,7 +601,7 @@ namespace MIMWebClient.Core.Events
             {
                 //Hand To Hand
                 weaponType = Item.WeaponType.HandToHand;
-                weaponSkill = player.Skills.Find(x => x.Name == "Hand to Hand").Proficiency;
+                weaponSkill = player.Skills.Find(x => x.Name == "Hand to Hand")?.Proficiency ?? 0;
             }
 
 
