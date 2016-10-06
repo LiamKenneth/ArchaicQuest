@@ -292,12 +292,11 @@ namespace MIMWebClient.Core.PlayerSetup
 
             this.Skills = this.Skills = new List<Skill>();
 
-            //var h2h = Skill.Skills().Find(x => x.Name.Equals(Skill.HandToHand));
-            //h2h.Proficiency = 0.1;
+            var punch = Punch.PunchSkill;
+            punch.Proficiency = 0.1;
       
-            //var shortBlades = new Skill() { Name = "Short Blade", Proficiency = 0 };
 
-            //this.Skills.Add(h2h);
+            this.Skills.Add(punch);
             //this.Skills.Add(shortBlades);
           
 

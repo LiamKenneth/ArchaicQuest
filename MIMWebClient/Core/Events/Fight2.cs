@@ -26,6 +26,11 @@ namespace MIMWebClient.Core.Events
         /// <returns></returns>
         public static void PerpareToFight(Player attacker, Room room, string defenderName)
         {
+            if (Command._Buffer.Count >= 0)
+            {
+                Command._Buffer.RemoveAt(0);
+            }
+
             if (attacker == null)
             {
                 return;
@@ -149,9 +154,11 @@ namespace MIMWebClient.Core.Events
                 {
                     bool alive = IsAlive(attacker, defender);
 
+                 
+
                     if (alive && attacker.Status != Player.PlayerStatus.Busy)
                     {
-
+                        
                         await Task.Delay(delay);
 
                         double offense = Offense(attacker);
@@ -173,6 +180,8 @@ namespace MIMWebClient.Core.Events
                             Score.UpdateUiPrompt(defender);
                         }
                     }
+
+                    
 
                 }
 
