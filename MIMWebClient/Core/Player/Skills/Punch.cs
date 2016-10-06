@@ -82,7 +82,7 @@ namespace MIMWebClient.Core.Player.Skills
 
         }
 
-        public static Skill PunchAb(Player player)
+        public static Skill PunchAb()
         {
 
  

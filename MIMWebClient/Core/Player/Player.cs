@@ -291,8 +291,8 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Inventory.Add(dagger);
 
             this.Skills = this.Skills = new List<Skill>();
-
-            var punch = Punch.PunchSkill;
+            
+            var punch = Punch.PunchAb();
             punch.Proficiency = 0.1;
       
 

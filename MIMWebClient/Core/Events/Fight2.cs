@@ -26,10 +26,7 @@ namespace MIMWebClient.Core.Events
         /// <returns></returns>
         public static void PerpareToFight(Player attacker, Room room, string defenderName)
         {
-            if (Command._Buffer.Count >= 0)
-            {
-                Command._Buffer.RemoveAt(0);
-            }
+            
 
             if (attacker == null)
             {
@@ -263,7 +260,7 @@ namespace MIMWebClient.Core.Events
             var die = new PlayerStats();
             var handToHand = die.dice(1, 6);
 
-            double handToHandSkill = attacker.Skills.Find(x => x.Name.Equals(Skill.HandToHand))?.Proficiency ?? 0;
+            double handToHandSkill = attacker.Skills.Find(x => x.Name.Equals("HandToHand"))?.Proficiency ?? 0;
 
             var handToHandSkillModifier = (handToHandSkill / handToHand) * 100;
             var damage = (int)((handToHandSkillModifier + handToHand) * 1);
