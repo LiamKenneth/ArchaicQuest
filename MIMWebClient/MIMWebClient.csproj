@@ -251,6 +251,7 @@
     <Compile Include="Core\PlayerSetup\PlayerLocation.cs" />
     <Compile Include="Core\PlayerSetup\PlayerRace.cs" />
     <Compile Include="Core\PlayerSetup\PlayerStats.cs" />
+    <Compile Include="Core\Player\Classes\PlayerClass.cs" />
     <Compile Include="Core\Player\Equipment.cs" />
     <Compile Include="Core\Player\Experience.cs" />
     <Compile Include="Core\Player\Inventory.cs" />
