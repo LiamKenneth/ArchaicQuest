@@ -14,9 +14,15 @@ namespace MIMWebClient.Core
 
     using Newtonsoft.Json.Linq;
     using System.Threading;
+
+    using MIMWebClient.Core.Player.Skills;
+
     public class Command
     {
+
+        public static List<string> _Buffer = new List<string>();
  
+
 
         //public static Dictionary<string, Action> commandList { get; set; }
         public static Dictionary<string, Action> Commands(string commandOptions,string commandKey,PlayerSetup.Player playerData,Room.Room room)
@@ -61,7 +67,7 @@ namespace MIMWebClient.Core
             commandList.Add("lock", () => ManipulateObject.LockItem(room, playerData, commandOptions, commandKey));
             commandList.Add("open", () => ManipulateObject.Open(room, playerData, commandOptions, commandKey));
             commandList.Add("close", () => ManipulateObject.Close(room, playerData, commandOptions, commandKey));
-            commandList.Add("punch", () => Fight2.Punch(playerData, room));
+            commandList.Add("punch", () =>  Punch.StartPunch(playerData, room));
             return commandList;
         }
 
@@ -102,6 +108,9 @@ namespace MIMWebClient.Core
             if (fire.Value != null)
             {
                  fire.Value();
+
+            
+
             }
             else
             {
@@ -109,9 +118,26 @@ namespace MIMWebClient.Core
                 HubContext.SendToClient("Sorry you can't do that.", playerData.HubGuid);
             }
 
-          //  Prompt.ShowPrompt(playerData);
+            //  Prompt.ShowPrompt(playerData);
             Score.UpdateUiPrompt(playerData);
            
         }
+
+        //public static void CommandBuffer(string input, PlayerSetup.Player playerData, Room.Room room = null)
+        //{
+        //    _Buffer.Add(input);
+
+        //    ProcessBuffer(playerData, room);
+
+
+        //}
+
+        //public static void ProcessBuffer(PlayerSetup.Player playerData, Room.Room room = null)
+        //{
+        //   var playerInput = _Buffer.FirstOrDefault();
+
+        //    ParseCommand(playerInput, playerData, room);
+
+        //}
     }
 }

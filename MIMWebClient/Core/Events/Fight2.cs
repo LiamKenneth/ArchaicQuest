@@ -26,17 +26,19 @@ namespace MIMWebClient.Core.Events
         /// <returns></returns>
         public static void PerpareToFight(Player attacker, Room room, string defenderName)
         {
+            
+
             if (attacker == null)
             {
                 return;
             }
 
-          /* player can only attack one target
-         * if player gets attacked by something else they cannot fight back until
-         * they have ended the fight they are already in.
-         * player defence should be divided by the number of people they are being attacked by.
-         * 
-         */
+            /* player can only attack one target
+           * if player gets attacked by something else they cannot fight back until
+           * they have ended the fight they are already in.
+           * player defence should be divided by the number of people they are being attacked by.
+           * 
+           */
 
             //automated Combat rounds for melee attacks
 
@@ -56,7 +58,7 @@ namespace MIMWebClient.Core.Events
             AddFightersIdtoRoom(attacker, defender, room);
 
             StartFight(attacker, defender, room);
-          
+
         }
 
         public static void AddFightersIdtoRoom(Player attacker, Player defender, Room room)
@@ -121,7 +123,7 @@ namespace MIMWebClient.Core.Events
                 return null;
             }
 
- 
+
             if (attacker.HitPoints <= 0)
             {
                 HubContext.SendToClient("You cannot attack anything while dead", attacker.HubGuid);
@@ -141,7 +143,7 @@ namespace MIMWebClient.Core.Events
         {
 
 
-            while (attacker.Status == PlayerSetup.Player.PlayerStatus.Fighting && defender.Status == PlayerSetup.Player.PlayerStatus.Fighting)
+            while (attacker.HitPoints > 0 && defender.HitPoints > 0)
             {
                 bool canAttack = CanAttack(attacker, defender);
 
@@ -149,10 +151,12 @@ namespace MIMWebClient.Core.Events
                 {
                     bool alive = IsAlive(attacker, defender);
 
-                    if (alive)
-                    {
+                 
 
-                         await Task.Delay(delay);
+                    if (alive && attacker.Status != Player.PlayerStatus.Busy)
+                    {
+                        
+                        await Task.Delay(delay);
 
                         double offense = Offense(attacker);
                         double evasion = Evasion(defender);
@@ -173,6 +177,8 @@ namespace MIMWebClient.Core.Events
                             Score.UpdateUiPrompt(defender);
                         }
                     }
+
+                    
 
                 }
 
@@ -217,50 +223,9 @@ namespace MIMWebClient.Core.Events
             return canAttack;
         }
 
-        /// <summary>
-        ///  (Weapon Damage * Strength Modifier * Condition Modifier * Critical Hit Modifier) / Armor Reduction.
-        /// </summary>
-        /// <param name="attacker"></param>
-        /// <param name="defender"></param>
-        public static int Damage(Player attacker, Player defender, bool criticalHit)
+        public static int CalculateDamageReduction(Player attacker, Player defender, int damage)
         {
-            // (Weapon Damage * Strength Modifier * Condition Modifier * Critical Hit Modifier) / Armor Reduction.
-            int strength = attacker.Strength;
-            int damage = 0;
-            var wielded = attacker.Equipment.RightHand;
-            Item weapon = null;
-            var die = new PlayerStats();
-            var handToHand = die.dice(1, 6);
-            double HandToHandSkill = attacker.Skills.Find(x => x.Name.Equals(Skill.HandToHand))?.Proficiency ?? 0;
-
-            if (wielded == "Nothing")
-            {
-                //weapon skill * 0.075 * critical hit modifier
-                if (criticalHit)
-                {
-                    damage = (int)((HandToHandSkill + handToHand) * 2);
-                }
-                else
-                {
-                    damage = (int)((HandToHandSkill + handToHand) * 1);
-                }
-              
-            }
-            else
-            {
-                //find weapon
-                weapon = attacker.Inventory.Find(x => x.name.Equals(wielded) && x.location.Equals("worn"));
-            }
-
-            if (weapon != null)
-            {
-                Helpers helper = new Helpers();
-                damage = helper.dice(1, weapon.stats.damMin, weapon.stats.damMax);
-            }
-
             int ArRating = ArmourRating(defender);
-
-
             int armourReduction = ArRating / damage;
 
             if (armourReduction > 4)
@@ -272,7 +237,65 @@ namespace MIMWebClient.Core.Events
                 armourReduction = 1;
             }
 
-            int totalDamage = damage / armourReduction;
+            return armourReduction;
+        }
+
+        public static Item GetAttackerWepon(Player attacker)
+        {
+            //currently everyone is right handed :-O
+            var wielded = attacker.Equipment.RightHand;
+
+            if (wielded == "Nothing")
+            {
+                return null;
+            }
+
+            var weapon = attacker.Inventory.Find(x => x.name.Equals(wielded) && x.location.Equals(Item.ItemLocation.Worn));
+
+            return weapon;
+        }
+
+        public static int HandToHandDamage(Player attacker)
+        {
+            var die = new PlayerStats();
+            var handToHand = die.dice(1, 6);
+
+            double handToHandSkill = attacker.Skills.Find(x => x.Name.Equals("HandToHand"))?.Proficiency ?? 0;
+
+            var handToHandSkillModifier = (handToHandSkill / handToHand) * 100;
+            var damage = (int)((handToHandSkillModifier + handToHand) * 1);
+
+            return damage;
+        }
+
+        /// <summary>
+        ///  (Weapon Damage * Strength Modifier * Condition Modifier * Critical Hit Modifier) / Armor Reduction.
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="defender"></param>
+        public static int Damage(Player attacker, Player defender, int criticalHit)
+        {
+            // (Weapon Damage * Strength Modifier * Condition Modifier * Critical Hit Modifier) / Armor Reduction.
+           
+            int damage;
+
+            var weapon = GetAttackerWepon(attacker);
+
+            if (weapon != null)
+            {
+                Helpers helper = new Helpers();
+                damage = helper.dice(1, weapon.stats.damMin, weapon.stats.damMax);
+            }
+            else
+            {
+                //Unarmed so use hand to hand
+                damage = HandToHandDamage(attacker);
+            }
+
+            var armourReduction = CalculateDamageReduction(attacker, defender, damage);
+
+
+            int totalDamage = (damage / armourReduction) * criticalHit;
 
             return totalDamage;
         }
@@ -288,48 +311,48 @@ namespace MIMWebClient.Core.Events
             Item weapon = null;
             if (wielded == "Nothing")
             {
-               return new KeyValuePair<string, string>("punch", "punches");
+                return new KeyValuePair<string, string>("punch", "punches");
             }
-          
+
             //find weapon
             weapon = attacker.Inventory.Find(x => x.name.Equals(wielded) && x.location.Equals("worn"));
 
-           /// weapon.attackType = Item.AttackTypes.Slash;
+            /// weapon.attackType = Item.AttackTypes.Slash;
             //add attack string to weapons
-            return new KeyValuePair<string, string>("","");
+            return new KeyValuePair<string, string>("", "");
         }
 
-        public static bool CriticalHit(double toHit, int chance)
+        public static int CriticalHit(double toHit, int chance)
         {
             var die = new PlayerStats();
             var chanceMod = die.dice(1, 4);
             var critical = chance * chanceMod;
-        
+
             if (toHit >= chance)
             {
-                return true;
+                return 2;
             }
-            return false;
+            return 1;
         }
 
         public static void ShowAttack(Player attacker, Player defender, Room room, double toHit, int chance)
         {
             bool alive = IsAlive(attacker, defender);
-            bool ISCritical = CriticalHit(toHit, chance);
+            int IsCritical = CriticalHit(toHit, chance);
 
             if (alive)
             {
 
                 if (toHit > chance)
                 {
-                    int dam = Damage(attacker, defender, ISCritical);
+                    int dam = Damage(attacker, defender, IsCritical);
                     var damageText = DamageText(dam);
 
 
-                        HubContext.SendToClient("Your hit " + damageText.Value + " " + defender.Name + "[" + dam + "]", attacker.HubGuid);
-                  
-                        HubContext.SendToClient(attacker.Name + "'s hit " + damageText.Value + " you [" + dam + "]", defender.HubGuid);
-                    
+                    HubContext.SendToClient("Your hit " + damageText.Value + " " + defender.Name + "[" + dam + "]", attacker.HubGuid);
+
+                    HubContext.SendToClient(attacker.Name + "'s hit " + damageText.Value + " you [" + dam + "]", defender.HubGuid);
+
 
                     defender.HitPoints -= dam;
 
@@ -347,11 +370,11 @@ namespace MIMWebClient.Core.Events
                 }
                 else
                 {
-                    
-                        HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
-                    
-                        HubContext.SendToClient(attacker.Name + " misses you ", defender.HubGuid);
-                    
+
+                    HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
+
+                    HubContext.SendToClient(attacker.Name + " misses you ", defender.HubGuid);
+
                     HubContext.SendToAllExcept(attacker.Name + " misses " + defender.Name, room.fighting, room.players);
                 }
             }
@@ -456,10 +479,10 @@ namespace MIMWebClient.Core.Events
 
                 HubContext.SendToAllExcept(defender.Name + " dies ", room.fighting, room.players);
 
-                
-                    HubContext.SendToClient("You die", defender.HubGuid);
-                
-                    HubContext.SendToClient(defender.Name + " dies", attacker.HubGuid);
+
+                HubContext.SendToClient("You die", defender.HubGuid);
+
+                HubContext.SendToClient(defender.Name + " dies", attacker.HubGuid);
 
                 defender.Target = null;
 
@@ -475,11 +498,11 @@ namespace MIMWebClient.Core.Events
                 };
 
                 foreach (var invItem in defender.Inventory)
-                {            
+                {
                     invItem.location = Item.ItemLocation.Inventory;
                     defenderCorpse.containerItems.Add(invItem);
 
-                }        
+                }
 
                 var oldRoom = room;
                 room.items.Add(defenderCorpse);
@@ -513,10 +536,10 @@ namespace MIMWebClient.Core.Events
             {
                 HubContext.SendToAllExcept(attacker.Name + " dies ", room.fighting, room.players);
 
-               
-                    HubContext.SendToClient("You die", attacker.HubGuid);
-               
-                    HubContext.SendToClient(attacker.Name + " dies", defender.HubGuid);
+
+                HubContext.SendToClient("You die", attacker.HubGuid);
+
+                HubContext.SendToClient(attacker.Name + " dies", defender.HubGuid);
 
                 attacker.Target = null;
                 var attackerCorpse = attacker;
@@ -547,7 +570,7 @@ namespace MIMWebClient.Core.Events
 
                 var xp = new Experience();
 
-               int xpGain = xp.MobXP(defender, attacker);
+                int xpGain = xp.MobXP(defender, attacker);
                 defender.Experience += xpGain;
                 HubContext.SendToClient("You gain " + xpGain + "XP", defender.HubGuid);
 
@@ -593,8 +616,8 @@ namespace MIMWebClient.Core.Events
 
             if (weapon != null)
             {
-                 weaponType = weapon.weaponType;
-                 weaponSkill = player.Skills.Find(x => x.Name == weaponType.ToString())?.Proficiency ?? 0;
+                weaponType = weapon.weaponType;
+                weaponSkill = player.Skills.Find(x => x.Name == weaponType.ToString())?.Proficiency ?? 0;
 
             }
             else
@@ -634,16 +657,18 @@ namespace MIMWebClient.Core.Events
             return evade;
         }
 
-        public static void Punch(Player attacker, Room room)
+        public static async Task Punch(Player attacker, Room room)
         {
 
-           //Fight2 needs refactoring so the below skills can use the same methods for damage, damage output, working out chance to hit etc. same for spells
-          
+            //Fight2 needs refactoring so the below skills can use the same methods for damage, damage output, working out chance to hit etc. same for spells
+
 
 
             HubContext.SendToClient("You clench your fist and pull your arm back", attacker.HubGuid);
             HubContext.SendToClient(attacker.Name + " Pulls his arm back aiming a punch at you.", attacker.HubGuid, attacker.Target.HubGuid, false, true);
             HubContext.broadcastToRoom(attacker.Name + " clenches his fist and pulls his arm back aiming for " + attacker.Target.Name, room.players, attacker.HubGuid, true);
+
+            await Task.Delay(1500);
 
             //get attacker strength
             var die = new PlayerStats();
@@ -654,7 +679,7 @@ namespace MIMWebClient.Core.Events
 
             if (toHit > chance)
             {
-                HubContext.SendToClient("Your punch hits", attacker.HubGuid);
+                HubContext.SendToClient("Your punch hits", attacker.HubGuid + " " + dam);
                 HubContext.SendToClient(attacker.Name + " punch hits you", attacker.HubGuid,
                     attacker.Target.HubGuid, false, true);
                 HubContext.broadcastToRoom(
@@ -669,8 +694,8 @@ namespace MIMWebClient.Core.Events
                 HubContext.SendToClient(attacker.Name + " swings a punch at you but misses", attacker.HubGuid, attacker.Target.HubGuid, false, true);
                 HubContext.broadcastToRoom(attacker.Name + " swings at " + attacker.Target.Name + " but misses", room.players, attacker.HubGuid, true);
             }
-            
- 
+
+
         }
     }
 }
