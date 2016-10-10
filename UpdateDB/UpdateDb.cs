@@ -29,9 +29,9 @@ namespace UpdateDB
             var database = client.GetDatabase("mimdb");
 
             var roomCollection = database.GetCollection<Room>("Room");
-
+            
             Console.WriteLine("Cleaning DB");
-
+            database.DropCollection("Room");
             Console.WriteLine("Compiling Areas.");
 
             var areaSpeed = new Stopwatch();
@@ -40,6 +40,7 @@ namespace UpdateDB
             var areas = new List<Room>();
             areas.Add(Anker.VillageSquare());
             areas.Add(Anker.SquareWalkOutsideTavern());
+            areas.Add(Anker.DrunkenSailor());
             areaSpeed.Stop();
             Console.WriteLine("Compiling Areas Completed in {0}ms.", areaSpeed.Elapsed.Milliseconds);
 

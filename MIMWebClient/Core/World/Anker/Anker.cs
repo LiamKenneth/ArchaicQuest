@@ -39,7 +39,7 @@ namespace MIMWebClient.Core.World.Anker
                 region = "Anker",
                 area = "Anker",
                 areaId = 0,
-                title = "Village Sqaure",
+                title = "Village Square",
                 description = "A round stone well occupies the centre of the grey cobbled square. " +
                 "A large oak tree provides shade. It is frequently used by passers-by and the villages main source of fresh water " +
                 "<br /> Not far from the well is the village notice board. " +
@@ -294,8 +294,8 @@ namespace MIMWebClient.Core.World.Anker
                 region = "Anker",
                 area = "Anker",
                 areaId = 1,
-                title = "Square walk, outside the drunken sailor",
-                description = "To the north is a large Inn, it's exterial walls plastered white. Either side of the large door is two checked windows." +
+                title = "Square walk, outside the Drunken Sailor",
+                description = "To the north is a large inn, its exterial walls plastered white. Either side of the large door is two checked windows." +
                 " To the south is the Village Square. The square walk continues east and west towards the stables joining the inn.",
 
                 //Defaults
@@ -397,6 +397,129 @@ namespace MIMWebClient.Core.World.Anker
             room.exits.Add(south);         
             room.exits.Add(west);
 
+
+
+
+            return room;
+        }
+
+        public static Room DrunkenSailor()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 2,
+                title = "The Drunken Sailor",
+                description = "The inside of the tavern is a single, low-roofed room. Rancid oil lamps emit a gloomy light." +
+                " Only a handful of people can be seen through the smoke-filled air. A small door to the west leads out to the stables." +
+                " A bad-tempered looking barkeeper seems to be cleaning the counter. ",
+      
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Inside,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+            var modo = new Player
+            {
+                Name = "Modo",
+                Type = "Mob",
+                Description = "The owner of the Drunken Sailor is a tall and intimidating appearance. This long-bearded man immediatly makes you feel uncomfortable. He does not seem to notice you.",
+                Strength = 3,
+                Dexterity = 2,
+                Constitution = 4,
+                Intelligence = 2,
+                Wisdom = 5,
+                Charisma = 1,
+                MaxHitPoints = 100,
+                HitPoints = 100,
+                Level = 1,
+                Status = Player.PlayerStatus.Standing,
+                Skills = new List<Skill>(),
+                Inventory = new List<Item.Item>()
+            };
+
+            var dyten = new Player
+            {
+                Name = "Dyten",
+                Type = "Mob",
+                Description = "This weathered old man probably never leaves this place. His cloudy eyes seem to seek something at the bottom of his glass.",
+                Strength = 1,
+                Dexterity = 2,
+                Constitution = 2,
+                Intelligence = 2,
+                Wisdom = 5,
+                Charisma = 1,
+                MaxHitPoints = 100,
+                HitPoints = 100,
+                Level = 1,
+                Status = Player.PlayerStatus.Busy,
+                Skills = new List<Skill>(),
+                Inventory = new List<Item.Item>()
+            };
+
+
+            room.mobs.Add(modo);
+            room.mobs.Add(dyten);
+            #region exits
+
+
+
+
+
+
+                // Create Exits
+                var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 0,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                description = new Item.Description
+                {
+                    look = "A small wooden door leads to the stables.", //return mobs / players?
+                    exam = "The door seems closed. Maybe you can open it by using your hands.",
+
+                }
+            };
+
+            #endregion
+          
+            room.exits.Add(west);
+
+            var counter = new RoomObject
+            {
+                name = "Wooden Counter",
+                look = "The surface is full of suspicious smudges. You better not touch it.",
+                examine = "There is nothing more of detail to see.",
+                touch = "The wood feels sticky.",
+                smell = "It smells like endless nights of drinking and smoking."
+            };
+
+            var table = new RoomObject
+            {
+                name = "A sturdy table",
+                look = "A small lamp is placed in its center. Scratches tell of wild nights in the past.",
+                examine = "There is nothing more of detail to see.",
+                touch = "The wood feels sticky.",
+                smell = "It smells like endless nights of drinking and smoking."
+            };
+
+
+            room.keywords.Add(table);
+            room.keywords.Add(counter);
 
 
 
