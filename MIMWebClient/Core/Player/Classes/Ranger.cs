@@ -8,25 +8,18 @@ namespace MIMWebClient.Core.Player.Classes
     using MIMWebClient.Core.Events;
     using MIMWebClient.Core.Player.Skills;
 
-    public class Fighter : PlayerClass
+    public class Ranger : PlayerClass
     {
-        public static PlayerClass FighterClass()
+        public static PlayerClass RangerClass()
         {
-
-
-            var fighter = new PlayerClass
+            var ranger = new PlayerClass
             {
-                Name = "Fighter",
-                IsBaseClass = true,
-                ExperienceModifier = 1500,
+                Name = "Ranger",
+                IsBaseClass = false,
+                ExperienceModifier = 2000,
                 HelpText = new Help(),
                 Skills = new List<Skill>(),
-                ReclassOptions = new List<PlayerClass>(),
-                MaxHpGain = 15,
-                MinHpGain = 11,
-                MaxManaGain = 8,
-                MinManaGain = 4
-
+                ReclassOptions = new List<PlayerClass>()
             };
 
             #region  Give fighter punch skill
@@ -35,15 +28,11 @@ namespace MIMWebClient.Core.Player.Classes
             punch.LevelObtained = 2;
             punch.Proficiency = 0.1;
             punch.MaxProficiency = 0.95;
-            fighter.Skills.Add(punch);
+            ranger.Skills.Add(punch);
 
             #endregion
 
-            fighter.ReclassOptions.Add(Ranger.RangerClass());
-
-            return fighter;
-
-
+            return ranger;
         }
     }
 }

@@ -30,6 +30,8 @@ namespace MIMWebClient.Core.Player
 
         public int LevelObtained { get; set; }
 
+        public double MaxProficiency { get; set; }
+
         public Help HelpText { get; set; }
 
         public string Syntax { get; set; }
