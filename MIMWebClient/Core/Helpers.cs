@@ -29,5 +29,16 @@ namespace MIMWebClient.Core
 
             return sum;
         }
+
+        
+        /// <summary>
+        /// Returns a random string.
+        /// </summary>
+        /// <param name="possible"></param>
+        /// <returns></returns>
+        public static String RandomString(params String[] possible)
+        {
+            return possible[diceRoll.Next(0, possible.Count())];
+        } 
     }
 }
