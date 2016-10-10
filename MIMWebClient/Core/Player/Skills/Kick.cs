@@ -39,7 +39,6 @@ namespace MIMWebClient.Core.Player.Skills
                 };
 
 
-                skill.HelpText = skill.Syntax + " Some help text about kick";
 
                 KickSkill = skill;
             }

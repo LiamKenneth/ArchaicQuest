@@ -99,9 +99,21 @@ namespace MIMWebClient.Core.Player.Skills
                 };
 
 
-                skill.HelpText = skill.Syntax + " Some help text about punch";
+            var help = new Help
+            {
+                Syntax = "Punch <Victim>",
+                HelpText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+                           "Duis at pulvinar velit, et eleifend purus." +
+                           " Vivamus venenatis lorem eu magna lobortis," +
+                           " at cursus felis venenatis. Proin pretium orci vel consequat tempus.",
+                DateUpdated = "10/10/2016"
 
-                return  skill;
+            };
+
+            skill.HelpText = help;
+
+
+            return  skill;
  
  
         }

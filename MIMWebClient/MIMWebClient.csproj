@@ -230,6 +230,7 @@
     <Compile Include="Core\Events\FindNth.cs" />
     <Compile Include="Core\Events\FindWhere.cs" />
     <Compile Include="Core\Events\Flee.cs" />
+    <Compile Include="Core\Events\Help.cs" />
     <Compile Include="Core\Events\LoadRoom.cs" />
     <Compile Include="Core\Events\ManipulateObject.cs" />
     <Compile Include="Core\Events\Save.cs" />

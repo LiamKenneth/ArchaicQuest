@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MIMWebClient.Core.Events;
 
 namespace MIMWebClient.Core.Player.Skills
 {
@@ -34,11 +35,10 @@ namespace MIMWebClient.Core.Player.Skills
                     LevelObtained = 1,
                     Passive = true,
                     UsableFromStatus = "Standing",
-                    Syntax = "Passive command"
+                    Syntax = "Passive command",
+                    HelpText = new Help()
                 };
 
-
-                skill.HelpText = skill.Syntax + " Some help text about Hand to Hand";
 
                 HandToHandSkill = skill;
             }
