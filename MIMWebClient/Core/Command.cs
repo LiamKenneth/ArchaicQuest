@@ -68,6 +68,7 @@ namespace MIMWebClient.Core
             commandList.Add("open", () => ManipulateObject.Open(room, playerData, commandOptions, commandKey));
             commandList.Add("close", () => ManipulateObject.Close(room, playerData, commandOptions, commandKey));
             commandList.Add("punch", () =>  Punch.StartPunch(playerData, room));
+            commandList.Add("help", () => Help.ShowHelp(commandOptions, playerData));
             return commandList;
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MIMWebClient.Core.Events;
 
 namespace MIMWebClient.Core.Player
 {
@@ -29,7 +30,7 @@ namespace MIMWebClient.Core.Player
 
         public int LevelObtained { get; set; }
 
-        public string HelpText { get; set; }
+        public Help HelpText { get; set; }
 
         public string Syntax { get; set; }
 
