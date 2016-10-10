@@ -36,7 +36,7 @@ namespace MIMWebClient.Core
         /// </summary>
         /// <param name="possible"></param>
         /// <returns></returns>
-        public static String Random(params String[] possible)
+        public static String RandomString(params String[] possible)
         {
             return possible[diceRoll.Next(0, possible.Count())];
         } 
