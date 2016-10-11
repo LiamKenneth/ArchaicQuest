@@ -9,6 +9,8 @@ namespace MIMWebClient.Core.Update
 {
     public class UpdateWorld
     {
+        
+
         public static void Init()
         {
             Task.Run(UpdateTime);
@@ -31,9 +33,9 @@ namespace MIMWebClient.Core.Update
         /// <returns></returns>
         public static async Task UpdateTime()
         {
-            await Task.Delay(60000);
-
-            HubContext.getHubContext.Clients.All.addNewMessageToPage("This is will update something every 60 seconds and not block the game");
+            await Task.Delay(75000);
+    
+            Time.UpdateTIme();
 
             Init();
         }
@@ -41,20 +43,20 @@ namespace MIMWebClient.Core.Update
 
         public static async Task UpdateRoom()
         {
-            await Task.Delay(5000);
+            await Task.Delay(300000);
 
-            HubContext.getHubContext.Clients.All.addNewMessageToPage("This is will update Rooms every 5 seconds and not block the game");
+            HubContext.getHubContext.Clients.All.addNewMessageToPage("This is will update Rooms every 5 minutes and not block the game");
 
             CleanRoom();
         }
 
         public static async Task MoveMob()
         {
-            await Task.Delay(5000);
+            //await Task.Delay(5000);
 
-            HubContext.getHubContext.Clients.All.addNewMessageToPage("This is will update Mobs every 5 seconds and not block the game");
+            //HubContext.getHubContext.Clients.All.addNewMessageToPage("This task will update Mobs every 5 seconds and not block the game");
 
-            UpdateMob();
+            //UpdateMob();
         }
     }
 }
