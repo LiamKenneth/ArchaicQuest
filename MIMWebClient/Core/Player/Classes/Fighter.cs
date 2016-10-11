@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using MIMWebClient.Core.Player.Classes.Reclasses;
 
 namespace MIMWebClient.Core.Player.Classes
 {
@@ -25,7 +26,11 @@ namespace MIMWebClient.Core.Player.Classes
                 MaxHpGain = 15,
                 MinHpGain = 11,
                 MaxManaGain = 8,
-                MinManaGain = 4
+                MinManaGain = 4,
+                MaxEnduranceGain = 15,
+                MinEnduranceGain = 11,
+                StatBonusStr = 1,
+                StatBonusCon = 1
 
             };
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MIMWebClient.Core.Player.Classes
+namespace MIMWebClient.Core.Player.Classes.Reclasses
 {
     using MIMWebClient.Core.Events;
     using MIMWebClient.Core.Player.Skills;
@@ -19,7 +19,15 @@ namespace MIMWebClient.Core.Player.Classes
                 ExperienceModifier = 2000,
                 HelpText = new Help(),
                 Skills = new List<Skill>(),
-                ReclassOptions = new List<PlayerClass>()
+                ReclassOptions = new List<PlayerClass>(),
+                MaxHpGain = 20,
+                MinHpGain = 13,
+                MaxManaGain = 15,
+                MinManaGain = 5,
+                MaxEnduranceGain = 40,
+                MinEnduranceGain = 15,
+                StatBonusCon = 1,
+                StatBonusDex = 2
             };
 
             #region  Give fighter punch skill
