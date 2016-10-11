@@ -254,12 +254,14 @@
     <Compile Include="Core\PlayerSetup\PlayerStats.cs" />
     <Compile Include="Core\Player\Classes\Fighter.cs" />
     <Compile Include="Core\Player\Classes\PlayerClass.cs" />
-    <Compile Include="Core\Player\Classes\Ranger.cs" />
+    <Compile Include="Core\Player\Classes\Reclasses\Ranger.cs" />
     <Compile Include="Core\Player\Equipment.cs" />
     <Compile Include="Core\Player\Experience.cs" />
     <Compile Include="Core\Player\Inventory.cs" />
     <Compile Include="Core\Player\Player.cs" />
     <Compile Include="Core\Player\Prompt.cs" />
+    <Compile Include="Core\Player\Races\Elf.cs" />
+    <Compile Include="Core\Player\Races\PlayerRace.cs" />
     <Compile Include="Core\Player\Skill.cs" />
     <Compile Include="Core\Player\Skills\Punch.cs" />
     <Compile Include="Core\Player\Skills\ShortBlades.cs" />
@@ -273,6 +275,7 @@
     <Compile Include="Core\Room\PlayerManager.cs" />
     <Compile Include="Core\Room\Room.cs" />
     <Compile Include="Core\Room\RoomObject.cs" />
+    <Compile Include="Core\Update\UpdateWorld.cs" />
     <Compile Include="Core\World\Anker\Anker.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -386,7 +389,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Core\NewFolder1\" />
     <Folder Include="Core\PlayerSetup\Data\Img\Avatar\" />
     <Folder Include="Core\Player\Spells\" />
     <Folder Include="Views\Default\" />
