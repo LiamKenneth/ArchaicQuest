@@ -33,22 +33,28 @@ namespace MIMWebClient.Core.Update
             }
         }
 
-        public static void UpdateMobs()
+        public static void UpdateRooms()
         {
             var context = HubContext.getHubContext;
-            var mobs = Cache.ReturnMobs();
+            var rooms = Cache.ReturnRooms();
 
-            if (mobs.Count == 0)
+            if (rooms.Count == 0)
             {
                 return;
             }
 
-            foreach (var mob in mobs)
+            foreach (var room in rooms)
             {
 
-                UpdateHp(mob, context);
-                UpdateMana(mob, context);
-                UpdateEndurance(mob, context);
+                foreach (var mob in room.mobs)
+                {
+                    UpdateHp(mob, context);
+                    UpdateMana(mob, context);
+                    UpdateEndurance(mob, context);
+                }
+
+               // add missing items
+               // add mob if found in corpse list
 
             }
         }
@@ -61,7 +67,24 @@ namespace MIMWebClient.Core.Update
             {
 
                 var die = new Helpers();
-                var maxGain = player.Constitution * 2;
+                var maxGain = player.Constitution;
+
+                if (player.Status == Player.PlayerStatus.Fighting)
+                {
+                    maxGain = maxGain / 2;
+                }
+
+                if (player.Status == Player.PlayerStatus.Sleeping)
+                {
+                    maxGain = maxGain * 2;
+                }
+
+
+                if (player.Status == Player.PlayerStatus.Resting)
+                {
+                    maxGain = (maxGain * 2) / 2;
+                }
+
 
                 player.HitPoints += die.dice(1, 1, maxGain);
 
@@ -87,7 +110,23 @@ namespace MIMWebClient.Core.Update
             {
 
                 var die = new Helpers();
-                var maxGain = player.Intelligence * 2;
+                var maxGain = player.Intelligence;
+
+                if (player.Status == Player.PlayerStatus.Fighting)
+                {
+                    maxGain = maxGain / 2;
+                }
+
+                if (player.Status == Player.PlayerStatus.Sleeping)
+                {
+                    maxGain = maxGain * 2;
+                }
+
+
+                if (player.Status == Player.PlayerStatus.Resting)
+                {
+                    maxGain = (maxGain * 2) / 2;
+                }
 
                 player.ManaPoints += die.dice(1, 1, maxGain);
 
@@ -112,7 +151,23 @@ namespace MIMWebClient.Core.Update
             {
 
                 var die = new Helpers();
-                var maxGain = player.Intelligence * 2;
+                var maxGain = player.Dexterity;
+
+                if (player.Status == Player.PlayerStatus.Fighting)
+                {
+                    maxGain = maxGain / 2;
+                }
+
+                if (player.Status == Player.PlayerStatus.Sleeping)
+                {
+                    maxGain = maxGain * 2;
+                }
+
+
+                if (player.Status == Player.PlayerStatus.Resting)
+                {
+                    maxGain = (maxGain * 2) / 2;
+                }
 
                 player.MovePoints += die.dice(1, 1, maxGain);
 
