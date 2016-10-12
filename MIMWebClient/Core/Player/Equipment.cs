@@ -116,9 +116,10 @@ namespace MIMWebClient.Core.Player
             foundItem.location = Item.ItemLocation.Worn;
             var slot = foundItem.slot;
 
+            //TODO: WTF is this?
             var eqLocation = player.Equipment.GetType().GetProperty(slot);
 
-            if (eqLocation == null){ return; }  // Log error?
+            if (eqLocation == null){ return; }  // Log error? What the hell is eqLocation?
 
             var hasValue = eqLocation.GetValue(player.Equipment);
 

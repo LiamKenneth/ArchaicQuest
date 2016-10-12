@@ -168,11 +168,11 @@ namespace MIMWebClient.Core.Events
                         ShowAttack(attacker, defender, room, toHit, chance);
 
 
-                        if (attacker.Type == "player")
+                        if (attacker.Type == Player.PlayerTypes.Player)
                         {
                             Score.UpdateUiPrompt(attacker);
                         }
-                        if (defender.Type == "player")
+                        if (defender.Type == Player.PlayerTypes.Player)
                         {
                             Score.UpdateUiPrompt(defender);
                         }
@@ -507,7 +507,7 @@ namespace MIMWebClient.Core.Events
                 var oldRoom = room;
                 room.items.Add(defenderCorpse);
 
-                if (defender.Type == "Mob")
+                if (defender.Type == Player.PlayerTypes.Mob)
                 {
                     room.mobs.Remove(defender);
                 }
@@ -519,7 +519,7 @@ namespace MIMWebClient.Core.Events
 
                 attacker.Status = PlayerSetup.Player.PlayerStatus.Standing;
 
-                defender.Status = defender.Type == "Player" ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;
+                defender.Status = defender.Type == Player.PlayerTypes.Player ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;
 
                 Cache.updateRoom(room, oldRoom);
 
@@ -552,7 +552,7 @@ namespace MIMWebClient.Core.Events
                 var oldRoom = room;
                 room.corpses.Add(attacker);
 
-                if (attacker.Type == "Mob")
+                if (attacker.Type == Player.PlayerTypes.Mob)
                 {
                     room.mobs.Remove(attacker);
                 }
@@ -564,7 +564,7 @@ namespace MIMWebClient.Core.Events
 
                 defender.Status = PlayerSetup.Player.PlayerStatus.Standing;
 
-                attacker.Status = attacker.Type == "Player" ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;
+                attacker.Status = attacker.Type == Player.PlayerTypes.Player ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;
 
                 Cache.updateRoom(room, oldRoom);
 

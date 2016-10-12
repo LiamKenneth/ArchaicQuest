@@ -9,7 +9,7 @@ namespace MIMWebClient.Core.Mob.Events
     {
         public static void greet(PlayerSetup.Player player, PlayerSetup.Player mob, Room.Room room)
         {
-            if (player.Type == "Player")
+            if (player.Type == PlayerSetup.Player.PlayerTypes.Player)
             {
                 string greetMessageToRoom = string.Format(mob.GreetMessage, player.Name);
                 HubContext.broadcastToRoom(mob.Name + " Says " + greetMessageToRoom, room.players, player.HubGuid);

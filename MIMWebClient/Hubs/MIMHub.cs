@@ -19,6 +19,7 @@ namespace MIMWebClient.Hubs
     {
         public static ConcurrentDictionary<string, Player> _PlayerCache = new ConcurrentDictionary<string, Player>();
         public static ConcurrentDictionary<int, Room> _AreaCache = new ConcurrentDictionary<int, Room>();
+        public static ConcurrentDictionary<string, Player> _ActiveMobCache = new ConcurrentDictionary<string, Player>();
 
         public static Player PlayerData { get; set; }
 
@@ -56,11 +57,13 @@ namespace MIMWebClient.Hubs
             if (_PlayerCache.TryGetValue(playerId, out player))
             {
 
-                var RoomData = new LoadRoom();
+                var RoomData = new LoadRoom
+                {
+                    Region = player.Region,
+                    Area = player.Area,
+                    id = player.AreaId
+                };
 
-                RoomData.Region = player.Region;
-                RoomData.Area = player.Area;
-                RoomData.id = player.AreaId;
 
                 Room getRoomData = null;
                 if (_AreaCache.TryGetValue(RoomData.id, out getRoomData))
@@ -73,6 +76,7 @@ namespace MIMWebClient.Hubs
                 {
                     getRoomData = RoomData.LoadRoomFile();
                     _AreaCache.TryAdd(RoomData.id, getRoomData);
+ 
 
                     return getRoomData;
                 }

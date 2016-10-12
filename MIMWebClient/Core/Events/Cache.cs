@@ -34,6 +34,17 @@ namespace MIMWebClient.Core.Events
         }
 
         /// <summary>
+        /// Gets Mob cache
+        /// </summary>
+        /// <returns>returns Mob Cache</returns>
+        private static ConcurrentDictionary<string, Player> getMobCache()
+        {
+            return MIMHub._ActiveMobCache;
+        }
+
+
+
+        /// <summary>
         /// Update room cache
         /// </summary>
         /// <param name="newRoom">The new room data</param>
@@ -99,6 +110,20 @@ namespace MIMWebClient.Core.Events
            var players = MIMHub._PlayerCache.Values.ToList();
 
             return players;
+        }
+
+        public static List<Player> ReturnMobs()
+        {
+            var mobs = MIMHub._PlayerCache.Values.ToList();
+
+            return mobs;
+        }
+
+        public static List<Room> ReturnRooms()
+        {
+            var rooms = MIMHub._AreaCache.Values.ToList();
+
+            return rooms;
         }
 
     }

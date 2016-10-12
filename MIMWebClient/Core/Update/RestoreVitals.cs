@@ -7,10 +7,13 @@ using MIMWebClient.Core.Events;
 
 namespace MIMWebClient.Core.Update
 {
+
+    using MIMWebClient.Core.PlayerSetup;
+
     public static class RestoreVitals
     {
 
-        public static void Update()
+        public static void UpdatePlayers()
         {
             var context = HubContext.getHubContext;
             var players = Cache.ReturnPlayers();
@@ -22,22 +25,43 @@ namespace MIMWebClient.Core.Update
 
             foreach (var player in players)
             {
-               
-              UpdateHp(player, context);
-              UpdateMana(player, context);
-              UpdateEndurance(player, context);
+
+                UpdateHp(player, context);
+                UpdateMana(player, context);
+                UpdateEndurance(player, context);
+
+            }
+        }
+
+        public static void UpdateMobs()
+        {
+            var context = HubContext.getHubContext;
+            var mobs = Cache.ReturnMobs();
+
+            if (mobs.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var mob in mobs)
+            {
+
+                UpdateHp(mob, context);
+                UpdateMana(mob, context);
+                UpdateEndurance(mob, context);
 
             }
         }
 
 
+
         public static void UpdateHp(PlayerSetup.Player player, IHubContext context)
         {
-            if (player.HitPoints >= player.MaxHitPoints)
+            if (player.HitPoints <= player.MaxHitPoints)
             {
 
                 var die = new Helpers();
-                var maxGain = player.Constitution*2;
+                var maxGain = player.Constitution * 2;
 
                 player.HitPoints += die.dice(1, 1, maxGain);
 
@@ -46,7 +70,12 @@ namespace MIMWebClient.Core.Update
                     player.HitPoints = player.MaxHitPoints;
                 }
 
-                context.Clients.Client(player.HubGuid).updateStat(player.HitPoints, player.MaxHitPoints, "hp");
+                if (player.Type == Player.PlayerTypes.Player)
+                {
+                    context.Clients.Client(player.HubGuid).updateStat(player.HitPoints, player.MaxHitPoints, "hp");
+                }
+
+
 
             }
 
@@ -54,7 +83,7 @@ namespace MIMWebClient.Core.Update
 
         public static void UpdateMana(PlayerSetup.Player player, IHubContext context)
         {
-            if (player.ManaPoints >= player.MaxHitPoints)
+            if (player.ManaPoints <= player.MaxHitPoints)
             {
 
                 var die = new Helpers();
@@ -67,17 +96,19 @@ namespace MIMWebClient.Core.Update
                     player.ManaPoints = player.MaxHitPoints;
                 }
 
-                context.Clients.Client(player.HubGuid).updateStat(player.ManaPoints, player.MaxManaPoints, "mana");
-             
 
+                if (player.Type == Player.PlayerTypes.Player)
+                {
+                    context.Clients.Client(player.HubGuid).updateStat(player.ManaPoints, player.MaxManaPoints, "mana");
+
+                }
             }
 
         }
 
-
         public static void UpdateEndurance(PlayerSetup.Player player, IHubContext context)
         {
-            if (player.MovePoints >= player.MaxMovePoints)
+            if (player.MovePoints <= player.MaxMovePoints)
             {
 
                 var die = new Helpers();
@@ -90,8 +121,12 @@ namespace MIMWebClient.Core.Update
                     player.MovePoints = player.MaxMovePoints;
                 }
 
-                context.Clients.Client(player.HubGuid).updateStat(player.MovePoints, player.MaxMovePoints, "endurance");
 
+                if (player.Type == Player.PlayerTypes.Player)
+                {
+
+                    context.Clients.Client(player.HubGuid).updateStat(player.MovePoints, player.MaxMovePoints, "endurance");
+                }
             }
 
         }

@@ -35,6 +35,13 @@ namespace MIMWebClient.Core.PlayerSetup
  
         }
 
+        public enum PlayerTypes
+        {
+            Player = 1,
+            Mob = 2
+
+        }
+
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId _id { get; set; }
 
@@ -42,7 +49,7 @@ namespace MIMWebClient.Core.PlayerSetup
         public string HubGuid;
 
         [BsonElement("ty")]
-        public string Type;
+        public PlayerTypes Type;
 
         [BsonElement("e")]
         public string Email;
@@ -240,7 +247,7 @@ namespace MIMWebClient.Core.PlayerSetup
         public Player()
         {
             //this.HubGuid = id;
-            this.Type = "Player";
+            this.Type = PlayerTypes.Player;
             //this.Email = email;
             //this.Password = password;
 
