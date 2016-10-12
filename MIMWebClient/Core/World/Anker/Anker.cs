@@ -264,7 +264,7 @@ namespace MIMWebClient.Core.World.Anker
                 type = Item.Item.ItemType.Weapon,
                 equipable = true,
                 attackType = Item.Item.AttackType.Pierce,
-                slot = "wield",
+                slot = Item.Item.EqSlot.Wield,
                 location = Item.Item.ItemLocation.Inventory
             };
 

@@ -290,7 +290,7 @@ namespace MIMWebClient.Core.PlayerSetup
                 type = Core.Item.Item.ItemType.Weapon,
                 equipable = true,
                 attackType = Core.Item.Item.AttackType.Pierce,
-                slot = "wield",
+                slot = Item.EqSlot.Wield,
                 location = Item.ItemLocation.Inventory
                 
             };

@@ -43,10 +43,11 @@ namespace MIMWebClient.Core.Update
 
         public static async Task UpdateRoom()
         {
-            await Task.Delay(300000);
+            await Task.Delay(5000);
+            RestoreVitals.UpdateRooms();
 
             HubContext.getHubContext.Clients.All.addNewMessageToPage("This is will update Rooms every 5 minutes and not block the game");
-
+          
             CleanRoom();
         }
 

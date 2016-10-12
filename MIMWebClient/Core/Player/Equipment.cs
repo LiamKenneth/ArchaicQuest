@@ -32,6 +32,7 @@ namespace MIMWebClient.Core.Player
         public string RightWrist { get; set; } = "Nothing";
         public string LeftHand { get; set; } = "Nothing";
         public string RightHand { get; set; } = "Nothing";
+        public string Wield { get; set; } = "Nothing";
         public string LeftRing { get; set; } = "Nothing";
         public string RightRing { get; set; } = "Nothing";
         public string Legs { get; set; } = "Nothing";
@@ -114,14 +115,14 @@ namespace MIMWebClient.Core.Player
             }
 
             foundItem.location = Item.ItemLocation.Worn;
-            var slot = foundItem.slot;
+            var slot = Enum.GetName(typeof(Item.EqSlot), foundItem.slot);
 
             //TODO: WTF is this?
             var eqLocation = player.Equipment.GetType().GetProperty(slot);
 
-            if (eqLocation == null){ return; }  // Log error? What the hell is eqLocation?
+            if (slot == null){ return; }  // Log error? What the hell is eqLocation?
 
-            var hasValue = eqLocation.GetValue(player.Equipment);
+             var hasValue = eqLocation.GetValue(player.Equipment);
 
             if (hasValue.ToString() != "Nothing")
             {
@@ -166,7 +167,8 @@ namespace MIMWebClient.Core.Player
             }
 
             foundItem.location = Item.ItemLocation.Inventory;
-            var slot = foundItem.slot;
+            var value = string.Empty;
+            var slot = Enum.GetName(typeof(Item.EqSlot), foundItem.slot);
 
             var eqLocation = player.Equipment.GetType().GetProperty(slot);
 

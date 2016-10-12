@@ -27,7 +27,7 @@ namespace MIMWebClient.Core.Item
         /// </summary>
         public Item.ItemLocation? location { get; set; }
         public bool equipable { get; set; }
-        public string slot { get; set; }
+        public Item.EqSlot slot { get; set; }
 
         public Action actions { get; set; }
         public Description description { get; set; }

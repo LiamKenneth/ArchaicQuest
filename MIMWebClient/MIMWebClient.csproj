@@ -279,6 +279,7 @@
     <Compile Include="Core\Update\Time.cs" />
     <Compile Include="Core\Update\UpdateWorld.cs" />
     <Compile Include="Core\World\Anker\Anker.cs" />
+    <Compile Include="Core\World\Areas.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

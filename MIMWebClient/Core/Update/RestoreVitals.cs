@@ -9,6 +9,7 @@ namespace MIMWebClient.Core.Update
 {
 
     using MIMWebClient.Core.PlayerSetup;
+    using MIMWebClient.Core.World.Anker;
 
     public static class RestoreVitals
     {
@@ -52,6 +53,38 @@ namespace MIMWebClient.Core.Update
                     UpdateMana(mob, context);
                     UpdateEndurance(mob, context);
                 }
+
+
+                if (room.corpses.Count > 0)
+                {
+                    foreach (var corpse in room.corpses)
+                    {
+                        //Find room where mob originally belongs
+                        foreach (var originalRoom in World.Areas.ListOfRooms())
+                        {
+                            //Find room where mob originally belongs
+                            
+                           foreach (var originalMob in originalRoom.mobs)
+                            {
+                                if (originalMob.Name == corpse.Name)
+                                {
+
+                                    //mob bac;
+                                    var roomToReset = rooms.Find(x => x.areaId == originalRoom.areaId && x.area == originalRoom.area && x.region == originalRoom.region);
+
+                                    roomToReset.mobs.Add(originalMob);
+                                    room.corpses.Remove(corpse);
+
+                                }
+                            }
+
+                        }
+
+                    }
+                }
+
+                //now for items
+
 
                // add missing items
                // add mob if found in corpse list
