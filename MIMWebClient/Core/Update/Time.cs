@@ -136,7 +136,7 @@ namespace MIMWebClient.Core.Update
             }
 
 
-            RestoreVitals.UpdateHp();
+            RestoreVitals.Update();
             //heal players / mobs
 
 
