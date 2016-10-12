@@ -94,5 +94,12 @@ namespace MIMWebClient.Core.Events
             return playerData;
         }
 
+        public static List<Player> ReturnPlayers()
+        {
+           var players = MIMHub._PlayerCache.Values.ToList();
+
+            return players;
+        }
+
     }
 }
