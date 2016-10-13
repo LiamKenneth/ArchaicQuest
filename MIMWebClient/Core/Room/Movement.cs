@@ -108,13 +108,14 @@ namespace MIMWebClient.Core.Room
             {
                 var exit = roomData.exits.Find(x => x.name == direction);
 
-                if (exit.open == false)
-                {
-                    HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("The "+ exit.doorName + " is close");
-                }
 
                 if (exit != null)
                 {
+                    if (exit.open == false)
+                    {
+                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("The " + exit.doorName + " is close");
+                        return;
+                    }
 
                     //remove player from old room
                     PlayerManager.RemovePlayerFromRoom(roomData, player);

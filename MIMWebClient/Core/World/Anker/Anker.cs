@@ -431,6 +431,7 @@ namespace MIMWebClient.Core.World.Anker
 
             var modo = new Player
             {
+                HubGuid = Guid.NewGuid().ToString(),
                 Name = "Modo",
                 Type = Player.PlayerTypes.Mob,
                 Description = "The owner of the Drunken Sailor is a tall and intimidating appearance. This long-bearded man immediatly makes you feel uncomfortable. He does not seem to notice you.",

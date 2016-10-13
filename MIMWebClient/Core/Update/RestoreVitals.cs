@@ -58,7 +58,7 @@ namespace MIMWebClient.Core.Update
                         UpdateEndurance(room.mobs[i], context);
 
                     }
- 
+
                     if (room.corpses.Count > 0)
                     {
 
@@ -72,28 +72,32 @@ namespace MIMWebClient.Core.Update
 
                                     var originalMob = World.Areas.ListOfRooms()[j].mobs[k];
                                     var originalRoom = World.Areas.ListOfRooms()[j];
-                                    var corpse = room.corpses[i];
 
-                                    if (originalMob.Name == corpse.Name)
+                                    if (room.corpses.Count -1 >= 0)
                                     {
+                                        var corpse = room.corpses[i];
 
-                                        //put mob back to start position
-                                        var roomToReset =
-                                            rooms.Find(
-                                                x =>
-                                                    x.areaId == originalRoom.areaId && x.area == originalRoom.area &&
-                                                    x.region == originalRoom.region);
+                                        if (originalMob.Name == corpse.Name)
+                                        {
 
-                                        roomToReset.mobs.Add(originalMob);
-                                        room.corpses.Remove(corpse);
+                                            //put mob back to start position
+                                            var roomToReset =
+                                                rooms.Find(
+                                                    x =>
+                                                        x.areaId == originalRoom.areaId && x.area == originalRoom.area &&
+                                                        x.region == originalRoom.region);
 
+                                            roomToReset.mobs.Add(originalMob);
+                                            room.corpses.Remove(corpse);
+
+                                        }
                                     }
                                 }
                             }
-                         
+
                         }
 
-                        
+
 
                     }
                 }
@@ -128,18 +132,18 @@ namespace MIMWebClient.Core.Update
 
                     if (player.Status == Player.PlayerStatus.Fighting)
                     {
-                        maxGain = maxGain/2;
+                        maxGain = maxGain / 2;
                     }
 
                     if (player.Status == Player.PlayerStatus.Sleeping)
                     {
-                        maxGain = maxGain*2;
+                        maxGain = maxGain * 2;
                     }
 
 
                     if (player.Status == Player.PlayerStatus.Resting)
                     {
-                        maxGain = (maxGain*2)/2;
+                        maxGain = (maxGain * 2) / 2;
                     }
 
 
@@ -260,7 +264,7 @@ namespace MIMWebClient.Core.Update
                     }
                 }
             }
-             catch (Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
 

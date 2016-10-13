@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -78,15 +79,12 @@ namespace MIMWebClient.Core.Events
         public static void StartFight(Player attacker, Player defender, Room room)
         {
 
-            if (attacker.Target == null)
-            {
+           
                 attacker.Target = defender;
-            }
-
-            if (defender.Target == null)
-            {
+            
+          
                 defender.Target = attacker;
-            }
+         
 
 
             double offense = Offense(attacker);
@@ -142,49 +140,61 @@ namespace MIMWebClient.Core.Events
         private static async Task HitTarget(Player attacker, Player defender, Room room, int delay)
         {
 
-
-            while (attacker.HitPoints > 0 && defender.HitPoints > 0)
+            try
             {
-                bool canAttack = CanAttack(attacker, defender);
 
-                if (canAttack)
+
+                while (attacker.HitPoints > 0 && defender.HitPoints > 0)
                 {
-                    bool alive = IsAlive(attacker, defender);
+                    bool canAttack = CanAttack(attacker, defender);
 
-                 
-
-                    if (alive && attacker.Status != Player.PlayerStatus.Busy)
+                    if (canAttack)
                     {
-                        
-                        await Task.Delay(delay);
-
-                        double offense = Offense(attacker);
-                        double evasion = Evasion(defender);
-
-                        double toHit = (offense / evasion) * 100;
-                        int chance = D100();
+                        bool alive = IsAlive(attacker, defender);
 
 
-                        ShowAttack(attacker, defender, room, toHit, chance);
 
-
-                        if (attacker.Type == Player.PlayerTypes.Player)
+                        if (alive && attacker.Status != Player.PlayerStatus.Busy)
                         {
-                            Score.UpdateUiPrompt(attacker);
+
+                            await Task.Delay(delay);
+
+                            double offense = Offense(attacker);
+                            double evasion = Evasion(defender);
+
+                            double toHit = (offense/evasion)*100;
+                            int chance = D100();
+
+
+                            ShowAttack(attacker, defender, room, toHit, chance);
+
+
+                            if (attacker.Type == Player.PlayerTypes.Player)
+                            {
+                                Score.UpdateUiPrompt(attacker);
+                            }
+                            if (defender.Type == Player.PlayerTypes.Player)
+                            {
+                                Score.UpdateUiPrompt(defender);
+                            }
                         }
-                        if (defender.Type == Player.PlayerTypes.Player)
-                        {
-                            Score.UpdateUiPrompt(defender);
-                        }
+
+
+
                     }
-
-                    
-
                 }
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
 
             }
 
         }
+
+       
 
         public static Player FindTarget(Room room, string defender)
         {
@@ -197,14 +207,30 @@ namespace MIMWebClient.Core.Events
         public static bool CanAttack(Player attacker, Player defender)
         {
 
-            bool canAttack = !(attacker.Status == PlayerSetup.Player.PlayerStatus.Standing || defender.Status == PlayerSetup.Player.PlayerStatus.Standing);
+            bool canAttack = attacker.Target.Name == defender.Name;
 
-            if (attacker.Target.Name != defender.Name)
+            if (attacker.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
             {
                 canAttack = false;
             }
 
-            if (attacker.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
+            if (attacker.Status == PlayerSetup.Player.PlayerStatus.Resting)
+            {
+                canAttack = false;
+            }
+
+            if (attacker.Status == PlayerSetup.Player.PlayerStatus.Incapitated)
+            {
+                canAttack = false;
+            }
+
+            if (attacker.Status == PlayerSetup.Player.PlayerStatus.Dead)
+            {
+                canAttack = false;
+            }
+
+
+            if (attacker.Status == PlayerSetup.Player.PlayerStatus.Ghost)
             {
                 canAttack = false;
             }
@@ -518,6 +544,9 @@ namespace MIMWebClient.Core.Events
                     //Add slain player to recall
                 }
 
+                defender.Target = null;
+                attacker.Target = null;
+
                 attacker.Status = PlayerSetup.Player.PlayerStatus.Standing;
 
                 defender.Status = defender.Type == Player.PlayerTypes.Player ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;
@@ -576,6 +605,8 @@ namespace MIMWebClient.Core.Events
                 }
 
                 defender.Status = PlayerSetup.Player.PlayerStatus.Standing;
+                defender.Target = null;
+                attacker.Target = null;
 
                 attacker.Status = attacker.Type == Player.PlayerTypes.Player ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;
 
