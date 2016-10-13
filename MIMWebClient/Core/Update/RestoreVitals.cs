@@ -58,7 +58,7 @@ namespace MIMWebClient.Core.Update
                         UpdateEndurance(room.mobs[i], context);
 
                     }
-
+                    #region add Mobs back
                     if (room.corpses.Count > 0)
                     {
 
@@ -73,7 +73,7 @@ namespace MIMWebClient.Core.Update
                                     var originalMob = World.Areas.ListOfRooms()[j].mobs[k];
                                     var originalRoom = World.Areas.ListOfRooms()[j];
 
-                                    if (room.corpses.Count -1 >= 0)
+                                    if (room.corpses.Count - 1 >= 0)
                                     {
                                         var corpse = room.corpses[i];
 
@@ -99,6 +99,49 @@ namespace MIMWebClient.Core.Update
 
 
 
+                    }
+                    #endregion
+
+                    for (int j = World.Areas.ListOfRooms().Count - 1; j >= 0; j--)
+                    {
+                        if (World.Areas.ListOfRooms()[j].area == room.area &&
+                            World.Areas.ListOfRooms()[j].areaId == room.areaId &&
+                            World.Areas.ListOfRooms()[j].region == room.region)
+                        {
+
+                            for (int k = World.Areas.ListOfRooms()[j].items.Count - 1; k >= 0; k--)
+                            {
+                                var itemAlreadyThere =
+                                    room.items.Find(x => x.name.Equals(World.Areas.ListOfRooms()[j].items[k].name));
+
+                                if (itemAlreadyThere == null)
+                                {
+                                    room.items.Add(World.Areas.ListOfRooms()[j].items[k]);
+                                }
+
+                                if (itemAlreadyThere?.container == true)
+                                {
+
+
+                                    for (int l = World.Areas.ListOfRooms()[j].items[k].containerItems.Count - 1; l >= 0; l--)
+                                    {
+
+                                        var containerItemAlreadyThere =
+                                            itemAlreadyThere.containerItems.Find(
+                                                x =>
+                                                    x.name.Equals(
+                                                        World.Areas.ListOfRooms()[j].items[k].containerItems[l].name));
+
+                                        if (containerItemAlreadyThere == null)
+                                        {
+                                            itemAlreadyThere.containerItems.Add(
+                                                World.Areas.ListOfRooms()[j].items[k].containerItems[l]);
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 
