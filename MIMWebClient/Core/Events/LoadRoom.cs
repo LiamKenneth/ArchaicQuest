@@ -114,17 +114,9 @@ namespace MIMWebClient.Core.Events
                     mobList += "<p class='roomItems'>" + article + " " + item.Name + " is here.<p>";
                 }
             }
-            var corpseList = string.Empty;
-            if (room.corpses != null)
-            {
-                foreach (var item in room.corpses)
-                {
-                    corpseList += " The corpse of " + item.Name + " is here.";
-                }
 
-            }
 
-            string displayRoom = "<p class='roomTitle'>" + roomTitle + "<p><p class='roomDescription'>" + roomDescription + "</p> <p class='RoomExits'>[ Exits: " + exitList.ToLower() + " ]</p>" + itemList + corpseList + "\r\n" + playerList + "\r\n" + mobList;
+            string displayRoom = "<p class='roomTitle'>" + roomTitle + "<p><p class='roomDescription'>" + roomDescription + "</p> <p class='RoomExits'>[ Exits: " + exitList.ToLower() + " ]</p>" + itemList  + "\r\n" + playerList + "\r\n" + mobList;
 
             return displayRoom;
 

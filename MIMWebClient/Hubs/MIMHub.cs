@@ -171,6 +171,7 @@ namespace MIMWebClient.Hubs
             PlayerData.Race = race;
             PlayerData.SelectedClass = selectedClass;
             PlayerData.Strength = strength;
+            PlayerData.Constitution = constitution;
             PlayerData.Dexterity = dexterity;
             PlayerData.Wisdom = wisdom;
             PlayerData.Intelligence = intelligence;

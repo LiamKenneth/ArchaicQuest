@@ -506,6 +506,7 @@ namespace MIMWebClient.Core.Events
 
                 var oldRoom = room;
                 room.items.Add(defenderCorpse);
+                room.corpses.Add(defender);
 
                 if (defender.Type == Player.PlayerTypes.Mob)
                 {
@@ -542,14 +543,26 @@ namespace MIMWebClient.Core.Events
                 HubContext.SendToClient(attacker.Name + " dies", defender.HubGuid);
 
                 attacker.Target = null;
-                var attackerCorpse = attacker;
 
-                //unequip
-                foreach (var item in attackerCorpse.Inventory)
+                //Turn corpse into room item
+                var attackerCorpse = new Item
                 {
-                    item.location = Item.ItemLocation.Inventory;
+                    name = "The corpse of " + attacker.Name,
+                    container = true,
+                    containerItems = new List<Item>(),
+                    description = new Description { look = "The slain corpse of " + attacker.Name + " is here.", room = "The slain corpse of " + attacker.Name },
+                    isVisibleToRoom = true
+                };
+
+                foreach (var invItem in defender.Inventory)
+                {
+                    invItem.location = Item.ItemLocation.Inventory;
+                    attackerCorpse.containerItems.Add(invItem);
+
                 }
+
                 var oldRoom = room;
+                room.items.Add(attackerCorpse);
                 room.corpses.Add(attacker);
 
                 if (attacker.Type == Player.PlayerTypes.Mob)

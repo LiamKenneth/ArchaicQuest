@@ -44,41 +44,56 @@ namespace MIMWebClient.Core.Update
                 return;
             }
 
-            foreach (var room in rooms)
+            try
             {
 
-                foreach (var mob in room.mobs)
+                foreach (var room in rooms)
                 {
-                    UpdateHp(mob, context);
-                    UpdateMana(mob, context);
-                    UpdateEndurance(mob, context);
-                }
 
-
-                if (room.corpses.Count > 0)
-                {
-                    foreach (var corpse in room.corpses)
+                    for (int i = room.mobs.Count - 1; i >= 0; i--)
                     {
-                        //Find room where mob originally belongs
-                        foreach (var originalRoom in World.Areas.ListOfRooms())
+
+                        UpdateHp(room.mobs[i], context);
+                        UpdateMana(room.mobs[i], context);
+                        UpdateEndurance(room.mobs[i], context);
+
+                    }
+ 
+                    if (room.corpses.Count > 0)
+                    {
+
+                        for (int i = room.corpses.Count - 1; i >= 0; i--)
                         {
-                            //Find room where mob originally belongs
-                            
-                           foreach (var originalMob in originalRoom.mobs)
+                            for (int j = World.Areas.ListOfRooms().Count - 1; j >= 0; j--)
                             {
-                                if (originalMob.Name == corpse.Name)
+
+                                for (int k = World.Areas.ListOfRooms()[j].mobs.Count - 1; k >= 0; k--)
                                 {
 
-                                    //mob bac;
-                                    var roomToReset = rooms.Find(x => x.areaId == originalRoom.areaId && x.area == originalRoom.area && x.region == originalRoom.region);
+                                    var originalMob = World.Areas.ListOfRooms()[j].mobs[k];
+                                    var originalRoom = World.Areas.ListOfRooms()[j];
+                                    var corpse = room.corpses[i];
 
-                                    roomToReset.mobs.Add(originalMob);
-                                    room.corpses.Remove(corpse);
+                                    if (originalMob.Name == corpse.Name)
+                                    {
 
+                                        //put mob back to start position
+                                        var roomToReset =
+                                            rooms.Find(
+                                                x =>
+                                                    x.areaId == originalRoom.areaId && x.area == originalRoom.area &&
+                                                    x.region == originalRoom.region);
+
+                                        roomToReset.mobs.Add(originalMob);
+                                        room.corpses.Remove(corpse);
+
+                                    }
                                 }
                             }
-
+                         
                         }
+
+                        
 
                     }
                 }
@@ -86,8 +101,13 @@ namespace MIMWebClient.Core.Update
                 //now for items
 
 
-               // add missing items
-               // add mob if found in corpse list
+                // add missing items
+                // add mob if found in corpse list
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
 
             }
         }
@@ -96,42 +116,51 @@ namespace MIMWebClient.Core.Update
 
         public static void UpdateHp(PlayerSetup.Player player, IHubContext context)
         {
-            if (player.HitPoints <= player.MaxHitPoints)
+            try
             {
 
-                var die = new Helpers();
-                var maxGain = player.Constitution;
-
-                if (player.Status == Player.PlayerStatus.Fighting)
+                if (player.HitPoints <= player.MaxHitPoints)
                 {
-                    maxGain = maxGain / 2;
+
+                    var die = new Helpers();
+                    var maxGain = player.Constitution;
+
+
+                    if (player.Status == Player.PlayerStatus.Fighting)
+                    {
+                        maxGain = maxGain/2;
+                    }
+
+                    if (player.Status == Player.PlayerStatus.Sleeping)
+                    {
+                        maxGain = maxGain*2;
+                    }
+
+
+                    if (player.Status == Player.PlayerStatus.Resting)
+                    {
+                        maxGain = (maxGain*2)/2;
+                    }
+
+
+                    player.HitPoints += die.dice(1, 1, maxGain);
+
+                    if (player.HitPoints > player.MaxHitPoints)
+                    {
+                        player.HitPoints = player.MaxHitPoints;
+                    }
+
+                    if (player.Type == Player.PlayerTypes.Player)
+                    {
+                        context.Clients.Client(player.HubGuid).updateStat(player.HitPoints, player.MaxHitPoints, "hp");
+                    }
+
                 }
 
-                if (player.Status == Player.PlayerStatus.Sleeping)
-                {
-                    maxGain = maxGain * 2;
-                }
-
-
-                if (player.Status == Player.PlayerStatus.Resting)
-                {
-                    maxGain = (maxGain * 2) / 2;
-                }
-
-
-                player.HitPoints += die.dice(1, 1, maxGain);
-
-                if (player.HitPoints > player.MaxHitPoints)
-                {
-                    player.HitPoints = player.MaxHitPoints;
-                }
-
-                if (player.Type == Player.PlayerTypes.Player)
-                {
-                    context.Clients.Client(player.HubGuid).updateStat(player.HitPoints, player.MaxHitPoints, "hp");
-                }
-
-
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
 
             }
 
@@ -139,82 +168,102 @@ namespace MIMWebClient.Core.Update
 
         public static void UpdateMana(PlayerSetup.Player player, IHubContext context)
         {
-            if (player.ManaPoints <= player.MaxHitPoints)
+
+            try
             {
-
-                var die = new Helpers();
-                var maxGain = player.Intelligence;
-
-                if (player.Status == Player.PlayerStatus.Fighting)
+                if (player.ManaPoints <= player.MaxHitPoints)
                 {
-                    maxGain = maxGain / 2;
+
+                    var die = new Helpers();
+                    var maxGain = player.Intelligence;
+
+                    if (player.Status == Player.PlayerStatus.Fighting)
+                    {
+                        maxGain = maxGain / 2;
+                    }
+
+                    if (player.Status == Player.PlayerStatus.Sleeping)
+                    {
+                        maxGain = maxGain * 2;
+                    }
+
+
+                    if (player.Status == Player.PlayerStatus.Resting)
+                    {
+                        maxGain = (maxGain * 2) / 2;
+                    }
+
+                    player.ManaPoints += die.dice(1, 1, maxGain);
+
+                    if (player.ManaPoints > player.MaxHitPoints)
+                    {
+                        player.ManaPoints = player.MaxHitPoints;
+                    }
+
+
+                    if (player.Type == Player.PlayerTypes.Player)
+                    {
+                        context.Clients.Client(player.HubGuid)
+                            .updateStat(player.ManaPoints, player.MaxManaPoints, "mana");
+
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
 
-                if (player.Status == Player.PlayerStatus.Sleeping)
-                {
-                    maxGain = maxGain * 2;
-                }
-
-
-                if (player.Status == Player.PlayerStatus.Resting)
-                {
-                    maxGain = (maxGain * 2) / 2;
-                }
-
-                player.ManaPoints += die.dice(1, 1, maxGain);
-
-                if (player.ManaPoints > player.MaxHitPoints)
-                {
-                    player.ManaPoints = player.MaxHitPoints;
-                }
-
-
-                if (player.Type == Player.PlayerTypes.Player)
-                {
-                    context.Clients.Client(player.HubGuid).updateStat(player.ManaPoints, player.MaxManaPoints, "mana");
-
-                }
             }
 
         }
 
         public static void UpdateEndurance(PlayerSetup.Player player, IHubContext context)
         {
-            if (player.MovePoints <= player.MaxMovePoints)
+
+            try
             {
-
-                var die = new Helpers();
-                var maxGain = player.Dexterity;
-
-                if (player.Status == Player.PlayerStatus.Fighting)
-                {
-                    maxGain = maxGain / 2;
-                }
-
-                if (player.Status == Player.PlayerStatus.Sleeping)
-                {
-                    maxGain = maxGain * 2;
-                }
-
-
-                if (player.Status == Player.PlayerStatus.Resting)
-                {
-                    maxGain = (maxGain * 2) / 2;
-                }
-
-                player.MovePoints += die.dice(1, 1, maxGain);
-
-                if (player.MovePoints > player.MaxMovePoints)
-                {
-                    player.MovePoints = player.MaxMovePoints;
-                }
-
-
-                if (player.Type == Player.PlayerTypes.Player)
+                if (player.MovePoints <= player.MaxMovePoints)
                 {
 
-                    context.Clients.Client(player.HubGuid).updateStat(player.MovePoints, player.MaxMovePoints, "endurance");
+                    var die = new Helpers();
+                    var maxGain = player.Dexterity;
+
+                    if (player.Status == Player.PlayerStatus.Fighting)
+                    {
+                        maxGain = maxGain / 2;
+                    }
+
+                    if (player.Status == Player.PlayerStatus.Sleeping)
+                    {
+                        maxGain = maxGain * 2;
+                    }
+
+
+                    if (player.Status == Player.PlayerStatus.Resting)
+                    {
+                        maxGain = (maxGain * 2) / 2;
+                    }
+
+                    player.MovePoints += die.dice(1, 1, maxGain);
+
+                    if (player.MovePoints > player.MaxMovePoints)
+                    {
+                        player.MovePoints = player.MaxMovePoints;
+                    }
+
+
+                    if (player.Type == Player.PlayerTypes.Player)
+                    {
+
+                        context.Clients.Client(player.HubGuid)
+                            .updateStat(player.MovePoints, player.MaxMovePoints, "endurance");
+                    }
                 }
+            }
+             catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+
             }
 
         }

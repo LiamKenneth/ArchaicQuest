@@ -36,7 +36,7 @@ namespace MIMWebClient.Core.Update
             await Task.Delay(30000);
     
             Time.UpdateTIme();
-
+            
             Init();
         }
 

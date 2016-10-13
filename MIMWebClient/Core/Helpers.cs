@@ -22,12 +22,33 @@ namespace MIMWebClient.Core
         {
             int sum = 0;
 
-            for (int i = 0; i < number; i++)
+            try
             {
-                sum += diceRoll.Next(minSize, maxSize);
-            }
+                //Hack - something in update is passing in 0 for max size
+                if (minSize == maxSize)
+                {
+                    maxSize += 1;
+                }
 
+                if (maxSize == 0)
+                {
+                    maxSize = minSize + 1;
+                }
+                //Hack
+
+                for (int i = 0; i < number; i++)
+                {
+                    sum += diceRoll.Next(minSize, maxSize);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+
+            }
             return sum;
+
         }
 
         
