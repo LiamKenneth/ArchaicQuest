@@ -324,7 +324,7 @@ namespace MIMWebClient.Core.Events
             var item = returnedItem.Value;
 
 
-            if (all[0].Equals("all", StringComparison.InvariantCultureIgnoreCase) && container == null)
+            if (all[0].Equals("all", StringComparison.InvariantCultureIgnoreCase) && all.Length == 1)
             {
                 var roomItems = room.items;
                 var roomItemsCount = roomItems.Count;
