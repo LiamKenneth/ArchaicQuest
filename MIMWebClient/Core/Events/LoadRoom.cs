@@ -66,13 +66,15 @@ namespace MIMWebClient.Core.Events
             var itemList = string.Empty;
             foreach (var item in room.items)
             {
-
-                if (item.isVisibleToRoom)
+                if (item != null)
                 {
-                    var result = AvsAnLib.AvsAn.Query(item.name);
-                    string article = result.Article;
+                    if (item.isVisibleToRoom)
+                    {
+                        var result = AvsAnLib.AvsAn.Query(item.name);
+                        string article = result.Article;
 
-                    itemList += "<p class='roomItems'>" + article + " " + item.name + " is on the floor here.<p>";
+                        itemList += "<p class='roomItems'>" + article + " " + item.name + " is on the floor here.<p>";
+                    }
                 }
             }
 

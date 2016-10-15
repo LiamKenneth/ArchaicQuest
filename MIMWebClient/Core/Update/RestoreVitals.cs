@@ -7,8 +7,9 @@ using MIMWebClient.Core.Events;
 
 namespace MIMWebClient.Core.Update
 {
-
+    using MIMWebClient.Core.Item;
     using MIMWebClient.Core.PlayerSetup;
+    using MIMWebClient.Core.Room;
     using MIMWebClient.Core.World.Anker;
 
     public static class RestoreVitals
@@ -46,9 +47,11 @@ namespace MIMWebClient.Core.Update
 
             try
             {
-
+                var origRoom = new Room();
                 foreach (var room in rooms)
                 {
+
+                    origRoom = room;
 
                     for (int i = room.mobs.Count - 1; i >= 0; i--)
                     {
@@ -89,7 +92,11 @@ namespace MIMWebClient.Core.Update
 
                                             roomToReset.mobs.Add(originalMob);
                                             room.corpses.Remove(corpse);
+                                         var getCorpse =   room.items.Find(x => x.name.Contains("corpse"));
+                                            room.items.Remove(getCorpse);
+                                            //save cache?
 
+                                            Cache.updateRoom(room, origRoom);
                                         }
                                     }
                                 }

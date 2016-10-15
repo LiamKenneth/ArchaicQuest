@@ -106,8 +106,8 @@ namespace MIMWebClient.Core.Events
 
         public static Player FindValidTarget(Room room, string defender, Player attacker)
         {
-            Player defendingPlayer = room.players.Find(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
-                            ?? room.mobs.Find(x => x.Name.ToLower().Contains(defender.ToLower()));
+            Player defendingPlayer = room.players.FirstOrDefault(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
+                            ?? room.mobs.FirstOrDefault(x => x.Name.ToLower().Contains(defender.ToLower()));
 
             if (defendingPlayer == null)
             {
@@ -198,8 +198,8 @@ namespace MIMWebClient.Core.Events
 
         public static Player FindTarget(Room room, string defender)
         {
-            Player target = room.players.Find(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
-                            ?? room.mobs.Find(x => x.Name.ToLower().Contains(defender.ToLower()));
+            Player target = room.players.FirstOrDefault(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
+                            ?? room.mobs.FirstOrDefault(x => x.Name.ToLower().Contains(defender.ToLower()));
 
             return target;
         }
@@ -276,7 +276,7 @@ namespace MIMWebClient.Core.Events
                 return null;
             }
 
-            var weapon = attacker.Inventory.Find(x => x.name.Equals(wielded) && x.location.Equals(Item.ItemLocation.Worn));
+            var weapon = attacker.Inventory.FirstOrDefault(x => x.name.Equals(wielded) && x.location.Equals(Item.ItemLocation.Worn));
 
             return weapon;
         }
