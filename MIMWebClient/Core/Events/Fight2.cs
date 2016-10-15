@@ -557,72 +557,74 @@ namespace MIMWebClient.Core.Events
 
                 int xpGain = xp.MobXP(attacker, defender);
                 attacker.Experience += xpGain;
-                HubContext.SendToClient("You gain " + xpGain + "XP", attacker.HubGuid);
+                HubContext.SendToClient(xpGain + "XP", attacker.HubGuid);
                 //calc xp
                 //create corpse
+
+            return;
             }
 
-            if (attacker.HitPoints <= 0)
-            {
-                HubContext.SendToAllExcept(attacker.Name + " dies ", room.fighting, room.players);
+            //if (attacker.HitPoints <= 0)
+            //{
+            //    HubContext.SendToAllExcept("oh now i see " + attacker.Name + " dies ", room.fighting, room.players);
 
 
-                HubContext.SendToClient("You die", attacker.HubGuid);
+            //    HubContext.SendToClient("You die", attacker.HubGuid);
 
-                HubContext.SendToClient(attacker.Name + " dies", defender.HubGuid);
+            //    HubContext.SendToClient("oh now i see " + attacker.Name + " dies", defender.HubGuid);
 
-                attacker.Target = null;
+            //    attacker.Target = null;
 
-                //Turn corpse into room item
-                var attackerCorpse = new Item
-                {
-                    name = "The corpse of " + attacker.Name,
-                    container = true,
-                    containerItems = new List<Item>(),
-                    description = new Description { look = "The slain corpse of " + attacker.Name + " is here.", room = "The slain corpse of " + attacker.Name },
-                    isVisibleToRoom = true
-                };
+            //    //Turn corpse into room item
+            //    var attackerCorpse = new Item
+            //    {
+            //        name = "The corpse of " + attacker.Name,
+            //        container = true,
+            //        containerItems = new List<Item>(),
+            //        description = new Description { look = "The slain corpse of " + attacker.Name + " is here.", room = "The slain corpse of " + attacker.Name },
+            //        isVisibleToRoom = true
+            //    };
 
-                foreach (var invItem in defender.Inventory)
-                {
-                    invItem.location = Item.ItemLocation.Inventory;
-                    attackerCorpse.containerItems.Add(invItem);
+            //    foreach (var invItem in defender.Inventory)
+            //    {
+            //        invItem.location = Item.ItemLocation.Inventory;
+            //        attackerCorpse.containerItems.Add(invItem);
 
-                }
+            //    }
 
-                var oldRoom = room;
-                room.items.Add(attackerCorpse);
-                room.corpses.Add(attacker);
+            //    var oldRoom = room;
+            //    room.items.Add(attackerCorpse);
+            //    room.corpses.Add(attacker);
 
-                if (attacker.Type == Player.PlayerTypes.Mob)
-                {
-                    room.mobs.Remove(attacker);
-                }
-                else
-                {
-                    //room.players.Remove(attacker);
-                    //Add slain player to recall
-                }
+            //    if (attacker.Type == Player.PlayerTypes.Mob)
+            //    {
+            //        room.mobs.Remove(attacker);
+            //    }
+            //    else
+            //    {
+            //        //room.players.Remove(attacker);
+            //        //Add slain player to recall
+            //    }
 
-                defender.Status = PlayerSetup.Player.PlayerStatus.Standing;
-                defender.Target = null;
-                attacker.Target = null;
+            //    defender.Status = PlayerSetup.Player.PlayerStatus.Standing;
+            //    defender.Target = null;
+            //    attacker.Target = null;
 
-                attacker.Status = attacker.Type == Player.PlayerTypes.Player ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;
+            //    attacker.Status = attacker.Type == Player.PlayerTypes.Player ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;
 
-                Cache.updateRoom(room, oldRoom);
+            //    Cache.updateRoom(room, oldRoom);
 
-                var xp = new Experience();
+            //    var xp = new Experience();
 
-                int xpGain = xp.MobXP(defender, attacker);
-                defender.Experience += xpGain;
-                HubContext.SendToClient("You gain " + xpGain + "XP", defender.HubGuid);
+            //    int xpGain = xp.MobXP(defender, attacker);
+            //    defender.Experience += xpGain;
+            //    HubContext.SendToClient("You gain " + xpGain + "XP", defender.HubGuid);
 
-
+                
                 //calc xp
 
                 //create corpse
-            }
+           // }
         }
 
         public static bool IsAlive(Player attacker, Player defender)
