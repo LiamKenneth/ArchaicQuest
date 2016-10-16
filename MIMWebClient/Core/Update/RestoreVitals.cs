@@ -55,7 +55,7 @@ namespace MIMWebClient.Core.Update
 
                     for (int i = room.mobs.Count - 1; i >= 0; i--)
                     {
-
+                        //update mob hp/mana/moves
                         UpdateHp(room.mobs[i], context);
                         UpdateMana(room.mobs[i], context);
                         UpdateEndurance(room.mobs[i], context);
@@ -109,6 +109,8 @@ namespace MIMWebClient.Core.Update
                     }
                     #endregion
 
+                    #region add Items back
+
                     for (int j = World.Areas.ListOfRooms().Count - 1; j >= 0; j--)
                     {
                         if (World.Areas.ListOfRooms()[j].area == room.area &&
@@ -151,12 +153,8 @@ namespace MIMWebClient.Core.Update
                         }
                     }
                 }
+#endregion
 
-                //now for items
-
-
-                // add missing items
-                // add mob if found in corpse list
 
             }
             catch (Exception ex)
@@ -182,7 +180,7 @@ namespace MIMWebClient.Core.Update
 
                     if (player.Status == Player.PlayerStatus.Fighting)
                     {
-                        maxGain = maxGain / 2;
+                        maxGain = maxGain / 4;
                     }
 
                     if (player.Status == Player.PlayerStatus.Sleeping)
@@ -233,7 +231,7 @@ namespace MIMWebClient.Core.Update
 
                     if (player.Status == Player.PlayerStatus.Fighting)
                     {
-                        maxGain = maxGain / 2;
+                        maxGain = maxGain / 4;
                     }
 
                     if (player.Status == Player.PlayerStatus.Sleeping)
@@ -284,7 +282,7 @@ namespace MIMWebClient.Core.Update
 
                     if (player.Status == Player.PlayerStatus.Fighting)
                     {
-                        maxGain = maxGain / 2;
+                        maxGain = maxGain / 4;
                     }
 
                     if (player.Status == Player.PlayerStatus.Sleeping)
