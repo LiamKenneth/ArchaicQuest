@@ -245,7 +245,8 @@ namespace MIMWebClient.Core.World.Anker
             //Create Mobs
             var cat = new Player
                           {
-                              Name = "Black and White cat", Type = Player.PlayerTypes.Mob, Description = "This black cat's fur looks in pristine condition despite being a stray.",
+                NPCId = 0,
+                Name = "Black and White cat", Type = Player.PlayerTypes.Mob, Description = "This black cat's fur looks in pristine condition despite being a stray.",
                               Strength = 12, Dexterity = 12, Constitution =12, Intelligence = 1, Wisdom = 1, Charisma = 1, MaxHitPoints = 50, HitPoints = 50, Level = 2, Status = Player.PlayerStatus.Standing, 
               Skills = new List<Skill>(),
               Inventory = new List<Item.Item>()
@@ -255,6 +256,7 @@ namespace MIMWebClient.Core.World.Anker
 
             var cat2 = new Player
             {
+                NPCId = 1,
                 Name = "Black and White cat",
                 Type = Player.PlayerTypes.Mob,
                 Description = "This black cat's fur looks in pristine condition despite being a stray.",
@@ -294,12 +296,23 @@ namespace MIMWebClient.Core.World.Anker
 
             cat.Inventory.Add(dagger);
 
-            /* how to add skills but think this needs rethinking */         
+            /* how to add skills but think this needs rethinking */
             //var h2h = Skill.Skills().Find(x => x.Name.Equals(Skill.HandToHand));
-           
+
             //h2h.Proficiency = 1;
 
             //cat.Skills.Add(h2h);          
+
+            var recall = new Recall
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+
+            cat.Recall = recall;
+            cat2.Recall = recall;
 
             room.mobs.Add(cat);
             room.mobs.Add(cat);
@@ -452,7 +465,7 @@ namespace MIMWebClient.Core.World.Anker
 
             var modo = new Player
             {
-                HubGuid = Guid.NewGuid().ToString(),
+                NPCId = 0,
                 Name = "Modo",
                 Type = Player.PlayerTypes.Mob,
                 Description = "The owner of the Drunken Sailor is a tall and intimidating appearance. This long-bearded man immediatly makes you feel uncomfortable. He does not seem to notice you.",
@@ -472,6 +485,7 @@ namespace MIMWebClient.Core.World.Anker
 
             var dyten = new Player
             {
+                NPCId = 1,
                 Name = "Dyten",
                 Type = Player.PlayerTypes.Mob,
                 Description = "This weathered old man probably never leaves this place. His cloudy eyes seem to seek something at the bottom of his glass.",
@@ -489,15 +503,22 @@ namespace MIMWebClient.Core.World.Anker
                 Inventory = new List<Item.Item>()
             };
 
+            var recall = new Recall
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+            modo.Recall = recall;
+            dyten.Recall = recall;
+
+
 
             room.mobs.Add(modo);
             room.mobs.Add(dyten);
             #region exits
-
-
-
-
-
+ 
 
                 // Create Exits
                 var west = new Exit

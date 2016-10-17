@@ -262,6 +262,7 @@
     <Compile Include="Core\Player\Prompt.cs" />
     <Compile Include="Core\Player\Races\Elf.cs" />
     <Compile Include="Core\Player\Races\PlayerRace.cs" />
+    <Compile Include="Core\Player\Recall.cs" />
     <Compile Include="Core\Player\Skill.cs" />
     <Compile Include="Core\Player\Skills\Punch.cs" />
     <Compile Include="Core\Player\Skills\ShortBlades.cs" />

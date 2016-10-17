@@ -62,51 +62,38 @@ namespace MIMWebClient.Core.Update
 
                     }
                     #region add Mobs back
-                    if (room.corpses.Count > 0)
-                    {
 
-                        for (int i = room.corpses.Count - 1; i >= 0; i--)
+                 
+                        if (room.corpses.Count > 0 && room.players.Count == 0)
                         {
-                            for (int j = World.Areas.ListOfRooms().Count - 1; j >= 0; j--)
+                            // decay corpse
+
+                            foreach (var corpse in room.corpses.ToList())
                             {
 
-                                for (int k = World.Areas.ListOfRooms()[j].mobs.Count - 1; k >= 0; k--)
-                                {
+                                var mobRoomOrigin =
+                                    rooms.Find(
+                                        x =>
+                                            x.areaId == corpse.Recall.AreaId && x.area == corpse.Recall.Area &&
+                                            x.region == corpse.Recall.Region);
+                                var originalArea = World.Areas.ListOfRooms().Find(x =>
+                                    x.area == mobRoomOrigin.area && x.areaId == mobRoomOrigin.areaId &&
+                                    x.region == mobRoomOrigin.region);
 
-                                    var originalMob = World.Areas.ListOfRooms()[j].mobs[k];
-                                    var originalRoom = World.Areas.ListOfRooms()[j];
+                                var originalMob = originalArea.mobs.Find(x => x.NPCId == corpse.NPCId);
 
-                                    if (room.corpses.Count - 1 >= 0)
-                                    {
-                                        var corpse = room.corpses[i];
 
-                                        if (originalMob.Name == corpse.Name)
-                                        {
 
-                                            //put mob back to start position
-                                            var roomToReset =
-                                                rooms.Find(
-                                                    x =>
-                                                        x.areaId == originalRoom.areaId && x.area == originalRoom.area &&
-                                                        x.region == originalRoom.region);
+                                room.items.Remove(room.items.Find(x => x.name.Contains(originalMob.Name)));
+                                room.corpses.Remove(room.corpses.Find(x => x.Name.Equals(originalMob.Name)));
 
-                                            roomToReset.mobs.Add(originalMob);
-                                            room.corpses.Remove(corpse);
-                                         var getCorpse =   room.items.Find(x => x.name.Contains("corpse"));
-                                            room.items.Remove(getCorpse);
-                                            //save cache?
+                                room.mobs.Add(originalMob);
 
-                                            Cache.updateRoom(room, origRoom);
-                                        }
-                                    }
-                                }
                             }
 
                         }
+                    
 
-
-
-                    }
                     #endregion
 
                     #region add Items back
@@ -153,7 +140,7 @@ namespace MIMWebClient.Core.Update
                         }
                     }
                 }
-#endregion
+                #endregion
 
 
             }

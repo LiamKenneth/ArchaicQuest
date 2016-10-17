@@ -201,13 +201,16 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("ari")]
         public int AreaId;
 
+        [BsonElement("rec")]
+        public Recall Recall;
+
         //NPC Properties
         [BsonElement("ne")]
         public List<string> Emotes;
 
         //NPC Properties
         [BsonElement("nid")]
-        public Guid NPCId;
+        public int NPCId;
 
         //NPC Properties
         [BsonElement("nr")]
@@ -277,8 +280,7 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Status = PlayerStatus.Standing; // enum property? 1 standing
             this.Target = null;
             this.Inventory = this.Inventory ?? (this.Inventory = new List<Item>());
-
-
+       
 
             var dagger = new Core.Item.Item
             {
@@ -291,7 +293,8 @@ namespace MIMWebClient.Core.PlayerSetup
                 equipable = true,
                 attackType = Core.Item.Item.AttackType.Pierce,
                 slot = Item.EqSlot.Wield,
-                location = Item.ItemLocation.Inventory
+                location = Item.ItemLocation.Inventory,
+                isVisibleToRoom = true
                 
             };
 
@@ -353,16 +356,17 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Equipment.Legs = Equipment.Legs;
             this.Equipment.Feet = Equipment.Feet;
 
+           
 
-            //attributes
+            var recall = new Recall
+            {
+                Area = "Anker",
+                AreaId = 0,
+                Region = "Anker"
+            };
 
-            //this.Strength = strength;
-            //this.Dexterity = dexterity;
-            //this.Constitution = constitution;
-            //this.Wisdom = wisdom;
-            //this.Intelligence = intelligence;
-            //this.Charisma = charisma;
 
+            this.Recall = recall;
 
 
         }
