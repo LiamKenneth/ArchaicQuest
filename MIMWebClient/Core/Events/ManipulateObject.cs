@@ -239,6 +239,7 @@ namespace MIMWebClient.Core.Events
 
                             if (containerItemsCount == 0)
                             {
+                                //TODO: Get all should not come here
                                 BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "The " + foundContainer.name + " is empty", player.Name + " looks in " + foundContainer.name + " but finds nothing");
 
                                 return new KeyValuePair<Item, Item>(foundContainer, foundItem);
@@ -331,14 +332,24 @@ namespace MIMWebClient.Core.Events
 
                 for (int i = roomItemsCount - 1; i >= 0; i--)
                 {
+                    if (!roomItems[i].stuck)
+                    {
+                        //Get all Items from the room
+                        roomItems[i].location = Item.ItemLocation.Inventory;
+                        player.Inventory.Add(roomItems[i]);
 
-                    //Get all Items from the room
-                    roomItems[i].location = Item.ItemLocation.Inventory;
-                    player.Inventory.Add(roomItems[i]);
-                 
-                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You pick up a " + roomItems[i].name, player.Name + " picks up a " + roomItems[i].name);
-                    room.items.Remove(roomItems[i]);
-
+                        BroadcastPlayerAction.BroadcastPlayerActions(
+                            player.HubGuid,
+                            player.Name,
+                            room.players,
+                            "You pick up a " + roomItems[i].name,
+                            player.Name + " picks up a " + roomItems[i].name);
+                        room.items.Remove(roomItems[i]);
+                    }
+                    else
+                    {
+                        HubContext.SendToClient("You can't take that", player.HubGuid);
+                    }
                 }
 
 
@@ -376,12 +387,24 @@ namespace MIMWebClient.Core.Events
                 if (container == null)
                 {
 
-                    room.items.Remove(item);
-                    item.location = Item.ItemLocation.Inventory;
-                    player.Inventory.Add(item);
+                    if (!item.stuck)
+                    {
+                        room.items.Remove(item);
+                        item.location = Item.ItemLocation.Inventory;
+                        player.Inventory.Add(item);
 
 
-                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You pick up a " + item.name, player.Name + " picks up a " + item.name);
+                        BroadcastPlayerAction.BroadcastPlayerActions(
+                            player.HubGuid,
+                            player.Name,
+                            room.players,
+                            "You pick up a " + item.name,
+                            player.Name + " picks up a " + item.name);
+                    }
+                    else
+                    {
+                        HubContext.SendToClient("You can't take that", player.HubGuid);
+                    }
 
                 }
                 else
@@ -445,7 +468,8 @@ namespace MIMWebClient.Core.Events
                     if (container == null)
                     {
                         playerInv[i].location = Item.ItemLocation.Room;
-                        room.items.Add(playerInv[i]);
+                        playerInv[i].isHiddenInRoom = false;
+                       room.items.Add(playerInv[i]);
                         
 
                         BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You drop a " + playerInv[i].name, player.Name + " drops a " + playerInv[i].name);
@@ -508,6 +532,7 @@ namespace MIMWebClient.Core.Events
                         HubContext.SendToClient("You have to open the " + container.name + " before you can put somthing inside", player.HubGuid);
                         return;
                     }
+
 
                     container.containerItems.Add(item);
 

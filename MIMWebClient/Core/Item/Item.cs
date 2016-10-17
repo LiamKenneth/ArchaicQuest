@@ -175,7 +175,7 @@ namespace MIMWebClient.Core.Item
         public EqSlot eqSlot { get; set; }
         public WeaponType weaponType { get; set; }
         public int weaponSpeed { get; set; }
-        public bool isVisibleToRoom { get; set; }
+        public bool isHiddenInRoom { get; set; }
         public int count { get; set; }
     }
 }

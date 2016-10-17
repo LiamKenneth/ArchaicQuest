@@ -126,13 +126,13 @@ namespace MIMWebClient.Core.World.Anker
                 canLock = true,
                 containerSize = 10,
                 container = true,
-                isVisibleToRoom = true,
                 location = Item.Item.ItemLocation.Room,
                 description = new Item.Description { look = "Small Chest by the well" },
                 open = false,
                 canOpen = true,
                 locked = true,
-                keyId = Guid.NewGuid().ToString()
+                keyId = Guid.NewGuid().ToString(),
+                stuck = true
             };
 
             woodenChestObj.keyValue = woodenChestObj.keyId;
@@ -143,7 +143,6 @@ namespace MIMWebClient.Core.World.Anker
             {
 
                 name = "Odd looking key",
-                isVisibleToRoom = true,
                 location = Item.Item.ItemLocation.Room,
                 description = new Item.Description { look = "Odd looking Key" },
                 keyValue = woodenChestObj.keyId
@@ -162,7 +161,7 @@ namespace MIMWebClient.Core.World.Anker
             bucketObj.waterContainer = true;
             bucketObj.waterContainerSize = 15;
             bucketObj.containerItems = new List<Item.Item>();
-            bucketObj.isVisibleToRoom = false;
+            bucketObj.isHiddenInRoom = true;
             bucketObj.name = "bucket";
 
             bucketGold.count = 5;

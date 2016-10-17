@@ -68,7 +68,7 @@ namespace MIMWebClient.Core.Events
             {
                 if (item != null)
                 {
-                    if (item.isVisibleToRoom)
+                    if (!item.isHiddenInRoom)
                     {
                         var result = AvsAnLib.AvsAn.Query(item.name);
                         string article = result.Article;

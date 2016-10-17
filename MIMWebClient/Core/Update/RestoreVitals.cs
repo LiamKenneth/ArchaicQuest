@@ -47,11 +47,11 @@ namespace MIMWebClient.Core.Update
 
             try
             {
-                var origRoom = new Room();
+                
                 foreach (var room in rooms)
                 {
 
-                    origRoom = room;
+                 
 
                     for (int i = room.mobs.Count - 1; i >= 0; i--)
                     {

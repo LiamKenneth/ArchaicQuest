@@ -293,8 +293,7 @@ namespace MIMWebClient.Core.PlayerSetup
                 equipable = true,
                 attackType = Core.Item.Item.AttackType.Pierce,
                 slot = Item.EqSlot.Wield,
-                location = Item.ItemLocation.Inventory,
-                isVisibleToRoom = true
+                location = Item.ItemLocation.Inventory
                 
             };
 

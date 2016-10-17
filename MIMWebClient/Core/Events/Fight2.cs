@@ -519,8 +519,7 @@ namespace MIMWebClient.Core.Events
                     name = "The corpse of " + defender.Name,
                     container = true,
                     containerItems = new List<Item>(),
-                    description = new Description { look = "The slain corpse of " + defender.Name + " is here.", room = "The slain corpse of " + defender.Name },
-                    isVisibleToRoom = true
+                    description = new Description { look = "The slain corpse of " + defender.Name + " is here.", room = "The slain corpse of " + defender.Name }
                 };
 
                 foreach (var invItem in defender.Inventory)
