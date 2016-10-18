@@ -331,7 +331,6 @@
     <Content Include="motd" />
     <Content Include="app.config" />
     <Content Include="LICENSE.md" />
-    <Content Include="Database\room.json" />
     <Content Include="WorldBuilding\Village\Ankar.txt" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

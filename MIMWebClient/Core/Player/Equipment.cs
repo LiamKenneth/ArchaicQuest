@@ -87,6 +87,7 @@ namespace MIMWebClient.Core.Player
                 .Append("<li>Right Ring: ".PadRight(4)).Append(eq.RightRing).Append("</li>")
                 .Append("<li>Legs: ".PadRight(8)).Append(eq.Legs).Append("</li>")
                 .Append("<li>Feet: ".PadRight(8)).Append(eq.Feet).Append("</li>")
+                .Append("<li>Wield: ".PadRight(8)).Append(eq.Wield).Append("</li>")
                 .Append("</ul>");
 
             HubContext.SendToClient(displayEquipment.ToString(), player.HubGuid);
@@ -159,7 +160,7 @@ namespace MIMWebClient.Core.Player
         public static void RemoveItem(Player player, string itemToRemove, bool replaceWithOtherEQ = false, bool unwield = false)
         {
             var oldPlayer = player;
-            var foundItem = player.Inventory.Find(i => i.name.ToLower().Contains(itemToRemove.ToLower()) && i.location.Equals("worn"));
+            var foundItem = player.Inventory.Find(i => i.name.ToLower().Contains(itemToRemove.ToLower()) && i.location.Equals(Item.ItemLocation.Worn));
 
             if (foundItem == null)
             {

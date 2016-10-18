@@ -16,7 +16,7 @@ namespace MIMWebClient.Core.Player
         {
             if (inventory != null)
             {
-                int inventoryCount = inventory.Count;
+                int inventoryCount = inventory.Count(i => i.location.Equals(Item.ItemLocation.Inventory));
                 var inventoryItems = new StringBuilder();;
                 inventoryItems.Append("You are carrying:").AppendLine();
                 for (int i = 0; i < inventoryCount; i++)
