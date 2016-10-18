@@ -32,6 +32,11 @@ namespace MIMWebClient.Core.Events
         public static object FindObject(Room room, Player player, string command, string thingToFind, string objectTypeToFind = "")
         {
 
+            if (thingToFind == "all" && objectTypeToFind == "all")
+            {
+              return  new KeyValuePair<Item, Item>(null, null);
+            }
+
             string item = thingToFind;
             var itemContainer = string.Empty;
             //checks for spaces
@@ -277,7 +282,7 @@ namespace MIMWebClient.Core.Events
                                 }
 
 
-                                BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You pick up a " + foundContainer.containerItems[i].name, player.Name + " picks up a " + foundContainer.containerItems[i].name);
+                                BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You pick up a " + foundContainer.containerItems[i].name + " from a " + foundContainer.name, player.Name + " picks up a " + foundContainer.containerItems[i].name + " from a " + foundContainer.name);
 
                                 foundContainer.containerItems.Remove(foundContainer.containerItems[i]);
                             }
@@ -319,6 +324,7 @@ namespace MIMWebClient.Core.Events
             {
                 type = "all";
             }
+
 
             var returnedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, type);
             var container = returnedItem.Key;
@@ -486,16 +492,18 @@ namespace MIMWebClient.Core.Events
 
                         if (container.open == false)
                         {
-                            HubContext.SendToClient("You have to open the " + container.name + " before you can put somthing inside", player.HubGuid);
+                            HubContext.SendToClient("You have to open the " + container.name + " before you can put something inside", player.HubGuid);
                             return;
                         }
 
                         container.containerItems.Add(playerInv[i]);
 
                         BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You drop a " + playerInv[i].name + " into a " + container.name, player.Name + " drops a " + playerInv[i].name + " into a " + container.name);
+
+                        player.Inventory.Remove(playerInv[i]);
                     }
 
-                    player.Inventory.Remove(playerInv[i]);
+                    
                 }
             }
             else
@@ -505,14 +513,14 @@ namespace MIMWebClient.Core.Events
                     return;
                 }
 
-                player.Inventory.Remove(item);
-                item.location = Item.ItemLocation.Room;
+               
 
                 if (container == null)
                 {
 
- 
 
+                    player.Inventory.Remove(item);
+                    item.location = Item.ItemLocation.Room;
                     room.items.Add(item);
 
                     BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You drop  a " + item.name, player.Name + " drops  a " + item.name);
@@ -529,11 +537,12 @@ namespace MIMWebClient.Core.Events
 
                     if (container.open == false)
                     {
-                        HubContext.SendToClient("You have to open the " + container.name + " before you can put somthing inside", player.HubGuid);
+                        HubContext.SendToClient("You have to open the " + container.name + " before you can put something inside", player.HubGuid);
                         return;
                     }
 
-
+                    player.Inventory.Remove(item);
+                    item.location = Item.ItemLocation.Room;
                     container.containerItems.Add(item);
 
                     BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You put a " + item.name + " inside the " + container.name, player.Name + " puts a " + item.name + " inside the " + container.name);
