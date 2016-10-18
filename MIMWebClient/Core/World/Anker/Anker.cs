@@ -291,7 +291,38 @@ namespace MIMWebClient.Core.World.Anker
             };
 
 
- 
+            var dagger2 = new Item.Item
+            {
+                actions = new Item.Action(),
+                name = "Flaming dagger",
+                eqSlot = Item.Item.EqSlot.Wield,
+                weaponType = Item.Item.WeaponType.ShortBlades,
+                stats = new Item.Stats { damMin = 21, damMax = 44, minUsageLevel = 1 },
+                type = Item.Item.ItemType.Weapon,
+                equipable = true,
+                attackType = Item.Item.AttackType.Pierce,
+                slot = Item.Item.EqSlot.Wield,
+                location = Item.Item.ItemLocation.Inventory
+            };
+
+
+            var dagger3 = new Item.Item
+            {
+                actions = new Item.Action(),
+                name = "Gold dagger",
+                eqSlot = Item.Item.EqSlot.Wield,
+                weaponType = Item.Item.WeaponType.ShortBlades,
+                stats = new Item.Stats { damMin = 1, damMax = 100, minUsageLevel = 1 },
+                type = Item.Item.ItemType.Weapon,
+                equipable = true,
+                attackType = Item.Item.AttackType.Pierce,
+                slot = Item.Item.EqSlot.Wield,
+                location = Item.Item.ItemLocation.Inventory
+            };
+
+
+            room.items.Add(dagger2);
+            room.items.Add(dagger3);
 
             cat.Inventory.Add(dagger);
 

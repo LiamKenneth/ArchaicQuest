@@ -100,7 +100,12 @@ namespace MIMWebClient.Core.Player
         public static void WearItem(Player player, string itemToWear, bool wield = false)
         {
             var oldPlayer = player;
-            var foundItem = player.Inventory.Find(i => i.name.ToLower().Contains(itemToWear.ToLower()));
+
+            var findObject = Events.FindNth.Findnth(itemToWear);
+            int nth = findObject.Key;
+            string itemToFind = findObject.Value;
+
+            var foundItem = FindItem.Item(player.Inventory, nth, itemToFind);// player.Inventory.Find(i => i.name.ToLower().Contains(itemToWear.ToLower()));
 
             if (foundItem == null)
             {
@@ -113,6 +118,8 @@ namespace MIMWebClient.Core.Player
                 HubContext.SendToClient("You do not have that item to wear.", player.HubGuid);
                 return;
             }
+
+           
 
             foundItem.location = Item.ItemLocation.Worn;
             var slot = Enum.GetName(typeof(Item.EqSlot), foundItem.slot);
