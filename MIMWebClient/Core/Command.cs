@@ -59,6 +59,7 @@ namespace MIMWebClient.Core
             commandList.Add("say", ()=> Communicate.Say(commandOptions, playerData, room));
             commandList.Add("sayto", () => Communicate.SayTo(commandOptions, room, playerData));
             commandList.Add(">", () => Communicate.SayTo(commandOptions, room, playerData));
+            commandList.Add("emote", () => Emote.EmoteActionToRoom(commandOptions, playerData));
             commandList.Add("quit", () => HubContext.Quit(playerData.HubGuid, room));
             commandList.Add("wear", () => Equipment.WearItem(playerData, commandOptions));
             commandList.Add("remove", () => Equipment.RemoveItem(playerData, commandOptions));

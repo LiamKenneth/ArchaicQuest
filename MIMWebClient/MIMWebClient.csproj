@@ -224,6 +224,7 @@
     <Compile Include="Core\Events\BroadcastPlayerAction.cs" />
     <Compile Include="Core\Events\Cache.cs" />
     <Compile Include="Core\Events\Communicate.cs" />
+    <Compile Include="Core\Events\Emote.cs" />
     <Compile Include="Core\Events\Fight2.cs" />
     <Compile Include="Core\Events\Fight\PlayerStatus.cs" />
     <Compile Include="Core\Events\FindItem.cs" />
