@@ -24,7 +24,7 @@ namespace MIMWebClient.Core.Player.Classes
                 Skills = new List<Skill>(),
                 ReclassOptions = new List<PlayerClass>(),
                 MaxHpGain = 15,
-                MinHpGain = 11,
+                MinHpGain = 10,
                 MaxManaGain = 8,
                 MinManaGain = 4,
                 MaxEnduranceGain = 15,

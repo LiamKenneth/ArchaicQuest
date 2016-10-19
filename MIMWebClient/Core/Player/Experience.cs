@@ -7,13 +7,15 @@ using MIMWebClient.Core.Player.Classes;
 
 namespace MIMWebClient.Core.Player
 {
+    using MIMWebClient.Core.Events;
+
     public class Experience
     {
 
 
         public int VictimDifficulty(PlayerSetup.Player player, PlayerSetup.Player victim)
         {
-            int difficulty = victim.Level * victim.Level * 2  + (victim.Strength + victim.Constitution + victim.Dexterity + victim.Intelligence + victim.Wisdom + victim.Charisma) * 10 + 
+            var difficulty = victim.Level * victim.Level * 2  + (victim.Strength + victim.Constitution + victim.Dexterity + victim.Intelligence + victim.Wisdom + victim.Charisma) * 10 + 
                          (victim.DamRoll + victim.HitRoll) * 2 + (victim.MaxHitPoints + victim.MaxManaPoints + victim.MaxMovePoints) * 2;
 
 
@@ -86,16 +88,23 @@ namespace MIMWebClient.Core.Player
                 player.Experience = carryOverExcessXp;
                 player.ExperienceToNextLevel = GetTNL(player);
 
-                //Heal player after gain?
-                player.HitPoints = player.MaxHitPoints;
-                player.ManaPoints = player.MaxManaPoints;
-                player.MovePoints = player.MaxMovePoints;
+                var selectedClass = PlayerClass.ClassList().FirstOrDefault(x => x.Value.Name.ToLower().StartsWith(player.SelectedClass, StringComparison.CurrentCultureIgnoreCase));
+                var dice = new Helpers();
 
+                var hpGain = dice.dice(1, selectedClass.Value.MinHpGain, selectedClass.Value.MaxHpGain);
+                var manaGain = dice.dice(1, selectedClass.Value.MinHpGain, selectedClass.Value.MaxHpGain);
+                var enduranceGain = dice.dice(1, selectedClass.Value.MinHpGain, selectedClass.Value.MaxHpGain);
                 //tell user they have gained a level
 
-                //tell user how much HP / mana / mvs / practices / trains they have gained
-                //method for calculating stat gain
+                player.MaxHitPoints += hpGain;
+                player.MaxManaPoints += manaGain;
+                player.MaxMovePoints += enduranceGain;
 
+                //tell user how much HP / mana / mvs / practices / trains they have gained
+
+                HubContext.SendToClient("Congratulations, you are now level " + player.Level + ". You have gained. HP: " + hpGain + " Mana: " + manaGain + " End: " + enduranceGain, player.HubGuid);
+
+                Save.SavePlayer(player);             
                 //save player
 
                 //check player hasn't leveled again
