@@ -56,5 +56,39 @@ namespace MIMWebClient.Core.Events
             }
         }
 
+
+        public static void NewbieChannel(string message, Player player)
+        {          
+            var players = Cache.ReturnPlayers().Where(x => x.NewbieChannel.Equals(true));
+
+            foreach (var pc in players)
+            {
+                HubContext.SendToClient("Newbie: " + player.Name + " says " +  message, pc.HubGuid);
+            }
+
+        }
+
+        public static void GossipChannel(string message, Player player)
+        {
+            var players = Cache.ReturnPlayers().Where(x => x.NewbieChannel.Equals(true));
+
+            foreach (var pc in players)
+            {
+                HubContext.SendToClient("Gossip: " + player.Name + " says " + message, pc.HubGuid);
+            }
+
+        }
+
+        public static void OocChannel(string message, Player player)
+        {
+            var players = Cache.ReturnPlayers().Where(x => x.NewbieChannel.Equals(true));
+
+            foreach (var pc in players)
+            {
+                HubContext.SendToClient("OOC: " + player.Name + " says " + message, pc.HubGuid);
+            }
+
+        }
+
     }
 }

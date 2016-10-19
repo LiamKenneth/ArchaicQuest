@@ -53,6 +53,9 @@ namespace MIMWebClient.Core
             commandList.Add("put", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey));
             commandList.Add("save", () =>  Save.UpdatePlayer(playerData));
             commandList.Add("'", () => Communicate.Say(commandOptions, playerData, room));
+            commandList.Add("newbie", () => Communicate.NewbieChannel(commandOptions, playerData));
+            commandList.Add("gossip", () => Communicate.GossipChannel(commandOptions, playerData));
+            commandList.Add("ooc", () => Communicate.OocChannel(commandOptions, playerData));
             commandList.Add("say", ()=> Communicate.Say(commandOptions, playerData, room));
             commandList.Add("sayto", () => Communicate.SayTo(commandOptions, room, playerData));
             commandList.Add(">", () => Communicate.SayTo(commandOptions, room, playerData));

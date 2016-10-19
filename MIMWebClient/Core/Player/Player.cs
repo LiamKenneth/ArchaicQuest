@@ -250,6 +250,15 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("ngu")]
         public bool Guard;
 
+        [BsonElement("nch")]
+        public bool NewbieChannel = true;
+
+        [BsonElement("gch")]
+        public bool GossipChannel = true;
+
+        [BsonElement("och")]
+        public bool OocChannel = true;
+
         public Player()
         {
             //this.HubGuid = id;
