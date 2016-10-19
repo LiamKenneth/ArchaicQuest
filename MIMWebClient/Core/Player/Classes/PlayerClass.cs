@@ -11,8 +11,8 @@ namespace MIMWebClient.Core.Player.Classes
     {
         public string Name { get; set; }
         public bool IsBaseClass { get; set; }
-        public List<PlayerClass> ReclassOptions { get; set; } 
-        public List<Skill> Skills { get; set; } 
+        public List<PlayerClass> ReclassOptions { get; set; }
+        public List<Skill> Skills { get; set; }
         public List<Spells> Spells { get; set; }
         public int ExperienceModifier { get; set; }
         /// <summary>
@@ -40,7 +40,11 @@ namespace MIMWebClient.Core.Player.Classes
             var classList = new Dictionary<string, PlayerClass>
             {
                 {"Fighter", Fighter.FighterClass() },
- 
+                {"Mage", Mage.MageClass() },
+                {"Cleric", Cleric.ClericClass()},
+                {"Thief", Thief.ThiefClass() },
+
+
             };
 
             return classList;

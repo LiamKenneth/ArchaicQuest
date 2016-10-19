@@ -252,6 +252,9 @@
     <Compile Include="Core\PlayerSetup\PlayerLocation.cs" />
     <Compile Include="Core\PlayerSetup\PlayerRace.cs" />
     <Compile Include="Core\PlayerSetup\PlayerStats.cs" />
+    <Compile Include="Core\Player\Classes\Thief.cs" />
+    <Compile Include="Core\Player\Classes\Cleric.cs" />
+    <Compile Include="Core\Player\Classes\Mage.cs" />
     <Compile Include="Core\Player\Classes\Fighter.cs" />
     <Compile Include="Core\Player\Classes\PlayerClass.cs" />
     <Compile Include="Core\Player\Classes\Reclasses\Ranger.cs" />
