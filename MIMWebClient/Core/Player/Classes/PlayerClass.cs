@@ -34,5 +34,17 @@ namespace MIMWebClient.Core.Player.Classes
         public int StatBonusCha { get; set; }
 
         //add THAC0
+
+        public static Dictionary<string, PlayerClass> ClassList()
+        {
+            var classList = new Dictionary<string, PlayerClass>
+            {
+                {"Fighter", Fighter.FighterClass() },
+ 
+            };
+
+            return classList;
+        }
+
     }
 }

@@ -554,9 +554,12 @@ namespace MIMWebClient.Core.Events
 
                 var xp = new Experience();
 
-                int xpGain = xp.MobXP(attacker, defender);
+                int xpGain = xp.GainXp(attacker, defender);
                 attacker.Experience += xpGain;
+                attacker.TotalExperience += xpGain;
                 HubContext.SendToClient(xpGain + "XP", attacker.HubGuid);
+
+                xp.GainLevel(attacker);
                 //calc xp
                 //create corpse
 

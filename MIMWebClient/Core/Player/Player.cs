@@ -79,6 +79,9 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("ali")]
         public int AlignmentScore;
 
+        [BsonElement("txp")]
+        public int TotalExperience;
+
         [BsonElement("xp")]
         public int Experience;
 
@@ -262,6 +265,7 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Level = 1;
             this.Description = this.Description ?? "You see nothing special about them.";
             this.AlignmentScore = 0;
+            this.TotalExperience = 0;
             this.Experience = 0;
             this.ExperienceToNextLevel = 1000; // create class to work out
             this.HitPoints = 100; // class to workout
