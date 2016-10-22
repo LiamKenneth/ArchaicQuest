@@ -75,6 +75,7 @@ namespace MIMWebClient.Core
             commandList.Add("help", () => Help.ShowHelp(commandOptions, playerData));
             commandList.Add("time", Update.Time.ShowTime);
             commandList.Add("clock", Update.Time.ShowTime);
+            commandList.Add("skills", () => ShowSkills.ShowPlayerSkills(playerData));
             return commandList;
         }
 

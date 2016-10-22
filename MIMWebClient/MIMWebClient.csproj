@@ -236,6 +236,7 @@
     <Compile Include="Core\Events\ManipulateObject.cs" />
     <Compile Include="Core\Events\Save.cs" />
     <Compile Include="Core\Events\Score.cs" />
+    <Compile Include="Core\Events\ShowSkills.cs" />
     <Compile Include="Core\Helpers.cs" />
     <Compile Include="Core\HubContext.cs" />
     <Compile Include="Core\Item\Action.cs" />

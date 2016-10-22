@@ -44,6 +44,28 @@ namespace MIMWebClient.Core.Player.Classes
 
             #endregion
 
+            #region  Give fighter kick skill
+
+            var kick = Punch.PunchAb();
+            kick.Name = "Kick";
+            kick.LevelObtained = 3;
+            kick.Proficiency = 0.1;
+            kick.MaxProficiency = 0.95;
+            fighter.Skills.Add(kick);
+
+            #endregion
+
+            #region  Give fighter longblade skill
+
+            var longblade = Punch.PunchAb();
+            longblade.Name = "Long Blade";
+            longblade.LevelObtained = 3;
+            longblade.Proficiency = 0.1;
+            longblade.MaxProficiency = 0.95;
+            fighter.Skills.Add(longblade);
+
+            #endregion
+
             fighter.ReclassOptions.Add(Ranger.RangerClass());
 
             return fighter;
