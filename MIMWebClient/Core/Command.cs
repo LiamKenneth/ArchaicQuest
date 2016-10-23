@@ -75,7 +75,8 @@ namespace MIMWebClient.Core
             commandList.Add("help", () => Help.ShowHelp(commandOptions, playerData));
             commandList.Add("time", Update.Time.ShowTime);
             commandList.Add("clock", Update.Time.ShowTime);
-            commandList.Add("skills", () => ShowSkills.ShowPlayerSkills(playerData));
+            commandList.Add("skills", () => ShowSkills.ShowPlayerSkills(playerData, commandOptions));
+            commandList.Add("skills all", () => ShowSkills.ShowPlayerSkills(playerData, commandOptions));
             return commandList;
         }
 
@@ -92,6 +93,8 @@ namespace MIMWebClient.Core
           
             string commandOptions = string.Empty;
             // testing
+
+           
  
             if (commands.Length >= 2)
             {

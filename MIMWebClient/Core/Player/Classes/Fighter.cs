@@ -34,10 +34,38 @@ namespace MIMWebClient.Core.Player.Classes
 
             };
 
+            /* TODO: some skills to add
+             * Axe Dagger Polearm  Mace
+             * Spear Shield Block
+             * staff  sword
+             *  bash Whip Enhanced damage
+             *  parry rescue swim  scrolls
+             *  staves  wands  recall
+             *  age  dig
+             *  dirt kicking
+             *  second atttack
+             *  third attack
+             *  fouth attack
+             *  fast healing
+             *  kick
+             *  disarm
+             *  blind fighting
+             *  trip
+             *  berserk
+             *  dual wield (eek)
+             * */
+
             #region  Give fighter punch skill
 
+            var bash = Punch.PunchAb();
+            bash.Name = "Bash";
+            bash.LevelObtained = 10;
+            bash.Proficiency = 0.1;
+            bash.MaxProficiency = 0.95;
+            fighter.Skills.Add(bash);
+
             var punch = Punch.PunchAb();
-            punch.LevelObtained = 2;
+            punch.LevelObtained = 1;
             punch.Proficiency = 0.1;
             punch.MaxProficiency = 0.95;
             fighter.Skills.Add(punch);
