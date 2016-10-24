@@ -20,17 +20,11 @@ namespace MIMWebClient.Core.Events
             }
             else
             {
-                var getClassSkills =
-                    PlayerClass.ClassList().FirstOrDefault(x => x.Value.Name.Equals(player.SelectedClass));
+              
 
                 HubContext.SendToClient("You currently know these skills:", player.HubGuid);
 
-                var skills =
-                    getClassSkills.Value.Skills.Where(x => x.LevelObtained <= player.Level)
-                        .OrderBy(o => o.LevelObtained)
-                        .ToList();
-
-                foreach (var skill in skills)
+                foreach (var skill in player.Skills)
                 {
 
                     HubContext.SendToClient(
@@ -42,17 +36,24 @@ namespace MIMWebClient.Core.Events
 
         public static void ShowPlayerAllSkills(Player player)
         {
-            var getClassSkills = PlayerClass.ClassList().FirstOrDefault(x => x.Value.Name.Equals(player.SelectedClass));
+            var getClassSkills = GetSkills(player);
 
             HubContext.SendToClient("You will eventually learn these skills:", player.HubGuid);
 
-            var skills = getClassSkills.Value.Skills.OrderBy(o => o.LevelObtained).ToList();
+            var skills = getClassSkills.OrderBy(o => o.LevelObtained).ToList();
 
             foreach (var skill in skills)
             {
 
                 HubContext.SendToClient("Level " + skill.LevelObtained + ": " + skill.Name + " " + skill.Proficiency + "%", player.HubGuid);
             }
+
+        }
+
+        public static List<Skill> GetSkills(Player player)
+        {
+           return PlayerClass.ClassList().FirstOrDefault(x => x.Value.Name.Equals(player.SelectedClass)).Value.Skills;
+          
         }
     }
 }

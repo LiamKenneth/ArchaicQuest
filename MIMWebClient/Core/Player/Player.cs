@@ -207,6 +207,12 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("rec")]
         public Recall Recall;
 
+        [BsonElement("pra")]
+        public int Practices;
+
+        [BsonElement("tra")]
+        public int Trains;
+
         //NPC Properties
         [BsonElement("ne")]
         public List<string> Emotes;
@@ -258,6 +264,8 @@ namespace MIMWebClient.Core.PlayerSetup
 
         [BsonElement("och")]
         public bool OocChannel = true;
+
+
 
         public Player()
         {
@@ -368,6 +376,8 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Equipment.Legs = Equipment.Legs;
             this.Equipment.Feet = Equipment.Feet;
 
+            this.Practices = 10;
+            this.Trains = 10;
            
 
             var recall = new Recall

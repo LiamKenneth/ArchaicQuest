@@ -69,8 +69,7 @@ namespace MIMWebClient.Core.Events
 
             List<Item> roomItems = room.items;
             List<Item> playerInv = player.Inventory;
-            List<Player> mobList = room.mobs;
-            List<Player> playerList = room.players;
+ 
 
             #region find Item searching Room and Player Inventory
             if (objectTypeToFind == lookItem && itemToFind != "all")

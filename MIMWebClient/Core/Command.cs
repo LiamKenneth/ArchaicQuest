@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MIMWebClient.Core.Mob.Events;
 
 namespace MIMWebClient.Core
 {
@@ -77,6 +78,8 @@ namespace MIMWebClient.Core
             commandList.Add("clock", Update.Time.ShowTime);
             commandList.Add("skills", () => ShowSkills.ShowPlayerSkills(playerData, commandOptions));
             commandList.Add("skills all", () => ShowSkills.ShowPlayerSkills(playerData, commandOptions));
+            commandList.Add("practice", () =>  Trainer.Practice(playerData, room, commandOptions));
+
             return commandList;
         }
 

@@ -377,6 +377,29 @@ namespace MIMWebClient.Core.World.Anker
 
 
 
+            var trainer = new Player
+            {
+                NPCId = 0,
+                Name = "Lance",
+                Type = Player.PlayerTypes.Mob,
+                Description = "The elder of the village anker",
+                Strength = 15,
+                Dexterity = 16,
+                Constitution = 16,
+                Intelligence = 12,
+                Wisdom = 16,
+                Charisma = 18,
+                MaxHitPoints = 250,
+                HitPoints = 250,
+                Level = 15,
+                Status = Player.PlayerStatus.Standing,
+                Skills = new List<Skill>(),
+                Inventory = new List<Item.Item>(),
+                Trainer = true
+            };
+
+
+
 
             #region exits
 
@@ -460,6 +483,8 @@ namespace MIMWebClient.Core.World.Anker
             room.exits.Add(east);
             room.exits.Add(south);         
             room.exits.Add(west);
+
+            room.mobs.Add(trainer);
 
 
 
