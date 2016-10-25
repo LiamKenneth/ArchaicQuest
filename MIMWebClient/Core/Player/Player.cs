@@ -323,7 +323,7 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Skills = this.Skills = new List<Skill>();
             
             var punch = Punch.PunchAb();
-            punch.Proficiency = 0.1;
+            punch.Proficiency = 1;
       
 
             this.Skills.Add(punch);

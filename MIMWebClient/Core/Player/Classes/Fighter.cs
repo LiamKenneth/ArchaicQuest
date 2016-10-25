@@ -60,14 +60,14 @@ namespace MIMWebClient.Core.Player.Classes
             var bash = Punch.PunchAb();
             bash.Name = "Bash";
             bash.LevelObtained = 10;
-            bash.Proficiency = 0.1;
-            bash.MaxProficiency = 0.95;
+            bash.Proficiency = 1;
+            bash.MaxProficiency = 95;
             fighter.Skills.Add(bash);
 
             var punch = Punch.PunchAb();
             punch.LevelObtained = 1;
-            punch.Proficiency = 0.1;
-            punch.MaxProficiency = 0.95;
+            punch.Proficiency = 1;
+            punch.MaxProficiency = 95;
             fighter.Skills.Add(punch);
 
             #endregion
@@ -77,8 +77,8 @@ namespace MIMWebClient.Core.Player.Classes
             var kick = Punch.PunchAb();
             kick.Name = "Kick";
             kick.LevelObtained = 3;
-            kick.Proficiency = 0.1;
-            kick.MaxProficiency = 0.95;
+            kick.Proficiency = 1;
+            kick.MaxProficiency = 95;
             fighter.Skills.Add(kick);
 
             #endregion
@@ -88,8 +88,8 @@ namespace MIMWebClient.Core.Player.Classes
             var longblade = Punch.PunchAb();
             longblade.Name = "Long Blade";
             longblade.LevelObtained = 3;
-            longblade.Proficiency = 0.1;
-            longblade.MaxProficiency = 0.95;
+            longblade.Proficiency = 1;
+            longblade.MaxProficiency = 95;
             fighter.Skills.Add(longblade);
 
             #endregion

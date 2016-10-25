@@ -82,8 +82,8 @@ namespace MIMWebClient.Core.Mob.Events
             }
 
             var skill = FindSkillToPractice(player, skillToPractice);
-
-            skill.Proficiency = 0.25 + skill.Proficiency; //what should this be;
+            var practiceGain = Helpers.Rand(0, player.Intelligence*2);
+            skill.Proficiency = practiceGain + skill.Proficiency; //what should this be;
 
             var updatedPlayer = player;
 
@@ -92,13 +92,14 @@ namespace MIMWebClient.Core.Mob.Events
             findPlayerSkill.Proficiency = skill.Proficiency;
 
             HubContext.SendToClient(trainer.Name + " teaches you " + findSkill.Name, player.HubGuid);
+            HubContext.SendToClient("Your " + findSkill.Name + " Skill has increased to " + findPlayerSkill.Proficiency +"%", player.HubGuid);
 
-            if (findPlayerSkill.Proficiency > skill.MaxProficiency)
+            if (findPlayerSkill.Proficiency >= skill.MaxProficiency)
             {
-                findPlayerSkill.Proficiency = 0.75;
+                findPlayerSkill.Proficiency = 75;
             }
 
-            if (findPlayerSkill.Proficiency == 0.75)
+            if (findPlayerSkill.Proficiency == 75)
             {
                 HubContext.SendToClient(trainer.Name + " says " + "You are now skilled in " + findSkill.Name, player.HubGuid);
               

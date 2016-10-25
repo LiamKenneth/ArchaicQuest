@@ -38,8 +38,8 @@ namespace MIMWebClient.Core.Player.Classes
 
             var punch = Punch.PunchAb();
             punch.LevelObtained = 2;
-            punch.Proficiency = 0.1;
-            punch.MaxProficiency = 0.95;
+            punch.Proficiency = 1;
+            punch.MaxProficiency = 95;
             cleric.Skills.Add(punch);
 
             #endregion

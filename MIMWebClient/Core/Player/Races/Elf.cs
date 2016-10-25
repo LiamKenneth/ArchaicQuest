@@ -18,10 +18,15 @@ namespace MIMWebClient.Core.Player.Races
             var elf = new PlayerRace()
             {
                 Name = "Elf",
-                ExperienceModifier = 250,
+                ExperienceModifier = 300,
                 HelpText = new Help(),
-                StatBonusInt = 2,
-                StatBonusCon = -2
+                MaxStr = 16,
+                MaxDex = 20,
+                MaxCon = 16,
+                MaxInt = 25,
+                MaxWis = 21,
+                MaxCha = 20,
+
 
             };
 

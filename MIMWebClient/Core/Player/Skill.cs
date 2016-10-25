@@ -13,7 +13,7 @@ namespace MIMWebClient.Core.Player
     {
         public string Name { get; set; }
 
-        public double Proficiency { get; set; }
+        public int Proficiency { get; set; }
 
         public bool Passive { get; set; }
 
@@ -30,7 +30,7 @@ namespace MIMWebClient.Core.Player
 
         public int LevelObtained { get; set; }
 
-        public double MaxProficiency { get; set; }
+        public int MaxProficiency { get; set; }
 
         public Help HelpText { get; set; }
 

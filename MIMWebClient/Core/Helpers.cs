@@ -51,7 +51,19 @@ namespace MIMWebClient.Core
 
         }
 
-        
+        /// <summary>
+        /// Returns a random number
+        /// </summary>
+        /// <param name="minSize"></param>
+        /// <param name="maxSize"></param>
+        /// <returns></returns>
+        public static int Rand(int minSize, int maxSize)
+        {
+            
+            return diceRoll.Next(minSize, maxSize);
+
+        }
+
         /// <summary>
         /// Returns a random string.
         /// </summary>

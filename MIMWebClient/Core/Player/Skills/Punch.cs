@@ -93,8 +93,8 @@ namespace MIMWebClient.Core.Player.Skills
                     Delay = 0,
                     LevelObtained = 1,
                     Passive = false,
-                    Proficiency = 0.1,
-                    MaxProficiency = 0.95,
+                    Proficiency = 1,
+                    MaxProficiency = 95,
                     UsableFromStatus = "Standing",
                     Syntax = "Punch <Target>"
                 };
