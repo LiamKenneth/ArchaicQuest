@@ -65,6 +65,20 @@ namespace MIMWebClient.Core
         }
 
         /// <summary>
+        /// Returns percentage of maximum value
+        /// </summary>
+        /// <param name="currentValue"></param>
+        /// <param name="maximumValue"></param>
+        /// <returns></returns>
+        public static int GetPercentage(int currentValue, int maximumValue)
+        {
+            var percent = currentValue / maximumValue * 100;
+
+            return percent;
+
+        }
+
+        /// <summary>
         /// Returns a random string.
         /// </summary>
         /// <param name="possible"></param>

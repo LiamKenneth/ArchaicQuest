@@ -9,6 +9,8 @@ namespace MIMWebClient.Core.Player
 {
     using MIMWebClient.Core.Player.Skills;
 
+    using MongoDB.Bson.Serialization.Attributes;
+
     public class Skill
     {
         public string Name { get; set; }
@@ -31,9 +33,9 @@ namespace MIMWebClient.Core.Player
         public int LevelObtained { get; set; }
 
         public int MaxProficiency { get; set; }
-
+        [BsonIgnore]
         public Help HelpText { get; set; }
-
+        [BsonIgnore]
         public string Syntax { get; set; }
 
 

@@ -23,13 +23,15 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (!_taskRunnning)
             {
-
+// find target if not in fight
                 HubContext.SendToClient("You clench your fist and pull your arm back", attacker.HubGuid);
                 HubContext.SendToClient(attacker.Name + " Pulls his arm back aiming a punch at you.", attacker.HubGuid,
                     attacker.Target.HubGuid, false, true);
                 HubContext.broadcastToRoom(
                     attacker.Name + " clenches his fist and pulls his arm back aiming for " + attacker.Target.Name,
                     room.players, attacker.HubGuid, true);
+
+
 
 
                 Task.Run(() => DoPunch(attacker, room));
@@ -55,7 +57,7 @@ namespace MIMWebClient.Core.Player.Skills
             //get attacker strength
             var die = new PlayerStats();
             var dam = die.dice(1, attacker.Strength);
-            var toHit = 0.5 * 95; // always 5% chance to miss
+            var toHit = Helpers.GetPercentage(attacker.Skills.Find(x => x.Name.Equals("Punch", StringComparison.CurrentCultureIgnoreCase)).Proficiency, 95); // always 5% chance to miss
             int chance = die.dice(1, 100);
 
 
@@ -63,12 +65,19 @@ namespace MIMWebClient.Core.Player.Skills
             {
                 //HIt, but what about defenders ability to block and dodge?
 
-                HubContext.SendToClient("Your punch hits", attacker.HubGuid);
-                HubContext.SendToClient(attacker.Name + " punch hits you", attacker.HubGuid, attacker.Target.HubGuid, false, true);
-                HubContext.broadcastToRoom( attacker.Name + " punches " + attacker.Target.Name, room.players, attacker.HubGuid, true);
+               
+
+                if (attacker.Target != null && attacker.Target.HitPoints > 0)
+                {
+                    HubContext.SendToClient("Your punch hits", attacker.HubGuid);
+                    HubContext.SendToClient(attacker.Name + " punch hits you", attacker.HubGuid, attacker.Target.HubGuid, false, true);
+                    HubContext.broadcastToRoom(attacker.Name + " punches " + attacker.Target.Name, room.players, attacker.HubGuid, true);
+                    attacker.Target.HitPoints -= dam;
+                }
+              
 
                 //find target and hurt them, not yourself!!
-                attacker.Target.HitPoints -= dam;
+                
             }
             else
             {
