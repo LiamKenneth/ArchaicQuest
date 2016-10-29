@@ -72,7 +72,7 @@ namespace MIMWebClient.Core.Events
 
             var collection = database.GetCollection<Player>("Player");
 
-            var returnPlayer = collection.AsQueryable<Player>().SingleOrDefault(x => x.Name.Equals(name)); 
+            var returnPlayer = collection.AsQueryable<Player>().SingleOrDefault(x => x.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase)); 
 
             return returnPlayer;
 

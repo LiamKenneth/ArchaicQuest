@@ -209,7 +209,7 @@ namespace MIMWebClient.Hubs
                 player.HubGuid = id;
 
                 //check for duplicates
-               var alreadyLogged = _PlayerCache.FirstOrDefault(x => x.Value.Name.Equals(name));
+               var alreadyLogged = _PlayerCache.FirstOrDefault(x => x.Value.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
 
                 if (alreadyLogged.Value != null)
                 {
