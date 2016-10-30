@@ -178,12 +178,14 @@
             $('#sendmessage').click(function () {
 
                 var message = $('#message');
-                var playerGuid = $.connection.hub.id;
 
-                // Call the Send method on the hub.
-                server.recieveFromClient(message.val(), playerGuid);
+                if (message.length) {
 
-                message.select().focus();
+                    var playerGuid = $.connection.hub.id;
+                    server.recieveFromClient(message.val(), playerGuid);
+                    message.select().focus();
+
+                }
             });
         },
         htmlEncode: function (value) {
@@ -205,6 +207,22 @@
 
         },
         login: function (char) {
+
+            if (char.Name.length <= 2) {
+                alert("must enter a name ");
+                return;
+            }
+
+
+            var checkExist = server.checkCharExists(char, "login");
+
+            if (!checkExist) {
+                return;
+            }
+            
+            //check char exists
+
+            //check password
 
             server.login($.connection.hub.id, char.Name, char.password);
 
@@ -539,6 +557,19 @@
         $("#Wisdom").val(wis);
         $("#Charisma").val(cha);
 
+    }
+
+
+    client.checkCharExists = function (charStatus, caller) {
+
+        if (!charStatus && caller === 'login') {
+
+            var charlogin = $('#charName');
+
+            charlogin.addClass('error');
+
+            return false;
+        }
     }
 
     client.savePlayerGuid = function (guid) {

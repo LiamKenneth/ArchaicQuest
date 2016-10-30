@@ -201,7 +201,7 @@ namespace MIMWebClient.Hubs
 
         public void Login(string id, string name, string password)
         {
-            var player = Save.GetPlayer(name, password);
+            var player = Save.GetPlayer(name);
 
             if (player != null)
             {
@@ -284,6 +284,13 @@ namespace MIMWebClient.Hubs
         }
 
         #endregion
+
+        public void checkCharExists(string name, string caller)
+        {
+            var validateChar = new ValidateChar();
+
+            Clients.Caller.checkCharExists(validateChar.CharacterExist(name), caller);
+        }
 
         public void getChar(string hubId, string name)
         {

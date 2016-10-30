@@ -60,7 +60,7 @@ namespace MIMWebClient.Core.Events
 
         }
 
-        public static Player GetPlayer(string name, string password)
+        public static Player GetPlayer(string name)
         {
             const string ConnectionString = DbServer;
 
