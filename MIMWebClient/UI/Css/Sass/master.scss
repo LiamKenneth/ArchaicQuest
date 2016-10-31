@@ -181,7 +181,10 @@ box-shadow: inset 0 0 15px 2px #000;
     }
 
 }
-//Builder 
+
+.error span {display:none;}
+.error span.errorMsg {display:inline-block; color:#F04903}
+//Builder
 
 .form-control {
     margin-bottom:10px;

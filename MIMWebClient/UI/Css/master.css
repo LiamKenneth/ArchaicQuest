@@ -141,6 +141,13 @@ pre {
   min-height: 193px;
   margin-bottom: 10px; }
 
+.error span {
+  display: none; }
+
+.error span.errorMsg {
+  display: inline-block;
+  color: #F04903; }
+
 .form-control {
   margin-bottom: 10px; }
 

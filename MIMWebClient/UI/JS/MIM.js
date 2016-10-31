@@ -208,27 +208,13 @@
         },
         login: function (char) {
 
-            if (char.Name.length <= 2) {
-                alert("must enter a name ");
-                return;
-            }
 
-
-            var checkExist = server.checkCharExists(char, "login");
-
-            if (!checkExist) {
-                return;
-            }
-            
-            //check char exists
-
-            //check password
 
             server.login($.connection.hub.id, char.Name, char.password);
 
-            document.getElementById('signUpModal').style.display = "none";
+            // document.getElementById('signUpModal').style.display = "none";
 
-            //server.getChar($.connection.hub.id, char.Name);
+
 
         },
         getGuid: function (guid) {
@@ -290,7 +276,7 @@
 
             }
         },
-        addItem: function() {
+        addItem: function () {
             $("#js-AddItem").click(function () {
                 alert("Handler for .click() called.");
 
@@ -314,9 +300,9 @@
                         "damMax": 5
                     }
                 };
-                
+
                 $.post("/Room/Create/addItem", function (data) {
-                  alert("success")
+                    alert("success")
                 });
             });
         },
@@ -362,7 +348,7 @@
     //// Add a new message to the page ////
     client.addNewMessageToPage = function (message) {
         $('#discussion').append("<p>" + message + "</p>");
- 
+
         $("#discussion").scrollTop($("#discussion")[0].scrollHeight);
     };
 
@@ -559,8 +545,48 @@
 
     }
 
+    client.characterNameLoginError = function (errors) {
+        var charlogin = $('#charName');
+
+
+        charlogin.addClass('error');
+
+        $("#charName .errorMsg").html(errors);
+
+        if (errors == "") {
+            charlogin.removeClass('error');
+        }
+
+
+
+    }
+
+    client.characterPasswordError = function (errors) {
+
+        var charpass = $('#charPass');
+
+
+        charpass.addClass('error');
+
+        $("#charPass .errorMsg").html(errors);
+
+        if (errors == "") {
+            charpass.removeClass('error');
+        }
+
+    }
+
+    client.loginErrors = function (errors) {
+
+
+
+    }
+
+
 
     client.checkCharExists = function (charStatus, caller) {
+
+        console.log("this validates " + charStatus)
 
         if (!charStatus && caller === 'login') {
 
@@ -568,8 +594,12 @@
 
             charlogin.addClass('error');
 
+            $("#charName .errorMsg").html("This character does not exist.");
+
             return false;
         }
+
+        return true;
     }
 
     client.savePlayerGuid = function (guid) {

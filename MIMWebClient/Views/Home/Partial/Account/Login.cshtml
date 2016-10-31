@@ -13,7 +13,7 @@
                         @Html.TextBoxFor(input => input.Name, string.Empty, new { @class = "form-control", placeholder = "Character name" })
 
                     }
-                    <span class="error">This Character does not exist.</span>
+                    <span class="errorMsg"></span>
                 </div>
  
 
@@ -21,10 +21,10 @@
                     <label for="password">Password</label>
                     @{
                         @Html.TextBoxFor(input => input.Password, string.Empty, new { id = "password", type = "password", @class = "form-control", placeholder = "Password" })
-                        @Html.ValidationMessageFor(input => input.Password)
                     }
+                    <span class="errorMsg"></span>
                 </div>
-                <span class="error">The password is incorrect</span>
+            
                
 
             

@@ -76,7 +76,7 @@ namespace MIMWebClient.Hubs
                 {
                     getRoomData = RoomData.LoadRoomFile();
                     _AreaCache.TryAdd(RoomData.id, getRoomData);
- 
+
 
                     return getRoomData;
                 }
@@ -136,7 +136,7 @@ namespace MIMWebClient.Hubs
             string roomData = ReturnRoom(id);
 
             this.Clients.Caller.addNewMessageToPage(roomData, true);
-          //  Score.UpdateUiRoom(PlayerData, roomData);
+            //  Score.UpdateUiRoom(PlayerData, roomData);
 
         }
 
@@ -176,9 +176,9 @@ namespace MIMWebClient.Hubs
             PlayerData.Wisdom = wisdom;
             PlayerData.Intelligence = intelligence;
             PlayerData.Charisma = charisma;
-         
 
-           // PlayerData.SavePlayerInformation();
+
+            // PlayerData.SavePlayerInformation();
 
             _PlayerCache.TryAdd(id, PlayerData);
 
@@ -201,6 +201,14 @@ namespace MIMWebClient.Hubs
 
         public void Login(string id, string name, string password)
         {
+
+            var valid = validateChar(id, name, password);
+
+            if (valid == false)
+            {
+                return;
+            }
+
             var player = Save.GetPlayer(name);
 
             if (player != null)
@@ -209,18 +217,18 @@ namespace MIMWebClient.Hubs
                 player.HubGuid = id;
 
                 //check for duplicates
-               var alreadyLogged = _PlayerCache.FirstOrDefault(x => x.Value.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
+                var alreadyLogged = _PlayerCache.FirstOrDefault(x => x.Value.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
 
                 if (alreadyLogged.Value != null)
                 {
 
                     if (alreadyLogged.Value.Name == name)
                     {
-                
-                         var oldPlayer = alreadyLogged.Value;
-                          _PlayerCache.TryRemove(alreadyLogged.Value.HubGuid, out oldPlayer);
 
-                       _AreaCache.FirstOrDefault(x => x.Value.players.Remove(oldPlayer));
+                        var oldPlayer = alreadyLogged.Value;
+                        _PlayerCache.TryRemove(alreadyLogged.Value.HubGuid, out oldPlayer);
+
+                        _AreaCache.FirstOrDefault(x => x.Value.players.Remove(oldPlayer));
 
                         //update room cache
 
@@ -242,7 +250,7 @@ namespace MIMWebClient.Hubs
                 PlayerManager.AddPlayerToRoom(roomData, player);
                 Movement.EnterRoom(player, roomData);
 
-              //  Prompt.ShowPrompt(player);
+                //  Prompt.ShowPrompt(player);
 
                 Score.ReturnScoreUI(player);
                 Score.UpdateUiPrompt(player);
@@ -285,11 +293,14 @@ namespace MIMWebClient.Hubs
 
         #endregion
 
-        public void checkCharExists(string name, string caller)
+        public bool validateChar(string id, string name, string password)
         {
             var validateChar = new ValidateChar();
 
-            Clients.Caller.checkCharExists(validateChar.CharacterExist(name), caller);
+            var valid = validateChar.CharacterisValid(id, name, password);
+
+            return valid;
+
         }
 
         public void getChar(string hubId, string name)
@@ -305,4 +316,3 @@ namespace MIMWebClient.Hubs
         }
     }
 }
- 

@@ -2,10 +2,12 @@
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Ajax.Utilities;
 
 namespace MIMWebClient.Core.Events
 {
@@ -72,7 +74,9 @@ namespace MIMWebClient.Core.Events
 
             var collection = database.GetCollection<Player>("Player");
 
-            var returnPlayer = collection.AsQueryable<Player>().SingleOrDefault(x => x.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase)); 
+            var cleanName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(name.ToLower());
+
+            var returnPlayer = collection.AsQueryable<Player>().FirstOrDefault(x => x.Name.Equals(cleanName)); 
 
             return returnPlayer;
 
