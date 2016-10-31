@@ -141,6 +141,9 @@ pre {
   min-height: 193px;
   margin-bottom: 10px; }
 
+.errorMsg {
+  color: #F04903; }
+
 .error span {
   display: none; }
 

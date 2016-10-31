@@ -212,7 +212,7 @@
 
             server.login($.connection.hub.id, char.Name, char.password);
 
-            // document.getElementById('signUpModal').style.display = "none";
+              document.getElementById('signUpModal').style.display = "none";
 
 
 
@@ -622,7 +622,16 @@
         //// Start scripts
         MIM.init();
 
+       
+
         $("#createCharaterForm").on("submit", function (event) {
+
+            var valid = $('#createCharaterForm').validate().form();
+
+            if (!valid) {
+                return;
+            }
+
             var $this = $(this);
             var frmValues = $this.serialize();
             $.ajax({
@@ -642,6 +651,13 @@
         });
 
         $("#loginForm").on("submit", function (event) {
+
+            var valid = $('#loginForm').validate().form();
+
+            if (!valid) {
+                return;
+            }
+
             var $this = $(this);
             var frmValues = $this.serialize();
             $.ajax({

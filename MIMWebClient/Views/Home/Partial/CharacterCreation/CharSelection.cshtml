@@ -11,7 +11,7 @@
                     <label for="Name">Character Name</label>
                     @{
                         @Html.TextBoxFor(input => input.Name, string.Empty, new { @class = "form-control", placeholder = "Character name" })
-                        @Html.ValidationMessageFor(input => input.Name)
+                        @Html.ValidationMessageFor(input => input.Name, string.Empty, new { @class="errorMsg"} )
 
                     }
                     <small>Choose a good unique fantasy name.</small>
@@ -40,7 +40,7 @@
                     <label for="Email">Email</label>
                     @{
                         @Html.TextBoxFor(input => input.Email, string.Empty, new { type = "email", @class = "form-control", placeholder = "Email Address" })
-                        @Html.ValidationMessageFor(input => input.Email)
+                        @Html.ValidationMessageFor(input => input.Email, string.Empty, new { @class = "errorMsg" })
                     }
                 </div>
 
@@ -48,7 +48,7 @@
                     <label for="password">Password</label>
                     @{
                         @Html.TextBoxFor(input => input.Password, string.Empty, new { id = "password", type = "password", @class = "form-control", placeholder = "Password" })
-                        @Html.ValidationMessageFor(input => input.Password)
+                        @Html.ValidationMessageFor(input => input.Password, string.Empty, new { @class = "errorMsg" })
                     }
                 </div>
 
@@ -56,7 +56,7 @@
                     <label for="password">Confirm Password</label>
                     @{
                         @Html.TextBoxFor(input => input.ConfirmPassword, string.Empty, new { id = "confirmPassword", type = "password", @class = "form-control", placeholder = "Confirm Password" })
-                        @Html.ValidationMessageFor(input => input.ConfirmPassword)
+                        @Html.ValidationMessageFor(input => input.ConfirmPassword, string.Empty, new { @class = "errorMsg" })
                     }
                     <p id="passwordMatchError" class="notVisible alert alert-danger">Your passwords do not match</p>
                 </div>

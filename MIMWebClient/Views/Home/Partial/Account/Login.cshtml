@@ -11,6 +11,7 @@
                     <label for="Name">Character Name</label>
                     @{
                         @Html.TextBoxFor(input => input.Name, string.Empty, new { @class = "form-control", placeholder = "Character name" })
+                        @Html.ValidationMessageFor(input => input.Name, string.Empty, new { @class = "errorMsg" })
 
                     }
                     <span class="errorMsg"></span>
@@ -21,6 +22,7 @@
                     <label for="password">Password</label>
                     @{
                         @Html.TextBoxFor(input => input.Password, string.Empty, new { id = "password", type = "password", @class = "form-control", placeholder = "Password" })
+                        @Html.ValidationMessageFor(input => input.Password, string.Empty, new { @class = "errorMsg" })
                     }
                     <span class="errorMsg"></span>
                 </div>

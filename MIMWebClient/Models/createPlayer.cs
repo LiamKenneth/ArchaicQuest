@@ -38,7 +38,7 @@ namespace MIMWebClient.Models
         [Required]
         public string Gender { get; set; }
 
-        [Required(ErrorMessage = "Don't cry at me when you forget your password.")]
+        [Required(ErrorMessage = "We need your email incase you forget your password.")]
         [EmailAddress(ErrorMessage = "Email address needs to be valid, enter abc@email.com if you don't want to leave one. ")]
         public string Email { get; set; }
 
