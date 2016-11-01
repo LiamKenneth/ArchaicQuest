@@ -10,12 +10,12 @@
 body {
   background: #272624;
   color: #f1f1f1;
-  font-family: "Slabo 27px", serif !important; }
+  font-family: 'Slabo 27px', serif !important; }
 
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
   font-size: 16px;
-  font-family: "Slabo 27px", serif !important; }
+  font-family: 'Slabo 27px', serif !important; }
 
 #discussion {
   font-size: 15px !important; }
@@ -153,4 +153,11 @@ pre {
 
 .form-control {
   margin-bottom: 10px; }
+
+#CreateCharName {
+  position: relative; }
+  #CreateCharName .js-generateName {
+    position: absolute;
+    top: 25px;
+    right: 0; }
 

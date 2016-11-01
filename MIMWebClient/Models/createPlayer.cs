@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace MIMWebClient.Models
 {
@@ -9,6 +10,7 @@ namespace MIMWebClient.Models
         [Required(ErrorMessage = "You won't become a legend without a name!")]
         [MinLength(3, ErrorMessage = "What kind of name is that? Try a longer one than 2 characters.")]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "A name like that doesn't sound very fantasy. Try using only A to Z")]
+        [Remote("Isname_Available", "Home")]
         public string Name { get; set; }
 
         [Required]
@@ -48,7 +50,7 @@ namespace MIMWebClient.Models
 
         [Required(ErrorMessage = "You can copy & paste your password if you like, but don't blame me if it's wrong.")]
         [MinLength(6, ErrorMessage = "Password needs to be atleast 6 characters long.")]
-        [Compare("Password", ErrorMessage = "Your passwords do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Your passwords do not match.")]
         public string ConfirmPassword { get; set; }
 
         public void savePlayer()

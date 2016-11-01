@@ -253,6 +253,7 @@
     <Compile Include="Core\Mob\Npc.cs" />
     <Compile Include="Core\PlayerSetup\PlayerClass.cs" />
     <Compile Include="Core\PlayerSetup\PlayerLocation.cs" />
+    <Compile Include="Core\PlayerSetup\PlayerName.cs" />
     <Compile Include="Core\PlayerSetup\PlayerRace.cs" />
     <Compile Include="Core\PlayerSetup\PlayerStats.cs" />
     <Compile Include="Core\PlayerSetup\ValidateChar.cs" />

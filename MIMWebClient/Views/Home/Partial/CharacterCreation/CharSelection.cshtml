@@ -7,13 +7,16 @@
         <div class="row">
             <div class="col-xs-12">
 
-                <div class="form-group">
+                <div class="form-group" id="CreateCharName">
                     <label for="Name">Character Name</label>
                     @{
                         @Html.TextBoxFor(input => input.Name, string.Empty, new { @class = "form-control", placeholder = "Character name" })
                         @Html.ValidationMessageFor(input => input.Name, string.Empty, new { @class="errorMsg"} )
 
                     }
+
+                    <a href="javascript:(0)" class="btn btn-success js-generateName" title="Choose a random name">Random Name</a>
+
                     <small>Choose a good unique fantasy name.</small>
                 </div>
 

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using MIMWebClient.Core.PlayerSetup;
 using MIMWebClient.Core.Update;
 
 namespace MIMWebClient
@@ -20,6 +21,7 @@ namespace MIMWebClient
             UpdateWorld.Init();
             UpdateWorld.CleanRoom();
             UpdateWorld.UpdateMob();
+            PlayerName.GenerateHumanNames();
         }
     }
 }

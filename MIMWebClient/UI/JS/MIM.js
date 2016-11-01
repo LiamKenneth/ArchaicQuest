@@ -629,8 +629,22 @@
         //// Start scripts
         MIM.init();
 
-       
 
+        $(".js-generateName").on("click", function (event) {
+
+            var nameField = $('#createCharaterForm #Name');
+ 
+            $.ajax({
+                    type: "get",
+                    url: "/Home/GenerateName"
+                })
+                .done(function(data) {
+
+                    nameField.val(data);
+
+                });
+           
+        });
         $("#createCharaterForm").on("submit", function (event) {
 
             var valid = $('#createCharaterForm').validate().form();

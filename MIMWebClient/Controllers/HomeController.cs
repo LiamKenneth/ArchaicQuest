@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MIMWebClient.Core.Events;
+using MIMWebClient.Core.PlayerSetup;
 
 namespace MIMWebClient.Controllers
 {
@@ -27,6 +29,33 @@ namespace MIMWebClient.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public JsonResult GenerateName()
+        {
+
+            var playerName = PlayerName.GetHumanName();
+
+           
+            return Json(playerName, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+        public JsonResult Isname_Available(string Name)
+        {
+
+            var playerName = Save.GetPlayer(Name);
+
+            if (playerName != null)
+            {
+                return Json("Character name already taken", JsonRequestBehavior.AllowGet);
+
+            }
+          
+                return Json(true, JsonRequestBehavior.AllowGet);
+
+            
         }
 
         [HttpPost]
