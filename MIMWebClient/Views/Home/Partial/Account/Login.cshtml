@@ -4,6 +4,9 @@
 <div id="login" style="display:none;">
     @using (@Html.BeginForm("Login", "Home", FormMethod.Post, new { id = "loginForm" }))
     {
+
+        @Html.ValidationSummary(true)
+
         <div class="row">
             <div class="col-xs-12">
 

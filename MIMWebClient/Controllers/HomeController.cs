@@ -35,12 +35,32 @@ namespace MIMWebClient.Controllers
         {
 
             var playerName = PlayerName.GetHumanName();
-
            
             return Json(playerName, JsonRequestBehavior.AllowGet);
 
-
         }
+
+        public JsonResult ValidateUser(string Name, string Password)
+        {
+
+            var player = Save.GetPlayer(Name);
+
+            if (player == null)
+            {
+                return Json("Character does not exist", JsonRequestBehavior.AllowGet);
+
+            }
+
+            var valid = player.Password == Password;
+
+            if (!valid)
+            {
+                return Json("Password is incorrect", JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
 
         public JsonResult Isname_Available(string Name)
         {

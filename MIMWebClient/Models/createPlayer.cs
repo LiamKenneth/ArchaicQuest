@@ -9,7 +9,7 @@ namespace MIMWebClient.Models
     {
         [Required(ErrorMessage = "You won't become a legend without a name!")]
         [MinLength(3, ErrorMessage = "What kind of name is that? Try a longer one than 2 characters.")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "A name like that doesn't sound very fantasy. Try using only A to Z")]
+        [RegularExpression(@"^[a-zA-Z']+$", ErrorMessage = "A name like that doesn't sound very fantasy. Try using only A to Z")]
         [Remote("Isname_Available", "Home")]
         public string Name { get; set; }
 

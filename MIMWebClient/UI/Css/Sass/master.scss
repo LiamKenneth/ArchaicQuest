@@ -24,6 +24,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #discussion {
+    position:relative;
     font-size: 15px !important;
 
     p {
@@ -183,10 +184,13 @@ pre {
 }
 
 #score {
+
     .window-inner {
         min-height: 193px;
         margin-bottom: 10px;
     }
+
+    .js-score {position:relative;}
 }
 
 .errorMsg {
@@ -216,3 +220,6 @@ pre {
         right: 0;
     }
 }
+
+
+@import "perfect-scrollbar.scss";

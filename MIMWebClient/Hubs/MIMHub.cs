@@ -202,13 +202,6 @@ namespace MIMWebClient.Hubs
         public void Login(string id, string name, string password)
         {
 
-            var valid = validateChar(id, name, password);
-
-            if (valid == false)
-            {
-                return;
-            }
-
             var player = Save.GetPlayer(name);
 
             if (player != null)
