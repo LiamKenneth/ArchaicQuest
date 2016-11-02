@@ -443,6 +443,8 @@ namespace MIMWebClient.Core.Events
             Cache.updateRoom(room, currentRoom);
             Cache.updatePlayer(player, currentPlayer);
             Score.UpdateUiInventory(player);
+            var roomdata = LoadRoom.DisplayRoom(room, player.Name);
+            Score.UpdateUiRoom(player, roomdata);
         }
 
         /// <summary>
@@ -557,6 +559,8 @@ namespace MIMWebClient.Core.Events
             Cache.updateRoom(room, currentRoom);
             Cache.updatePlayer(player, currentPlayer);
             Score.UpdateUiInventory(player);
+            var roomdata = LoadRoom.DisplayRoom(room, player.Name);
+            Score.UpdateUiRoom(player, roomdata);
         }
 
 

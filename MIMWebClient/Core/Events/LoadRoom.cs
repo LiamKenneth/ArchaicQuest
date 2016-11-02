@@ -119,7 +119,8 @@ namespace MIMWebClient.Core.Events
 
 
             string displayRoom = "<p class='roomTitle'>" + roomTitle + "<p><p class='roomDescription'>" + roomDescription + "</p> <p class='RoomExits'>[ Exits: " + exitList.ToLower() + " ]</p>" + itemList  + "\r\n" + playerList + "\r\n" + mobList;
-
+            
+          //  Score.UpdateUiRoom(room.players.FirstOrDefault(x => x.Name.Equals(playerName)), displayRoom);
             return displayRoom;
 
         }

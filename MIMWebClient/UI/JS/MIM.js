@@ -453,30 +453,10 @@
 
     client.UpdateUiRoom = function (room) {
 
-        console.log(room)
-        var title = room.title;
-        var description = room.description;
-        var mobs = room.mobs;
-        var items = room.items;
-        var players = room.players;
-
-        //description a string
-        //rest are arrys
-
-        for (var i = 0; i < mobs.length; i++) {
-
-        }
-
-        for (var i = 0; i < items.length; i++) {
-
-        }
-
-        for (var i = 0; i < players.length; i++) {
-
-        }
-
+        console.log("room" + room)
+       
         $("#roomTitleInfo").html(room);
-        $("#roomDescInfo").html(description);
+      //  $("#roomDescInfo").html(description);
     };
 
     client.updateInventory = function (inventory) {
@@ -733,6 +713,7 @@
 
         $('#discussion').perfectScrollbar();
         $('.js-score').perfectScrollbar();
+        $('.js-room').perfectScrollbar();
 
         var resizeTimer;
 

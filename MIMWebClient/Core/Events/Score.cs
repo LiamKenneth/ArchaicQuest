@@ -53,7 +53,7 @@
             //var room = new Room.Room();
             //var currentRoom = p
             var context = HubContext.getHubContext;
-            context.Clients.Client(playerData.HubGuid).updateRoom(playerData, room);
+            context.Clients.Client(playerData.HubGuid).UpdateUiRoom(room);
             //context.Clients.Client(playerData.HubGuid).updateRoom(playerData.Inventory);
 
         }

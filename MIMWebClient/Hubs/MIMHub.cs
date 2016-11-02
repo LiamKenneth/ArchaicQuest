@@ -130,13 +130,13 @@ namespace MIMWebClient.Hubs
 
         }
 
-        public void loadRoom(string id)
+        public void loadRoom(Player playerData, string id)
         {
 
             string roomData = ReturnRoom(id);
 
             this.Clients.Caller.addNewMessageToPage(roomData, true);
-            //  Score.UpdateUiRoom(PlayerData, roomData);
+               Score.UpdateUiRoom(playerData, roomData);
 
         }
 
@@ -182,7 +182,7 @@ namespace MIMWebClient.Hubs
 
             _PlayerCache.TryAdd(id, PlayerData);
 
-            loadRoom(id);
+            loadRoom(PlayerData, id);
             //add player to room
             Room roomData = null;
             _AreaCache.TryGetValue(PlayerData.AreaId, out roomData);
@@ -234,7 +234,7 @@ namespace MIMWebClient.Hubs
 
                 _PlayerCache.TryAdd(id, player);
 
-                this.loadRoom(player.HubGuid);
+                this.loadRoom(player, player.HubGuid);
 
                 //add player to room
                 Room roomData = null;

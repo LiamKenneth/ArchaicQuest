@@ -3,25 +3,22 @@
     ViewBag.Title = "Chat";
 }
 <div class="container-fluid  full-height" style="margin-top: -73px;">
- 
+
     <a id="open-left-panel" href="javascript:void(0);" class="full-height visible-xs" style="position: absolute; top: -120px; left: 0; width: 22%; z-index: 900"></a>
- 
-<div class="row full-height">
-<div id="left-panel" class="col-xs-12 col-sm-3  hidden-xs full-height" style="display: table;">
 
-<div id="info-char" class="full-height" style="display: table; width: 100%; height: 50%;">
-    <div id="score" style="display: table-cell; width: 100%;" class="window">
+    <div class="row full-height">
+        <div id="left-panel" class="col-xs-12 col-sm-3  hidden-xs full-height" style="display: table;">
 
-        <div class="js-score" style="overflow-y: scroll; max-height: 40vh;">
-            <h3 id="player-name" class="text-center">Malleus - </h3>
+            <div id="info-char" class="full-height" style="display: table; width: 100%; height: 50%;">
+                <div id="score" style="display: table-cell; width: 100%;" class="window">
 
-            <p class="text-center"><span id="player-gender"></span> <span id="player-race"></span> <span id="player-class"></span> Level <span id="player-level"></span></p>
-            <p class="text-center">HP <span id="player-hp"></span>/<span id="player-max-hp"></span> Mana <span id="player-mana"></span>/<span id="player-max-mana"></span> Fatigue <span id="player-end"></span>/<span id="player-max-end"></span> </p>
+                    <div class="js-score" style="overflow-y: scroll; max-height: 40vh;">
+                        <h3 id="player-name" class="text-center">Malleus - </h3>
 
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="scoreContainer window-inner">
+                        <p class="text-center"><span id="player-gender"></span> <span id="player-race"></span> <span id="player-class"></span> Level <span id="player-level"></span></p>
+                        <p class="text-center">HP <span id="player-hp"></span>/<span id="player-max-hp"></span> Mana <span id="player-mana"></span>/<span id="player-max-mana"></span> Fatigue <span id="player-end"></span>/<span id="player-max-end"></span> </p>
+
+                        <div class="scoreContainer">
                             <h3 class="text-center">Attributes</h3>
 
                             <table width="100%">
@@ -51,9 +48,8 @@
                                 </tr>
                             </table>
                         </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="scoreContainer window-inner">
+
+                        <div class="scoreContainer">
                             <h3 class="text-center">Armour</h3>
 
                             <table width="100%">
@@ -82,69 +78,55 @@
 
                             </table>
                         </div>
-                    </div>
-                </div>
-            </div>
+
+                        <div class="scoreContainer">
+                            <h3 class="text-center">Offence</h3>
+
+                            <table width="100%">
+                                <tr>
+                                    <td>Hit Roll</td>
+                                    <td> <span class="pull-right"> <span id="player-hitroll"></span> </span> </td>
+                                </tr>
+                                <tr>
+                                    <td>Dam Roll</td>
+                                    <td> <span class="pull-right"><span id="player-damroll"></span></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Wimpy</td>
+                                    <td> <span class="pull-right"> <span id="player-wimpy"></span></span></td>
+                                </tr>
+
+                            </table>
+                        </div>
+
+                        <div class="scoreContainer">
+                            <h3 class="text-center">Misc</h3>
+
+                            <table width="100%">
+                                <tr>
+                                    <td>Aignment</td>
+                                    <td><span class="pull-right"><span id="player-alignment"></span></span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Experience</td>
+                                    <td><span class="pull-right"><span id="player-experience"></span></span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Weight</td>
+                                    <td><span class="pull-right"><span id="player-weight"></span> of <span id="player-max-weight"></span></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td><span class="pull-right"><span id="player-status"></span></span></td>
+                                </tr>
 
 
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="scoreContainer window-inner">
-                        <h3 class="text-center">Offence</h3>
+                            </table>
+                        </div>
 
-                        <table width="100%">
-                            <tr>
-                                <td>Hit Roll</td>
-                                <td> <span class="pull-right"> <span id="player-hitroll"></span> </span> </td>
-                            </tr>
-                            <tr>
-                                <td>Dam Roll</td>
-                                <td> <span class="pull-right"><span id="player-damroll"></span></span></td>
-                            </tr>
-                            <tr>
-                                <td>Wimpy</td>
-                                <td> <span class="pull-right"> <span id="player-wimpy"></span></span></td>
-                            </tr>
-                            
-                        </table>
-                    </div>
-                </div>
-                <div class="col-xs-12">
-                    <div class="scoreContainer window-inner">
-                        <h3 class="text-center">Misc</h3>
-
-                        <table width="100%">
-                            <tr>
-                                <td>Aignment</td>
-                                <td><span class="pull-right"><span id="player-alignment"></span></span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Experience</td>
-                                <td><span class="pull-right"><span id="player-experience"></span></span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Weight</td>
-                                <td><span class="pull-right"><span id="player-weight"></span> of <span id="player-max-weight"></span></span></td>
-                            </tr>
-                            <tr>
-                                <td>Status</td>
-                                <td><span class="pull-right"><span id="player-status"></span></span></td>
-                            </tr>
-                            
-
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="scoreContainer window-inner">
+                        <div class="scoreContainer">
                             <h3 class="text-center">Stats</h3>
 
                             <table width="100%">
@@ -156,13 +138,12 @@
                                     <td>Quest Points</td>
                                     <td> <span class="pull-right">N/A</span></td>
                                 </tr>
-                               
+
 
                             </table>
                         </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="scoreContainer window-inner">
+
+                        <div class="scoreContainer">
                             <h3 class="text-center">Money</h3>
 
                             <table width="100%">
@@ -176,7 +157,7 @@
                                     <td><span class="pull-right"><span id="player-silver"></span></span></td>
                                 </tr>
 
-                              
+
                                 <tr>
                                     <td>Gold</td>
                                     <td><span class="pull-right"><span id="player-gold"></span></span></td>
@@ -185,51 +166,47 @@
 
                             </table>
                         </div>
+
                     </div>
                 </div>
             </div>
 
+            <div id="info-inv" class="full-height" style="display: table; width: 100%; height: 44.3%; margin-top: 10px;">
+                <div style="display: table-cell; width: 100%;" class="window">
+                    <h3 class="text-center">Inventory</h3>
 
-        
-             
+                    <div id="invList"></div>
+                </div>
 
             </div>
-    </div>
-</div>
-
-<div id="info-inv" class="full-height" style="display: table; width: 100%; height: 44.3%; margin-top: 10px;">
-    <div style="display: table-cell; width: 100%;" class="window">
-        <h3 class="text-center">Inventory</h3>
-
-        <div id="invList"></div>
-    </div>
-
-</div>
-</div>
-<div id="main-panel" class="col-xs-12 col-sm-6 full-height">
-
-    <div id="discussion" class="full-height window" style="overflow-y: scroll; padding: 15px;"></div>
-</div>
-<div  id="right-panel" class="col-xs-12 col-sm-3 hidden-xs full-height" style="display: table;">
-
-    <div id="info-room" class="full-height" style="display: table; width: 100%; height: 50%;">
-
-        <div style="display: table-cell; width: 100%;" class="window">
-            <h3>Room Info</h3>
-
-            <span id="roomTitleInfo"></span>
-            <span id="roomDescInfo"></span>
         </div>
+        <div id="main-panel" class="col-xs-12 col-sm-6 full-height">
 
-    </div>
+            <div id="discussion" class="full-height window" style="overflow-y: scroll; padding: 15px;"></div>
+        </div>
+        <div id="right-panel" class="col-xs-12 col-sm-3 hidden-xs full-height" style="display: table;">
 
-    <div id="info-quest" class="full-height" style="display: table; width: 100%; height: 44.3%; margin-top: 10px;">
-        <div style="display: table-cell; width: 100%;" class="window">
-            <h3>Quests</h3>
+            <div id="info-room" class="full-height" style="display: table; width: 100%; height: 50%;">
+
+
+                <div style="display: table-cell; width: 100%;" class="window">
+
+                    <div class="js-room" style="overflow-y: scroll; max-height: 40vh;">
+                        <h3>Room Info</h3>
+
+                        <span id="roomTitleInfo"></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="info-quest" class="full-height" style="display: table; width: 100%; height: 44.3%; margin-top: 10px;">
+                <div style="display: table-cell; width: 100%;" class="window">
+                    <h3>Quests</h3>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</div>
 
 
     <a id="open-right-panel" href="javascript:void(0);" class="full-height visible-xs" style="position: absolute; top: -120px; right: 0; width: 22%; z-index: 900"></a>
@@ -237,41 +214,45 @@
 
 
 
-<div class="modal" tabindex="-1" role="dialog" data-show="true" style="display: block;" id="signUpModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="row">
-                    <div class="col-xs-3 active raceBreadCrumb"><span class="hidden-xs">Choose</span> Race
-                    </div>
-                    <div class="col-xs-3 classBreadCrumb"><span class="hidden-xs">Choose</span> Class
-                    </div>
-                    <div class="col-xs-3 statsBreadCrumb"><span class="hidden-xs">Roll</span> Stats
-                    </div>
-                    <div class="col-xs-3 infoBreadCrumb"><span class="hidden-xs">Character</span> Info
+    <div class="modal" tabindex="-1" role="dialog" data-show="true" style="display: block;" id="signUpModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <div class="col-xs-3 active raceBreadCrumb">
+                            <span class="hidden-xs">Choose</span> Race
+                        </div>
+                        <div class="col-xs-3 classBreadCrumb">
+                            <span class="hidden-xs">Choose</span> Class
+                        </div>
+                        <div class="col-xs-3 statsBreadCrumb">
+                            <span class="hidden-xs">Roll</span> Stats
+                        </div>
+                        <div class="col-xs-3 infoBreadCrumb">
+                            <span class="hidden-xs">Character</span> Info
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-body">
+                <div class="modal-body">
 
 
-                @{ Html.RenderPartial("~/Views/Home/Partial/Account/Login.cshtml"); }
+                    @{ Html.RenderPartial("~/Views/Home/Partial/Account/Login.cshtml"); }
 
-                @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/RaceSelection.cshtml"); }
+                    @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/RaceSelection.cshtml"); }
 
-                @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/ClassSelection.cshtml"); }
+                    @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/ClassSelection.cshtml"); }
 
-                @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/StatSelection.cshtml"); }
+                    @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/StatSelection.cshtml"); }
 
-                @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/CharSelection.cshtml"); }
+                    @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/CharSelection.cshtml"); }
 
-                <!-- TODO: Stat Partial & Char info partial -->
+                    <!-- TODO: Stat Partial & Char info partial -->
 
-            </div>
+                </div>
 
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </div>
 <div class="container-fluid" style="position: absolute; bottom: 0; width: 100%">
     <div class="row">
@@ -281,7 +262,7 @@
                     <span id="stat-HP"></span>/<span id="stat-max-HP"></span>
                 </div>
             </div>
-            
+
         </div>
         <div class="col-xs-4">
             <div class="progress">
@@ -290,7 +271,7 @@
                 </div>
             </div>
 
-             
+
         </div>
         <div class="col-xs-4">
             <div class="progress">
@@ -298,8 +279,8 @@
                     <span id="stat-endurance"></span>/<span id="stat-max-endurance"></span>
                 </div>
 
-                </div>
             </div>
+        </div>
 
     </div>
     <div class="row hidden">
@@ -315,7 +296,7 @@
         <div class="col-xs-12" style="position: relative;">
             <form onSubmit="return false;">
                 <input type="text" id="message" class="form-control" placeholder="Type here..." autofocus style="background: #101010; color: #f1f1f1; margin-bottom: 15px;" />
-                <button type="submit" id="sendmessage"  style="position: absolute; right: 25px; top: 5px; background: #fed967; border: 1px solid #ff8c00">send</button>
+                <button type="submit" id="sendmessage" style="position: absolute; right: 25px; top: 5px; background: #fed967; border: 1px solid #ff8c00">send</button>
             </form>
         </div>
 

@@ -191,7 +191,14 @@ pre {
     }
 
     .js-score {position:relative;}
+
+    h3  {
+        border-bottom: 2px solid #525045;
+        padding:10px 0;
+    }
 }
+
+.js-room {position:relative;}
 
 .errorMsg {
     color: #F04903;

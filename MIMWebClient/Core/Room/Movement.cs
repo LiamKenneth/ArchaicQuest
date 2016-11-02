@@ -26,6 +26,9 @@ namespace MIMWebClient.Core.Room
                     enterText = "You walk in " + direction;
                     HubContext.getHubContext.Clients.Client(players.HubGuid).addNewMessageToPage(enterText);
                 }
+
+                var roomdata = LoadRoom.DisplayRoom(room, players.Name);
+                Score.UpdateUiRoom(players, roomdata);
             }
 
         }
@@ -50,6 +53,9 @@ namespace MIMWebClient.Core.Room
                     exitText = "You walk " + direction;
                     HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(exitText);
                 }
+
+                var roomdata = LoadRoom.DisplayRoom(room, players.Name);
+                Score.UpdateUiRoom(players, roomdata);
             }
         }
 
