@@ -234,9 +234,9 @@ namespace MIMWebClient.Core.Update
 
                     player.ManaPoints += die.dice(1, 1, maxGain);
 
-                    if (player.ManaPoints > player.MaxHitPoints)
+                    if (player.ManaPoints > player.MaxManaPoints)
                     {
-                        player.ManaPoints = player.MaxHitPoints;
+                        player.ManaPoints = player.MaxManaPoints;
                     }
 
 

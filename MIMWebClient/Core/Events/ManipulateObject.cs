@@ -442,6 +442,7 @@ namespace MIMWebClient.Core.Events
             //save to cache
             Cache.updateRoom(room, currentRoom);
             Cache.updatePlayer(player, currentPlayer);
+            Score.UpdateUiInventory(player);
         }
 
         /// <summary>
@@ -478,6 +479,8 @@ namespace MIMWebClient.Core.Events
                         
 
                         BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You drop a " + playerInv[i].name, player.Name + " drops a " + playerInv[i].name);
+
+                        player.Inventory.Remove(playerInv[i]);
                     }
                     else
                     {
@@ -547,10 +550,13 @@ namespace MIMWebClient.Core.Events
                     BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You put a " + item.name + " inside the " + container.name, player.Name + " puts a " + item.name + " inside the " + container.name);
                 }
 
-                //save to cache
-                Cache.updateRoom(room, currentRoom);
-                Cache.updatePlayer(player, currentPlayer);
+               
             }
+
+            //save to cache
+            Cache.updateRoom(room, currentRoom);
+            Cache.updatePlayer(player, currentPlayer);
+            Score.UpdateUiInventory(player);
         }
 
 
