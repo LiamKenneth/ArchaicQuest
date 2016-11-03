@@ -563,7 +563,15 @@ namespace MIMWebClient.Core.Events
                 //calc xp
                 //create corpse
 
-             
+                foreach (var player in room.players)
+                {
+
+                    var roomdata = LoadRoom.DisplayRoom(room, player.Name);
+                    Score.UpdateUiRoom(player, roomdata);
+                }
+
+                
+
             }
 
         }

@@ -453,15 +453,14 @@
 
     client.UpdateUiRoom = function (room) {
 
-        console.log("room" + room)
+    
        
         $("#roomTitleInfo").html(room);
       //  $("#roomDescInfo").html(description);
     };
 
     client.updateInventory = function (inventory) {
-        console.log(inventory);
-
+   
         var inventoryCount = inventory.length;
 
         if (inventory == 0) {
@@ -470,7 +469,7 @@
         }
         $("#invList").empty();
         for (var i = 0; i < inventoryCount; i++) {
-            $("#invList").append(inventory[i].name);
+            $("#invList").append("<li>" + inventory[i].name + "</li>");
         }
 
 

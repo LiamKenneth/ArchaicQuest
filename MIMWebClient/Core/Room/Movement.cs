@@ -15,20 +15,21 @@ namespace MIMWebClient.Core.Room
             direction = oppositeDirection(direction);
             string enterText = name + " " + movement + direction;
 
-            foreach (var players in room.players)
+            for (int i = 0; i < room.players.Count; i++)
             {
-                if (player.Name != players.Name)
+                
+             if (player.Name != room.players[i].Name)
                 {
-                    HubContext.getHubContext.Clients.Client(players.HubGuid).addNewMessageToPage(enterText);
+                    HubContext.getHubContext.Clients.Client(room.players[i].HubGuid).addNewMessageToPage(enterText);
                 }
                 else
                 {
                     enterText = "You walk in " + direction;
-                    HubContext.getHubContext.Clients.Client(players.HubGuid).addNewMessageToPage(enterText);
+                    HubContext.getHubContext.Clients.Client(room.players[i].HubGuid).addNewMessageToPage(enterText);
                 }
 
-                var roomdata = LoadRoom.DisplayRoom(room, players.Name);
-                Score.UpdateUiRoom(players, roomdata);
+                var roomdata = LoadRoom.DisplayRoom(room, room.players[i].Name);
+                Score.UpdateUiRoom(room.players[i], roomdata);
             }
 
         }
@@ -41,11 +42,11 @@ namespace MIMWebClient.Core.Room
 
             string exitText = name + " " + movement + exitDir;
 
-            foreach (var players in room.players)
+            for (int i = 0; i < room.players.Count; i++)
             {
-                if (player.Name != players.Name)
+                if (player.Name != room.players[i].Name)
                 {
-                    HubContext.getHubContext.Clients.Client(players.HubGuid).addNewMessageToPage(exitText);
+                    HubContext.getHubContext.Clients.Client(room.players[i].HubGuid).addNewMessageToPage(exitText);
                     
                 }
                 else
@@ -54,8 +55,8 @@ namespace MIMWebClient.Core.Room
                     HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(exitText);
                 }
 
-                var roomdata = LoadRoom.DisplayRoom(room, players.Name);
-                Score.UpdateUiRoom(players, roomdata);
+                var roomdata = LoadRoom.DisplayRoom(room, room.players[i].Name);
+                Score.UpdateUiRoom(room.players[i], roomdata);
             }
         }
 
@@ -87,7 +88,7 @@ namespace MIMWebClient.Core.Room
                     }
                 case "Down":
                     {
-                        return "" + "" + "rom Upstairs";
+                        return "" + "" + "from Upstairs";
                     }
                 default:
                     {

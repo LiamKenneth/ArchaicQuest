@@ -43,6 +43,8 @@
         {
 
             var context = HubContext.getHubContext;
+ 
+
             context.Clients.Client(playerData.HubGuid).updateInventory(playerData.Inventory);
        
         }
