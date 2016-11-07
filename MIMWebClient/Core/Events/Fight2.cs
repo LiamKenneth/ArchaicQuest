@@ -146,6 +146,16 @@ namespace MIMWebClient.Core.Events
 
                 while (attacker.HitPoints > 0 && defender.HitPoints > 0)
                 {
+                    //check still here
+                    Player target = FindValidTarget(room, defender.Name, attacker);
+
+
+                    if (target == null)
+                    {
+                        HubContext.SendToClient("No one here by that name", attacker.HubGuid);
+                        return;
+                    }
+
                     bool canAttack = CanAttack(attacker, defender);
 
                     if (canAttack)
@@ -165,6 +175,14 @@ namespace MIMWebClient.Core.Events
                             double toHit = (offense/evasion)*100;
                             int chance = D100();
 
+                            Player checkAttackerAgainAfterDelay = FindValidTarget(room, defender.Name, attacker);
+                            Player checkDefenderAgainAfterDelay = FindValidTarget(room, attacker.Name, defender);
+
+                            if (checkAttackerAgainAfterDelay == null || checkDefenderAgainAfterDelay == null)
+                            {
+                                //Fixes bug where fleeing you would still get hit and hit back while in another room.
+                                return;
+                            }
 
                             ShowAttack(attacker, defender, room, toHit, chance);
 

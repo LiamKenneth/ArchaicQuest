@@ -24,7 +24,11 @@ namespace MIMWebClient.Core.Events
                //var exit = room.exits.Find(x => x.name.Equals("north", StringComparison.InvariantCultureIgnoreCase));
 
                 player.Status = PlayerSetup.Player.PlayerStatus.Standing;
+              
+
                 HubContext.SendToClient(player.Name + " Flee's from combat", player.Target.HubGuid);
+
+                player.Target = null;
 
                 Room.Movement.Move(player, room, "North");
             }
