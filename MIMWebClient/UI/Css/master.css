@@ -172,6 +172,11 @@ pre {
     top: 25px;
     right: 0; }
 
+.showExit {
+  position: relative;
+  background: url("/UI/img/compass.png") no-repeat center center;
+  background-size: contain; }
+
 /* perfect-scrollbar v0.6.13 */
 .ps-container {
   -ms-touch-action: auto;

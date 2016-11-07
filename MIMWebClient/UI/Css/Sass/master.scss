@@ -228,5 +228,11 @@ pre {
     }
 }
 
+.showExit {
+    position:relative;
+    background:url('/UI/img/compass.png') no-repeat center center;
+    background-size: contain;
+}
+
 
 @import "perfect-scrollbar.scss";
