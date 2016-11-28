@@ -25,14 +25,14 @@ Potential Layout
 							|			 |              |                                                                     Ankar Woods-------Ankar Woods------AnkarWoods-----Cabin---ANkarwoods
 							|	         |              |                       Graveyard-----Graveyard----Graveyard               |                 |               |
 							|		  Village           |                            |                      |                      |                 |               |
-					 Square Walk-------Square------Square WAlk-----Village Hall      |       Church         |                  Ankar Woods-------Ankar Woods-------Ankar woods
+				   ---Square Walk-------Square------Square WAlk-----Village Hall      |       Church         |                  Ankar Woods-------Ankar Woods-------Ankar woods
 				            |            |              |                            |          |           |                      |
 							|            |              |                         Graveyard-----|----------Graveyard               |
 							|            |    			|		                                |                             Path to the woods
 							|			 |				|                                       |                                  |
 					 Square Walk------Square Walk-------Square Walk-------------Church Road---Church Road                          |
 			  |											|                                                                   Path to the woods
-			  | 	    House			House	     	|             House        House             House                         |
+			  | 	    House			House	     	|             House *        House             House                       |
        		  |	         |                |             |              |             |               |                             |
           Ankar Lane---Ankar Lane-----Ankar Lane-------Ankar Lane-----Ankar LaNe----Ankar Lane---- Ankar Lane----------------Ankar Lane----ELSEWHERE  
               |          |                |              |              |            |                 |                           |                                   Crops--crops---crops

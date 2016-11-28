@@ -40,10 +40,13 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 areaId = 0,
                 title = "Village Square",
-                description = "A round stone well occupies the centre of the grey cobbled square. " +
-                "A large oak tree provides shade. It is frequently used by passers-by and the villages main source of fresh water " +
-                "<br /> Not far from the well is the village notice board. " +
-                "<br /> The local inn is to the north.",
+                description = "<p>A wide open space stretches out here at the centre point of Anker. " +
+                              "A few trees dot the green space but the village well dominates the middle" +
+                              " of the square and is used frequently by villagers and passers-by, a dirt track " +
+                              "forged by hundreds of feet forms a central square with paths leading in all cardinal " +
+                              "directions back to Square walk. Benches sit either side of the pathways facing the inner square.</p>" +
+                              "<p> A tall wooden signpost stands near to the well showing directions to key places of Anker. " +
+                              "The village notice board has been hammered into a large oak tree near the path to the centre.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -74,10 +77,29 @@ namespace MIMWebClient.Core.World.Anker
             var well = new RoomObject
             {
                 name = "Stone well",
-                look = "A well used wooden bucket hangs lopsided over the well. On the side is a handle used for lowering and lifting the bucket.",
+                look = "A well used wooden bucket hangs lopsided by a rope swinging over the well. On the side of the well is a handle used for lowering and lifting the bucket.",
                 examine = "Inscribed in one of the stone blocks of the well is IX-XXVI, MMXVI",
                 touch = "The stone fills rough to touch",
                 smell = "The water from the well smells somewhat fresh and pleasant"
+            };
+
+            var signpost = new RoomObject
+            {
+                name = "Signpost",
+                look = "The signpost points:<br /> " +
+                       "<span class='RoomExits'>North</span><br /> The Drunken Sailor<br />" +
+                       "<span class='RoomExits'>North East</span><br />  General Store <br /> Black smith<br />" +
+                       "<span class='RoomExits'>East</span><br />Village hall<br />" +
+                       "<span class='RoomExits'>South East</span><br />Church<br />" +
+                       "<span class='RoomExits'>North West</span><br /> Stables.",
+                examine = "The signpost points:<br /> " +
+                       "<span class='RoomExits'>North</span><br /> The Drunken Sailor<br />" +
+                       "<span class='RoomExits'>North East</span><br />  General Store <br /> Black smith<br />" +
+                       "<span class='RoomExits'>East</span><br />Village hall<br />" +
+                       "<span class='RoomExits'>South East</span><br />Church<br />" +
+                       "<span class='RoomExits'>North West</span><br /> Stables.",
+                touch = "The signpost is finely crafted and smooth to touch",
+                smell = "The signpost has no obvious smell"
             };
 
 
@@ -94,7 +116,7 @@ namespace MIMWebClient.Core.World.Anker
             var noticeboard = new RoomObject
             {
                 name = "Village notice board",
-                look = "A notice board is here with only one piece of parchment attached",
+                look = "A notice board has been hammered into the oak tree with only one piece of parchment attached",
                 examine = "You take a closer look at the notice board and read the parchment attached <br />"
                 + "Welcome to MIM <br /> This is the starting village. You can look, examine obviously. Move using N,E,south etc. look around and let me know what you think...",
                 touch = "The notice board is wooden and smooth to touch",
@@ -175,14 +197,14 @@ namespace MIMWebClient.Core.World.Anker
             var bench = new RoomObject
             {
                 name = "Stone bench",
-                look = "A stone bench sits under the shade of the large oak tree",
+                look = "A stone bench sits under the conopy of the large oak tree",
                 examine = "There is nothing more of detail to see",
                 touch = "The stone fills rough to touch",
                 smell = "The smell of flowers is smelt by the bench"
             };
 
 
-
+            room.keywords.Add(signpost);
             room.keywords.Add(noticeboard);
             room.keywords.Add(bucket);
             room.keywords.Add(well);
@@ -358,9 +380,10 @@ namespace MIMWebClient.Core.World.Anker
                 region = "Anker",
                 area = "Anker",
                 areaId = 1,
-                title = "Square walk, outside the Drunken Sailor",
-                description = "To the north is a large inn, its exterial walls plastered white. Either side of the large door is two checked windows." +
-                " To the south is the Village Square. The square walk continues east and west towards the stables joining the inn.",
+                title = "Square walk, outside the Red Lion",
+                description = "<p>The Red Lion occupies the north western part of Square walk. It's large oval wooden door is kept closed keeping the warmth inside as well as the hustle and bustle hidden from the outside." +
+                              "Large windows sit either side of the door to the black and white timber building. The inn carries on to the west where the stables reside. " +
+                              "The dirt track of square walk continues west and east towards the general store.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -486,6 +509,106 @@ namespace MIMWebClient.Core.World.Anker
 
             room.mobs.Add(trainer);
 
+
+
+
+            return room;
+        }
+
+        public static Room SquareWalkOutsideStables()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 1,
+                title = "Square walk, outside the stables of the Red Lion",
+                description = "<p>This corner of Square walk gives access to the stables of the Red lion. Mainly used by travellers to house their mounts." +
+                              "The stables connect to the Inn giving it another form of entry or exit. Square walk continues south and east to the entrance of The Red Lion. </p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+
+          
+
+
+            #region exits
+
+
+            // Create Exits
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 2,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                description = new Item.Description
+                {
+                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
+                    exam = "To the north you see the inn of the drunken sailor.",
+
+                }
+            };
+
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 0,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                description = new Item.Description
+                {
+                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
+                    exam = "To the north you see the inn of the drunken sailor.",
+
+                }
+            };
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 0,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                description = new Item.Description
+                {
+                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
+                    exam = "To the north you see the inn of the drunken sailor.",
+
+                }
+            };
+
+
+           
+
+            #endregion
+            room.exits.Add(north);
+            room.exits.Add(east);
+            room.exits.Add(south);
 
 
 
