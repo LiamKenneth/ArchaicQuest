@@ -524,7 +524,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 1,
                 title = "Square walk, outside the stables of the Red Lion",
                 description = "<p>This corner of Square walk gives access to the stables of the Red lion. Mainly used by travellers to house their mounts." +
-                              "The stables connect to the Inn giving it another form of entry or exit. Square walk continues south and east to the entrance of The Red Lion. </p>",
+                              "bits of hay and manure litter the northern entrance to the stables. Square walk continues south and east to the entrance of The Red Lion. </p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -604,6 +604,105 @@ namespace MIMWebClient.Core.World.Anker
 
 
            
+
+            #endregion
+            room.exits.Add(north);
+            room.exits.Add(east);
+            room.exits.Add(south);
+
+
+
+            return room;
+        }
+
+        public static Room SquareWalkWestOfCentre()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 1,
+                title = "Square walk, west of the centre",
+                description = "<p></p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+
+
+
+
+            #region exits
+
+
+            // Create Exits
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 2,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                description = new Item.Description
+                {
+                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
+                    exam = "To the north you see the inn of the drunken sailor.",
+
+                }
+            };
+
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 0,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                description = new Item.Description
+                {
+                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
+                    exam = "To the north you see the inn of the drunken sailor.",
+
+                }
+            };
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 0,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                description = new Item.Description
+                {
+                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
+                    exam = "To the north you see the inn of the drunken sailor.",
+
+                }
+            };
+
+
+
 
             #endregion
             room.exits.Add(north);
@@ -746,5 +845,7 @@ namespace MIMWebClient.Core.World.Anker
 
             return room;
         }
+
+       
     }
 }
