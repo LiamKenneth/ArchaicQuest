@@ -40,13 +40,11 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 areaId = 0,
                 title = "Village Square",
-                description = "<p>A wide open space stretches out here at the centre point of Anker. " +
-                              "A few trees dot the green space but the village well dominates the middle" +
-                              " of the square and is used frequently by villagers and passers-by, a dirt track " +
-                              "forged by hundreds of feet forms a central square with paths leading in all cardinal " +
-                              "directions back to Square walk. Benches sit either side of the pathways facing the inner square.</p>" +
-                              "<p> A tall wooden signpost stands near to the well showing directions to key places of Anker. " +
-                              "The village notice board has been hammered into a large oak tree near the path to the centre.</p>",
+                description = "<p>A cross is formed by dirt tracks running through the village green from" +
+                            "Square walk to the centre, circling a stone well. Low hedges follow the " +
+                            "path either side. A lantern hangs from a wooden signpost in the centre. " +
+                            "The village notice board has been hammered into a large oak tree near the " +
+                            "path to the centre.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
