@@ -40,7 +40,7 @@ namespace MIMWebClient.Core.Events
 
             Room room = collection.Find(x => x.areaId == this.id && x.area == Area && x.region == Region).FirstOrDefault();
 
-            
+
             if (room != null)
             {
                 return room;
@@ -118,9 +118,9 @@ namespace MIMWebClient.Core.Events
             }
 
 
-            string displayRoom = "<p class='roomTitle'>" + roomTitle + "<p><p class='roomDescription'>" + roomDescription + "</p> <p class='RoomExits'>[ Exits: " + exitList.ToLower() + " ]</p>" + itemList  + "\r\n" + playerList + "\r\n" + mobList;
-            
-          //  Score.UpdateUiRoom(room.players.FirstOrDefault(x => x.Name.Equals(playerName)), displayRoom);
+            string displayRoom = "<p class='roomTitle'>" + roomTitle + "<p><p class='roomDescription'>" + roomDescription + "</p> <p class='RoomExits'>[ Exits: " + exitList.ToLower() + " ]</p>" + itemList + "\r\n" + playerList + "\r\n" + mobList;
+
+            //  Score.UpdateUiRoom(room.players.FirstOrDefault(x => x.Name.Equals(playerName)), displayRoom);
             return displayRoom;
 
         }
@@ -187,15 +187,15 @@ namespace MIMWebClient.Core.Events
 
                     if (isPlayer)
                     {
-                          targetPlayerId = playerDescription.HubGuid;
+                        targetPlayerId = playerDescription.HubGuid;
                     }
                 }
 
-              
+                var roomExitDescription = roomData.exits.Find(x => x.name.ToLower().Contains(commandOptions));
 
 
                 //Returns descriptions for important objects in the room
-                    if (roomDescription != null && keyword != "look in" && !string.IsNullOrWhiteSpace(commandOptions))
+                if (roomDescription != null && keyword != "look in" && !string.IsNullOrWhiteSpace(commandOptions))
                 {
                     string descriptionText = string.Empty;
                     string broadcastAction = string.Empty;
@@ -248,7 +248,8 @@ namespace MIMWebClient.Core.Events
                     string descriptionText = string.Empty;
                     string broadcastAction = string.Empty;
 
-                    if(keyword.Equals("look in", StringComparison.InvariantCultureIgnoreCase)) {
+                    if (keyword.Equals("look in", StringComparison.InvariantCultureIgnoreCase))
+                    {
 
                         if (itemDescription.open == false)
                         {
@@ -271,15 +272,15 @@ namespace MIMWebClient.Core.Events
                             {
                                 HubContext.SendToClient("You look into the " + itemDescription.name + " but it is empty", player.HubGuid);
                             }
-                           
+
                             HubContext.broadcastToRoom(player.Name + " looks in a " + itemDescription.name, room.players, player.HubGuid, true);
                         }
                         else
                         {
-                            HubContext.SendToClient(itemDescription.name  + " is not a container", player.HubGuid);
+                            HubContext.SendToClient(itemDescription.name + " is not a container", player.HubGuid);
                         }
                     }
-                   else if (keyword.StartsWith("look"))
+                    else if (keyword.StartsWith("look"))
                     {
                         descriptionText = itemDescription.description.look;
                         broadcastAction = " looks at a " + itemDescription.name;
@@ -316,7 +317,7 @@ namespace MIMWebClient.Core.Events
                 {
                     string descriptionText = string.Empty;
 
-                    if (keyword.StartsWith("look"))
+                    if (keyword.StartsWith("look") || keyword.StartsWith("examine"))
                     {
                         descriptionText = mobDescription.Description;
                     }
@@ -335,7 +336,7 @@ namespace MIMWebClient.Core.Events
                 {
                     string descriptionText = string.Empty;
 
-                    if (keyword.StartsWith("look"))
+                    if (keyword.StartsWith("look") || keyword.StartsWith("examine"))
                     {
                         descriptionText = playerDescription.Description;
                     }
@@ -349,6 +350,45 @@ namespace MIMWebClient.Core.Events
                     else
                     {
                         HubContext.SendToClient("You can't do that to a " + playerDescription.Name, player.HubGuid);
+                    }
+                }
+                else if (roomExitDescription != null)
+                {
+                    HubContext.SendToClient("You look " + roomExitDescription.name, player.HubGuid);
+
+                    var currentAreaId = player.AreaId;
+                    player.AreaId = roomExitDescription.areaId;
+
+
+                    var adjacentRoom = Cache.getRoom(player);
+                    if (adjacentRoom == null)
+                    {
+                        var newRoom = new LoadRoom();
+
+                        newRoom.Area = roomExitDescription.area;
+                        newRoom.id = roomExitDescription.areaId;
+                        newRoom.Region = roomExitDescription.region;
+
+                         adjacentRoom = newRoom.LoadRoomFile();
+
+                        //add to cache?
+
+                    }
+
+                  var showNextRoom = LoadRoom.DisplayRoom(adjacentRoom, player.Name);
+
+
+
+                     HubContext.SendToClient(showNextRoom, player.HubGuid);
+
+                    player.AreaId = currentAreaId;
+
+                    foreach (var players in room.players)
+                    {
+                        if (player.Name != players.Name)
+                        {
+                            HubContext.SendToClient(player.Name + " looks " + roomExitDescription.name, players.HubGuid);
+                        }
                     }
                 }
                 else

@@ -75,6 +75,9 @@ namespace MIMWebClient.Core.Update
 
                 switch (tickCount)
                 {
+                    case 0:
+                    case 1:
+                    case 2:
                     case 3:
                         HubContext.getHubContext.Clients.All.addNewMessageToPage(
                             "The moon is slowly moving west across the sky.");

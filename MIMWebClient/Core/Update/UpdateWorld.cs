@@ -33,7 +33,7 @@ namespace MIMWebClient.Core.Update
         /// <returns></returns>
         public static async Task UpdateTime()
         {
-            await Task.Delay(6500);
+            await Task.Delay(60000);
     
             Time.UpdateTIme();
             

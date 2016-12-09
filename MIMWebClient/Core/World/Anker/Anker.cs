@@ -56,7 +56,7 @@ namespace MIMWebClient.Core.World.Anker
                 players = new List<Player>(),
                 fighting = new List<string>(),
                 clean = true,
-                
+
 
             };
 
@@ -105,7 +105,7 @@ namespace MIMWebClient.Core.World.Anker
             var bucket = new RoomObject
             {
                 name = "Bucket",
-                look ="A well used wooden bucket hangs lopsided over the well. On the side is a handle used for lowering and lifting the bucket.",
+                look = "A well used wooden bucket hangs lopsided over the well. On the side is a handle used for lowering and lifting the bucket.",
                 examine = "Inside the bucket you see some gold coins",
                 touch = "The bucket is wet to touch",
                 smell = "The bucket smells damp"
@@ -166,7 +166,7 @@ namespace MIMWebClient.Core.World.Anker
                 location = Item.Item.ItemLocation.Room,
                 description = new Item.Description { look = "Odd looking Key" },
                 keyValue = woodenChestObj.keyId
-        };
+            };
             room.items.Add(oddKey);
 
 
@@ -250,10 +250,10 @@ namespace MIMWebClient.Core.World.Anker
                     exam = "To the north you see the inn of the drunken sailor.",
 
                 },
-               
+
             };
 
-            
+
 
             //create items
 
@@ -263,15 +263,27 @@ namespace MIMWebClient.Core.World.Anker
 
             //Create Mobs
             var cat = new Player
-                          {
+            {
                 NPCId = 0,
-                Name = "Black and White cat", Type = Player.PlayerTypes.Mob, Description = "This black cat's fur looks in pristine condition despite being a stray.",
-                              Strength = 12, Dexterity = 12, Constitution =12, Intelligence = 1, Wisdom = 1, Charisma = 1, MaxHitPoints = 50, HitPoints = 50, Level = 2, Status = Player.PlayerStatus.Standing, 
-              Skills = new List<Skill>(),
-              Inventory = new List<Item.Item>()
+                Name = "Black and White cat",
+                Type = Player.PlayerTypes.Mob,
+                Description = "This black cat's fur looks in pristine condition despite being a stray.",
+                
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Intelligence = 1,
+                Wisdom = 1,
+                Charisma = 1,
+                MaxHitPoints = 50,
+                HitPoints = 50,
+                Level = 2,
+                Status = Player.PlayerStatus.Standing,
+                Skills = new List<Skill>(),
+                Inventory = new List<Item.Item>()
 
-           
-        };
+
+            };
 
             var cat2 = new Player
             {
@@ -307,8 +319,15 @@ namespace MIMWebClient.Core.World.Anker
                 equipable = true,
                 attackType = Item.Item.AttackType.Pierce,
                 slot = Item.Item.EqSlot.Wield,
-                location = Item.Item.ItemLocation.Inventory
+                location = Item.Item.ItemLocation.Inventory,
+                description = new Description(),
+               
             };
+
+            dagger.description.look = "This is just a blunt dagger";
+            dagger.description.exam = "This is an extremly blunt dagger";
+
+         
 
 
             var dagger2 = new Item.Item
@@ -326,23 +345,11 @@ namespace MIMWebClient.Core.World.Anker
             };
 
 
-            var dagger3 = new Item.Item
-            {
-                actions = new Item.Action(),
-                name = "Gold dagger",
-                eqSlot = Item.Item.EqSlot.Wield,
-                weaponType = Item.Item.WeaponType.ShortBlades,
-                stats = new Item.Stats { damMin = 1, damMax = 100, minUsageLevel = 1 },
-                type = Item.Item.ItemType.Weapon,
-                equipable = true,
-                attackType = Item.Item.AttackType.Pierce,
-                slot = Item.Item.EqSlot.Wield,
-                location = Item.Item.ItemLocation.Inventory
-            };
+            
+            
 
-
-            room.items.Add(dagger2);
-            room.items.Add(dagger3);
+            room.items.Add(dagger);
+           // room.items.Add(dagger3);
 
             cat.Inventory.Add(dagger);
 
@@ -373,13 +380,14 @@ namespace MIMWebClient.Core.World.Anker
 
         public static Room SquareWalkOutsideTavern()
         {
+            #region room setup
             var room = new Room
             {
                 region = "Anker",
                 area = "Anker",
                 areaId = 1,
                 title = "Square walk, outside the Red Lion",
-                description = "<p>The Red Lion occupies the north western part of Square walk. It's large oval wooden door is kept closed keeping the warmth inside as well as the hustle and bustle hidden from the outside." +
+                description = "<p>The Red Lion occupies the north western part of Square walk. It's large oval wooden door is kept closed keeping the warmth inside as well as the hustle and bustle hidden from the outside. " +
                               "Large windows sit either side of the door to the black and white timber building. The inn carries on to the west where the stables reside. " +
                               "The dirt track of square walk continues west and east towards the general store.</p>",
 
@@ -396,8 +404,9 @@ namespace MIMWebClient.Core.World.Anker
 
             };
 
+            #endregion
 
-
+            #region NPC setup
             var trainer = new Player
             {
                 NPCId = 0,
@@ -418,6 +427,8 @@ namespace MIMWebClient.Core.World.Anker
                 Inventory = new List<Item.Item>(),
                 Trainer = true
             };
+
+            #endregion
 
 
 
@@ -487,7 +498,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "West",
                 area = "Anker",
                 region = "Anker",
-                areaId = 0,
+                areaId = 3,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false,
@@ -500,9 +511,11 @@ namespace MIMWebClient.Core.World.Anker
             };
 
             #endregion
+
+
             room.exits.Add(north);
             room.exits.Add(east);
-            room.exits.Add(south);         
+            room.exits.Add(south);
             room.exits.Add(west);
 
             room.mobs.Add(trainer);
@@ -519,7 +532,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 region = "Anker",
                 area = "Anker",
-                areaId = 1,
+                areaId = 3,
                 title = "Square walk, outside the stables of the Red Lion",
                 description = "<p>This corner of Square walk gives access to the stables of the Red lion. Mainly used by travellers to house their mounts." +
                               "bits of hay and manure litter the northern entrance to the stables. Square walk continues south and east to the entrance of The Red Lion. </p>",
@@ -539,7 +552,7 @@ namespace MIMWebClient.Core.World.Anker
 
 
 
-          
+
 
 
             #region exits
@@ -569,7 +582,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "South",
                 area = "Anker",
                 region = "Anker",
-                areaId = 0,
+                areaId = 4,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false,
@@ -601,7 +614,7 @@ namespace MIMWebClient.Core.World.Anker
             };
 
 
-           
+
 
             #endregion
             room.exits.Add(north);
@@ -619,7 +632,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 region = "Anker",
                 area = "Anker",
-                areaId = 1,
+                areaId = 4,
                 title = "Square walk, west of the centre",
                 description = "<p></p>",
 
@@ -723,7 +736,7 @@ namespace MIMWebClient.Core.World.Anker
                 description = "The inside of the tavern is a single, low-roofed room. Rancid oil lamps emit a gloomy light." +
                 " Only a handful of people can be seen through the smoke-filled air. A small door to the west leads out to the stables." +
                 " A bad-tempered looking barkeeper seems to be cleaning the counter. ",
-      
+
                 //Defaults
                 exits = new List<Exit>(),
                 items = new List<Item.Item>(),
@@ -793,10 +806,10 @@ namespace MIMWebClient.Core.World.Anker
             room.mobs.Add(modo);
             room.mobs.Add(dyten);
             #region exits
- 
 
-                // Create Exits
-                var west = new Exit
+
+            // Create Exits
+            var west = new Exit
             {
                 name = "West",
                 area = "Anker",
@@ -814,7 +827,7 @@ namespace MIMWebClient.Core.World.Anker
             };
 
             #endregion
-          
+
             room.exits.Add(west);
 
             var counter = new RoomObject
@@ -844,6 +857,6 @@ namespace MIMWebClient.Core.World.Anker
             return room;
         }
 
-       
+
     }
 }
