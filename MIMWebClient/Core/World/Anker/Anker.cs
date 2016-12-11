@@ -243,16 +243,23 @@ namespace MIMWebClient.Core.World.Anker
                 canLock = true,
                 canOpen = true,
                 open = true,
-                doorName = "wooden door",
-                description = new Item.Description
-                {
-                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
-                    exam = "To the north you see the inn of the drunken sailor.",
-
-                },
+                doorName = "wooden door" 
 
             };
 
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 4,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = true,
+                canOpen = true,
+                open = true
+            };
 
 
             //create items
@@ -260,6 +267,7 @@ namespace MIMWebClient.Core.World.Anker
             room.items.Add(bucketObj);
 
             room.exits.Add(north);
+            room.exits.Add(west);
 
             //Create Mobs
             var cat = new Player
@@ -445,13 +453,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 2,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false,
-                description = new Item.Description
-                {
-                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
-                    exam = "To the north you see the inn of the drunken sailor.",
-
-                }
+                locked = false 
             };
 
             // Create Exits
@@ -463,13 +465,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 0,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false,
-                description = new Item.Description
-                {
-                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
-                    exam = "To the north you see the inn of the drunken sailor.",
-
-                }
+                locked = false 
             };
 
 
@@ -483,12 +479,7 @@ namespace MIMWebClient.Core.World.Anker
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false,
-                description = new Item.Description
-                {
-                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
-                    exam = "To the north you see the inn of the drunken sailor.",
-
-                }
+                 
             };
 
 
@@ -501,13 +492,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 3,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false,
-                description = new Item.Description
-                {
-                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
-                    exam = "To the north you see the inn of the drunken sailor.",
-
-                }
+                locked = false 
             };
 
             #endregion
@@ -567,13 +552,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 2,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false,
-                description = new Item.Description
-                {
-                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
-                    exam = "To the north you see the inn of the drunken sailor.",
-
-                }
+                locked = false 
             };
 
             // Create Exits
@@ -585,13 +564,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 4,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false,
-                description = new Item.Description
-                {
-                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
-                    exam = "To the north you see the inn of the drunken sailor.",
-
-                }
+                locked = false 
             };
 
 
@@ -604,13 +577,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 0,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false,
-                description = new Item.Description
-                {
-                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
-                    exam = "To the north you see the inn of the drunken sailor.",
-
-                }
+                locked = false 
             };
 
 
@@ -634,7 +601,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 areaId = 4,
                 title = "Square walk, west of the centre",
-                description = "<p></p>",
+                description = "<p>This dirt track here leads north and curves here to the west. A latern has been placed on the corner patch of grass to the light at night. Wild flowers dot either side of the dusty path. In the distance towards the south you see the back of some houses.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -652,8 +619,6 @@ namespace MIMWebClient.Core.World.Anker
 
 
 
-
-
             #region exits
 
 
@@ -663,36 +628,13 @@ namespace MIMWebClient.Core.World.Anker
                 name = "North",
                 area = "Anker",
                 region = "Anker",
-                areaId = 2,
+                areaId = 3,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false,
-                description = new Item.Description
-                {
-                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
-                    exam = "To the north you see the inn of the drunken sailor.",
-
-                }
+                locked = false 
             };
 
-            // Create Exits
-            var south = new Exit
-            {
-                name = "South",
-                area = "Anker",
-                region = "Anker",
-                areaId = 0,
-                keywords = new List<string>(),
-                hidden = false,
-                locked = false,
-                description = new Item.Description
-                {
-                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
-                    exam = "To the north you see the inn of the drunken sailor.",
-
-                }
-            };
-
+ 
 
             // Create Exits
             var east = new Exit
@@ -703,23 +645,17 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 0,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false,
-                description = new Item.Description
-                {
-                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
-                    exam = "To the north you see the inn of the drunken sailor.",
-
-                }
+                locked = false, 
             };
 
+      
 
 
 
             #endregion
             room.exits.Add(north);
             room.exits.Add(east);
-            room.exits.Add(south);
-
+          
 
 
             return room;
@@ -735,7 +671,7 @@ namespace MIMWebClient.Core.World.Anker
                 title = "The Drunken Sailor",
                 description = "The inside of the tavern is a single, low-roofed room. Rancid oil lamps emit a gloomy light." +
                 " Only a handful of people can be seen through the smoke-filled air. A small door to the west leads out to the stables." +
-                " A bad-tempered looking barkeeper seems to be cleaning the counter. ",
+                " A bad-tempered looking barkeeper seems to be cleaning the counter. A large door south leads out to Square walk",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -817,18 +753,25 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 0,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false,
-                description = new Item.Description
-                {
-                    look = "A small wooden door leads to the stables.", //return mobs / players?
-                    exam = "The door seems closed. Maybe you can open it by using your hands.",
+                locked = false, 
+            };
 
-                }
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 1,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false 
             };
 
             #endregion
 
             room.exits.Add(west);
+            room.exits.Add(south);
 
             var counter = new RoomObject
             {
