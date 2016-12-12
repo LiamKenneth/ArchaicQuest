@@ -41,7 +41,13 @@ namespace UpdateDB
             areas.Add(Anker.VillageSquare());
             areas.Add(Anker.SquareWalkOutsideTavern());
             areas.Add(Anker.SquareWalkOutsideStables());
+            areas.Add(Anker.RedLionStables());
+            areas.Add(Anker.SquareWalkCommerceCorner());
+            areas.Add(Anker.SquareWalkEastOfCentre());
+            areas.Add(Anker.SquareWalkEntrance());
+            areas.Add(Anker.SquareWalkSouthWestOfCentre());
             areas.Add(Anker.SquareWalkWestOfCentre());
+            areas.Add(Anker.SquareWalkSouthOfCentre());
             areas.Add(Anker.DrunkenSailor());
             areaSpeed.Stop();
             Console.WriteLine("Compiling Areas Completed in {0}ms.", areaSpeed.Elapsed.Milliseconds);

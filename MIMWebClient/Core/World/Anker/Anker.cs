@@ -85,13 +85,13 @@ namespace MIMWebClient.Core.World.Anker
             {
                 name = "Signpost",
                 look = "The signpost points:<br /> " +
-                       "<span class='RoomExits'>North</span><br /> The Drunken Sailor<br />" +
+                       "<span class='RoomExits'>North</span><br /> The Red Lion<br />" +
                        "<span class='RoomExits'>North East</span><br />  General Store <br /> Black smith<br />" +
                        "<span class='RoomExits'>East</span><br />Village hall<br />" +
                        "<span class='RoomExits'>South East</span><br />Church<br />" +
                        "<span class='RoomExits'>North West</span><br /> Stables.",
                 examine = "The signpost points:<br /> " +
-                       "<span class='RoomExits'>North</span><br /> The Drunken Sailor<br />" +
+                       "<span class='RoomExits'>North</span><br /> The Red Lion<br />" +
                        "<span class='RoomExits'>North East</span><br />  General Store <br /> Black smith<br />" +
                        "<span class='RoomExits'>East</span><br />Village hall<br />" +
                        "<span class='RoomExits'>South East</span><br />Church<br />" +
@@ -223,8 +223,8 @@ namespace MIMWebClient.Core.World.Anker
                 doorName = "wooden door", - name of door/exit
                 description = new Item.Description - doesn't seem to work
                 {
-                    look = "To the north you see the inn of the drunken sailor.", //return mobs / players?
-                    exam = "To the north you see the inn of the drunken sailor.",
+                    look = "To the north you see the inn of The Red Lion.", //return mobs / players?
+                    exam = "To the north you see the inn of The Red Lion.",
 
                 },
              * 
@@ -246,6 +246,34 @@ namespace MIMWebClient.Core.World.Anker
                 doorName = "wooden door" 
 
             };
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 8,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = true,
+                canOpen = true,
+                open = true
+            };
+
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 6,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = true,
+                canOpen = true,
+                open = true
+            };
+
 
             var west = new Exit
             {
@@ -267,6 +295,8 @@ namespace MIMWebClient.Core.World.Anker
             room.items.Add(bucketObj);
 
             room.exits.Add(north);
+            room.exits.Add(east);
+            room.exits.Add(south);
             room.exits.Add(west);
 
             //Create Mobs
@@ -475,7 +505,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "East",
                 area = "Anker",
                 region = "Anker",
-                areaId = 0,
+                areaId = 9,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false,
@@ -549,7 +579,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "North",
                 area = "Anker",
                 region = "Anker",
-                areaId = 2,
+                areaId = 14,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false 
@@ -574,7 +604,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "East",
                 area = "Anker",
                 region = "Anker",
-                areaId = 0,
+                areaId = 1,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false 
@@ -601,7 +631,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 areaId = 4,
                 title = "Square walk, west of the centre",
-                description = "<p>This dirt track here leads north and curves here to the west. A latern has been placed on the corner patch of grass to the light at night. Wild flowers dot either side of the dusty path. In the distance towards the south you see the back of some houses.</p>",
+                description = "<p>This part of the square walk leads north to the Red Lion stables, the large village centre green is to the east. The dirt track continues south. Small wild flowers dot the grass either side of the dirt track. To the west you see rolling green hills off in to the distance.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -631,10 +661,10 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 3,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false 
+                locked = false
             };
 
- 
+
 
             // Create Exits
             var east = new Exit
@@ -645,17 +675,451 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 0,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false, 
+                locked = false,
             };
 
-      
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 5,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
+
+
 
 
 
             #endregion
             room.exits.Add(north);
             room.exits.Add(east);
-          
+            room.exits.Add(south);
+
+
+
+            return room;
+        }
+
+        public static Room SquareWalkSouthWestOfCentre()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 5,
+                title = "Square walk, south west of the centre",
+                description = "<p>This dirt track here leads north and curves here to the west. A latern has been placed on the corner patch of grass to the light at night. Wild flowers dot either side of the dusty path. In the distance towards the south you see the back of some houses.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+
+
+            #region exits
+
+
+            // Create Exits
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 4,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 6,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
+
+
+
+
+
+            #endregion
+            room.exits.Add(north);
+            room.exits.Add(east);
+
+
+
+            return room;
+        }
+
+        public static Room SquareWalkSouthOfCentre()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 6,
+                title = "Square walk, south of the centre",
+                description = "<p>The centre of the square is to the north a large green space enjoyed by everyone who comes to Anker. Wild flowers dot the perimeter of the dirt track. East and west continues to the square walk. A lantern is by the north path to light the way at night. You see the rear of some houses towards the south in the distance.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+
+
+            #region exits
+
+
+            // Create Exits
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 0,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 7,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
+
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 5,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
+
+
+
+            #endregion
+            room.exits.Add(north);
+            room.exits.Add(east);
+            room.exits.Add(west);
+
+
+
+            return room;
+        }
+
+        public static Room SquareWalkEntrance()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 7,
+                title = "Square walk, Entrance",
+                description = "<p>A smooth grey arched stone with writing inscribed sits to the side of the path leading north towards the general store and inn." +
+                              "The centre of the square is towards the north west. The packed dirt path also leads east towards the Temple and continues west along Square walk.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+            var stone = new RoomObject
+            {
+                name = "smooth grey arched stone",
+                look = "The stone reads: Welcome to Anker. The world is a book, and those who don't travel only read one page.",
+                examine = "The stone reads: Welcome to Anker. The world is a book, and those who don't travel only read one page.",
+                touch = "The stone fills rough to touch"
+            };
+
+
+
+
+            #region exits
+
+
+            // Create Exits
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 8,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            // Create Exits
+            //var east = new Exit
+            //{
+            //    name = "East",
+            //    area = "Anker",
+            //    region = "Anker",
+            //    areaId = 10,
+            //    keywords = new List<string>(),
+            //    hidden = false,
+            //    locked = false,
+            //};
+
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 6,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
+
+
+            room.keywords.Add(stone);
+            #endregion
+            room.exits.Add(north);
+          //  room.exits.Add(east);
+            room.exits.Add(west);
+
+
+
+            return room;
+        }
+
+        public static Room SquareWalkEastOfCentre()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 8,
+                title = "Square walk, east of the centre",
+                description = "<p>The most frequent path of square walk with the centre to the west and the large Village hall to the east the only stone building in Anker. " +
+                              "Visited by any who seek the village Elder for wisdom and advice " +
+                              "The path continues north towards the General store and the black smith. south leads to the entrance and the church.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+
+
+            #region exits
+
+
+            // Create Exits
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 9,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            // Create Exits
+            //var east = new Exit
+            //{
+            //    name = "East",
+            //    area = "Anker",
+            //    region = "Anker",
+            //    areaId = 11,
+            //    keywords = new List<string>(),
+            //    hidden = false,
+            //    locked = false,
+            //};
+
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 7,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
+
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 0,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
+
+
+
+
+
+            #endregion
+            room.exits.Add(north);
+             room.exits.Add(west);
+            room.exits.Add(south);
+
+
+
+            return room;
+        }
+
+        public static Room SquareWalkCommerceCorner()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 9,
+                title = "Square walk, commerce corner",
+                description = "<p>The only shop in Anker is to the north providing everything from food, clothing and basic adventuring equipment. " +
+                              "To the east is the black smith providing basic metal work for the village. The dirt part runs west towards to the Red Lion inn and south to Square walk.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+
+
+            #region exits
+
+
+            // Create Exits
+            //var north = new Exit
+            //{
+            //    name = "North",
+            //    area = "Anker",
+            //    region = "Anker",
+            //    areaId = 12,
+            //    keywords = new List<string>(),
+            //    hidden = false,
+            //    locked = false
+            //};
+
+
+
+            // Create Exits
+            //var east = new Exit
+            //{
+            //    name = "East",
+            //    area = "Anker",
+            //    region = "Anker",
+            //    areaId = 13,
+            //    keywords = new List<string>(),
+            //    hidden = false,
+            //    locked = false,
+            //};
+
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 8,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
+
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 1,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
+
+
+
+
+
+            #endregion
+            //room.exits.Add(north);
+            room.exits.Add(south);
+            room.exits.Add(west);
+           
+
 
 
             return room;
@@ -668,7 +1132,7 @@ namespace MIMWebClient.Core.World.Anker
                 region = "Anker",
                 area = "Anker",
                 areaId = 2,
-                title = "The Drunken Sailor",
+                title = "The Red Lion",
                 description = "The inside of the tavern is a single, low-roofed room. Rancid oil lamps emit a gloomy light." +
                 " Only a handful of people can be seen through the smoke-filled air. A small door to the west leads out to the stables." +
                 " A bad-tempered looking barkeeper seems to be cleaning the counter. A large door south leads out to Square walk",
@@ -692,7 +1156,7 @@ namespace MIMWebClient.Core.World.Anker
                 NPCId = 0,
                 Name = "Modo",
                 Type = Player.PlayerTypes.Mob,
-                Description = "The owner of the Drunken Sailor is a tall and intimidating appearance. This long-bearded man immediatly makes you feel uncomfortable. He does not seem to notice you.",
+                Description = "The owner of The Red Lion is a tall and intimidating appearance. This long-bearded man immediatly makes you feel uncomfortable. He does not seem to notice you.",
                 Strength = 15,
                 Dexterity = 16,
                 Constitution = 16,
@@ -750,7 +1214,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "West",
                 area = "Anker",
                 region = "Anker",
-                areaId = 0,
+                areaId = 14,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false, 
@@ -800,6 +1264,121 @@ namespace MIMWebClient.Core.World.Anker
             return room;
         }
 
+        public static Room RedLionStables()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 14,
+                title = "Stables of The Red Lion",
+                description = "Hay scatter the floor here with the occasional moud of manure, Several posts under a roof allow you to secure a horse here." +
+                              "To the east a small door leads in to the Red Lion. South leads out from the wide doors to Square walk.",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Inside,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+            var stableBoy = new Player
+            {
+                NPCId = 0,
+                Name = "Stable boy",
+                Type = Player.PlayerTypes.Mob,
+                Description = "A rough dirty looking stable boy",
+                Strength = 11,
+                Dexterity = 16,
+                Constitution = 16,
+                Intelligence = 9,
+                Wisdom = 11,
+                Charisma = 8,
+                MaxHitPoints = 100,
+                HitPoints = 100,
+                Level = 5,
+                Status = Player.PlayerStatus.Standing,
+                Skills = new List<Skill>(),
+                Inventory = new List<Item.Item>()
+            };
+
+            var blackhorse = new Player
+            {
+                NPCId = 1,
+                Name = "Sleek Black Horse",
+                Type = Player.PlayerTypes.Mob,
+                Description = "A sleek strong looking black horse",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Intelligence = 12,
+                Wisdom = 15,
+                Charisma = 18,
+                MaxHitPoints = 500,
+                HitPoints = 500,
+                Level = 15,
+                Status = Player.PlayerStatus.Busy,
+                Skills = new List<Skill>(),
+                Inventory = new List<Item.Item>()
+            };
+
+            var recall = new Recall
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+            stableBoy.Recall = recall;
+            blackhorse.Recall = recall;
+
+
+
+            room.mobs.Add(stableBoy);
+            room.mobs.Add(blackhorse);
+            #region exits
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 2,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
+
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 3,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            #endregion
+
+            room.exits.Add(east);
+            room.exits.Add(south);
+
+          
+
+
+            return room;
+        }
 
     }
 }

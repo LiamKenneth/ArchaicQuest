@@ -48,10 +48,7 @@ Potential Layout
 																     |                                                        Crops--Crops--crops              Pasture---Pasture----pasture
 																	 |                                                          |      |      |                   |         |          |
 																	 |                                                         Crops--crops--crops              Pasture---Pasture----pasture
-																    Beach
-																	 |
-																	 |
-																	Sea
+												   western dock-- Harbour --Eastern dock
 																	
 
 Village Square
