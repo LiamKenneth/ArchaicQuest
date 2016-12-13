@@ -2,10 +2,7 @@
     display: none;
 }
 
-.hidden-xs {
-    display: inline-block !important;
-}
-
+ 
 .margin-right-10 {
     margin-right: 10px;
 }
@@ -24,8 +21,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #discussion {
-    position:relative;
-    font-size: 15px !important;
+    position: relative;
+    font-size: 12px;
+
+
+    @media screen and (min-width: 768px) {
+        font-size: 15px;
+    }
+
+    @media screen and (min-width: 992px) {
+        font-size: 15px;
+    }
+
+
+    @media screen and (min-width: 1200px) {
+        font-size: 15px;
+    }
 
     p {
         max-width: 560px;
@@ -173,7 +184,20 @@ pre {
     padding: 15px;
     border: 4px solid #525045;
     box-shadow: inset 0 0 15px 2px #000;
-    font-size: 14px !important;
+    font-size: 12px;
+
+     @media screen and (min-width: 768px) {
+        font-size: 14px;
+    }
+
+    @media screen and (min-width: 992px) {
+        font-size: 14px;
+    }
+
+
+    @media screen and (min-width: 1200px) {
+        font-size: 14px;
+    }
 }
 
 .window-inner {
@@ -190,15 +214,19 @@ pre {
         margin-bottom: 10px;
     }
 
-    .js-score {position:relative;}
+    .js-score {
+        position: relative;
+    }
 
-    h3  {
+    h3 {
         border-bottom: 2px solid #525045;
-        padding:10px 0;
+        padding: 10px 0;
     }
 }
 
-.js-room {position:relative;}
+.js-room {
+    position: relative;
+}
 
 .errorMsg {
     color: #F04903;
@@ -229,8 +257,8 @@ pre {
 }
 
 .showExit {
-    position:relative;
-    background:url('/UI/img/compass.png') no-repeat center center;
+    position: relative;
+    background: url('/UI/img/compass.png') no-repeat center center;
     background-size: contain;
 }
 

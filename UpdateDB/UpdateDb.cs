@@ -49,6 +49,7 @@ namespace UpdateDB
             areas.Add(Anker.SquareWalkWestOfCentre());
             areas.Add(Anker.SquareWalkSouthOfCentre());
             areas.Add(Anker.DrunkenSailor());
+            areas.Add(Anker.GeneralStore());
             areaSpeed.Stop();
             Console.WriteLine("Compiling Areas Completed in {0}ms.", areaSpeed.Elapsed.Milliseconds);
 

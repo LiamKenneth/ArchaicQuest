@@ -3,7 +3,7 @@
     //================================================================================
     // Setup the auto-generated proxy for the hub.
     //================================================================================
-    $.connection.hub.url = "/signalr"; // reelase =/mud/signalr";
+    $.connection.hub.url = "/mud/signalr";
 
     var chat = $.connection.mIMHub;
     var client = chat.client;
@@ -615,7 +615,7 @@
  
             $.ajax({
                     type: "get",
-                    url: "/Home/GenerateName"
+                    url: "/mud/Home/Generatename"
                 })
                 .done(function(data) {
 

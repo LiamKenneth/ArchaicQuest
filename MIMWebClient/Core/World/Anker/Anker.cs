@@ -425,7 +425,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 areaId = 1,
                 title = "Square walk, outside the Red Lion",
-                description = "<p>The Red Lion occupies the north western part of Square walk. It's large oval wooden door is kept closed keeping the warmth inside as well as the hustle and bustle hidden from the outside. " +
+                description = "<p>The Red Lion occupies the north western path of Square walk. It's large oval wooden door is kept closed keeping the warmth inside as well as the hustle and bustle hidden from the outside. " +
                               "Large windows sit either side of the door to the black and white timber building. The inn carries on to the west where the stables reside. " +
                               "The dirt track of square walk continues west and east towards the general store.</p>",
 
@@ -1040,7 +1040,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 9,
                 title = "Square walk, commerce corner",
                 description = "<p>The only shop in Anker is to the north providing everything from food, clothing and basic adventuring equipment. " +
-                              "To the east is the black smith providing basic metal work for the village. The dirt part runs west towards to the Red Lion inn and south to Square walk.</p>",
+                              "To the east is the black smith providing basic metal work for the village. The dirt path runs west towards to the Red Lion inn and south to Square walk.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -1062,16 +1062,16 @@ namespace MIMWebClient.Core.World.Anker
 
 
             // Create Exits
-            //var north = new Exit
-            //{
-            //    name = "North",
-            //    area = "Anker",
-            //    region = "Anker",
-            //    areaId = 12,
-            //    keywords = new List<string>(),
-            //    hidden = false,
-            //    locked = false
-            //};
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 12,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
 
 
 
@@ -1115,10 +1115,81 @@ namespace MIMWebClient.Core.World.Anker
 
 
             #endregion
-            //room.exits.Add(north);
+            room.exits.Add(north);
             room.exits.Add(south);
             room.exits.Add(west);
            
+
+
+
+            return room;
+        }
+
+        public static Room  GeneralStore()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 12,
+                title = "The General Store",
+                description = "<p>Candle light fills the shop with a warm glow, flickering off the wooden walls adding a shine to the various items sitting on the shelfs around the shop. " +
+                              "A neat pile of mismatch garments sit folded on a table in the centre of the room.</p> " +
+                              "<p>To the north you see a closed door behind a wooden counter and a few old looking weapons" +
+                              " hanging overhead on the wall. On the counter is a sign and a large red leather book, " +
+                              "a couple of candles rest on the counter along side an ink pot and quill. " +
+                              "The door south leads out to the Square walk.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+            var sign = new RoomObject
+            {
+                name = "Sign",
+                look = "Welcome to the General store, Let me know if you want me to list my wares but don't touch anything.",
+                examine = "Welcome to the General store, Let me know if you want me to list my wares but don't touch anything.",
+ 
+            };
+
+
+            room.keywords.Add(sign);
+
+            #region exits
+
+
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 9,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
+
+ 
+
+
+
+
+            #endregion
+   
+            room.exits.Add(south);
+   
+
 
 
 
