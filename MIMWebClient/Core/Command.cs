@@ -79,6 +79,7 @@ namespace MIMWebClient.Core
             commandList.Add("skills", () => ShowSkills.ShowPlayerSkills(playerData, commandOptions));
             commandList.Add("skills all", () => ShowSkills.ShowPlayerSkills(playerData, commandOptions));
             commandList.Add("practice", () =>  Trainer.Practice(playerData, room, commandOptions));
+            commandList.Add("map", () => Map.GenerateGrid(playerData));
 
             return commandList;
         }

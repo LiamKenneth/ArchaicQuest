@@ -3,7 +3,7 @@
     //================================================================================
     // Setup the auto-generated proxy for the hub.
     //================================================================================
-    $.connection.hub.url = "/mud/signalr";
+    $.connection.hub.url = "/signalr";
 
     var chat = $.connection.mIMHub;
     var client = chat.client;
@@ -354,7 +354,7 @@
     };
     //// Add a new message to the page ////
     client.addNewMessageToPage = function (message) {
-        $('#discussion').append("<p>" + message + "</p>");
+        $('#discussion').append("<pre>" + message + "</pre>");
 
         $("#discussion").scrollTop($("#discussion")[0].scrollHeight);
     };
