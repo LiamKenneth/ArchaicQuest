@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using MIMWebClient.Hubs;
 
 namespace MIMWebClient.Core.Update
 {
@@ -25,6 +26,34 @@ namespace MIMWebClient.Core.Update
         {
             Task.Run(MoveMob);
         }
+
+        public static async Task EmoteMob()
+        {
+            //Loop every mob in the rooms in cache.
+            // only emote if player is in the room
+
+            foreach (var room in MIMHub._AreaCache.Values)
+            {
+                if (room.players.Count > 0 && room.mobs.Count > 0)
+                {
+                   // check mob emotes
+
+                    foreach (var mob in room.mobs)
+                    {
+                        if (mob.Emotes != null && mob.HitPoints > 0)
+                        {
+                            var emoteIndex = Helpers.diceRoll.Next(mob.Emotes.Count);
+                            HubContext.broadcastToRoom(mob.Name + " " + mob.Emotes[emoteIndex], room.players, String.Empty);
+                        }
+                    }
+                }
+            }
+
+           
+
+                
+        }
+
         /// <summary>
         /// Wahoo! This works
         /// Now needs to update player/mob stats, spells, reset rooms and mobs. Move mobs around?
@@ -36,7 +65,8 @@ namespace MIMWebClient.Core.Update
             await Task.Delay(60000);
     
             Time.UpdateTIme();
-            
+            await Task.Run(EmoteMob);
+
             Init();
         }
 

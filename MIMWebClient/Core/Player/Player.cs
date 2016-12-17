@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MIMWebClient.Core.Mob;
 
 namespace MIMWebClient.Core.PlayerSetup
 {
@@ -247,6 +248,10 @@ namespace MIMWebClient.Core.PlayerSetup
         //NPC Properties
         [BsonElement("nsi")]
         public List<Item> itemsToSell;
+
+        //NPC Properties
+        [BsonElement("ndia")]
+        public List<Responses> Dialogue;
 
         //NPC Properties
         [BsonElement("nt")]

@@ -8,6 +8,6 @@ namespace MIMWebClient.Core.Room
 {
    public class Keyword
     {
-        public Dictionary<string, string> keyword { get; set; }
+        public List<string> Keywords { get; set; }
     }
 }

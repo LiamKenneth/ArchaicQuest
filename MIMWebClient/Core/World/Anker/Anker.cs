@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Item;
+using MIMWebClient.Core.Mob;
 
 namespace MIMWebClient.Core.World.Anker
 {
@@ -243,7 +245,7 @@ namespace MIMWebClient.Core.World.Anker
                 canLock = true,
                 canOpen = true,
                 open = true,
-                doorName = "wooden door" 
+                doorName = "wooden door"
 
             };
             var east = new Exit
@@ -306,7 +308,7 @@ namespace MIMWebClient.Core.World.Anker
                 Name = "Black and White cat",
                 Type = Player.PlayerTypes.Mob,
                 Description = "This black cat's fur looks in pristine condition despite being a stray.",
-                
+
                 Strength = 12,
                 Dexterity = 12,
                 Constitution = 12,
@@ -359,13 +361,13 @@ namespace MIMWebClient.Core.World.Anker
                 slot = Item.Item.EqSlot.Wield,
                 location = Item.Item.ItemLocation.Inventory,
                 description = new Description(),
-               
+
             };
 
             dagger.description.look = "This is just a blunt dagger";
             dagger.description.exam = "This is an extremly blunt dagger";
 
-         
+
 
 
             var dagger2 = new Item.Item
@@ -383,11 +385,11 @@ namespace MIMWebClient.Core.World.Anker
             };
 
 
-            
-            
+
+
 
             room.items.Add(dagger);
-           // room.items.Add(dagger3);
+            // room.items.Add(dagger3);
 
             cat.Inventory.Add(dagger);
 
@@ -466,8 +468,8 @@ namespace MIMWebClient.Core.World.Anker
                 Trainer = true,
                 Greet = true,
                 GreetMessage = "Hello there!",
-                
-               
+
+
             };
 
             #endregion
@@ -487,7 +489,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 2,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false 
+                locked = false
             };
 
             // Create Exits
@@ -499,7 +501,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 0,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false 
+                locked = false
             };
 
 
@@ -513,7 +515,7 @@ namespace MIMWebClient.Core.World.Anker
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false,
-                 
+
             };
 
 
@@ -526,7 +528,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 3,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false 
+                locked = false
             };
 
             #endregion
@@ -586,7 +588,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 14,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false 
+                locked = false
             };
 
             // Create Exits
@@ -598,7 +600,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 4,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false 
+                locked = false
             };
 
 
@@ -611,7 +613,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 1,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false 
+                locked = false
             };
 
 
@@ -933,7 +935,7 @@ namespace MIMWebClient.Core.World.Anker
             room.keywords.Add(stone);
             #endregion
             room.exits.Add(north);
-          //  room.exits.Add(east);
+            //  room.exits.Add(east);
             room.exits.Add(west);
 
 
@@ -1027,7 +1029,7 @@ namespace MIMWebClient.Core.World.Anker
 
             #endregion
             room.exits.Add(north);
-             room.exits.Add(west);
+            room.exits.Add(west);
             room.exits.Add(south);
 
 
@@ -1081,13 +1083,13 @@ namespace MIMWebClient.Core.World.Anker
 
             // Create Exits
             var east = new Exit
-           {
+            {
                 name = "East",
                 area = "Anker",
-               region = "Anker",
+                region = "Anker",
                 areaId = 13,
-               keywords = new List<string>(),
-               hidden = false,
+                keywords = new List<string>(),
+                hidden = false,
                 locked = false,
             };
 
@@ -1123,14 +1125,14 @@ namespace MIMWebClient.Core.World.Anker
             room.exits.Add(east);
             room.exits.Add(south);
             room.exits.Add(west);
-           
+
 
 
 
             return room;
         }
 
-        public static Room  GeneralStore()
+        public static Room GeneralStore()
         {
             var room = new Room
             {
@@ -1164,7 +1166,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "Sign",
                 look = "Welcome to Odds and sods, Let me know if you want me to list my wares but don't touch anything.",
                 examine = "Welcome to Odds and sods, Let me know if you want me to list my wares but don't touch anything.",
- 
+
             };
 
 
@@ -1185,15 +1187,15 @@ namespace MIMWebClient.Core.World.Anker
                 locked = false,
             };
 
- 
+
 
 
 
 
             #endregion
-   
+
             room.exits.Add(south);
-   
+
 
 
 
@@ -1228,7 +1230,7 @@ namespace MIMWebClient.Core.World.Anker
             };
 
 
-            
+
             #region exits
 
 
@@ -1303,8 +1305,43 @@ namespace MIMWebClient.Core.World.Anker
                 Level = 10,
                 Status = Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
-                Inventory = new List<Item.Item>()
+                Inventory = new List<Item.Item>(),
+                Dialogue = new List<Responses>(),
+                Emotes = new List<string>()
+               
+
             };
+
+
+
+            var beerTalk = new Responses
+            {
+                Keyword = new List<string>
+                {
+                    "beer",
+                    "drink",
+                     "ale",
+                },
+                Response = "Beer? What would you like?"
+            };
+
+            var helloTalk = new Responses
+            {
+                Keyword = new List<string>
+                {
+                    "hello",
+                    "hi",
+                     "greetings",
+                },
+                Response = "Hello there to you too $playerName come, grab a seat and i'll get you a Beer"
+            };
+
+
+           
+            modo.Dialogue.Add(beerTalk);
+            modo.Emotes.Add("Wipes down the bar keeping it clean");
+            modo.Emotes.Add("Grabs a wet glass and starts drying it with a stained towel");
+            modo.Dialogue.Add(helloTalk);
 
             var dyten = new Player
             {
@@ -1352,7 +1389,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 14,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false, 
+                locked = false,
             };
 
             // Create Exits
@@ -1364,7 +1401,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 1,
                 keywords = new List<string>(),
                 hidden = false,
-                locked = false 
+                locked = false
             };
 
             #endregion
@@ -1509,7 +1546,7 @@ namespace MIMWebClient.Core.World.Anker
             room.exits.Add(east);
             room.exits.Add(south);
 
-          
+
 
 
             return room;

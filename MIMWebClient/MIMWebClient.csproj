@@ -251,7 +251,7 @@
     <Compile Include="Core\Mob\Events\Shop.cs" />
     <Compile Include="Core\Mob\Events\Trainer.cs" />
     <Compile Include="Core\Mob\Events\Welcome.cs" />
-    <Compile Include="Core\Mob\Npc.cs" />
+    <Compile Include="Core\Mob\Responses.cs" />
     <Compile Include="Core\PlayerSetup\PlayerClass.cs" />
     <Compile Include="Core\PlayerSetup\PlayerLocation.cs" />
     <Compile Include="Core\PlayerSetup\PlayerName.cs" />
@@ -280,7 +280,6 @@
     <Compile Include="Core\Player\Spells.cs" />
     <Compile Include="Core\Room\Exit.cs" />
     <Compile Include="Core\Room\Keyword.cs" />
-    <Compile Include="Core\Room\Map.cs" />
     <Compile Include="Core\Room\Mob.cs" />
     <Compile Include="Core\Room\Movement.cs" />
     <Compile Include="Core\Room\PlayerManager.cs" />
