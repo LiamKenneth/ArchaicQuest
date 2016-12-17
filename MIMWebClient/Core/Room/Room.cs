@@ -55,6 +55,10 @@ namespace MIMWebClient.Core.Room
 
         public int areaId { get; set; }
 
+        public int xcoord { get; set; }
+
+        public int ycoord { get; set; }
+
         public bool clean { get; set; }
 
         public string modified { get; set; }
