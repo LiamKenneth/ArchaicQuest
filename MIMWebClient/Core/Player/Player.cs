@@ -219,7 +219,7 @@ namespace MIMWebClient.Core.PlayerSetup
 
         //NPC Properties
         [BsonElement("nid")]
-        public int NPCId;
+        public Guid NPCId;
 
         //NPC Properties
         [BsonElement("nr")]

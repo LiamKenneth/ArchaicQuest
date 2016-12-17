@@ -3,7 +3,7 @@
     //================================================================================
     // Setup the auto-generated proxy for the hub.
     //================================================================================
-    $.connection.hub.url = "/mud/signalr";
+    $.connection.hub.url = "/signalr";
 
     var chat = $.connection.mIMHub;
     var client = chat.client;

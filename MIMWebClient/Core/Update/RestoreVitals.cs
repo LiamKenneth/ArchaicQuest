@@ -71,6 +71,11 @@ namespace MIMWebClient.Core.Update
                             foreach (var corpse in room.corpses.ToList())
                             {
 
+                                if (corpse.Type.Equals(Player.PlayerTypes.Player))
+                                {
+                                    return;
+                                }
+
                                 var mobRoomOrigin =
                                     rooms.Find(
                                         x =>

@@ -86,13 +86,13 @@ namespace MIMWebClient.Core.World.Anker
                 name = "Signpost",
                 look = "The signpost points:<br /> " +
                        "<span class='RoomExits'>North</span><br /> The Red Lion<br />" +
-                       "<span class='RoomExits'>North East</span><br />  General Store <br /> Black smith<br />" +
+                       "<span class='RoomExits'>North East</span><br />  Odds and sods <br /> Black smith<br />" +
                        "<span class='RoomExits'>East</span><br />Village hall<br />" +
                        "<span class='RoomExits'>South East</span><br />Church<br />" +
                        "<span class='RoomExits'>North West</span><br /> Stables.",
                 examine = "The signpost points:<br /> " +
                        "<span class='RoomExits'>North</span><br /> The Red Lion<br />" +
-                       "<span class='RoomExits'>North East</span><br />  General Store <br /> Black smith<br />" +
+                       "<span class='RoomExits'>North East</span><br />  Odds and sods <br /> Black smith<br />" +
                        "<span class='RoomExits'>East</span><br />Village hall<br />" +
                        "<span class='RoomExits'>South East</span><br />Church<br />" +
                        "<span class='RoomExits'>North West</span><br /> Stables.",
@@ -302,7 +302,7 @@ namespace MIMWebClient.Core.World.Anker
             //Create Mobs
             var cat = new Player
             {
-                NPCId = 0,
+                NPCId = Guid.NewGuid(),
                 Name = "Black and White cat",
                 Type = Player.PlayerTypes.Mob,
                 Description = "This black cat's fur looks in pristine condition despite being a stray.",
@@ -325,7 +325,7 @@ namespace MIMWebClient.Core.World.Anker
 
             var cat2 = new Player
             {
-                NPCId = 1,
+                NPCId = Guid.NewGuid(),
                 Name = "Black and White cat",
                 Type = Player.PlayerTypes.Mob,
                 Description = "This black cat's fur looks in pristine condition despite being a stray.",
@@ -447,7 +447,7 @@ namespace MIMWebClient.Core.World.Anker
             #region NPC setup
             var trainer = new Player
             {
-                NPCId = 0,
+                NPCId = Guid.NewGuid(),
                 Name = "Lance",
                 Type = Player.PlayerTypes.Mob,
                 Description = "The elder of the village anker",
@@ -457,13 +457,17 @@ namespace MIMWebClient.Core.World.Anker
                 Intelligence = 12,
                 Wisdom = 16,
                 Charisma = 18,
-                MaxHitPoints = 250,
-                HitPoints = 250,
+                MaxHitPoints = 350,
+                HitPoints = 350,
                 Level = 15,
                 Status = Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
                 Inventory = new List<Item.Item>(),
-                Trainer = true
+                Trainer = true,
+                Greet = true,
+                GreetMessage = "Hello there!",
+                
+               
             };
 
             #endregion
@@ -1076,16 +1080,16 @@ namespace MIMWebClient.Core.World.Anker
 
 
             // Create Exits
-            //var east = new Exit
-            //{
-            //    name = "East",
-            //    area = "Anker",
-            //    region = "Anker",
-            //    areaId = 13,
-            //    keywords = new List<string>(),
-            //    hidden = false,
-            //    locked = false,
-            //};
+            var east = new Exit
+           {
+                name = "East",
+                area = "Anker",
+               region = "Anker",
+                areaId = 13,
+               keywords = new List<string>(),
+               hidden = false,
+                locked = false,
+            };
 
             // Create Exits
             var south = new Exit
@@ -1116,6 +1120,7 @@ namespace MIMWebClient.Core.World.Anker
 
             #endregion
             room.exits.Add(north);
+            room.exits.Add(east);
             room.exits.Add(south);
             room.exits.Add(west);
            
@@ -1132,7 +1137,7 @@ namespace MIMWebClient.Core.World.Anker
                 region = "Anker",
                 area = "Anker",
                 areaId = 12,
-                title = "The General Store",
+                title = "Odds and sods shoppe",
                 description = "<p>Candle light fills the shop with a warm glow, flickering off the wooden walls adding a shine to the various items sitting on the shelfs around the shop. " +
                               "A neat pile of mismatch garments sit folded on a table in the centre of the room.</p> " +
                               "<p>To the north you see a closed door behind a wooden counter and a few old looking weapons" +
@@ -1157,8 +1162,8 @@ namespace MIMWebClient.Core.World.Anker
             var sign = new RoomObject
             {
                 name = "Sign",
-                look = "Welcome to the General store, Let me know if you want me to list my wares but don't touch anything.",
-                examine = "Welcome to the General store, Let me know if you want me to list my wares but don't touch anything.",
+                look = "Welcome to Odds and sods, Let me know if you want me to list my wares but don't touch anything.",
+                examine = "Welcome to Odds and sods, Let me know if you want me to list my wares but don't touch anything.",
  
             };
 
@@ -1196,6 +1201,65 @@ namespace MIMWebClient.Core.World.Anker
             return room;
         }
 
+
+        public static Room MetalMedley()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 13,
+                title = "Metal Medley",
+                description = "<p>A shovel protrudes from a mountain of coal leaning against a large roaring forge of hot yellow flames. Sacks of raw materials and broken metalwork rest in the corner off to the left.</p>" +
+
+                              "<p> Not far from the forge is a large anvil and workbench. Approns, metal tongs, hammers, chisels and a sledge hammer rest on the table in easy reach of the anvil. Racks fill the eastern wall housing an assortment of swords, daggers and spears. The other side are suits of basic chain mail armour and various sizes of shields on display either side of the exit leading west to commerce corner.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+            
+            #region exits
+
+
+            // Create Exits
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 9,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
+
+
+
+
+
+
+            #endregion
+
+            room.exits.Add(west);
+
+
+
+
+
+            return room;
+        }
+
         public static Room DrunkenSailor()
         {
             var room = new Room
@@ -1224,7 +1288,7 @@ namespace MIMWebClient.Core.World.Anker
 
             var modo = new Player
             {
-                NPCId = 0,
+                NPCId = Guid.NewGuid(),
                 Name = "Modo",
                 Type = Player.PlayerTypes.Mob,
                 Description = "The owner of The Red Lion is a tall and intimidating appearance. This long-bearded man immediatly makes you feel uncomfortable. He does not seem to notice you.",
@@ -1244,7 +1308,7 @@ namespace MIMWebClient.Core.World.Anker
 
             var dyten = new Player
             {
-                NPCId = 1,
+                NPCId = Guid.NewGuid(),
                 Name = "Dyten",
                 Type = Player.PlayerTypes.Mob,
                 Description = "This weathered old man probably never leaves this place. His cloudy eyes seem to seek something at the bottom of his glass.",
@@ -1361,7 +1425,7 @@ namespace MIMWebClient.Core.World.Anker
 
             var stableBoy = new Player
             {
-                NPCId = 0,
+                NPCId = Guid.NewGuid(),
                 Name = "Stable boy",
                 Type = Player.PlayerTypes.Mob,
                 Description = "A rough dirty looking stable boy",
@@ -1381,7 +1445,7 @@ namespace MIMWebClient.Core.World.Anker
 
             var blackhorse = new Player
             {
-                NPCId = 1,
+                NPCId = Guid.NewGuid(),
                 Name = "Sleek Black Horse",
                 Type = Player.PlayerTypes.Mob,
                 Description = "A sleek strong looking black horse",

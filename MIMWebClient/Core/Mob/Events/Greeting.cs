@@ -7,16 +7,16 @@ namespace MIMWebClient.Core.Mob.Events
 {
     public class Greeting
     {
-        public static void greet(PlayerSetup.Player player, PlayerSetup.Player mob, Room.Room room)
+        public static void greet(PlayerSetup.Player player, PlayerSetup.Player mob, Room.Room room, string message = "")
         {
-            if (player.Type == PlayerSetup.Player.PlayerTypes.Player)
+            if (player.Type == PlayerSetup.Player.PlayerTypes.Player && message == string.Empty)
             {
-                string greetMessageToRoom = string.Format(mob.GreetMessage, player.Name);
-                HubContext.broadcastToRoom(mob.Name + " Says " + greetMessageToRoom, room.players, player.HubGuid);
+                string greetMessageToRoom = mob.GreetMessage + " " + player.Name;
+                HubContext.broadcastToRoom(mob.Name + " says " + greetMessageToRoom, room.players, player.HubGuid);
             }
             else
             {
-                //Greet other mob
+               
             }
         }
     }
