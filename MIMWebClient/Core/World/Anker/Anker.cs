@@ -481,7 +481,7 @@ namespace MIMWebClient.Core.World.Anker
             var welcomePlayers = new DialogTree
             {
                 Id = "lance1",
-                Message = "Greetings and welcome to Anker, I am the villiage Elder and I can help you if you need it.",
+                Message = "Greetings and welcome to Anker, I am the village Elder and I can help you if you need it.",
                 PossibleResponse = new List<Responses>()
             };
 
@@ -493,30 +493,12 @@ namespace MIMWebClient.Core.World.Anker
                 Response = "What is this place?"
             };
 
-            var lance1aAnswer = new Responses()
-            {
-                Keyword = new List<string>(),
-                MatchPhrase = lance1a.Response,
-                QuestionId = "lance1",
-                AnswerId = "lance1a",
-                Response = "This is Anker a small fishing Villiage, the 1st of many interesting places built on this world. It will take time but this place will feel alive soon. I am talking aien't I?"
-            };
-
             var lance1b = new Responses()
             {
                 Keyword = new List<string>(),
                 QuestionId = "lance1",
                 AnswerId = "lance1b",
                 Response = "What is there to do?"
-            };
-
-            var lance1bAnswer = new Responses()
-            {
-                Keyword = new List<string>(),
-                MatchPhrase = lance1b.Response,
-                QuestionId = "lance1",
-                AnswerId = "lance1b",
-                Response = "Hmmm... The world is young $playerName but you can go north to the inn, Modo and Dysten may surprise you. North East houses the General shoppe and the blacksmith. Other than that you can walk around square walk. More changes happen everyday..."
             };
 
             var lance1c = new Responses()
@@ -527,13 +509,63 @@ namespace MIMWebClient.Core.World.Anker
                 Response = "Help I am stuck and confused"
             };
 
-            var lance1cAnswer = new Responses()
+            var lance1d = new Responses()
             {
                 Keyword = new List<string>(),
-                MatchPhrase = lance1c.Response,
                 QuestionId = "lance1",
-                AnswerId = "lance1c",
-                Response = "Stuck? Oh, This can be a daunting place for newcommers. You know how to move right? you got here anyway. Move by typing the exit typically north, east, south etc can be shorten to just n,e,s,w. You can get or drop items. Wield or wear equipment and kill things. Stick to the cats."
+                AnswerId = "lance1d",
+                Response = "It looks great, nice to meet you."
+            };
+
+            var lance1aAnswer = new DialogTree()
+            {
+               Id = "lance1a",
+                MatchPhrase = lance1a.Response,
+                Message = "This is Anker a small fishing village, the 1st of many interesting places built on this world. It will take time but this place will feel alive soon. I am talking aien't I?",
+                PossibleResponse = new List<Responses>()
+                 
+            };
+
+            lance1aAnswer.PossibleResponse.Add(lance1a);
+            lance1aAnswer.PossibleResponse.Add(lance1b);
+            lance1aAnswer.PossibleResponse.Add(lance1c);
+            lance1aAnswer.PossibleResponse.Add(lance1d);
+
+            var lance1bAnswer = new DialogTree()
+            {
+                Id = "lance1b",
+                MatchPhrase = lance1b.Response,
+                Message = "Hmmm... The world is young $playerName but you can go north to the inn, Modo and Dysten may surprise you. North East houses the General shoppe and the blacksmith. Other than that you can walk around square walk. More changes happen everyday...",
+                PossibleResponse = new List<Responses>()
+
+            };
+
+            lance1bAnswer.PossibleResponse.Add(lance1a);
+            lance1bAnswer.PossibleResponse.Add(lance1b);
+            lance1bAnswer.PossibleResponse.Add(lance1c);
+
+
+            var lance1cAnswer = new DialogTree()
+            {
+                Id = "lance1c",
+                MatchPhrase = lance1c.Response,
+                Message = "Stuck? Oh, This can be a daunting place for newcommers. You know how to move right? you got here anyway. Move by typing the exit typically north, east, south etc can be shorten to just n,e,s,w. You can get or drop items. Wield or wear equipment and kill things. Stick to the cats.",
+                PossibleResponse = new List<Responses>()
+
+            };
+
+
+            lance1cAnswer.PossibleResponse.Add(lance1a);
+            lance1cAnswer.PossibleResponse.Add(lance1b);
+            lance1cAnswer.PossibleResponse.Add(lance1c);
+
+            var lance1dAnswer = new DialogTree()
+            {
+                Id = "lance1d",
+                MatchPhrase = lance1d.Response,
+                Message = "Thankyou $playerName, I am glad you like it. Run along now and enjoy your time here. The Gods will appreciate any feedback. Just send a prayer to liam.kenneth@hotmail.co.uk",
+                PossibleResponse = new List<Responses>()
+
             };
 
             var whosModo = new DialogTree
@@ -543,33 +575,17 @@ namespace MIMWebClient.Core.World.Anker
                 PossibleResponse = new List<Responses>()
             };
 
-            var lance2a = new Responses()
-            {
-                Keyword = new List<string>(),
-                MatchPhrase = lance1c.Response,
-                QuestionId = "lance2",
-                AnswerId = "lance1b",
-                Response = "Who is Modo?"
-            };
+             
 
-            var lance2aAnswer = new Responses()
-            {
-                Keyword = new List<string>(),
-                MatchPhrase = lance2a.Response,
-                QuestionId = "lance2",
-                AnswerId = "lance2a",
-                Response = ""
-            };
-
-            lance1aAnswer.Keyword.Add("lance1a");
-            
-            trainer.Dialogue.Add(lance1aAnswer);
-            trainer.Dialogue.Add(lance1bAnswer);
-            trainer.Dialogue.Add(lance1cAnswer);
-            trainer.Dialogue.Add(lance2aAnswer);
+           
+        
             trainer.DialogueTree.Add(welcomePlayers);
+            trainer.DialogueTree.Add(lance1aAnswer);
+            trainer.DialogueTree.Add(lance1cAnswer);
+            trainer.DialogueTree.Add(lance1bAnswer);
+            trainer.DialogueTree.Add(lance1dAnswer);
 
-            whosModo.PossibleResponse.Add(lance2a);
+
 
             welcomePlayers.PossibleResponse.Add(lance1a);
             welcomePlayers.PossibleResponse.Add(lance1b);

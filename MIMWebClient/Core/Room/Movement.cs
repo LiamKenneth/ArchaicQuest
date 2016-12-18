@@ -168,8 +168,7 @@ namespace MIMWebClient.Core.Room
 
                                 if (mob.DialogueTree != null)
                                 {
-                                    foreach (var speak in mob.DialogueTree)
-                                    {
+                                    var speak = mob.DialogueTree[0];
                                       
                                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(speak.Message);
                                         var i = 1;
@@ -178,7 +177,7 @@ namespace MIMWebClient.Core.Room
                                             var textChoice = "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " + respond.Response + "\",\"" + player.HubGuid +"\")'>" + i + ". " + respond.Response + "</a>";
                                             HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
                                             i++;
-                                        }
+                                        
                                     }
                                 }
                             }

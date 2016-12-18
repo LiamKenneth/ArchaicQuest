@@ -12,7 +12,7 @@ namespace MIMWebClient.Core.Mob
         /// </summary>
         public string Id { get; set; }
         public string Message { get; set; }
-
+        public string MatchPhrase { get; set; }
         public List<Responses> PossibleResponse { get; set; }
     }
 }

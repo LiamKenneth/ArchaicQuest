@@ -21,31 +21,32 @@ namespace MIMWebClient.Core.Events
             HubContext.SendToClient("You say " + message, playerId, null, false, false);
             HubContext.broadcastToRoom(player.Name + " says " + message, room.players, playerId, true);
 
-            
+
             //check npc response
             foreach (var mob in room.mobs)
             {
-                var response = string.Empty; 
+                var response = string.Empty;
 
                 if (mob.Dialogue == null) continue;
                 foreach (var dialogue in mob.Dialogue)
                 {
-
-                    if (dialogue.MatchPhrase != string.Empty)
+                    foreach (var keyword in dialogue.Keyword)
                     {
-                        if (message.Equals(dialogue.MatchPhrase))
+                        if (message.Contains(keyword))
                         {
                             response = dialogue.Response;
                         }
                     }
-                    else
+
+                }
+
+                if (response == string.Empty)
+                {
+                    foreach (var tree in mob.DialogueTree)
                     {
-                        foreach (var keyword in dialogue.Keyword)
+                        if (message.Equals(tree.MatchPhrase))
                         {
-                            if (message.Contains(keyword))
-                            {
-                                response = dialogue.Response;
-                            }
+                            response = tree.Message;
                         }
                     }
                 }
@@ -57,36 +58,44 @@ namespace MIMWebClient.Core.Events
                         mob.Name + " says to you " + response.Replace("$playerName", player.Name), playerId,
                         null, true);
 
-                    HubContext.SendToClient(
-                        mob.Name + " says to you anything else?", playerId,
-                        null, true);
+                  
                     //check branch to show responses from
-                    foreach (var speak in mob.DialogueTree)
-                    {
-                      
-                        var i = 1;
-                        foreach (var respond in speak.PossibleResponse)
-                        {
+                    var speak = mob.DialogueTree.FirstOrDefault(x => x.Message.Equals(response));
 
-                            if (respond.QuestionId == speak.Id)
-                            {
-                                
-                                             
+                    if (speak.PossibleResponse != null)
+                    {
+                        HubContext.SendToClient(
+                            mob.Name + " says to you anything else?", playerId,
+                            null, true);
+                    }
+                    else
+                    {
+                        HubContext.SendToClient(
+                            mob.Name + " says to you Goodbye", playerId,
+                            null, true);
+                    }
+                   
+                    var i = 1;
+                    foreach (var respond in speak.PossibleResponse)
+                    {
+
+                        
+
                             var textChoice = "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " + respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " + respond.Response + "</a>";
                             HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
                             i++;
-                            }
                         }
-                    }
-
+                    
                 }
+
+
                 else
                 {
                     //generic responses?
                 }
             }
 
-           
+
 
         }
 
