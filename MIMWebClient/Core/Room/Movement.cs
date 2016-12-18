@@ -170,7 +170,7 @@ namespace MIMWebClient.Core.Room
                                 {
                                     var speak = mob.DialogueTree[0];
                                       
-                                       HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(speak.Message);
+                                       HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(mob.Name + " says to you " + speak.Message);
                                         var i = 1;
                                         foreach (var respond in speak.PossibleResponse)
                                         {

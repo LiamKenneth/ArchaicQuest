@@ -28,6 +28,8 @@ h1, h2, h3, h4, h5, h6 {
       font-size: 15px; } }
   #discussion p {
     max-width: 560px; }
+  #discussion p:empty {
+    display: none; }
   #discussion .roomTitle {
     color: #2ecc71;
     border-bottom: 1px dashed #555;

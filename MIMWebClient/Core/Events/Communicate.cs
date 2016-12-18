@@ -62,7 +62,7 @@ namespace MIMWebClient.Core.Events
                     //check branch to show responses from
                     var speak = mob.DialogueTree.FirstOrDefault(x => x.Message.Equals(response));
 
-                    if (speak.PossibleResponse != null)
+                    if (speak.PossibleResponse.Count > 0)
                     {
                         HubContext.SendToClient(
                             mob.Name + " says to you anything else?", playerId,
