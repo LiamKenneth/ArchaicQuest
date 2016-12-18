@@ -40,6 +40,7 @@ h1, h2, h3, h4, h5, h6 {
 
     p {
         max-width: 560px;
+      
     }
 
     .roomTitle {
@@ -58,6 +59,13 @@ h1, h2, h3, h4, h5, h6 {
 
     .roomItems:first-letter {
         text-transform: uppercase;
+    }
+
+    .multipleChoice {
+        margin:0;
+        padding:0;
+        color:#F7CA18;
+        cursor:pointer;
     }
 }
 

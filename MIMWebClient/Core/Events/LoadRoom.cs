@@ -113,6 +113,11 @@ namespace MIMWebClient.Core.Events
                     var result = AvsAnLib.AvsAn.Query(item.Name);
                     string article = result.Article;
 
+                    if (item.KnownByName)
+                    {
+                        article = string.Empty;
+                    }
+
                     mobList += "<p class='roomItems'>" + article + " " + item.Name + " is here.<p>";
                 }
             }

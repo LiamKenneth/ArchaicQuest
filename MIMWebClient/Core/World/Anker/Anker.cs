@@ -451,6 +451,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Lance",
+                KnownByName = true,
                 Type = Player.PlayerTypes.Mob,
                 Description = "The elder of the village anker",
                 Strength = 15,
@@ -468,6 +469,8 @@ namespace MIMWebClient.Core.World.Anker
                 Trainer = true,
                 Greet = true,
                 GreetMessage = "Hello there!",
+                DialogueTree = new List<DialogTree>(),
+                Dialogue = new List<Responses>()
 
 
             };
@@ -475,6 +478,102 @@ namespace MIMWebClient.Core.World.Anker
             #endregion
 
 
+            var welcomePlayers = new DialogTree
+            {
+                Id = "lance1",
+                Message = "Greetings and welcome to Anker, I am the villiage Elder and I can help you if you need it.",
+                PossibleResponse = new List<Responses>()
+            };
+
+            var lance1a = new Responses()
+            {
+                Keyword = new List<string>(),
+                QuestionId = "lance1",
+                AnswerId = "lance1a",
+                Response = "What is this place?"
+            };
+
+            var lance1aAnswer = new Responses()
+            {
+                Keyword = new List<string>(),
+                MatchPhrase = lance1a.Response,
+                QuestionId = "lance1",
+                AnswerId = "lance1a",
+                Response = "This is Anker a small fishing Villiage, the 1st of many interesting places built on this world. It will take time but this place will feel alive soon. I am talking aien't I?"
+            };
+
+            var lance1b = new Responses()
+            {
+                Keyword = new List<string>(),
+                QuestionId = "lance1",
+                AnswerId = "lance1b",
+                Response = "What is there to do?"
+            };
+
+            var lance1bAnswer = new Responses()
+            {
+                Keyword = new List<string>(),
+                MatchPhrase = lance1b.Response,
+                QuestionId = "lance1",
+                AnswerId = "lance1b",
+                Response = "Hmmm... The world is young $playerName but you can go north to the inn, Modo and Dysten may surprise you. North East houses the General shoppe and the blacksmith. Other than that you can walk around square walk. More changes happen everyday..."
+            };
+
+            var lance1c = new Responses()
+            {
+                Keyword = new List<string>(),
+                QuestionId = "lance1",
+                AnswerId = "lance1c",
+                Response = "Help I am stuck and confused"
+            };
+
+            var lance1cAnswer = new Responses()
+            {
+                Keyword = new List<string>(),
+                MatchPhrase = lance1c.Response,
+                QuestionId = "lance1",
+                AnswerId = "lance1c",
+                Response = "Stuck? Oh, This can be a daunting place for newcommers. You know how to move right? you got here anyway. Move by typing the exit typically north, east, south etc can be shorten to just n,e,s,w. You can get or drop items. Wield or wear equipment and kill things. Stick to the cats."
+            };
+
+            var whosModo = new DialogTree
+            {
+                Id = "lance2",
+                Message = "He is the owner of the Red Lion, best beer in Anker I might add.",
+                PossibleResponse = new List<Responses>()
+            };
+
+            var lance2a = new Responses()
+            {
+                Keyword = new List<string>(),
+                MatchPhrase = lance1c.Response,
+                QuestionId = "lance2",
+                AnswerId = "lance1b",
+                Response = "Who is Modo?"
+            };
+
+            var lance2aAnswer = new Responses()
+            {
+                Keyword = new List<string>(),
+                MatchPhrase = lance2a.Response,
+                QuestionId = "lance2",
+                AnswerId = "lance2a",
+                Response = ""
+            };
+
+            lance1aAnswer.Keyword.Add("lance1a");
+            
+            trainer.Dialogue.Add(lance1aAnswer);
+            trainer.Dialogue.Add(lance1bAnswer);
+            trainer.Dialogue.Add(lance1cAnswer);
+            trainer.Dialogue.Add(lance2aAnswer);
+            trainer.DialogueTree.Add(welcomePlayers);
+
+            whosModo.PossibleResponse.Add(lance2a);
+
+            welcomePlayers.PossibleResponse.Add(lance1a);
+            welcomePlayers.PossibleResponse.Add(lance1b);
+            welcomePlayers.PossibleResponse.Add(lance1c);
 
 
             #region exits
@@ -1292,6 +1391,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Modo",
+                KnownByName = true,
                 Type = Player.PlayerTypes.Mob,
                 Description = "The owner of The Red Lion is a tall and intimidating appearance. This long-bearded man immediatly makes you feel uncomfortable. He does not seem to notice you.",
                 Strength = 15,
@@ -1339,14 +1439,19 @@ namespace MIMWebClient.Core.World.Anker
 
            
             modo.Dialogue.Add(beerTalk);
-            modo.Emotes.Add("Wipes down the bar keeping it clean");
-            modo.Emotes.Add("Grabs a wet glass and starts drying it with a stained towel");
+
+            modo.Emotes.Add("wipes down the bar keeping it clean");
+            modo.Emotes.Add("grabs a wet glass and starts drying it with a stained towel");
+            modo.Emotes.Add("strokes his beard and looks around");
+            modo.Emotes.Add("anyone for a pint?");
+
             modo.Dialogue.Add(helloTalk);
 
             var dyten = new Player
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Dyten",
+                KnownByName = true,
                 Type = Player.PlayerTypes.Mob,
                 Description = "This weathered old man probably never leaves this place. His cloudy eyes seem to seek something at the bottom of his glass.",
                 Strength = 1,
@@ -1360,9 +1465,13 @@ namespace MIMWebClient.Core.World.Anker
                 Level = 1,
                 Status = Player.PlayerStatus.Busy,
                 Skills = new List<Skill>(),
-                Inventory = new List<Item.Item>()
+                Inventory = new List<Item.Item>(),
+                Emotes = new List<string>()
             };
 
+            dyten.Emotes.Add("picks up his glass and stares down into it");
+            dyten.Emotes.Add("grabs his glass and lifts it to his lips taking a large gulp of beer");
+            
             var recall = new Recall
             {
                 Area = room.area,

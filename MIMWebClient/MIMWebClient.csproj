@@ -237,6 +237,7 @@
     <Compile Include="Core\Events\Save.cs" />
     <Compile Include="Core\Events\Score.cs" />
     <Compile Include="Core\Events\ShowSkills.cs" />
+    <Compile Include="Core\Events\Talk.cs" />
     <Compile Include="Core\Helpers.cs" />
     <Compile Include="Core\HubContext.cs" />
     <Compile Include="Core\Item\Action.cs" />
@@ -245,6 +246,7 @@
     <Compile Include="Core\Item\Description.cs" />
     <Compile Include="Core\Item\Item.cs" />
     <Compile Include="Core\Item\Stats.cs" />
+    <Compile Include="Core\Mob\DialogTree.cs" />
     <Compile Include="Core\Mob\Event.cs" />
     <Compile Include="Core\Mob\Events\Aggro.cs" />
     <Compile Include="Core\Mob\Events\Greeting.cs" />

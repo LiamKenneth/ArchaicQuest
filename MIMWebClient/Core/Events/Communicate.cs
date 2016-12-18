@@ -30,13 +30,24 @@ namespace MIMWebClient.Core.Events
                 if (mob.Dialogue == null) continue;
                 foreach (var dialogue in mob.Dialogue)
                 {
-                    foreach (var keyword in dialogue.Keyword)
+
+                    if (dialogue.MatchPhrase != string.Empty)
                     {
-                        if (message.Contains(keyword))
+                        if (message.Equals(dialogue.MatchPhrase))
                         {
                             response = dialogue.Response;
                         }
-                    }                  
+                    }
+                    else
+                    {
+                        foreach (var keyword in dialogue.Keyword)
+                        {
+                            if (message.Contains(keyword))
+                            {
+                                response = dialogue.Response;
+                            }
+                        }
+                    }
                 }
 
                 if (response != String.Empty)
@@ -45,6 +56,29 @@ namespace MIMWebClient.Core.Events
                     HubContext.SendToClient(
                         mob.Name + " says to you " + response.Replace("$playerName", player.Name), playerId,
                         null, true);
+
+                    HubContext.SendToClient(
+                        mob.Name + " says to you anything else?", playerId,
+                        null, true);
+                    //check branch to show responses from
+                    foreach (var speak in mob.DialogueTree)
+                    {
+                      
+                        var i = 1;
+                        foreach (var respond in speak.PossibleResponse)
+                        {
+
+                            if (respond.QuestionId == speak.Id)
+                            {
+                                
+                                             
+                            var textChoice = "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " + respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " + respond.Response + "</a>";
+                            HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
+                            i++;
+                            }
+                        }
+                    }
+
                 }
                 else
                 {

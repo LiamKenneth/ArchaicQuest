@@ -60,10 +60,12 @@ namespace MIMWebClient.Core
             commandList.Add("say", ()=> Communicate.Say(commandOptions, playerData, room));
             commandList.Add("sayto", () => Communicate.SayTo(commandOptions, room, playerData));
             commandList.Add(">", () => Communicate.SayTo(commandOptions, room, playerData));
+            commandList.Add("talkto", () => Talk.TalkTo(commandOptions, room, playerData));
             commandList.Add("emote", () => Emote.EmoteActionToRoom(commandOptions, playerData));
             commandList.Add("quit", () => HubContext.Quit(playerData.HubGuid, room));
             commandList.Add("wear", () => Equipment.WearItem(playerData, commandOptions));
             commandList.Add("remove", () => Equipment.RemoveItem(playerData, commandOptions));
+            commandList.Add("doff", () => Equipment.RemoveItem(playerData, commandOptions));
             commandList.Add("wield", () => Equipment.WearItem(playerData, commandOptions, true));
             commandList.Add("unwield", () => Equipment.RemoveItem(playerData, commandOptions, false, true));
             commandList.Add("kill",  () =>  Fight2.PerpareToFight(playerData, room, commandOptions));

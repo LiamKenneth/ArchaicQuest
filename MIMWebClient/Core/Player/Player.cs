@@ -65,6 +65,9 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("n")]
         public string Name;
 
+        [BsonElement("kn")]
+        public bool KnownByName;
+
         [BsonElement("g")]
         public string Gender;
 
@@ -252,6 +255,10 @@ namespace MIMWebClient.Core.PlayerSetup
         //NPC Properties
         [BsonElement("ndia")]
         public List<Responses> Dialogue;
+
+        //NPC Properties
+        [BsonElement("ndiaT")]
+        public List<DialogTree> DialogueTree;
 
         //NPC Properties
         [BsonElement("nt")]

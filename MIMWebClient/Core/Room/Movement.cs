@@ -166,6 +166,21 @@ namespace MIMWebClient.Core.Room
                                     //mob might be aggro
                                 }
 
+                                if (mob.DialogueTree != null)
+                                {
+                                    foreach (var speak in mob.DialogueTree)
+                                    {
+                                      
+                                       HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(speak.Message);
+                                        var i = 1;
+                                        foreach (var respond in speak.PossibleResponse)
+                                        {
+                                            var textChoice = "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " + respond.Response + "\",\"" + player.HubGuid +"\")'>" + i + ". " + respond.Response + "</a>";
+                                            HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
+                                            i++;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
