@@ -351,7 +351,7 @@ namespace MIMWebClient.Core.Events
 
         public static KeyValuePair<string, string> WeaponAttackName(Player attacker)
         {
-            var wielded = attacker.Equipment.RightHand;
+            var wielded = attacker.Equipment.Wield;
             Item weapon = null;
             if (wielded == "Nothing")
             {
@@ -359,11 +359,20 @@ namespace MIMWebClient.Core.Events
             }
 
             //find weapon
-            weapon = attacker.Inventory.Find(x => x.name.Equals(wielded) && x.location.Equals("worn"));
+            weapon = attacker.Inventory.Find(x => x.name.Equals(wielded) && x.eqSlot.Equals(Item.EqSlot.Wield));
 
+            if (weapon != null)
+            {
+
+                return new KeyValuePair<string, string>(weapon.name, weapon.name);
+            }
+            else
+            {
+                return new KeyValuePair<string, string>("hit", "hit");
+            }
             /// weapon.attackType = Item.AttackTypes.Slash;
             //add attack string to weapons
-            return new KeyValuePair<string, string>("", "");
+           
         }
 
         public static int CriticalHit(double toHit, int chance)
@@ -393,9 +402,9 @@ namespace MIMWebClient.Core.Events
                     var damageText = DamageText(dam);
 
 
-                    HubContext.SendToClient("Your hit " + damageText.Value + " " + defender.Name + "[" + dam + "]", attacker.HubGuid);
+                    HubContext.SendToClient("Your " + WeaponAttackName(attacker).Key + " " +damageText.Value + " " + defender.Name + "[" + dam + "]", attacker.HubGuid);
 
-                    HubContext.SendToClient(attacker.Name + "'s hit " + damageText.Value + " you [" + dam + "]", defender.HubGuid);
+                    HubContext.SendToClient(attacker.Name + "'s" + " " +WeaponAttackName(attacker).Value + " " + damageText.Value + " you [" + dam + "]", defender.HubGuid);
 
 
                     defender.HitPoints -= dam;
@@ -404,7 +413,7 @@ namespace MIMWebClient.Core.Events
                     {
                         defender.HitPoints = 0;
                     }
-                    HubContext.SendToAllExcept(attacker.Name + "'s hit " + damageText.Value + " " + defender.Name, room.fighting, room.players);
+                    HubContext.SendToAllExcept(attacker.Name + "'s " + WeaponAttackName(attacker).Value + " " + damageText.Value + " " + defender.Name, room.fighting, room.players);
 
                     if (!IsAlive(attacker, defender))
                     {
@@ -430,13 +439,27 @@ namespace MIMWebClient.Core.Events
         {
             string[] missText = new[]
                                     {
-                                        "You side step out of the way of " + defender.Name + "'s attack",
+                                        "You side step away from " + defender.Name + "'s attack",
                                         "You lean back out of the way of " + defender.Name + "'s attack",
                                         "You duck out of the way of " + defender.Name + "'s attack",
                                         "You weave out of the way of " + defender.Name + "'s attack"
                                     };
 
-            return missText[0];
+            return missText[Helpers.diceRoll.Next(missText.Length)];
+        }
+
+
+        public string HitMessage(Player attacker, Player defender)
+        {
+            string[] hitText = new[]
+                                    {
+                                        "You side step away from " + defender.Name + "'s attack",
+                                        "You lean back out of the way of " + defender.Name + "'s attack",
+                                        "You duck out of the way of " + defender.Name + "'s attack",
+                                        "You weave out of the way of " + defender.Name + "'s attack"
+                                    };
+
+            return hitText[0];
         }
 
         public static KeyValuePair<string, string> DamageText(int damage)
