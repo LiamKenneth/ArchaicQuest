@@ -1423,12 +1423,29 @@ namespace MIMWebClient.Core.World.Anker
                 Skills = new List<Skill>(),
                 Inventory = new List<Item.Item>(),
                 Dialogue = new List<Responses>(),
-                Emotes = new List<string>()
+                Emotes = new List<string>(),
+                Shop = true,
+                itemsToSell = new List<Item.Item>(),
+                sellerMessage = "Why of course, here is what I can sell you."
                
 
             };
 
+            var beer = new Item.Item
+            {
+                name = "Light Beer",
+                type = Item.Item.ItemType.Drink,
+                worth = 3,
+                description = new Description
+                {
+                    look = "A weak looking flat beer bubbles in a bottle",
+                    room = "A beer has been left on the floor"
+                },
+                slot = Item.Item.EqSlot.Hand
+            };
 
+    
+            modo.itemsToSell.Add(beer);
 
             var beerTalk = new Responses
             {

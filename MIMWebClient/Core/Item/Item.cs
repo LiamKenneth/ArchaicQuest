@@ -32,6 +32,7 @@ namespace MIMWebClient.Core.Item
             Book,
             Container,
             Food,
+            Drink,
             Key,
             light,
             Misc,
@@ -177,5 +178,6 @@ namespace MIMWebClient.Core.Item
         public int weaponSpeed { get; set; }
         public bool isHiddenInRoom { get; set; }
         public int count { get; set; }
+        public int worth { get; set; }
     }
 }
