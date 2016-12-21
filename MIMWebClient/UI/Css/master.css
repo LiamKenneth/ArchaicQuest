@@ -45,6 +45,10 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0;
     color: #F7CA18;
     cursor: pointer; }
+  #discussion table {
+    width: 100%; }
+  #discussion thead {
+    border: 1px dashed #fff; }
 
 pre {
   background: #272624;

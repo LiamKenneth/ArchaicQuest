@@ -186,7 +186,7 @@ namespace MIMWebClient.Core.World.Anker
             bucketObj.isHiddenInRoom = true;
             bucketObj.name = "bucket";
 
-            bucketGold.count = 5;
+            bucketGold.count = 75;
             bucketGold.type = Item.Item.ItemType.Gold;
             bucketGold.name = "Gold Coins";
 
@@ -1435,7 +1435,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 name = "Light Beer",
                 type = Item.Item.ItemType.Drink,
-                worth = 3,
+                Gold = 3,
                 description = new Description
                 {
                     look = "A weak looking flat beer bubbles in a bottle",

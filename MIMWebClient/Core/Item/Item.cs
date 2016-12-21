@@ -178,6 +178,6 @@ namespace MIMWebClient.Core.Item
         public int weaponSpeed { get; set; }
         public bool isHiddenInRoom { get; set; }
         public int count { get; set; }
-        public int worth { get; set; }
+        public int Gold { get; set; }
     }
 }

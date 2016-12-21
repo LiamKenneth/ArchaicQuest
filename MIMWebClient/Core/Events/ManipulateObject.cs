@@ -34,7 +34,7 @@ namespace MIMWebClient.Core.Events
 
             if (thingToFind == "all" && objectTypeToFind == "all")
             {
-              return  new KeyValuePair<Item, Item>(null, null);
+                return new KeyValuePair<Item, Item>(null, null);
             }
 
             string item = thingToFind;
@@ -69,7 +69,7 @@ namespace MIMWebClient.Core.Events
 
             List<Item> roomItems = room.items;
             List<Item> playerInv = player.Inventory;
- 
+
 
             #region find Item searching Room and Player Inventory
             if (objectTypeToFind == lookItem && itemToFind != "all")
@@ -91,8 +91,8 @@ namespace MIMWebClient.Core.Events
                 {
 
                     //look in room
-                     foundContainer = (nthContainer == -1) ? roomItems.Find(x => x.name.ToLower().Contains(comntainerToFind) && x.container == true)
-                                          : roomItems.FindAll(x => x.name.ToLower().Contains(comntainerToFind) && x.container == true).Skip(nthContainer - 1).FirstOrDefault();
+                    foundContainer = (nthContainer == -1) ? roomItems.Find(x => x.name.ToLower().Contains(comntainerToFind) && x.container == true)
+                                         : roomItems.FindAll(x => x.name.ToLower().Contains(comntainerToFind) && x.container == true).Skip(nthContainer - 1).FirstOrDefault();
 
 
                     if (foundContainer != null)
@@ -131,7 +131,7 @@ namespace MIMWebClient.Core.Events
             #region find item in player inventory for commands such as drop, equip, wield etc
             else if (objectTypeToFind == FindInventory)
             {
-              
+
                 if (string.IsNullOrEmpty(itemContainer))
                 {
 
@@ -226,9 +226,9 @@ namespace MIMWebClient.Core.Events
                 else
                 {
                     //look in room
-                     foundContainer = (nthContainer == -1) ? roomItems.Find(x => x.name.ToLower().Contains(comntainerToFind) && x.container == true)
-                                          : roomItems.FindAll(x => x.name.ToLower().Contains(comntainerToFind) && x
-                      .container == true).Skip(nthContainer - 1).FirstOrDefault();
+                    foundContainer = (nthContainer == -1) ? roomItems.Find(x => x.name.ToLower().Contains(comntainerToFind) && x.container == true)
+                                         : roomItems.FindAll(x => x.name.ToLower().Contains(comntainerToFind) && x
+                     .container == true).Skip(nthContainer - 1).FirstOrDefault();
 
 
 
@@ -290,7 +290,7 @@ namespace MIMWebClient.Core.Events
                         {
 
                             BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't see that inside the container", player.Name + " searches around inside the container but finds nothing");
-                            return new KeyValuePair<Item, Item>(foundContainer, foundItem);  
+                            return new KeyValuePair<Item, Item>(foundContainer, foundItem);
 
                         }
                     }
@@ -340,16 +340,34 @@ namespace MIMWebClient.Core.Events
                     if (!roomItems[i].stuck)
                     {
                         //Get all Items from the room
-                        roomItems[i].location = Item.ItemLocation.Inventory;
-                        player.Inventory.Add(roomItems[i]);
+                        if (item.type != Item.ItemType.Gold)
+                        {
+                            roomItems[i].location = Item.ItemLocation.Inventory;
+                            player.Inventory.Add(roomItems[i]);
 
-                        BroadcastPlayerAction.BroadcastPlayerActions(
-                            player.HubGuid,
-                            player.Name,
-                            room.players,
-                            "You pick up a " + roomItems[i].name,
-                            player.Name + " picks up a " + roomItems[i].name);
-                        room.items.Remove(roomItems[i]);
+                            BroadcastPlayerAction.BroadcastPlayerActions(
+                                player.HubGuid,
+                                player.Name,
+                                room.players,
+                                "You pick up a " + roomItems[i].name,
+                                player.Name + " picks up a " + roomItems[i].name);
+                            room.items.Remove(roomItems[i]);
+                        }
+                        else
+                        {
+
+
+                            player.Gold += roomItems[i].count;
+
+                            BroadcastPlayerAction.BroadcastPlayerActions(
+                                                          player.HubGuid,
+                                                          player.Name,
+                                                          room.players,
+                                                          "You pick up " + roomItems[i].count + " " + roomItems[i].name,
+                                                          player.Name + " picks up a " + roomItems[i].name);
+
+                            room.items.Remove(roomItems[i]);
+                        }
                     }
                     else
                     {
@@ -374,12 +392,35 @@ namespace MIMWebClient.Core.Events
 
                 for (int i = containerCount - 1; i >= 0; i--)
                 {
-                    containerItems[i].location = Item.ItemLocation.Inventory;
-                    player.Inventory.Add(containerItems[i]);
+                    if (item.type != Item.ItemType.Gold)
+                    {
 
-                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You get a " + containerItems[i].name + " from a " + container.name, player.Name + " get a " + containerItems[i].name + " from a " + container.name);
+                        containerItems[i].location = Item.ItemLocation.Inventory;
+                        player.Inventory.Add(containerItems[i]);
 
-                    containerItems.Remove(containerItems[i]);
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players,
+                            "You get a " + containerItems[i].name + " from a " + container.name,
+                            player.Name + " get a " + containerItems[i].name + " from a " + container.name);
+
+                        containerItems.Remove(containerItems[i]);
+                    }
+                    else
+                    {
+
+
+                        player.Gold += containerItems[i].count;
+
+                        BroadcastPlayerAction.BroadcastPlayerActions(
+                             player.HubGuid,
+                             player.Name,
+                             room.players,
+                             "You pick up " + item.count + " " + item.name + " from a " + container.name,
+                             player.Name + " picks up a " + item.name + containerItems[i].name + " from a " + container.name);
+
+
+
+                        containerItems.Remove(containerItems[i]);
+                    }
                 }
 
 
@@ -394,17 +435,35 @@ namespace MIMWebClient.Core.Events
 
                     if (!item.stuck)
                     {
-                        room.items.Remove(item);
-                        item.location = Item.ItemLocation.Inventory;
-                        player.Inventory.Add(item);
 
 
-                        BroadcastPlayerAction.BroadcastPlayerActions(
-                            player.HubGuid,
-                            player.Name,
-                            room.players,
-                            "You pick up a " + item.name,
-                            player.Name + " picks up a " + item.name);
+                        if (item.type != Item.ItemType.Gold)
+                        {
+
+                            room.items.Remove(item);
+                            item.location = Item.ItemLocation.Inventory;
+                            player.Inventory.Add(item);
+
+
+                            BroadcastPlayerAction.BroadcastPlayerActions(
+                                player.HubGuid,
+                                player.Name,
+                                room.players,
+                                "You pick up a " + item.name,
+                                player.Name + " picks up a " + item.name);
+                        }
+                        else
+                        {
+                            room.items.Remove(item);
+                            player.Gold += item.count;
+
+                            BroadcastPlayerAction.BroadcastPlayerActions(
+                               player.HubGuid,
+                               player.Name,
+                               room.players,
+                               "You pick up " + item.count + " " + item.name,
+                               player.Name + " picks up a " + item.name);
+                        }
                     }
                     else
                     {
@@ -422,12 +481,32 @@ namespace MIMWebClient.Core.Events
                     }
 
                     //Get item from container
-                    container.containerItems.Remove(item);
-                    container.location = Item.ItemLocation.Inventory;
-                    player.Inventory.Add(item);
+
+                    if (item.type != Item.ItemType.Gold)
+                    {
 
 
-                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You get a " + item.name + " from a " + container.name, player.Name + " gets a " + item.name + " from a " + container.name);
+                        container.containerItems.Remove(item);
+                        container.location = Item.ItemLocation.Inventory;
+                        player.Inventory.Add(item);
+
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players,
+                          "You get a " + item.name + " from a " + container.name,
+                          player.Name + " gets a " + item.name + " from a " + container.name);
+
+                    }
+                    else
+                    {
+                        container.containerItems.Remove(item);
+
+                        player.Gold += item.count;
+
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You get " + item.count + " " + item.name + "coin from a " + container.name, player.Name + " gets a " + item.name + " from a " + container.name);
+                    }
+
+
+
+
 
                 }
 
@@ -477,8 +556,8 @@ namespace MIMWebClient.Core.Events
                     {
                         playerInv[i].location = Item.ItemLocation.Room;
                         playerInv[i].isHiddenInRoom = false;
-                       room.items.Add(playerInv[i]);
-                        
+                        room.items.Add(playerInv[i]);
+
 
                         BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You drop a " + playerInv[i].name, player.Name + " drops a " + playerInv[i].name);
 
@@ -507,7 +586,7 @@ namespace MIMWebClient.Core.Events
                         player.Inventory.Remove(playerInv[i]);
                     }
 
-                    
+
                 }
             }
             else
@@ -517,7 +596,7 @@ namespace MIMWebClient.Core.Events
                     return;
                 }
 
-               
+
 
                 if (container == null)
                 {
@@ -552,7 +631,7 @@ namespace MIMWebClient.Core.Events
                     BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You put a " + item.name + " inside the " + container.name, player.Name + " puts a " + item.name + " inside the " + container.name);
                 }
 
-               
+
             }
 
             //save to cache
@@ -588,7 +667,7 @@ namespace MIMWebClient.Core.Events
 
             foundItem = FindItem.Item(room.items, nth, userInput);
 
-           
+
 
             if (foundItem == null)
             {
@@ -662,7 +741,7 @@ namespace MIMWebClient.Core.Events
                             hasKey = true;
                         }
                     }
-                   
+
                 }
 
                 if (hasKey == false)
@@ -687,10 +766,10 @@ namespace MIMWebClient.Core.Events
                     }
                 }
             }
-         
+
             //save to cache
             Cache.updateRoom(room, currentRoom);
-   
+
         }
 
         /// <summary>
@@ -717,7 +796,7 @@ namespace MIMWebClient.Core.Events
 
             foundItem = FindItem.Item(room.items, nth, userInput);
 
-          
+
 
             if (foundItem == null)
             {
@@ -763,7 +842,7 @@ namespace MIMWebClient.Core.Events
                 {
                     BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You lock the chest", player.Name + " locks the " + foundItem.name);
                     foundItem.locked = true;
-                     
+
                 }
                 else
                 {
@@ -792,7 +871,7 @@ namespace MIMWebClient.Core.Events
                 {
                     BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You lock the chest", player.Name + " locks the " + foundExit.name);
                     foundExit.locked = true;
-                    
+
                 }
                 else
                 {
@@ -819,7 +898,7 @@ namespace MIMWebClient.Core.Events
         public static void Open(Room room, Player player, string userInput, string commandKey)
         {
             var currentRoom = room;
-           
+
             var findObject = Events.FindNth.Findnth(userInput);
             int nth = findObject.Key;
 
@@ -916,14 +995,14 @@ namespace MIMWebClient.Core.Events
                 }
                 else
                 {
-                   
-                        BroadcastPlayerAction.BroadcastPlayerActions(
-                            player.HubGuid,
-                            player.Name,
-                            room.players,
-                            "the " + foundExit.name + "is already open ",
-                            player.Name + " tries to open the already open chest" + foundExit.name);
-                    
+
+                    BroadcastPlayerAction.BroadcastPlayerActions(
+                        player.HubGuid,
+                        player.Name,
+                        room.players,
+                        "the " + foundExit.name + "is already open ",
+                        player.Name + " tries to open the already open chest" + foundExit.name);
+
                     return;
                 }
             }
@@ -943,7 +1022,7 @@ namespace MIMWebClient.Core.Events
         public static void Close(Room room, Player player, string userInput, string commandKey)
         {
             var currentRoom = room;
-           
+
             var findObject = Events.FindNth.Findnth(userInput);
             int nth = findObject.Key;
 
@@ -1052,6 +1131,6 @@ namespace MIMWebClient.Core.Events
             Cache.updateRoom(room, currentRoom);
 
         }
-    
-}
+
+    }
 }

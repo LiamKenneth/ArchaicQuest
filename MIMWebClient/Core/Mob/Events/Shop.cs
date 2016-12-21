@@ -24,7 +24,7 @@ namespace MIMWebClient.Core.Mob.Events
 
                     foreach (var item in mob.itemsToSell)
                     {
-                        itemsForSell +=  "<tr><td>" + item.name + "</td> <td>" + item.worth + " GP</td></tr>";
+                        itemsForSell +=  "<tr><td>" + item.name + "</td> <td>" + item.Gold + " GP</td></tr>";
                     }
 
                     itemsForSell += "</tbody></table>";
@@ -70,19 +70,35 @@ namespace MIMWebClient.Core.Mob.Events
 
                     if (itemToBuy != null)
                     {
+                        var result = AvsAnLib.AvsAn.Query(itemToBuy.name);
+                        string article = result.Article;
 
-                    
+                        //Can afford
 
-                        itemToBuy.location = Item.Item.ItemLocation.Inventory;
-                        player.Inventory.Add(itemToBuy);
-                        HubContext.SendToClient(
-                            "You buy " + AvsAnLib.AvsAn.Query(itemToBuy.name) + itemToBuy.name + " from " + mob.Name,
-                            player.HubGuid);
-                        HubContext.broadcastToRoom(
-                            player.Name + " buys " + AvsAnLib.AvsAn.Query(itemToBuy.name) + itemToBuy.name + " from " +
-                            mob.Name, room.players, player.HubGuid, true);
-                        Score.UpdateUiInventory(player);
-                        //deduct gold
+                        if (player.Gold >= itemToBuy.Gold)
+                        {
+
+                            itemToBuy.location = Item.Item.ItemLocation.Inventory;
+                            player.Inventory.Add(itemToBuy);
+                            HubContext.SendToClient(
+                                "You buy " + article + itemToBuy.name + " from " + mob.Name,
+                                player.HubGuid);
+                            HubContext.broadcastToRoom(
+                                player.Name + " buys " + article + " " + itemToBuy.name +
+                                " from " +
+                                mob.Name, room.players, player.HubGuid, true);
+                            Score.UpdateUiInventory(player);
+                            //deduct gold
+
+                            player.Gold -= itemToBuy.Gold;
+                        }
+                        else
+                        {
+                            HubContext.SendToClient("You can't afford " + article + " " + itemToBuy.name, player.HubGuid);
+                        }
+
+
+
                     }
 
                 }
