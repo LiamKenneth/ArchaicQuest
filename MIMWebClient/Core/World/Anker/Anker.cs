@@ -640,7 +640,8 @@ namespace MIMWebClient.Core.World.Anker
                 },
                 RewardXp = 200,
                 QuestGiver = trainer.Name,
-                PrerequisiteItemEmote = "puts his hands in his money pounch and hands you some gold."
+                PrerequisiteItemEmote = "puts his hands in his money pounch and hands you some gold.",
+                AlreadyOnQuestMessage = "Yeah I told you to get me some beer from Modo."
 
 
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using MIMWebClient.Core.Mob;
 
@@ -50,6 +51,29 @@ namespace MIMWebClient.Core.Player
         public int RewardXp { get; set; }
         public Item.Item RewardItem { get; set; }
         public DialogTree RewardDialog { get; set; }
+        public string AlreadyOnQuestMessage { get; set; }
         public bool Completed { get; set; } = false;
+
+        public static void QuestLog(PlayerSetup.Player player)
+        {
+            if (player.QuestLog.Count > 0)
+            {
+                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("Your current quests");
+
+                foreach (var quest in player.QuestLog)
+                {
+                    if (!quest.Completed)
+                    {
+                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(quest.Name);
+                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(quest.Description);
+                    }
+                }
+            }
+            else
+            {
+                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You have no quests.");
+            }
+
+        }
     }
 }

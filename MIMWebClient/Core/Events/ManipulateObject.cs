@@ -644,6 +644,70 @@ namespace MIMWebClient.Core.Events
 
 
         /// <summary>
+        /// Drops item from player inventory
+        /// </summary>
+        /// <param name="room">room object</param>
+        /// <param name="player">player object</param>
+        /// <param name="userInput">text entered by user</param>
+        /// <param name="commandKey">command entered</param>
+        public static void GiveItem(Room room, Player player, string userInput, string commandKey)
+        {
+            var currentRoom = room;
+            var currentPlayer = player;
+            string[] all = userInput.Split();
+            var returnedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, FindInventory);
+            var container = returnedItem.Key;
+            var item = returnedItem.Value;
+
+            if (all[0].Equals("all", StringComparison.InvariantCultureIgnoreCase))
+            {
+                var playerInv = player.Inventory;
+                var playerInvCount = player.Inventory.Count;
+
+                for (int i = playerInvCount - 1; i >= 0; i--)
+                {
+                    playerInv[i].location = Item.ItemLocation.Room;
+ 
+                        playerInv[i].location = Item.ItemLocation.Room;
+                        playerInv[i].isHiddenInRoom = false;
+                        room.items.Add(playerInv[i]);
+
+
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You drop a " + playerInv[i].name, player.Name + " drops a " + playerInv[i].name);
+
+                        player.Inventory.Remove(playerInv[i]);
+                                 
+       
+                }
+            }
+            else
+            {
+                if (item == null)
+                {
+                    return;
+                }
+
+
+ 
+
+                    player.Inventory.Remove(item);
+                    item.location = Item.ItemLocation.Room;
+                    room.items.Add(item);
+
+                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You drop  a " + item.name, player.Name + " drops  a " + item.name);
+              
+            }
+
+            //save to cache
+            Cache.updateRoom(room, currentRoom);
+            Cache.updatePlayer(player, currentPlayer);
+            Score.UpdateUiInventory(player);
+            var roomdata = LoadRoom.DisplayRoom(room, player.Name);
+            Score.UpdateUiRoom(player, roomdata);
+        }
+
+
+        /// <summary>
         /// Unlock Item
         /// </summary>
         /// <param name="room">room object</param>

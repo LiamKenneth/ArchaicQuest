@@ -58,22 +58,7 @@ namespace MIMWebClient.Core.Events
                                 GivePrerequisiteItem = (bool)tree.GivePrerequisiteItem;
                             if (tree.QuestId != null) questId = (int) tree.QuestId;
 
-                            if (hasQuest)
-                            {
-                                //find quest
-                                var quest = mob.Quest.FirstOrDefault(x => x.Id.Equals(questId));
-                                //to player log
-                                player.QuestLog.Add(quest);
-
-                                if (quest?.PrerequisiteItem != null)
-                                {
-                                    //  Command.ParseCommand("Give 5 gold " + player.Name, mob, room);
-                                    player.Gold += 5;
-                                    HubContext.broadcastToRoom(mob.Name + " " + quest.PrerequisiteItemEmote, room.players, String.Empty);
-                                    HubContext.SendToClient("You get 5 gold from " + mob.Name, playerId);
-                                }
-
-                            }
+                           
                         }
                     }
                 }
@@ -86,7 +71,34 @@ namespace MIMWebClient.Core.Events
                         null, true);
 
                     
+                     if (hasQuest)
+                            {
+                                //find quest
+                                var quest = mob.Quest.FirstOrDefault(x => x.Id.Equals(questId));
 
+                                var playerHasQuest = player.QuestLog.FirstOrDefault(x => x.Name.Equals(quest.Name));
+
+                                if (playerHasQuest == null)
+                                {
+                                    //to player log
+                                    player.QuestLog.Add(quest);
+
+                                    if (GivePrerequisiteItem)
+                                    {
+                                        //  Command.ParseCommand("Give 5 gold " + player.Name, mob, room);
+                                        player.Gold += 5;
+                                        HubContext.broadcastToRoom(mob.Name + " " + quest.PrerequisiteItemEmote,
+                                            room.players, String.Empty);
+                                        HubContext.SendToClient("You get 5 gold from " + mob.Name, playerId);
+                                    }
+                                }
+                                else
+                                {
+                            HubContext.SendToClient(
+               mob.Name + " says to you " + quest.AlreadyOnQuestMessage, playerId,
+               null, true);
+                        }
+                            }
                   
                     //check branch to show responses from
                     var speak = mob.DialogueTree.FirstOrDefault(x => x.Message.Equals(response));
@@ -97,12 +109,12 @@ namespace MIMWebClient.Core.Events
                             mob.Name + " says to you anything else?", playerId,
                             null, true);
                     }
-                    else
-                    {
-                        HubContext.SendToClient(
-                            mob.Name + " says to you Goodbye", playerId,
-                            null, true);
-                    }
+    
+    
+    
+    
+    
+                   
                    
                     var i = 1;
                     foreach (var respond in speak.PossibleResponse)
