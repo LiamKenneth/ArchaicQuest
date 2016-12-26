@@ -11,8 +11,11 @@ namespace MIMWebClient.Core.Mob
         /// ID = MobName + int e.g Modo1
         /// </summary>
         public string Id { get; set; }
+        public int? QuestId { get; set; }
         public string Message { get; set; }
         public string MatchPhrase { get; set; }
+        public bool? GiveQuest { get; set; } = false;
+        public bool? GivePrerequisiteItem { get; set; } = false;
         public List<Responses> PossibleResponse { get; set; }
     }
 }

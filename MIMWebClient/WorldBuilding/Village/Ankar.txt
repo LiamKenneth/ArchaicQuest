@@ -20,7 +20,7 @@ Potential Layout
 						                                                                                                                                              |                 |           |
 					    Stable--------Tavern       General Store                                                                                                      |                 |           |
 					       |		    |              |                                                          Ankar Woods----Ankar Woods----Ankar Woods--------Ankar Woods-----aNKAR wOODS---anKAR wOODS
-					Square Walk-----Square Walk---Square Walk-----Black Smith                                                      |                 |                |
+					Square Walk-----Square Walk---Square Walk-----Black Smith                                                      |                 |                |int
 							|			 |              |                                                                          |                 |                |
 							|			 |              |                                                                     Ankar Woods-------Ankar Woods------AnkarWoods-----Cabin---ANkarwoods
 							|	         |              |                       Graveyard-----Graveyard----Graveyard               |                 |               |

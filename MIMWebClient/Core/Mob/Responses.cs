@@ -12,8 +12,11 @@ namespace MIMWebClient.Core.Mob
         /// </summary>
         public string QuestionId { get; set; }
         public string AnswerId { get; set; }
+        public int QuestId { get; set; } = 0;
         public List<string> Keyword { get; set; }
         public string MatchPhrase { get; set; }
         public string Response { get; set; }
+        public bool? GiveQuest { get; set; } = false;
+        public bool? GivePrerequisiteItem { get; set; } = false;
     }
 }

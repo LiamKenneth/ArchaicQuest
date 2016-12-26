@@ -271,6 +271,7 @@
     <Compile Include="Core\Player\Inventory.cs" />
     <Compile Include="Core\Player\Player.cs" />
     <Compile Include="Core\Player\Prompt.cs" />
+    <Compile Include="Core\Player\Quest.cs" />
     <Compile Include="Core\Player\Races\Elf.cs" />
     <Compile Include="Core\Player\Races\PlayerRace.cs" />
     <Compile Include="Core\Player\Recall.cs" />

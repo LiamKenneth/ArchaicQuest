@@ -217,6 +217,9 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("tra")]
         public int Trains;
 
+        [BsonElement("qlog")]
+        public List<Quest> QuestLog;
+
         //NPC Properties
         [BsonElement("ne")]
         public List<string> Emotes;
@@ -259,6 +262,9 @@ namespace MIMWebClient.Core.PlayerSetup
         //NPC Properties
         [BsonElement("ndiaT")]
         public List<DialogTree> DialogueTree;
+
+        [BsonElement("nqu")]
+        public List<Quest> Quest;
 
         //NPC Properties
         [BsonElement("nt")]

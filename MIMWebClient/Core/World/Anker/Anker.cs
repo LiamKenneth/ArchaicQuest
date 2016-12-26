@@ -470,7 +470,8 @@ namespace MIMWebClient.Core.World.Anker
                 Greet = true,
                 GreetMessage = "Hello there!",
                 DialogueTree = new List<DialogTree>(),
-                Dialogue = new List<Responses>()
+                Dialogue = new List<Responses>(),
+                Quest = new List<Quest>()
 
 
             };
@@ -517,6 +518,14 @@ namespace MIMWebClient.Core.World.Anker
                 Response = "It looks great, nice to meet you."
             };
 
+            var lance1e = new Responses()
+            {
+                Keyword = new List<string>(),
+                QuestionId = "lance1",
+                AnswerId = "lance1e",
+                Response = "Do you mind helping me?"
+            };
+
             var lance1aAnswer = new DialogTree()
             {
                Id = "lance1a",
@@ -530,6 +539,7 @@ namespace MIMWebClient.Core.World.Anker
             lance1aAnswer.PossibleResponse.Add(lance1b);
             lance1aAnswer.PossibleResponse.Add(lance1c);
             lance1aAnswer.PossibleResponse.Add(lance1d);
+            lance1aAnswer.PossibleResponse.Add(lance1e);
 
             var lance1bAnswer = new DialogTree()
             {
@@ -568,6 +578,17 @@ namespace MIMWebClient.Core.World.Anker
 
             };
 
+            var lance1eAnswer = new DialogTree()
+            {
+                Id = "lance1d",
+                MatchPhrase = lance1e.Response,
+                Message = "Thankyou $playerName, I would like you to buy me a beer from Modo please. You may need some gold.",
+                PossibleResponse = new List<Responses>(),
+                GivePrerequisiteItem = true,
+
+
+            };
+
             var whosModo = new DialogTree
             {
                 Id = "lance2",
@@ -584,12 +605,44 @@ namespace MIMWebClient.Core.World.Anker
             trainer.DialogueTree.Add(lance1cAnswer);
             trainer.DialogueTree.Add(lance1bAnswer);
             trainer.DialogueTree.Add(lance1dAnswer);
+            trainer.DialogueTree.Add(lance1eAnswer);
 
 
 
             welcomePlayers.PossibleResponse.Add(lance1a);
             welcomePlayers.PossibleResponse.Add(lance1b);
             welcomePlayers.PossibleResponse.Add(lance1c);
+
+
+            //quest
+
+            var getBeer = new Quest()
+            {
+                Id = 1,
+                Description = "I would like some beer from Modo please",
+                Name = "Buy beer from modo and give to lance",
+                Type = Quest.QuestType.Find,
+                QuestItem = new Item.Item
+                {
+                    name = "Light Beer",
+                    type = Item.Item.ItemType.Drink,
+                    Gold = 3,
+                    description = new Description
+                    {
+                        look = "A weak looking flat beer bubbles in a bottle",
+                        room = "A beer has been left on the floor"
+                    },
+                    slot = Item.Item.EqSlot.Hand
+                },
+                RewardXp = 200,
+                QuestGiver = trainer.Name,
+                PrerequisiteItemEmote = "puts his hands in his money pounch and hands you some gold."
+
+
+
+            };
+
+            trainer.Quest.Add(getBeer);
 
 
             #region exits
@@ -1103,17 +1156,17 @@ namespace MIMWebClient.Core.World.Anker
 
 
 
-            // Create Exits
-            //var east = new Exit
-            //{
-            //    name = "East",
-            //    area = "Anker",
-            //    region = "Anker",
-            //    areaId = 11,
-            //    keywords = new List<string>(),
-            //    hidden = false,
-            //    locked = false,
-            //};
+// Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 10,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
 
             // Create Exits
             var south = new Exit
@@ -1144,6 +1197,7 @@ namespace MIMWebClient.Core.World.Anker
 
             #endregion
             room.exits.Add(north);
+            room.exits.Add(east);
             room.exits.Add(west);
             room.exits.Add(south);
 
@@ -1678,6 +1732,198 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 region = "Anker",
                 areaId = 3,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            #endregion
+
+            room.exits.Add(east);
+            room.exits.Add(south);
+
+
+
+
+            return room;
+        }
+
+        public static Room VillageHallEntrance()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 10,
+                title = "Village Hall Entrance",
+                description = "A large circular window above the western double doors gives a grand appearance to the empty entrance way." +
+                              " The floor is paved with smooth sandstone leading further inside under an arch way to the east." +
+                              " A large sign sits on a wooden desk beside the door.",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Inside,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+         
+            #region exits
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 11,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
+
+            // Create Exits
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 8,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            #endregion
+
+            room.exits.Add(east);
+            room.exits.Add(west);
+
+
+
+
+            return room;
+        }
+
+        public static Room VillageHall()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 11,
+                title = "The Village Hall",
+                description = "High back chairs surround a circular table that fills most of the room." +
+                              " This is a meeting point for the villagers and the Elder to discuss issues surrounding Anker." +
+                              " Torches hang either side of the archway. A wooden door is to the north, a plaque has been added to the door.",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Inside,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+            #region exits
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 10,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
+
+            // Create Exits
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 12,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            #endregion
+
+            room.exits.Add(north);
+            room.exits.Add(east);
+
+
+
+
+            return room;
+        }
+
+        public static Room VillageHallEldersRoom()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 12,
+                title = "The Village Hall, Elder Chamber",
+                description = "A grand wooden desk faces the entrance taking over most of the room." +
+                              " A large sword is attacheed to the wall above the desk. To the east a bookcase covers the wall filled with books of all sizes and colours." +
+                              " A fabric cloth hangs on the western wall bearing the crest of Anker. Torches wither side of the door light the room.",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Inside,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+            #region exits
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 15,
+                keywords = new List<string>(),
+                hidden = true,
+                locked = false,
+            };
+
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 11,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false

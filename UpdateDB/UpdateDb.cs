@@ -51,6 +51,9 @@ namespace UpdateDB
             areas.Add(Anker.DrunkenSailor());
             areas.Add(Anker.GeneralStore());
             areas.Add(Anker.MetalMedley());
+            areas.Add(Anker.VillageHall());
+            areas.Add(Anker.VillageHallEntrance());
+            areas.Add(Anker.VillageHallEldersRoom());
             areaSpeed.Stop();
             Console.WriteLine("Compiling Areas Completed in {0}ms.", areaSpeed.Elapsed.Milliseconds);
 
