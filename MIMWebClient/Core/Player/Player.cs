@@ -397,6 +397,7 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Practices = 10;
             this.Trains = 10;
            
+            this.QuestLog = new List<Quest>();
 
             var recall = new Recall
             {

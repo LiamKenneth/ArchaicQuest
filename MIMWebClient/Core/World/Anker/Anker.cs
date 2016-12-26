@@ -523,7 +523,8 @@ namespace MIMWebClient.Core.World.Anker
                 Keyword = new List<string>(),
                 QuestionId = "lance1",
                 AnswerId = "lance1e",
-                Response = "Do you mind helping me?"
+                Response = "Anything I can help you with?"
+                
             };
 
             var lance1aAnswer = new DialogTree()
@@ -582,9 +583,11 @@ namespace MIMWebClient.Core.World.Anker
             {
                 Id = "lance1d",
                 MatchPhrase = lance1e.Response,
-                Message = "Thankyou $playerName, I would like you to buy me a beer from Modo please. You may need some gold.",
+                Message = "Yes $playerName, I would like you to buy me a beer from Modo please. You may need some gold.",
                 PossibleResponse = new List<Responses>(),
                 GivePrerequisiteItem = true,
+                GiveQuest = true,
+                QuestId = 1
 
 
             };
@@ -612,6 +615,7 @@ namespace MIMWebClient.Core.World.Anker
             welcomePlayers.PossibleResponse.Add(lance1a);
             welcomePlayers.PossibleResponse.Add(lance1b);
             welcomePlayers.PossibleResponse.Add(lance1c);
+            welcomePlayers.PossibleResponse.Add(lance1e);
 
 
             //quest
@@ -643,7 +647,7 @@ namespace MIMWebClient.Core.World.Anker
             };
 
             trainer.Quest.Add(getBeer);
-
+             
 
             #region exits
 
