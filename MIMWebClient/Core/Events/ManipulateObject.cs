@@ -650,14 +650,18 @@ namespace MIMWebClient.Core.Events
         /// <param name="player">player object</param>
         /// <param name="userInput">text entered by user</param>
         /// <param name="commandKey">command entered</param>
-        public static void GiveItem(Room room, Player player, string userInput, string commandKey)
+        public static void GiveItem(Room room, Player player, string userInput, string commandKey, string type)
         {
             var currentRoom = room;
             var currentPlayer = player;
             string[] all = userInput.Split();
-            var returnedItem = (KeyValuePair<Item, Item>)FindObject(room, player, commandKey, userInput, FindInventory);
-            var container = returnedItem.Key;
-            var item = returnedItem.Value;
+            var itemToGive = all[0];
+            var thing = all.Last();
+            var item = itemToGive;
+ 
+            var foundItem = player.Inventory.FirstOrDefault(x => item != null && x.name.StartsWith(item, StringComparison.CurrentCultureIgnoreCase));
+            var foundThing = room.players.FirstOrDefault(x => thing != null && x.Name.StartsWith(thing, StringComparison.CurrentCultureIgnoreCase)) ??
+                             room.mobs.FirstOrDefault(x => thing != null && x.Name.StartsWith(thing, StringComparison.CurrentCultureIgnoreCase));
 
             if (all[0].Equals("all", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -666,36 +670,41 @@ namespace MIMWebClient.Core.Events
 
                 for (int i = playerInvCount - 1; i >= 0; i--)
                 {
-                    playerInv[i].location = Item.ItemLocation.Room;
- 
-                        playerInv[i].location = Item.ItemLocation.Room;
-                        playerInv[i].isHiddenInRoom = false;
-                        room.items.Add(playerInv[i]);
+                    if (foundThing != null)
+                    {
+                        foundThing.Inventory.Add(playerInv[i]);
 
 
-                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You drop a " + playerInv[i].name, player.Name + " drops a " + playerInv[i].name);
+                        BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players,
+                                            "You give a " + playerInv[i].name + " to " + playerInv[i].name,
+                                            player.Name + " gives a " + playerInv[i].name + " to " + foundThing.Name);
 
                         player.Inventory.Remove(playerInv[i]);
-                                 
-       
+
+                    }
                 }
             }
             else
             {
-                if (item == null)
+                if (foundThing == null)
                 {
+                    HubContext.SendToClient("You don't see " + thing + " here.", player.HubGuid);
                     return;
                 }
 
+                if (foundItem == null)
+                {
+                    HubContext.SendToClient("You are not carrying a " + item, player.HubGuid);
+                    return;
+                }
 
- 
+                player.Inventory.Remove(foundItem);
+                foundThing.Inventory.Add(foundItem);
 
-                    player.Inventory.Remove(item);
-                    item.location = Item.ItemLocation.Room;
-                    room.items.Add(item);
 
-                    BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You drop  a " + item.name, player.Name + " drops  a " + item.name);
-              
+                BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players,
+                    "You give a " + foundItem.name + " to " + foundItem.name,
+                    player.Name + " gives a " + foundItem.name + " to " + foundItem.name);
             }
 
             //save to cache

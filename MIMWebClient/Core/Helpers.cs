@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MIMWebClient.Core.Room;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -86,6 +87,19 @@ namespace MIMWebClient.Core
         public static String RandomString(params String[] possible)
         {
             return possible[diceRoll.Next(0, possible.Count())];
-        } 
+        }
+
+        public static PlayerSetup.Player FindPlayer(Room.Room Room, PlayerSetup.Player player)
+        {
+            var playerFound = Room.players.FirstOrDefault(x => x.Name.StartsWith(player.Name, StringComparison.CurrentCultureIgnoreCase))
+                             ?? Room.mobs.FirstOrDefault(x => x.Name.ToLower().Contains(player.Name.ToLower()));
+
+            return playerFound;
+
+        }
+
+
+        
+
     }
 }

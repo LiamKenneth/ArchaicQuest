@@ -51,7 +51,7 @@ namespace MIMWebClient.Core
             commandList.Add("get", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item"));
             commandList.Add("take", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item"));
             commandList.Add("drop", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey));
-            commandList.Add("give", () => ManipulateObject.GiveItem(room, playerData, commandOptions, commandKey));
+            commandList.Add("give", () => ManipulateObject.GiveItem(room, playerData, commandOptions, commandKey, "killable"));
             commandList.Add("put", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey));
             commandList.Add("save", () =>  Save.UpdatePlayer(playerData));
             commandList.Add("'", () => Communicate.Say(commandOptions, playerData, room));
