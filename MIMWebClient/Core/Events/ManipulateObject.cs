@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MIMWebClient.Core.Player;
 
 namespace MIMWebClient.Core.Events
 {
@@ -703,8 +704,30 @@ namespace MIMWebClient.Core.Events
 
 
                 BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players,
-                    "You give a " + foundItem.name + " to " + foundItem.name,
-                    player.Name + " gives a " + foundItem.name + " to " + foundItem.name);
+                    "You give a " + foundItem.name + " to " + foundThing.Name,
+                    player.Name + " gives a " + foundItem.name + " to " + foundThing.Name);
+
+                //check quest
+
+                foreach (var quest in player.QuestLog)
+                {
+                    if (!quest.Completed && quest.Type == Quest.QuestType.Find)
+                    {
+                        //Find quest requires player to give item to the mob.
+
+                        if (quest.QuestGiver == foundThing.Name && quest.QuestItem.name == foundItem.name)
+                        {
+                            // player completed quest
+
+                            HubContext.SendToClient(
+                            foundThing.Name + " says to you " + quest.RewardDialog.Message.Replace("$playerName", player.Name), player.HubGuid,
+                            null, true);
+
+                            //award player
+                        }
+
+                    }
+                }
             }
 
             //save to cache
