@@ -523,7 +523,8 @@ namespace MIMWebClient.Core.World.Anker
                 Keyword = new List<string>(),
                 QuestionId = "lance1",
                 AnswerId = "lance1e",
-                Response = "Anything I can help you with?"
+                Response = "Anything I can help you with?",
+                QuestId = 1
                 
             };
 
@@ -644,7 +645,8 @@ namespace MIMWebClient.Core.World.Anker
                 AlreadyOnQuestMessage = "Yeah I told you to get me some beer from Modo.",
                 RewardDialog = new DialogTree()
                 {
-                    Message = "Ah Thank you so much!"
+                    Message = "Ah Thank you so much!",
+                    PossibleResponse = new List<Responses>()
                 }
 
 

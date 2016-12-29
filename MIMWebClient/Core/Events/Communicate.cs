@@ -38,27 +38,30 @@ namespace MIMWebClient.Core.Events
                         if (message.Contains(keyword))
                         {
                             response = dialogue.Response;
-                           
+
                         }
                     }
 
                 }
 
-              
+
 
                 if (response == string.Empty)
                 {
-                    foreach (var tree in mob.DialogueTree)
+                    if (mob.DialogueTree != null)
                     {
-                        if (message.Equals(tree.MatchPhrase))
+                        foreach (var tree in mob.DialogueTree)
                         {
-                            response = tree.Message;
-                            if (tree.GiveQuest != null) hasQuest = (bool)tree.GiveQuest;
-                            if (tree.GivePrerequisiteItem != null)
-                                GivePrerequisiteItem = (bool)tree.GivePrerequisiteItem;
-                            if (tree.QuestId != null) questId = (int) tree.QuestId;
+                            if (message.Equals(tree.MatchPhrase))
+                            {
+                                response = tree.Message;
+                                if (tree.GiveQuest != null) hasQuest = (bool) tree.GiveQuest;
+                                if (tree.GivePrerequisiteItem != null)
+                                    GivePrerequisiteItem = (bool) tree.GivePrerequisiteItem;
+                                if (tree.QuestId != null) questId = (int) tree.QuestId;
 
-                           
+
+                            }
                         }
                     }
                 }
@@ -66,40 +69,43 @@ namespace MIMWebClient.Core.Events
                 if (response != String.Empty)
                 {
                     Thread.Sleep(120); // hack, sometimes the responses calls before the questions??
-                    HubContext.SendToClient(
-                        mob.Name + " says to you " + response.Replace("$playerName", player.Name), playerId,
-                        null, true);
 
-                    
-                     if (hasQuest)
+
+                    if (hasQuest)
+                    {
+                        //find quest
+                        var quest = mob.Quest.FirstOrDefault(x => x.Id.Equals(questId));
+
+                        var playerHasQuest = player.QuestLog.FirstOrDefault(x => x.Name.Equals(quest.Name));
+
+                        if (playerHasQuest == null)
+                        {
+                            //to player log
+                            player.QuestLog.Add(quest);
+
+                            if (GivePrerequisiteItem)
                             {
-                                //find quest
-                                var quest = mob.Quest.FirstOrDefault(x => x.Id.Equals(questId));
-
-                                var playerHasQuest = player.QuestLog.FirstOrDefault(x => x.Name.Equals(quest.Name));
-
-                                if (playerHasQuest == null)
-                                {
-                                    //to player log
-                                    player.QuestLog.Add(quest);
-
-                                    if (GivePrerequisiteItem)
-                                    {
-                                        //  Command.ParseCommand("Give 5 gold " + player.Name, mob, room);
-                                        player.Gold += 5;
-                                        HubContext.broadcastToRoom(mob.Name + " " + quest.PrerequisiteItemEmote,
-                                            room.players, String.Empty);
-                                        HubContext.SendToClient("You get 5 gold from " + mob.Name, playerId);
-                                    }
-                                }
-                                else
-                                {
+                                //  Command.ParseCommand("Give 5 gold " + player.Name, mob, room);
+                                player.Gold += 5;
+                                HubContext.broadcastToRoom(mob.Name + " " + quest.PrerequisiteItemEmote,
+                                    room.players, String.Empty);
+                                HubContext.SendToClient("You get 5 gold from " + mob.Name, playerId);
+                            }
+                        }
+                        else
+                        {
                             HubContext.SendToClient(
                mob.Name + " says to you " + quest.AlreadyOnQuestMessage, playerId,
                null, true);
+                            return;
                         }
-                            }
-                  
+                    }
+
+                    HubContext.SendToClient(
+                       mob.Name + " says to you " + response.Replace("$playerName", player.Name), playerId,
+                       null, true);
+
+
                     //check branch to show responses from
                     var speak = mob.DialogueTree.FirstOrDefault(x => x.Message.Equals(response));
 
@@ -109,24 +115,43 @@ namespace MIMWebClient.Core.Events
                             mob.Name + " says to you anything else?", playerId,
                             null, true);
                     }
-    
-    
-    
-    
-    
-                   
-                   
+
+
+
+
+
+
+
                     var i = 1;
                     foreach (var respond in speak.PossibleResponse)
                     {
+                        if (player.QuestLog != null && respond.QuestId > 0)
+                        {
+                            var doneQuest =
+                                player.QuestLog.FirstOrDefault(
+                                    x => x.Id.Equals(respond.QuestId) && x.QuestGiver.Equals(mob.Name) && x.Completed.Equals(true));
 
-                        
-
-                            var textChoice = "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " + respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " + respond.Response + "</a>";
-                            HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
-                            i++;
+                            if (doneQuest == null)
+                            {
+                                var textChoice =
+                                    "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
+                                    respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " + respond.Response +
+                                    "</a>";
+                                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
+                                i++;
+                            }
+                            else
+                            {
+                                var textChoice =
+                                    "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
+                                    respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " + respond.Response +
+                                    "</a>";
+                                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
+                                i++;
+                            }
                         }
-                    
+                    }
+
                 }
 
 

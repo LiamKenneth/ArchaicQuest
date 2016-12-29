@@ -719,9 +719,11 @@ namespace MIMWebClient.Core.Events
                         {
                             // player completed quest
 
-                            HubContext.SendToClient(
-                            foundThing.Name + " says to you " + quest.RewardDialog.Message.Replace("$playerName", player.Name), player.HubGuid,
-                            null, true);
+                            var mobQuest = foundThing.Quest.FirstOrDefault(x => x.Id.Equals(quest.Id));
+                            if (mobQuest != null)
+                                HubContext.SendToClient(
+                                    foundThing.Name + " says to you " + mobQuest.RewardDialog.Message.Replace("$playerName", player.Name), player.HubGuid,
+                                    null, true);
 
                             //award player
                         }
