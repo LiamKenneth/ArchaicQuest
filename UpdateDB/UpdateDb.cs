@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MIMWebClient.Core.World.Tutorial;
 
 namespace UpdateDB
 {
@@ -37,23 +38,27 @@ namespace UpdateDB
             var areaSpeed = new Stopwatch();
             areaSpeed.Start();
 
-            var areas = new List<Room>();
-            areas.Add(Anker.VillageSquare());
-            areas.Add(Anker.SquareWalkOutsideTavern());
-            areas.Add(Anker.SquareWalkOutsideStables());
-            areas.Add(Anker.RedLionStables());
-            areas.Add(Anker.SquareWalkCommerceCorner());
-            areas.Add(Anker.SquareWalkEastOfCentre());
-            areas.Add(Anker.SquareWalkEntrance());
-            areas.Add(Anker.SquareWalkSouthWestOfCentre());
-            areas.Add(Anker.SquareWalkWestOfCentre());
-            areas.Add(Anker.SquareWalkSouthOfCentre());
-            areas.Add(Anker.DrunkenSailor());
-            areas.Add(Anker.GeneralStore());
-            areas.Add(Anker.MetalMedley());
-            areas.Add(Anker.VillageHall());
-            areas.Add(Anker.VillageHallEntrance());
-            areas.Add(Anker.VillageHallEldersRoom());
+            var areas = new List<Room>
+            {
+                Ambush.TutorialRoom1(),
+                Ambush.TutorialRoom2(),
+                Anker.VillageSquare(),
+                Anker.SquareWalkOutsideTavern(),
+                Anker.SquareWalkOutsideStables(),
+                Anker.RedLionStables(),
+                Anker.SquareWalkCommerceCorner(),
+                Anker.SquareWalkEastOfCentre(),
+                Anker.SquareWalkEntrance(),
+                Anker.SquareWalkSouthWestOfCentre(),
+                Anker.SquareWalkWestOfCentre(),
+                Anker.SquareWalkSouthOfCentre(),
+                Anker.DrunkenSailor(),
+                Anker.GeneralStore(),
+                Anker.MetalMedley(),
+                Anker.VillageHall(),
+                Anker.VillageHallEntrance(),
+                Anker.VillageHallEldersRoom()
+            };
             areaSpeed.Stop();
             Console.WriteLine("Compiling Areas Completed in {0}ms.", areaSpeed.Elapsed.Milliseconds);
 

@@ -363,8 +363,8 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Copper = 100;
 
             //Location
-            this.Region = "Anker";
-            this.Area = "Anker";
+            this.Region = "Tutorial";
+            this.Area = "Tutorial";
             this.AreaId = 0;
 
             //Eq
