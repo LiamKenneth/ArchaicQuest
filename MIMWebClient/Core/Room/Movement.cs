@@ -32,6 +32,35 @@ namespace MIMWebClient.Core.Room
                 Score.UpdateUiRoom(room.players[i], roomdata);
             }
 
+            //NPC Enter event here
+            foreach (var mob in room.mobs)
+            {
+
+                if (mob.Greet)
+                {
+                    Event.ParseCommand("greet", player, mob, room);
+                }
+                else
+                {
+                    //mob might be aggro
+                }
+
+                if (mob.DialogueTree.Count > 0)
+                {
+                    var speak = mob.DialogueTree[0];
+
+                    HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(mob.Name + " says to you " + speak.Message);
+                    var i = 1;
+                    foreach (var respond in speak.PossibleResponse)
+                    {
+                        var textChoice = "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " + respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " + respond.Response + "</a>";
+                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
+                        i++;
+
+                    }
+                }
+            }
+
         }
 
         public static void ExitRoom(Player player, Room room, string direction)
