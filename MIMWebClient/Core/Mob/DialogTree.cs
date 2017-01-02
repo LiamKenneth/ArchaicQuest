@@ -17,5 +17,6 @@ namespace MIMWebClient.Core.Mob
         public bool? GiveQuest { get; set; } = false;
         public bool? GivePrerequisiteItem { get; set; } = false;
         public List<Responses> PossibleResponse { get; set; }
+        public bool? DoAction { get; set; } = false;
     }
 }

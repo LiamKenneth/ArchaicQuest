@@ -6,6 +6,7 @@ using MIMWebClient.Core.Item;
 using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.Player;
 using MIMWebClient.Core.Room;
+using Action = MIMWebClient.Core.Item.Action;
 
 namespace MIMWebClient.Core.World.Tutorial
 {
@@ -33,12 +34,15 @@ namespace MIMWebClient.Core.World.Tutorial
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),
                 clean = true,
+                
+               
 
 
             };
 
         
-
+            room.Emotes.Add("You hear the sound of bushes and trees rustling all around you");
+            room.Emotes.Add("*SNAP* You hear the distinctive sound of a stick snapping");
             // Create Exits
             var north = new Exit
             {
@@ -79,12 +83,14 @@ namespace MIMWebClient.Core.World.Tutorial
                 Skills = new List<Skill>(),
                 Inventory = new List<Item.Item>(),
                 DialogueTree = new List<DialogTree>(),
-                Greet = true,
-                GreetMessage = "I don't think we have much further to go, "
+                Greet = false,
+                GreetMessage = "I don't think we have much further to go, ",
+                Emotes = new List<string>()
 
 
             };
 
+            wilhelm.Emotes.Add("looks around nervously");
         
             var dagger = new Item.Item
             {
@@ -120,7 +126,8 @@ namespace MIMWebClient.Core.World.Tutorial
             {
                 Id = "tut1",
                 Message = "Did you hear that?",
-                PossibleResponse = new List<Responses>()
+                PossibleResponse = new List<Responses>(),
+                
             };
 
             var tut1a = new Responses()
@@ -139,10 +146,65 @@ namespace MIMWebClient.Core.World.Tutorial
             didYouHearThat.PossibleResponse.Add(tut1a);
             didYouHearThat.PossibleResponse.Add(tut1b);
 
-            wilhelm.DialogueTree.Add(didYouHearThat);
+          //  wilhelm.DialogueTree.Add(didYouHearThat);
+
+
+            var goblin = new PlayerSetup.Player
+            {
+                NPCId = Guid.NewGuid(),
+                Name = "Goblin",
+                Type = PlayerSetup.Player.PlayerTypes.Mob,
+                Description = "",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Intelligence = 12,
+                Wisdom = 12,
+                Charisma = 12,
+                MaxHitPoints = 150,
+                HitPoints = 150,
+                Level = 10,
+                Status = PlayerSetup.Player.PlayerStatus.Standing,
+                Skills = new List<Skill>(),
+                Inventory = new List<Item.Item>(),
+                DialogueTree = new List<DialogTree>(),
+              Dialogue = new List<Responses>(),
+                Emotes = new List<string>(),
+                Actions = new Dictionary<string, Action>()
+                
+
+
+            };
+
+           
+
+            var attack = new Responses()
+            {
+                QuestionId = "tut1",
+                MatchPhrase = tut1a.Response,               
+                Response = "AAAHG-ATACK!!!!",
+                Keyword = new List<string>()
+               
+            };
+
+            attack.Keyword.Add(tut1a.Response);
+
+            var attackb = new Responses()
+            {
+                QuestionId = "tut1",
+                MatchPhrase = tut1b.Response,
+                Response = "AAAHG-ATACK!!!!",
+                Keyword = new List<string>()
+
+            };
+
+            attackb.Keyword.Add(tut1b.Response);
+
+            goblin.Dialogue.Add(attack);
+            goblin.Dialogue.Add(attackb);
 
             room.exits.Add(north);
-            
+            room.mobs.Add(goblin);
             room.mobs.Add(wilhelm);         
 
             return room;

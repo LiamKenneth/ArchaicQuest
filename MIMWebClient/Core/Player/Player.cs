@@ -274,6 +274,9 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("ngu")]
         public bool Guard;
 
+        [BsonElement("nAct")]
+        public Dictionary<string, Action> Actions;
+
         [BsonElement("nch")]
         public bool NewbieChannel = true;
 
@@ -409,8 +412,18 @@ namespace MIMWebClient.Core.PlayerSetup
 
             this.Recall = recall;
 
+            var tutorialQuest = new Quest();
 
+            tutorialQuest.Name = "Tutorial";
+            tutorialQuest.Description = "Introduction to Mud";
+            tutorialQuest.Type = Core.Player.Quest.QuestType.Act;
+            tutorialQuest.Id = 0;
+            tutorialQuest.QuestGiver = "Wilhem";
+
+            QuestLog.Add(tutorialQuest);
         }
+
+         
 
         public void SavePlayerInformation()
         {

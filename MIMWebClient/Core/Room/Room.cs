@@ -75,9 +75,9 @@ namespace MIMWebClient.Core.Room
         public List<PlayerSetup.Player> mobs { get; set; }
          public List<Item.Item> items { get; set; }
          public List<PlayerSetup.Player> corpses { get; set; }
+        public List<string> Emotes { get; set; } = new List<string>();
 
-       
-       
+
     }
 
   

@@ -1,4 +1,5 @@
 ﻿using System;
+using MIMWebClient.Core.World.Tutorial;
 
 namespace MIMWebClient.Core.Room
 {
@@ -60,6 +61,8 @@ namespace MIMWebClient.Core.Room
                     }
                 }
             }
+
+            Tutorial.Intro(player, room);
 
         }
 

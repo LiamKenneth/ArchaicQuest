@@ -10,6 +10,7 @@ using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Player;
 using MIMWebClient.Core;
 using MIMWebClient;
+using MIMWebClient.Core.World.Tutorial;
 
 namespace MIMWebClient.Hubs
 {
@@ -251,6 +252,10 @@ namespace MIMWebClient.Hubs
                 Score.ReturnScoreUI(player);
                 Score.UpdateUiPrompt(player);
                 Score.UpdateUiInventory(player);
+
+              
+                   
+                 
             }
             else
             {

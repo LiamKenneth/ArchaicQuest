@@ -76,7 +76,7 @@ namespace MIMWebClient.Core.Events
                         //find quest
                         var quest = mob.Quest.FirstOrDefault(x => x.Id.Equals(questId));
 
-                        var playerHasQuest = player.QuestLog.FirstOrDefault(x => x.Name.Equals(quest.Name));
+                        var playerHasQuest = player.QuestLog.FirstOrDefault(x => quest != null && x.Name.Equals(quest.Name));
 
                         if (playerHasQuest == null)
                         {
@@ -109,7 +109,7 @@ namespace MIMWebClient.Core.Events
                     //check branch to show responses from
                     var speak = mob.DialogueTree.FirstOrDefault(x => x.Message.Equals(response));
 
-                    if (speak.PossibleResponse.Count > 0)
+                    if (speak?.PossibleResponse.Count > 0)
                     {
                         HubContext.SendToClient(
                             mob.Name + " says to you anything else?", playerId,
