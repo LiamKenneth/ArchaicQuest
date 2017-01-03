@@ -30,18 +30,20 @@ namespace MIMWebClient.Core.Events
                 var questId = 0;
                 var GivePrerequisiteItem = false;
 
-                if (mob.Dialogue == null) continue;
-                foreach (var dialogue in mob.Dialogue)
+                if (mob.Dialogue != null)
                 {
-                    foreach (var keyword in dialogue.Keyword)
+                    foreach (var dialogue in mob.Dialogue)
                     {
-                        if (message.Contains(keyword))
+                        foreach (var keyword in dialogue.Keyword)
                         {
-                            response = dialogue.Response;
+                            if (message.Contains(keyword))
+                            {
+                                response = dialogue.Response;
 
+                            }
                         }
-                    }
 
+                    }
                 }
 
 
@@ -118,10 +120,6 @@ namespace MIMWebClient.Core.Events
 
 
 
-
-
-
-
                     var i = 1;
                     foreach (var respond in speak.PossibleResponse)
                     {
@@ -158,6 +156,13 @@ namespace MIMWebClient.Core.Events
                 else
                 {
                     //generic responses?
+                }
+
+                if (mob.EventOnComunicate.Count > 0)
+                {
+                    var triggerEvent = mob.EventOnComunicate.FirstOrDefault(x => x.Value.Equals("yes"));
+
+                    Event.ParseCommand(triggerEvent.Key, player, mob, room, "yes", "player");
                 }
             }
 

@@ -274,8 +274,11 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("ngu")]
         public bool Guard;
 
-        [BsonElement("nAct")]
-        public Dictionary<string, Action> Actions;
+        [BsonElement("eoe")]
+        public string EventOnEnter;
+
+        [BsonElement("eoc")]
+        public Dictionary<string, string> EventOnComunicate;
 
         [BsonElement("nch")]
         public bool NewbieChannel = true;

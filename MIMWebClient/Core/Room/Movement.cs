@@ -60,9 +60,14 @@ namespace MIMWebClient.Core.Room
 
                     }
                 }
+
+                if (mob.EventOnEnter != null)
+                {
+                    Event.ParseCommand(mob.EventOnEnter, player, mob, room);
+                }
             }
 
-            Tutorial.Intro(player, room);
+            
 
         }
 

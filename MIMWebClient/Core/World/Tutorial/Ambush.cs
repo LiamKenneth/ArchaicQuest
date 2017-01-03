@@ -85,7 +85,8 @@ namespace MIMWebClient.Core.World.Tutorial
                 DialogueTree = new List<DialogTree>(),
                 Greet = false,
                 GreetMessage = "I don't think we have much further to go, ",
-                Emotes = new List<string>()
+                Emotes = new List<string>(),
+                EventOnComunicate = new Dictionary<string, string>()
 
 
             };
@@ -170,13 +171,16 @@ namespace MIMWebClient.Core.World.Tutorial
                 DialogueTree = new List<DialogTree>(),
               Dialogue = new List<Responses>(),
                 Emotes = new List<string>(),
-                Actions = new Dictionary<string, Action>()
+                EventOnEnter = "tutorial",
+                EventOnComunicate = new Dictionary<string, string>()
                 
 
 
             };
 
-           
+            wilhelm.EventOnComunicate.Add("tutorial", "yes");
+         
+
 
             var attack = new Responses()
             {
