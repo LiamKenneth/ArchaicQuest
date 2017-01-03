@@ -86,8 +86,8 @@ namespace MIMWebClient.Core.World.Tutorial
                 Greet = false,
                 GreetMessage = "I don't think we have much further to go, ",
                 Emotes = new List<string>(),
-                EventOnComunicate = new Dictionary<string, string>()
-
+                EventOnComunicate = new Dictionary<string, string>(),
+                  EventOnEnter = "tutorial"
 
             };
 
@@ -150,34 +150,7 @@ namespace MIMWebClient.Core.World.Tutorial
           //  wilhelm.DialogueTree.Add(didYouHearThat);
 
 
-            var goblin = new PlayerSetup.Player
-            {
-                NPCId = Guid.NewGuid(),
-                Name = "Goblin",
-                Type = PlayerSetup.Player.PlayerTypes.Mob,
-                Description = "",
-                Strength = 12,
-                Dexterity = 12,
-                Constitution = 12,
-                Intelligence = 12,
-                Wisdom = 12,
-                Charisma = 12,
-                MaxHitPoints = 150,
-                HitPoints = 150,
-                Level = 10,
-                Status = PlayerSetup.Player.PlayerStatus.Standing,
-                Skills = new List<Skill>(),
-                Inventory = new List<Item.Item>(),
-                DialogueTree = new List<DialogTree>(),
-              Dialogue = new List<Responses>(),
-                Emotes = new List<string>(),
-                EventOnEnter = "tutorial",
-                EventOnComunicate = new Dictionary<string, string>()
-                
-
-
-            };
-
+         
             wilhelm.EventOnComunicate.Add("tutorial", "yes");
          
 
@@ -204,11 +177,9 @@ namespace MIMWebClient.Core.World.Tutorial
 
             attackb.Keyword.Add(tut1b.Response);
 
-            goblin.Dialogue.Add(attack);
-            goblin.Dialogue.Add(attackb);
-
+         
             room.exits.Add(north);
-            room.mobs.Add(goblin);
+          
             room.mobs.Add(wilhelm);         
 
             return room;

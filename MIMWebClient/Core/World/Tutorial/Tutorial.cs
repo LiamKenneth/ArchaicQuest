@@ -34,7 +34,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                 await Task.Delay(3000);
 
-                HubContext.SendToClient(npc.Name + " says to you did you hear that?" + player.Name, player.HubGuid);
+                HubContext.SendToClient(npc.Name + " says to you did you hear that? " + player.Name, player.HubGuid);
 
                 HubContext.SendToClient("<p class='RoomExits'>[Hint] Type say yes</p>", player.HubGuid);
 
@@ -66,7 +66,9 @@ namespace MIMWebClient.Core.World.Tutorial
 
                 HubContext.SendToClient("You hear movement all around you", player.HubGuid);
 
-                HubContext.SendToClient(npc.Name + " says to you here take this dagger" + player.Name, player.HubGuid);
+                await Task.Delay(1500);
+
+                HubContext.SendToClient(npc.Name + " says to you here take this dagger " + player.Name, player.HubGuid);
 
                 var weapon = npc.Inventory.FirstOrDefault(x => x.name.Contains("dagger"));
 
@@ -76,11 +78,11 @@ namespace MIMWebClient.Core.World.Tutorial
                 }
 
 
-                HubContext.SendToClient(npc.Name + " gives you a blunt dagger" + player.Name, player.HubGuid);
+                HubContext.SendToClient(npc.Name + " gives you a blunt dagger", player.HubGuid);
 
                 await Task.Delay(1500);
 
-                HubContext.SendToClient(npc.Name + " says to you it's nothing special but it will help you. I belive the way to Ester is all north from here." + player.Name, player.HubGuid);
+                HubContext.SendToClient(npc.Name + " says to you it's nothing special but it will help you. I belive the way to Ester is all north from here.", player.HubGuid);
 
                 await Task.Delay(3000);
 
@@ -88,7 +90,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                 await Task.Delay(3000);
 
-                HubContext.SendToClient(npc.Name + " says to you you must get that letter to Cromwell." + player.Name, player.HubGuid);
+                HubContext.SendToClient(npc.Name + " says you must get that letter to Cromwell.", player.HubGuid);
 
                 await Task.Delay(3000);
 
@@ -101,9 +103,14 @@ namespace MIMWebClient.Core.World.Tutorial
                 while (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
                 {
                     await Task.Delay(30000);
-                    HubContext.SendToClient(npc.Name + " yells GO, " + player.Name + " I'll hold them off. RUN! Run now to the North", player.HubGuid);
 
-                    HubContext.SendToClient("<p class='RoomExits'>[Hint] Type north or n for short to move north away from the ambush</p>", player.HubGuid);
+                    if (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
+                    {
+                        HubContext.SendToClient(npc.Name + " yells GO, " + player.Name + " I'll hold them off. RUN! Run now to the North", player.HubGuid);
+
+                        HubContext.SendToClient("<p class='RoomExits'>[Hint] Type north or n for short to move north away from the ambush</p>", player.HubGuid);
+                    }
+                  
                 }
 
 
