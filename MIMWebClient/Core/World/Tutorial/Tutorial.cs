@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Caching;
+using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Room;
 using Cache = MIMWebClient.Core.Events.Cache;
 
@@ -160,6 +161,18 @@ namespace MIMWebClient.Core.World.Tutorial
             }
             else
             {
+
+                var loadRoom = new LoadRoom
+                {
+                    Area = player.Area,
+                    id = player.AreaId,
+                    Region = player.Region
+                };
+
+
+                var newRoom = loadRoom.LoadRoomFile();
+
+                Movement.EnterRoom(player, newRoom);
                 //load from DB
             }
         }
