@@ -18,8 +18,8 @@ namespace MIMWebClient.Core.Room
 
             for (int i = 0; i < room.players.Count; i++)
             {
-                
-             if (player.Name != room.players[i].Name)
+
+                if (player.Name != room.players[i].Name)
                 {
                     HubContext.getHubContext.Clients.Client(room.players[i].HubGuid).addNewMessageToPage(enterText);
                 }
@@ -30,7 +30,7 @@ namespace MIMWebClient.Core.Room
                         enterText = "You walk in " + direction;
                         HubContext.getHubContext.Clients.Client(room.players[i].HubGuid).addNewMessageToPage(enterText);
                     }
-                   
+
                 }
 
                 var roomdata = LoadRoom.DisplayRoom(room, room.players[i].Name);
@@ -76,7 +76,7 @@ namespace MIMWebClient.Core.Room
                 }
             }
 
-            
+
 
         }
 
@@ -93,7 +93,7 @@ namespace MIMWebClient.Core.Room
                 if (player.Name != room.players[i].Name)
                 {
                     HubContext.getHubContext.Clients.Client(room.players[i].HubGuid).addNewMessageToPage(exitText);
-                    
+
                 }
                 else
                 {
@@ -146,7 +146,97 @@ namespace MIMWebClient.Core.Room
 
         }
 
-        public  static void Move(Player player, Room room, string direction)
+        //Create transport method
+
+        public static void Teleport(Player player, Room room, Exit exit)
+        {
+
+            Room roomData = room;
+
+
+            //Find Exit
+
+
+            //remove player from old room
+            PlayerManager.RemovePlayerFromRoom(roomData, player);
+
+            //exit message
+            ExitRoom(player, roomData, null);
+
+            //change player Location
+            player.Area = exit.area;
+            player.AreaId = exit.areaId;
+            player.Region = exit.region;
+
+            //Get new room  
+            try
+            {
+                //Room getNewRoom =  await HubProxy.MimHubServer.Invoke<Room>("getRoom", player.HubGuid);
+                Room getNewRoom = MIMWebClient.Hubs.MIMHub.getRoom(player.HubGuid);
+
+                if (getNewRoom != null)
+                {
+                    //add player to new room
+                    PlayerManager.AddPlayerToRoom(getNewRoom, player);
+
+                    //enter message
+                    EnterRoom(player, getNewRoom, null);
+
+                    var roomDescription = LoadRoom.DisplayRoom(getNewRoom, player.Name);
+
+                    if (player.Status != Player.PlayerStatus.Sleeping)
+                    {
+                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(roomDescription);
+
+                    }
+
+
+                    //NPC Enter event here
+                    foreach (var mob in getNewRoom.mobs)
+                    {
+
+                        if (mob.Greet)
+                        {
+                            Event.ParseCommand("greet", player, mob, getNewRoom);
+                        }
+                        else
+                        {
+                            //mob might be aggro
+                        }
+
+                        if (mob.DialogueTree != null)
+                        {
+                            var speak = mob.DialogueTree[0];
+
+                            HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(mob.Name + " says to you " + speak.Message);
+                            var i = 1;
+                            foreach (var respond in speak.PossibleResponse)
+                            {
+                                var textChoice = "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " + respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " + respond.Response + "</a>";
+                                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
+                                i++;
+
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                //log error
+            }
+
+
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="room"></param>
+        /// <param name="direction"></param>
+        public static void Move(Player player, Room room, string direction)
         {
 
             Room roomData = room;
@@ -185,7 +275,7 @@ namespace MIMWebClient.Core.Room
                     try
                     {
                         //Room getNewRoom =  await HubProxy.MimHubServer.Invoke<Room>("getRoom", player.HubGuid);
-                        Room getNewRoom =  MIMWebClient.Hubs.MIMHub.getRoom(player.HubGuid);
+                        Room getNewRoom = MIMWebClient.Hubs.MIMHub.getRoom(player.HubGuid);
 
                         if (getNewRoom != null)
                         {
@@ -215,15 +305,15 @@ namespace MIMWebClient.Core.Room
                                 if (mob.DialogueTree != null)
                                 {
                                     var speak = mob.DialogueTree[0];
-                                      
-                                       HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(mob.Name + " says to you " + speak.Message);
-                                        var i = 1;
-                                        foreach (var respond in speak.PossibleResponse)
-                                        {
-                                            var textChoice = "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " + respond.Response + "\",\"" + player.HubGuid +"\")'>" + i + ". " + respond.Response + "</a>";
-                                            HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
-                                            i++;
-                                        
+
+                                    HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(mob.Name + " says to you " + speak.Message);
+                                    var i = 1;
+                                    foreach (var respond in speak.PossibleResponse)
+                                    {
+                                        var textChoice = "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " + respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " + respond.Response + "</a>";
+                                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
+                                        i++;
+
                                     }
                                 }
                             }
@@ -237,7 +327,7 @@ namespace MIMWebClient.Core.Room
                 else
                 {
                     HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("There is no exit here");
-              
+
                 }
             }
         }

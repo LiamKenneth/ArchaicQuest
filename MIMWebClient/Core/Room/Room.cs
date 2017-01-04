@@ -77,9 +77,12 @@ namespace MIMWebClient.Core.Room
          public List<PlayerSetup.Player> corpses { get; set; }
         public List<string> Emotes { get; set; } = new List<string>();
         [BsonElement("eoe")]
-        public string EventOnEnter;
+        public string EventOnEnter { get; set; }
+        [BsonElement("eow")]
+        public string EventWake { get; set; }
+
 
     }
 
-  
+
 }

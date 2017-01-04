@@ -60,7 +60,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 GreetMessage = "May Tyr bless you",
                 Emotes = new List<string>(),
                 EventOnComunicate = new Dictionary<string, string>(),
-                EventOnEnter = "awakening"
+                EventWake = "awakening awake"
 
             };
 

@@ -277,6 +277,8 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("eoe")]
         public string EventOnEnter;
 
+        [BsonElement("eow")] public string EventWake;
+
         [BsonElement("eoc")]
         public Dictionary<string, string> EventOnComunicate;
 
@@ -404,6 +406,10 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Trains = 10;
            
             this.QuestLog = new List<Quest>();
+
+            this.EventWake = "";
+            this.EventOnEnter = "";
+            this.EventOnComunicate = new Dictionary<string, string>();
 
             var recall = new Recall
             {

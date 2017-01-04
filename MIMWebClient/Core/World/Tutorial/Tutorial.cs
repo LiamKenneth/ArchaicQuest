@@ -135,56 +135,70 @@ namespace MIMWebClient.Core.World.Tutorial
 
         public static void setUpAwakening(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
-            Task.Run(() => Awakening(player, room, step, calledBy));
+         Task.Run(() => Awakening(player, room, step, calledBy));
         }
 
-        public static async Task AwakeningRescue(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
+        public static void AwakeningRescue(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
 
-            player.Area = "Tutorial";
-            player.Region = "Tutorial";
-            player.AreaId = 3;
+            var npc = room.mobs.FirstOrDefault(x => x.Name.Equals("Mortem"));
 
-            player.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
+            HubContext.SendToClient(npc.Name + " says AH you are awake!", player.HubGuid);
 
-            var templeRoom =
-                Cache.ReturnRooms()
-                    .FirstOrDefault(
-                        x =>
-                            x.area.Equals(player.Area) && x.areaId.Equals(player.AreaId) &&
-                            x.region.Equals(player.Region));
-
-            if (templeRoom != null)
-            {
-                Movement.EnterRoom(player, templeRoom);
-
-            }
-            else
-            {
-
-                var loadRoom = new LoadRoom
-                {
-                    Area = player.Area,
-                    id = player.AreaId,
-                    Region = player.Region
-                };
+           
 
 
-                var newRoom = loadRoom.LoadRoomFile();
-
-                Movement.EnterRoom(player, newRoom);
-                //load from DB
-            }
         }
 
         public static async Task Awakening(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
-
+            player.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
 
             var npc = room.mobs.FirstOrDefault(x => x.Name.Equals("Mortem"));
 
             if (string.IsNullOrEmpty(step))
             {
+
+                player.Area = "Tutorial";
+                player.Region = "Tutorial";
+                player.AreaId = 3;
+
+                var exit = new Exit
+                {
+                    area = player.Area,
+                    region = player.Region,
+                    areaId = player.AreaId
+                };
+
+
+                var templeRoom =
+                    Cache.ReturnRooms()
+                        .FirstOrDefault(
+                            x =>
+                                x.area.Equals(player.Area) && x.areaId.Equals(player.AreaId) &&
+                                x.region.Equals(player.Region));
+
+                if (templeRoom != null)
+                {
+                    Movement.Teleport(player, templeRoom, exit);
+
+                }
+                else
+                {
+
+                    var loadRoom = new LoadRoom
+                    {
+                        Area = player.Area,
+                        id = player.AreaId,
+                        Region = player.Region
+                    };
+
+
+                    var newRoom = loadRoom.LoadRoomFile();
+
+                    Movement.Teleport(player, newRoom, exit);
+                    //load from DB
+                }
 
                 HubContext.SendToClient("You feel better as a wave of warth surrounds your body", player.HubGuid);
 
@@ -214,6 +228,9 @@ namespace MIMWebClient.Core.World.Tutorial
                         await Task.Delay(2000);
 
                         HubContext.SendToClient("<p class='RoomExits'>[Hint] Type wake to wake up</p>", player.HubGuid);
+
+                       
+
                     }
 
                 }
