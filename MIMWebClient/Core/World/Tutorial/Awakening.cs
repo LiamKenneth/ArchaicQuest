@@ -57,7 +57,6 @@ namespace MIMWebClient.Core.World.Tutorial
                 Inventory = new List<Item.Item>(),
                 DialogueTree = new List<DialogTree>(),
                 Greet = false,
-                GreetMessage = "May Tyr bless you",
                 Emotes = new List<string>(),
                 EventOnComunicate = new Dictionary<string, string>(),
                 EventWake = "awakening awake"

@@ -143,11 +143,14 @@ namespace MIMWebClient.Core.World.Tutorial
 
             var npc = room.mobs.FirstOrDefault(x => x.Name.Equals("Mortem"));
 
-            HubContext.SendToClient(npc.Name + " says AH you are awake!", player.HubGuid);
+            if (npc != null)
+            {
+                HubContext.SendToClient(npc.Name + " says AH you are awake!", player.HubGuid);
 
-           
+                HubContext.SendToClient(npc.Name + " says You were in a bad way when we found you, I didn't think you would wake.", player.HubGuid);
 
-
+                HubContext.SendToClient(npc.Name + " says do you remember anything?", player.HubGuid);
+            }
         }
 
         public static async Task Awakening(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
@@ -200,11 +203,13 @@ namespace MIMWebClient.Core.World.Tutorial
                     //load from DB
                 }
 
+                await Task.Delay(3000);
+
                 HubContext.SendToClient("You feel better as a wave of warth surrounds your body", player.HubGuid);
 
                 await Task.Delay(2000);
 
-                HubContext.SendToClient("You should be feeling better now, wake when you are ready", player.HubGuid);
+                HubContext.SendToClient("Someone says to you, You should be feeling better now, wake when you are ready", player.HubGuid);
 
               
 
@@ -223,7 +228,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                         await Task.Delay(2000);
 
-                        HubContext.SendToClient("You should be feeling better now, wake when you are ready", player.HubGuid);
+                        HubContext.SendToClient("Someone says to you, you should be feeling better now, wake when you are ready", player.HubGuid);
 
                         await Task.Delay(2000);
 
@@ -239,34 +244,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
             }
 
-            if (step.Equals("yes", StringComparison.CurrentCultureIgnoreCase))
-            {
-
-               
-                var weapon = npc.Inventory.FirstOrDefault(x => x.name.Contains("dagger"));
-
-                if (weapon != null)
-                {
-                    player.Inventory.Add(weapon);
-                }
-
-
-
-                while (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
-                {
-                    await Task.Delay(30000);
-
-                    if (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
-                    {
-                        HubContext.SendToClient(npc.Name + " yells GO, " + player.Name + " I'll hold them off. RUN! Run now to the North", player.HubGuid);
-
-                        HubContext.SendToClient("<p class='RoomExits'>[Hint] Type north or n for short to move north away from the ambush</p>", player.HubGuid);
-                    }
-
-                }
-
-
-            }
+        
 
        
 

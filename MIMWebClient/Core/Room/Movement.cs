@@ -184,7 +184,7 @@ namespace MIMWebClient.Core.Room
 
                     var roomDescription = LoadRoom.DisplayRoom(getNewRoom, player.Name);
 
-                    if (player.Status != Player.PlayerStatus.Sleeping)
+                   if (player.Status != Player.PlayerStatus.Sleeping)
                     {
                         HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(roomDescription);
 
