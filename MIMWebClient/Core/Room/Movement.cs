@@ -25,12 +25,21 @@ namespace MIMWebClient.Core.Room
                 }
                 else
                 {
-                    enterText = "You walk in " + direction;
-                    HubContext.getHubContext.Clients.Client(room.players[i].HubGuid).addNewMessageToPage(enterText);
+                    if (player.Status == Player.PlayerStatus.Standing)
+                    {
+                        enterText = "You walk in " + direction;
+                        HubContext.getHubContext.Clients.Client(room.players[i].HubGuid).addNewMessageToPage(enterText);
+                    }
+                   
                 }
 
                 var roomdata = LoadRoom.DisplayRoom(room, room.players[i].Name);
                 Score.UpdateUiRoom(room.players[i], roomdata);
+            }
+
+            if (room.EventOnEnter != null)
+            {
+                Event.ParseCommand(room.EventOnEnter, player, null, room);
             }
 
             //NPC Enter event here

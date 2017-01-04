@@ -42,6 +42,7 @@ namespace UpdateDB
             {
                 Ambush.TutorialRoom1(),
                 Ambush.TutorialRoom2(),
+                Awakening.TempleOfTyr(),
                 Anker.VillageSquare(),
                 Anker.SquareWalkOutsideTavern(),
                 Anker.SquareWalkOutsideStables(),

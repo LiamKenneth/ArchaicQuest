@@ -30,7 +30,8 @@ namespace MIMWebClient.Core
             var eventList = new Dictionary<String, Action>();
             eventList.Add("greet", () => Greeting.greet(player, mob, room));
             eventList.Add("tutorial", () => Tutorial.setUpTut(player, room, option, calledBy));
-
+            eventList.Add("rescue", () => Tutorial.setUpRescue(player, room, option, calledBy));
+            eventList.Add("awakening", () => Tutorial.setUpAwakening(player, room, option, calledBy));
 
             return eventList;
         }

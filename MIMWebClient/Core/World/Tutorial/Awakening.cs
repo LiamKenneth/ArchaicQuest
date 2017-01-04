@@ -20,7 +20,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 area = "Tutorial",
                 areaId = 3,
                 title = "Temple of Tyr",
-                description = "<p>A circular blue mosaic covers the centre of the temple with a gold fist and star underneath in the centre. Above is a dome roof with yellow tinted glass giving the area a golden glow. An Alter to Tyr is at the back with a large blue banner behind hanging from the wall with the same golden fist above the star. To the south the entrance to the Temple</p>",
+                description = "<p>A circular blue mosaic covers the centre of the temple with a gold fist and star underneath in the centre. Above is a dome roof with yellow tinted glass giving the area a golden glow. An Alter to Tyr is at the back with a large blue banner hanging from the wall with the same golden fist above the star. To the south the entrance to the Temple</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -41,27 +41,34 @@ namespace MIMWebClient.Core.World.Tutorial
                 Name = "Mortem",
                 KnownByName = true,
                 Type = PlayerSetup.Player.PlayerTypes.Mob,
-                Description = "Wilhelm has matted black hair, sharp hazel eyes and a cropped beard. He wears chain mail and wields a short sword.",
-                Strength = 12,
-                Dexterity = 12,
-                Constitution = 12,
+                Description = "A blue cape of Tyr hangs down Mortems back who is covered in full platemail except for his heads and hands. A golden mace hangs upside down from his belt.",
+                Strength = 14,
+                Dexterity = 16,
+                Constitution = 18,
                 Intelligence = 12,
-                Wisdom = 12,
-                Charisma = 12,
-                MaxHitPoints = 150,
-                HitPoints = 150,
-                Level = 10,
+                Wisdom = 18,
+                Charisma = 14,
+                MaxHitPoints = 300,
+                HitPoints = 300,
+                Level = 20,
+                Gold = 450,
                 Status = PlayerSetup.Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
                 Inventory = new List<Item.Item>(),
                 DialogueTree = new List<DialogTree>(),
                 Greet = false,
-                GreetMessage = "I don't think we have much further to go, ",
+                GreetMessage = "May Tyr bless you",
                 Emotes = new List<string>(),
                 EventOnComunicate = new Dictionary<string, string>(),
-                EventOnEnter = "tutorial"
+                EventOnEnter = "awakening"
 
             };
+
+            // create item for platemail / cape / mace / set to worn
+            //top and trousers for player
+           
+
+            room.mobs.Add(mortem);
 
             return room;
         }

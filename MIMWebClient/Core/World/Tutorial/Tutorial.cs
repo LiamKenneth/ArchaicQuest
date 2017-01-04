@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Caching;
+using MIMWebClient.Core.Room;
+using Cache = MIMWebClient.Core.Events.Cache;
 
 namespace MIMWebClient.Core.World.Tutorial
 {
@@ -122,6 +125,121 @@ namespace MIMWebClient.Core.World.Tutorial
             }
 
             
+        }
+
+        public static void setUpRescue(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
+        {
+            Task.Run(() => AwakeningRescue(player, room, step, calledBy));
+        }
+
+        public static void setUpAwakening(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
+        {
+            Task.Run(() => Awakening(player, room, step, calledBy));
+        }
+
+        public static async Task AwakeningRescue(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
+        {
+
+            player.Area = "Tutorial";
+            player.Region = "Tutorial";
+            player.AreaId = 3;
+
+            player.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
+
+            var templeRoom =
+                Cache.ReturnRooms()
+                    .FirstOrDefault(
+                        x =>
+                            x.area.Equals(player.Area) && x.areaId.Equals(player.AreaId) &&
+                            x.region.Equals(player.Region));
+
+            if (templeRoom != null)
+            {
+                Movement.EnterRoom(player, templeRoom);
+
+            }
+            else
+            {
+                //load from DB
+            }
+        }
+
+        public static async Task Awakening(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
+        {
+
+
+            var npc = room.mobs.FirstOrDefault(x => x.Name.Equals("Mortem"));
+
+            if (string.IsNullOrEmpty(step))
+            {
+
+                HubContext.SendToClient("You feel better as a wave of warth surrounds your body", player.HubGuid);
+
+                await Task.Delay(2000);
+
+                HubContext.SendToClient("You should be feeling better now, wake when you are ready", player.HubGuid);
+
+              
+
+                await Task.Delay(2000);
+
+                HubContext.SendToClient("<p class='RoomExits'>[Hint] Type wake to wake up</p>", player.HubGuid);
+
+
+                while (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
+                {
+                    await Task.Delay(30000);
+
+                    if (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)).Status != PlayerSetup.Player.PlayerStatus.Standing)
+                    {
+                        HubContext.SendToClient("You feel better as a wave of warth surrounds your body", player.HubGuid);
+
+                        await Task.Delay(2000);
+
+                        HubContext.SendToClient("You should be feeling better now, wake when you are ready", player.HubGuid);
+
+                        await Task.Delay(2000);
+
+                        HubContext.SendToClient("<p class='RoomExits'>[Hint] Type wake to wake up</p>", player.HubGuid);
+                    }
+
+                }
+
+
+
+            }
+
+            if (step.Equals("yes", StringComparison.CurrentCultureIgnoreCase))
+            {
+
+               
+                var weapon = npc.Inventory.FirstOrDefault(x => x.name.Contains("dagger"));
+
+                if (weapon != null)
+                {
+                    player.Inventory.Add(weapon);
+                }
+
+
+
+                while (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
+                {
+                    await Task.Delay(30000);
+
+                    if (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
+                    {
+                        HubContext.SendToClient(npc.Name + " yells GO, " + player.Name + " I'll hold them off. RUN! Run now to the North", player.HubGuid);
+
+                        HubContext.SendToClient("<p class='RoomExits'>[Hint] Type north or n for short to move north away from the ambush</p>", player.HubGuid);
+                    }
+
+                }
+
+
+            }
+
+       
+
         }
     }
 }
