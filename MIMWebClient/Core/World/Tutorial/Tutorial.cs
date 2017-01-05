@@ -84,6 +84,8 @@ namespace MIMWebClient.Core.World.Tutorial
 
                 HubContext.SendToClient(npc.Name + " gives you a blunt dagger", player.HubGuid);
 
+                Score.UpdateUiInventory(player);
+
                 await Task.Delay(1500);
 
                 HubContext.SendToClient(npc.Name + " says to you it's nothing special but it will help you. I belive the way to Ester is all north from here.", player.HubGuid);
@@ -157,7 +159,7 @@ namespace MIMWebClient.Core.World.Tutorial
         {
             player.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
 
-            var npc = room.mobs.FirstOrDefault(x => x.Name.Equals("Mortem"));
+            
 
             if (string.IsNullOrEmpty(step))
             {
@@ -205,7 +207,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                 await Task.Delay(3000);
 
-                HubContext.SendToClient("You feel better as a wave of warth surrounds your body", player.HubGuid);
+                HubContext.SendToClient("You feel better as a wave of warmth surrounds your body", player.HubGuid);
 
                 await Task.Delay(2000);
 

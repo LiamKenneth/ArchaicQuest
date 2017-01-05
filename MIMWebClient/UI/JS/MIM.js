@@ -615,7 +615,7 @@
  
             $.ajax({
                     type: "get",
-                    url: "/mud/Home/Generatename"
+                    url: "/Home/Generatename"
                 })
                 .done(function(data) {
 
@@ -625,30 +625,38 @@
            
         });
 
+        var submitted = 0;
+
         $("#createCharaterForm").on("submit", function (event) {
+            
+            if (submitted == 0) {
+          
+                var valid = $('#createCharaterForm').validate().form();
 
-            var valid = $('#createCharaterForm').validate().form();
+                if (!valid) {
+                    return;
+                }
 
-            if (!valid) {
-                return;
+                var $this = $(this);
+                var frmValues = $this.serialize();
+                $.ajax({
+                        type: $this.attr('method'),
+                        url: $this.attr('action'),
+                        data: frmValues
+                    })
+                    .done(function(data) {
+
+                        MIM.createCharacter(data);
+
+                    })
+                    .fail(function() {
+                        alert("failed");
+                    });
             }
 
-            var $this = $(this);
-            var frmValues = $this.serialize();
-            $.ajax({
-                type: $this.attr('method'),
-                url: $this.attr('action'),
-                data: frmValues
-            })
-            .done(function (data) {
-
-                MIM.createCharacter(data);
-
-            })
-            .fail(function () {
-                alert("failed");
-            });
+            submitted++;
             event.preventDefault();
+
         });
 
         $("#loginForm").on("submit", function (event) {

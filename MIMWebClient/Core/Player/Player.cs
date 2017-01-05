@@ -350,7 +350,7 @@ namespace MIMWebClient.Core.PlayerSetup
                 
             };
 
-            this.Inventory.Add(dagger);
+            
 
             this.Skills = this.Skills = new List<Skill>();
             

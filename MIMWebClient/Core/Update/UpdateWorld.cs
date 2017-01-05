@@ -110,8 +110,8 @@ namespace MIMWebClient.Core.Update
         {
       
             foreach (var player in MIMHub._PlayerCache)
-            {
-                if (player.Value != null && player.Value.LastCommandTime.AddMinutes(1) < DateTime.UtcNow)
+            {  
+                if (player.Value != null && player.Value.LastCommandTime.AddMinutes(10) < DateTime.UtcNow)
                 {
                     HubContext.SendToClient("You disapear in the void", player.Value.HubGuid);
 
@@ -133,7 +133,7 @@ namespace MIMWebClient.Core.Update
                     }
                 }
 
-                if (player.Value != null && player.Value.LastCommandTime.AddMinutes(5) < DateTime.UtcNow)
+                if (player.Value != null && player.Value.LastCommandTime.AddMinutes(20) < DateTime.UtcNow)
                 {
                     var room =
                         MIMHub._AreaCache.FirstOrDefault(
