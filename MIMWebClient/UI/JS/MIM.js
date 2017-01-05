@@ -135,7 +135,7 @@
                 $(".modal-header").hide();
             });
 
-            $("#CreateCharBtn").click(function () {
+            $("#CreateCharBtn").on("click", function () {
 
 
                 name = document.getElementById('playerName').value.trim();
@@ -147,11 +147,11 @@
 
                 if (pass == confirmPass && confirmPass != "") {
                     password = confirmPass;
+                    $(this).prop('disabled', true);
                 }
                 else {
                     document.getElementById('passwordMatchError').style.display = "block";
                     document.getElementById('confirmPassword').className += " has-error";
-                    alert("error")
                     return false;
                 }
 
@@ -609,7 +609,7 @@
         MIM.init();
 
 
-        $(".js-generateName").on("click", function (event) {
+        $(".js-generateName").click(function () {
 
             var nameField = $('#createCharaterForm #Name');
  
@@ -624,6 +624,7 @@
                 });
            
         });
+
         $("#createCharaterForm").on("submit", function (event) {
 
             var valid = $('#createCharaterForm').validate().form();

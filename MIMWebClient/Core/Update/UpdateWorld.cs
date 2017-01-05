@@ -91,7 +91,7 @@ namespace MIMWebClient.Core.Update
 
             await Task.Run(EmoteMob);
             await Task.Run(EmoteRoom);
-
+            await Task.Run(KickIdlePlayers);
             Init();
         }
 
@@ -104,6 +104,46 @@ namespace MIMWebClient.Core.Update
             HubContext.getHubContext.Clients.All.addNewMessageToPage("This is will update Rooms every 5 minutes and not block the game");
 
             CleanRoom();
+        }
+
+        public static async Task KickIdlePlayers()
+        {
+      
+            foreach (var player in MIMHub._PlayerCache)
+            {
+                if (player.Value != null && player.Value.LastCommandTime.AddMinutes(1) < DateTime.UtcNow)
+                {
+                    HubContext.SendToClient("You disapear in the void", player.Value.HubGuid);
+
+                    var room =
+                        MIMHub._AreaCache.FirstOrDefault(
+                            x =>
+                                x.Value.area.Equals(player.Value.Area) && x.Value.areaId.Equals(player.Value.AreaId) &&
+                                x.Value.region.Equals(player.Value.Region));
+
+                    if (room.Value != null)
+                    {
+                        foreach (var players in room.Value.players)
+                        {
+                            HubContext.broadcastToRoom(player.Value.Name + " disapears in the void", room.Value.players,
+                                player.Value.HubGuid, true);
+                        }
+
+                        //room.Value.players.Remove(player.Value);
+                    }
+                }
+
+                if (player.Value != null && player.Value.LastCommandTime.AddMinutes(5) < DateTime.UtcNow)
+                {
+                    var room =
+                        MIMHub._AreaCache.FirstOrDefault(
+                            x =>
+                                x.Value.area.Equals(player.Value.Area) && x.Value.areaId.Equals(player.Value.AreaId) &&
+                                x.Value.region.Equals(player.Value.Region));
+
+                    Command.ParseCommand("quit", player.Value, room.Value);
+                }
+            }
         }
 
         public static async Task MoveMob()

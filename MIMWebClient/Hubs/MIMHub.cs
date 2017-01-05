@@ -181,6 +181,9 @@ namespace MIMWebClient.Hubs
             PlayerData.Intelligence = intelligence;
             PlayerData.Charisma = charisma;
 
+            PlayerData.JoinedDate = DateTime.UtcNow;
+            PlayerData.LastCommandTime = DateTime.UtcNow;
+
 
             // PlayerData.SavePlayerInformation();
 

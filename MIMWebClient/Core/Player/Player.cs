@@ -49,6 +49,12 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("hid")]
         public string HubGuid;
 
+        [BsonElement("sd")]
+        public DateTime JoinedDate;
+
+        [BsonElement("lcd")]
+        public DateTime LastCommandTime;
+
         [BsonElement("ty")]
         public PlayerTypes Type;
 

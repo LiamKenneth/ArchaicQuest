@@ -98,6 +98,7 @@ namespace MIMWebClient.Core
         public static  void ParseCommand(string input, PlayerSetup.Player playerData, Room.Room room = null)
         {
 
+
             //testing
             string enteredCommand = input;
             string[] commands = enteredCommand.Split(' ');
@@ -142,26 +143,11 @@ namespace MIMWebClient.Core
                 HubContext.SendToClient("Sorry you can't do that.", playerData.HubGuid);
             }
 
-            //  Prompt.ShowPrompt(playerData);
+            playerData.LastCommandTime = DateTime.UtcNow;
+
             Score.UpdateUiPrompt(playerData);
            
         }
 
-        //public static void CommandBuffer(string input, PlayerSetup.Player playerData, Room.Room room = null)
-        //{
-        //    _Buffer.Add(input);
-
-        //    ProcessBuffer(playerData, room);
-
-
-        //}
-
-        //public static void ProcessBuffer(PlayerSetup.Player playerData, Room.Room room = null)
-        //{
-        //   var playerInput = _Buffer.FirstOrDefault();
-
-        //    ParseCommand(playerInput, playerData, room);
-
-        //}
     }
 }
