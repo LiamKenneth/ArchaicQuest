@@ -5,9 +5,9 @@ using System.Web;
 using Castle.Components.DictionaryAdapter;
 using MIMWebClient.Core.Item;
 
-namespace MIMWebClient.Core.World.Items.Clothing.Body
+namespace MIMWebClient.Core.World.Items.Clothing.ClothingBody
 {
-    public class Body
+    public class ClothingBody
     {
         public static Item.Item PlainTop()
         {
@@ -39,7 +39,9 @@ namespace MIMWebClient.Core.World.Items.Clothing.Body
                 itemFlags = new EditableList<Item.Item.ItemFlags>()
                 {
                     Item.Item.ItemFlags.equipable
-                }
+                },
+                Weight = 0.2,
+                equipable = true
 
             };
 

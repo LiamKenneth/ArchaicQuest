@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MIMWebClient.Core.Player;
 
 namespace MIMWebClient.Core.Events
 {
@@ -176,14 +177,14 @@ namespace MIMWebClient.Core.Events
                     roomData.mobs = new List<Player>();
                 }
 
-                var mobDescription = roomData.mobs.Find(x => x.Name.ToLower().Contains(commandOptions));
+                var mobDescription = roomData.mobs.Find(x => x.Name.ToLower().Contains(commandOptions.ToLower()));
 
                 if (roomData.players == null)
                 {
                     roomData.players = new List<Player>();
                 }
 
-                var playerDescription = roomData.players.Find(x => x.Name.ToLower().Contains(commandOptions));
+                var playerDescription = roomData.players.Find(x => x.Name.ToLower().Contains(commandOptions.ToLower()));
 
                 var targetPlayerId = string.Empty;
                 if (playerDescription != null)
@@ -331,6 +332,9 @@ namespace MIMWebClient.Core.Events
                     if (!string.IsNullOrEmpty(descriptionText))
                     {
                         HubContext.SendToClient(descriptionText, player.HubGuid);
+                     
+                        Equipment.ShowEquipmentLook(mobDescription, player);
+                        HubContext.broadcastToRoom(player.Name + " looks at " + mobDescription.Name, roomData.players, player.HubGuid, true);
                     }
                     else
                     {
@@ -341,6 +345,7 @@ namespace MIMWebClient.Core.Events
                 {
                     string descriptionText = string.Empty;
 
+
                     if (keyword.StartsWith("look") || keyword.StartsWith("examine"))
                     {
                         descriptionText = playerDescription.Description;
@@ -350,6 +355,7 @@ namespace MIMWebClient.Core.Events
                     if (!string.IsNullOrEmpty(descriptionText))
                     {
                         HubContext.SendToClient(descriptionText, player.HubGuid);
+                        Equipment.ShowEquipmentLook(playerDescription, player);
                         HubContext.SendToClient(player.Name + " looks at you", targetPlayerId);
                     }
                     else

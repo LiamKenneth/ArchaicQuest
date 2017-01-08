@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +7,8 @@ using System.Web;
 using System.Web.Caching;
 using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Room;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Clothing.Legs;
+using MIMWebClient.Core.World.Items.Clothing.ClothingBody;
 using Cache = MIMWebClient.Core.Events.Cache;
 
 namespace MIMWebClient.Core.World.Tutorial
@@ -13,7 +16,7 @@ namespace MIMWebClient.Core.World.Tutorial
     public class Tutorial
     {
 
-        public static void  setUpTut(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
+        public static void setUpTut(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
             Task.Run(() => Intro(player, room, step, calledBy));
         }
@@ -24,7 +27,7 @@ namespace MIMWebClient.Core.World.Tutorial
             var npc = room.mobs.FirstOrDefault(x => x.Name.Equals("Wilhelm"));
 
             if (string.IsNullOrEmpty(step))
-            {     
+            {
 
                 HubContext.SendToClient(npc.Name + " says to you I don't think we have much further to go, " + player.Name, player.HubGuid);
 
@@ -116,7 +119,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                         HubContext.SendToClient("<p class='RoomExits'>[Hint] Type north or n for short to move north away from the ambush</p>", player.HubGuid);
                     }
-                  
+
                 }
 
 
@@ -127,7 +130,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 //blah blah
             }
 
-            
+
         }
 
         public static void setUpRescue(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
@@ -137,46 +140,71 @@ namespace MIMWebClient.Core.World.Tutorial
 
         public static void setUpAwakening(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
-         Task.Run(() => Awakening(player, room, step, calledBy));
+            Task.Run(() => Awakening(player, room, step, calledBy));
+
         }
 
-        public static void AwakeningRescue(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
+        public static async Task AwakeningRescue(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
-
+            await Task.Delay(2000);
             var npc = room.mobs.FirstOrDefault(x => x.Name.Equals("Mortem"));
 
-            if (npc != null)
+            if (npc == null) return;
+
+            if (string.IsNullOrEmpty(step))
             {
+
                 HubContext.SendToClient(npc.Name + " says Ah you are awake!", player.HubGuid);
 
-                HubContext.SendToClient(npc.Name + " says You were in a bad way when we found you, I didn't think you would wake.", player.HubGuid);
+                await Task.Delay(2000);
 
-                HubContext.SendToClient(npc.Name + " Gets a pair of trousers and a shirt and hands them to you", player.HubGuid);
+                HubContext.SendToClient(
+                    npc.Name + " says You were in a bad way when we found you, I didn't think you would wake.",
+                    player.HubGuid);
 
-                HubContext.SendToClient(npc.Name + " says wear them, you can't walk around naked I am afraid.", player.HubGuid);
+                await Task.Delay(2000);
 
-                HubContext.SendToClient("<p class='RoomExits'>[Hint] To view items you are carrying type Inventory or i for short</p>", player.HubGuid);
+                HubContext.SendToClient(npc.Name + " Gets a pair of trousers and a shirt and hands them to you",
+                    player.HubGuid);
+
+                player.Inventory.Add(ClothingBody.PlainTop());
+                player.Inventory.Add(ClothingLegs.PlainTrousers());
+
+                Score.UpdateUiInventory(player);
+
+                await Task.Delay(2000);
+
+                HubContext.SendToClient(npc.Name + " says wear them, you can't walk around naked I am afraid.",
+                    player.HubGuid);
+
+                await Task.Delay(2000);
+
+                HubContext.SendToClient(
+                    "<p class='RoomExits'>[Hint] To view items you are carrying type Inventory or i for short</p>",
+                    player.HubGuid);
 
                 HubContext.SendToClient(npc.Name + " smiles at you.", player.HubGuid);
 
-                HubContext.SendToClient("<p class='RoomExits'>[Hint] Type wear trousers and wear shirt or alternativily wear all</p>", player.HubGuid);
+                await Task.Delay(2000);
 
-                //check if trouser
+                HubContext.SendToClient(
+                    "<p class='RoomExits'>[Hint] Type wear trousers and wear shirt or alternativily wear all</p>",
+                    player.HubGuid);
 
-                HubContext.SendToClient(npc.Name + " says do you remember anything?", player.HubGuid);
-
-                //var txtOption = "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
-                //                    respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " + respond.Response +
-                //                    "</a>";
-                //HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(txtOption)/*;*/
             }
+
+            if ()
+            {
+                
+            }
+
         }
 
         public static async Task Awakening(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
             player.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
 
-            
+            await Task.Delay(5000);
 
             if (string.IsNullOrEmpty(step))
             {
@@ -230,7 +258,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                 HubContext.SendToClient("Someone says to you, You should be feeling better now, wake when you are ready", player.HubGuid);
 
-              
+
 
                 await Task.Delay(2000);
 
@@ -253,7 +281,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                         HubContext.SendToClient("<p class='RoomExits'>[Hint] Type wake to wake up</p>", player.HubGuid);
 
-                       
+
 
                     }
 
@@ -263,9 +291,9 @@ namespace MIMWebClient.Core.World.Tutorial
 
             }
 
-        
 
-       
+
+
 
         }
     }

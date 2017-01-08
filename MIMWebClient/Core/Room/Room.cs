@@ -80,6 +80,8 @@ namespace MIMWebClient.Core.Room
         public string EventOnEnter { get; set; }
         [BsonElement("eow")]
         public string EventWake { get; set; }
+        [BsonElement("eowe")]
+        public string EventWear { get; set; }
 
 
     }

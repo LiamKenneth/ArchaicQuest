@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using MIMWebClient.Core.World.Items.Clothing;
+using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Body;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Clothing.Legs;
+using MIMWebClient.Core.World.Items.Clothing.ClothingBody;
 
 namespace MIMWebClient.Core.World.Tutorial
 {
@@ -60,13 +62,22 @@ namespace MIMWebClient.Core.World.Tutorial
                 Greet = false,
                 Emotes = new List<string>(),
                 EventOnComunicate = new Dictionary<string, string>(),
-                EventWake = "awakening awake"
+                EventWake = "awakening awake",
+                EventWear = "wearEQ"
 
             };
 
-            var top = Clothing.PlainTop();
+            var plainTop = ClothingBody.PlainTop();
+            var plainTrousers = ClothingLegs.PlainTrousers();
 
-            mortem.Inventory.Add(top);
+            var breastPlateTyr = FullPlateBody.BreastPlateOfTyr();
+           breastPlateTyr.location = Item.Item.ItemLocation.Worn;
+        
+            mortem.Inventory.Add(plainTop);
+            mortem.Inventory.Add(plainTrousers);
+            mortem.Inventory.Add(breastPlateTyr);
+
+            mortem.Equipment.Body = breastPlateTyr.name;
 
             var intro = new DialogTree()
             {

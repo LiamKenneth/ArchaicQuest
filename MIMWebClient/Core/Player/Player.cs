@@ -288,6 +288,9 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("eoc")]
         public Dictionary<string, string> EventOnComunicate;
 
+        [BsonElement("eowe")]
+        public string EventWear { get; set; }
+
         [BsonElement("nch")]
         public bool NewbieChannel = true;
 
