@@ -5,9 +5,9 @@ using System.Web;
 using Castle.Components.DictionaryAdapter;
 using MIMWebClient.Core.Item;
 
-namespace MIMWebClient.Core.World.Items.Clothing
+namespace MIMWebClient.Core.World.Items.Clothing.Body
 {
-    public class Clothing
+    public class Body
     {
         public static Item.Item PlainTop()
         {
@@ -31,17 +31,20 @@ namespace MIMWebClient.Core.World.Items.Clothing
                 slot = Item.Item.EqSlot.Body,
                 type = Item.Item.ItemType.Armour,
                 name = "A plain top",
-                ArmorRating = 1,
+                ArmorRating = new ArmourRating()
+                {
+                    Armour = 1,
+                    Magic = 0
+                },
                 itemFlags = new EditableList<Item.Item.ItemFlags>()
                 {
                     Item.Item.ItemFlags.equipable
                 }
 
-
-
             };
 
 
-            return
+            return plainTop;
         }
+    }
 }
