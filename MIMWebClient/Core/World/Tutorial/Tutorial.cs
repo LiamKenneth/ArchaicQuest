@@ -147,11 +147,28 @@ namespace MIMWebClient.Core.World.Tutorial
 
             if (npc != null)
             {
-                HubContext.SendToClient(npc.Name + " says AH you are awake!", player.HubGuid);
+                HubContext.SendToClient(npc.Name + " says Ah you are awake!", player.HubGuid);
 
                 HubContext.SendToClient(npc.Name + " says You were in a bad way when we found you, I didn't think you would wake.", player.HubGuid);
 
+                HubContext.SendToClient(npc.Name + " Gets a pair of trousers and a shirt and hands them to you", player.HubGuid);
+
+                HubContext.SendToClient(npc.Name + " says wear them, you can't walk around naked I am afraid.", player.HubGuid);
+
+                HubContext.SendToClient("<p class='RoomExits'>[Hint] To view items you are carrying type Inventory or i for short</p>", player.HubGuid);
+
+                HubContext.SendToClient(npc.Name + " smiles at you.", player.HubGuid);
+
+                HubContext.SendToClient("<p class='RoomExits'>[Hint] Type wear trousers and wear shirt or alternativily wear all</p>", player.HubGuid);
+
+                //check if trouser
+
                 HubContext.SendToClient(npc.Name + " says do you remember anything?", player.HubGuid);
+
+                //var txtOption = "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
+                //                    respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " + respond.Response +
+                //                    "</a>";
+                //HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(txtOption)/*;*/
             }
         }
 

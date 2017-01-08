@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using MIMWebClient.Core.World.Items.Clothing;
 
 namespace MIMWebClient.Core.World.Tutorial
 {
@@ -62,6 +63,19 @@ namespace MIMWebClient.Core.World.Tutorial
                 EventWake = "awakening awake"
 
             };
+
+            var top = Clothing.PlainTop();
+
+            mortem.Inventory.Add(top);
+
+            var intro = new DialogTree()
+            {
+                GiveQuest = true,
+                QuestId = 0,
+                Message = ""
+            };
+
+              
 
             // create item for platemail / cape / mace / set to worn
             //top and trousers for player

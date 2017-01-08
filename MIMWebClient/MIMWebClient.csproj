@@ -294,6 +294,7 @@
     <Compile Include="Core\Update\UpdateWorld.cs" />
     <Compile Include="Core\World\Anker\Anker.cs" />
     <Compile Include="Core\World\Areas.cs" />
+    <Compile Include="Core\World\Items\Clothing\Clothing.cs" />
     <Compile Include="Core\World\Tutorial\Ambush.cs" />
     <Compile Include="Core\World\Tutorial\Awakening.cs" />
     <Compile Include="Core\World\Tutorial\Tutorial.cs" />
