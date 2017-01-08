@@ -63,7 +63,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 Emotes = new List<string>(),
                 EventOnComunicate = new Dictionary<string, string>(),
                 EventWake = "awakening awake",
-                EventWear = "wearEQ"
+                EventWear = "awakening awake"
 
             };
 

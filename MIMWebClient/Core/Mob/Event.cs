@@ -33,7 +33,6 @@ namespace MIMWebClient.Core
             eventList.Add("rescue", () => Tutorial.setUpAwakening(player, room, option, calledBy));
             eventList.Add("awakening", () => Tutorial.setUpAwakening(player, room, option, calledBy));
             eventList.Add("awakening awake", () => Tutorial.setUpRescue(player, room, option, calledBy));
-            eventList.Add("awakening awake", () => Tutorial.setUpRescue(player, room, option, calledBy));
             eventList.Add("wearEQ", () => Tutorial.setUpAwakening(player, room, option, calledBy));
 
             return eventList;

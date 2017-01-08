@@ -151,7 +151,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
             if (npc == null) return;
 
-            if (string.IsNullOrEmpty(step))
+            if (step.Equals("wake", StringComparison.CurrentCultureIgnoreCase))
             {
 
                 HubContext.SendToClient(npc.Name + " says Ah you are awake!", player.HubGuid);
@@ -193,9 +193,34 @@ namespace MIMWebClient.Core.World.Tutorial
 
             }
 
-            if ()
+            if (step != null && step.Contains("plain"))
             {
-                
+                if (player.Equipment.Body.Equals(ClothingBody.PlainTop().name) && !player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name))
+                {
+                    HubContext.SendToClient(npc.Name + " says it fits well, don't forget to wear the trousers too",
+                   player.HubGuid);
+                }
+
+                 if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) && !player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
+                {
+                    HubContext.SendToClient(npc.Name + " says it fits well, don't forget to wear the trousers too",
+                   player.HubGuid);
+                }
+
+                if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) && player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
+                {
+                    HubContext.SendToClient(npc.Name + " says excellent, I have one request for you and that is to speak to Lance the Elder of the village.",
+                  player.HubGuid);
+
+                    HubContext.SendToClient(npc.Name + " says he wants to know if you remember anything about the attack that may help him? We have been raided a few times of late.",
+                  player.HubGuid);
+
+                    HubContext.SendToClient(npc.Name + " says You will found him in the Square of Anker just leave south and follow the hill path in to town you can't miss the Square.",
+                  player.HubGuid);
+
+
+                    //give player quest
+                }
             }
 
         }
