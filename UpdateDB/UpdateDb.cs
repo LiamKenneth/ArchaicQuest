@@ -58,7 +58,10 @@ namespace UpdateDB
                 Anker.MetalMedley(),
                 Anker.VillageHall(),
                 Anker.VillageHallEntrance(),
-                Anker.VillageHallEldersRoom()
+                Anker.VillageHallEldersRoom(),
+                Anker.TempleRoad(),
+                Anker.TempleRoad2(),
+                Anker.TempleEntrance()
             };
             areaSpeed.Stop();
             Console.WriteLine("Compiling Areas Completed in {0}ms.", areaSpeed.Elapsed.Milliseconds);

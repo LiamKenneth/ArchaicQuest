@@ -1951,5 +1951,170 @@ namespace MIMWebClient.Core.World.Anker
             return room;
         }
 
+        public static Room TempleRoad()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 15,
+                title = "Temple Walk",
+                description = "<p>The path here leads east at an incline through a hill, the path cutting through the hill and curving up towards the temple of Tyr. To the west is the entrance to the square.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+            
+            #region exits
+
+
+            // Create Exits
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 7,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 16,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+            #endregion
+            room.exits.Add(east);
+            room.exits.Add(west);
+
+            return room;
+        }
+
+        public static Room TempleRoad2()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 16,
+                title = "Temple Walk",
+                description = "<p>The muddy path slopes down cut into the hill snaking round steeply. To the north is the temple of Tyr. To the west the path even outs and leads through to Anker.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+            #region exits
+
+
+            // Create Exits
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 15,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 17,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+            #endregion
+            room.exits.Add(west);
+            room.exits.Add(north);
+
+            return room;
+        }
+
+        public static Room TempleEntrance()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 17,
+                title = "Temple Entrance",
+                description = "<p>The temple of Tyr watches over Anker from the large hill it rests on. Two monolithic support columns stand either side of the temple archway entrance. There is no doors to the northern entrance so you can see right inside the golden glow of the temple chamber. To the east and west is a path that leads around the temple and it's graves. To the south is the path leading down the hill.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+            #region exits
+
+
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 16,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+           
+
+
+            #endregion
+            room.exits.Add(south);
+            
+
+            return room;
+        }
+
     }
 }

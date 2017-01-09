@@ -86,11 +86,24 @@ namespace MIMWebClient.Core.World.Tutorial
                 Message = ""
             };
 
-              
+
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 17,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            room.exits.Add(south);
+
 
             // create item for platemail / cape / mace / set to worn
             //top and trousers for player
-           
+
 
             room.mobs.Add(mortem);
 

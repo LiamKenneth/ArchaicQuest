@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Caching;
 using MIMWebClient.Core.Events;
+using MIMWebClient.Core.Mob;
+using MIMWebClient.Core.Player;
 using MIMWebClient.Core.Room;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Clothing.Legs;
 using MIMWebClient.Core.World.Items.Clothing.ClothingBody;
@@ -207,19 +209,56 @@ namespace MIMWebClient.Core.World.Tutorial
                    player.HubGuid);
                 }
 
-                if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) && player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
+                if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) &&
+                    player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
                 {
-                    HubContext.SendToClient(npc.Name + " says excellent, I have one request for you and that is to speak to Lance the Elder of the village.",
-                  player.HubGuid);
+                    HubContext.SendToClient(
+                        npc.Name +
+                        " says excellent, I have one request for you and that is to speak to Lance the Elder of the village.",
+                        player.HubGuid);
 
-                    HubContext.SendToClient(npc.Name + " says he wants to know if you remember anything about the attack that may help him? We have been raided a few times of late.",
-                  player.HubGuid);
+                    HubContext.SendToClient(
+                        npc.Name +
+                        " says he wants to know if you remember anything about the attack that may help him? We have been raided a few times of late.",
+                        player.HubGuid);
 
-                    HubContext.SendToClient(npc.Name + " says You will found him in the Square of Anker just leave south and follow the hill path in to town you can't miss the Square.",
-                  player.HubGuid);
+                    HubContext.SendToClient(
+                        npc.Name +
+                        " says You will found him in the Square of Anker just leave south and follow the hill path in to town you can't miss the Square.",
+                        player.HubGuid);
 
 
                     //give player quest
+
+                    var findLance = new Quest()
+                    {
+                        Id  = 3,
+                        Name = "Find and greet Lance",
+                        Description =
+                            "Mortem has asked me to go find Lance the village elder who can be found in the main square, From the temple leave south and follow the hill path in to town." +
+                            "<p class='RoomExits'>[Hint] Type greet lance to greet the Elder once you have found him</p>",
+                        QuestGiver = "Mortem",
+                        Type = Quest.QuestType.Find,
+                        RewardXp = 250,
+                        RewardDialog = new DialogTree()
+                        {
+                            Message = "Yes I am Lance, well met $playerName"
+                        }
+                    };
+
+                    player.QuestLog.Add(findLance);
+
+                    HubContext.SendToClient(
+                       "New Quest added: Find and greet Lance. Type qlog to be reminded about quest information.",
+                       player.HubGuid);
+
+
+                    HubContext.SendToClient(
+                        npc.Name +
+                        " waves to you, may Thy bless you.",
+                        player.HubGuid);
+
+
                 }
             }
 
