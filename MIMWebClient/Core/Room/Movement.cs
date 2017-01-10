@@ -43,8 +43,19 @@ namespace MIMWebClient.Core.Room
             }
 
             //NPC Enter event here
- 
 
+            foreach (var mob in room.mobs)
+            {
+
+               
+                
+
+                if (mob.EventOnEnter != null)
+                {
+                    Event.ParseCommand(mob.EventOnEnter, player, mob, room);
+                }
+
+            }
 
 
         }
@@ -285,6 +296,12 @@ namespace MIMWebClient.Core.Room
 
                                     }
                                 }
+
+                                if (mob.EventOnEnter != null)
+                                {
+                                    Event.ParseCommand(mob.EventOnEnter, player, mob, room);
+                                }
+
                             }
                         }
                     }

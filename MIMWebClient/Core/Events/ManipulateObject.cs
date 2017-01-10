@@ -711,7 +711,7 @@ namespace MIMWebClient.Core.Events
 
                 foreach (var quest in player.QuestLog)
                 {
-                    if (!quest.Completed && quest.Type == Quest.QuestType.Find)
+                    if (!quest.Completed && quest.Type == Quest.QuestType.FindMob)
                     {
                         //Find quest requires player to give item to the mob.
 

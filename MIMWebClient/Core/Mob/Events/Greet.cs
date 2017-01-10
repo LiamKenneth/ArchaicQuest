@@ -35,10 +35,18 @@ namespace MIMWebClient.Core.Mob.Events
                     // QuestItem get item or somthing
                     // QuestKill mob
                     // add QuestFind mob?
-                    if (qlog.Completed.Equals(false) && qlog.QuestGiver.Equals(npc.Name))
+                    if (qlog.Completed.Equals(false) && qlog.QuestGiver.Equals(npc.Name) || qlog.Completed.Equals(false) && qlog.QuestFindMob != null && qlog.QuestFindMob.Equals(npc.Description))
                     {
 
-                        //check quests here
+                        qlog.Completed = true;
+                        player.Experience += qlog.RewardXp;
+
+                        HubContext.SendToClient(qlog.RewardDialog.Message, player.HubGuid);
+
+                        HubContext.SendToClient(qlog.Name + " Completed, you are rewarded " + qlog.RewardXp + " xp", player.HubGuid);
+
+                         
+
                     }
                 }
 

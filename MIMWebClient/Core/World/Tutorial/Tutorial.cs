@@ -9,6 +9,7 @@ using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.Player;
 using MIMWebClient.Core.Room;
+using MIMWebClient.Core.World.Anker.Mobs;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Clothing.Legs;
 using MIMWebClient.Core.World.Items.Clothing.ClothingBody;
 using Cache = MIMWebClient.Core.Events.Cache;
@@ -238,7 +239,8 @@ namespace MIMWebClient.Core.World.Tutorial
                             "Mortem has asked me to go find Lance the village elder who can be found in the main square, From the temple leave south and follow the hill path in to town." +
                             "<p class='RoomExits'>[Hint] Type greet lance to greet the Elder once you have found him</p>",
                         QuestGiver = "Mortem",
-                        Type = Quest.QuestType.Find,
+                        QuestFindMob = Lance.VillageElderLance().Description,
+                        Type = Quest.QuestType.FindMob,
                         RewardXp = 250,
                         RewardDialog = new DialogTree()
                         {

@@ -12,7 +12,8 @@ namespace MIMWebClient.Core.Player
         public enum QuestType
         {
             Kill,
-            Find,
+            FindItem,
+            FindMob,
             Act
         }
 
@@ -42,11 +43,28 @@ namespace MIMWebClient.Core.Player
         public QuestType Type { get; set; }
         public string QuestGiver { get; set; }
         public int QuestCount { get; set; } = 1;
+        /// <summary>
+        /// Quest complete when player gains item
+        /// </summary>
         public Item.Item QuestItem { get; set; }
         public Item.Item PrerequisiteItem { get; set; }
         public string PrerequisiteItemEmote { get; set; }
+
+        /// <summary>
+        /// Quest is completed when player kills mob
+        /// </summary>
         public PlayerSetup.Player QuestKill { get; set; }
-        public string QuestDo { get; set; }
+
+        /// <summary>
+        /// Quest is completed when player finds mob
+        /// string so match on description
+        /// was on matching mob data but if player gives mob
+        /// an item or change the mob in anyway 
+        /// it will brake the quest x_x
+        /// </summary>
+        public string QuestFindMob { get; set; }
+
+   
         public int RewardGold { get; set; }
         public int RewardXp { get; set; }
         public Item.Item RewardItem { get; set; }

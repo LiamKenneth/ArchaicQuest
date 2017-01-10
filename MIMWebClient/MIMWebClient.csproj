@@ -296,6 +296,7 @@
     <Compile Include="Core\Update\Time.cs" />
     <Compile Include="Core\Update\UpdateWorld.cs" />
     <Compile Include="Core\World\Anker\Anker.cs" />
+    <Compile Include="Core\World\Anker\Mobs\Lance.cs" />
     <Compile Include="Core\World\Areas.cs" />
     <Compile Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Body\FullPlateBody.cs" />
     <Compile Include="Core\World\Items\Armour\LightArmour\Clothing\Body\ClothingBody.cs" />
