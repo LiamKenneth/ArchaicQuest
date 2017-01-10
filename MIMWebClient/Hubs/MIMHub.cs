@@ -19,7 +19,7 @@ namespace MIMWebClient.Hubs
     public class MIMHub : Hub
     {
         public static ConcurrentDictionary<string, Player> _PlayerCache = new ConcurrentDictionary<string, Player>();
-        public static ConcurrentDictionary<int, Room> _AreaCache = new ConcurrentDictionary<int, Room>();
+        public static ConcurrentDictionary<Tuple<string, string, int>, Room> _AreaCache = new ConcurrentDictionary<Tuple<string, string, int>, Room>();
         public static ConcurrentDictionary<string, Player> _ActiveMobCache = new ConcurrentDictionary<string, Player>();
 
         public static Player PlayerData { get; set; }
@@ -40,7 +40,13 @@ namespace MIMWebClient.Hubs
             Player PlayerData;
             Room RoomData;
             _PlayerCache.TryGetValue(playerGuid, out PlayerData);
-            _AreaCache.TryGetValue(PlayerData.AreaId, out RoomData);
+
+
+ 
+            var room = new Tuple<string, string, int>(PlayerData.Region, PlayerData.Area, PlayerData.AreaId);
+
+
+            _AreaCache.TryGetValue(room, out RoomData);
 
              
                 HubContext.SendToClient("<p style='color:#999'>" + message + "<p/>", PlayerData.HubGuid);
@@ -70,7 +76,11 @@ namespace MIMWebClient.Hubs
 
 
                 Room getRoomData = null;
-                if (_AreaCache.TryGetValue(RoomData.id, out getRoomData))
+ 
+                var room = new Tuple<string, string, int>(RoomData.Region, RoomData.Area, RoomData.id);
+
+
+                if (_AreaCache.TryGetValue(room, out getRoomData))
                 {
 
                     return getRoomData;
@@ -79,7 +89,7 @@ namespace MIMWebClient.Hubs
                 else
                 {
                     getRoomData = RoomData.LoadRoomFile();
-                    _AreaCache.TryAdd(RoomData.id, getRoomData);
+                    _AreaCache.TryAdd(room, getRoomData);
 
 
                     return getRoomData;
@@ -103,8 +113,11 @@ namespace MIMWebClient.Hubs
                 roomJSON.id = player.AreaId;
 
                 Room roomData;
+ 
 
-                if (_AreaCache.TryGetValue(roomJSON.id, out roomData))
+                var findRoomData = new Tuple<string, string, int>(roomJSON.Region, roomJSON.Area, roomJSON.id);
+
+                if (_AreaCache.TryGetValue(findRoomData, out roomData))
                 {
 
 
@@ -115,7 +128,7 @@ namespace MIMWebClient.Hubs
                 {
 
                     roomData = roomJSON.LoadRoomFile();
-                    _AreaCache.TryAdd(roomJSON.id, roomData);
+                    _AreaCache.TryAdd(findRoomData, roomData);
                     room = LoadRoom.DisplayRoom(roomData, player.Name);
 
                 }
@@ -128,8 +141,10 @@ namespace MIMWebClient.Hubs
 
         public void SaveRoom(Room room)
         {
+ 
+            var saveRoom = new Tuple<string, string, int>(room.region, room.area, room.areaId);
 
-            _AreaCache.TryAdd(room.areaId, room);
+            _AreaCache.TryAdd(saveRoom, room);
 
 
         }
@@ -192,7 +207,10 @@ namespace MIMWebClient.Hubs
             loadRoom(PlayerData, id);
             //add player to room
             Room roomData = null;
-            _AreaCache.TryGetValue(PlayerData.AreaId, out roomData);
+ 
+            var getPlayerRoom = new Tuple<string, string, int>(PlayerData.Region, PlayerData.Area, PlayerData.AreaId);
+
+            _AreaCache.TryGetValue(getPlayerRoom, out roomData);
 
             MIMWebClient.Core.Room.PlayerManager.AddPlayerToRoom(roomData, PlayerData);
             Movement.EnterRoom(PlayerData, roomData);
@@ -245,7 +263,10 @@ namespace MIMWebClient.Hubs
 
                 //add player to room
                 Room roomData = null;
-                _AreaCache.TryGetValue(player.AreaId, out roomData);
+ 
+                var getPlayerRoom = new Tuple<string, string, int>(player.Region, player.Area, player.AreaId);
+
+                _AreaCache.TryGetValue(getPlayerRoom, out roomData);
 
                 PlayerManager.AddPlayerToRoom(roomData, player);
                 Movement.EnterRoom(player, roomData);

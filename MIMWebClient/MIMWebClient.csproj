@@ -251,6 +251,7 @@
     <Compile Include="Core\Mob\DialogTree.cs" />
     <Compile Include="Core\Mob\Event.cs" />
     <Compile Include="Core\Mob\Events\Aggro.cs" />
+    <Compile Include="Core\Mob\Events\Greet.cs" />
     <Compile Include="Core\Mob\Events\Greeting.cs" />
     <Compile Include="Core\Mob\Events\Shop.cs" />
     <Compile Include="Core\Mob\Events\Trainer.cs" />

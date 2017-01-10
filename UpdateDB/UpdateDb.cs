@@ -66,6 +66,8 @@ namespace UpdateDB
             areaSpeed.Stop();
             Console.WriteLine("Compiling Areas Completed in {0}ms.", areaSpeed.Elapsed.Milliseconds);
 
+            //check areas for duplicate ids
+ 
 
             Console.WriteLine("Adding Area's to Database");
             var addSpeed = new Stopwatch();

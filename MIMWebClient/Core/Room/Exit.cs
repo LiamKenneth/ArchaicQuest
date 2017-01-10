@@ -14,5 +14,19 @@ namespace MIMWebClient.Core.Room
         public string area { get; set; }
         public string region { get; set; }
         public string doorName { get; set; }
+
+
+        //public override Exit GetHashCode()
+        //{
+        //    return Exit;
+        //}
+        //public override bool Equals(object obj)
+        //{
+        //    return Equals(obj as Exit);
+        //}
+        //public bool Equals(Exit obj)
+        //{
+        //    return obj != null && obj.areaId == this.areaId && obj.area == this.area && obj.region == this.region;
+        //}
     }
 }

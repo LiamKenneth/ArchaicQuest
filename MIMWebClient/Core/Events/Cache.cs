@@ -19,7 +19,7 @@ namespace MIMWebClient.Core.Events
         /// Gets room cache
         /// </summary>
         /// <returns>returns room Cache</returns>
-        private static ConcurrentDictionary<int, Room> getRoomCache()
+        private static ConcurrentDictionary<Tuple<string,string,int>, Room> getRoomCache()
         {
             return MIMHub._AreaCache;
         }
@@ -51,7 +51,10 @@ namespace MIMWebClient.Core.Events
         /// <param name="oldRoom">The old room data</param>
         public static bool updateRoom(Room newRoom, Room oldRoom)
         {
-            if (MIMHub._AreaCache.TryUpdate(oldRoom.areaId, newRoom, oldRoom))
+
+            var updateOldRoom = new Tuple<string, string, int>(oldRoom.region, oldRoom.area, oldRoom.areaId);
+
+            if (MIMHub._AreaCache.TryUpdate(updateOldRoom, newRoom, oldRoom))
             {
                 return true;
             } 
@@ -69,7 +72,10 @@ namespace MIMWebClient.Core.Events
         public static Room getRoom(Player player)
         {
             Room roomData;
-            MIMHub._AreaCache.TryGetValue(player.AreaId, out roomData);
+
+            var getRoom = new Tuple<string, string, int>(player.Region, player.Area, player.AreaId);
+
+            MIMHub._AreaCache.TryGetValue(getRoom, out roomData);
 
             return roomData;
         }

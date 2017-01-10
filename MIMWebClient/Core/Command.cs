@@ -88,6 +88,7 @@ namespace MIMWebClient.Core
             commandList.Add("qlog", () => Quest.QuestLog(playerData));
             commandList.Add("wake", () => Status.WakePlayer(playerData, room));
             commandList.Add("sleep", () => Status.SleepPlayer(playerData, room));
+            commandList.Add("greet", () => Greet.GreetMob(playerData, room, commandOptions));
             //  commandList.Add("map", () => Map.GenerateGrid(playerData));
 
             return commandList;

@@ -244,11 +244,11 @@ namespace MIMWebClient.Core.PlayerSetup
 
         //NPC Properties
         [BsonElement("ng")]
-        public bool Greet;
+        public bool Greet = false;
         //NPC Properties
 
         [BsonElement("ngm")]
-        public string GreetMessage;
+        public string GreetMessage = String.Empty;
 
         //NPC Properties
         [BsonElement("ns")]

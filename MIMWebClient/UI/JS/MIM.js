@@ -658,32 +658,37 @@
             event.preventDefault();
 
         });
-
+        var submittedLogin = 0;
         $("#loginForm").on("submit", function (event) {
 
-            var valid = $('#loginForm').validate().form();
+            if (submittedLogin == 0) {
 
-            if (!valid) {
-                return;
+                var valid = $('#loginForm').validate().form();
+
+                if (!valid) {
+                    return;
+                }
+
+                var $this = $(this);
+                var frmValues = $this.serialize();
+                $.ajax({
+                        type: $this.attr('method'),
+                        url: $this.attr('action'),
+                        data: frmValues
+                    })
+                    .done(function(data) {
+
+                        MIM.login(data);
+
+
+                    })
+                    .fail(function() {
+                        alert("failed");
+                    });
+
+                submittedLogin++;
+
             }
-
-            var $this = $(this);
-            var frmValues = $this.serialize();
-            $.ajax({
-                type: $this.attr('method'),
-                url: $this.attr('action'),
-                data: frmValues
-            })
-            .done(function (data) {
-
-                MIM.login(data);
-
-
-
-            })
-            .fail(function () {
-                alert("failed");
-            });
             event.preventDefault();
         });
 
