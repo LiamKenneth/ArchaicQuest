@@ -151,54 +151,108 @@ namespace MIMWebClient.Core.Player
         {
             var oldPlayer = player;
 
-            var findObject = Events.FindNth.Findnth(itemToWear);
-            int nth = findObject.Key;
-            string itemToFind = findObject.Value;
-
-            var foundItem = FindItem.Item(player.Inventory, nth, itemToFind);// player.Inventory.Find(i => i.name.ToLower().Contains(itemToWear.ToLower()));
-
-            if (foundItem == null)
+            if (!itemToWear.Equals("all", StringComparison.CurrentCultureIgnoreCase))
             {
-                if (wield)
+
+                var findObject = Events.FindNth.Findnth(itemToWear);
+                int nth = findObject.Key;
+                string itemToFind = findObject.Value;
+
+                var foundItem = FindItem.Item(player.Inventory, nth, itemToFind, Item.ItemLocation.Inventory);
+                // player.Inventory.Find(i => i.name.ToLower().Contains(itemToWear.ToLower()));
+
+                if (foundItem == null)
                 {
-                    HubContext.SendToClient("You do not have that item to wield.", player.HubGuid);
+                    if (wield)
+                    {
+                        HubContext.SendToClient("You do not have that item to wield.", player.HubGuid);
+                        return;
+                    }
+
+                    HubContext.SendToClient("You do not have that item to wear.", player.HubGuid);
                     return;
                 }
 
-                HubContext.SendToClient("You do not have that item to wear.", player.HubGuid);
-                return;
-            }
 
-           
 
-            foundItem.location = Item.ItemLocation.Worn;
-            var slot = Enum.GetName(typeof(Item.EqSlot), foundItem.slot);
+                foundItem.location = Item.ItemLocation.Worn;
+                var slot = Enum.GetName(typeof(Item.EqSlot), foundItem.slot);
 
-            //TODO: WTF is this?
-            var eqLocation = player.Equipment.GetType().GetProperty(slot);
+                //TODO: WTF is this?
+                var eqLocation = player.Equipment.GetType().GetProperty(slot);
 
-            if (slot == null){ return; }  // Log error? What the hell is eqLocation?
+                if (slot == null)
+                {
+                    return;
+                } // Log error? What the hell is eqLocation?
 
-             var hasValue = eqLocation.GetValue(player.Equipment);
+                var hasValue = eqLocation.GetValue(player.Equipment);
 
-            if (hasValue.ToString() != "Nothing")
-            {
-                RemoveItem(player, hasValue.ToString(), true);
-            }
+                if (hasValue.ToString() != "Nothing")
+                {
+                    RemoveItem(player, hasValue.ToString(), true);
+                }
 
-            eqLocation.SetValue(player.Equipment, foundItem.name);
+                eqLocation.SetValue(player.Equipment, foundItem.name);
 
-            if (!wield)
-            {
-                HubContext.SendToClient("You wear." + foundItem.name, player.HubGuid);
+                if (!wield)
+                {
+                    HubContext.SendToClient("You wear." + foundItem.name, player.HubGuid);
 
-                //Wear event
+                    //Wear event
 
-                CheckEvent.FindEvent(CheckEvent.EventType.Wear, player, foundItem.name);
+                    CheckEvent.FindEvent(CheckEvent.EventType.Wear, player, foundItem.name);
+                }
+                else
+                {
+                    HubContext.SendToClient("You wield." + foundItem.name, player.HubGuid);
+                }
+
             }
             else
             {
-                HubContext.SendToClient("You wield." + foundItem.name, player.HubGuid);
+                foreach (var item in player.Inventory)
+                {
+                    if (item.location == Item.ItemLocation.Inventory)
+                    {
+              
+                        var slot = Enum.GetName(typeof(Item.EqSlot), item.slot);
+
+                        //TODO: WTF is this?
+                        if (slot != null)
+                        {
+                            var eqLocation = player.Equipment.GetType().GetProperty(slot);
+
+                            if (slot == null)
+                            {
+                                return;
+                            } // Log error? What the hell is eqLocation?
+
+                            var hasValue = eqLocation.GetValue(player.Equipment);
+
+                            if (hasValue.ToString() != "Nothing")
+                            {
+                                RemoveItem(player, hasValue.ToString(), true);
+                            }
+                            item.location = Item.ItemLocation.Worn;
+                            eqLocation.SetValue(player.Equipment, item.name);
+
+
+                            if (!wield)
+                            {
+                                HubContext.SendToClient("You wear." + item.name, player.HubGuid);
+
+                                //Wear event
+
+                                CheckEvent.FindEvent(CheckEvent.EventType.Wear, player, item.name);
+                            }
+                            else
+                            {
+                                HubContext.SendToClient("You wield." + item.name, player.HubGuid);
+                            }
+                        }
+                    }
+                }
             }
 
             Cache.updatePlayer(player, oldPlayer);

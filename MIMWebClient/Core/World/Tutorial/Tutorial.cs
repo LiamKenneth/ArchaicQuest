@@ -138,7 +138,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
         public static void setUpRescue(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
-            Task.Run(() => AwakeningRescue(player, room, step, calledBy));
+              Task.Run(() => AwakeningRescue(player, room, step, calledBy));
         }
 
         public static void setUpAwakening(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
@@ -149,7 +149,8 @@ namespace MIMWebClient.Core.World.Tutorial
 
         public static async Task AwakeningRescue(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
-            await Task.Delay(2000);
+
+         
             var npc = room.mobs.FirstOrDefault(x => x.Name.Equals("Mortem"));
 
             if (npc == null) return;
@@ -198,21 +199,41 @@ namespace MIMWebClient.Core.World.Tutorial
 
             if (step != null && step.Contains("plain"))
             {
+
+              
                 if (player.Equipment.Body.Equals(ClothingBody.PlainTop().name) && !player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name))
                 {
                     HubContext.SendToClient(npc.Name + " says it fits well, don't forget to wear the trousers too",
                    player.HubGuid);
+
+                    if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
+                    {
+                        return;
+                    }
                 }
 
-                 if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) && !player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
+                if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) && !player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
                 {
                     HubContext.SendToClient(npc.Name + " says it fits well, don't forget to wear the trousers too",
                    player.HubGuid);
+
+                    if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
+                    {
+                        return;
+                    }
                 }
 
                 if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) &&
                     player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
                 {
+              
+
+                    if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
+                    {
+                        return;
+                    }
+
+
                     HubContext.SendToClient(
                         npc.Name +
                         " says excellent, I have one request for you and that is to speak to Lance the Elder of the village.",
@@ -233,7 +254,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                     var findLance = new Quest()
                     {
-                        Id  = 3,
+                        Id = 3,
                         Name = "Find and greet Lance",
                         Description =
                             "Mortem has asked me to go find Lance the village elder who can be found in the main square, From the temple leave south and follow the hill path in to town." +
@@ -244,21 +265,27 @@ namespace MIMWebClient.Core.World.Tutorial
                         RewardXp = 250,
                         RewardDialog = new DialogTree()
                         {
-                            Message = "Yes I am Lance, well met $playerName"
+                            Message = "Yes I am Lance, well met $playerName",
+                            ShowIfOnQuest = "Find and greet Lance"
                         }
                     };
 
-                    player.QuestLog.Add(findLance);
+                    if (player.QuestLog.FirstOrDefault(x => x.Name.Equals(findLance.Name)) == null)
+                    {
+                        player.QuestLog.Add(findLance);
 
-                    HubContext.SendToClient(
-                       "New Quest added: Find and greet Lance. Type qlog to be reminded about quest information.",
-                       player.HubGuid);
+                        HubContext.SendToClient(
+     "New Quest added: Find and greet Lance. Type qlog to be reminded about quest information.",
+     player.HubGuid);
 
 
-                    HubContext.SendToClient(
-                        npc.Name +
-                        " waves to you, may Thy bless you.",
-                        player.HubGuid);
+                        HubContext.SendToClient(
+                            npc.Name +
+                            " waves to you, may Thy bless you.",
+                            player.HubGuid);
+
+                 
+                    }
 
 
                 }

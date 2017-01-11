@@ -8,21 +8,22 @@ namespace MIMWebClient.Core.Events
 {
     public class FindItem
     {
-        public static Item.Item Item (List<Item.Item> collection, int findNth, string itemToFind)
+        public static Item.Item Item (List<Item.Item> collection, int findNth, string itemToFind, Item.Item.ItemLocation findWear)
         {
 
             if (collection == null)
             {
                 return null;
-            }
 
+            }
+ 
             if (findNth == -1)
             {
-                return collection.Find(x => x.name.ToLower().Contains(itemToFind));
+                return collection.Find(x => x.name.ToLower().Contains(itemToFind) && x.location == findWear);
             }
 
 
-            return collection.FindAll(x => x.name.ToLower().Contains(itemToFind)).Skip(findNth - 1).FirstOrDefault();
+            return collection.FindAll(x => x.name.ToLower().Contains(itemToFind) && x.location == findWear).Skip(findNth - 1).FirstOrDefault();
 
         }
 

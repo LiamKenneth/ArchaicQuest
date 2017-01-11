@@ -13,12 +13,12 @@ namespace MIMWebClient.Core.Events
 
             //search room items 1st
 
-           var  foundItem = FindItem.Item(room.items, findNth, itemToFind);
+           var  foundItem = FindItem.Item(room.items, findNth, itemToFind, Item.Item.ItemLocation.Room);
 
             if (foundItem != null) { return foundItem; }
 
             //search player inventory
-            foundItem = FindItem.Item(player.Inventory, findNth, itemToFind);
+            foundItem = FindItem.Item(player.Inventory, findNth, itemToFind, Item.Item.ItemLocation.Inventory);
 
             if (foundItem != null)
             {

@@ -172,6 +172,8 @@ namespace MIMWebClient.Core.World.Anker.Mobs
 
 
 
+
+
             Lance.DialogueTree.Add(welcomePlayers);
             Lance.DialogueTree.Add(lance1aAnswer);
             Lance.DialogueTree.Add(lance1cAnswer);
@@ -185,6 +187,26 @@ namespace MIMWebClient.Core.World.Anker.Mobs
             welcomePlayers.PossibleResponse.Add(lance1b);
             welcomePlayers.PossibleResponse.Add(lance1c);
             welcomePlayers.PossibleResponse.Add(lance1e);
+
+
+            var findLance = new DialogTree
+            {
+                Id = "lance1",
+                Message = "Yes I am Lance, well met $playerName",
+                PossibleResponse = new List<Responses>(),
+                ShowIfOnQuest = "Find and greet Lance",
+                
+            };
+
+            var findLanceA = new Responses()
+            {
+                Response = "Well wtf do I do now?",
+
+            };
+
+            findLance.PossibleResponse.Add(findLanceA);
+
+            Lance.DialogueTree.Add(findLance);
 
 
             //quest

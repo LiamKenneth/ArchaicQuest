@@ -38,14 +38,44 @@ namespace MIMWebClient.Core.Mob.Events
                     if (qlog.Completed.Equals(false) && qlog.QuestGiver.Equals(npc.Name) || qlog.Completed.Equals(false) && qlog.QuestFindMob != null && qlog.QuestFindMob.Equals(npc.Description))
                     {
 
+                     
+                     //   HubContext.SendToClient(qlog.RewardDialog.Message, player.HubGuid);
+
+                        if (npc.DialogueTree != null && npc.DialogueTree.Count >= 1)
+                        {
+
+                            
+                            var speak = npc.DialogueTree[0];
+          
+                            foreach (var quest in player.QuestLog)
+                            {
+
+                                speak = npc.DialogueTree.FirstOrDefault(x => x.ShowIfOnQuest.Equals(quest.Name));
+
+                            }
+
+                            if (speak == null)
+                            {
+                                speak = npc.DialogueTree[0];
+                            }
+
+                            HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(npc.Name + " says to you " + speak.Message);
+                            var i = 1;
+                            foreach (var respond in speak.PossibleResponse)
+                            {
+                                var textChoice = "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " + respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " + respond.Response + "</a>";
+                                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
+                                i++;
+
+                            }
+                        }
+
                         qlog.Completed = true;
                         player.Experience += qlog.RewardXp;
 
-                        HubContext.SendToClient(qlog.RewardDialog.Message, player.HubGuid);
-
                         HubContext.SendToClient(qlog.Name + " Completed, you are rewarded " + qlog.RewardXp + " xp", player.HubGuid);
 
-                         
+                        return;
 
                     }
                 }

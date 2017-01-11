@@ -79,7 +79,7 @@ namespace MIMWebClient.Core.Events
                 if (string.IsNullOrEmpty(itemContainer))
                 {
                     //search room items 1st
-                    foundItem = FindItem.Item(room.items, nth, itemToFind);
+                    foundItem = FindItem.Item(room.items, nth, itemToFind, Item.ItemLocation.Room);
 
                     if (foundItem != null) { return new KeyValuePair<Item, Item>(null, foundItem); }
 
@@ -99,7 +99,7 @@ namespace MIMWebClient.Core.Events
                     if (foundContainer != null)
                     {
 
-                        foundItem = FindItem.Item(foundContainer.containerItems, nth, itemToFind);
+                        foundItem = FindItem.Item(foundContainer.containerItems, nth, itemToFind, Item.ItemLocation.Room);
 
                     }
 
@@ -136,7 +136,7 @@ namespace MIMWebClient.Core.Events
                 if (string.IsNullOrEmpty(itemContainer))
                 {
 
-                    foundItem = FindItem.Item(player.Inventory, nth, itemToFind);
+                    foundItem = FindItem.Item(player.Inventory, nth, itemToFind, Item.ItemLocation.Inventory);
 
 
 
@@ -156,7 +156,7 @@ namespace MIMWebClient.Core.Events
                     //look in inv
                     if (itemToFind != "all")
                     {
-                        foundItem = FindItem.Item(player.Inventory, nth, itemToFind);
+                        foundItem = FindItem.Item(player.Inventory, nth, itemToFind, Item.ItemLocation.Inventory);
                     }
 
                     if (foundItem != null || itemContainer != null && itemToFind == "all")
@@ -341,7 +341,7 @@ namespace MIMWebClient.Core.Events
                     if (!roomItems[i].stuck)
                     {
                         //Get all Items from the room
-                        if (item.type != Item.ItemType.Gold)
+                        if (roomItems[i].type != Item.ItemType.Gold)
                         {
                             roomItems[i].location = Item.ItemLocation.Inventory;
                             player.Inventory.Add(roomItems[i]);
@@ -393,7 +393,7 @@ namespace MIMWebClient.Core.Events
 
                 for (int i = containerCount - 1; i >= 0; i--)
                 {
-                    if (item.type != Item.ItemType.Gold)
+                    if (containerItems[i].type != Item.ItemType.Gold)
                     {
 
                         containerItems[i].location = Item.ItemLocation.Inventory;
@@ -763,7 +763,7 @@ namespace MIMWebClient.Core.Events
             Item foundItem = null;
             Exit foundExit = null;
 
-            foundItem = FindItem.Item(room.items, nth, userInput);
+            foundItem = FindItem.Item(room.items, nth, userInput, Item.ItemLocation.Room);
 
 
 
@@ -892,7 +892,7 @@ namespace MIMWebClient.Core.Events
             Item foundItem = null;
             Exit foundExit = null;
 
-            foundItem = FindItem.Item(room.items, nth, userInput);
+            foundItem = FindItem.Item(room.items, nth, userInput, Item.ItemLocation.Room);
 
 
 
@@ -1003,7 +1003,7 @@ namespace MIMWebClient.Core.Events
             Item foundItem = null;
             Exit foundExit = null;
 
-            foundItem = FindItem.Item(room.items, nth, userInput);
+            foundItem = FindItem.Item(room.items, nth, userInput, Item.ItemLocation.Room);
 
 
 
@@ -1127,7 +1127,7 @@ namespace MIMWebClient.Core.Events
             Item foundItem = null;
             Exit foundExit = null;
 
-            foundItem = FindItem.Item(room.items, nth, userInput);
+            foundItem = FindItem.Item(room.items, nth, userInput, Item.ItemLocation.Room);
 
 
             if (foundItem == null)

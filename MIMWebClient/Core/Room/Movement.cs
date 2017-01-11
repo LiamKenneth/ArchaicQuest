@@ -45,10 +45,7 @@ namespace MIMWebClient.Core.Room
             //NPC Enter event here
 
             foreach (var mob in room.mobs)
-            {
-
-               
-                
+            {              
 
                 if (mob.EventOnEnter != null)
                 {
@@ -184,7 +181,7 @@ namespace MIMWebClient.Core.Room
                             //mob might be aggro
                         }
 
-                        if (mob.DialogueTree != null)
+                        if (mob.DialogueTree != null && mob.DialogueTree.Count >= 1)
                         {
                             var speak = mob.DialogueTree[0];
 

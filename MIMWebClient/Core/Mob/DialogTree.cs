@@ -18,5 +18,8 @@ namespace MIMWebClient.Core.Mob
         public bool? GivePrerequisiteItem { get; set; } = false;
         public List<Responses> PossibleResponse { get; set; }
         public bool? DoAction { get; set; } = false;
+        public string ShowIfOnQuest { get; set; } = String.Empty;
+        public int ShowIfLevelUpTo { get; set; } = 0;
+
     }
 }
