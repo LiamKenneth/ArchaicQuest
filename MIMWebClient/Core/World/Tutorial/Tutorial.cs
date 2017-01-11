@@ -199,28 +199,31 @@ namespace MIMWebClient.Core.World.Tutorial
 
             if (step != null && step.Contains("plain"))
             {
+                if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
+                {
+                    return;
+                }
 
-              
+             
+
                 if (player.Equipment.Body.Equals(ClothingBody.PlainTop().name) && !player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name))
                 {
                     HubContext.SendToClient(npc.Name + " says it fits well, don't forget to wear the trousers too",
                    player.HubGuid);
 
-                    if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
-                    {
-                        return;
-                    }
+                    return;
+
                 }
 
                 if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) && !player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
                 {
-                    HubContext.SendToClient(npc.Name + " says it fits well, don't forget to wear the trousers too",
+
+                   
+                    HubContext.SendToClient(npc.Name + " says it fits well, don't forget to wear the top too",
                    player.HubGuid);
 
-                    if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
-                    {
-                        return;
-                    }
+                    return;
+
                 }
 
                 if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) &&
@@ -228,11 +231,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 {
               
 
-                    if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
-                    {
-                        return;
-                    }
-
+                  
 
                     HubContext.SendToClient(
                         npc.Name +
@@ -251,14 +250,13 @@ namespace MIMWebClient.Core.World.Tutorial
 
 
                     //give player quest
-
                     var findLance = new Quest()
                     {
                         Id = 3,
                         Name = "Find and greet Lance",
                         Description =
-                            "Mortem has asked me to go find Lance the village elder who can be found in the main square, From the temple leave south and follow the hill path in to town." +
-                            "<p class='RoomExits'>[Hint] Type greet lance to greet the Elder once you have found him</p>",
+                     "Mortem has asked me to go find Lance the village elder who can be found in the main square, From the temple leave south and follow the hill path in to town." +
+                     "<p class='RoomExits'>[Hint] Type greet lance to greet the Elder once you have found him</p>",
                         QuestGiver = "Mortem",
                         QuestFindMob = Lance.VillageElderLance().Description,
                         Type = Quest.QuestType.FindMob,
@@ -270,11 +268,12 @@ namespace MIMWebClient.Core.World.Tutorial
                         }
                     };
 
-                    if (player.QuestLog.FirstOrDefault(x => x.Name.Equals(findLance.Name)) == null)
-                    {
-                        player.QuestLog.Add(findLance);
+                    player.QuestLog.Add(findLance);
 
-                        HubContext.SendToClient(
+
+
+
+                    HubContext.SendToClient(
      "New Quest added: Find and greet Lance. Type qlog to be reminded about quest information.",
      player.HubGuid);
 
@@ -285,7 +284,7 @@ namespace MIMWebClient.Core.World.Tutorial
                             player.HubGuid);
 
                  
-                    }
+                    
 
 
                 }

@@ -239,6 +239,7 @@
     <Compile Include="Core\Events\Score.cs" />
     <Compile Include="Core\Events\ShowSkills.cs" />
     <Compile Include="Core\Events\Talk.cs" />
+    <Compile Include="Core\Events\Who.cs" />
     <Compile Include="Core\Helpers.cs" />
     <Compile Include="Core\HubContext.cs" />
     <Compile Include="Core\Item\Action.cs" />
@@ -295,6 +296,7 @@
     <Compile Include="Core\Update\RestoreVitals.cs" />
     <Compile Include="Core\Update\Time.cs" />
     <Compile Include="Core\Update\UpdateWorld.cs" />
+    <Compile Include="Core\Util\TruncateString.cs" />
     <Compile Include="Core\World\Anker\Anker.cs" />
     <Compile Include="Core\World\Anker\Mobs\Lance.cs" />
     <Compile Include="Core\World\Areas.cs" />
