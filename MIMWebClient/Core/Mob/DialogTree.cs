@@ -20,6 +20,9 @@ namespace MIMWebClient.Core.Mob
         public bool? DoAction { get; set; } = false;
         public string ShowIfOnQuest { get; set; } = String.Empty;
         public int ShowIfLevelUpTo { get; set; } = 0;
+        public bool ShowIfEvil { get; set; } = false;
+        public bool ShowIfGood { get; set; } = false;
+        public bool ShowIfNeutral { get; set; } = false;
 
     }
 }
