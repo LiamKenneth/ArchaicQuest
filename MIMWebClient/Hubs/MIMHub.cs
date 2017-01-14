@@ -257,6 +257,8 @@ namespace MIMWebClient.Hubs
                     }
                 }
 
+                player.LastCommandTime = DateTime.UtcNow;
+
                 _PlayerCache.TryAdd(id, player);
 
                 this.loadRoom(player, player.HubGuid);

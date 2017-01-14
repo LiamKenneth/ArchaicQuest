@@ -197,7 +197,7 @@ namespace MIMWebClient.Core.Player
 
                 if (!wield)
                 {
-                    HubContext.SendToClient("You wear." + foundItem.name, player.HubGuid);
+                    HubContext.SendToClient("You wear " + foundItem.name, player.HubGuid);
 
                     //Wear event
 
@@ -205,15 +205,15 @@ namespace MIMWebClient.Core.Player
                 }
                 else
                 {
-                    HubContext.SendToClient("You wield." + foundItem.name, player.HubGuid);
+                    HubContext.SendToClient("You wield " + foundItem.name, player.HubGuid);
                 }
 
             }
             else
             {
-                foreach (var item in player.Inventory)
+                foreach (var item in player.Inventory.Where(x => x.location.Equals(Item.ItemLocation.Inventory)))
                 {
-                    if (item.location == Item.ItemLocation.Inventory)
+                    if (item.location == Item.ItemLocation.Inventory && item.equipable == true)
                     {
               
                         var slot = Enum.GetName(typeof(Item.EqSlot), item.slot);

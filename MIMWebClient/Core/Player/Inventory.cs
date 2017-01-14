@@ -16,14 +16,16 @@ namespace MIMWebClient.Core.Player
         {
             if (inventory != null)
             {
-                int inventoryCount = inventory.Count(i => i.location.Equals(Item.ItemLocation.Inventory));
+               
                 var inventoryItems = new StringBuilder();;
                 inventoryItems.Append("You are carrying:").AppendLine();
-                for (int i = 0; i < inventoryCount; i++)
+
+                foreach (var item in player.Inventory.Where(x => x.location == Item.ItemLocation.Inventory))
                 {
-                    //should group items with same name?
-                    inventoryItems.Append(inventory[i].name).AppendLine();
+                   
+                    inventoryItems.Append(item.name).AppendLine();
                 }
+                
 
                 HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(inventoryItems.ToString());
             }

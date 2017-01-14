@@ -1,4 +1,6 @@
-﻿namespace MIMWebClient.Core.Events
+﻿using System.Linq;
+
+namespace MIMWebClient.Core.Events
 {
     using System.Text;
     using System.Web.Helpers;
@@ -45,7 +47,7 @@
             var context = HubContext.getHubContext;
  
 
-            context.Clients.Client(playerData.HubGuid).updateInventory(playerData.Inventory);
+            context.Clients.Client(playerData.HubGuid).updateInventory(playerData.Inventory.Where(x => x.location == Item.Item.ItemLocation.Inventory));
        
         }
 
