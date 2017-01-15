@@ -195,7 +195,7 @@ namespace MIMWebClient.Core.Player
 
                 eqLocation.SetValue(player.Equipment, foundItem.name);
 
-                if (!wield)
+                if (!wield || !slot.Equals("wield", StringComparison.CurrentCultureIgnoreCase))
                 {
                     HubContext.SendToClient("You wear " + foundItem.name, player.HubGuid);
 
@@ -207,6 +207,7 @@ namespace MIMWebClient.Core.Player
                 {
                     HubContext.SendToClient("You wield " + foundItem.name, player.HubGuid);
                 }
+                Score.UpdateUiInventory(player);
 
             }
             else
@@ -238,7 +239,7 @@ namespace MIMWebClient.Core.Player
                             eqLocation.SetValue(player.Equipment, item.name);
 
 
-                            if (!wield)
+                            if (!wield || !slot.Equals("wield", StringComparison.CurrentCultureIgnoreCase))
                             {
                                 HubContext.SendToClient("You wear." + item.name, player.HubGuid);
 
@@ -254,7 +255,7 @@ namespace MIMWebClient.Core.Player
                     }
                 }
             }
-
+            Score.UpdateUiInventory(player);
             Cache.updatePlayer(player, oldPlayer);
 
         }
@@ -266,49 +267,99 @@ namespace MIMWebClient.Core.Player
         /// <param name="itemToRemove">Item to Remove</param>
         public static void RemoveItem(Player player, string itemToRemove, bool replaceWithOtherEQ = false, bool unwield = false)
         {
-            var oldPlayer = player;
-            var foundItem = player.Inventory.Find(i => i.name.ToLower().Contains(itemToRemove.ToLower()) && i.location.Equals(Item.ItemLocation.Worn));
 
-            if (foundItem == null)
+            if (!itemToRemove.Equals("all", StringComparison.CurrentCultureIgnoreCase))
             {
-                if (unwield)
+                var oldPlayer = player;
+                var foundItem =
+                    player.Inventory.Find(
+                        i =>
+                            i.name.ToLower().Contains(itemToRemove.ToLower()) &&
+                            i.location.Equals(Item.ItemLocation.Worn));
+
+                if (foundItem == null)
                 {
-                    HubContext.SendToClient("You do not have that item to unwield.", player.HubGuid);
+                    if (unwield)
+                    {
+                        HubContext.SendToClient("You do not have that item to unwield.", player.HubGuid);
+                        return;
+                    }
+
+                    HubContext.SendToClient("You are not wearing that item.", player.HubGuid);
                     return;
                 }
 
-                HubContext.SendToClient("You are not wearing that item.", player.HubGuid);
-                return;
-            }
+                foundItem.location = Item.ItemLocation.Inventory;
+                var value = string.Empty;
+                var slot = Enum.GetName(typeof(Item.EqSlot), foundItem.slot);
 
-            foundItem.location = Item.ItemLocation.Inventory;
-            var value = string.Empty;
-            var slot = Enum.GetName(typeof(Item.EqSlot), foundItem.slot);
+                var eqLocation = player.Equipment.GetType().GetProperty(slot);
 
-            var eqLocation = player.Equipment.GetType().GetProperty(slot);
+                if (eqLocation == null)
+                {
+                    return;
+                } // Log error?
 
-            if (eqLocation == null) { return; }  // Log error?
 
-          
-             eqLocation.SetValue(player.Equipment, "Nothing");
+                eqLocation.SetValue(player.Equipment, "Nothing");
 
-            if (!unwield)
-            {
-                HubContext.SendToClient("You Remove." + foundItem.name, player.HubGuid);
+                if (!unwield || !slot.Equals("wield", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    HubContext.SendToClient("You Remove." + foundItem.name, player.HubGuid);
+                }
+                else
+                {
+                    HubContext.SendToClient("You Unwield." + foundItem.name, player.HubGuid);
+                }
+                Score.UpdateUiInventory(player);
+
+                if (replaceWithOtherEQ)
+                {
+                    return; // we don't need to update the cache
+                }
+
+
+                Cache.updatePlayer(player, oldPlayer);
+
             }
             else
             {
-                HubContext.SendToClient("You Unwield." + foundItem.name, player.HubGuid);
-            }
-             
 
-            if (replaceWithOtherEQ)
-            {
-                return; // we don't need to update the cache
-            }
-       
+                var oldPlayer = player;
 
-            Cache.updatePlayer(player, oldPlayer);
+                foreach (var item in player.Inventory.Where(x => x.location.Equals(Item.ItemLocation.Worn)))
+                {
+
+                    if (item.eqSlot != Item.EqSlot.Wield)
+                    {
+                        HubContext.SendToClient("You remove " + item.name, player.HubGuid);
+
+                    }
+                    else
+                    {
+                        HubContext.SendToClient("You unwield " + item.name, player.HubGuid);
+                    }
+
+                    item.location = Item.ItemLocation.Inventory;
+                    var value = string.Empty;
+                    var slot = Enum.GetName(typeof(Item.EqSlot), item.slot);
+
+                    var eqLocation = player.Equipment.GetType().GetProperty(slot);
+
+                    if (eqLocation == null)
+                    {
+                        return;
+                    } // Log error?
+
+
+                    eqLocation.SetValue(player.Equipment, "Nothing");
+
+
+                }
+
+                Score.UpdateUiInventory(player);
+                Cache.updatePlayer(player, oldPlayer);
+            }
 
         }
 

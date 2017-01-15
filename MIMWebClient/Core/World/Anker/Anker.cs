@@ -186,6 +186,8 @@ namespace MIMWebClient.Core.World.Anker
             bucketObj.containerItems = new List<Item.Item>();
             bucketObj.isHiddenInRoom = true;
             bucketObj.name = "bucket";
+            bucketObj.location = Item.Item.ItemLocation.Room;
+            
 
             bucketGold.count = 75;
             bucketGold.type = Item.Item.ItemType.Gold;
