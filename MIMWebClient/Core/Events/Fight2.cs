@@ -34,6 +34,12 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
+            if (attacker.Target != null)
+            {
+                HubContext.SendToClient("You can only concerntrate on one target", attacker.HubGuid);
+                return;
+            }
+
             /* player can only attack one target
            * if player gets attacked by something else they cannot fight back until
            * they have ended the fight they are already in.

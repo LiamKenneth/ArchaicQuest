@@ -677,7 +677,7 @@ namespace MIMWebClient.Core.Events
 
 
                         BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players,
-                                            "You give a " + playerInv[i].name + " to " + playerInv[i].name,
+                                            "You give a " + playerInv[i].name + " to " + foundThing.Name,
                                             player.Name + " gives a " + playerInv[i].name + " to " + foundThing.Name);
 
                         player.Inventory.Remove(playerInv[i]);

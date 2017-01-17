@@ -19,18 +19,28 @@ namespace MIMWebClient.Core.Events
         {
             if (player.Status == PlayerSetup.Player.PlayerStatus.Fighting)
             {
-                HubContext.SendToClient("You Flee", player.HubGuid);
+                //hardcode 50% flee success rate
 
-               //var exit = room.exits.Find(x => x.name.Equals("north", StringComparison.InvariantCultureIgnoreCase));
+                if (Helpers.Rand(1, 100) >= 50)
+                {
 
-                player.Status = PlayerSetup.Player.PlayerStatus.Standing;
-              
+                    HubContext.SendToClient("You Flee", player.HubGuid);
 
-                HubContext.SendToClient(player.Name + " Flee's from combat", player.Target.HubGuid);
+                    var exit = Helpers.diceRoll.Next(room.exits.Count);
 
-                player.Target = null;
+                    player.Status = PlayerSetup.Player.PlayerStatus.Standing;
 
-                Room.Movement.Move(player, room, "North");
+                    HubContext.SendToClient(player.Name + " Flee's from combat", player.Target.HubGuid);
+
+                    player.Target = null;
+
+                    Room.Movement.Move(player, room, room.exits[exit].name);
+
+                }
+                else
+                {
+                    HubContext.SendToClient("You fail to flee", player.HubGuid);
+                }
             }
             else
             {

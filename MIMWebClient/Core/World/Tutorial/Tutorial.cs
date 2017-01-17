@@ -211,6 +211,8 @@ namespace MIMWebClient.Core.World.Tutorial
                     HubContext.SendToClient(npc.Name + " says it fits well, don't forget to wear the trousers too",
                    player.HubGuid);
 
+                   
+
                     return;
 
                 }
@@ -226,12 +228,8 @@ namespace MIMWebClient.Core.World.Tutorial
 
                 }
 
-                if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) &&
-                    player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
-                {
-              
-
-                  
+                if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) &&  player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
+                {                
 
                     HubContext.SendToClient(
                         npc.Name +
@@ -280,7 +278,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                         HubContext.SendToClient(
                             npc.Name +
-                            " waves to you, may Thy bless you.",
+                            " waves to you, may Tyr bless you.",
                             player.HubGuid);
 
                  

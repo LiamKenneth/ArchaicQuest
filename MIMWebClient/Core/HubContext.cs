@@ -80,31 +80,23 @@ namespace MIMWebClient.Core
         {
             if (message != null)
             {
-                int playerCount = players.Count;
 
-                for (int i = 0; i < playerCount; i++)
+                foreach (var player in players)
                 {
-                    if (players[i].HubGuid != excludeThesePlayers.FirstOrDefault(x => x.Equals(players[i].HubGuid)))
+                    if (player.HubGuid != excludeThesePlayers.FirstOrDefault(x => x.Equals(player.HubGuid)))
                     {
-                        HubContext.getHubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(message);
+                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(message);
                     }
                     else
                     {
-                        var playerInFight = players.FindAll(x => x.Status.Equals(PlayerSetup.Player.PlayerStatus.Fighting));
 
-                        foreach (var fighter in playerInFight)
+                        if (player.Status != PlayerSetup.Player.PlayerStatus.Fighting)
                         {
-                            if (players[i].Status != PlayerSetup.Player.PlayerStatus.Fighting)
-                            { 
-                                HubContext.getHubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(message);
-                            }
+                            HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(message);
                         }
+
                     }
-
                 }
-
-
-
             }
         }
 
@@ -147,7 +139,7 @@ namespace MIMWebClient.Core
             Cache.updateRoom(room, oldRoom);
 
             PlayerSetup.Player playerData = null;
-           MIMHub._PlayerCache.TryRemove(playerId, out playerData);
+            MIMHub._PlayerCache.TryRemove(playerId, out playerData);
 
             if (playerData != null)
             {

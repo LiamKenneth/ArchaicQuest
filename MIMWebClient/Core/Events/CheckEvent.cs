@@ -42,9 +42,6 @@ namespace MIMWebClient.Core.Events
                 EvokeEvent(room, player, option);
             }
 
-
-
-
         }
 
         private static void EvokeEvent(Room.Room room, PlayerSetup.Player player, string option)

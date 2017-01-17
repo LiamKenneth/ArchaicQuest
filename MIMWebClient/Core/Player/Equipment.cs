@@ -326,8 +326,8 @@ namespace MIMWebClient.Core.Player
             {
 
                 var oldPlayer = player;
-
-                foreach (var item in player.Inventory.Where(x => x.location.Equals(Item.ItemLocation.Worn)))
+                var wornItems = player.Inventory.Where(x => x.location.Equals(Item.ItemLocation.Worn));
+                foreach (var item in wornItems)
                 {
 
                     if (item.eqSlot != Item.EqSlot.Wield)
@@ -355,6 +355,11 @@ namespace MIMWebClient.Core.Player
                     eqLocation.SetValue(player.Equipment, "Nothing");
 
 
+                }
+
+                if (!wornItems.Any())
+                {
+                    HubContext.SendToClient("You aren't wearing anything to remove.", player.HubGuid);
                 }
 
                 Score.UpdateUiInventory(player);
