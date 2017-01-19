@@ -6,80 +6,125 @@ using System.Threading.Tasks;
 
 namespace MIMWebClient.Core.Player.Skills
 {
-    using System.Runtime.CompilerServices;
-
+    using MIMWebClient.Core.Events;
     using MIMWebClient.Core.PlayerSetup;
     using MIMWebClient.Core.Room;
 
-    public class Kick: Skill
+    public class Kick : Skill
     {
-
+        private static bool _taskRunnning = false;
         public static Skill KickSkill { get; set; }
-        public static void KickAb(Player attacker, Player defender, Room room)
-        {
-           
-            Skill kick = null;
 
-            if (KickSkill != null)
+        public static void StartKick(Player attacker, Room room)
+        {
+
+            //TODO: Fix His to be gender specific
+            //TODO: Fist? what if it's a paw?
+
+            if (!_taskRunnning)
             {
-                kick = KickSkill;
+                // find target if not in fight
+                HubContext.SendToClient("You pull your leg back", attacker.HubGuid);
+                HubContext.SendToClient(attacker.Name + " pulls his leg back ready to kick at you.", attacker.HubGuid,
+                    attacker.Target.HubGuid, false, true);
+                HubContext.broadcastToRoom(
+                    attacker.Name + " pulls his leg back ready to kick at " + attacker.Target.Name,
+                    room.players, attacker.HubGuid, true);
+
+
+
+
+                Task.Run(() => DoKick(attacker, room));
+
             }
             else
             {
-                var skill = new Skill
-                {
-                    Name = "Kick",
-                    CoolDown = 0,
-                    Delay = 0,
-                    LevelObtained = 1,
-                    Passive = false,
-                    Proficiency = 75,
-                    UsableFromStatus = "Standing",
-                    Syntax = "Kick <Target>"
-                };
-
-
-
-                KickSkill = skill;
-            }
-
-            if (attacker.Level >= kick.LevelObtained)
-            {
-                if (attacker.Target != null)
-                {
-                    if (attacker.Status == Player.PlayerStatus.Standing ||  attacker.Status == Player.PlayerStatus.Fighting)
-                    {
-                        return;
-                    }
-
-                    var die = new PlayerStats();
-                     var dam = die.dice(1, attacker.Strength);
-
-                    if (defender.HitPoints > 0)
-                    {
-                        defender.HitPoints -= dam;
-                    }
-
-                    if (defender.HitPoints <= 0)
-                    {
-                        defender.HitPoints = 0;
-                      
-                    }
-
-
-                    HubContext.SendToClient("You kick " + defender.Name, attacker.HubGuid);
-                        HubContext.SendToClient(attacker.Name + " kicks you", defender.HubGuid);
-                    
-                }
-                else
-                {
-                    HubContext.SendToClient("You are not fighting anyone ", attacker.HubGuid);
-                }
+                HubContext.SendToClient("You are already trying to kick", attacker.HubGuid);
 
             }
 
-            
         }
 
+        private static async Task DoKick(Player attacker, Room room)
+        {
+            _taskRunnning = true;
+            attacker.Status = Player.PlayerStatus.Busy;
+
+
+            await Task.Delay(2000);
+
+
+            //get attacker strength
+            var die = new PlayerStats();
+            var dam = die.dice(1, attacker.Strength);
+            var toHit = Helpers.GetPercentage(attacker.Skills.Find(x => x.Name.Equals("Kick", StringComparison.CurrentCultureIgnoreCase)).Proficiency, 95); // always 5% chance to miss
+            int chance = die.dice(1, 100);
+
+
+            if (toHit > chance)
+            {
+                //HIt, but what about defenders ability to block and dodge?
+
+
+
+                if (attacker.Target != null && attacker.Target.HitPoints > 0)
+                {
+                    HubContext.SendToClient("Your kick hits", attacker.HubGuid);
+                    HubContext.SendToClient(attacker.Name + "'s kick hits you", attacker.HubGuid, attacker.Target.HubGuid, false, true);
+                    HubContext.broadcastToRoom(attacker.Name + " kicks " + attacker.Target.Name, room.players, attacker.HubGuid, true);
+                    attacker.Target.HitPoints -= dam;
+                }
+
+
+                //find target and hurt them, not yourself!!
+
+            }
+            else
+            {
+                HubContext.SendToClient("You kick at " + attacker.Target.Name + " but miss", attacker.HubGuid);
+                HubContext.SendToClient(attacker.Name + " kicks at you but misses", attacker.HubGuid, attacker.Target.HubGuid, false, true);
+                HubContext.broadcastToRoom(attacker.Name + " kicks at " + attacker.Target.Name + " but misses", room.players, attacker.HubGuid, true);
+            }
+
+            _taskRunnning = false;
+            attacker.Status = Player.PlayerStatus.Fighting;
+
+        }
+
+        public static Skill KickAb()
+        {
+
+
+            var skill = new Skill
+            {
+                Name = "Kick",
+                CoolDown = 0,
+                Delay = 0,
+                LevelObtained = 1,
+                Passive = false,
+                Proficiency = 1,
+                MaxProficiency = 95,
+                UsableFromStatus = "Standing",
+                Syntax = "Kick <Target>"
+            };
+
+
+            var help = new Help
+            {
+                Syntax = "Kick <Victim>",
+                HelpText = "Kick can be used to start a fight or during a fight, " +
+                           "you can only kick your primary target." +
+                           " During combat only kick is needed to kick your target to inflict damage",
+                DateUpdated = "18/01/2017"
+
+            };
+
+            skill.HelpText = help;
+
+
+            return skill;
+
+
+        }
     }
 }

@@ -73,7 +73,7 @@ namespace MIMWebClient.Core
         /// <returns></returns>
         public static int GetPercentage(int currentValue, int maximumValue)
         {
-            var percent = (int)Math.Round((double)(currentValue / maximumValue) * 100);
+            var percent = currentValue / maximumValue * 100;
 
             return percent <= 0 ? 1 : percent;
 

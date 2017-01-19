@@ -340,19 +340,25 @@ namespace MIMWebClient.Core.World.Tutorial
                     //load from DB
                 }
 
-                await Task.Delay(3000);
+                //fix for random wake message hint showing
+                if (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
+                {
+                    await Task.Delay(3000);
 
-                HubContext.SendToClient("You feel better as a wave of warmth surrounds your body", player.HubGuid);
+                    HubContext.SendToClient("You feel better as a wave of warmth surrounds your body", player.HubGuid);
 
-                await Task.Delay(2000);
+                    await Task.Delay(2000);
 
-                HubContext.SendToClient("Someone says to you, You should be feeling better now, wake when you are ready", player.HubGuid);
+                    HubContext.SendToClient("Someone says to you, You should be feeling better now, wake when you are ready", player.HubGuid);
 
 
 
-                await Task.Delay(2000);
+                    await Task.Delay(2000);
 
-                HubContext.SendToClient("<p class='RoomExits'>[Hint] Type wake to wake up</p>", player.HubGuid);
+                    HubContext.SendToClient("<p class='RoomExits'>[Hint] Type wake to wake up</p>", player.HubGuid);
+                }
+
+
 
 
                 while (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
