@@ -42,18 +42,18 @@ namespace MIMWebClient.Hubs
             _PlayerCache.TryGetValue(playerGuid, out PlayerData);
 
 
- 
+
             var room = new Tuple<string, string, int>(PlayerData.Region, PlayerData.Area, PlayerData.AreaId);
 
 
             _AreaCache.TryGetValue(room, out RoomData);
 
-             
-                HubContext.SendToClient("<p style='color:#999'>" + message + "<p/>", PlayerData.HubGuid);
-            
-                Command.ParseCommand(message, PlayerData, RoomData);
-            
-            
+
+            HubContext.SendToClient("<p style='color:#999'>" + message + "<p/>", PlayerData.HubGuid);
+
+            Command.ParseCommand(message, PlayerData, RoomData);
+
+
 
 
         }
@@ -76,7 +76,7 @@ namespace MIMWebClient.Hubs
 
 
                 Room getRoomData = null;
- 
+
                 var room = new Tuple<string, string, int>(RoomData.Region, RoomData.Area, RoomData.id);
 
 
@@ -113,7 +113,7 @@ namespace MIMWebClient.Hubs
                 roomJSON.id = player.AreaId;
 
                 Room roomData;
- 
+
 
                 var findRoomData = new Tuple<string, string, int>(roomJSON.Region, roomJSON.Area, roomJSON.id);
 
@@ -141,7 +141,7 @@ namespace MIMWebClient.Hubs
 
         public void SaveRoom(Room room)
         {
- 
+
             var saveRoom = new Tuple<string, string, int>(room.region, room.area, room.areaId);
 
             _AreaCache.TryAdd(saveRoom, room);
@@ -155,7 +155,7 @@ namespace MIMWebClient.Hubs
             string roomData = ReturnRoom(id);
 
             this.Clients.Caller.addNewMessageToPage(roomData, true);
-               Score.UpdateUiRoom(playerData, roomData);
+            Score.UpdateUiRoom(playerData, roomData);
 
         }
 
@@ -199,15 +199,29 @@ namespace MIMWebClient.Hubs
             PlayerData.JoinedDate = DateTime.UtcNow;
             PlayerData.LastCommandTime = DateTime.UtcNow;
 
+            //add skills to player
+            var classSelected = Core.Player.Classes.PlayerClass.ClassList()
+                .FirstOrDefault(x => x.Value.Name
+                .Equals(selectedClass, StringComparison.CurrentCultureIgnoreCase));
 
-            // PlayerData.SavePlayerInformation();
+            if (classSelected.Value != null)
+            {
+                foreach (var classSkill in classSelected.Value.Skills.Where(x => x.LevelObtained.Equals(1)))
+                {
+                    PlayerData.Skills.Add(classSkill);
+                }
+            }
+            else
+            {
+                //well, you get no skills bro
+            }
 
             _PlayerCache.TryAdd(id, PlayerData);
 
             loadRoom(PlayerData, id);
             //add player to room
             Room roomData = null;
- 
+
             var getPlayerRoom = new Tuple<string, string, int>(PlayerData.Region, PlayerData.Area, PlayerData.AreaId);
 
             _AreaCache.TryGetValue(getPlayerRoom, out roomData);
@@ -265,7 +279,7 @@ namespace MIMWebClient.Hubs
 
                 //add player to room
                 Room roomData = null;
- 
+
                 var getPlayerRoom = new Tuple<string, string, int>(player.Region, player.Area, player.AreaId);
 
                 _AreaCache.TryGetValue(getPlayerRoom, out roomData);
@@ -279,9 +293,9 @@ namespace MIMWebClient.Hubs
                 Score.UpdateUiPrompt(player);
                 Score.UpdateUiInventory(player);
 
-              
-                   
-                 
+
+
+
             }
             else
             {

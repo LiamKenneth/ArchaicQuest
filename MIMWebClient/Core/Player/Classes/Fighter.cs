@@ -74,10 +74,10 @@ namespace MIMWebClient.Core.Player.Classes
 
             #region  Give fighter kick skill
 
-            var kick = Punch.PunchAb();
-            kick.Name = "Kick";
-            kick.LevelObtained = 3;
-            kick.Proficiency = 1;
+            var kick = Kick.KickAb();
+
+            kick.LevelObtained = 1;
+            kick.Proficiency = 50;
             kick.MaxProficiency = 95;
             fighter.Skills.Add(kick);
 

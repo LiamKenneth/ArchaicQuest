@@ -74,8 +74,7 @@ namespace MIMWebClient.Core
             commandList.Add("unlock", () => ManipulateObject.UnlockItem(room, playerData, commandOptions, commandKey));
             commandList.Add("lock", () => ManipulateObject.LockItem(room, playerData, commandOptions, commandKey));
             commandList.Add("open", () => ManipulateObject.Open(room, playerData, commandOptions, commandKey));
-            commandList.Add("close", () => ManipulateObject.Close(room, playerData, commandOptions, commandKey));
-            commandList.Add("punch", () =>  Punch.StartPunch(playerData, room));
+            commandList.Add("close", () => ManipulateObject.Close(room, playerData, commandOptions, commandKey));           
             commandList.Add("help", () => Help.ShowHelp(commandOptions, playerData));
             commandList.Add("time", Update.Time.ShowTime);
             commandList.Add("clock", Update.Time.ShowTime);
@@ -90,7 +89,9 @@ namespace MIMWebClient.Core
             commandList.Add("sleep", () => Status.SleepPlayer(playerData, room));
             commandList.Add("greet", () => Greet.GreetMob(playerData, room, commandOptions));
             commandList.Add("who", () => Who.Connected(playerData));
-            //  commandList.Add("map", () => Map.GenerateGrid(playerData));
+            // skills
+            commandList.Add("punch", () => Punch.StartPunch(playerData, room));
+            commandList.Add("kick", () => Kick.StartKick(playerData, room));
 
             return commandList;
         }

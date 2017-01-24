@@ -280,6 +280,7 @@
     <Compile Include="Core\Player\Races\PlayerRace.cs" />
     <Compile Include="Core\Player\Recall.cs" />
     <Compile Include="Core\Player\Skill.cs" />
+    <Compile Include="Core\Player\Skills\Template-skill.cs" />
     <Compile Include="Core\Player\Skills\Punch.cs" />
     <Compile Include="Core\Player\Skills\ShortBlades.cs" />
     <Compile Include="Core\Player\Skills\HandtoHand.cs" />

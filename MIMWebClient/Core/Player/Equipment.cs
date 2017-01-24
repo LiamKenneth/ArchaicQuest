@@ -212,6 +212,7 @@ namespace MIMWebClient.Core.Player
             }
             else
             {
+                var listOfItemsWorn = string.Empty;
                 foreach (var item in player.Inventory.Where(x => x.location.Equals(Item.ItemLocation.Inventory)))
                 {
                     if (item.location == Item.ItemLocation.Inventory && item.equipable == true)
@@ -224,11 +225,7 @@ namespace MIMWebClient.Core.Player
                         {
                             var eqLocation = player.Equipment.GetType().GetProperty(slot);
 
-                            if (slot == null)
-                            {
-                                return;
-                            } // Log error? What the hell is eqLocation?
-
+                           
                             var hasValue = eqLocation.GetValue(player.Equipment);
 
                             if (hasValue.ToString() != "Nothing")
@@ -239,21 +236,25 @@ namespace MIMWebClient.Core.Player
                             eqLocation.SetValue(player.Equipment, item.name);
 
 
+                            listOfItemsWorn += $" {item.name}";
+
+
                             if (!wield || !slot.Equals("wield", StringComparison.CurrentCultureIgnoreCase))
                             {
                                 HubContext.SendToClient("You wear." + item.name, player.HubGuid);
 
-                                //Wear event
-
-                                CheckEvent.FindEvent(CheckEvent.EventType.Wear, player, item.name);
                             }
                             else
                             {
                                 HubContext.SendToClient("You wield." + item.name, player.HubGuid);
                             }
+ 
+
                         }
                     }
                 }
+
+                CheckEvent.FindEvent(CheckEvent.EventType.Wear, player, listOfItemsWorn);
             }
             Score.UpdateUiInventory(player);
             Cache.updatePlayer(player, oldPlayer);
