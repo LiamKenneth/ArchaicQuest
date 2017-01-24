@@ -199,6 +199,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
             if (step != null && step.Contains("plain"))
             {
+
                 if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
                 {
                     return;
@@ -211,7 +212,7 @@ namespace MIMWebClient.Core.World.Tutorial
                     HubContext.SendToClient(npc.Name + " says it fits well, don't forget to wear the trousers too",
                    player.HubGuid);
 
-                   
+                    await Task.Delay(2000);
 
                     return;
 
@@ -223,6 +224,8 @@ namespace MIMWebClient.Core.World.Tutorial
                    
                     HubContext.SendToClient(npc.Name + " says it fits well, don't forget to wear the top too",
                    player.HubGuid);
+
+                    await Task.Delay(2000);
 
                     return;
 
