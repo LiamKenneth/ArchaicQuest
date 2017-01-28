@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MIMWebClient.Core.PlayerSetup;
 using NUnit.Framework;
 
 namespace MIM.Test
@@ -55,6 +56,25 @@ namespace MIM.Test
             var randomString = MIMWebClient.Core.Helpers.RandomString(strings);
 
            // Assert.That(randomString, Is.EqualTo("hello") || Is.EqualTo("world"));
+        }
+
+        [Test]
+        public void ShouldReturnArticleForName()
+        {
+            var cat = new Player {Name = "Cat"};
+            var mollyCat = new Player { Name = "Molly", KnownByName = true};
+            var apple = "apple";
+            var sword = "sword";
+
+            var returnedName = MIMWebClient.Core.Helpers.ReturnName(cat, null);
+            var returnedName2 = MIMWebClient.Core.Helpers.ReturnName(mollyCat, null);
+            var objName = MIMWebClient.Core.Helpers.ReturnName(null, apple);
+            var objName2 = MIMWebClient.Core.Helpers.ReturnName(null, sword);
+
+            Assert.That(returnedName, Is.EqualTo("a Cat"));
+            Assert.That(returnedName2, Is.EqualTo("Molly"));
+            Assert.That(objName2, Is.EqualTo("a sword"));
+            Assert.That(objName, Is.EqualTo("an apple"));
         }
     }
 }

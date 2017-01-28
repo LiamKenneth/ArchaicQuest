@@ -413,6 +413,7 @@ namespace MIMWebClient.Core.PlayerSetup
 
             this.Practices = 10;
             this.Trains = 10;
+            this.KnownByName = true;
            
             this.QuestLog = new List<Quest>();
 

@@ -90,6 +90,13 @@ namespace MIMWebClient.Core
             return possible[diceRoll.Next(0, possible.Count())];
         }
 
+        /// <summary>
+        /// Find player? not used will be deleted after 30 days of no use
+        /// </summary>
+        /// <param name="Room"></param>
+        /// <param name="player"></param>
+        /// <returns></returns>
+
         public static PlayerSetup.Player FindPlayer(Room.Room Room, PlayerSetup.Player player)
         {
             var playerFound = Room.players.FirstOrDefault(x => x.Name.StartsWith(player.Name, StringComparison.CurrentCultureIgnoreCase))
@@ -99,7 +106,65 @@ namespace MIMWebClient.Core
 
         }
 
+        /// <summary>
+        /// Returns a or an if name starts with a Vowel 
+        /// but if the object has a name it returns that.
+        /// 
+        /// e.g an apple / Liam / 
+        /// </summary>
+        /// <param name="objName"></param>
+        ///  /// <param name="itemName"></param>
+        /// <returns></returns>
+        public static string ReturnName(PlayerSetup.Player objName, string itemName)
+        {
+            if (objName != null)
+            {
 
+                var result = AvsAnLib.AvsAn.Query(objName.Name).Article;
+                string name;
+
+                if (objName.KnownByName)
+                {
+                    name = objName.Name;
+                }
+                else
+                {
+                    name = result + " " + objName.Name;
+                }
+
+
+                return name;
+
+            }
+
+              var itemResult = AvsAnLib.AvsAn.Query(itemName).Article;
+
+
+            return FirstLetterToUpper(itemResult + " " + itemName);
+
+        }
+
+        /// <summary>
+        /// Returns captalised string
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string FirstLetterToUpper(string str)
+        {
+            if (str == null)
+                return null;
+
+            if (str.Length > 1)
+                return char.ToUpper(str[0]) + str.Substring(1);
+
+            return str.ToUpper();
+        }
+
+        public static string ReturnHisOrHers(string sex)
+        {
+
+            return sex == "Male" ? "his" : "hers";
+        }
 
     }
 }

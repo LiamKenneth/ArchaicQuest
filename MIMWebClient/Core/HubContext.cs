@@ -87,15 +87,7 @@ namespace MIMWebClient.Core
                     {
                         HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(message);
                     }
-                    else
-                    {
-
-                        if (player.Status != PlayerSetup.Player.PlayerStatus.Fighting)
-                        {
-                            HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(message);
-                        }
-
-                    }
+                    
                 }
             }
         }

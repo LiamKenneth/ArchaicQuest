@@ -4,6 +4,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+ 
+ 
 
 namespace MIMWebClient.Core.Events
 {
@@ -14,6 +16,8 @@ namespace MIMWebClient.Core.Events
     using MIMWebClient.Core.PlayerSetup;
     using MIMWebClient.Core.Room;
     using Player;
+    using System.Data.Entity.Infrastructure.Pluralization;
+
     public class Fight2
     {
         /// <summary>
@@ -100,7 +104,7 @@ namespace MIMWebClient.Core.Events
             int chance = D100();
 
 
-            ShowAttack(attacker, defender, room, toHit, chance);
+            ShowAttack(attacker, defender, room, toHit, chance, null);
 
 
             //3000, 3 second timer needs to be a method taking in players dexterity, condition and spells to determine speed.
@@ -190,7 +194,7 @@ namespace MIMWebClient.Core.Events
                                 return;
                             }
 
-                            ShowAttack(attacker, defender, room, toHit, chance);
+                            ShowAttack(attacker, defender, room, toHit, chance, null);
 
 
                             if (attacker.Type == Player.PlayerTypes.Player)
@@ -355,30 +359,41 @@ namespace MIMWebClient.Core.Events
             return 1 + defender.ArmorRating;
         }
 
-        public static KeyValuePair<string, string> WeaponAttackName(Player attacker)
+        public static KeyValuePair<string, string> WeaponAttackName(Player attacker, Skill skillUsed)
         {
-            var wielded = attacker.Equipment.Wield;
-            Item weapon = null;
-            if (wielded == "Nothing")
-            {
-                return new KeyValuePair<string, string>("punch", "punches");
-            }
-
-            //find weapon
-            weapon = attacker.Inventory.Find(x => x.name.Equals(wielded) && x.eqSlot.Equals(Item.EqSlot.Wield));
-
-            if (weapon != null)
+            if (skillUsed == null)
             {
 
-                return new KeyValuePair<string, string>(weapon.name, weapon.name);
+                var wielded = attacker.Equipment.Wield;
+                Item weapon = null;
+                if (wielded == "Nothing")
+                {
+                    return new KeyValuePair<string, string>("punch", "punches");
+                }
+
+                //find weapon
+                weapon = attacker.Inventory.Find(x => x.name.Equals(wielded) && x.eqSlot.Equals(Item.EqSlot.Wield));
+
+                if (weapon != null)
+                {
+
+                    return new KeyValuePair<string, string>(weapon.name, weapon.name);
+                }
+                else
+                {
+                    return new KeyValuePair<string, string>("hit", "hit");
+                }
+                /// weapon.attackType = Item.AttackTypes.Slash;
+                //add attack string to weapons
+
             }
-            else
-            {
-                return new KeyValuePair<string, string>("hit", "hit");
-            }
-            /// weapon.attackType = Item.AttackTypes.Slash;
-            //add attack string to weapons
-           
+
+          //  var checkPlural = new EnglishPluralizationService();
+            
+
+            //Skill / spell name here
+            return new KeyValuePair<string, string>(skillUsed.Name, skillUsed.Name);
+
         }
 
         public static int CriticalHit(double toHit, int chance)
@@ -394,7 +409,17 @@ namespace MIMWebClient.Core.Events
             return 1;
         }
 
-        public static void ShowAttack(Player attacker, Player defender, Room room, double toHit, int chance)
+        /// <summary>
+        /// Shows attack and damage to player
+        /// </summary>
+        /// <param name="attacker">the attacker</param>
+        /// <param name="defender">the defender</param>
+        /// <param name="room">The rom</param>
+        /// <param name="toHit">Target tohit value</param>
+        /// <param name="chance">Chance to hit value</param>
+        /// <param name="skillUsed">This is used for skills and spells only</param>
+        /// <param name="damage">This is used for skills and spells only</param>
+        public static void ShowAttack(Player attacker, Player defender, Room room, double toHit, int chance, Skill skillUsed, int damage = 0)
         {
             bool alive = IsAlive(attacker, defender);
             int IsCritical = CriticalHit(toHit, chance);
@@ -404,14 +429,16 @@ namespace MIMWebClient.Core.Events
 
                 if (toHit > chance)
                 {
-                    int dam = Damage(attacker, defender, IsCritical);
+                    var dam = damage > 0 ? damage : Damage(attacker, defender, IsCritical);
+                   
                     var damageText = DamageText(dam);
 
 
-                    HubContext.SendToClient("Your " + WeaponAttackName(attacker).Key + " " +damageText.Value + " " + defender.Name + "[" + dam + "]", attacker.HubGuid);
+                    HubContext.SendToClient("Your " + WeaponAttackName(attacker, skillUsed).Key + " " + damageText.Value + " " + Helpers.ReturnName(defender, null) + " [" + dam + "]", attacker.HubGuid);
 
-                    HubContext.SendToClient(attacker.Name + "'s" + " " +WeaponAttackName(attacker).Value + " " + damageText.Value + " you [" + dam + "]", defender.HubGuid);
+                    HubContext.SendToClient(Helpers.ReturnName(attacker, null) + "'s " + WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value + " you [" + dam + "]", defender.HubGuid);
 
+                    HubContext.SendToAllExcept(Helpers.ReturnName(attacker, null) +"'s " + WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value + " " + Helpers.ReturnName(defender, null), room.fighting, room.players);
 
                     defender.HitPoints -= dam;
 
@@ -419,7 +446,7 @@ namespace MIMWebClient.Core.Events
                     {
                         defender.HitPoints = 0;
                     }
-                    HubContext.SendToAllExcept(attacker.Name + "'s " + WeaponAttackName(attacker).Value + " " + damageText.Value + " " + defender.Name, room.fighting, room.players);
+                   
 
                     if (!IsAlive(attacker, defender))
                     {
@@ -430,11 +457,11 @@ namespace MIMWebClient.Core.Events
                 else
                 {
 
-                    HubContext.SendToClient("You miss " + defender.Name, attacker.HubGuid);
+                    HubContext.SendToClient("Your " + WeaponAttackName(attacker, skillUsed).Key + " misses " + Helpers.ReturnName(defender, null), attacker.HubGuid);
 
-                    HubContext.SendToClient(attacker.Name + " misses you ", defender.HubGuid);
+                    HubContext.SendToClient(Helpers.ReturnName(attacker, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key + " misses you ", defender.HubGuid);
 
-                    HubContext.SendToAllExcept(attacker.Name + " misses " + defender.Name, room.fighting, room.players);
+                    HubContext.SendToAllExcept(Helpers.ReturnName(attacker, null) +"'s " + WeaponAttackName(attacker, skillUsed).Key  + " misses " + Helpers.ReturnName(defender, null), room.fighting, room.players);
                 }
             }
 
@@ -699,45 +726,6 @@ namespace MIMWebClient.Core.Events
             return evade;
         }
 
-        public static async Task Punch(Player attacker, Room room)
-        {
-
-            //Fight2 needs refactoring so the below skills can use the same methods for damage, damage output, working out chance to hit etc. same for spells
-
-
-
-            HubContext.SendToClient("You clench your fist and pull your arm back", attacker.HubGuid);
-            HubContext.SendToClient(attacker.Name + " Pulls his arm back aiming a punch at you.", attacker.HubGuid, attacker.Target.HubGuid, false, true);
-            HubContext.broadcastToRoom(attacker.Name + " clenches his fist and pulls his arm back aiming for " + attacker.Target.Name, room.players, attacker.HubGuid, true);
-
-            await Task.Delay(1500);
-
-            //get attacker strength
-            var die = new PlayerStats();
-            var dam = die.dice(1, attacker.Strength);
-            var toHit = 0.5 * 95; // always 5% chance to miss
-            int chance = D100();
-
-
-            if (toHit > chance)
-            {
-                HubContext.SendToClient("Your punch hits", attacker.HubGuid + " " + dam);
-                HubContext.SendToClient(attacker.Name + " punch hits you", attacker.HubGuid,
-                    attacker.Target.HubGuid, false, true);
-                HubContext.broadcastToRoom(
-                    attacker.Name + " punches " + attacker.Target.Name,
-                    room.players, attacker.HubGuid, true);
-
-                attacker.Target.HitPoints -= dam;
-            }
-            else
-            {
-                HubContext.SendToClient("You swing a punch at " + attacker.Target.Name + " but miss", attacker.HubGuid);
-                HubContext.SendToClient(attacker.Name + " swings a punch at you but misses", attacker.HubGuid, attacker.Target.HubGuid, false, true);
-                HubContext.broadcastToRoom(attacker.Name + " swings at " + attacker.Target.Name + " but misses", room.players, attacker.HubGuid, true);
-            }
-
-
-        }
+     
     }
 }

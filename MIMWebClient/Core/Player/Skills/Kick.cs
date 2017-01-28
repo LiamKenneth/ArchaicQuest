@@ -21,24 +21,27 @@ namespace MIMWebClient.Core.Player.Skills
             //TODO: Fix His to be gender specific
             //TODO: Fist? what if it's a paw?
 
-            if (!_taskRunnning)
+            if (!_taskRunnning && attacker.Target != null)
             {
                 // find target if not in fight
                 HubContext.SendToClient("You pull your leg back", attacker.HubGuid);
-                HubContext.SendToClient(attacker.Name + " pulls his leg back ready to kick at you.", attacker.HubGuid,
+                HubContext.SendToClient(Helpers.ReturnName(attacker, null) + " pulls " + Helpers.ReturnHisOrHers(attacker.Gender) + " leg back ready to kick at you.", attacker.HubGuid,
                     attacker.Target.HubGuid, false, true);
                 HubContext.broadcastToRoom(
-                    attacker.Name + " pulls his leg back ready to kick at " + attacker.Target.Name,
+                    Helpers.ReturnName(attacker, null) + " pulls " + Helpers.ReturnHisOrHers(attacker.Gender) +" leg back ready to kick at " + Helpers.ReturnName(attacker.Target, null),
                     room.players, attacker.HubGuid, true);
-
-
-
 
                 Task.Run(() => DoKick(attacker, room));
 
             }
             else
             {
+                if (attacker.Target == null)
+                {
+                    HubContext.SendToClient("You stop your kick", attacker.HubGuid);
+                    return;
+                }
+
                 HubContext.SendToClient("You are already trying to kick", attacker.HubGuid);
 
             }
@@ -60,31 +63,8 @@ namespace MIMWebClient.Core.Player.Skills
             var toHit = Helpers.GetPercentage(attacker.Skills.Find(x => x.Name.Equals("Kick", StringComparison.CurrentCultureIgnoreCase)).Proficiency, 95); // always 5% chance to miss
             int chance = die.dice(1, 100);
 
+            Fight2.ShowAttack(attacker, attacker.Target, room, toHit, chance, KickAb(), dam);
 
-            if (toHit > chance)
-            {
-                //HIt, but what about defenders ability to block and dodge?
-
-
-
-                if (attacker.Target != null && attacker.Target.HitPoints > 0)
-                {
-                    HubContext.SendToClient("Your kick hits", attacker.HubGuid);
-                    HubContext.SendToClient(attacker.Name + "'s kick hits you", attacker.HubGuid, attacker.Target.HubGuid, false, true);
-                    HubContext.broadcastToRoom(attacker.Name + " kicks " + attacker.Target.Name, room.players, attacker.HubGuid, true);
-                    attacker.Target.HitPoints -= dam;
-                }
-
-
-                //find target and hurt them, not yourself!!
-
-            }
-            else
-            {
-                HubContext.SendToClient("You kick at " + attacker.Target.Name + " but miss", attacker.HubGuid);
-                HubContext.SendToClient(attacker.Name + " kicks at you but misses", attacker.HubGuid, attacker.Target.HubGuid, false, true);
-                HubContext.broadcastToRoom(attacker.Name + " kicks at " + attacker.Target.Name + " but misses", room.players, attacker.HubGuid, true);
-            }
 
             _taskRunnning = false;
             attacker.Status = Player.PlayerStatus.Fighting;
