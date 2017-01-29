@@ -15,7 +15,7 @@ namespace MIMWebClient.Core.Player.Skills
         private static bool _taskRunnning = false;
         public static Skill MagicMissilekill { get; set; }
 
-        public static void StartMagicMissile(Player attacker, Room room)
+        public static void StartMagicMissile(Player attacker, Room room, string target = "")
         {
 
             var spell =
@@ -30,8 +30,52 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
-            //TODO: Fix His to be gender specific
-            //TODO: Fist? what if it's a paw?
+            if (target != "")
+            {
+                var theTarget = string.Empty;
+                var hasQuotes = target.Contains("'\"");
+
+                if (hasQuotes)
+                {
+                    theTarget = target.Substring(target.LastIndexOf('"') + 1);
+
+                    if (string.IsNullOrEmpty(theTarget))
+                    {
+                        theTarget = target.Substring(target.LastIndexOf('\'') + 1);
+                    }
+                }
+                else
+                {
+                    theTarget = target.Substring(target.LastIndexOf(' ') + 1);
+                }
+
+                var foundTarget = Fight2.FindTarget(room, theTarget);
+
+                if (foundTarget == null)
+                {
+                    return;;
+                }
+
+                attacker.Target = foundTarget;
+            }
+
+            var isAttackerFighting = room.fighting.FirstOrDefault(x => x.Equals(attacker.HubGuid));
+
+            if (isAttackerFighting == null)
+            {
+                room.fighting.Add(attacker.HubGuid);
+            }
+
+           
+            // null issue here ussing c 'magic missile' cat
+            // code correctly found cat as a target
+            // unsure on null, did flee from combat then reinit combat
+            var isDefenderFighting = room.fighting.FirstOrDefault(x => x.Equals(attacker.Target.HubGuid));
+
+            if (isDefenderFighting == null)
+            {
+                room.fighting.Add(attacker.Target.HubGuid);
+            }
 
             if (!_taskRunnning && attacker.Target != null)
             {
@@ -94,12 +138,24 @@ namespace MIMWebClient.Core.Player.Skills
             {
                 ballCount = 5;
             }
-         
-            
+
+            var castingTextAttacker = ballCount == 1  ? "A red crackling energy ball hurls from your hands straight at " +  Helpers.ReturnName(attacker.Target, null) : ballCount + " red crackling energy balls hurl from your hands in a wide arc closing in on " + Helpers.ReturnName(attacker.Target, null);
+
+            var castingTextDefender = ballCount == 1 ? Helpers.ReturnName(attacker, null) + " hurls a red crackling energy ball straight towards you." 
+                :  Helpers.ReturnName(attacker, null) + " launches " + ballCount + " red crackling energy balls from " + Helpers.ReturnHisOrHers(attacker.Gender) +"  hands in a wide arc closing in on you";
+
+
+            var castingTextRoom = ballCount == 1 ? Helpers.ReturnName(attacker, null) + " hurls a red crackling energy ball straight towards " + Helpers.ReturnName(attacker.Target, null)  + "."
+              : Helpers.ReturnName(attacker, null) + " launches " + ballCount + " red crackling energy balls from " + Helpers.ReturnHisOrHers(attacker.Gender) + "  hands in a wide arc closing in on" + Helpers.ReturnName(attacker.Target, null);
+
+          
 
             //level dependant but for testing launch 4 balls
-            HubContext.SendToClient("4 red crackling energy balls hurl from your hands in a wide spread closing in your target", attacker.HubGuid);
-            for (int i = 0; i < 4; i++)
+            HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
+            HubContext.SendToClient(castingTextDefender, attacker.Target.HubGuid);
+            HubContext.SendToAllExcept(castingTextRoom, room.fighting, room.players);
+
+            for (int i = 0; i < ballCount; i++)
             {
                 var dam = die.dice(1, 4);
                 var toHit = 52; //Helpers.GetPercentage(attacker.Skills.Find(x => x.Name.Equals("Kick", StringComparison.CurrentCultureIgnoreCase)).Proficiency, 95); // always 5% chance to miss

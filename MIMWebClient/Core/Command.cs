@@ -74,8 +74,8 @@ namespace MIMWebClient.Core
 
 
             //spells
-            commandList.Add("c magic missile", () => MagicMissile.StartMagicMissile(playerData, room));
-            commandList.Add("cast magic missile", () => MagicMissile.StartMagicMissile(playerData, room));
+            commandList.Add("c magic missile", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions));
+            commandList.Add("cast magic missile", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions));
             // skills
             commandList.Add("punch", () => Punch.StartPunch(playerData, room));
             commandList.Add("kick", () => Kick.StartKick(playerData, room));
