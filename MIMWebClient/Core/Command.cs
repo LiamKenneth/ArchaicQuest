@@ -71,6 +71,15 @@ namespace MIMWebClient.Core
             commandList.Add("unwield", () => Equipment.RemoveItem(playerData, commandOptions, false, true));
             commandList.Add("kill",  () =>  Fight2.PerpareToFight(playerData, room, commandOptions));
             commandList.Add("flee", () => Flee.fleeCombat(playerData, room));
+
+
+            //spells
+            commandList.Add("c magic missile", () => MagicMissile.StartMagicMissile(playerData, room));
+            commandList.Add("cast magic missile", () => MagicMissile.StartMagicMissile(playerData, room));
+            // skills
+            commandList.Add("punch", () => Punch.StartPunch(playerData, room));
+            commandList.Add("kick", () => Kick.StartKick(playerData, room));
+
             commandList.Add("unlock", () => ManipulateObject.UnlockItem(room, playerData, commandOptions, commandKey));
             commandList.Add("lock", () => ManipulateObject.LockItem(room, playerData, commandOptions, commandKey));
             commandList.Add("open", () => ManipulateObject.Open(room, playerData, commandOptions, commandKey));
@@ -89,9 +98,7 @@ namespace MIMWebClient.Core
             commandList.Add("sleep", () => Status.SleepPlayer(playerData, room));
             commandList.Add("greet", () => Greet.GreetMob(playerData, room, commandOptions));
             commandList.Add("who", () => Who.Connected(playerData));
-            // skills
-            commandList.Add("punch", () => Punch.StartPunch(playerData, room));
-            commandList.Add("kick", () => Kick.StartKick(playerData, room));
+          
 
             return commandList;
         }

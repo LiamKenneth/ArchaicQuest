@@ -294,6 +294,7 @@
     <Compile Include="Core\Player\Skills\HandtoHand.cs" />
     <Compile Include="Core\Player\Skills\Kick.cs" />
     <Compile Include="Core\Player\Spells.cs" />
+    <Compile Include="Core\Player\Spells\MagicMissile.cs" />
     <Compile Include="Core\Player\Status.cs" />
     <Compile Include="Core\Room\Exit.cs" />
     <Compile Include="Core\Room\Keyword.cs" />
@@ -430,7 +431,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Core\PlayerSetup\Data\Img\Avatar\" />
-    <Folder Include="Core\Player\Spells\" />
     <Folder Include="Core\World\Items\Armour\HeavyArmour\BandedMail\AboutBody\" />
     <Folder Include="Core\World\Items\Armour\HeavyArmour\BandedMail\Arms\" />
     <Folder Include="Core\World\Items\Armour\HeavyArmour\BandedMail\Body\" />

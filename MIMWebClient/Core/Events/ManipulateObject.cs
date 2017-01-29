@@ -1134,7 +1134,7 @@ namespace MIMWebClient.Core.Events
             {
                 foundExit = FindItem.Exit(room.exits, nth, userInput);
 
-                if (foundExit.canOpen == false)
+                if (foundExit != null && foundExit.canOpen == false)
                 {
                     BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You can't close that", player.Name + " tries to close the " + foundExit.name);
                     return;

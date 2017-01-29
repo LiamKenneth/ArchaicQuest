@@ -29,8 +29,8 @@ namespace MIMWebClient.Core.Player.Classes
                 MinManaGain = 10,
                 MaxEnduranceGain = 15,
                 MinEnduranceGain = 11,
-                StatBonusStr = 1,
-                StatBonusCon = 1
+                StatBonusInt = 2,
+                StatBonusWis = 1
 
             };
 
@@ -43,6 +43,18 @@ namespace MIMWebClient.Core.Player.Classes
             mage.Skills.Add(punch);
 
             #endregion
+
+            #region  Give mage magic missile skill
+
+            var magicMissile = MagicMissile.MagicMissileAb();
+
+            magicMissile.LevelObtained = 1;
+            magicMissile.Proficiency = 50;
+            magicMissile.MaxProficiency = 95;
+            mage.Skills.Add(magicMissile);
+
+            #endregion
+
 
             mage.ReclassOptions.Add(Ranger.RangerClass());
 
