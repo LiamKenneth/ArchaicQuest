@@ -17,7 +17,7 @@ namespace MIMWebClient.Core.Player.Skills
 
         public static void StartMagicMissile(Player attacker, Room room, string target = "")
         {
-
+            //Check if player has spell
             var spell =
                attacker.Skills.FirstOrDefault(
                    x =>
@@ -30,53 +30,55 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
+            //Find target if it's specified
+            PlayerSetup.Player  foundTarget = null;
             if (target != "")
             {
-                var theTarget = string.Empty;
-                var hasQuotes = target.Contains("'\"");
-
-                if (hasQuotes)
+                // check to see if user typed "C magic target" or just "c magic"
+                // if an actual target there wil lbe a space
+                var targetLength = target.Count(x => x.Equals(' '));
+                if (targetLength >= 1)
                 {
-                    theTarget = target.Substring(target.LastIndexOf('"') + 1);
+                    var theTarget = string.Empty;
+                    var hasQuotes = target.Contains("'\"");
 
-                    if (string.IsNullOrEmpty(theTarget))
+                    if (hasQuotes)
                     {
-                        theTarget = target.Substring(target.LastIndexOf('\'') + 1);
+                        theTarget = target.Substring(target.LastIndexOf('"') + 1);
+
+                        if (string.IsNullOrEmpty(theTarget))
+                        {
+                            theTarget = target.Substring(target.LastIndexOf('\'') + 1);
+                        }
                     }
-                }
-                else
-                {
-                    theTarget = target.Substring(target.LastIndexOf(' ') + 1);
+                    else
+                    {
+                        theTarget = target.Substring(target.LastIndexOf(' ') + 1);
+                    }
+
+                    foundTarget = Fight2.FindTarget(room, theTarget);
+
+                    if (foundTarget == null)
+                    {
+                        // echo no target?
+                        return;
+                    }
+
                 }
 
-                var foundTarget = Fight2.FindTarget(room, theTarget);
-
-                if (foundTarget == null)
-                {
-                    return;;
-                }
-
-                attacker.Target = foundTarget;
             }
 
-            var isAttackerFighting = room.fighting.FirstOrDefault(x => x.Equals(attacker.HubGuid));
-
-            if (isAttackerFighting == null)
+            //If found target but not in a fight, start the fight
+            //current bug that hit fires before action
+            //perhaps set user to busy
+            if (foundTarget != null && attacker.Target == null && target != "")
             {
-                room.fighting.Add(attacker.HubGuid);
+                attacker.Status = Player.PlayerStatus.Busy;
+                Fight2.PerpareToFight(attacker, room, foundTarget.Name);
+          
             }
 
-           
-            // null issue here ussing c 'magic missile' cat
-            // code correctly found cat as a target
-            // unsure on null, did flee from combat then reinit combat
-            var isDefenderFighting = room.fighting.FirstOrDefault(x => x.Equals(attacker.Target.HubGuid));
-
-            if (isDefenderFighting == null)
-            {
-                room.fighting.Add(attacker.Target.HubGuid);
-            }
-
+    
             if (!_taskRunnning && attacker.Target != null)
             {
                 // find target if not in fight
@@ -94,7 +96,7 @@ namespace MIMWebClient.Core.Player.Skills
             {
                 if (attacker.Target == null)
                 {
-                    HubContext.SendToClient("The energy disapates as you stop your chant", attacker.HubGuid);
+                    HubContext.SendToClient("Cast magic missile at whom?", attacker.HubGuid);
                     return;
                 }
 
