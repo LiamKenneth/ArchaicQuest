@@ -26,10 +26,8 @@ namespace MIM.Test
         {
             var rand = MIMWebClient.Core.Helpers.Rand(1, 2);
 
-            Assert.That(rand, Is.GreaterThanOrEqualTo(1));
-            Assert.That(rand, Is.LessThanOrEqualTo(2));
-            Assert.That(rand, Is.Not.GreaterThanOrEqualTo(3));
-            Assert.That(rand, Is.Not.LessThanOrEqualTo(0));
+            Assert.That(rand, Is.InRange(1, 2));
+            Assert.That(rand, Is.Not.InRange(3, 4));
         }
 
         [Test]

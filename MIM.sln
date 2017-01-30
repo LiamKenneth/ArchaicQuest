@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIM.Test", "MIM.Test\MIM.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateDB", "UpdateDB\UpdateDB.csproj", "{0582158A-31E1-493E-A7E4-DD5F227A635B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIMDashboard", "MIMDashboard\MIMDashboard.csproj", "{BC4E699A-0C05-412D-B5E1-E953C04F782A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{0582158A-31E1-493E-A7E4-DD5F227A635B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0582158A-31E1-493E-A7E4-DD5F227A635B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0582158A-31E1-493E-A7E4-DD5F227A635B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC4E699A-0C05-412D-B5E1-E953C04F782A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC4E699A-0C05-412D-B5E1-E953C04F782A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC4E699A-0C05-412D-B5E1-E953C04F782A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC4E699A-0C05-412D-B5E1-E953C04F782A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
