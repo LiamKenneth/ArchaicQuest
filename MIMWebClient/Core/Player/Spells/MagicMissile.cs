@@ -67,27 +67,41 @@ namespace MIMWebClient.Core.Player.Skills
                 }
 
             }
-
-            //If found target but not in a fight, start the fight
-            //current bug that hit fires before action
-            //perhaps set user to busy
+ 
             if (foundTarget != null && attacker.Target == null && target != "")
             {
-                attacker.Status = Player.PlayerStatus.Busy;
-                Fight2.PerpareToFight(attacker, room, foundTarget.Name);
+              
+                Fight2.PerpareToFight(attacker, room, foundTarget.Name, true);
           
             }
 
     
             if (!_taskRunnning && attacker.Target != null)
             {
-                // find target if not in fight
+
+                if (attacker.ManaPoints < MagicMissileAb().ManaCost)
+                {
+                    HubContext.SendToClient("You clasp your hands together but fail to form any energy", attacker.HubGuid);
+
+                    var excludePlayerInBroadcast = new List<string>();
+                    excludePlayerInBroadcast.Add(attacker.HubGuid);
+
+                    HubContext.SendToAllExcept(Helpers.ReturnName(attacker, null) + " clasps " + Helpers.ReturnHisOrHers(attacker.Gender) + " hands together but fails to form any energy", excludePlayerInBroadcast, room.players);
+                    
+                    return;
+                }
+
+                attacker.ManaPoints -= MagicMissileAb().ManaCost;
+
+                Score.UpdateUiPrompt(attacker);
+
                 HubContext.SendToClient("A red ball begins swirling between your hands as you begin chanting magic missle", attacker.HubGuid);
+
                 HubContext.SendToClient("A red ball begins swirling between " + Helpers.ReturnName(attacker, null) + " hands " + Helpers.ReturnHisOrHers(attacker.Gender) + " as they begin chanting magic missle", attacker.HubGuid,
                     attacker.Target.HubGuid, false, true);
+
                 HubContext.broadcastToRoom("A red ball begins swirling between " +
-                    Helpers.ReturnName(attacker, null) + " hands " + Helpers.ReturnHisOrHers(attacker.Gender) +" as they begin chanting magic missle " + Helpers.ReturnName(attacker.Target, null),
-                    room.players, attacker.HubGuid, true);
+                    Helpers.ReturnName(attacker, null) + " hands " + Helpers.ReturnHisOrHers(attacker.Gender) +" as they begin chanting magic missle " + Helpers.ReturnName(attacker.Target, null), room.players, attacker.HubGuid, true);
 
                 Task.Run(() => DoMagicMissile(attacker, room));
 
@@ -112,7 +126,7 @@ namespace MIMWebClient.Core.Player.Skills
             attacker.Status = Player.PlayerStatus.Busy;
 
 
-            await Task.Delay(2000);
+            await Task.Delay(1000);
 
 
             //get attacker strength
@@ -182,6 +196,7 @@ namespace MIMWebClient.Core.Player.Skills
                 CoolDown = 0,
                 Delay = 0,
                 LevelObtained = 1,
+                ManaCost = 10,
                 Passive = false,
                 Proficiency = 1,
                 MaxProficiency = 95,
@@ -192,11 +207,10 @@ namespace MIMWebClient.Core.Player.Skills
 
             var help = new Help
             {
-                Syntax = "Kick <Victim>",
-                HelpText = "Kick can be used to start a fight or during a fight, " +
-                           "you can only kick your primary target." +
-                           " During combat only kick is needed to kick your target to inflict damage",
-                DateUpdated = "18/01/2017"
+                Syntax = "cast magic missile <target>",
+                HelpText = "Does 1d4 magic damage, missiles increase with every 5 levels up to a maximum of 5 at level 20 " +
+                           "it can be used in combat and out of combat to initiate combat.",
+                DateUpdated = "30/01/2017"
 
             };
 

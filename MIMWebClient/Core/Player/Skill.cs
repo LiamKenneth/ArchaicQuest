@@ -32,6 +32,8 @@ namespace MIMWebClient.Core.Player
 
         public int LevelObtained { get; set; }
 
+        public int ManaCost { get; set; }
+
         public int MaxProficiency { get; set; }
         [BsonIgnore]
         public Help HelpText { get; set; }

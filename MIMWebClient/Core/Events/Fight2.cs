@@ -29,7 +29,7 @@ namespace MIMWebClient.Core.Events
         /// <param name="room">The room</param>
         /// <param name="defenderName">The defenders Name for now</param>
         /// <returns></returns>
-        public static void PerpareToFight(Player attacker, Room room, string defenderName)
+        public static void PerpareToFight(Player attacker, Room room, string defenderName, bool busy = false)
         {
             
 
@@ -63,8 +63,19 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
+
+
             defender.Status = Player.PlayerStatus.Fighting;
-            attacker.Status = Player.PlayerStatus.Fighting;
+
+            if (!busy)
+            {
+                attacker.Status = Player.PlayerStatus.Fighting;
+            }
+            else
+            {
+                attacker.Status = Player.PlayerStatus.Busy;
+            }
+          
 
             AddFightersIdtoRoom(attacker, defender, room);
 
@@ -89,24 +100,23 @@ namespace MIMWebClient.Core.Events
         public static void StartFight(Player attacker, Player defender, Room room)
         {
 
+            defender.Target = attacker;
+            attacker.Target = defender;
+
+            if (attacker.Status == Player.PlayerStatus.Fighting)
+            {
+
            
-                attacker.Target = defender;
-            
-          
-                defender.Target = attacker;
-         
+                double offense = Offense(attacker);
+                double evasion = Evasion(defender);
+
+                double toHit = (offense/evasion)*100;
+                int chance = D100();
 
 
-            double offense = Offense(attacker);
-            double evasion = Evasion(defender);
+                ShowAttack(attacker, defender, room, toHit, chance, null);
 
-            double toHit = (offense / evasion) * 100;
-            int chance = D100();
-
-
-            ShowAttack(attacker, defender, room, toHit, chance, null);
-
-
+            }
             //3000, 3 second timer needs to be a method taking in players dexterity, condition and spells to determine speed.
 
             Task.Run(() => HitTarget(attacker, defender, room, 3000));
