@@ -98,5 +98,25 @@ namespace MIMWebClient.Core.Player
             return String.Empty;
         }
 
+        public static PlayerSetup.Player FindTarget(string target, Room.Room room)
+        {
+            //Find target if it's specified
+            if (target == "")
+            {
+                return null;
+            }
+               
+            var getTargetName = Skill.GetSkillTarget(target);
+
+            if (getTargetName != string.Empty)
+            {
+                var foundTarget = Fight2.FindTarget(room, getTargetName);
+
+                return foundTarget;
+            }
+
+            return null;
+        }
+
     }
 }

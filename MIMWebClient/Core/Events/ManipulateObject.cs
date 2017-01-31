@@ -492,8 +492,8 @@ namespace MIMWebClient.Core.Events
                         player.Inventory.Add(item);
 
                         BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players,
-                          "You get a " + item.name + " from a " + container.name,
-                          player.Name + " gets a " + item.name + " from a " + container.name);
+                          "You get a " + item.name + " from " + container.name,
+                          player.Name + " gets a " + item.name + " from " + container.name);
 
                     }
                     else

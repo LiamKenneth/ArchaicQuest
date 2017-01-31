@@ -26,44 +26,8 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
-            //Find target if it's specified
-            PlayerSetup.Player  foundTarget = null;
-            if (target != "")
-            {
-                // check to see if user typed "C magic target" or just "c magic"
-                // if an actual target there wil lbe a space
-                var targetLength = target.Count(x => x.Equals(' '));
-                if (targetLength >= 1)
-                {
-                    var theTarget = string.Empty;
-                    var hasQuotes = target.Contains("'\"");
+            var foundTarget = Skill.FindTarget(target, room);
 
-                    if (hasQuotes)
-                    {
-                        theTarget = target.Substring(target.LastIndexOf('"') + 1);
-
-                        if (string.IsNullOrEmpty(theTarget))
-                        {
-                            theTarget = target.Substring(target.LastIndexOf('\'') + 1);
-                        }
-                    }
-                    else
-                    {
-                        theTarget = target.Substring(target.LastIndexOf(' ') + 1);
-                    }
-
-                    foundTarget = Fight2.FindTarget(room, theTarget);
-
-                    if (foundTarget == null)
-                    {
-                        // echo no target?
-                        return;
-                    }
-
-                }
-
-            }
- 
             if (foundTarget != null && attacker.Target == null && target != "")
             {
               

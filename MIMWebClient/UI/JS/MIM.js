@@ -437,6 +437,7 @@
 
         if (statType == "mana") {
             document.getElementById('mana-bar').style.width = statPercentage + "%";
+            document.getElementById('stat-mana').innerHTML = stat;
         }
 
         if (statType == "endurance") {

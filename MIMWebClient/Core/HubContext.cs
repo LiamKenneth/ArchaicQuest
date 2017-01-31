@@ -83,7 +83,8 @@ namespace MIMWebClient.Core
 
                 foreach (var player in players)
                 {
-                    if (player.HubGuid != excludeThesePlayers.FirstOrDefault(x => x.Equals(player.HubGuid)))
+   
+                    if (player != null && player.HubGuid != excludeThesePlayers.FirstOrDefault(x => x.Equals(player.HubGuid)))
                     {
                         HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(message);
                     }

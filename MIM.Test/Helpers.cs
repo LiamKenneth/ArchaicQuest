@@ -71,8 +71,8 @@ namespace MIM.Test
 
             Assert.That(returnedName, Is.EqualTo("a Cat"));
             Assert.That(returnedName2, Is.EqualTo("Molly"));
-            Assert.That(objName2, Is.EqualTo("a sword"));
-            Assert.That(objName, Is.EqualTo("an apple"));
+            Assert.That(objName2, Is.EqualTo("A sword"));
+            Assert.That(objName, Is.EqualTo("An apple"));
         }
     }
 }

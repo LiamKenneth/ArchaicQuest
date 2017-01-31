@@ -608,10 +608,12 @@ namespace MIMWebClient.Core.Events
 
                 foreach (var invItem in defender.Inventory)
                 {
-                    invItem.location = Item.ItemLocation.Inventory;
+                    invItem.location = Item.ItemLocation.Room;
                     defenderCorpse.containerItems.Add(invItem);
 
                 }
+
+                
 
                 var oldRoom = room;
                 room.items.Add(defenderCorpse);
