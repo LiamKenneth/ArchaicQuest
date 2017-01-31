@@ -59,7 +59,7 @@ namespace MIM.Test
         [Test]
         public void ShouldReturnArticleForName()
         {
-            var cat = new Player {Name = "Cat"};
+            var cat = new Player {Name = "Cat", KnownByName = false};
             var mollyCat = new Player { Name = "Molly", KnownByName = true};
             var apple = "apple";
             var sword = "sword";

@@ -77,6 +77,8 @@
     <Compile Include="Core\PlayerSetup\PlayerRaceTest.cs" />
     <Compile Include="Core\PlayerSetup\PlayerStatsTest.cs" />
     <Compile Include="Core\Player\PlayerTest.cs" />
+    <Compile Include="Core\Player\SkillsTest.cs" />
+    <Compile Include="Core\Player\Spells\MagicMissileTest.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

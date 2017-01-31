@@ -18,13 +18,9 @@ namespace MIMWebClient.Core.Player.Skills
         public static void StartMagicMissile(Player attacker, Room room, string target = "")
         {
             //Check if player has spell
-            var spell =
-               attacker.Skills.FirstOrDefault(
-                   x =>
-                       x.Name.Equals("Magic Missile") &&
-                       x.LevelObtained <= attacker.Level);
+            var hasSpell =  Skill.CheckPlayerHasSkill(attacker, MagicMissileAb().Name);
 
-            if (spell == null)
+            if (hasSpell == false)
             {
                 HubContext.SendToClient("You don't know that spell.", attacker.HubGuid);
                 return;
@@ -150,7 +146,7 @@ namespace MIMWebClient.Core.Player.Skills
             {
                 ballCount = 4;
             }
-            else if (attacker.Level <= 20)
+            else if (attacker.Level >= 20)
             {
                 ballCount = 5;
             }
@@ -174,7 +170,7 @@ namespace MIMWebClient.Core.Player.Skills
             for (int i = 0; i < ballCount; i++)
             {
                 var dam = die.dice(1, 4);
-                var toHit = 52; //Helpers.GetPercentage(attacker.Skills.Find(x => x.Name.Equals("Kick", StringComparison.CurrentCultureIgnoreCase)).Proficiency, 95); // always 5% chance to miss
+                var toHit = Helpers.GetPercentage(attacker.Skills.Find(x => x.Name.Equals(MagicMissileAb().Name, StringComparison.CurrentCultureIgnoreCase)).Proficiency, 95); // always 5% chance to miss
                 int chance = die.dice(1, 100);
                 Fight2.ShowAttack(attacker, attacker.Target, room, toHit, chance, MagicMissileAb(), dam);
             }

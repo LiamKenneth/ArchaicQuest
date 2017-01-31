@@ -41,5 +41,62 @@ namespace MIMWebClient.Core.Player
         public string Syntax { get; set; }
 
 
+        public static bool CheckPlayerHasSkill(PlayerSetup.Player player, string skillName)
+        {
+
+            //Check if player has spell
+            var hasSpell =
+               player.Skills.FirstOrDefault(
+                   x =>
+                       x.Name.Equals(skillName) &&
+                       x.LevelObtained <= player.Level);
+
+            if (hasSpell != null)
+            {
+                return true;
+            }
+
+
+            return false;
+        }
+
+
+        public static string GetSkillTarget(string target)
+        {
+            if (target == "")
+            {
+                return String.Empty;
+            }
+
+            // check to see if user typed "C magic target" or just "c magic"
+            // if an actual target there wil lbe a space
+            var targetLength = target.Count(x => x.Equals(' '));
+            if (targetLength >= 1)
+            {
+                string theTarget;
+                var hasQuotes = target.Contains("'\"");
+
+                if (hasQuotes)
+                {
+                    theTarget = target.Substring(target.LastIndexOf('"') + 1);
+
+                    if (string.IsNullOrEmpty(theTarget))
+                    {
+                        theTarget = target.Substring(target.LastIndexOf('\'') + 1);
+                    }
+                }
+                else
+                {
+                    theTarget = target.Substring(target.LastIndexOf(' ') + 1);
+                }
+
+
+                return theTarget;
+
+            }
+
+            return String.Empty;
+        }
+
     }
 }
