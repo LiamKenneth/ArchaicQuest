@@ -12,7 +12,7 @@ namespace MIMWebClient.Core.Room
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     [BsonIgnoreExtraElements]
-   public class Room
+    public class Room
     {
 
         //        INSIDE          |   0  | Weather doesn't show.
@@ -48,33 +48,24 @@ namespace MIMWebClient.Core.Room
 
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId _id { get; set; }
-
         public string region { get; set; }
-
         public string area { get; set; }
-
         public int areaId { get; set; }
-
-        public int xcoord { get; set; }
-
-        public int ycoord { get; set; }
-
+        [BsonIgnore]
+        public bool visited { get; set; }
+        public Coordinates coords { get; set; } = new Coordinates();
         public bool clean { get; set; }
-
         public string modified { get; set; }
         public string title { get; set; }
         public string description { get; set; }
-
         public Terrain terrain { get; set; }
-
-         public List<RoomObject> keywords { get; set; }
-         public List<Exit> exits { get; set; }
-
+        public List<RoomObject> keywords { get; set; }
+        public List<Exit> exits { get; set; }
         public List<PlayerSetup.Player> players { get; set; }
         public List<string> fighting { get; set; }
         public List<PlayerSetup.Player> mobs { get; set; }
-         public List<Item.Item> items { get; set; }
-         public List<PlayerSetup.Player> corpses { get; set; }
+        public List<Item.Item> items { get; set; }
+        public List<PlayerSetup.Player> corpses { get; set; }
         public List<string> Emotes { get; set; } = new List<string>();
         [BsonElement("eoe")]
         public string EventOnEnter { get; set; }

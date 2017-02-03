@@ -227,6 +227,8 @@
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Core\AI\BreadthFirstSearch.cs" />
+    <Compile Include="Core\AI\Node.cs" />
     <Compile Include="Core\AI\Pathfinding.cs" />
     <Compile Include="Core\Command.cs" />
     <Compile Include="Core\Data.cs" />
@@ -298,6 +300,7 @@
     <Compile Include="Core\Player\Spells\Armour.cs" />
     <Compile Include="Core\Player\Spells\MagicMissile.cs" />
     <Compile Include="Core\Player\Status.cs" />
+    <Compile Include="Core\Room\Coordinates.cs" />
     <Compile Include="Core\Room\Exit.cs" />
     <Compile Include="Core\Room\Keyword.cs" />
     <Compile Include="Core\Room\Mob.cs" />
