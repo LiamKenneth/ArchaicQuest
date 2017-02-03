@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\AI\PathfindingTest.cs" />
     <Compile Include="Core\Events\CommunicateTest.cs" />
     <Compile Include="Core\PlayerSetup\PlayerClassTest.cs" />
     <Compile Include="Core\PlayerSetup\PlayerRaceTest.cs" />

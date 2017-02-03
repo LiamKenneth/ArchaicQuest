@@ -227,6 +227,7 @@
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Core\AI\Pathfinding.cs" />
     <Compile Include="Core\Command.cs" />
     <Compile Include="Core\Data.cs" />
     <Compile Include="Core\Events\BroadcastPlayerAction.cs" />
