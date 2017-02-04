@@ -32,6 +32,13 @@ namespace MIM.Test.Core.AI
 
          var list =   roomSetUp.AssignCoords();
 
+            foreach (var i in list.OrderBy(x => x.areaId))
+            {
+                Console.WriteLine("roomID " + i.areaId + " " + i.coords.Y + " " + i.coords.X);
+            }
+
+           
+
             Assert.AreEqual(1,1);
         }
     }
