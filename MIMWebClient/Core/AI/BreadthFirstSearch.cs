@@ -20,7 +20,6 @@ namespace MIMWebClient.Core.AI
             var completedRooms = new List<Room.Room>();
 
 
-
             if (startingLoc == null)
             {
                 return null;
@@ -125,44 +124,45 @@ namespace MIMWebClient.Core.AI
         {
             var newCoords = new Coordinates();
             var dir = direction;
-            //if (opposite)
-            //{
-            //    switch (dir)
-            //    {
-            //        case "North":
-            //            newCoords.X = parentCoords.X;
-            //            newCoords.Y = parentCoords.Y - 1;
-            //            newCoords.Z = parentCoords.Z;
-            //            break;
-            //        case "East":
-            //            newCoords.X = parentCoords.X - 1;
-            //            newCoords.Y = parentCoords.Y;
-            //            newCoords.Z = parentCoords.Z;
-            //            break;
-            //        case "South":
-            //            newCoords.X = parentCoords.X;
-            //            newCoords.Y = parentCoords.Y + 1;
-            //            newCoords.Z = parentCoords.Z;
-            //            break;
-            //        case "West":
-            //            newCoords.X = parentCoords.X + 1;
-            //            newCoords.Y = parentCoords.Y;
-            //            newCoords.Z = parentCoords.Z;
-            //            break;
-            //        case "Up":
-            //            newCoords.X = parentCoords.X;
-            //            newCoords.Y = parentCoords.Y;
-            //            newCoords.Z = parentCoords.Z - 1;
-            //            break;
-            //        case "Down":
-            //            newCoords.X = parentCoords.X;
-            //            newCoords.Y = parentCoords.Y;
-            //            newCoords.Z = parentCoords.Z + 1;
-            //            break;
-            //    }
 
-            //     return newCoords;
-           // }
+            if (opposite)
+            {
+                switch (dir)
+                {
+                    case "North":
+                        newCoords.X = parentCoords.X;
+                        newCoords.Y = parentCoords.Y - 1;
+                        newCoords.Z = parentCoords.Z;
+                        break;
+                    case "East":
+                        newCoords.X = parentCoords.X - 1;
+                        newCoords.Y = parentCoords.Y;
+                        newCoords.Z = parentCoords.Z;
+                        break;
+                    case "South":
+                        newCoords.X = parentCoords.X;
+                        newCoords.Y = parentCoords.Y + 1;
+                        newCoords.Z = parentCoords.Z;
+                        break;
+                    case "West":
+                        newCoords.X = parentCoords.X + 1;
+                        newCoords.Y = parentCoords.Y;
+                        newCoords.Z = parentCoords.Z;
+                        break;
+                    case "Up":
+                        newCoords.X = parentCoords.X;
+                        newCoords.Y = parentCoords.Y;
+                        newCoords.Z = parentCoords.Z - 1;
+                        break;
+                    case "Down":
+                        newCoords.X = parentCoords.X;
+                        newCoords.Y = parentCoords.Y;
+                        newCoords.Z = parentCoords.Z + 1;
+                        break;
+                }
+
+                return newCoords;
+            }
 
             switch (dir)
             {
