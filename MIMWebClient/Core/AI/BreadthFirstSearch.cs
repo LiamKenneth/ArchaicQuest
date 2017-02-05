@@ -71,10 +71,15 @@ namespace MIMWebClient.Core.AI
 
                 if (getNeighbour != null)
                 {
-                    var getRoomCorrds = GetNewCoord(getNeighbour.coords, getRoom.exits[0].name, true);
 
-                    getRoom.coords.X = getRoomCorrds.X;
-                    getRoom.coords.Y = getRoomCorrds.Y;
+                    var getExitToNeighbour = getRoom.exits.FirstOrDefault(x => x.areaId == getNeighbour.areaId);
+                    if (getExitToNeighbour != null)
+                    {
+                        var getRoomCorrds = GetNewCoord(getNeighbour.coords, getExitToNeighbour.name, true);
+
+                        getRoom.coords.X = getRoomCorrds.X;
+                        getRoom.coords.Y = getRoomCorrds.Y;
+                    }
 
                     foreach (var exit in getRoom.exits)
                     {
