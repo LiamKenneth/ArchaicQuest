@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,192 +10,92 @@ namespace MIMWebClient.Core.AI
 {
     public class BreadthFirstSearch
     {
+
+        private static List<Room.Room> AreaList { get; set; } = Areas.ListOfRooms();
+        private List<Room.Room> CompletedRooms { get; set; } = new List<Room.Room>();
+
         /// <summary>
         /// search all rooms assigning coords then checking neighbours
         /// it will assign rooms as visited to not check them again
         /// </summary>
         public List<Room.Room> AssignCoords()
         {
-            var areas = Areas.ListOfRooms();
-            var startingLoc = areas.FirstOrDefault(x => x.areaId == 0);
-            var completedRooms = new List<Room.Room>();
+            var startingLoc = AreaList.FirstOrDefault(x => x.areaId == 0);
+            if (startingLoc == null) return null;
 
+            SetCoords(startingLoc, new Coordinates());
 
-            if (startingLoc == null)
+            ProcessRoom(startingLoc);
+
+            while (AreaList.Count > 0)
             {
-                return null;
-
-            }
-
-            startingLoc.coords.X = 0;
-            startingLoc.coords.Y = 0;
-            startingLoc.coords.Z = 0;
-
-            while (areas.Count > 0)
-            {
-
-                if (startingLoc.visited == false)
-                {
-                    //get exit id
-                    foreach (var exit in startingLoc.exits)
-                    {
-                        var nextRoom = areas.FirstOrDefault(x => x.areaId == exit.areaId);
-                        var nextRoomCoords = GetNewCoord(startingLoc.coords, exit.name);
-
-                        if (nextRoom != null && nextRoom.visited == false)
-                        {
-                            nextRoom.coords.X = nextRoomCoords.X;
-                            nextRoom.coords.Y = nextRoomCoords.Y;
-                            nextRoom.coords.Z = nextRoomCoords.Z;
-
-                            nextRoom.visited = true;
-
-                            completedRooms.Add(nextRoom);
-                            areas.Remove(nextRoom);
-                        }
-                    }
-
-                    startingLoc.visited = true;
-                    completedRooms.Add(startingLoc);
-                    areas.Remove(startingLoc);
-                }
-
-
-                var getRoom = areas.Last();
-                var getNeighbour = new Room.Room();
-
-                foreach (var exit in getRoom.exits)
-                {
-                     getNeighbour = completedRooms.FirstOrDefault(x => x.areaId == exit.areaId);
-                }
+                var getRoom = AreaList.Last();
+                var getNeighbour = GetNeighbour(getRoom);
 
                 if (getNeighbour != null)
                 {
+                    var getExitToNeighbour = GetNeighbourExit(getRoom, getNeighbour);
 
-                    var getExitToNeighbour = getRoom.exits.FirstOrDefault(x => x.areaId == getNeighbour.areaId);
                     if (getExitToNeighbour != null)
                     {
-                        var getRoomCorrds = GetNewCoord(getNeighbour.coords, getExitToNeighbour.name, true);
-
-                        getRoom.coords.X = getRoomCorrds.X;
-                        getRoom.coords.Y = getRoomCorrds.Y;
+                        SetCoords(getRoom, GetNewCoord(getNeighbour.coords, getExitToNeighbour.name, true));
                     }
 
-                    foreach (var exit in getRoom.exits)
-                    {
-                        var nextRoom = areas.FirstOrDefault(x => x.areaId == exit.areaId);
-                        var nextRoomCoords = GetNewCoord(getRoom.coords, exit.name);
-
-                        if (nextRoom != null && nextRoom.visited == false)
-                        {
-                            nextRoom.coords.X = nextRoomCoords.X;
-                            nextRoom.coords.Y = nextRoomCoords.Y;
-                            nextRoom.coords.Z = nextRoomCoords.Z;
-
-                            nextRoom.visited = true;
-
-                            completedRooms.Add(nextRoom);
-                            areas.Remove(nextRoom);
-                        }
-                    }
-
-                    getRoom.visited = true;
-                    completedRooms.Add(getRoom);
-                    areas.Remove(getRoom);
-
+                    ProcessRoom(getRoom);
                 }
                 else
                 {
-                    //1st in last out?
-                    areas.Remove(getRoom);
-
-                    areas.Insert(0, getRoom);
-
+                    AreaList.Remove(getRoom);
+                    AreaList.Insert(0, getRoom);
                 }
-
-
-
             }
+            return CompletedRooms;
+        }
 
-            return completedRooms;
+        public Room.Room GetNeighbour(Room.Room getRoom)
+        {
+            return CompletedRooms.FirstOrDefault(x =>
+            {
+                var lastOrDefault = getRoom.exits.LastOrDefault();
+                return lastOrDefault != null && x.areaId == lastOrDefault.areaId;
+            });
 
         }
 
-        public Coordinates GetNewCoord(Coordinates parentCoords, string direction, bool opposite = false)
+        public Exit GetNeighbourExit(Room.Room getRoom, Room.Room neighbour)
         {
-            var newCoords = new Coordinates();
-            var dir = direction;
+            return getRoom.exits.FirstOrDefault(x => x.areaId == neighbour.areaId);
 
-            if (opposite)
+        }
+
+        public Coordinates GetNewCoord(Coordinates coords, string direction, bool opposite = false)
+        {
+            var newCoords = new Coordinates
             {
-                switch (dir)
-                {
-                    case "North":
-                        newCoords.X = parentCoords.X;
-                        newCoords.Y = parentCoords.Y - 1;
-                        newCoords.Z = parentCoords.Z;
-                        break;
-                    case "East":
-                        newCoords.X = parentCoords.X - 1;
-                        newCoords.Y = parentCoords.Y;
-                        newCoords.Z = parentCoords.Z;
-                        break;
-                    case "South":
-                        newCoords.X = parentCoords.X;
-                        newCoords.Y = parentCoords.Y + 1;
-                        newCoords.Z = parentCoords.Z;
-                        break;
-                    case "West":
-                        newCoords.X = parentCoords.X + 1;
-                        newCoords.Y = parentCoords.Y;
-                        newCoords.Z = parentCoords.Z;
-                        break;
-                    case "Up":
-                        newCoords.X = parentCoords.X;
-                        newCoords.Y = parentCoords.Y;
-                        newCoords.Z = parentCoords.Z - 1;
-                        break;
-                    case "Down":
-                        newCoords.X = parentCoords.X;
-                        newCoords.Y = parentCoords.Y;
-                        newCoords.Z = parentCoords.Z + 1;
-                        break;
-                }
+                X = coords.X,
+                Y = coords.Y,
+                Z = coords.Z
+            };
 
-                return newCoords;
-            }
-
-            switch (dir)
+            switch (direction)
             {
                 case "North":
-                    newCoords.X = parentCoords.X;
-                    newCoords.Y = parentCoords.Y + 1;
-                    newCoords.Z = parentCoords.Z;
+                    newCoords.Y = SetCoord(opposite, direction, newCoords.Y);
                     break;
                 case "East":
-                    newCoords.X = parentCoords.X + 1;
-                    newCoords.Y = parentCoords.Y;
-                    newCoords.Z = parentCoords.Z;
+                    newCoords.X = SetCoord(opposite, direction, newCoords.X);
                     break;
                 case "South":
-                    newCoords.X = parentCoords.X;
-                    newCoords.Y = parentCoords.Y - 1;
-                    newCoords.Z = parentCoords.Z;
+                    newCoords.Y = SetCoord(opposite, direction, newCoords.Y);
                     break;
                 case "West":
-                    newCoords.X = parentCoords.X - 1;
-                    newCoords.Y = parentCoords.Y;
-                    newCoords.Z = parentCoords.Z;
+                    newCoords.X = SetCoord(opposite, direction, newCoords.X);
                     break;
                 case "Up":
-                    newCoords.X = parentCoords.X;
-                    newCoords.Y = parentCoords.Y;
-                    newCoords.Z = parentCoords.Z + 1;
+                    newCoords.Z = SetCoord(opposite, direction, newCoords.Z);
                     break;
                 case "Down":
-                    newCoords.X = parentCoords.X;
-                    newCoords.Y = parentCoords.Y;
-                    newCoords.Z = parentCoords.Z - 1;
+                    newCoords.Z = SetCoord(opposite, direction, newCoords.Z);
                     break;
             }
 
@@ -202,7 +103,64 @@ namespace MIMWebClient.Core.AI
 
         }
 
+        public void ProcessRoom(Room.Room getRoom)
+        {
 
+            foreach (var exit in getRoom.exits)
+            {
+                var nextRoom = AreaList.FirstOrDefault(x => x.areaId == exit.areaId);
+                var nextRoomCoords = GetNewCoord(getRoom.coords, exit.name);
+
+                if (nextRoom != null && nextRoom.visited == false)
+                {
+                    SetCoords(nextRoom, nextRoomCoords);
+                    nextRoom.visited = true;
+                    CompletedRooms.Add(nextRoom);
+                    AreaList.Remove(nextRoom);
+                }
+            }
+
+            getRoom.visited = true;
+            CompletedRooms.Add(getRoom);
+            AreaList.Remove(getRoom);
+
+        }
+
+        public static int SetCoord(bool opposite, string direction, int coord)
+        {
+
+            if (opposite)
+            {
+
+                if (direction == "North" || direction == "East" || direction == "Up")
+                {
+                    return --coord;
+                }
+
+                // else direction == "South" || direction == "West" || direction == "Down"
+                return ++coord;
+
+            }
+
+            if (direction == "North" || direction == "East" || direction == "Up")
+            {
+                return ++coord;
+            }
+
+            //direction == "South" || direction == "West" || direction == "Down")
+
+            return --coord;
+        }
+
+        public static void SetCoords(Room.Room room, Coordinates coords)
+        {
+            if (room != null)
+            {
+                room.coords = coords;
+            }
+        }
+
+ 
 
     }
 }

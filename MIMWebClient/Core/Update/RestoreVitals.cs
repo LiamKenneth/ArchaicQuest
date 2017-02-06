@@ -81,7 +81,7 @@ namespace MIMWebClient.Core.Update
                                         x =>
                                             x.areaId == corpse.Recall.AreaId && x.area == corpse.Recall.Area &&
                                             x.region == corpse.Recall.Region);
-                                var originalArea = World.Areas.ListOfRooms().Find(x =>
+                                var originalArea = World.Areas.ListOfRooms().FirstOrDefault(x =>
                                     x.area == mobRoomOrigin.area && x.areaId == mobRoomOrigin.areaId &&
                                     x.region == mobRoomOrigin.region);
 

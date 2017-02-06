@@ -11,7 +11,7 @@ namespace MIMWebClient.Core.World
             var areas = new List<Room>
 
             {
-                 Anker.Anker.VillageSquare(),
+                Anker.Anker.VillageSquare(),
                 Anker.Anker.SquareWalkOutsideTavern(),
                 Anker.Anker.SquareWalkOutsideStables(),
                 Anker.Anker.RedLionStables(),

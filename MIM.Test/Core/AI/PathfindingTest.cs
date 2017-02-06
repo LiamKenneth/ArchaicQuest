@@ -16,21 +16,9 @@ namespace MIM.Test.Core.AI
         [Test]
         public void ShouldFindDestination()
         {
-            //mock player
-       
-            //set room ID /area name
-            var player = new MIMWebClient.Core.PlayerSetup.Player()
-            {
-                Name = "Liam",
-                AreaId = 1,
-                Area = "Anker",
-                Region = "Anker"
-             
-            };
-
             var roomSetUp = new BreadthFirstSearch();
 
-         var list =   roomSetUp.AssignCoords();
+            var list = roomSetUp.AssignCoords();
 
 
             //some points at random
@@ -63,7 +51,7 @@ namespace MIM.Test.Core.AI
                 Console.WriteLine("roomID " + i.areaId + " (" + i.coords.X + ", " + i.coords.Y + ")");
             }
 
-            
+
             Assert.That(modo.coords.X, Is.EqualTo(modoActual.X));
             Assert.That(modo.coords.Y, Is.EqualTo(modoActual.Y));
 
