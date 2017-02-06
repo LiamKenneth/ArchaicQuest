@@ -21,7 +21,6 @@ namespace MIM.Test.Core.AI
             var list = roomSetUp.AssignCoords();
 
 
-            //some points at random
             var modo = list.FirstOrDefault(x => x.areaId == 2);
             var modoActual = new Coordinates()
             {
