@@ -29,76 +29,72 @@ namespace MIMWebClient.Core
         public static Dictionary<string, Action> Commands(string commandOptions,string commandKey,PlayerSetup.Player playerData,Room.Room room)
         {
 
-            var commandList = new Dictionary<String, Action>(); 
-            commandList.Add("north", () => Movement.Move(playerData, room, "North"));
-            commandList.Add("south", () => Movement.Move(playerData, room, "South"));
-            commandList.Add("east", () => Movement.Move(playerData, room, "East"));
-            commandList.Add("west", () => Movement.Move(playerData, room, "West"));
-            commandList.Add("down", () => Movement.Move(playerData, room, "Down"));
-            commandList.Add("up", () => Movement.Move(playerData, room, "Up"));
-            //commandList.Add("look at", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look"));
-            commandList.Add("look", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look"));
-            commandList.Add("l in", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look in"));
-            commandList.Add("look in", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look in"));
-            commandList.Add("examine", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "examine"));
-            commandList.Add("touch", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "touch"));
-            commandList.Add("smell", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "smell"));
-            commandList.Add("taste", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "taste"));
-            commandList.Add("score", () => Score.ReturnScore(playerData));
-            commandList.Add("inventory", () => Inventory.ReturnInventory(playerData.Inventory, playerData));
-            commandList.Add("equipment", () => Equipment.ShowEquipment(playerData));
-            commandList.Add("garb", () => Equipment.ShowEquipment(playerData));
-            commandList.Add("get", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item"));
-            commandList.Add("take", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item"));
-            commandList.Add("drop", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey));
-            commandList.Add("give", () => ManipulateObject.GiveItem(room, playerData, commandOptions, commandKey, "killable"));
-            commandList.Add("put", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey));
-            commandList.Add("save", () =>  Save.UpdatePlayer(playerData));
-            commandList.Add("'", () => Communicate.Say(commandOptions, playerData, room));
-            commandList.Add("newbie", () => Communicate.NewbieChannel(commandOptions, playerData));
-            commandList.Add("gossip", () => Communicate.GossipChannel(commandOptions, playerData));
-            commandList.Add("ooc", () => Communicate.OocChannel(commandOptions, playerData));
-            commandList.Add("say", ()=> Communicate.Say(commandOptions, playerData, room));
-            commandList.Add("sayto", () => Communicate.SayTo(commandOptions, room, playerData));
-            commandList.Add(">", () => Communicate.SayTo(commandOptions, room, playerData));
-            commandList.Add("talkto", () => Talk.TalkTo(commandOptions, room, playerData));
-            commandList.Add("emote", () => Emote.EmoteActionToRoom(commandOptions, playerData));
-            commandList.Add("quit", () => HubContext.Quit(playerData.HubGuid, room));
-            commandList.Add("wear", () => Equipment.WearItem(playerData, commandOptions));
-            commandList.Add("remove", () => Equipment.RemoveItem(playerData, commandOptions));
-            commandList.Add("doff", () => Equipment.RemoveItem(playerData, commandOptions));
-            commandList.Add("wield", () => Equipment.WearItem(playerData, commandOptions, true));
-            commandList.Add("unwield", () => Equipment.RemoveItem(playerData, commandOptions, false, true));
-            commandList.Add("kill",  () =>  Fight2.PerpareToFight(playerData, room, commandOptions));
-            commandList.Add("flee", () => Flee.fleeCombat(playerData, room));
-
-
-            //spells
-            commandList.Add("c magic missile", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions));
-            commandList.Add("cast magic missile", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions));
-            // skills
-            commandList.Add("punch", () => Punch.StartPunch(playerData, room));
-            commandList.Add("kick", () => Kick.StartKick(playerData, room));
-
-            commandList.Add("unlock", () => ManipulateObject.UnlockItem(room, playerData, commandOptions, commandKey));
-            commandList.Add("lock", () => ManipulateObject.LockItem(room, playerData, commandOptions, commandKey));
-            commandList.Add("open", () => ManipulateObject.Open(room, playerData, commandOptions, commandKey));
-            commandList.Add("close", () => ManipulateObject.Close(room, playerData, commandOptions, commandKey));           
-            commandList.Add("help", () => Help.ShowHelp(commandOptions, playerData));
-            commandList.Add("time", Update.Time.ShowTime);
-            commandList.Add("clock", Update.Time.ShowTime);
-            commandList.Add("skills", () => ShowSkills.ShowPlayerSkills(playerData, commandOptions));
-            commandList.Add("skills all", () => ShowSkills.ShowPlayerSkills(playerData, commandOptions));
-            commandList.Add("practice", () =>  Trainer.Practice(playerData, room, commandOptions));
-            commandList.Add("list", () => Shop.listItems(playerData, room));
-            commandList.Add("buy", () => Shop.buyItems(playerData, room, commandOptions));
-            commandList.Add("quest log", () => Quest.QuestLog(playerData));
-            commandList.Add("qlog", () => Quest.QuestLog(playerData));
-            commandList.Add("wake", () => Status.WakePlayer(playerData, room));
-            commandList.Add("sleep", () => Status.SleepPlayer(playerData, room));
-            commandList.Add("greet", () => Greet.GreetMob(playerData, room, commandOptions));
-            commandList.Add("who", () => Who.Connected(playerData));
-          
+            var commandList = new Dictionary<String, Action>
+            {
+                {"north", () => Movement.Move(playerData, room, "North")},
+                {"south", () => Movement.Move(playerData, room, "South")},
+                {"east", () => Movement.Move(playerData, room, "East")},
+                {"west", () => Movement.Move(playerData, room, "West")},
+                {"down", () => Movement.Move(playerData, room, "Down")},
+                {"up", () => Movement.Move(playerData, room, "Up")},
+                {"look", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look")},
+                {"l in", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look in")},
+                {"look in", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look in")},
+                {"examine", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "examine")},
+                {"touch", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "touch")},
+                {"smell", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "smell")},
+                {"taste", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "taste")},
+                {"score", () => Score.ReturnScore(playerData)},
+                {"inventory", () => Inventory.ReturnInventory(playerData.Inventory, playerData)},
+                {"equipment", () => Equipment.ShowEquipment(playerData)},
+                {"garb", () => Equipment.ShowEquipment(playerData)},
+                {"get", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item")},
+                {"take", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item")},
+                {"drop", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey)},
+                {"give", () => ManipulateObject.GiveItem(room, playerData, commandOptions, commandKey, "killable")},
+                {"put", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey)},
+                {"save", () => Save.UpdatePlayer(playerData)},
+                {"'", () => Communicate.Say(commandOptions, playerData, room)},
+                {"newbie", () => Communicate.NewbieChannel(commandOptions, playerData)},
+                {"gossip", () => Communicate.GossipChannel(commandOptions, playerData)},
+                {"ooc", () => Communicate.OocChannel(commandOptions, playerData)},
+                {"say", () => Communicate.Say(commandOptions, playerData, room)},
+                {"sayto", () => Communicate.SayTo(commandOptions, room, playerData)},
+                {">", () => Communicate.SayTo(commandOptions, room, playerData)},
+                {"talkto", () => Talk.TalkTo(commandOptions, room, playerData)},
+                {"emote", () => Emote.EmoteActionToRoom(commandOptions, playerData)},
+                {"quit", () => HubContext.Quit(playerData.HubGuid, room)},
+                {"wear", () => Equipment.WearItem(playerData, commandOptions)},
+                {"remove", () => Equipment.RemoveItem(playerData, commandOptions)},
+                {"doff", () => Equipment.RemoveItem(playerData, commandOptions)},
+                {"wield", () => Equipment.WearItem(playerData, commandOptions, true)},
+                {"unwield", () => Equipment.RemoveItem(playerData, commandOptions, false, true)},
+                {"kill", () => Fight2.PerpareToFight(playerData, room, commandOptions)},
+                {"flee", () => Flee.fleeCombat(playerData, room)},
+                {"c magic missile", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
+                {"cast magic missile", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
+                {"punch", () => Punch.StartPunch(playerData, room)},
+                {"kick", () => Kick.StartKick(playerData, room)},
+                {"unlock", () => ManipulateObject.UnlockItem(room, playerData, commandOptions, commandKey)},
+                {"lock", () => ManipulateObject.LockItem(room, playerData, commandOptions, commandKey)},
+                {"open", () => ManipulateObject.Open(room, playerData, commandOptions, commandKey)},
+                {"close", () => ManipulateObject.Close(room, playerData, commandOptions, commandKey)},
+                {"help", () => Help.ShowHelp(commandOptions, playerData)},
+                {"time", Update.Time.ShowTime},
+                {"clock", Update.Time.ShowTime},
+                {"skills", () => ShowSkills.ShowPlayerSkills(playerData, commandOptions)},
+                {"skills all", () => ShowSkills.ShowPlayerSkills(playerData, commandOptions)},
+                {"practice", () => Trainer.Practice(playerData, room, commandOptions)},
+                {"list", () => Shop.listItems(playerData, room)},
+                {"buy", () => Shop.buyItems(playerData, room, commandOptions)},
+                {"quest log", () => Quest.QuestLog(playerData)},
+                {"qlog", () => Quest.QuestLog(playerData)},
+                {"wake", () => Status.WakePlayer(playerData, room)},
+                {"sleep", () => Status.SleepPlayer(playerData, room)},
+                {"greet", () => Greet.GreetMob(playerData, room, commandOptions)},
+                {"who", () => Who.Connected(playerData)}
+            };
+ 
 
             return commandList;
         }

@@ -136,12 +136,16 @@ namespace MIMWebClient.Core
 
             if (playerData != null)
             {
-                SendToClient("See you soon!", playerId);
-                broadcastToRoom(playerData.Name + " has left the realm", room.players, playerId, true);
+             
 
                 Save.UpdatePlayer(playerData);
 
+                SendToClient("Gods take note of your progress", playerId);
+                SendToClient("See you soon!", playerId);
+                broadcastToRoom(playerData.Name + " has left the realm", room.players, playerId, true);
+
                 HubContext.getHubContext.Clients.Client(playerId).quit();
+ 
             }
 
 

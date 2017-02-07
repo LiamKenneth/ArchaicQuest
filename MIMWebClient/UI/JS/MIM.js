@@ -361,7 +361,7 @@
 
     //// Add a new message to the page ////
     client.updateScore = function (score) {
-        console.log("score: " + score)
+      
         var playerData = score;
 
 
@@ -403,6 +403,11 @@
         $('#player-hitroll').html(score.HitRoll);
         $('#player-damroll').html(score.DamRoll);
         $('#player-wimpy').html(score.Wimpy);
+
+        console.log("a", score.ArmorRating)
+        $('#player-armorDef').html(score.ArmorRating);
+        $('#player-magicDef').html("N/A");
+
 
         $('#player-weight').html(score.Weight);
         $('#player-max-weight').html(score.MaxWeight);

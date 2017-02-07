@@ -12,33 +12,26 @@ namespace MIMWebClient.Core.Player
     using MIMWebClient.Core.PlayerSetup;
     public class Equipment
     {
-        public string Floating { get; set; } = "Nothing";
-        public string Head { get; set; } = "Nothing";
-        public string Face { get; set; } = "Nothing";
-        public string Eyes { get; set; } = "Nothing";
-        public string LeftEar { get; set; } = "Nothing";
-        public string RightEar { get; set; } = "Nothing";
+        public string Light { get; set; } = "Nothing";
+        public string Finger { get; set; } = "Nothing";
+        public string Finger2 { get; set; } = "Nothing";
         public string Neck { get; set; } = "Nothing";
         public string Neck2 { get; set; } = "Nothing";
-        public string Cloak { get; set; } = "Nothing";
-        public string AboutBody { get; set; } = "Nothing";
-        public string Body { get; set; } = "Nothing";
-        public string Waist { get; set; } = "Nothing";
-        public string LeftSheath { get; set; } = "Nothing";
-        public string RightSheath { get; set; } = "Nothing";
-        public string BackSheath { get; set; } = "Nothing";
-        public string Back { get; set; } = "Nothing";
-        public string Arms { get; set; } = "Nothing";
-        public string LeftWrist { get; set; } = "Nothing";
-        public string RightWrist { get; set; } = "Nothing";
-        public string LeftHand { get; set; } = "Nothing";
-        public string RightHand { get; set; } = "Nothing";
-        public string Wield { get; set; } = "Nothing";
-        public string LeftRing { get; set; } = "Nothing";
-        public string RightRing { get; set; } = "Nothing";
+        public string Face { get; set; } = "Nothing";
+        public string Head { get; set; } = "Nothing";
+        public string Torso { get; set; } = "Nothing";
         public string Legs { get; set; } = "Nothing";
         public string Feet { get; set; } = "Nothing";
-
+        public string Hands { get; set; } = "Nothing";
+        public string Arms { get; set; } = "Nothing";
+        public string Body { get; set; } = "Nothing";
+        public string Waist { get; set; } = "Nothing";
+        public string Wrist { get; set; } = "Nothing";
+        public string Wrist2 { get; set; } = "Nothing";
+        public string Wielded { get; set; } = "Nothing";
+        public string Held { get; set; } = "Nothing";
+        public string Floating { get; set; } = "Nothing";
+       
         /// <summary>
         /// Displays what the player is wearing and what slots are availaible
         /// </summary>
@@ -50,46 +43,27 @@ namespace MIMWebClient.Core.Player
 
             HubContext.SendToClient("You are wearing:", player.HubGuid);
 
-            displayEquipment.Append("<ul>")
-               .Append("<li>Floating: ".PadRight(4)).Append(eq.Floating).Append("</li>")
-               .Append("<li>Head: ".PadRight(8)).Append(eq.Head).Append("</li>")
-               .Append("<li>Face: ".PadRight(8)).Append(eq.Face).Append("</li>")
-               .Append("<li>Eyes: ".PadRight(8)).Append(eq.Eyes).Append("</li>")
-               .Append("<li>Left Ear: ".PadRight(4)).Append(eq.LeftEar).Append("</li>")
-               .Append("<li>Right Ear: ".PadRight(4)).Append(eq.RightEar).Append("</li>")
-               .Append("<li>Neck: ".PadRight(8)).Append(eq.Neck).Append("</li>")
-               .Append("<li>Neck: ".PadRight(8)).Append(eq.Neck2).Append("</li>")
-               .Append("<li>Cloak: ".PadRight(8)).Append(eq.Cloak).Append("</li>")
-               .Append("<li>About Body: ".PadRight(4)).Append(eq.AboutBody).Append("</li>")
-               .Append("<li>Body: ".PadRight(8)).Append(eq.Body).Append("</li>")
-               .Append("<li>Waist: ".PadRight(7)).Append(eq.Waist).Append("</li>");
-
-            if (eq.LeftSheath != "Nothing")
-            {
-                displayEquipment.Append("<li>Left Sheath: ").Append(eq.LeftSheath).Append("</li>");
-            }
-
-            if (eq.RightSheath != "Nothing")
-            {
-                displayEquipment.Append("<li>Right Sheath: ").Append(eq.RightSheath).Append("</li>");
-            }
-
-            if (eq.BackSheath != "Nothing")
-            {
-                displayEquipment.Append("<li>Back Sheath: ").Append(eq.BackSheath).Append("</li>");
-            }
-
-            displayEquipment.Append("<li>Back: ".PadRight(8)).Append(eq.Back).Append("</li>")
-                .Append("<li>Left Wrist: ".PadRight(4)).Append(eq.LeftWrist).Append("</li>")
-                .Append("<li>Right Wrist: ".PadRight(4)).Append(eq.RightWrist).Append("</li>")
-                .Append("<li>Left Hand: ".PadRight(4)).Append(eq.LeftHand).Append("</li>")
-                .Append("<li>Right Hand: ".PadRight(4)).Append(eq.RightHand).Append("</li>")
-                .Append("<li>Left Ring: ".PadRight(4)).Append(eq.LeftRing).Append("</li>")
-                .Append("<li>Right Ring: ".PadRight(4)).Append(eq.RightRing).Append("</li>")
-                .Append("<li>Legs: ".PadRight(8)).Append(eq.Legs).Append("</li>")
-                .Append("<li>Feet: ".PadRight(8)).Append(eq.Feet).Append("</li>")
-                .Append("<li>Wield: ".PadRight(8)).Append(eq.Wield).Append("</li>")
-                .Append("</ul>");
+            displayEquipment.Append("<table>")
+                .Append("<tr><td style='width:175px;'>").Append("&lt;Used as light&gt;").Append("</td>").Append("<td>").Append(eq.Light).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on finger&gt;").Append("</td>").Append("<td>").Append(eq.Finger).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on finger&gt;").Append("</td>").Append("<td>").Append(eq.Finger2).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn around neck&gt;").Append("</td>").Append("<td>").Append(eq.Neck).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn around neck&gt;").Append("</td>").Append("<td>").Append(eq.Neck2).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on face&gt;").Append("</td>").Append("<td>").Append(eq.Face).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on head&gt;").Append("</td>").Append("<td>").Append(eq.Head).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on torso&gt;").Append("</td>").Append("<td>").Append(eq.Torso).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on legs&gt;").Append("</td>").Append("<td>").Append(eq.Legs).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on feet&gt;").Append("</td>").Append("<td>").Append(eq.Feet).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on hands&gt;").Append("</td>").Append("<td>").Append(eq.Hands).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on arms&gt;").Append("</td>").Append("<td>").Append(eq.Arms).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn about body&gt;").Append("</td>").Append("<td>").Append(eq.Body).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn about waist&gt;").Append("</td>").Append("<td>").Append(eq.Waist).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn around wrist&gt;").Append("</td>").Append("<td>").Append(eq.Wrist).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn around wrist&gt;").Append("</td>").Append("<td>").Append(eq.Wrist2).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Wielded&gt;").Append("</td>").Append("<td>").Append(eq.Wielded).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Held&gt;").Append("</td>").Append("<td>").Append(eq.Held).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Floating nearby&gt;").Append("</td>").Append("<td>").Append(eq.Floating).Append("</td></tr>").Append("</table");
+       
 
             HubContext.SendToClient(displayEquipment.ToString(), player.HubGuid);
         }
@@ -99,47 +73,26 @@ namespace MIMWebClient.Core.Player
             var eq = mob.Equipment;
             var displayEquipment = new StringBuilder();
 
-            displayEquipment.Append("<ul>")
-               .Append("<li>Floating: ".PadRight(4)).Append(eq.Floating).Append("</li>")
-               .Append("<li>Head: ".PadRight(8)).Append(eq.Head).Append("</li>")
-               .Append("<li>Face: ".PadRight(8)).Append(eq.Face).Append("</li>")
-               .Append("<li>Eyes: ".PadRight(8)).Append(eq.Eyes).Append("</li>")
-               .Append("<li>Left Ear: ".PadRight(4)).Append(eq.LeftEar).Append("</li>")
-               .Append("<li>Right Ear: ".PadRight(4)).Append(eq.RightEar).Append("</li>")
-               .Append("<li>Neck: ".PadRight(8)).Append(eq.Neck).Append("</li>")
-               .Append("<li>Neck: ".PadRight(8)).Append(eq.Neck2).Append("</li>")
-               .Append("<li>Cloak: ".PadRight(8)).Append(eq.Cloak).Append("</li>")
-               .Append("<li>About Body: ".PadRight(4)).Append(eq.AboutBody).Append("</li>")
-               .Append("<li>Body: ".PadRight(8)).Append(eq.Body).Append("</li>")
-               .Append("<li>Waist: ".PadRight(7)).Append(eq.Waist).Append("</li>");
-
-            if (eq.LeftSheath != "Nothing")
-            {
-                displayEquipment.Append("<li>Left Sheath: ").Append(eq.LeftSheath).Append("</li>");
-            }
-
-            if (eq.RightSheath != "Nothing")
-            {
-                displayEquipment.Append("<li>Right Sheath: ").Append(eq.RightSheath).Append("</li>");
-            }
-
-            if (eq.BackSheath != "Nothing")
-            {
-                displayEquipment.Append("<li>Back Sheath: ").Append(eq.BackSheath).Append("</li>");
-            }
-
-            displayEquipment.Append("<li>Back: ".PadRight(8)).Append(eq.Back).Append("</li>")
-                .Append("<li>Left Wrist: ".PadRight(4)).Append(eq.LeftWrist).Append("</li>")
-                .Append("<li>Right Wrist: ".PadRight(4)).Append(eq.RightWrist).Append("</li>")
-                .Append("<li>Left Hand: ".PadRight(4)).Append(eq.LeftHand).Append("</li>")
-                .Append("<li>Right Hand: ".PadRight(4)).Append(eq.RightHand).Append("</li>")
-                .Append("<li>Left Ring: ".PadRight(4)).Append(eq.LeftRing).Append("</li>")
-                .Append("<li>Right Ring: ".PadRight(4)).Append(eq.RightRing).Append("</li>")
-                .Append("<li>Legs: ".PadRight(8)).Append(eq.Legs).Append("</li>")
-                .Append("<li>Feet: ".PadRight(8)).Append(eq.Feet).Append("</li>")
-                .Append("<li>Wield: ".PadRight(8)).Append(eq.Wield).Append("</li>")
-                .Append("</ul>");
-
+            displayEquipment.Append("<table>")
+                 .Append("<tr><td style='width:175px;'>").Append("&lt;Used as light&gt;").Append("</td>").Append("<td>").Append(eq.Light).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on finger&gt;").Append("</td>").Append("<td>").Append(eq.Finger).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on finger&gt;").Append("</td>").Append("<td>").Append(eq.Finger2).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn around neck&gt;").Append("</td>").Append("<td>").Append(eq.Neck).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn around neck&gt;").Append("</td>").Append("<td>").Append(eq.Neck2).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on face&gt;").Append("</td>").Append("<td>").Append(eq.Face).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on head&gt;").Append("</td>").Append("<td>").Append(eq.Head).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on torso&gt;").Append("</td>").Append("<td>").Append(eq.Torso).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on legs&gt;").Append("</td>").Append("<td>").Append(eq.Legs).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on feet&gt;").Append("</td>").Append("<td>").Append(eq.Feet).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on hands&gt;").Append("</td>").Append("<td>").Append(eq.Hands).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn on arms&gt;").Append("</td>").Append("<td>").Append(eq.Arms).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn about body&gt;").Append("</td>").Append("<td>").Append(eq.Body).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn about waist&gt;").Append("</td>").Append("<td>").Append(eq.Waist).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn around wrist&gt;").Append("</td>").Append("<td>").Append(eq.Wrist).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Worn around wrist&gt;").Append("</td>").Append("<td>").Append(eq.Wrist2).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Wielded&gt;").Append("</td>").Append("<td>").Append(eq.Wielded).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Held&gt;").Append("</td>").Append("<td>").Append(eq.Held).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Floating nearby&gt;").Append("</td>").Append("<td>").Append(eq.Floating).Append("</td></tr>").Append("</table");
             HubContext.SendToClient(displayEquipment.ToString(), viewer.HubGuid);
         }
 
@@ -196,7 +149,12 @@ namespace MIMWebClient.Core.Player
 
                 eqLocation.SetValue(player.Equipment, foundItem.name);
 
-                if (!wield || !slot.Equals("wield", StringComparison.CurrentCultureIgnoreCase))
+                if (foundItem.ArmorRating != null)
+                {
+                    player.ArmorRating += foundItem.ArmorRating.Armour;
+                }
+
+                if (!wield || !slot.Equals(Item.EqSlot.Wielded.ToString()))
                 {
                     HubContext.SendToClient("You wear " + foundItem.name, player.HubGuid);
 
@@ -209,6 +167,7 @@ namespace MIMWebClient.Core.Player
                     HubContext.SendToClient("You wield " + foundItem.name, player.HubGuid);
                 }
                 Score.UpdateUiInventory(player);
+                Score.ReturnScoreUI(player);
 
             }
             else
@@ -224,16 +183,7 @@ namespace MIMWebClient.Core.Player
                         //TODO: WTF is this?
                         if (slot != null)
                         {
-                            if (slot == Item.EqSlot.Hand.ToString())
-                            {
-                                slot = Item.EqSlot.RightHand.ToString();
-                            }
-
-                            if (slot == Item.EqSlot.Ring.ToString())
-                            {
-                                slot = Item.EqSlot.RightRing.ToString();
-                            }
-
+                           
                             var eqLocation = player.Equipment.GetType().GetProperty(slot);
 
 
@@ -276,6 +226,7 @@ namespace MIMWebClient.Core.Player
                 CheckEvent.FindEvent(CheckEvent.EventType.Wear, player, listOfItemsWorn);
             }
             Score.UpdateUiInventory(player);
+            Score.ReturnScoreUI(player);
             Cache.updatePlayer(player, oldPlayer);
 
         }
@@ -337,6 +288,7 @@ namespace MIMWebClient.Core.Player
                     HubContext.SendToClient("You Unwield." + foundItem.name, player.HubGuid);
                 }
                 Score.UpdateUiInventory(player);
+                Score.ReturnScoreUI(player);
 
                 if (replaceWithOtherEQ)
                 {
@@ -355,7 +307,12 @@ namespace MIMWebClient.Core.Player
                 foreach (var item in wornItems)
                 {
 
-                    if (item.eqSlot != Item.EqSlot.Wield)
+                    if (item.ArmorRating != null)
+                    {
+                        player.ArmorRating -= item.ArmorRating.Armour;
+                    }
+
+                    if (item.eqSlot != Item.EqSlot.Wielded)
                     {
                         HubContext.SendToClient("You remove " + item.name, player.HubGuid);
 
@@ -388,6 +345,7 @@ namespace MIMWebClient.Core.Player
                 }
 
                 Score.UpdateUiInventory(player);
+                Score.ReturnScoreUI(player);
                 Cache.updatePlayer(player, oldPlayer);
             }
 

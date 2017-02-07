@@ -78,29 +78,23 @@ namespace MIMWebClient.Core.Item
 
         public enum EqSlot
         {
-            Floating = 1,
-            Head,
-            Face,
-            Eyes,
-            Ear,
+            Light,
+            Finger,
             Neck,
-            Cloak,
-            AboutBody,
-            Body,
-            Waist,
-            Sheath,
-            Back,
-            Wrist,
-            LeftHand,
-            RightHand,
-            Hand,
-            LeftRing,
-            RightRing,
-            Ring,
-            Arms,
+            Face,
+            Head,
+            Torso,
             Legs,
             Feet,
-            Wield
+            Hands,
+            Arms,
+            Body,
+            Waist,
+            Wrist,
+            Wielded,
+            Held,
+            Floating
+           
         }
 
         public enum AttackType

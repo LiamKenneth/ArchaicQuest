@@ -15,7 +15,7 @@ namespace MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Hands
             var GuantletOfTyr = new Item.Item
             {
                 armourType = Item.Item.ArmourType.PlateMail,
-                eqSlot = Item.Item.EqSlot.Hand,
+                eqSlot = Item.Item.EqSlot.Hands,
                 description = new Description()
                 {
                     look =
@@ -28,7 +28,7 @@ namespace MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Hands
                     touch = "It feels cold to touch"
                 },
                 location = Item.Item.ItemLocation.Inventory,
-                slot = Item.Item.EqSlot.Hand,
+                slot = Item.Item.EqSlot.Hands,
                 type = Item.Item.ItemType.Armour,
                 name = "Guantlet Of Tyr",
                 ArmorRating = new ArmourRating()

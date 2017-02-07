@@ -342,13 +342,13 @@ namespace MIMWebClient.Core.PlayerSetup
             {
                 actions = new Core.Item.Action(),
                 name = "Blunt dagger",
-                eqSlot = Core.Item.Item.EqSlot.Wield,
+                eqSlot = Core.Item.Item.EqSlot.Wielded,
                 weaponType = Core.Item.Item.WeaponType.ShortBlades,
                 stats = new Core.Item.Stats { damMin = 2, damMax = 4, minUsageLevel = 1, damRoll = 0},
                 type = Core.Item.Item.ItemType.Weapon,
                 equipable = true,
                 attackType = Core.Item.Item.AttackType.Pierce,
-                slot = Item.EqSlot.Wield,
+                slot = Item.EqSlot.Wielded,
                 location = Item.ItemLocation.Inventory
                 
             };
@@ -388,26 +388,11 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Equipment = this.Equipment ?? (this.Equipment = new Equipment());
             this.Equipment.Floating = this.Equipment.Floating;
             this.Equipment.Head = Equipment.Head;
-            this.Equipment.Face = Equipment.Face;
-            this.Equipment.Eyes = Equipment.Eyes;
-            this.Equipment.LeftEar = Equipment.LeftEar;
-            this.Equipment.RightEar = Equipment.RightEar;
+            this.Equipment.Face = Equipment.Face;         
             this.Equipment.Neck = Equipment.Neck;
             this.Equipment.Neck2 = Equipment.Neck2;
-            this.Equipment.Cloak = Equipment.Cloak;
-            this.Equipment.AboutBody = Equipment.AboutBody;
             this.Equipment.Body = Equipment.Body;
-            this.Equipment.Waist = Equipment.Waist;
-            this.Equipment.LeftSheath = Equipment.LeftSheath;
-            this.Equipment.RightSheath = Equipment.RightSheath;
-            this.Equipment.BackSheath = Equipment.BackSheath;
-            this.Equipment.Back = Equipment.Back;
-            this.Equipment.LeftWrist = Equipment.LeftWrist;
-            this.Equipment.RightWrist = Equipment.RightWrist;
-            this.Equipment.LeftHand = Equipment.LeftHand;
-            this.Equipment.RightHand = Equipment.RightHand;
-            this.Equipment.LeftRing = Equipment.LeftRing;
-            this.Equipment.RightRing = Equipment.RightRing;
+            this.Equipment.Waist = Equipment.Waist;         
             this.Equipment.Legs = Equipment.Legs;
             this.Equipment.Feet = Equipment.Feet;
 

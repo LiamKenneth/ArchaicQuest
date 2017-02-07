@@ -361,13 +361,13 @@ namespace MIMWebClient.Core.World.Anker
             {
                 actions = new Item.Action(),
                 name = "Blunt dagger",
-                eqSlot = Item.Item.EqSlot.Wield,
+                eqSlot = Item.Item.EqSlot.Wielded,
                 weaponType = Item.Item.WeaponType.ShortBlades,
                 stats = new Item.Stats { damMin = 2, damMax = 4, minUsageLevel = 1 },
                 type = Item.Item.ItemType.Weapon,
                 equipable = true,
                 attackType = Item.Item.AttackType.Pierce,
-                slot = Item.Item.EqSlot.Wield,
+                slot = Item.Item.EqSlot.Wielded,
                 location = Item.Item.ItemLocation.Inventory,
                 description = new Description(),
 
@@ -383,13 +383,13 @@ namespace MIMWebClient.Core.World.Anker
             {
                 actions = new Item.Action(),
                 name = "Flaming dagger",
-                eqSlot = Item.Item.EqSlot.Wield,
+                eqSlot = Item.Item.EqSlot.Wielded,
                 weaponType = Item.Item.WeaponType.ShortBlades,
                 stats = new Item.Stats { damMin = 21, damMax = 44, minUsageLevel = 1 },
                 type = Item.Item.ItemType.Weapon,
                 equipable = true,
                 attackType = Item.Item.AttackType.Pierce,
-                slot = Item.Item.EqSlot.Wield,
+                slot = Item.Item.EqSlot.Wielded,
                 location = Item.Item.ItemLocation.Inventory
             };
 
@@ -1319,7 +1319,7 @@ namespace MIMWebClient.Core.World.Anker
                     look = "A weak looking flat beer bubbles in a bottle",
                     room = "A beer has been left on the floor"
                 },
-                slot = Item.Item.EqSlot.Hand
+                slot = Item.Item.EqSlot.Hands
             };
 
     

@@ -97,13 +97,13 @@ namespace MIMWebClient.Core.World.Tutorial
             {
                 actions = new Item.Action(),
                 name = "Blunt dagger",
-                eqSlot = Item.Item.EqSlot.Wield,
+                eqSlot = Item.Item.EqSlot.Wielded,
                 weaponType = Item.Item.WeaponType.ShortBlades,
                 stats = new Item.Stats { damMin = 2, damMax = 4, minUsageLevel = 1 },
                 type = Item.Item.ItemType.Weapon,
                 equipable = true,
                 attackType = Item.Item.AttackType.Pierce,
-                slot = Item.Item.EqSlot.Wield,
+                slot = Item.Item.EqSlot.Wielded,
                 location = Item.Item.ItemLocation.Inventory,
                 description = new Description(),
 

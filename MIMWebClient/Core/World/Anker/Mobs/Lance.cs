@@ -227,7 +227,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                         look = "A weak looking flat beer bubbles in a bottle",
                         room = "A beer has been left on the floor"
                     },
-                    slot = Item.Item.EqSlot.Hand
+                    slot = Item.Item.EqSlot.Hands
                 },
                 RewardXp = 200,
                 QuestGiver = Lance.Name,

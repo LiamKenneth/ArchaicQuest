@@ -307,7 +307,7 @@ namespace MIMWebClient.Core.Events
         public static Item GetAttackerWepon(Player attacker)
         {
             //currently everyone is right handed :-O
-            var wielded = attacker.Equipment.Wield;
+            var wielded = attacker.Equipment.Wielded;
 
             if (wielded == "Nothing")
             {
@@ -374,7 +374,7 @@ namespace MIMWebClient.Core.Events
             if (skillUsed == null)
             {
 
-                var wielded = attacker.Equipment.Wield;
+                var wielded = attacker.Equipment.Wielded;
                 Item weapon = null;
                 if (wielded == "Nothing")
                 {
@@ -382,7 +382,7 @@ namespace MIMWebClient.Core.Events
                 }
 
                 //find weapon
-                weapon = attacker.Inventory.Find(x => x.name.Equals(wielded) && x.eqSlot.Equals(Item.EqSlot.Wield));
+                weapon = attacker.Inventory.Find(x => x.name.Equals(wielded) && x.eqSlot.Equals(Item.EqSlot.Wielded));
 
                 if (weapon != null)
                 {
