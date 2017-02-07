@@ -307,7 +307,7 @@ namespace MIMWebClient.Core.Events
         public static Item GetAttackerWepon(Player attacker)
         {
             //currently everyone is right handed :-O
-            var wielded = attacker.Equipment.RightHand;
+            var wielded = attacker.Equipment.Wield;
 
             if (wielded == "Nothing")
             {
@@ -715,7 +715,7 @@ namespace MIMWebClient.Core.Events
 
             //(Weapon Skill + (Agility / 5) + (Luck / 10)) * (0.75 + 0.5 * Current Fatigue / Maximum Fatigue);
 
-            double off = weaponSkill + (dexterity / 5) * (0.75 + 0.5 * player.MovePoints / player.MaxMovePoints);
+            double off = weaponSkill + (strength / 5) * (0.75 + 0.5 * player.MovePoints / player.MaxMovePoints);
 
             //Based on skill and a random number, an Offensive Force / Factor(OF) is generated.
             //This number is bonused by the user's Agility as modified by the weapon's balance.

@@ -6,6 +6,12 @@ using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Item;
 using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.World.Anker.Mobs;
+using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Arms;
+using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Body;
+using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Feet;
+using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Head;
+using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Legs;
+using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Hands;
 
 namespace MIMWebClient.Core.World.Anker
 {
@@ -416,6 +422,17 @@ namespace MIMWebClient.Core.World.Anker
 
             room.mobs.Add(cat);
             room.mobs.Add(cat);
+
+
+            //test EQ
+            var plate = FullPlateBody.BreastPlateOfTyr();
+            room.items.Add(plate);
+            room.items.Add(FullPlateHelm.HelmOfTyr());
+            room.items.Add(FullPlateSleeves.SteelSleevesOfTyr());
+            room.items.Add(FullPlateBoots.BootsOfTyr());
+            room.items.Add(FullPlateGauntlet.GuantletOfTyr());
+            room.items.Add(FullPlateGreaves.SteelGreevesOfTyr());
+
 
 
             return room;

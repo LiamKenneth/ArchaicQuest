@@ -28,6 +28,7 @@ namespace MIMWebClient.Core.Player
         public string RightSheath { get; set; } = "Nothing";
         public string BackSheath { get; set; } = "Nothing";
         public string Back { get; set; } = "Nothing";
+        public string Arms { get; set; } = "Nothing";
         public string LeftWrist { get; set; } = "Nothing";
         public string RightWrist { get; set; } = "Nothing";
         public string LeftHand { get; set; } = "Nothing";
@@ -223,17 +224,35 @@ namespace MIMWebClient.Core.Player
                         //TODO: WTF is this?
                         if (slot != null)
                         {
+                            if (slot == Item.EqSlot.Hand.ToString())
+                            {
+                                slot = Item.EqSlot.RightHand.ToString();
+                            }
+
+                            if (slot == Item.EqSlot.Ring.ToString())
+                            {
+                                slot = Item.EqSlot.RightRing.ToString();
+                            }
+
                             var eqLocation = player.Equipment.GetType().GetProperty(slot);
 
-                           
-                            var hasValue = eqLocation.GetValue(player.Equipment);
 
-                            if (hasValue.ToString() != "Nothing")
+                            if (eqLocation != null)
                             {
-                                RemoveItem(player, hasValue.ToString(), true);
+                                var hasValue = eqLocation.GetValue(player.Equipment);
+
+                                if (hasValue.ToString() != "Nothing")
+                                {
+                                    RemoveItem(player, hasValue.ToString(), true);
+                                }
                             }
                             item.location = Item.ItemLocation.Worn;
                             eqLocation.SetValue(player.Equipment, item.name);
+
+                            if (item.ArmorRating != null)
+                            {
+                                player.ArmorRating += item.ArmorRating.Armour;
+                            }
 
 
                             listOfItemsWorn += $" {item.name}";
@@ -303,6 +322,11 @@ namespace MIMWebClient.Core.Player
 
 
                 eqLocation.SetValue(player.Equipment, "Nothing");
+
+                if (foundItem.ArmorRating != null)
+                {
+                    player.ArmorRating -= foundItem.ArmorRating.Armour;
+                }
 
                 if (!unwield || !slot.Equals("wield", StringComparison.CurrentCultureIgnoreCase))
                 {

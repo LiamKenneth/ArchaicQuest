@@ -315,7 +315,12 @@
     <Compile Include="Core\World\Anker\Anker.cs" />
     <Compile Include="Core\World\Anker\Mobs\Lance.cs" />
     <Compile Include="Core\World\Areas.cs" />
+    <Compile Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Arms\FullPlateSleeves.cs" />
     <Compile Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Body\FullPlateBody.cs" />
+    <Compile Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Hands\FullPlateGauntlet.cs" />
+    <Compile Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Feet\FullPlateBoots.cs" />
+    <Compile Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Head\FullPlateHelm.cs" />
+    <Compile Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Legs\FullPlateGreaves.cs" />
     <Compile Include="Core\World\Items\Armour\LightArmour\Clothing\Body\ClothingBody.cs" />
     <Compile Include="Core\World\Items\Armour\LightArmour\Clothing\Legs\ClothingLegs.cs" />
     <Compile Include="Core\World\Tutorial\Ambush.cs" />
@@ -447,13 +452,8 @@
     <Folder Include="Core\World\Items\Armour\HeavyArmour\BandedMail\Legs\" />
     <Folder Include="Core\World\Items\Armour\HeavyArmour\BandedMail\Waist\" />
     <Folder Include="Core\World\Items\Armour\HeavyArmour\FullPlate\AboutBody\" />
-    <Folder Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Arms\" />
     <Folder Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Cloak\" />
     <Folder Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Face\" />
-    <Folder Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Feet\" />
-    <Folder Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Hands\" />
-    <Folder Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Head\" />
-    <Folder Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Legs\" />
     <Folder Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Waist\" />
     <Folder Include="Core\World\Items\Armour\HeavyArmour\HalfPlate\AboutBody\" />
     <Folder Include="Core\World\Items\Armour\HeavyArmour\HalfPlate\Arms\" />

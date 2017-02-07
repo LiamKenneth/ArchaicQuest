@@ -91,8 +91,13 @@ namespace MIMWebClient.Core.Item
             Sheath,
             Back,
             Wrist,
+            LeftHand,
+            RightHand,
             Hand,
+            LeftRing,
+            RightRing,
             Ring,
+            Arms,
             Legs,
             Feet,
             Wield
