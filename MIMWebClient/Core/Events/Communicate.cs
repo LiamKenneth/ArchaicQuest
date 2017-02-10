@@ -57,10 +57,10 @@ namespace MIMWebClient.Core.Events
                             if (message.Equals(tree.MatchPhrase))
                             {
                                 response = tree.Message;
-                                if (tree.GiveQuest != null) hasQuest = (bool) tree.GiveQuest;
+                                if (tree.GiveQuest != null) hasQuest = (bool)tree.GiveQuest;
                                 if (tree.GivePrerequisiteItem != null)
-                                    GivePrerequisiteItem = (bool) tree.GivePrerequisiteItem;
-                                if (tree.QuestId != null) questId = (int) tree.QuestId;
+                                    GivePrerequisiteItem = (bool)tree.GivePrerequisiteItem;
+                                if (tree.QuestId != null) questId = (int)tree.QuestId;
 
 
                             }
@@ -72,36 +72,15 @@ namespace MIMWebClient.Core.Events
                 {
                     Thread.Sleep(120); // hack, sometimes the responses calls before the questions??
 
-
-                    if (hasQuest)
+                    if (!hasQuest)
                     {
-                        //find quest
                         var quest = mob.Quest.FirstOrDefault(x => x.Id.Equals(questId));
-
-                        var playerHasQuest = player.QuestLog.FirstOrDefault(x => quest != null && x.Name.Equals(quest.Name));
-
-                        if (playerHasQuest == null)
-                        {
-                            //to player log
-                            player.QuestLog.Add(quest);
-
-                            if (GivePrerequisiteItem)
-                            {
-                                //  Command.ParseCommand("Give 5 gold " + player.Name, mob, room);
-                                player.Gold += 5;
-                                HubContext.broadcastToRoom(mob.Name + " " + quest.PrerequisiteItemEmote,
-                                    room.players, String.Empty);
-                                HubContext.SendToClient("You get 5 gold from " + mob.Name, playerId);
-                            }
-                        }
-                        else
-                        {
-                            HubContext.SendToClient(
-               mob.Name + " says to you " + quest.AlreadyOnQuestMessage, playerId,
-               null, true);
-                            return;
-                        }
+                        HubContext.SendToClient(
+           mob.Name + " says to you " + quest.AlreadyOnQuestMessage, playerId,
+           null, true);
+                        return;
                     }
+
 
                     HubContext.SendToClient(
                        mob.Name + " says to you " + response.Replace("$playerName", player.Name), playerId,
@@ -148,6 +127,33 @@ namespace MIMWebClient.Core.Events
                                 i++;
                             }
                         }
+                    }
+
+
+                    if (hasQuest)
+                    {
+                        //find quest
+                        var quest = mob.Quest.FirstOrDefault(x => x.Id.Equals(questId));
+
+                        var playerHasQuest = player.QuestLog.FirstOrDefault(x => quest != null && x.Name.Equals(quest.Name));
+
+                        if (playerHasQuest == null)
+                        {
+                            //to player log
+                            player.QuestLog.Add(quest);
+
+                            HubContext.SendToClient("<h5>Quest Added: </h5> "+  quest.Name, playerId);
+
+                            if (GivePrerequisiteItem)
+                            {
+                                //  Command.ParseCommand("Give 5 gold " + player.Name, mob, room);
+                                player.Gold += 5;
+                                HubContext.broadcastToRoom(mob.Name + " " + quest.PrerequisiteItemEmote,
+                                    room.players, String.Empty);
+                                HubContext.SendToClient("You get 5 gold from " + mob.Name, playerId);
+                            }
+                        }
+
                     }
 
                 }

@@ -1192,7 +1192,7 @@ namespace MIMWebClient.Core.World.Anker
 
             room.exits.Add(south);
 
-
+            room.mobs.Add(Anika.OddsNSodsShopKeeper());
 
 
 

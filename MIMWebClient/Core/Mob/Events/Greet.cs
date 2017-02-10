@@ -35,7 +35,7 @@ namespace MIMWebClient.Core.Mob.Events
                     // QuestItem get item or somthing
                     // QuestKill mob
                     // add QuestFind mob?
-                    if (qlog.Completed.Equals(false) && qlog.QuestGiver.Equals(npc.Name) || qlog.Completed.Equals(false) && qlog.QuestFindMob != null && qlog.QuestFindMob.Equals(npc.Description))
+                    if (qlog.Completed.Equals(false) && qlog.QuestGiver.Equals(npc.Name) || qlog.Completed.Equals(false) && qlog.QuestFindMob != null && qlog.QuestFindMob.Equals(npc.Name))
                     {
 
                      

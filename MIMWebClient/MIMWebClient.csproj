@@ -313,6 +313,7 @@
     <Compile Include="Core\Update\UpdateWorld.cs" />
     <Compile Include="Core\Util\TruncateString.cs" />
     <Compile Include="Core\World\Anker\Anker.cs" />
+    <Compile Include="Core\World\Anker\Mobs\Anika.cs" />
     <Compile Include="Core\World\Anker\Mobs\Lance.cs" />
     <Compile Include="Core\World\Areas.cs" />
     <Compile Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Arms\FullPlateSleeves.cs" />

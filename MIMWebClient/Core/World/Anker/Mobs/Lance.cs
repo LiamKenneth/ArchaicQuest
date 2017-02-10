@@ -8,6 +8,9 @@ using MIMWebClient.Core.Player;
 
 namespace MIMWebClient.Core.World.Anker.Mobs
 {
+    /// <summary>
+    /// The village Elder
+    /// </summary>
     public class Lance
     {
 
@@ -192,24 +195,88 @@ namespace MIMWebClient.Core.World.Anker.Mobs
             var findLance = new DialogTree
             {
                 Id = "lance1",
-                Message = "Yes I am Lance, well met $playerName",
+                Message = "Yes I am Lance, you must be $playerName, well met. You look much better than when I last saw you. " +
+                          "Do you remember much?",
                 PossibleResponse = new List<Responses>(),
                 ShowIfOnQuest = "Find and greet Lance",
+                
                 
             };
 
             var findLanceA = new Responses()
             {
-                Response = "Well wtf do I do now?",
+                Response = "Yes I was with someone called Wilhelm, Did you find anyone else?",
 
             };
 
-            findLance.PossibleResponse.Add(findLanceA);
+            var findLanceB = new Responses()
+            {
+                Response = "Know what happend to me?",
 
+            };
+
+            var findLance1aAnswer = new DialogTree()
+            {
+                Id = "findLanceA",
+                MatchPhrase = findLanceA.Response,
+                Message = "Sorry we only found you, there is a good chance that if he was captured they may of taken him to the caves east of here in the woods" +
+                          " it is there we believe the goblins have been coming from",
+                PossibleResponse = new List<Responses>(),
+                GivePrerequisiteItem = true,
+                GiveQuest = true,
+                QuestId = 2
+            };
+
+
+            var findLance1bAnswer = new DialogTree()
+            {
+                Id = "findLanceB",
+                MatchPhrase = findLanceA.Response,
+                Message = "You had a nasty hit to the head when we found you, we suspected it was goblins. They have been raiding us for some time now. We need an adventure to find the source and stop them. Are you able to help us?",
+                PossibleResponse = new List<Responses>(),
+                GivePrerequisiteItem = true,
+                GiveQuest = true,
+                QuestId = 2
+            };
+            findLance.PossibleResponse.Add(findLanceA);
+            findLance.PossibleResponse.Add(findLanceB);
+
+            Lance.DialogueTree.Add(findLance1aAnswer);
+            Lance.DialogueTree.Add(findLance1bAnswer);
             Lance.DialogueTree.Add(findLance);
 
 
             //quest
+
+
+            var getStarted = new Quest()
+            {
+                Id = 2,
+                Description = "Investigate the origins of the Goblins",
+                Name = "Find and remove the source of the Goblins",
+                Type = Quest.QuestType.Kill,
+                QuestFindMob = "Shaman",
+                RewardXp = 1000,
+                RewardGold = 500,
+                PrerequisiteItem = new Item.Item()
+                {
+                    name = "Gold",
+                    type = Item.Item.ItemType.Gold,
+                    Gold = 120
+                },
+                QuestGiver = Lance.Name,
+                PrerequisiteItemEmote = "puts his hands in his money pounch and hands you some gold. \"Use this to get yourself a weapon and some armor from the shops north east of Anker.\" ",
+                AlreadyOnQuestMessage = "The goblins raid us everyday, have you found them yet?",
+                RewardDialog = new DialogTree()
+                {
+                    Message = "You are our hero",
+                    PossibleResponse = new List<Responses>()
+                }
+
+
+
+            };
+
 
             var getBeer = new Quest()
             {
@@ -244,7 +311,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
             };
 
             Lance.Quest.Add(getBeer);
-
+            Lance.Quest.Add(getStarted);
             return Lance;
         }
     }
