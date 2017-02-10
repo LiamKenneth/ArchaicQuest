@@ -27,7 +27,7 @@ namespace MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Body
                     taste = "It tastes like metal",
                     touch = "It feels cold to touch"
                 },
-                location = Item.Item.ItemLocation.Inventory,
+                location = Item.Item.ItemLocation.Room,
                 slot = Item.Item.EqSlot.Body,
                 type = Item.Item.ItemType.Armour,
                 name = "The breast plate of Tyr",

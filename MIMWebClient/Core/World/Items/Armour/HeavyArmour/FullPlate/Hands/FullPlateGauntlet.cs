@@ -27,7 +27,7 @@ namespace MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Hands
                     taste = "It tastes like metal",
                     touch = "It feels cold to touch"
                 },
-                location = Item.Item.ItemLocation.Inventory,
+                location = Item.Item.ItemLocation.Room,
                 slot = Item.Item.EqSlot.Hands,
                 type = Item.Item.ItemType.Armour,
                 name = "Guantlet Of Tyr",

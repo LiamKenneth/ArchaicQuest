@@ -79,12 +79,13 @@ namespace MIMWebClient.Core.Events
                 if (string.IsNullOrEmpty(itemContainer))
                 {
                     //search room items 1st
+                    //this is crappy
                     foundItem = FindItem.Item(room.items, nth, itemToFind, Item.ItemLocation.Room);
 
                     if (foundItem != null) { return new KeyValuePair<Item, Item>(null, foundItem); }
 
-
-                    string msgToPlayer = "You don't see " + AvsAnLib.AvsAn.Query(itemToFind) + " " + itemToFind + " here and you are not carrying " + AvsAnLib.AvsAn.Query(itemToFind) + " " + itemToFind;
+                     
+                    string msgToPlayer = "You don't see " + AvsAnLib.AvsAn.Query(itemToFind).Article + " " + itemToFind + " here and you are not carrying " + AvsAnLib.AvsAn.Query(itemToFind).Article + " " + itemToFind;
                     BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, msgToPlayer, player.Name + " rummages around for an item but finds nothing");
                     return new KeyValuePair<Item, Item>(null, null);
                 }

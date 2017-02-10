@@ -27,7 +27,7 @@ namespace MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Legs
                     taste = "It tastes like metal",
                     touch = "It feels cold to touch"
                 },
-                location = Item.Item.ItemLocation.Inventory,
+                location = Item.Item.ItemLocation.Room,
                 slot = Item.Item.EqSlot.Legs,               
                 type = Item.Item.ItemType.Armour,
                 name = "Greaves of Tyr",

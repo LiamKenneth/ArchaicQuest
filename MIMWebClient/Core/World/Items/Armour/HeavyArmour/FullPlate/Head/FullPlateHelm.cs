@@ -27,7 +27,7 @@ namespace MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Head
                     taste = "It tastes like metal",
                     touch = "It feels cold to touch"
                 },
-                location = Item.Item.ItemLocation.Inventory,
+                location = Item.Item.ItemLocation.Room,
                 slot = Item.Item.EqSlot.Head,
                 type = Item.Item.ItemType.Armour,
                 name = "Helm of Tyr",

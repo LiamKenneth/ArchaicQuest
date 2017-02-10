@@ -368,7 +368,7 @@ namespace MIMWebClient.Core.World.Anker
                 equipable = true,
                 attackType = Item.Item.AttackType.Pierce,
                 slot = Item.Item.EqSlot.Wielded,
-                location = Item.Item.ItemLocation.Inventory,
+                location = Item.Item.ItemLocation.Room,
                 description = new Description(),
                 itemFlags = new List<Item.Item.ItemFlags>()
 
@@ -393,7 +393,7 @@ namespace MIMWebClient.Core.World.Anker
                 equipable = true,
                 attackType = Item.Item.AttackType.Pierce,
                 slot = Item.Item.EqSlot.Wielded,
-                location = Item.Item.ItemLocation.Inventory
+                location = Item.Item.ItemLocation.Room
             };
 
 
