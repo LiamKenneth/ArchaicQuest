@@ -70,6 +70,8 @@ namespace MIMWebClient.Core.Player
         public Item.Item RewardItem { get; set; }
         public DialogTree RewardDialog { get; set; }
         public string AlreadyOnQuestMessage { get; set; }
+        public string QuestHint { get; set; }
+        public string QuestTrigger{ get; set; }
         public bool Completed { get; set; } = false;
 
         public static void QuestLog(PlayerSetup.Player player)

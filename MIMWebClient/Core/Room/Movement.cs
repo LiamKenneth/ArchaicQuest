@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using MIMWebClient.Core.World.Tutorial;
 
 namespace MIMWebClient.Core.Room
@@ -36,6 +37,8 @@ namespace MIMWebClient.Core.Room
                 var roomdata = LoadRoom.DisplayRoom(room, room.players[i].Name);
                 Score.UpdateUiRoom(room.players[i], roomdata);
             }
+
+          
 
             if (room.EventOnEnter != null)
             {
@@ -297,6 +300,14 @@ namespace MIMWebClient.Core.Room
                                 if (mob.EventOnEnter != null)
                                 {
                                     Event.ParseCommand(mob.EventOnEnter, player, mob, room);
+                                }
+
+                                foreach (var quest in player.QuestLog.Where(x => x.Completed == false))
+                                {
+                                    if (quest.QuestHint != null && mob.Name == quest.QuestFindMob)
+                                    {
+                                        HubContext.SendToClient(quest.QuestHint, player.HubGuid);
+                                    }
                                 }
 
                             }

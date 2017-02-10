@@ -259,9 +259,11 @@ namespace MIMWebClient.Core.World.Tutorial
                      "Mortem has asked me to go find Lance the village elder who can be found in the main square, From the temple leave south and follow the hill path in to town." +
                      "<p class='RoomExits'>[Hint] Type greet lance to greet the Elder once you have found him</p>",
                         QuestGiver = "Mortem",
-                        QuestFindMob = Lance.VillageElderLance().Description,
+                        QuestFindMob = Lance.VillageElderLance().Name,
                         Type = Quest.QuestType.FindMob,
                         RewardXp = 250,
+                        QuestHint = "<h5>Hint:</h5><p>Lance is here, type greet Lance to interact with him.</p>",
+                        QuestTrigger = Lance.VillageElderLance().Name,
                         RewardDialog = new DialogTree()
                         {
                             Message = "Yes I am Lance, well met $playerName",

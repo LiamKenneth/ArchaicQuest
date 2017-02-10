@@ -370,8 +370,11 @@ namespace MIMWebClient.Core.World.Anker
                 slot = Item.Item.EqSlot.Wielded,
                 location = Item.Item.ItemLocation.Inventory,
                 description = new Description(),
+                itemFlags = new List<Item.Item.ItemFlags>()
 
             };
+
+            dagger.itemFlags.Add(Item.Item.ItemFlags.glow);
 
             dagger.description.look = "This is just a blunt dagger";
             dagger.description.exam = "This is an extremly blunt dagger";
