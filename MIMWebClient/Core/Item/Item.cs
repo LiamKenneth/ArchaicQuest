@@ -93,6 +93,7 @@ namespace MIMWebClient.Core.Item
             Wrist,
             Wielded,
             Held,
+            Shield,
             Floating
            
         }

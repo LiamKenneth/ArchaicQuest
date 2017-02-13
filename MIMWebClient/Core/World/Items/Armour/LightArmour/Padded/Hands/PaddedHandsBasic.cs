@@ -8,7 +8,7 @@ namespace MIMWebClient.Core.World.Items.Armour.LightArmour.Padded.Hands
 {
     public class PaddedHandsBasic
     {
-        public Item.Item PaddedGloves()
+        public static Item.Item PaddedGloves()
         {
             var paddedGloves = new Item.Item
             {

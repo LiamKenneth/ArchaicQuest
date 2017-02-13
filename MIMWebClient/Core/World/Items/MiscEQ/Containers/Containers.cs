@@ -7,7 +7,7 @@ namespace MIMWebClient.Core.World.Items.MiscEQ.Containers
 {
     public class Containers
     {
-        public Item.Item LeatherBackpack()
+        public static Item.Item LeatherBackpack()
         {
             var backpack = new Item.Item
             {

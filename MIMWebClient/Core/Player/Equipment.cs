@@ -29,6 +29,7 @@ namespace MIMWebClient.Core.Player
         public string Wrist { get; set; } = "Nothing";
         public string Wrist2 { get; set; } = "Nothing";
         public string Wielded { get; set; } = "Nothing";
+        public string Shield { get; set; } = "Nothing";
         public string Held { get; set; } = "Nothing";
         public string Floating { get; set; } = "Nothing";
        
@@ -101,6 +102,7 @@ namespace MIMWebClient.Core.Player
                 .Append("<tr><td>").Append("&lt;Worn around wrist&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Wrist)).Append("</td></tr>")
                 .Append("<tr><td>").Append("&lt;Worn around wrist&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Wrist2)).Append("</td></tr>")
                 .Append("<tr><td>").Append("&lt;Wielded&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Wielded)).Append("</td></tr>")
+                .Append("<tr><td>").Append("&lt;Shield&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Shield)).Append("</td></tr>")
                 .Append("<tr><td>").Append("&lt;Held&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Held)).Append("</td></tr>")
                 .Append("<tr><td>").Append("&lt;Floating nearby&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Floating)).Append("</td></tr>").Append("</table");
 

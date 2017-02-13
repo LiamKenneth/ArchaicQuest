@@ -9,7 +9,7 @@ namespace MIMWebClient.Core.World.Items.Weapons.DaggerBasic
     public class DaggerBasic
     {
 
-        public Item.Item IronDagger()
+        public static Item.Item IronDagger()
         {
             var ironDagger = new Item.Item
             {

@@ -8,7 +8,7 @@ namespace MIMWebClient.Core.World.Items.Weapons.Sword.Long
 {
     public class LongSwordBasic
     {
-        public Item.Item LongIronSword()
+        public static Item.Item LongIronSword()
         {
             var LongIronSword = new Item.Item
             {

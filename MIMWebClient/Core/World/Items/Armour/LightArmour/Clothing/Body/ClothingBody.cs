@@ -48,5 +48,7 @@ namespace MIMWebClient.Core.World.Items.Clothing.ClothingBody
 
             return plainTop;
         }
+
+
     }
 }

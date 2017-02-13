@@ -8,7 +8,7 @@ namespace MIMWebClient.Core.World.Items.Armour.LightArmour.Padded.Body
 {
     public class PaddedBodyBasic
     {
-        public Item.Item PaddedBreastPlate()
+        public static Item.Item PaddedBreastPlate()
         {
             var paddedBreastPlate = new Item.Item
             {
@@ -16,8 +16,8 @@ namespace MIMWebClient.Core.World.Items.Armour.LightArmour.Padded.Body
                 Weight = 10,
                 count = 10,
                 equipable = true,
-                eqSlot = Item.Item.EqSlot.Body,
-                slot = Item.Item.EqSlot.Body,
+                eqSlot = Item.Item.EqSlot.Torso,
+                slot = Item.Item.EqSlot.Torso,
                 type = Item.Item.ItemType.Armour,
                 location = Item.Item.ItemLocation.Inventory,
               

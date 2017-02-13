@@ -8,7 +8,7 @@ namespace MIMWebClient.Core.World.Items.Weapons.Staff
 {
     public class StaffBasic
     {
-        public Item.Item WoodenQuarterstaff()
+        public static Item.Item WoodenQuarterstaff()
         {
             var WoodenQuarterstaff = new Item.Item
             {

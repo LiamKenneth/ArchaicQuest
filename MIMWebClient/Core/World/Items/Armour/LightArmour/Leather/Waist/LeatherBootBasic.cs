@@ -8,7 +8,7 @@ namespace MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Feet
 {
     public class LeatherBootBasic
     {
-        public Item.Item WornLeatherBoots()
+        public static Item.Item WornLeatherBoots()
         {
             var wornLeatherBoots = new Item.Item
             {

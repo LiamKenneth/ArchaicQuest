@@ -8,7 +8,7 @@ namespace MIMWebClient.Core.World.Items.Weapons.Axe
 {
     public class AxeBasic
     {
-        public Item.Item IronHatchet()
+        public static Item.Item IronHatchet()
         {
             var IronHatchet = new Item.Item
             {

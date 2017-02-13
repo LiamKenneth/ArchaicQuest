@@ -5,6 +5,20 @@ using System.Web;
 using MIMWebClient.Core.Item;
 using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.Player;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Feet;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Padded.Arms;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Padded.Body;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Padded.Hands;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Padded.Legs;
+using MIMWebClient.Core.World.Items.Consumables.Drinks;
+using MIMWebClient.Core.World.Items.Consumables.Food;
+using MIMWebClient.Core.World.Items.MiscEQ.Light;
+using MIMWebClient.Core.World.Items.Weapons.Axe;
+using MIMWebClient.Core.World.Items.Weapons.Blunt;
+using MIMWebClient.Core.World.Items.Weapons.DaggerBasic;
+using MIMWebClient.Core.World.Items.Weapons.Staff;
+using MIMWebClient.Core.World.Items.Weapons.Sword.Long;
+using MIMWebClient.Core.World.Items.Weapons.Sword.Short;
 
 namespace MIMWebClient.Core.World.Anker.Mobs
 {
@@ -61,6 +75,20 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 Gold = 25
             };
 
+            Anika.itemsToSell.Add(ShortSwordBasic.ShortIronSword());
+            Anika.itemsToSell.Add(DaggerBasic.IronDagger());
+            Anika.itemsToSell.Add(LongSwordBasic.LongIronSword());
+            Anika.itemsToSell.Add(StaffBasic.WoodenQuarterstaff());
+            Anika.itemsToSell.Add(AxeBasic.IronHatchet());
+            Anika.itemsToSell.Add(MaceBasic.IronMace());
+            Anika.itemsToSell.Add(PaddedBodyBasic.PaddedBreastPlate());
+            Anika.itemsToSell.Add(PaddedSleeves.PaddedSleeve());
+            Anika.itemsToSell.Add(PaddedHandsBasic.PaddedGloves());
+            Anika.itemsToSell.Add(PaddedLegsBasic.PaddedGreaves());
+            Anika.itemsToSell.Add(LeatherBootBasic.WornLeatherBoots());
+            Anika.itemsToSell.Add(Light.WoodenTorch());
+            Anika.itemsToSell.Add(drink.WaterSkin());
+            Anika.itemsToSell.Add(Food.Cheese());
             Anika.itemsToSell.Add(backpack);
             #endregion
 

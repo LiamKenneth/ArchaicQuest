@@ -17,6 +17,10 @@ h1, h2, h3, h4, h5, h6 {
 #discussion {
   position: relative;
   font-size: 12px; }
+  #discussion tr td {
+    padding: 5px; }
+  #discussion tr:nth-child(even) {
+    background: #444; }
   @media screen and (min-width: 768px) {
     #discussion {
       font-size: 15px; } }
@@ -48,7 +52,9 @@ h1, h2, h3, h4, h5, h6 {
   #discussion table {
     width: 100%; }
   #discussion thead {
-    border: 1px dashed #fff; }
+    border-bottom: 1px dashed #fff; }
+    #discussion thead td {
+      padding: 5px; }
 
 pre {
   background: #272624;

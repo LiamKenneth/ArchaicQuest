@@ -8,7 +8,7 @@ namespace MIMWebClient.Core.World.Items.Weapons.Blunt
 {
     public class MaceBasic
     {
-        public Item.Item IronMace()
+        public static Item.Item IronMace()
         {
             var ironMace = new Item.Item
             {

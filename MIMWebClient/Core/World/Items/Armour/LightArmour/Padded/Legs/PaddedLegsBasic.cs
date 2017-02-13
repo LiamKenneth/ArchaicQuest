@@ -8,7 +8,7 @@ namespace MIMWebClient.Core.World.Items.Armour.LightArmour.Padded.Legs
 {
     public class PaddedLegsBasic
     {
-        public Item.Item PaddedGreaves()
+        public static Item.Item PaddedGreaves()
         {
             var paddedGreaves = new Item.Item
             {
