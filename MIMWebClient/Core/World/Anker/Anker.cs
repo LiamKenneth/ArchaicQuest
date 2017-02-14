@@ -1983,10 +1983,10 @@ namespace MIMWebClient.Core.World.Anker
             //TODO : create ANker lane to connect this to
             var south = new Exit
             {
-                name = "East",
+                name = "South",
                 area = "Anker",
                 region = "Anker",
-                areaId = 15,
+                areaId = 20,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false,
@@ -1995,9 +1995,8 @@ namespace MIMWebClient.Core.World.Anker
             
      
             #endregion
-            room.exits.Add(north);
-       
-           // room.exits.Add(south);
+            room.exits.Add(north);     
+             room.exits.Add(south);
 
 
             return room;
@@ -2012,9 +2011,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 areaId = 20,
                 title = "Anker Lane",
-                description = "<p>This dirt path connects the Anker Lane, the main road through the village to the busy village square." +
-                              " The path is flanked by cut grass and a border of wild flowers. You can also see the backs of some of the villagers houses from here.</p>" +
-                              "<p>To the north east in the distance upon a hill over looking Anker is the village temple.</p>",
+                description = "<p>..</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -2040,7 +2037,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "North",
                 area = "Anker",
                 region = "Anker",
-                areaId = 7,
+                areaId = 19,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
