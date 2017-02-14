@@ -49,5 +49,48 @@ namespace MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Hands
 
             return GuantletOfTyr;
         }
+
+        public static Item.Item BronzeGauntlets()
+        {
+
+            var BronzeGauntlets = new Item.Item
+            {
+                armourType = Item.Item.ArmourType.PlateMail,
+                eqSlot = Item.Item.EqSlot.Body,
+                description = new Description()
+                {
+                    look = "Bronze platemail Gauntlets",
+                    exam = "Bronze platemail Gauntlets",
+                    smell = "Bronze platemail Gauntlets",
+                    room = "Bronze platemail Gauntlets",
+                    taste = "",
+                    touch = ""
+                },
+                location = Item.Item.ItemLocation.Room,
+                slot = Item.Item.EqSlot.Hands,
+                type = Item.Item.ItemType.Armour,
+                name = "Bronze platemail Gauntlets",
+                stats = new Stats()
+                {
+                    minUsageLevel = 7
+                },
+                ArmorRating = new ArmourRating()
+                {
+                    Armour = 5,
+                    Magic = 1
+                },
+                itemFlags = new EditableList<Item.Item.ItemFlags>()
+                {
+                    Item.Item.ItemFlags.equipable,
+   
+                },
+                Weight = 15,
+                equipable = true,
+                Gold = 80
+
+            };
+
+            return BronzeGauntlets;
+        }
     }
 }

@@ -43,11 +43,54 @@ namespace MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Legs
                     Item.Item.ItemFlags.bless,
                 },
                 Weight = 15,
-                equipable = true
+                equipable = true,
 
             };
 
             return SteelGreevesOfTyr;
+        }
+
+        public static Item.Item BronzeGreaves()
+        {
+
+            var BronzeGreaves = new Item.Item
+            {
+                armourType = Item.Item.ArmourType.PlateMail,
+                eqSlot = Item.Item.EqSlot.Body,
+                description = new Description()
+                {
+                    look = "Bronze platemail Greaves",
+                    exam = "Bronze platemail Greaves",
+                    smell = "Bronze platemail Greaves",
+                    room = "Bronze platemail Greaves",
+                    taste = "",
+                    touch = ""
+                },
+                location = Item.Item.ItemLocation.Room,
+                slot = Item.Item.EqSlot.Legs,
+                type = Item.Item.ItemType.Armour,
+                name = "Bronze platemail Greaves",
+                stats = new Stats()
+                {
+                    minUsageLevel = 7
+                },
+                ArmorRating = new ArmourRating()
+                {
+                    Armour = 5,
+                    Magic = 1
+                },
+                itemFlags = new EditableList<Item.Item.ItemFlags>()
+                {
+                    Item.Item.ItemFlags.equipable,
+
+                },
+                Weight = 15,
+                equipable = true,
+                Gold = 80
+
+            };
+
+            return BronzeGreaves;
         }
     }
 }

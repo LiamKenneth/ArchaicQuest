@@ -332,6 +332,12 @@
     <Compile Include="Core\World\Items\Armour\LightArmour\Padded\Hands\PaddedHandsBasic.cs" />
     <Compile Include="Core\World\Items\Armour\LightArmour\Padded\Legs\PaddedLegsBasic.cs" />
     <Compile Include="Core\World\Items\Armour\LightArmour\Shields\ShieldBasic.cs" />
+    <Compile Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Arms\ScalemailArms.cs" />
+    <Compile Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Body\ScalemailBody.cs" />
+    <Compile Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Feet\ScalemailFeet.cs" />
+    <Compile Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Hands\ScalemailHands.cs" />
+    <Compile Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Head\ScalemailHead.cs" />
+    <Compile Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Legs\ScalemailLegs.cs" />
     <Compile Include="Core\World\Items\Consumables\Drinks\drink.cs" />
     <Compile Include="Core\World\Items\Consumables\Food\Food.cs" />
     <Compile Include="Core\World\Items\MiscEQ\Containers\Containers.cs" />
@@ -561,14 +567,8 @@
     <Folder Include="Core\World\Items\Armour\MediumArmour\Hide\Legs\" />
     <Folder Include="Core\World\Items\Armour\MediumArmour\Hide\Waist\" />
     <Folder Include="Core\World\Items\Armour\MediumArmour\ScaleMail\AboutBody\" />
-    <Folder Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Arms\" />
-    <Folder Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Body\" />
     <Folder Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Cloak\" />
     <Folder Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Face\" />
-    <Folder Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Feet\" />
-    <Folder Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Hands\" />
-    <Folder Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Head\" />
-    <Folder Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Legs\" />
     <Folder Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Waist\" />
     <Folder Include="Core\World\Items\Armour\MediumArmour\Shields\" />
     <Folder Include="Core\World\Items\Consumables\Potions\" />

@@ -4,6 +4,18 @@ using System.Linq;
 using System.Web;
 using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.Player;
+using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Arms;
+using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Body;
+using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Feet;
+using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Hands;
+using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Head;
+using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Legs;
+using MIMWebClient.Core.World.Items.Armour.MediumArmour.ScaleMail.Arms;
+using MIMWebClient.Core.World.Items.Armour.MediumArmour.ScaleMail.Body;
+using MIMWebClient.Core.World.Items.Armour.MediumArmour.ScaleMail.Feet;
+using MIMWebClient.Core.World.Items.Armour.MediumArmour.ScaleMail.Hands;
+using MIMWebClient.Core.World.Items.Armour.MediumArmour.ScaleMail.Head;
+using MIMWebClient.Core.World.Items.Armour.MediumArmour.ScaleMail.Legs;
 using MIMWebClient.Core.World.Items.Weapons.Axe;
 using MIMWebClient.Core.World.Items.Weapons.Blunt;
 using MIMWebClient.Core.World.Items.Weapons.DaggerBasic;
@@ -62,6 +74,24 @@ namespace MIMWebClient.Core.World.Anker.Mobs
             ferron.itemsToSell.Add(LongSwordBasic.Katana());
             ferron.itemsToSell.Add(DaggerBasic.HuntingKnife());
             ferron.itemsToSell.Add(DaggerBasic.HiddenBlade());
+
+            //armor scale mail
+
+            ferron.itemsToSell.Add(ScalemailHead.ScalemailHelm());
+            ferron.itemsToSell.Add(ScalemailBody.ScalemailBreastPlate());
+            ferron.itemsToSell.Add(ScalemailArms.ScalemailSleeves());
+            ferron.itemsToSell.Add(ScalemailLegs.ScalemailGreaves());
+            ferron.itemsToSell.Add(ScalemailHands.ScalemailGauntlets());
+            ferron.itemsToSell.Add(ScalemailFeet.ScalemailBoots());
+
+            //armour bronze - bronze has crappy stats, make better?
+            ferron.itemsToSell.Add(FullPlateHelm.BronzeHelm());
+            ferron.itemsToSell.Add(FullPlateBody.BronzeBreastPlate());
+            ferron.itemsToSell.Add(FullPlateSleeves.BronzeSleeves());
+            ferron.itemsToSell.Add(FullPlateGreaves.BronzeGreaves());
+            ferron.itemsToSell.Add(FullPlateGauntlet.BronzeGauntlets());
+            ferron.itemsToSell.Add(FullPlateBoots.BronzeBoots());
+
             return ferron;
         }
     }

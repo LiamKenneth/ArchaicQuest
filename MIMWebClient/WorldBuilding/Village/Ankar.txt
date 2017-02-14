@@ -32,8 +32,10 @@ Potential Layout
 							|			 |				|                                       |                                  |
 					 Square Walk------Square Walk-------Square Walk-------------Church Road---Church Road                          |
 			  |											|                                                                   Path to the woods
-			  | 	    House			House	     	|             House *        House             House                       |
-       		  |	         |                |             |              |             |               |                             |
+			  | 	    			     	            |             House *        House             House                       |
+       		  |	                                Path to the Square 
+			             House         House            |         
+						  |              |              |
           Ankar Lane---Ankar Lane-----Ankar Lane-------Ankar Lane-----Ankar LaNe----Ankar Lane---- Ankar Lane----------------Ankar Lane----ELSEWHERE  
               |          |                |              |              |            |                 |                           |                                   Crops--crops---crops
             House      House            House            |             House       House             House                         |                                     |      |       |

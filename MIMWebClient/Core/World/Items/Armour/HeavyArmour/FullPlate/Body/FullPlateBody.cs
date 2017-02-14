@@ -49,5 +49,48 @@ namespace MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Body
 
             return BreastPlateOfTyr;
         }
+
+        public static Item.Item BronzeBreastPlate()
+        {
+
+            var BronzeBreastPlate = new Item.Item
+            {
+                armourType = Item.Item.ArmourType.PlateMail,
+                eqSlot = Item.Item.EqSlot.Body,
+                description = new Description()
+                {
+                    look = "Bronze platemail Breastplate",
+                    exam = "Bronze platemail Breastplate",
+                    smell = "Bronze platemail Breastplate",
+                    room = "Bronze platemail Breastplate",
+                    taste = "",
+                    touch = ""
+                },
+                location = Item.Item.ItemLocation.Room,
+                slot = Item.Item.EqSlot.Body,
+                type = Item.Item.ItemType.Armour,
+                name = "Bronze platemail Breastplate",
+                stats = new Stats()
+                {
+                    minUsageLevel = 7
+                },
+                ArmorRating = new ArmourRating()
+                {
+                    Armour = 5,
+                    Magic = 1
+                },
+                itemFlags = new EditableList<Item.Item.ItemFlags>()
+                {
+                    Item.Item.ItemFlags.equipable,
+      
+                },
+                Weight = 15,
+                equipable = true,
+                Gold = 80
+
+            };
+
+            return BronzeBreastPlate;
+        }
     }
 }
