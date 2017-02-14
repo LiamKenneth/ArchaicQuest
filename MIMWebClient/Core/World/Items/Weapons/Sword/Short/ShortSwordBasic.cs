@@ -45,5 +45,43 @@ namespace MIMWebClient.Core.World.Items.Weapons.Sword.Short
 
             return ShortIronSword;
         }
+
+        public static Item.Item Saber()
+        {
+            var Saber = new Item.Item
+            {
+                name = "Saber",
+                Weight = 2,
+                count = 10,
+                equipable = true,
+                eqSlot = Item.Item.EqSlot.Wielded,
+                slot = Item.Item.EqSlot.Wielded,
+                location = Item.Item.ItemLocation.Inventory,
+                weaponSpeed = 1,
+                weaponType = Item.Item.WeaponType.ShortBlades,
+                attackType = Item.Item.AttackType.Slash,
+                stats = new Stats()
+                {
+                    damMax = 8,
+                    damMin = 1,
+                    damRoll = 0,
+                    minUsageLevel = 1,
+                    worth = 1
+                },
+                description = new Description()
+                {
+                    exam = "A thin light metal saber",
+                    look = "A thin light metal saber",
+                    room = "A thin light metal saber",
+                    smell = "",
+                    taste = "",
+                    touch = "",
+                },
+                Gold = 30
+
+            };
+
+            return Saber;
+        }
     }
 }

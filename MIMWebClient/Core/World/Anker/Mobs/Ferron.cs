@@ -4,7 +4,13 @@ using System.Linq;
 using System.Web;
 using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.Player;
- 
+using MIMWebClient.Core.World.Items.Weapons.Axe;
+using MIMWebClient.Core.World.Items.Weapons.Blunt;
+using MIMWebClient.Core.World.Items.Weapons.DaggerBasic;
+using MIMWebClient.Core.World.Items.Weapons.Spear;
+using MIMWebClient.Core.World.Items.Weapons.Sword.Long;
+using MIMWebClient.Core.World.Items.Weapons.Sword.Short;
+
 namespace MIMWebClient.Core.World.Anker.Mobs
 {
     public class Ferron
@@ -48,6 +54,14 @@ namespace MIMWebClient.Core.World.Anker.Mobs
  
             #endregion
 
+            ferron.itemsToSell.Add(ShortSwordBasic.Saber());
+            ferron.itemsToSell.Add(LongSwordBasic.BastardSword());
+            ferron.itemsToSell.Add(SpearBasic.BoarSpear());
+            ferron.itemsToSell.Add(AxeBasic.DoubleAxe());
+            ferron.itemsToSell.Add(HammerBasic.GreatHammer());
+            ferron.itemsToSell.Add(LongSwordBasic.Katana());
+            ferron.itemsToSell.Add(DaggerBasic.HuntingKnife());
+            ferron.itemsToSell.Add(DaggerBasic.HiddenBlade());
             return ferron;
         }
     }

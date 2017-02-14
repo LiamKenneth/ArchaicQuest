@@ -47,5 +47,81 @@ namespace MIMWebClient.Core.World.Items.Weapons.DaggerBasic
             return ironDagger;
         }
 
+        public static Item.Item HuntingKnife()
+        {
+            var HuntingKnife = new Item.Item
+            {
+                name = "Hunting Knife",
+                Weight = 2,
+                count = 10,
+                equipable = true,
+                eqSlot = Item.Item.EqSlot.Wielded,
+                slot = Item.Item.EqSlot.Wielded,
+                location = Item.Item.ItemLocation.Inventory,
+                weaponSpeed = 1,
+                weaponType = Item.Item.WeaponType.ShortBlades,
+                attackType = Item.Item.AttackType.Slash,
+                stats = new Stats()
+                {
+                    damMax = 6,
+                    damMin = 1,
+                    damRoll = 1,
+                    minUsageLevel = 1,
+                    worth = 10
+                },
+                description = new Description()
+                {
+                    exam = "A hunting knife",
+                    look = "A hunting knife",
+                    room = "A hunting knife",
+                    smell = "",
+                    taste = "",
+                    touch = "",
+                },
+                Gold = 20
+
+            };
+
+            return HuntingKnife;
+        }
+
+        public static Item.Item HiddenBlade()
+        {
+            var HiddenBlade = new Item.Item
+            {
+                name = "Hidden Blade",
+                Weight = 4,
+                count = 10,
+                equipable = true,
+                eqSlot = Item.Item.EqSlot.Wielded,
+                slot = Item.Item.EqSlot.Wielded,
+                location = Item.Item.ItemLocation.Inventory,
+                weaponSpeed = 1,
+                weaponType = Item.Item.WeaponType.ShortBlades,
+                attackType = Item.Item.AttackType.Pierce,
+                stats = new Stats()
+                {
+                    damMax = 6,
+                    damMin = 1,
+                    damRoll = 1,
+                    minUsageLevel = 1,
+                    worth = 10
+                },
+                description = new Description()
+                {
+                    exam = "A Hidden Blade",
+                    look = "A Hidden Blade",
+                    room = "A Hidden Blade",
+                    smell = "",
+                    taste = "",
+                    touch = "",
+                },
+                Gold = 120
+
+            };
+
+            return HiddenBlade;
+        }
+
     }
 }
