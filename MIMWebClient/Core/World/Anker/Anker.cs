@@ -2139,7 +2139,17 @@ namespace MIMWebClient.Core.World.Anker
 
 
             #region exits
-
+            // Create Exits
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 28,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
 
             // Create Exits
             var east = new Exit
@@ -2165,11 +2175,207 @@ namespace MIMWebClient.Core.World.Anker
                 locked = false
             };
 
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 29,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
 
 
             #endregion
+            room.exits.Add(north);
             room.exits.Add(east);
+            room.exits.Add(south);
             room.exits.Add(west);
+ 
+
+            return room;
+        }
+
+        public static Room AnkerHome()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 28,
+                title = "A small cosy home",
+                description = "<p>A large rug covers the wooden floor of the room, to the left is a couple of chairs in front of a small fireplace warming the room. To the right is a small bed.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+            var villager = new Player()
+            {
+                Name = "Male villager",
+                Gender = "Male",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Wisdom = 12,
+                Intelligence = 12,
+                Charisma = 12,
+                Level = 7,
+                HitPoints = 156,
+                MaxHitPoints = 156,
+                MovePoints = 200,
+                MaxMovePoints = 200,
+                Description = "A male villager",
+                Type = Player.PlayerTypes.Mob
+
+            };
+
+            var villager2 = new Player()
+            {
+                Name = "Female villager",
+                Gender = "Female",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Wisdom = 12,
+                Intelligence = 12,
+                Charisma = 12,
+                Level = 10,
+                HitPoints = 210,
+                MaxHitPoints = 210,
+                MovePoints = 200,
+                MaxMovePoints = 200,
+                Description = "A female villager",
+                Type = Player.PlayerTypes.Mob
+
+            };
+
+            room.mobs.Add(villager);
+            room.mobs.Add(villager2);
+
+            #region exits
+
+
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 21,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+            #endregion
+            // Create Exits
+
+            room.exits.Add(south);
+
+            // room.exits.Add(south);
+
+
+            return room;
+        }
+
+        public static Room AnkerHome2()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 29,
+                title = "A small cosy home",
+                description = "<p>A large rug covers the wooden floor of the room, to the left is a couple of chairs in front of a small fireplace warming the room. To the right is a small bed.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+            var villager = new Player()
+            {
+                Name = "Male villager",
+                Gender = "Male",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Wisdom = 12,
+                Intelligence = 12,
+                Charisma = 12,
+                Level = 7,
+                HitPoints = 156,
+                MaxHitPoints = 156,
+                MovePoints = 200,
+                MaxMovePoints = 200,
+                Description = "A male villager",
+                Type = Player.PlayerTypes.Mob
+
+            };
+
+            var villager2 = new Player()
+            {
+                Name = "Female villager",
+                Gender = "Female",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Wisdom = 12,
+                Intelligence = 12,
+                Charisma = 12,
+                Level = 10,
+                HitPoints = 210,
+                MaxHitPoints = 210,
+                MovePoints = 200,
+                MaxMovePoints = 200,
+                Description = "A female villager",
+                Type = Player.PlayerTypes.Mob
+
+            };
+
+            room.mobs.Add(villager);
+            room.mobs.Add(villager2);
+
+            #region exits
+
+
+            // Create Exits
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 21,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+            #endregion
+            // Create Exits
+
+            room.exits.Add(north);
 
             // room.exits.Add(south);
 
@@ -2209,6 +2415,17 @@ namespace MIMWebClient.Core.World.Anker
 
             #region exits
 
+            // Create Exits
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 26,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
 
             // Create Exits
             var east = new Exit
@@ -2235,11 +2452,248 @@ namespace MIMWebClient.Core.World.Anker
             };
 
 
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 27,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
 
 
             #endregion
+            room.exits.Add(north);
             room.exits.Add(east);
+            room.exits.Add(south);
             room.exits.Add(west);
+            // room.exits.Add(south);
+
+
+            return room;
+        }
+
+        public static Room AnkerHome3()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 26,
+                title = "A small cosy home",
+                description = "<p>A large rug covers the wooden floor of the room, to the left is a couple of chairs in front of a small fireplace warming the room. To the right is a small bed.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+            var villager = new Player()
+            {
+                Name = "Male villager",
+                Gender = "Male",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Wisdom = 12,
+                Intelligence = 12,
+                Charisma = 12,
+                Level = 7,
+                HitPoints = 156,
+                MaxHitPoints = 156,
+                MovePoints = 200,
+                MaxMovePoints = 200,
+                Description = "A male villager",
+                Type = Player.PlayerTypes.Mob
+
+            };
+
+            var villager2 = new Player()
+            {
+                Name = "Female villager",
+                Gender = "Female",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Wisdom = 12,
+                Intelligence = 12,
+                Charisma = 12,
+                Level = 10,
+                HitPoints = 210,
+                MaxHitPoints = 210,
+                MovePoints = 200,
+                MaxMovePoints = 200,
+                Description = "A female villager",
+                Type = Player.PlayerTypes.Mob
+
+            };
+
+            var villager3 = new Player()
+            {
+                Name = "Little boy",
+                Gender = "Male",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Wisdom = 12,
+                Intelligence = 12,
+                Charisma = 12,
+                Level = 5,
+                HitPoints = 60,
+                MaxHitPoints = 60,
+                MovePoints = 200,
+                MaxMovePoints = 200,
+                Description = "A little boy",
+                Type = Player.PlayerTypes.Mob
+
+            };
+
+            room.mobs.Add(villager);
+            room.mobs.Add(villager2);
+            room.mobs.Add(villager3);
+            #region exits
+
+
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 25,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+            #endregion
+            // Create Exits
+
+            room.exits.Add(south);
+
+            // room.exits.Add(south);
+
+
+            return room;
+        }
+
+        public static Room AnkerHome4()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 27,
+                title = "A small cosy home",
+                description = "<p>A large rug covers the wooden floor of the room, to the left is a couple of chairs in front of a small fireplace warming the room. To the right is a small bed.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+            var villager = new Player()
+            {
+                Name = "Male villager",
+                Gender = "Male",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Wisdom = 12,
+                Intelligence = 12,
+                Charisma = 12,
+                Level = 7,
+                HitPoints = 156,
+                MaxHitPoints = 156,
+                MovePoints = 200,
+                MaxMovePoints = 200,
+                Description = "A male villager",
+                Type = Player.PlayerTypes.Mob
+
+            };
+
+            var villager2 = new Player()
+            {
+                Name = "Female villager",
+                Gender = "Female",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Wisdom = 12,
+                Intelligence = 12,
+                Charisma = 12,
+                Level = 10,
+                HitPoints = 210,
+                MaxHitPoints = 210,
+                MovePoints = 200,
+                MaxMovePoints = 200,
+                Description = "A female villager",
+                Type = Player.PlayerTypes.Mob
+
+            };
+
+            var villager3 = new Player()
+            {
+                Name = "Little girl",
+                Gender = "Female",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Wisdom = 12,
+                Intelligence = 12,
+                Charisma = 12,
+                Level = 5,
+                HitPoints = 60,
+                MaxHitPoints = 60,
+                MovePoints = 200,
+                MaxMovePoints = 200,
+                Description = "A little girl",
+                Type = Player.PlayerTypes.Mob
+
+            };
+
+            room.mobs.Add(villager);
+            room.mobs.Add(villager2);
+            room.mobs.Add(villager3);
+            #region exits
+
+
+            // Create Exits
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 25,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+            #endregion
+            // Create Exits
+
+            room.exits.Add(north);
+
             // room.exits.Add(south);
 
 
@@ -2292,10 +2746,259 @@ namespace MIMWebClient.Core.World.Anker
             };
 
 
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 38,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 39,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
 
 
             #endregion
+            room.exits.Add(north);
+
             room.exits.Add(east);
+
+            room.exits.Add(south);
+
+
+            // room.exits.Add(south);
+
+
+            return room;
+        }
+
+        public static Room AnkerHome6()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 38,
+                title = "A small cosy home",
+                description = "<p>A large rug covers the wooden floor of the room, to the left is a couple of chairs in front of a small fireplace warming the room. To the right is a small bed.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+            var villager = new Player()
+            {
+                Name = "Male villager",
+                Gender = "Male",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Wisdom = 12,
+                Intelligence = 12,
+                Charisma = 12,
+                Level = 7,
+                HitPoints = 156,
+                MaxHitPoints = 156,
+                MovePoints = 200,
+                MaxMovePoints = 200,
+                Description = "A male villager",
+                Type = Player.PlayerTypes.Mob
+
+            };
+
+            var villager2 = new Player()
+            {
+                Name = "Female villager",
+                Gender = "Female",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Wisdom = 12,
+                Intelligence = 12,
+                Charisma = 12,
+                Level = 10,
+                HitPoints = 210,
+                MaxHitPoints = 210,
+                MovePoints = 200,
+                MaxMovePoints = 200,
+                Description = "A female villager",
+                Type = Player.PlayerTypes.Mob
+
+            };
+
+            var villager3 = new Player()
+            {
+                Name = "Little boy",
+                Gender = "Male",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Wisdom = 12,
+                Intelligence = 12,
+                Charisma = 12,
+                Level = 5,
+                HitPoints = 60,
+                MaxHitPoints = 60,
+                MovePoints = 200,
+                MaxMovePoints = 200,
+                Description = "A little boy",
+                Type = Player.PlayerTypes.Mob
+
+            };
+
+            room.mobs.Add(villager);
+            room.mobs.Add(villager2);
+            room.mobs.Add(villager3);
+            #region exits
+
+
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 37,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+            #endregion
+            // Create Exits
+
+            room.exits.Add(south);
+
+            // room.exits.Add(south);
+
+
+            return room;
+        }
+
+        public static Room AnkerHome5()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 39,
+                title = "A small cosy home",
+                description = "<p>A large rug covers the wooden floor of the room, to the left is a couple of chairs in front of a small fireplace warming the room. To the right is a small bed.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+            var villager = new Player()
+            {
+                Name = "Male villager",
+                Gender = "Male",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Wisdom = 12,
+                Intelligence = 12,
+                Charisma = 12,
+                Level = 7,
+                HitPoints = 156,
+                MaxHitPoints = 156,
+                MovePoints = 200,
+                MaxMovePoints = 200,
+                Description = "A male villager",
+                Type = Player.PlayerTypes.Mob
+
+            };
+
+            var villager2 = new Player()
+            {
+                Name = "Female villager",
+                Gender = "Female",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Wisdom = 12,
+                Intelligence = 12,
+                Charisma = 12,
+                Level = 10,
+                HitPoints = 210,
+                MaxHitPoints = 210,
+                MovePoints = 200,
+                MaxMovePoints = 200,
+                Description = "A female villager",
+                Type = Player.PlayerTypes.Mob
+
+            };
+
+            var villager3 = new Player()
+            {
+                Name = "Little girl",
+                Gender = "Female",
+                Strength = 12,
+                Dexterity = 12,
+                Constitution = 12,
+                Wisdom = 12,
+                Intelligence = 12,
+                Charisma = 12,
+                Level = 5,
+                HitPoints = 60,
+                MaxHitPoints = 60,
+                MovePoints = 200,
+                MaxMovePoints = 200,
+                Description = "A little girl",
+                Type = Player.PlayerTypes.Mob
+
+            };
+
+            room.mobs.Add(villager);
+            room.mobs.Add(villager2);
+            room.mobs.Add(villager3);
+            #region exits
+
+
+            // Create Exits
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 37,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+            #endregion
+            // Create Exits
+
+            room.exits.Add(north);
 
             // room.exits.Add(south);
 

@@ -35,9 +35,15 @@ namespace MIMWebClient.Core.World
                 Anker.Anker.AnkerLaneWest21(),
                 Anker.Anker.AnkerLaneWest25(),
                 Anker.Anker.AnkerLaneWest37(),
-                 Anker.Anker.AnkerLaneEast22(),
+                Anker.Anker.AnkerLaneEast22(),
                 Anker.Anker.AnkerLaneEast23(),
-                Anker.Anker.AnkerLaneEast24()
+                Anker.Anker.AnkerLaneEast24(),
+                Anker.Anker.AnkerHome(),
+                Anker.Anker.AnkerHome2(),
+                Anker.Anker.AnkerHome3(),
+                Anker.Anker.AnkerHome4(),
+                 Anker.Anker.AnkerHome5(),
+                Anker.Anker.AnkerHome6()
             };
 
             return areas;

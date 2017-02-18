@@ -70,6 +70,12 @@ namespace UpdateDB
                 Anker.AnkerLaneEast22(),
                 Anker.AnkerLaneEast23(),
                 Anker.AnkerLaneEast24(),
+                Anker.AnkerHome(),
+                Anker.AnkerHome2(),
+                Anker.AnkerHome3(),
+                Anker.AnkerHome4(),
+                  Anker.AnkerHome5(),
+                Anker.AnkerHome6()
             };
             areaSpeed.Stop();
             Console.WriteLine("Compiling Areas Completed in {0}ms.", areaSpeed.Elapsed.Milliseconds);
