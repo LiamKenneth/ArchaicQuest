@@ -29,7 +29,15 @@ namespace MIMWebClient.Core.World
                 Anker.Anker.VillageHallEldersRoom(),
                 Anker.Anker.TempleRoad(),
                 Anker.Anker.TempleRoad2(),
-                Anker.Anker.TempleEntrance()
+                Anker.Anker.TempleEntrance(),
+                Anker.Anker.PathToTheSquare(),
+                Anker.Anker.AnkerLane(),
+                Anker.Anker.AnkerLaneWest21(),
+                Anker.Anker.AnkerLaneWest25(),
+                Anker.Anker.AnkerLaneWest37(),
+                 Anker.Anker.AnkerLaneEast22(),
+                Anker.Anker.AnkerLaneEast23(),
+                Anker.Anker.AnkerLaneEast24()
             };
 
             return areas;

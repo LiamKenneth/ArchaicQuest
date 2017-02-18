@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Management;
 using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Item;
 using MIMWebClient.Core.Mob;
@@ -193,7 +194,7 @@ namespace MIMWebClient.Core.World.Anker
             bucketObj.isHiddenInRoom = true;
             bucketObj.name = "bucket";
             bucketObj.location = Item.Item.ItemLocation.Room;
-            
+
 
             bucketGold.count = 75;
             bucketGold.type = Item.Item.ItemType.Gold;
@@ -469,8 +470,8 @@ namespace MIMWebClient.Core.World.Anker
 
             #endregion
 
-         
-             
+
+
 
             #region exits
 
@@ -915,6 +916,17 @@ namespace MIMWebClient.Core.World.Anker
                 locked = false,
             };
 
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 19,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
+
             var west = new Exit
             {
                 name = "West",
@@ -927,10 +939,13 @@ namespace MIMWebClient.Core.World.Anker
             };
 
 
+
+
             room.keywords.Add(stone);
             #endregion
             room.exits.Add(north);
-               room.exits.Add(east);
+            room.exits.Add(east);
+            room.exits.Add(south);
             room.exits.Add(west);
 
 
@@ -983,7 +998,7 @@ namespace MIMWebClient.Core.World.Anker
 
 
 
-// Create Exits
+            // Create Exits
             var east = new Exit
             {
                 name = "East",
@@ -1308,7 +1323,7 @@ namespace MIMWebClient.Core.World.Anker
                 Shop = true,
                 itemsToSell = new List<Item.Item>(),
                 sellerMessage = "Why of course, here is what I can sell you."
-               
+
 
             };
 
@@ -1325,7 +1340,7 @@ namespace MIMWebClient.Core.World.Anker
                 slot = Item.Item.EqSlot.Hands
             };
 
-    
+
             modo.itemsToSell.Add(beer);
 
             var beerTalk = new Responses
@@ -1351,7 +1366,7 @@ namespace MIMWebClient.Core.World.Anker
             };
 
 
-           
+
             modo.Dialogue.Add(beerTalk);
 
             modo.Emotes.Add("wipes down the bar keeping it clean");
@@ -1385,7 +1400,7 @@ namespace MIMWebClient.Core.World.Anker
 
             dyten.Emotes.Add("picks up his glass and stares down into it");
             dyten.Emotes.Add("grabs his glass and lifts it to his lips taking a large gulp of beer");
-            
+
             var recall = new Recall
             {
                 Area = room.area,
@@ -1600,7 +1615,7 @@ namespace MIMWebClient.Core.World.Anker
 
             };
 
-         
+
             #region exits
 
 
@@ -1758,7 +1773,7 @@ namespace MIMWebClient.Core.World.Anker
 
             #endregion
 
-          //  room.exits.Add(east);
+            //  room.exits.Add(east);
             room.exits.Add(south);
 
 
@@ -1790,7 +1805,7 @@ namespace MIMWebClient.Core.World.Anker
 
             };
 
-            
+
             #region exits
 
 
@@ -1922,12 +1937,12 @@ namespace MIMWebClient.Core.World.Anker
                 locked = false
             };
 
-           
+
 
 
             #endregion
             room.exits.Add(south);
-            
+
 
             return room;
         }
@@ -1960,7 +1975,7 @@ namespace MIMWebClient.Core.World.Anker
 
             };
 
- 
+
 
             #region exits
 
@@ -1992,17 +2007,17 @@ namespace MIMWebClient.Core.World.Anker
                 locked = false,
             };
 
-            
-     
+
+
             #endregion
-            room.exits.Add(north);     
-             room.exits.Add(south);
+            room.exits.Add(north);
+            room.exits.Add(south);
 
 
             return room;
         }
 
-        //TODO: confirm id, and find a better way to do that
+
         public static Room AnkerLane()
         {
             var room = new Room
@@ -2010,8 +2025,8 @@ namespace MIMWebClient.Core.World.Anker
                 region = "Anker",
                 area = "Anker",
                 areaId = 20,
-                title = "Anker Lane",
-                description = "<p>..</p>",
+                title = "Middle of Anker Lane",
+                description = "<p>The mud trodden path forks off to the north leading to the main hub of Anker. A tree towers over the fork in the road with a sign attached to it. The main path continues east and west containing houses in both directions.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -2025,6 +2040,16 @@ namespace MIMWebClient.Core.World.Anker
                 clean = true
 
             };
+
+            var sign = new RoomObject()
+            {
+                name = "sign",
+                look = "The sign reads: East to Anker Forest and farms, West to Ester.",
+                examine = "The sign reads: East to Anker Forest and farms, West to Ester.",
+                touch = "The sign is smooth but weathered wood with engraved writing"
+            };
+
+            room.keywords.Add(sign);
 
 
 
@@ -2047,16 +2072,27 @@ namespace MIMWebClient.Core.World.Anker
 
             // Create Exits
             //TODO : create ANker lane to connect this to
-            //var south = new Exit
-            //{
-            //    name = "East",
-            //    area = "Anker",
-            //    region = "Anker",
-            //    areaId = 15,
-            //    keywords = new List<string>(),
-            //    hidden = false,
-            //    locked = false,
-            //};
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 21,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
+
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 22,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+            };
 
 
             //TODO add exits east and west
@@ -2064,6 +2100,76 @@ namespace MIMWebClient.Core.World.Anker
 
             #endregion
             room.exits.Add(north);
+            room.exits.Add(east);
+            room.exits.Add(west);
+
+
+            return room;
+        }
+
+        #region westAnker
+        public static Room AnkerLaneWest21()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 21,
+                title = "Anker Lane",
+                description = "<p>The wide path runs through the heart of Anker formed from years of use. " +
+                              "Small cottages line the road on both sides and continue" +
+                              "to do so both east and west. Wild flowers line most of the" +
+                              " path with a few small trees here and there. " +
+                              "The occasional chimney puffs smoke up in the air.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+
+
+            #region exits
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 20,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            // Create Exits
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 25,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            #endregion
+            room.exits.Add(east);
+            room.exits.Add(west);
 
             // room.exits.Add(south);
 
@@ -2071,6 +2177,340 @@ namespace MIMWebClient.Core.World.Anker
             return room;
         }
 
+        public static Room AnkerLaneWest25()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 25,
+                title = "Anker Lane",
+                description = "<p>The wide path runs through the heart of Anker formed from years of use. " +
+                              "Small cottages line the road on both sides and continue" +
+                              "to do so both east and west. Wild flowers line most of the" +
+                              " path with a few small trees here and there. " +
+                              "The occasional chimney puffs smoke up in the air.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+
+
+            #region exits
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 21,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            // Create Exits
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 37,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+
+            #endregion
+            room.exits.Add(east);
+            room.exits.Add(west);
+            // room.exits.Add(south);
+
+
+            return room;
+        }
+
+        public static Room AnkerLaneWest37()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 37,
+                title = "Anker Lane",
+                description = "<p>The wide path runs through the heart of Anker formed from years of use. " +
+                              "Small cottages line the road on both sides and continue" +
+                              "to do so both east and west. Wild flowers line most of the" +
+                              " path with a few small trees here and there. " +
+                              "The occasional chimney puffs smoke up in the air.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+
+
+            #region exits
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 25,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+
+            #endregion
+            room.exits.Add(east);
+
+            // room.exits.Add(south);
+
+
+            return room;
+        }
+        #endregion
+        #region EastAnker
+        public static Room AnkerLaneEast22()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 22,
+                title = "Anker Lane",
+                description = "<p>The wide path runs through the heart of Anker formed from years of use. " +
+                              "Small cottages line the road on both sides and continue" +
+                              "to do so both east and west. Wild flowers line most of the" +
+                              " path with a few small trees here and there. " +
+                              "The occasional chimney puffs smoke up in the air.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+
+
+            #region exits
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 23,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            // Create Exits
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 20,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+
+            #endregion
+            room.exits.Add(east);
+            room.exits.Add(west);
+            // room.exits.Add(south);
+
+
+            return room;
+        }
+
+        public static Room AnkerLaneEast23()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 23,
+                title = "Anker Lane",
+                description = "<p>The wide path runs through the heart of Anker formed from years of use. " +
+                              "Small cottages line the road on both sides and continue" +
+                              "to do so both east and west. Wild flowers line most of the" +
+                              " path with a few small trees here and there. " +
+                              "The occasional chimney puffs smoke up in the air.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+
+
+            #region exits
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 24,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            // Create Exits
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 22,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+
+            #endregion
+            room.exits.Add(east);
+            room.exits.Add(west);
+            // room.exits.Add(south);
+
+
+            return room;
+        }
+
+        public static Room AnkerLaneEast24()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 24,
+                title = "Anker Lane",
+                description = "<p>The wide path runs through the heart of Anker formed from years of use. " +
+                              "Small cottages line the road on both sides and continue" +
+                              "to do so both east and west. Wild flowers line most of the" +
+                              " path with a few small trees here and there. " +
+                              "The occasional chimney puffs smoke up in the air.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+
+
+            #region exits
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 40,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            // Create Exits
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 23,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+
+            #endregion
+//room.exits.Add(east);
+             room.exits.Add(west);
+             
+
+
+            return room;
+        }
+        #endregion
 
     }
 }

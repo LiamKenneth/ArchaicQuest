@@ -14,9 +14,9 @@ namespace UpdateDB
     class UpdateDb
     {
         public IMongoCollection<Room> roomCollection { get; set; }
- 
 
- 
+
+
         static void Main(string[] args)
         {
             //TODO: Clean up :)
@@ -30,7 +30,7 @@ namespace UpdateDB
             var database = client.GetDatabase("mimdb");
 
             var roomCollection = database.GetCollection<Room>("Room");
-            
+
             Console.WriteLine("Cleaning DB");
             database.DropCollection("Room");
             Console.WriteLine("Compiling Areas.");
@@ -61,13 +61,21 @@ namespace UpdateDB
                 Anker.VillageHallEldersRoom(),
                 Anker.TempleRoad(),
                 Anker.TempleRoad2(),
-                Anker.TempleEntrance()
+                Anker.TempleEntrance(),
+                Anker.PathToTheSquare(),
+                Anker.AnkerLane(),
+                Anker.AnkerLaneWest21(),
+                Anker.AnkerLaneWest25(),
+                Anker.AnkerLaneWest37(),
+                Anker.AnkerLaneEast22(),
+                Anker.AnkerLaneEast23(),
+                Anker.AnkerLaneEast24(),
             };
             areaSpeed.Stop();
             Console.WriteLine("Compiling Areas Completed in {0}ms.", areaSpeed.Elapsed.Milliseconds);
 
             //check areas for duplicate ids
- 
+
 
             Console.WriteLine("Adding Area's to Database");
             var addSpeed = new Stopwatch();
@@ -75,7 +83,7 @@ namespace UpdateDB
             foreach (var area in areas)
             {
                 Console.WriteLine("Added {0}", area.title);
-               
+
                 roomCollection.InsertOne(area);
             }
             addSpeed.Stop();
