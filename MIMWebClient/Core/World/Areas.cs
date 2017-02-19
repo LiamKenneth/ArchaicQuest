@@ -42,8 +42,14 @@ namespace MIMWebClient.Core.World
                 Anker.Anker.AnkerHome2(),
                 Anker.Anker.AnkerHome3(),
                 Anker.Anker.AnkerHome4(),
-                 Anker.Anker.AnkerHome5(),
-                Anker.Anker.AnkerHome6()
+                Anker.Anker.AnkerHome5(),
+                Anker.Anker.AnkerHome6(),
+                Anker.Anker.AnkerHome31(),
+                Anker.Anker.AnkerHome32(),
+                Anker.Anker.AnkerHome33(),
+                Anker.Anker.AnkerHome34(),
+                Anker.Anker.AnkerHome35(),
+                Anker.Anker.AnkerHome36(),
             };
 
             return areas;

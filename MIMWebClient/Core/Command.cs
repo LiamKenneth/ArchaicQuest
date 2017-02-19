@@ -71,10 +71,20 @@ namespace MIMWebClient.Core
                 {"unwield", () => Equipment.RemoveItem(playerData, commandOptions, false, true)},
                 {"kill", () => Fight2.PerpareToFight(playerData, room, commandOptions)},
                 {"flee", () => Flee.fleeCombat(playerData, room)},
+
+                //spells
                 {"c magic missile", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
                 {"cast magic missile", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
+                {"c armour", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
+                {"cast armour", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
+                { "c armor", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
+                {"cast armor", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
+
+                //skills
                 {"punch", () => Punch.StartPunch(playerData, room)},
                 {"kick", () => Kick.StartKick(playerData, room)},
+
+                //
                 {"unlock", () => ManipulateObject.UnlockItem(room, playerData, commandOptions, commandKey)},
                 {"lock", () => ManipulateObject.LockItem(room, playerData, commandOptions, commandKey)},
                 {"open", () => ManipulateObject.Open(room, playerData, commandOptions, commandKey)},

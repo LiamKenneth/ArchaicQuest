@@ -15,14 +15,14 @@ namespace MIMWebClient.Core.Player.Skills
         private static bool _taskRunnning = false;
         public static Skill ArmourSkill { get; set; }
 
-        public static void StartArmour(Player attacker, Room room, string target = "")
+        public static void StartArmour(Player player, Room room, string target = "")
         {
             //Check if player has spell
-            var hasSpell = Skill.CheckPlayerHasSkill(attacker, ArmourAb().Name);
+            var hasSpell = Skill.CheckPlayerHasSkill(player, ArmourAb().Name);
 
             if (hasSpell == false)
             {
-                HubContext.SendToClient("You don't know that spell.", attacker.HubGuid);
+                HubContext.SendToClient("You don't know that spell.", player.HubGuid);
                 return;
             }
 
@@ -36,115 +36,109 @@ namespace MIMWebClient.Core.Player.Skills
             }
 
 
-            if (!_taskRunnning && attacker.Target != null)
+            if (!_taskRunnning && player.Target != null)
             {
 
-            //    if (attacker.ManaPoints < MagicMissileAb().ManaCost)
-            //    {
-            //        HubContext.SendToClient("You clasp your hands together but fail to form any energy", attacker.HubGuid);
+                if (player.ManaPoints < ArmourAb().ManaCost)
+                {
+                    HubContext.SendToClient("You clasp your hands together but fail to form any energy", player.HubGuid);
 
-            //        var excludePlayerInBroadcast = new List<string>();
-            //        excludePlayerInBroadcast.Add(attacker.HubGuid);
+                    var excludePlayerInBroadcast = new List<string> {player.HubGuid};
 
-            //        HubContext.SendToAllExcept(Helpers.ReturnName(attacker, null) + " clasps " + Helpers.ReturnHisOrHers(attacker.Gender) + " hands together but fails to form any energy", excludePlayerInBroadcast, room.players);
+                    HubContext.SendToAllExcept(Helpers.ReturnName(player, null) + " clasps " + Helpers.ReturnHisOrHers(player.Gender) + " hands together but fails to form any energy", excludePlayerInBroadcast, room.players);
 
-            //        return;
-            //    }
+                    return;
+                }
 
-            //    attacker.ManaPoints -= MagicMissileAb().ManaCost;
+                //TODO REfactor
 
-            //    Score.UpdateUiPrompt(attacker);
+                player.ManaPoints -= ArmourAb().ManaCost;
 
-            //    HubContext.SendToClient("A red ball begins swirling between your hands as you begin chanting magic missle", attacker.HubGuid);
+                Score.UpdateUiPrompt(player);
 
-            //    HubContext.SendToClient("A red ball begins swirling between " + Helpers.ReturnName(attacker, null) + " hands " + Helpers.ReturnHisOrHers(attacker.Gender) + " as they begin chanting magic missle", attacker.HubGuid,
-            //        attacker.Target.HubGuid, false, true);
+                HubContext.SendToClient("A white sphere begins swirling between your hands as you begin chanting the armour spell", player.HubGuid);
 
-            //    HubContext.broadcastToRoom("A red ball begins swirling between " +
-            //        Helpers.ReturnName(attacker, null) + " hands " + Helpers.ReturnHisOrHers(attacker.Gender) + " as they begin chanting magic missle " + Helpers.ReturnName(attacker.Target, null), room.players, attacker.HubGuid, true);
+                HubContext.SendToClient("Awhite sphere begins swirling between " + Helpers.ReturnName(player, null) + " hands " + Helpers.ReturnHisOrHers(player.Gender) + " as they begin chanting the Armour spell", player.HubGuid,
+                    player.Target.HubGuid, false, true);
 
-            //    Task.Run(() => DoArmour(attacker, room));
+                HubContext.broadcastToRoom("A white sphere begins swirling between " +
+                    Helpers.ReturnName(player, null) + " hands " + Helpers.ReturnHisOrHers(player.Gender) + " as they begin chanting the armour spell " + Helpers.ReturnName(player.Target, null), room.players, player.HubGuid, true);
 
-            //}
-            //else
-            //{
-            //    if (attacker.Target == null)
-            //    {
-            //        HubContext.SendToClient("Cast magic missile at whom?", attacker.HubGuid);
-            //        return;
-            //    }
+                Task.Run(() => DoArmour(player, room));
 
-            //    HubContext.SendToClient("You are trying to cast magic missle", attacker.HubGuid);
+            }
+            else
+            {
+                if (player.Target == null)
+                {
+
+                    //TODO REfactor
+                    player.ManaPoints -= ArmourAb().ManaCost;
+
+                    Score.UpdateUiPrompt(player);
+
+                    HubContext.SendToClient("A white sphere begins swirling between your hands as you begin chanting the armour spell", player.HubGuid);
+
+                    HubContext.SendToClient("Awhite sphere begins swirling between " + Helpers.ReturnName(player, null) + " hands " + Helpers.ReturnHisOrHers(player.Gender) + " as they begin chanting the Armour spell", player.HubGuid,
+                        player.Target.HubGuid, false, true);
+
+                    HubContext.broadcastToRoom("A white sphere begins swirling between " +
+                        Helpers.ReturnName(player, null) + " hands " + Helpers.ReturnHisOrHers(player.Gender) + " as they begin chanting the armour spell " + Helpers.ReturnName(player.Target, null), room.players, player.HubGuid, true);
+
+                    Task.Run(() => DoArmour(player, room));
+                     
+                }
+
+                HubContext.SendToClient("You are trying to cast magic missle", player.HubGuid);
 
             }
 
         }
 
-        //private static async Task DoArmour(Player attacker, Room room)
-        //{
-        //    _taskRunnning = true;
-        //    attacker.Status = Player.PlayerStatus.Busy;
+        private static async Task DoArmour(Player attacker, Room room)
+        {
+            _taskRunnning = true;
+            attacker.Status = Player.PlayerStatus.Busy;
 
 
-        //    await Task.Delay(1000);
+            await Task.Delay(500);
 
+            if (attacker.Target == null)
+            {
+                var castingTextAttacker =
+                    "You release the white sphere from your hands and it surrounds your whole body providing extra protection.";
+                 
+                var castingTextRoom = Helpers.ReturnName(attacker, null) +  " releases a white glowing sphere which surrounds " + Helpers.ReturnHisOrHers(attacker.Gender) + " body.";
 
-        //    //get attacker strength
-        //    var die = new PlayerStats();
+                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
+                
+                HubContext.SendToAllExcept(castingTextRoom, room.fighting, room.players);
 
-        //    var ballCount = 1;
+                attacker.ArmorRating += 20;
 
-        //    if (attacker.Level == 1)
-        //    {
-        //        ballCount = 1;
-        //    }        
-        //    else if (attacker.Level <= 5)
-        //    {
-        //        ballCount = 2;
-        //    }
-        //    else if (attacker.Level <= 10)
-        //    {
-        //        ballCount = 3;
-        //    }
-        //    else if (attacker.Level <= 15)
-        //    {
-        //        ballCount = 4;
-        //    }
-        //    else if (attacker.Level >= 20)
-        //    {
-        //        ballCount = 5;
-        //    }
+            }
+            else
+            {
+                var castingTextAttacker =
+                   "Your white sphere from your hands surrounds your whole body providing extra protection.";
+                var castingTextDefender = Helpers.ReturnName(attacker, null) + " sends a white glowing ball straight towards you.";
+                var castingTextRoom = Helpers.ReturnName(attacker, null) +
+                                      " sends a white glowing ball  straight towards " +
+                                      Helpers.ReturnName(attacker.Target, null) + ".";
 
-        //    var castingTextAttacker = ballCount == 1  ? "A red crackling energy ball hurls from your hands straight at " +  Helpers.ReturnName(attacker.Target, null) : ballCount + " red crackling energy balls hurl from your hands in a wide arc closing in on " + Helpers.ReturnName(attacker.Target, null);
+                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
+                HubContext.SendToClient(castingTextDefender, attacker.Target.HubGuid);
+                HubContext.SendToAllExcept(castingTextRoom, room.fighting, room.players);
 
-        //    var castingTextDefender = ballCount == 1 ? Helpers.ReturnName(attacker, null) + " hurls a red crackling energy ball straight towards you." 
-        //        :  Helpers.ReturnName(attacker, null) + " launches " + ballCount + " red crackling energy balls from " + Helpers.ReturnHisOrHers(attacker.Gender) +"  hands in a wide arc closing in on you";
+                attacker.Target.ArmorRating += 20;
 
+            }
 
-        //    var castingTextRoom = ballCount == 1 ? Helpers.ReturnName(attacker, null) + " hurls a red crackling energy ball straight towards " + Helpers.ReturnName(attacker.Target, null)  + "."
-        //      : Helpers.ReturnName(attacker, null) + " launches " + ballCount + " red crackling energy balls from " + Helpers.ReturnHisOrHers(attacker.Gender) + "  hands in a wide arc closing in on" + Helpers.ReturnName(attacker.Target, null);
+ 
+            _taskRunnning = false;
+     
 
-
-
-        //    //level dependant but for testing launch 4 balls
-        //    HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-        //    HubContext.SendToClient(castingTextDefender, attacker.Target.HubGuid);
-        //    HubContext.SendToAllExcept(castingTextRoom, room.fighting, room.players);
-
-        //    for (int i = 0; i < ballCount; i++)
-        //    {
-        //        var dam = die.dice(1, 4);
-        //        var toHit = Helpers.GetPercentage(attacker.Skills.Find(x => x.Name.Equals(MagicMissileAb().Name, StringComparison.CurrentCultureIgnoreCase)).Proficiency, 95); // always 5% chance to miss
-        //        int chance = die.dice(1, 100);
-        //        Fight2.ShowAttack(attacker, attacker.Target, room, toHit, chance, MagicMissileAb(), dam);
-        //    }
-
-
-
-        //    _taskRunnning = false;
-        //    attacker.Status = Player.PlayerStatus.Fighting;
-
-        //}
+        }
 
         public static Skill ArmourAb()
         {
@@ -168,8 +162,8 @@ namespace MIMWebClient.Core.Player.Skills
             var help = new Help
             {
                 Syntax = skill.Syntax,
-                HelpText = "Increases Armour rating of caster",
-                DateUpdated = "31/01/2017"
+                HelpText = "Increases Armour rating by 20",
+                DateUpdated = "19/02/2017"
 
             };
 
