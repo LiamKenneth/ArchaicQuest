@@ -13,6 +13,7 @@ namespace MIMWebClient.Core.Player.Skills
     public class Armour : Skill
     {
         private static bool _taskRunnning = false;
+        private static Player _target = new Player();
         public static Skill ArmourSkill { get; set; }
 
         public static void StartArmour(Player player, Room room, string target = "")
@@ -26,17 +27,10 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
-            var foundTarget = Skill.FindTarget(target, room);
-
-            if (foundTarget != null)
-            {
-
-                // cast armour on target
-
-            }
+            _target = Skill.FindTarget(target, room);
 
 
-            if (!_taskRunnning && player.Target != null)
+            if (!_taskRunnning && _target != null)
             {
 
                 if (player.ManaPoints < ArmourAb().ManaCost)
@@ -58,18 +52,18 @@ namespace MIMWebClient.Core.Player.Skills
 
                 HubContext.SendToClient("A white sphere begins swirling between your hands as you begin chanting the armour spell", player.HubGuid);
 
-                HubContext.SendToClient("Awhite sphere begins swirling between " + Helpers.ReturnName(player, null) + " hands " + Helpers.ReturnHisOrHers(player.Gender) + " as they begin chanting the Armour spell", player.HubGuid,
-                    player.Target.HubGuid, false, true);
+                HubContext.SendToClient("A white sphere begins swirling between " + Helpers.ReturnName(player, null) + " hands " + Helpers.ReturnHisOrHers(player.Gender) + " as they begin chanting the Armour spell", player.HubGuid,
+                    _target.HubGuid, false, true);
 
                 HubContext.broadcastToRoom("A white sphere begins swirling between " +
-                    Helpers.ReturnName(player, null) + " hands " + Helpers.ReturnHisOrHers(player.Gender) + " as they begin chanting the armour spell " + Helpers.ReturnName(player.Target, null), room.players, player.HubGuid, true);
+                    Helpers.ReturnName(player, null) + " hands " + Helpers.ReturnHisOrHers(player.Gender) + " as they begin chanting the armour spell " + Helpers.ReturnName(_target, null), room.players, player.HubGuid, true);
 
                 Task.Run(() => DoArmour(player, room));
 
             }
             else
             {
-                if (player.Target == null)
+                if (_target == null)
                 {
 
                     //TODO REfactor
@@ -79,17 +73,14 @@ namespace MIMWebClient.Core.Player.Skills
 
                     HubContext.SendToClient("A white sphere begins swirling between your hands as you begin chanting the armour spell", player.HubGuid);
 
-                    HubContext.SendToClient("Awhite sphere begins swirling between " + Helpers.ReturnName(player, null) + " hands " + Helpers.ReturnHisOrHers(player.Gender) + " as they begin chanting the Armour spell", player.HubGuid,
-                        player.Target.HubGuid, false, true);
-
                     HubContext.broadcastToRoom("A white sphere begins swirling between " +
-                        Helpers.ReturnName(player, null) + " hands " + Helpers.ReturnHisOrHers(player.Gender) + " as they begin chanting the armour spell " + Helpers.ReturnName(player.Target, null), room.players, player.HubGuid, true);
+                        Helpers.ReturnName(player, null) + " hands " + Helpers.ReturnHisOrHers(player.Gender) + " as they begin chanting the armour spell ", room.players, player.HubGuid, true);
 
                     Task.Run(() => DoArmour(player, room));
                      
                 }
 
-                HubContext.SendToClient("You are trying to cast magic missle", player.HubGuid);
+                HubContext.SendToClient("You are trying to cast armour", player.HubGuid);
 
             }
 
@@ -103,7 +94,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             await Task.Delay(500);
 
-            if (attacker.Target == null)
+            if (_target == null)
             {
                 var castingTextAttacker =
                     "You release the white sphere from your hands and it surrounds your whole body providing extra protection.";
@@ -120,21 +111,21 @@ namespace MIMWebClient.Core.Player.Skills
             else
             {
                 var castingTextAttacker =
-                   "Your white sphere from your hands surrounds your whole body providing extra protection.";
-                var castingTextDefender = Helpers.ReturnName(attacker, null) + " sends a white glowing ball straight towards you.";
+                   "Your launch a white sphere from your hands towards " + Helpers.ReturnName(_target, null) +" which surrounds them in magical armour. ";
+                var castingTextDefender = Helpers.ReturnName(attacker, null) + " sends a white glowing ball straight towards you which surrounds you in magical armour.";
                 var castingTextRoom = Helpers.ReturnName(attacker, null) +
-                                      " sends a white glowing ball  straight towards " +
-                                      Helpers.ReturnName(attacker.Target, null) + ".";
+                                      " sends a white glowing ball straight towards " +
+                                      Helpers.ReturnName(_target, null) + " which surrounds them in magical armour..";
 
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-                HubContext.SendToClient(castingTextDefender, attacker.Target.HubGuid);
+                HubContext.SendToClient(castingTextDefender, _target.HubGuid);
                 HubContext.SendToAllExcept(castingTextRoom, room.fighting, room.players);
 
-                attacker.Target.ArmorRating += 20;
+                _target.ArmorRating += 20;
 
             }
 
- 
+            _target = null;
             _taskRunnning = false;
      
 

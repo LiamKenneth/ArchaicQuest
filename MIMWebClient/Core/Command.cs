@@ -75,10 +75,10 @@ namespace MIMWebClient.Core
                 //spells
                 {"c magic missile", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
                 {"cast magic missile", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
-                {"c armour", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
-                {"cast armour", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
-                { "c armor", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
-                {"cast armor", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
+                { "c armour", () => Armour.StartArmour(playerData, room, commandOptions)},
+                {"cast armour", () => Armour.StartArmour(playerData, room, commandOptions)},
+                { "c armor", () => Armour.StartArmour(playerData, room, commandOptions)},
+                {"cast armor", () => Armour.StartArmour(playerData, room, commandOptions)},
 
                 //skills
                 {"punch", () => Punch.StartPunch(playerData, room)},
@@ -133,6 +133,14 @@ namespace MIMWebClient.Core
                 {
                     commandKey = commands[0] + " " + commands[1];
                     commandOptions =  enteredCommand.Substring(enteredCommand.IndexOf(commands[2], StringComparison.Ordinal)).Trim();  
+                }
+                else if (commandKey.Equals("c", StringComparison.InvariantCultureIgnoreCase) || commandKey.Equals("cast", StringComparison.InvariantCultureIgnoreCase) && commands.Length > 1)
+                {
+                    commandKey = commands[0] + " " + commands[1];
+
+                    commandOptions =
+                        enteredCommand.Substring(enteredCommand.IndexOf(commands[0], StringComparison.Ordinal)).Trim();
+
                 }
                 else
                 {

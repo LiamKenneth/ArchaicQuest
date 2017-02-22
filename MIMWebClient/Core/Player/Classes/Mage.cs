@@ -56,6 +56,18 @@ namespace MIMWebClient.Core.Player.Classes
             #endregion
 
 
+            #region  Give mage armor skill
+
+            var armour = Armour.ArmourAb();
+
+            armour.LevelObtained = 1;
+            armour.Proficiency = 50;
+            armour.MaxProficiency = 95;
+            mage.Skills.Add(armour);
+
+            #endregion
+
+
             mage.ReclassOptions.Add(Ranger.RangerClass());
 
             return mage;
