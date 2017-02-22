@@ -160,10 +160,15 @@ namespace MIMWebClient.Core
             return str.ToUpper();
         }
 
-        public static string ReturnHisOrHers(string sex)
+        public static string ReturnHisOrHers(string sex, bool plural = true)
         {
+            if (plural)
+            {
+                return sex == "Male" ? "his" : "hers";
+            }
 
-            return sex == "Male" ? "his" : "hers";
+            return sex == "Male" ? "his" : "her";
+
         }
 
     }

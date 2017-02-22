@@ -29,6 +29,12 @@ namespace MIMWebClient.Core.Player.Skills
 
             _target = Skill.FindTarget(target, room);
 
+            //Fix issue if target has similar name to user and they use abbrivations to target them
+            if (_target == player)
+            {
+                _target = null;
+            }
+
 
             if (!_taskRunnning && _target != null)
             {
@@ -52,11 +58,18 @@ namespace MIMWebClient.Core.Player.Skills
 
                 HubContext.SendToClient("A white sphere begins swirling between your hands as you begin chanting the armour spell", player.HubGuid);
 
-                HubContext.SendToClient("A white sphere begins swirling between " + Helpers.ReturnName(player, null) + " hands " + Helpers.ReturnHisOrHers(player.Gender) + " as they begin chanting the Armour spell", player.HubGuid,
+                HubContext.SendToClient("A white sphere begins swirling between the hands of " + Helpers.ReturnName(player, null) + " as they begin chanting the Armour spell", player.HubGuid,
                     _target.HubGuid, false, true);
 
-                HubContext.broadcastToRoom("A white sphere begins swirling between " +
-                    Helpers.ReturnName(player, null) + " hands " + Helpers.ReturnHisOrHers(player.Gender) + " as they begin chanting the armour spell " + Helpers.ReturnName(_target, null), room.players, player.HubGuid, true);
+                var playersInRoom = new List<Player>(room.players);
+                //remove target
+                 playersInRoom.Remove(_target);
+
+                //todo Stop double echo to target
+                //To target: Vall sends a white glowing ball straight towards you surrounding you in magical armour.
+                //To room : Vall sends a white glowing ball straight towards Val which surrounds them in magical armour..
+                HubContext.broadcastToRoom("A white sphere begins swirling between the hands of " +
+                    Helpers.ReturnName(player, null) + " as they begin chanting the armour spell.", playersInRoom, player.HubGuid, true);
 
                 Task.Run(() => DoArmour(player, room));
 
@@ -73,14 +86,14 @@ namespace MIMWebClient.Core.Player.Skills
 
                     HubContext.SendToClient("A white sphere begins swirling between your hands as you begin chanting the armour spell", player.HubGuid);
 
-                    HubContext.broadcastToRoom("A white sphere begins swirling between " +
-                        Helpers.ReturnName(player, null) + " hands " + Helpers.ReturnHisOrHers(player.Gender) + " as they begin chanting the armour spell ", room.players, player.HubGuid, true);
+                    HubContext.broadcastToRoom("A white sphere begins swirling between the hands of " +
+                        Helpers.ReturnName(player, null) + " as they begin chanting the armour spell ", room.players, player.HubGuid, true);
 
                     Task.Run(() => DoArmour(player, room));
                      
                 }
 
-                HubContext.SendToClient("You are trying to cast armour", player.HubGuid);
+                 
 
             }
 
@@ -99,7 +112,7 @@ namespace MIMWebClient.Core.Player.Skills
                 var castingTextAttacker =
                     "You release the white sphere from your hands and it surrounds your whole body providing extra protection.";
                  
-                var castingTextRoom = Helpers.ReturnName(attacker, null) +  " releases a white glowing sphere which surrounds " + Helpers.ReturnHisOrHers(attacker.Gender) + " body.";
+                var castingTextRoom =  Helpers.ReturnName(attacker, null) +  " releases a white glowing sphere which surrounds " + Helpers.ReturnHisOrHers(attacker.Gender, false) + " body.";
 
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
                 
@@ -111,15 +124,16 @@ namespace MIMWebClient.Core.Player.Skills
             else
             {
                 var castingTextAttacker =
-                   "Your launch a white sphere from your hands towards " + Helpers.ReturnName(_target, null) +" which surrounds them in magical armour. ";
-                var castingTextDefender = Helpers.ReturnName(attacker, null) + " sends a white glowing ball straight towards you which surrounds you in magical armour.";
+                   "You launch a white sphere from your hands towards " + Helpers.ReturnName(_target, null) +" surrounding them in magical armour.";
+
+                var castingTextDefender = Helpers.ReturnName(attacker, null) + " sends a white glowing ball straight towards you surrounding you in magical armour.";
+
                 var castingTextRoom = Helpers.ReturnName(attacker, null) +
-                                      " sends a white glowing ball straight towards " +
-                                      Helpers.ReturnName(_target, null) + " which surrounds them in magical armour..";
+                                      " sends a white glowing ball straight towards " + Helpers.ReturnName(_target, null) + " which surrounds them in magical armour..";
 
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
                 HubContext.SendToClient(castingTextDefender, _target.HubGuid);
-                HubContext.SendToAllExcept(castingTextRoom, room.fighting, room.players);
+                HubContext.broadcastToRoom(castingTextRoom, room.players, attacker.HubGuid, true);
 
                 _target.ArmorRating += 20;
 
