@@ -19,13 +19,7 @@ namespace MIMWebClient.Core.Player.Skills
         public static void StartArmour(Player player, Room room, string target = "")
         {
             //Check if player has spell
-            var hasSpell = Skill.CheckPlayerHasSkill(player, ArmourAb().Name);
-
-            if (hasSpell == false)
-            {
-                HubContext.SendToClient("You don't know that spell.", player.HubGuid);
-                return;
-            }
+            Skill.CheckPlayerHasSkill(player, ArmourAb().Name);
 
             _target = Skill.FindTarget(target, room);
 
@@ -41,11 +35,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (player.ManaPoints < ArmourAb().ManaCost)
                 {
-                    HubContext.SendToClient("You clasp your hands together but fail to form any energy", player.HubGuid);
-
-                    var excludePlayerInBroadcast = new List<string> {player.HubGuid};
-
-                    HubContext.SendToAllExcept(Helpers.ReturnName(player, null) + " clasps " + Helpers.ReturnHisOrHers(player.Gender) + " hands together but fails to form any energy", excludePlayerInBroadcast, room.players);
+                    HubContext.SendToClient("You attempt to draw energy to your hands but fail", player.HubGuid);
 
                     return;
                 }
@@ -56,20 +46,14 @@ namespace MIMWebClient.Core.Player.Skills
 
                 Score.UpdateUiPrompt(player);
 
-                HubContext.SendToClient("A white sphere begins swirling between your hands as you begin chanting the armour spell", player.HubGuid);
-
-                HubContext.SendToClient("A white sphere begins swirling between the hands of " + Helpers.ReturnName(player, null) + " as they begin chanting the Armour spell", player.HubGuid,
-                    _target.HubGuid, false, true);
+                HubContext.SendToClient("Your hands start to glow as you begin chanting the armour spell", player.HubGuid);
 
                 var playersInRoom = new List<Player>(room.players);
-                //remove target
-                 playersInRoom.Remove(_target);
 
                 //todo Stop double echo to target
                 //To target: Vall sends a white glowing ball straight towards you surrounding you in magical armour.
                 //To room : Vall sends a white glowing ball straight towards Val which surrounds them in magical armour..
-                HubContext.broadcastToRoom("A white sphere begins swirling between the hands of " +
-                    Helpers.ReturnName(player, null) + " as they begin chanting the armour spell.", playersInRoom, player.HubGuid, true);
+                HubContext.broadcastToRoom(Helpers.ReturnName(player, null) + " hands start to glow as they begin chanting the Armour spell", playersInRoom, player.HubGuid, true);
 
                 Task.Run(() => DoArmour(player, room));
 
@@ -84,10 +68,9 @@ namespace MIMWebClient.Core.Player.Skills
 
                     Score.UpdateUiPrompt(player);
 
-                    HubContext.SendToClient("A white sphere begins swirling between your hands as you begin chanting the armour spell", player.HubGuid);
+                    HubContext.SendToClient("Your hands start to glow as you begin chanting the armour spell", player.HubGuid);
 
-                    HubContext.broadcastToRoom("A white sphere begins swirling between the hands of " +
-                        Helpers.ReturnName(player, null) + " as they begin chanting the armour spell ", room.players, player.HubGuid, true);
+                    HubContext.broadcastToRoom(Helpers.ReturnName(player, null) + " hands start to glow as they begin chanting the Armour spell", room.players, player.HubGuid, true);
 
                     Task.Run(() => DoArmour(player, room));
                      
@@ -110,9 +93,9 @@ namespace MIMWebClient.Core.Player.Skills
             if (_target == null)
             {
                 var castingTextAttacker =
-                    "You release the white sphere from your hands and it surrounds your whole body providing extra protection.";
-                 
-                var castingTextRoom =  Helpers.ReturnName(attacker, null) +  " releases a white glowing sphere which surrounds " + Helpers.ReturnHisOrHers(attacker.Gender, false) + " body.";
+                    "You place your hands upon your chest engulfing yourself in a white protective glow.";
+
+                var castingTextRoom =  Helpers.ReturnName(attacker, null) +  " places " + Helpers.ReturnHisOrHers(attacker.Gender, false) + " hands upon " + Helpers.ReturnHisOrHers(attacker.Gender, false) + " chest engulfing himself in a white protective glow.";
 
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
                 
@@ -124,12 +107,12 @@ namespace MIMWebClient.Core.Player.Skills
             else
             {
                 var castingTextAttacker =
-                   "You launch a white sphere from your hands towards " + Helpers.ReturnName(_target, null) +" surrounding them in magical armour.";
+                      "You place your hands upon " + Helpers.ReturnName(_target, null) + " engulfing them in a white protective glow.";
 
-                var castingTextDefender = Helpers.ReturnName(attacker, null) + " sends a white glowing ball straight towards you surrounding you in magical armour.";
+                var castingTextDefender = Helpers.ReturnName(attacker, null) + " touches your chest engulfing you in a white protective glow.";
 
                 var castingTextRoom = Helpers.ReturnName(attacker, null) +
-                                      " sends a white glowing ball straight towards " + Helpers.ReturnName(_target, null) + " which surrounds them in magical armour..";
+                                      " touches " + Helpers.ReturnName(_target, null) + " engulfing them in a white protective glow.";
 
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
                 HubContext.SendToClient(castingTextDefender, _target.HubGuid);
@@ -168,7 +151,7 @@ namespace MIMWebClient.Core.Player.Skills
             {
                 Syntax = skill.Syntax,
                 HelpText = "Increases Armour rating by 20",
-                DateUpdated = "19/02/2017"
+                DateUpdated = "28/03/2017"
 
             };
 

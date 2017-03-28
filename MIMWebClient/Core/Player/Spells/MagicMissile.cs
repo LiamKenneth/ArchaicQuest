@@ -43,8 +43,7 @@ namespace MIMWebClient.Core.Player.Skills
                 {
                     HubContext.SendToClient("You clasp your hands together but fail to form any energy", attacker.HubGuid);
 
-                    var excludePlayerInBroadcast = new List<string>();
-                    excludePlayerInBroadcast.Add(attacker.HubGuid);
+                    var excludePlayerInBroadcast = new List<string> {attacker.HubGuid};
 
                     HubContext.SendToAllExcept(Helpers.ReturnName(attacker, null) + " clasps " + Helpers.ReturnHisOrHers(attacker.Gender) + " hands together but fails to form any energy", excludePlayerInBroadcast, room.players);
                     
@@ -57,11 +56,10 @@ namespace MIMWebClient.Core.Player.Skills
 
                 HubContext.SendToClient("A red ball begins swirling between your hands as you begin chanting magic missle", attacker.HubGuid);
 
-                HubContext.SendToClient("A red ball begins swirling between " + Helpers.ReturnName(attacker, null) + " hands " + Helpers.ReturnHisOrHers(attacker.Gender) + " as they begin chanting magic missle", attacker.HubGuid,
-                    attacker.Target.HubGuid, false, true);
+                HubContext.SendToClient("A red ball begins swirling between " + Helpers.ReturnName(attacker, null) + " hands as they begin chanting magic missle", attacker.HubGuid, attacker.Target.HubGuid, false, true);
 
                 HubContext.broadcastToRoom("A red ball begins swirling between " +
-                    Helpers.ReturnName(attacker, null) + " hands " + Helpers.ReturnHisOrHers(attacker.Gender) +" as they begin chanting magic missle " + Helpers.ReturnName(attacker.Target, null), room.players, attacker.HubGuid, true);
+                    Helpers.ReturnName(attacker, null) + " hands as they begin chanting magic missle " + Helpers.ReturnName(attacker.Target, null), room.players, attacker.HubGuid, true);
 
                 Task.Run(() => DoMagicMissile(attacker, room));
 

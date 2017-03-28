@@ -56,8 +56,10 @@ namespace MIMWebClient.Core.Player
                 return true;
             }
 
-
-            return false;
+  
+                HubContext.SendToClient("You don't know that spell.", player.HubGuid);
+                return false;
+          
         }
 
 
