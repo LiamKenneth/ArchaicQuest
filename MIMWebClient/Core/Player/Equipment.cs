@@ -56,10 +56,11 @@ namespace MIMWebClient.Core.Player
             var flags = string.Empty;
             var item = mob.Inventory.FirstOrDefault(x => x.name == eq);
 
-            if (item == null)
+            if (item == null || item.itemFlags == null)
             {
                 return flags + eq;
             }
+             
 
             foreach (var itemFlag in item.itemFlags)
             {

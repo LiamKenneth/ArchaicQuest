@@ -95,7 +95,7 @@ namespace MIMWebClient.Core.Player.Skills
                 var castingTextAttacker =
                     "You place your hands upon your chest engulfing yourself in a white protective glow.";
 
-                var castingTextRoom =  Helpers.ReturnName(attacker, null) +  " places " + Helpers.ReturnHisOrHers(attacker.Gender, false) + " hands upon " + Helpers.ReturnHisOrHers(attacker.Gender, false) + " chest engulfing himself in a white protective glow.";
+                var castingTextRoom =  Helpers.ReturnName(attacker, null) +  " places " + Helpers.ReturnHisOrHers(attacker.Gender, false) + " hands upon " + Helpers.ReturnHisOrHers(attacker.Gender, false) + " chest engulfing themselves in a white protective glow.";
 
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
                 
