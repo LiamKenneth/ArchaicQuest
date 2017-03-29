@@ -101,7 +101,7 @@ namespace UpdateDB
             addSpeed.Stop();
 
             Console.WriteLine("Adding Area's to Database Completed in {0}ms.", addSpeed.Elapsed.Milliseconds);
-
+            Console.WriteLine("{0} Areas added", areas.Count);
             Console.ReadLine();
         }
     }

@@ -304,16 +304,7 @@ namespace MIMWebClient.Core.PlayerSetup
 
         public Player()
         {
-            //this.HubGuid = id;
             this.Type = PlayerTypes.Player;
-            //this.Email = email;
-            //this.Password = password;
-
-            ////info
-            //this.Name = name;
-            //this.Gender = gender;
-            //this.Race = race;
-            //this.SelectedClass = selectedClass;
             this.Level = 1;
             this.Description = this.Description ?? "You see nothing special about them.";
             this.AlignmentScore = 0;
@@ -337,35 +328,9 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Target = null;
             this.Inventory = this.Inventory ?? (this.Inventory = new List<Item>());
        
-
-            var dagger = new Core.Item.Item
-            {
-                actions = new Core.Item.Action(),
-                name = "Blunt dagger",
-                eqSlot = Core.Item.Item.EqSlot.Wielded,
-                weaponType = Core.Item.Item.WeaponType.ShortBlades,
-                stats = new Core.Item.Stats { damMin = 2, damMax = 4, minUsageLevel = 1, damRoll = 0},
-                type = Core.Item.Item.ItemType.Weapon,
-                equipable = true,
-                attackType = Core.Item.Item.AttackType.Pierce,
-                slot = Item.EqSlot.Wielded,
-                location = Item.ItemLocation.Inventory
-                
-            };
-
-            
-
-            this.Skills = this.Skills = new List<Skill>();
-            
-            var punch = Punch.PunchAb();
-            punch.Proficiency = 1;
-      
-
-            this.Skills.Add(punch);
-            //this.Skills.Add(shortBlades);
-          
-
-        
+ 
+            this.Skills  = new List<Skill>();
+ 
 
             //kills
             this.MobKills = 0;
@@ -418,33 +383,6 @@ namespace MIMWebClient.Core.PlayerSetup
 
           
         }
-
-         
-
-        public void SavePlayerInformation()
-        {
-            //string json = JsonConvert.SerializeObject(this);
-            //File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "/" + Name + ".json", json);
-
-
-            const string ConnectionString = "mongodb://testuser:password@ds052968.mlab.com:52968/mimdb";
-
-            // Create a MongoClient object by using the connection string
-            var client = new MongoClient(ConnectionString);
-
-            //Use the MongoClient to access the server
-            var database = client.GetDatabase("mimdb");
-
-            var playerCollection = database.GetCollection<Player>("Player");
-
-            playerCollection.InsertOne(this);
-
-        }
-
-        public JObject ReturnPlayerInformation()
-        {
-            JObject json = JObject.Parse(JsonConvert.SerializeObject(this));
-            return json;
-        }
+ 
     }
 }

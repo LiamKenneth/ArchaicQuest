@@ -150,6 +150,32 @@ namespace MIMWebClient.Core.World.Tutorial
         public static async Task AwakeningRescue(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
 
+            //give player quest
+            var findLance = new Quest()
+            {
+                Id = 3,
+                Name = "Find and greet Lance",
+                Description =
+             "Mortem has asked me to go find Lance the village elder who can be found in the main square, From the temple leave south and follow the hill path in to town." +
+             "<p class='RoomExits'>[Hint] Type greet lance to greet the Elder once you have found him</p>",
+                QuestGiver = "Mortem",
+                QuestFindMob = Lance.VillageElderLance().Name,
+                Type = Quest.QuestType.FindMob,
+                RewardXp = 250,
+                QuestHint = "<h5>Hint:</h5><p>Lance is here, type greet Lance to interact with him.</p>",
+                QuestTrigger = Lance.VillageElderLance().Name,
+                RewardDialog = new DialogTree()
+                {
+                    Message = "Yes I am Lance, well met $playerName",
+                    ShowIfOnQuest = "Find and greet Lance"
+                }
+            };
+
+            //to stop task firing twice
+            if (player.QuestLog.Contains(findLance))
+            {
+                return;
+            }
          
             var npc = room.mobs.FirstOrDefault(x => x.Name.Equals("Mortem"));
 
@@ -250,26 +276,7 @@ namespace MIMWebClient.Core.World.Tutorial
                         player.HubGuid);
 
 
-                    //give player quest
-                    var findLance = new Quest()
-                    {
-                        Id = 3,
-                        Name = "Find and greet Lance",
-                        Description =
-                     "Mortem has asked me to go find Lance the village elder who can be found in the main square, From the temple leave south and follow the hill path in to town." +
-                     "<p class='RoomExits'>[Hint] Type greet lance to greet the Elder once you have found him</p>",
-                        QuestGiver = "Mortem",
-                        QuestFindMob = Lance.VillageElderLance().Name,
-                        Type = Quest.QuestType.FindMob,
-                        RewardXp = 250,
-                        QuestHint = "<h5>Hint:</h5><p>Lance is here, type greet Lance to interact with him.</p>",
-                        QuestTrigger = Lance.VillageElderLance().Name,
-                        RewardDialog = new DialogTree()
-                        {
-                            Message = "Yes I am Lance, well met $playerName",
-                            ShowIfOnQuest = "Find and greet Lance"
-                        }
-                    };
+
 
                     player.QuestLog.Add(findLance);
 
@@ -285,10 +292,6 @@ namespace MIMWebClient.Core.World.Tutorial
                             npc.Name +
                             " waves to you, may Tyr bless you.",
                             player.HubGuid);
-
-                 
-                    
-
 
                 }
             }

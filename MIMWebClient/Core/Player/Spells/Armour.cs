@@ -19,7 +19,13 @@ namespace MIMWebClient.Core.Player.Skills
         public static void StartArmour(Player player, Room room, string target = "")
         {
             //Check if player has spell
-            Skill.CheckPlayerHasSkill(player, ArmourAb().Name);
+            var hasSpell = Skill.CheckPlayerHasSkill(player, ArmourAb().Name);
+
+            if (hasSpell == false)
+            {
+                HubContext.SendToClient("You don't know that spell.", player.HubGuid);
+                return;
+            }
 
             _target = Skill.FindTarget(target, room);
 
@@ -98,8 +104,12 @@ namespace MIMWebClient.Core.Player.Skills
                 var castingTextRoom =  Helpers.ReturnName(attacker, null) +  " places " + Helpers.ReturnHisOrHers(attacker.Gender, false) + " hands upon " + Helpers.ReturnHisOrHers(attacker.Gender, false) + " chest engulfing themselves in a white protective glow.";
 
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-                
-                HubContext.SendToAllExcept(castingTextRoom, room.fighting, room.players);
+
+                var excludePlayers = new List<string> {attacker.Name};
+
+
+
+                HubContext.SendToAllExcept(castingTextRoom, excludePlayers, room.players);
 
                 attacker.ArmorRating += 20;
 
