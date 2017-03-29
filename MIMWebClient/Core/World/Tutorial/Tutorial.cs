@@ -138,7 +138,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
         public static void setUpRescue(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
-              Task.Run(() => AwakeningRescue(player, room, step, calledBy));
+            Task.Run(() => AwakeningRescue(player, room, step, calledBy));
         }
 
         public static void setUpAwakening(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
@@ -172,11 +172,11 @@ namespace MIMWebClient.Core.World.Tutorial
             };
 
             //to stop task firing twice
-            if (player.QuestLog.Contains(findLance))
+            if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
             {
                 return;
             }
-         
+
             var npc = room.mobs.FirstOrDefault(x => x.Name.Equals("Mortem"));
 
             if (npc == null) return;
@@ -231,7 +231,7 @@ namespace MIMWebClient.Core.World.Tutorial
                     return;
                 }
 
-             
+
 
                 if (player.Equipment.Body.Equals(ClothingBody.PlainTop().name) && !player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name))
                 {
@@ -247,7 +247,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) && !player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
                 {
 
-                   
+
                     HubContext.SendToClient(npc.Name + " says it fits well, don't forget to wear the top too",
                    player.HubGuid);
 
@@ -257,8 +257,8 @@ namespace MIMWebClient.Core.World.Tutorial
 
                 }
 
-                if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) &&  player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
-                {                
+                if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) && player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
+                {
 
                     HubContext.SendToClient(
                         npc.Name +
@@ -288,18 +288,39 @@ namespace MIMWebClient.Core.World.Tutorial
      player.HubGuid);
 
 
-                        HubContext.SendToClient(
-                            npc.Name +
-                            " waves to you, may Tyr bless you.",
-                            player.HubGuid);
+                    HubContext.SendToClient(
+                        npc.Name +
+                        " waves to you, may Tyr bless you.",
+                        player.HubGuid);
 
                 }
             }
 
         }
 
+
+        //TODO: find bug causing this task to fire randomly
+        // ran twice when casting armor spell on cat! -_-
+
+        // c armor cat
+
+        //Your hands start to glow as you begin chanting the armour spell
+
+        //You place your hands upon Black and White cat engulfing them in a white protective glow.
+
+        //You feel better as a wave of warth surrounds your body <-- task
+
+        //Someone says to you, you should be feeling better now, wake when you are ready <-- task
+
         public static async Task Awakening(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
+            //to stop task firing twice
+            if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
+            {
+                return;
+            }
+
+
             player.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
 
             await Task.Delay(5000);
@@ -349,7 +370,16 @@ namespace MIMWebClient.Core.World.Tutorial
                 }
 
                 //fix for random wake message hint showing
-                if (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
+
+                var playerInRoom =
+                    Cache.ReturnRooms()
+                        .FirstOrDefault(
+                            x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"))
+                        .players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null;
+
+
+                //well this does not work
+                if (playerInRoom)
                 {
                     await Task.Delay(3000);
 
@@ -368,10 +398,11 @@ namespace MIMWebClient.Core.World.Tutorial
 
 
 
-
-                while (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
+                //loops forever because room.players does not get updated when player leaves the ambush room
+                // so this always tries to fire the messages below. as to why it sometimes it shows and sometimes does not, I have no idea.
+                while (playerInRoom)
                 {
-                    await Task.Delay(30000);
+                    await Task.Delay(30000); // <-- is this the cause && the check below is not working
 
                     if (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)).Status != PlayerSetup.Player.PlayerStatus.Standing)
                     {

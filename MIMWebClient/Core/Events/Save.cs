@@ -34,7 +34,19 @@ namespace MIMWebClient.Core.Events
 
                 var collection = database.GetCollection<Player>("Player");
 
-                collection.InsertOne(player);
+
+                var returnPlayer = collection.AsQueryable<Player>().FirstOrDefault(x => x.Name.Equals(player.Name));
+
+                //To solve issue with duplicate named chars being added to the database
+                if (returnPlayer == null)
+                {
+                    collection.InsertOne(player);
+                }
+                else
+                {
+                    UpdatePlayer(player);
+                }
+               
             }
             catch(Exception e)
             {
