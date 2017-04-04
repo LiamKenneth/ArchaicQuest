@@ -117,6 +117,13 @@ namespace MIMWebClient.Core.Player
         /// <param name="itemToWear">Item to wear</param>
         public static void WearItem(Player player, string itemToWear, bool wield = false)
         {
+
+            if (string.IsNullOrEmpty(itemToWear))
+            {
+                HubContext.SendToClient("Wear what?", player.HubGuid);
+                return;
+            }
+
             var oldPlayer = player;
 
             if (!itemToWear.Equals("all", StringComparison.CurrentCultureIgnoreCase))
