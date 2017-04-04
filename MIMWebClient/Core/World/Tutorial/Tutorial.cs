@@ -184,6 +184,17 @@ namespace MIMWebClient.Core.World.Tutorial
             if (step.Equals("wake", StringComparison.CurrentCultureIgnoreCase))
             {
 
+                //remove player from tutorial room
+                var oldRoom = Cache.ReturnRooms()
+                    .FirstOrDefault(
+                        x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"));
+
+                if (oldRoom != null && oldRoom.players.Contains(player))
+                {
+                    PlayerManager.RemovePlayerFromRoom(oldRoom, player);
+                }
+
+ 
                 HubContext.SendToClient(npc.Name + " says Ah you are awake!", player.HubGuid);
 
                 await Task.Delay(2000);
@@ -375,11 +386,11 @@ namespace MIMWebClient.Core.World.Tutorial
                     Cache.ReturnRooms()
                         .FirstOrDefault(
                             x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"))
-                        .players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null;
+                        .players.FirstOrDefault(x => x.Name.Equals(player.Name));
 
 
                 //well this does not work
-                if (playerInRoom)
+                if (playerInRoom != null)
                 {
                     await Task.Delay(3000);
 
@@ -396,15 +407,28 @@ namespace MIMWebClient.Core.World.Tutorial
                     HubContext.SendToClient("<p class='RoomExits'>[Hint] Type wake to wake up</p>", player.HubGuid);
                 }
 
-
+ 
+       
 
                 //loops forever because room.players does not get updated when player leaves the ambush room
                 // so this always tries to fire the messages below. as to why it sometimes it shows and sometimes does not, I have no idea.
-                while (playerInRoom)
+                while (playerInRoom !=null && playerInRoom.Area.Equals("Tutorial"))
                 {
                     await Task.Delay(30000); // <-- is this the cause && the check below is not working
 
-                    if (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)).Status != PlayerSetup.Player.PlayerStatus.Standing)
+                    playerInRoom =
+                  Cache.ReturnRooms()
+                      .FirstOrDefault(
+                          x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"))
+                      .players.FirstOrDefault(x => x.Name.Equals(player.Name));
+
+                    if (playerInRoom == null)
+                    {
+                        return;
+                    }
+
+                    if (playerInRoom.Status != PlayerSetup.Player.PlayerStatus.Standing)
+
                     {
                         HubContext.SendToClient("You feel better as a wave of warth surrounds your body", player.HubGuid);
 
