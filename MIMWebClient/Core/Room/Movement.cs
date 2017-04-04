@@ -13,7 +13,7 @@ namespace MIMWebClient.Core.Room
         public static void EnterRoom(Player player, Room room, string direction = "")
         {
             string name = player.Name;
-            string movement = "walks in"; // runs, hovers, crawls. Steps out of a portal, appears?
+            string movement = "walks in "; // runs, hovers, crawls. Steps out of a portal, appears?
             direction = oppositeDirection(direction);
             string enterText = name + " " + movement + direction;
 

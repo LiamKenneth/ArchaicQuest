@@ -164,10 +164,10 @@ namespace MIMWebClient.Core
         {
             if (plural)
             {
-                return sex == "Male" ? "his" : "hers";
+                return sex == "male" ? "his" : "hers";
             }
 
-            return sex == "Male" ? "his" : "her";
+            return sex == "male" ? "his" : "her";
 
         }
 
