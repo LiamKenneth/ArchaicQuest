@@ -79,6 +79,8 @@ namespace MIMWebClient.Core
                 {"cast armour", () => Armour.StartArmour(playerData, room, commandOptions)},
                 { "c armor", () => Armour.StartArmour(playerData, room, commandOptions)},
                 {"cast armor", () => Armour.StartArmour(playerData, room, commandOptions)},
+                { "c continual light", () => ContinualLight.StarContinualLight(playerData, room, commandOptions)},
+                {"cast continual light", () => ContinualLight.StarContinualLight(playerData, room, commandOptions)},
 
                 //skills
                 {"punch", () => Punch.StartPunch(playerData, room)},

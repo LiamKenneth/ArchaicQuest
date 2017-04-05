@@ -74,7 +74,16 @@ namespace MIMWebClient.Core.Events
                         var result = AvsAnLib.AvsAn.Query(item.name);
                         string article = result.Article;
 
-                        itemList += "<p class='roomItems'>" + article + " " + item.name + " is on the floor here.<p>";
+                        if (item.description?.room != null)
+                        {
+                            itemList += $"<p class='roomItems'>{item.description.room}<p>";
+                        }
+                        else
+                        {
+                            itemList += $"<p class='roomItems'>{ article} {item.name} is on the floor here.<p>";
+                        }
+
+                        
                     }
                 }
             }

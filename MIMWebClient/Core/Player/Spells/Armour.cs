@@ -56,9 +56,6 @@ namespace MIMWebClient.Core.Player.Skills
 
                 var playersInRoom = new List<Player>(room.players);
 
-                //todo Stop double echo to target
-                //To target: Vall sends a white glowing ball straight towards you surrounding you in magical armour.
-                //To room : Vall sends a white glowing ball straight towards Val which surrounds them in magical armour..
                 HubContext.broadcastToRoom(Helpers.ReturnName(player, null) + " hands start to glow as they begin chanting the Armour spell", playersInRoom, player.HubGuid, true);
 
                 Task.Run(() => DoArmour(player, room));
@@ -107,8 +104,6 @@ namespace MIMWebClient.Core.Player.Skills
 
                 var excludePlayers = new List<string> {attacker.Name};
 
-
-
                 HubContext.SendToAllExcept(castingTextRoom, excludePlayers, room.players);
 
                 attacker.ArmorRating += 20;
@@ -145,6 +140,8 @@ namespace MIMWebClient.Core.Player.Skills
             var skill = new Skill
             {
                 Name = "Armour",
+                SpellGroup = SpellGroupType.Abjuration,
+                SkillType = Type.Spell,
                 CoolDown = 0,
                 Delay = 0,
                 LevelObtained = 2,

@@ -151,6 +151,8 @@ namespace MIMWebClient.Core.Player.Skills
             var skill = new Skill
             {
                 Name = "Magic Missile",
+                SpellGroup = SpellGroupType.Invocation,
+                SkillType = Type.Spell,
                 CoolDown = 0,
                 Delay = 0,
                 LevelObtained = 1,

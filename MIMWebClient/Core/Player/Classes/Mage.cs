@@ -68,6 +68,18 @@ namespace MIMWebClient.Core.Player.Classes
             #endregion
 
 
+
+            #region  Give continual light skill
+
+            var continualLight = ContinualLight.ContinualLightAb();
+
+            continualLight.LevelObtained = 1;
+            continualLight.Proficiency = 50;
+            continualLight.MaxProficiency = 95;
+            mage.Skills.Add(continualLight);
+
+            #endregion
+
             mage.ReclassOptions.Add(Ranger.RangerClass());
 
             return mage;
