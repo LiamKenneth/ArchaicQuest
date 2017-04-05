@@ -56,7 +56,10 @@ namespace MIMWebClient.Core.Player.Skills
 
                 var playersInRoom = new List<Player>(room.players);
 
-                HubContext.broadcastToRoom(Helpers.ReturnName(player, null) + " hands start to glow as they begin chanting the Armour spell", playersInRoom, player.HubGuid, true);
+                //todo Stop double echo to target
+                //To target: Vall sends a white glowing ball straight towards you surrounding you in magical armour.
+                //To room : Vall sends a white glowing ball straight towards Val which surrounds them in magical armour..
+                HubContext.broadcastToRoom(Helpers.ReturnName(player, null) + "'s hands start to glow as they begin chanting the Armour spell", playersInRoom, player.HubGuid, true);
 
                 Task.Run(() => DoArmour(player, room));
 
@@ -73,7 +76,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                     HubContext.SendToClient("Your hands start to glow as you begin chanting the armour spell", player.HubGuid);
 
-                    HubContext.broadcastToRoom(Helpers.ReturnName(player, null) + " hands start to glow as they begin chanting the Armour spell", room.players, player.HubGuid, true);
+                    HubContext.broadcastToRoom(Helpers.ReturnName(player, null) + "'s hands start to glow as they begin chanting the Armour spell", room.players, player.HubGuid, true);
 
                     Task.Run(() => DoArmour(player, room));
                      
@@ -102,11 +105,13 @@ namespace MIMWebClient.Core.Player.Skills
 
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
 
-                var excludePlayers = new List<string> {attacker.Name};
+                var excludePlayers = new List<string> {attacker.HubGuid};
 
                 HubContext.SendToAllExcept(castingTextRoom, excludePlayers, room.players);
 
                 attacker.ArmorRating += 20;
+
+                Score.ReturnScoreUI(attacker);
 
             }
             else
@@ -121,9 +126,18 @@ namespace MIMWebClient.Core.Player.Skills
 
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
                 HubContext.SendToClient(castingTextDefender, _target.HubGuid);
-                HubContext.broadcastToRoom(castingTextRoom, room.players, attacker.HubGuid, true);
+
+                var excludePlayers = new List<string>()
+                {
+                    attacker.HubGuid,
+                    _target.HubGuid
+                };
+               
+                HubContext.SendToAllExcept(castingTextRoom, excludePlayers, room.players);
 
                 _target.ArmorRating += 20;
+
+                Score.ReturnScoreUI(_target);
 
             }
 

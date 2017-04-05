@@ -76,21 +76,30 @@ namespace MIMWebClient.Core
             }
         }
 
+        /// <summary>
+        /// Sends a message to all except those specified in the exclude list 
+        /// which contains the hubguid of the player
+        /// </summary>
+        /// <param name="message">message to send to all</param>
+        /// <param name="excludeThesePlayers">list of HubGuid's to exclude</param>
+        /// <param name="players">players to send message to</param>
         public static void SendToAllExcept(string message, List<string> excludeThesePlayers, List<PlayerSetup.Player> players)
         {
-            if (message != null)
+            if (message == null)
+            {
+                return;
+            }
+
+            foreach (var player in players)
             {
 
-                foreach (var player in players)
+                if (player != null && player.HubGuid != excludeThesePlayers.FirstOrDefault(x => x.Equals(player.HubGuid)))
                 {
-   
-                    if (player != null && player.HubGuid != excludeThesePlayers.FirstOrDefault(x => x.Equals(player.HubGuid)))
-                    {
-                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(message);
-                    }
-                    
+                    HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(message);
                 }
+
             }
+
         }
 
         public static void broadcastToRoom(string message, List<PlayerSetup.Player> players, string playerId, bool excludeCaller = false)
@@ -136,7 +145,7 @@ namespace MIMWebClient.Core
 
             if (playerData != null)
             {
-             
+
 
                 Save.UpdatePlayer(playerData);
 
@@ -145,7 +154,7 @@ namespace MIMWebClient.Core
                 broadcastToRoom(playerData.Name + " has left the realm", room.players, playerId, true);
 
                 HubContext.getHubContext.Clients.Client(playerId).quit();
- 
+
             }
 
 
