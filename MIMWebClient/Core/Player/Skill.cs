@@ -63,10 +63,19 @@ namespace MIMWebClient.Core.Player
 
         public int Proficiency { get; set; }
 
+        public Type SkillType { get; set; } = Type.Skill;
+
+        public SpellGroupType SpellGroup { get; set; } = SpellGroupType.None;
+
+        public ElementalType ElementalDamage { get; set; } = ElementalType.None;
+
+        [BsonIgnore]
         public bool Passive { get; set; }
 
+        [BsonIgnore] 
         public int Delay { get; set; }
 
+        [BsonIgnore]    
         public int CoolDown { get; set; }
 
         //Says what status a skill can be used from
@@ -74,9 +83,13 @@ namespace MIMWebClient.Core.Player
         //Resting means everything
         //standing means all but resting
         //can't use skills while asleep
+        [BsonIgnore]
         public string UsableFromStatus { get; set; }
+        [BsonIgnore]
         public int LevelObtained { get; set; }
+        [BsonIgnore]
         public int ManaCost { get; set; }
+        [BsonIgnore]
         public int MaxProficiency { get; set; }
         [BsonIgnore]
         public Help HelpText { get; set; }
@@ -84,8 +97,12 @@ namespace MIMWebClient.Core.Player
         public string Syntax { get; set; }
 
 
+
+
+
         public static bool CheckPlayerHasSkill(PlayerSetup.Player player, string skillName)
         {
+   
 
             //Check if player has spell
             var hasSpell =
