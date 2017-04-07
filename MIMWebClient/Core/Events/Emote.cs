@@ -20,7 +20,7 @@ namespace MIMWebClient.Core.Events
             {
                 if (pc != player)
                 {
-                    HubContext.SendToClient(Helpers.ReturnName(player, string.Empty) + " " + message, pc.HubGuid);
+                    HubContext.SendToClient(Helpers.ReturnName(player, pc, string.Empty) + " " + message, pc.HubGuid);
                 }
                 else
                 {

@@ -12,13 +12,13 @@ namespace MIMWebClient.Core.Room
     {
         public static void EnterRoom(Player player, Room room, string direction = "")
         {
-            string name = Helpers.ReturnName(player, string.Empty);
-            string movement = "walks in "; // runs, hovers, crawls. Steps out of a portal, appears?
-            direction = oppositeDirection(direction);
-            string enterText = name + " " + movement + direction;
-
+           
             for (int i = 0; i < room.players.Count; i++)
             {
+                string name = Helpers.ReturnName(player, room.players[i], string.Empty);
+                string movement = "walks in "; // runs, hovers, crawls. Steps out of a portal, appears?
+                direction = oppositeDirection(direction);
+                string enterText = name + " " + movement + direction;
 
                 if (player.Name != room.players[i].Name)
                 {
@@ -62,14 +62,15 @@ namespace MIMWebClient.Core.Room
 
         public static void ExitRoom(Player player, Room room, string direction)
         {
-            string name = Helpers.ReturnName(player, string.Empty);
-            string movement = "walks "; // runs, hovers, crawls. Steps out of a portal, appears?
-            string exitDir = direction;                             // string prevDirection = "South";
-
-            string exitText = name + " " + movement + exitDir;
+          
 
             for (int i = 0; i < room.players.Count; i++)
             {
+                string name = Helpers.ReturnName(player, room.players[i], string.Empty);
+                string movement = "walks "; // runs, hovers, crawls. Steps out of a portal, appears?
+                string exitDir = direction;                             // string prevDirection = "South";
+                string exitText = name + " " + movement + exitDir;
+
                 if (player.Name != room.players[i].Name)
                 {
                     HubContext.getHubContext.Clients.Client(room.players[i].HubGuid).addNewMessageToPage(exitText);

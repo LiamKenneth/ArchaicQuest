@@ -115,27 +115,28 @@ namespace MIMWebClient.Core
         /// <param name="objName"></param>
         ///  /// <param name="itemName"></param>
         /// <returns></returns>
-        public static string ReturnName(PlayerSetup.Player objName, string itemName)
+        public static string ReturnName(PlayerSetup.Player player, PlayerSetup.Player target, string itemName)
         {
 
-            if (objName.invis == true)
+            //TODO: ah a bug, if you have detects it will always say someone
+            if (player.invis == true && target.DetectInvis == false || player.hidden == true && target.DetectHidden == false)
             {
                 return "Someone";
             }
 
-            if (objName != null)
+            if (player != null)
             {
 
-                var result = AvsAnLib.AvsAn.Query(objName.Name).Article;
+                var result = AvsAnLib.AvsAn.Query(player.Name).Article;
                 string name;
 
-                if (objName.KnownByName)
+                if (player.KnownByName)
                 {
-                    name = objName.Name;
+                    name = player.Name;
                 }
                 else
                 {
-                    name = result + " " + objName.Name;
+                    name = result + " " + player.Name;
                 }
 
 
@@ -166,14 +167,19 @@ namespace MIMWebClient.Core
             return str.ToUpper();
         }
 
-        public static string ReturnHisOrHers(string sex, bool plural = true)
+        public static string ReturnHisOrHers(PlayerSetup.Player player, PlayerSetup.Player target, bool plural = true)
         {
-            if (plural)
+            if (player.invis == true && target.DetectInvis == false || player.hidden == true && target.DetectHidden == false)
             {
-                return sex == "male" ? "his" : "hers";
+                return "their";
             }
 
-            return sex == "male" ? "his" : "her";
+            if (plural)
+            {
+                return player.Gender == "male" ? "his" : "hers";
+            }
+
+            return player.Gender == "male" ? "his" : "her";
 
         }
 

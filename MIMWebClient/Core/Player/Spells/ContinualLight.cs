@@ -121,7 +121,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 var playersInRoom = new List<Player>(room.players);
 
-                HubContext.broadcastToRoom(Helpers.ReturnName(player, null) + $" grasps {article} {_target.name} between {Helpers.ReturnHisOrHers(player.Gender)} hands which starts to shimmer a slight {_color} colour", playersInRoom, player.HubGuid, true);
+                HubContext.broadcastToRoom(Helpers.ReturnName(player, target, null) + $" grasps {article} {_target.name} between {Helpers.ReturnHisOrHers(player.Gender)} hands which starts to shimmer a slight {_color} colour", playersInRoom, player.HubGuid, true);
 
 
 

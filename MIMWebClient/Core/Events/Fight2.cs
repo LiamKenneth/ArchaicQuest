@@ -444,11 +444,11 @@ namespace MIMWebClient.Core.Events
                     var damageText = DamageText(dam);
 
 
-                    HubContext.SendToClient("Your " + WeaponAttackName(attacker, skillUsed).Key + " " + damageText.Value + " " + Helpers.ReturnName(defender, null) + " [" + dam + "]", attacker.HubGuid);
+                    HubContext.SendToClient("Your " + WeaponAttackName(attacker, skillUsed).Key + " " + damageText.Value + " " + Helpers.ReturnName(defender, attacker, null) + " [" + dam + "]", attacker.HubGuid);
 
-                    HubContext.SendToClient(Helpers.ReturnName(attacker, null) + "'s " + WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value + " you [" + dam + "]", defender.HubGuid);
+                    HubContext.SendToClient(Helpers.ReturnName(attacker,  defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value + " you [" + dam + "]", defender.HubGuid);
 
-                    HubContext.SendToAllExcept(Helpers.ReturnName(attacker, null) +"'s " + WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value + " " + Helpers.ReturnName(defender, null), room.fighting, room.players);
+                    HubContext.SendToAllExcept(Helpers.ReturnName(attacker, defender, null) +"'s " + WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value + " " + Helpers.ReturnName(defender, attacker,  null), room.fighting, room.players);
 
                     defender.HitPoints -= dam;
 
@@ -467,11 +467,11 @@ namespace MIMWebClient.Core.Events
                 else
                 {
 
-                    HubContext.SendToClient("Your " + WeaponAttackName(attacker, skillUsed).Key + " misses " + Helpers.ReturnName(defender, null), attacker.HubGuid);
+                    HubContext.SendToClient("Your " + WeaponAttackName(attacker, skillUsed).Key + " misses " + Helpers.ReturnName(defender, attacker, null), attacker.HubGuid);
 
-                    HubContext.SendToClient(Helpers.ReturnName(attacker, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key + " misses you ", defender.HubGuid);
+                    HubContext.SendToClient(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key + " misses you ", defender.HubGuid);
 
-                    HubContext.SendToAllExcept(Helpers.ReturnName(attacker, null) +"'s " + WeaponAttackName(attacker, skillUsed).Key  + " misses " + Helpers.ReturnName(defender, null), room.fighting, room.players);
+                    HubContext.SendToAllExcept(Helpers.ReturnName(attacker, defender, null) +"'s " + WeaponAttackName(attacker, skillUsed).Key  + " misses " + Helpers.ReturnName(defender, attacker, null), room.fighting, room.players);
                 }
             }
 

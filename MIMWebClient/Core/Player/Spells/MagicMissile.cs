@@ -45,7 +45,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                     var excludePlayerInBroadcast = new List<string> {attacker.HubGuid};
 
-                    HubContext.SendToAllExcept(Helpers.ReturnName(attacker, null) + " clasps " + Helpers.ReturnHisOrHers(attacker.Gender) + " hands together but fails to form any energy", excludePlayerInBroadcast, room.players);
+                    HubContext.SendToAllExcept($"{Helpers.ReturnName(attacker, attacker.Target, null)} clasps {Helpers.ReturnHisOrHers(attacker, attacker.Target)} hands together but fails to form any energy", excludePlayerInBroadcast, room.players);
                     
                     return;
                 }
@@ -56,10 +56,9 @@ namespace MIMWebClient.Core.Player.Skills
 
                 HubContext.SendToClient("A red ball begins swirling between your hands as you begin chanting magic missle", attacker.HubGuid);
 
-                HubContext.SendToClient("A red ball begins swirling between " + Helpers.ReturnName(attacker, null) + " hands as they begin chanting magic missle", attacker.HubGuid, attacker.Target.HubGuid, false, true);
+                HubContext.SendToClient($"A red ball begins swirling between {Helpers.ReturnName(attacker, attacker.Target, null)} 's hands as they begin chanting magic missle", attacker.HubGuid, attacker.Target.HubGuid, false, true);
 
-                HubContext.broadcastToRoom("A red ball begins swirling between " +
-                    Helpers.ReturnName(attacker, null) + " hands as they begin chanting magic missle " + Helpers.ReturnName(attacker.Target, null), room.players, attacker.HubGuid, true);
+                HubContext.broadcastToRoom($"A red ball begins swirling between {Helpers.ReturnName(attacker, attacker.Target, null)} 's hands as they begin chanting magic missle", room.players, attacker.HubGuid, true);
 
                 Task.Run(() => DoMagicMissile(attacker, room));
 
@@ -113,14 +112,14 @@ namespace MIMWebClient.Core.Player.Skills
                 ballCount = 5;
             }
 
-            var castingTextAttacker = ballCount == 1  ? "A red crackling energy ball hurls from your hands straight at " +  Helpers.ReturnName(attacker.Target, null) : ballCount + " red crackling energy balls hurl from your hands in a wide arc closing in on " + Helpers.ReturnName(attacker.Target, null);
+            var castingTextAttacker = ballCount == 1  ? "A red crackling energy ball hurls from your hands straight at " +  Helpers.ReturnName(attacker.Target, attacker, null) : ballCount + " red crackling energy balls hurl from your hands in a wide arc closing in on " + Helpers.ReturnName(attacker.Target, attacker, null);
 
-            var castingTextDefender = ballCount == 1 ? Helpers.ReturnName(attacker, null) + " hurls a red crackling energy ball straight towards you." 
-                :  Helpers.ReturnName(attacker, null) + " launches " + ballCount + " red crackling energy balls from " + Helpers.ReturnHisOrHers(attacker.Gender) +"  hands in a wide arc closing in on you";
+            var castingTextDefender = ballCount == 1 ? Helpers.ReturnName(attacker, attacker.Target, null) + " hurls a red crackling energy ball straight towards you." 
+                :  Helpers.ReturnName(attacker, attacker.Target, null) + " launches " + ballCount + " red crackling energy balls from " + Helpers.ReturnHisOrHers(attacker, attacker.Target) +"  hands in a wide arc closing in on you";
 
 
-            var castingTextRoom = ballCount == 1 ? Helpers.ReturnName(attacker, null) + " hurls a red crackling energy ball straight towards " + Helpers.ReturnName(attacker.Target, null)  + "."
-              : Helpers.ReturnName(attacker, null) + " launches " + ballCount + " red crackling energy balls from " + Helpers.ReturnHisOrHers(attacker.Gender) + "  hands in a wide arc closing in on" + Helpers.ReturnName(attacker.Target, null);
+            var castingTextRoom = ballCount == 1 ? Helpers.ReturnName(attacker, attacker.Target, null) + " hurls a red crackling energy ball straight towards " + Helpers.ReturnName(attacker.Target, attacker, null)  + "."
+              : Helpers.ReturnName(attacker, attacker.Target, null) + " launches " + ballCount + " red crackling energy balls from " + Helpers.ReturnHisOrHers(attacker, attacker.Target) + "  hands in a wide arc closing in on" + Helpers.ReturnName(attacker.Target, attacker, null);
 
           
 
