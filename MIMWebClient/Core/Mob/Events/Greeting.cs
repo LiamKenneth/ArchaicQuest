@@ -14,7 +14,7 @@ namespace MIMWebClient.Core.Mob.Events
                 if (mob.GreetMessage != null)
                 {
                     string greetMessageToRoom = mob.GreetMessage + " " + player.Name;
-                    HubContext.broadcastToRoom(mob.Name + " says " + greetMessageToRoom, room.players, player.HubGuid);
+                    HubContext.broadcastToRoom(mob.Name + " says " + greetMessageToRoom, room.players, player);
                 }
                
             }

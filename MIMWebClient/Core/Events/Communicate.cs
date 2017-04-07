@@ -19,7 +19,7 @@ namespace MIMWebClient.Core.Events
             string playerId = player.HubGuid;
 
             HubContext.SendToClient("You say " + message, playerId, null, false, false);
-            HubContext.broadcastToRoom(Helpers.ReturnName(player, string.Empty) + " says " + message, room.players, playerId, true);
+            HubContext.broadcastToRoom(player.Name + " says " + message, room.players, player, true);
 
 
             //check npc response
@@ -149,7 +149,7 @@ namespace MIMWebClient.Core.Events
                                 //  Command.ParseCommand("Give 5 gold " + player.Name, mob, room);
                                 player.Gold += 5;
                                 HubContext.broadcastToRoom(mob.Name + " " + quest.PrerequisiteItemEmote,
-                                    room.players, String.Empty);
+                                    room.players, mob);
                                 HubContext.SendToClient("You get 5 gold from " + mob.Name, playerId);
                             }
                         }
@@ -201,7 +201,7 @@ namespace MIMWebClient.Core.Events
             {
                 string recipientName = recipientPlayer.Name;
                 HubContext.SendToClient("You say to " + recipientName + " " + actualMessage, playerId, null, false, false);
-                HubContext.SendToClient(Helpers.ReturnName(player, string.Empty) + " says to you " + actualMessage, playerId, recipientName, true, true);
+                HubContext.SendToClient(Helpers.ReturnName(player, recipientPlayer, string.Empty) + " says to you " + actualMessage, playerId, recipientName, true, true);
 
 
 

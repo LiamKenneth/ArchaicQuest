@@ -10,7 +10,9 @@ namespace MIMWebClient.Core.Events
         public static void BroadcastPlayerActions (string playerHub, string playerName, List<PlayerSetup.Player> playersInRoom, string messageForPlayer, string messageForRoom)
         {
             HubContext.SendToClient(messageForPlayer, playerHub);
-            HubContext.broadcastToRoom(playerName + " " + messageForRoom, playersInRoom, playerHub, true);
+
+            var getPlayer = playersInRoom.FirstOrDefault(x => x.HubGuid.Equals(playerHub));
+            HubContext.broadcastToRoom(playerName + " " + messageForRoom, playersInRoom, getPlayer, true);
         }
        
     }
