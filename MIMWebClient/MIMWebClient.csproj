@@ -297,6 +297,7 @@
     <Compile Include="Core\Player\Skills\HandtoHand.cs" />
     <Compile Include="Core\Player\Skills\Kick.cs" />
     <Compile Include="Core\Player\Spells.cs" />
+    <Compile Include="Core\Player\Spells\Invis.cs" />
     <Compile Include="Core\Player\Spells\ContinualLight.cs" />
     <Compile Include="Core\Player\Spells\Armour.cs" />
     <Compile Include="Core\Player\Spells\MagicMissile.cs" />

@@ -18,7 +18,15 @@ namespace MIMWebClient.Core.Events
 
             foreach (var pc in players)
             {
-                HubContext.SendToClient(player.Name + " " + message, pc.HubGuid);
+                if (pc != player)
+                {
+                    HubContext.SendToClient(Helpers.ReturnName(player, string.Empty) + " " + message, pc.HubGuid);
+                }
+                else
+                {
+                    HubContext.SendToClient("You " + message, pc.HubGuid);
+                }
+                
             }
 
         }

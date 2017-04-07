@@ -223,6 +223,24 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("tra")]
         public int Trains;
 
+        [BsonElement("ndec")]
+        public bool nonDectect = false;
+
+        [BsonElement("inv")]
+        public bool invis = false;
+
+        [BsonElement("dinv")]
+        public bool DetectInvis = false;
+
+        [BsonElement("hidd")]
+        public bool hidden = false;
+
+        [BsonElement("dhidd")]
+        public bool DetectHidden= false;
+
+        [BsonElement("poi")]
+        public bool poinsoned = false;
+
         [BsonElement("qlog")]
         public List<Quest> QuestLog;
 

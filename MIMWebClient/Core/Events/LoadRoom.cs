@@ -51,7 +51,12 @@ namespace MIMWebClient.Core.Events
         }
 
 
-
+        /// <summary>
+        /// Displays room desc, players, mobs, items and exits
+        /// </summary>
+        /// <param name="room"></param>
+        /// <param name="playerName"></param>
+        /// <returns></returns>
         public static string DisplayRoom(Room room, string playerName)
         {
 
@@ -64,11 +69,20 @@ namespace MIMWebClient.Core.Events
                 exitList += exit.name + " ";
             }
 
+            var player = room.players.FirstOrDefault(x => x.Name.Equals(playerName));
+
+
             var itemList = string.Empty;
             foreach (var item in room.items)
             {
                 if (item != null)
                 {
+
+                    if (item.itemFlags?.Contains(Item.Item.ItemFlags.invis) == true && player.DetectInvis == false || item.itemFlags?.Contains(Item.Item.ItemFlags.hidden) == true && player.DetectHidden == false)
+                    {
+                        continue;
+                    }
+
                     if (!item.isHiddenInRoom)
                     {
                         var result = AvsAnLib.AvsAn.Query(item.name);
@@ -88,13 +102,24 @@ namespace MIMWebClient.Core.Events
                 }
             }
 
+           
             var playerList = string.Empty;
             if (room.players != null)
             {
-
+               
 
                 foreach (var item in room.players)
                 {
+                    if (item.invis == true && player.DetectInvis == false || item.hidden == true && player.DetectHidden == false)
+                    {
+                        continue;
+                    }
+
+                    if (item.nonDectect == true)
+                    {
+                        continue;
+                    }
+
                     if (item.Name != playerName)
                     {
                         if (item.Status == Player.PlayerStatus.Standing)
@@ -105,11 +130,15 @@ namespace MIMWebClient.Core.Events
                         {
                             playerList += item.Name + " is fighting " + item.Target.Name + "\r\n";
                         }
-                        else if (item.Status == PlayerSetup.Player.PlayerStatus.Ghost)
+                        else if (item.Status == PlayerSetup.Player.PlayerStatus.Resting)
                         {
-                            playerList += item.Name + "(Ghost) (Translucent) (Invis)\r\n";
+                            playerList += item.Name + " is resting.";
                         }
-
+                        else if (item.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
+                        {
+                            playerList += item.Name + " is sleeping.";
+                        }
+   
                     }
 
                 }
@@ -120,6 +149,18 @@ namespace MIMWebClient.Core.Events
             {
                 foreach (var item in room.mobs)
                 {
+
+                    if (item.invis == true && player.DetectInvis == false || item.hidden == true && player.DetectHidden == false)
+                    {
+                        continue;
+                    }
+
+                    if (item.nonDectect == true)
+                    {
+                        continue;
+                    }
+
+
                     var result = AvsAnLib.AvsAn.Query(item.Name);
                     string article = result.Article;
 
@@ -128,7 +169,22 @@ namespace MIMWebClient.Core.Events
                         article = string.Empty;
                     }
 
-                    mobList += "<p class='roomItems'>" + article + " " + item.Name + " is here.<p>";
+                    if (item.Status == Player.PlayerStatus.Standing)
+                    {
+                        mobList += "<p class='roomItems'>" + article + " " + item.Name + " is here.<p>";
+                    }
+                    else if (item.Status == Player.PlayerStatus.Fighting)
+                    {
+                        mobList += "<p class='roomItems'>" + article + " " + item.Name + " is fighting " + item.Target.Name + "</p>";
+                    }
+                    else if (item.Status == PlayerSetup.Player.PlayerStatus.Resting)
+                    {
+                        mobList += "<p class='roomItems'>" + article + " " + item.Name + " is resting.<p>";
+                    }
+                    else if (item.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
+                    {
+                        mobList += "<p class='roomItems'>" + article + " " + item.Name + " is sleeping.<p>";
+                    }
                 }
             }
 

@@ -67,7 +67,16 @@ namespace MIMWebClient.Core.Player.Classes
 
             #endregion
 
+            #region  Give invis skill
 
+            var invis = Invis.InvisAb();
+
+            invis.LevelObtained = 1;
+            invis.Proficiency = 50;
+            invis.MaxProficiency = 95;
+            mage.Skills.Add(invis);
+
+            #endregion
 
             #region  Give continual light skill
 

@@ -117,6 +117,12 @@ namespace MIMWebClient.Core
         /// <returns></returns>
         public static string ReturnName(PlayerSetup.Player objName, string itemName)
         {
+
+            if (objName.invis == true)
+            {
+                return "Someone";
+            }
+
             if (objName != null)
             {
 
@@ -143,7 +149,7 @@ namespace MIMWebClient.Core
             return FirstLetterToUpper(itemResult + " " + itemName);
 
         }
-
+ 
         /// <summary>
         /// Returns captalised string
         /// </summary>
