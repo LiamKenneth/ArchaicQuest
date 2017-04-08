@@ -19,9 +19,9 @@ namespace MIMWebClient.Core.Player.Skills
         private static string _color = "white";
         public static Skill ContinualLightSkill { get; set; }
 
-        public static void StarContinualLight (Player player, Room room, string commandOptions = "")
+        public static void StarContinualLight(Player player, Room room, string commandOptions = "")
         {
- 
+
             //Check if player has spell
             var hasSpell = Skill.CheckPlayerHasSkill(player, ContinualLightAb().Name);
 
@@ -37,7 +37,7 @@ namespace MIMWebClient.Core.Player.Skills
             int nth = -1;
             string getNth = string.Empty;
             string objectToFind = String.Empty;
- 
+
 
             if (options.Length == 3)
             {
@@ -67,7 +67,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             #endregion
 
-            if (nth == 0) {  nth = -1;  }
+            if (nth == 0) { nth = -1; }
 
 
             _target = FindItem.Item(player.Inventory, nth, objectToFind, Item.Item.ItemLocation.Inventory);
@@ -84,7 +84,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 return;
             }
- 
+
             if (!_taskRunnning && _target != null)
             {
 
@@ -121,7 +121,16 @@ namespace MIMWebClient.Core.Player.Skills
 
                 var playersInRoom = new List<Player>(room.players);
 
-                HubContext.broadcastToRoom(Helpers.ReturnName(player, target, null) + $" grasps {article} {_target.name} between {Helpers.ReturnHisOrHers(player.Gender)} hands which starts to shimmer a slight {_color} colour", playersInRoom, player.HubGuid, true);
+                foreach (var character in room.players)
+                {
+                    if (character != player)
+                    {
+                        var hisOrHer = Helpers.ReturnHisOrHers(player, character);
+                        var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} grasps {article} {_target.name} between {hisOrHer} hands which starts to shimmer a slight {_color} colour";
+
+                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                    }
+                }
 
 
 
@@ -137,16 +146,25 @@ namespace MIMWebClient.Core.Player.Skills
                     player.ManaPoints -= ContinualLightAb().ManaCost;
 
                     Score.UpdateUiPrompt(player);
-                
+
                     HubContext.SendToClient($"You clasp your hands together forming a bright {_color} ball between them", player.HubGuid);
 
-                    HubContext.broadcastToRoom(Helpers.ReturnName(player, null) + " 's hands start to glow as they begin chanting the Continual light spell", room.players, player.HubGuid, true);
+                    foreach (var character in room.players)
+                    {
+                        if (character != player)
+                        {
+                            var hisOrHer = Helpers.ReturnHisOrHers(player, character);
+                            var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} 's hands start to glow as they begin chanting the Continual light spell";
+
+                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                        }
+                    }
 
                     Task.Run(() => DoContinualLight(player, room));
-                     
+
                 }
 
-                 
+
 
             }
 
@@ -162,15 +180,20 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (_target == null)
             {
-                var castingTextAttacker =  $"A bright {_color} ball of light is released by your hands and hovers in the air.";
-
-                var castingTextRoom =  $"{Helpers.ReturnName(attacker, null)} releases a {_color} bright ball of light which hovers in the air.";
+                var castingTextAttacker = $"A bright {_color} ball of light is released by your hands and hovers in the air.";
 
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
 
-                var excludePlayers = new List<string> {attacker.HubGuid};
+                foreach (var character in room.players)
+                {
+                    if (character != attacker)
+                    {
 
-                HubContext.SendToAllExcept(castingTextRoom, excludePlayers, room.players);
+                        var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)} releases a {_color} bright ball of light which hovers in the air.";
+
+                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                    }
+                }
 
                 var ballOfLight = Light.BallOfLight();
                 ballOfLight.description = new Description()
@@ -181,14 +204,14 @@ namespace MIMWebClient.Core.Player.Skills
                 };
                 ballOfLight.name = $"A bright {_color} ball of light";
                 ballOfLight.location = Item.Item.ItemLocation.Room;
- 
+
 
                 room.items.Add(ballOfLight);
 
             }
             else
             {
-                var castingTextAttacker =  $"The {_target.name} glows a bright {_color} colour.";
+                var castingTextAttacker = $"The {_target.name} glows a bright {_color} colour.";
 
                 var castingTextRoom = $"The {_target.name} glows a bright {_color} colour.";
 
@@ -201,13 +224,13 @@ namespace MIMWebClient.Core.Player.Skills
 
             _target = null;
             _taskRunnning = false;
-     
+
 
         }
 
         private static string ReturnColor(string color)
         {
-            var allowedColours = new List<string> {"Blue", "Red", "Green", "Yellow", "Purple", "Orange", "White"};
+            var allowedColours = new List<string> { "Blue", "Red", "Green", "Yellow", "Purple", "Orange", "White" };
 
             foreach (var allowedColor in allowedColours)
             {

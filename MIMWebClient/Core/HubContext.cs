@@ -85,8 +85,6 @@ namespace MIMWebClient.Core
         /// <param name="players">players to send message to</param>
         public static void SendToAllExcept(string message, List<string> excludeThesePlayers, List<PlayerSetup.Player> players)
         {
-
-            //TODO: add sender here,
             if (message == null)
             {
                 return;
@@ -94,8 +92,6 @@ namespace MIMWebClient.Core
 
             foreach (var player in players)
             {
-
-                //TODO finsh string building here
 
                 if (player != null && player.HubGuid != excludeThesePlayers.FirstOrDefault(x => x.Equals(player.HubGuid)))
                 {
@@ -106,9 +102,7 @@ namespace MIMWebClient.Core
 
         }
 
-
-        //TODO fix invis here
-        public static void broadcastToRoom(string message, List<PlayerSetup.Player> players, PlayerSetup.Player player, bool excludeCaller = false)
+        public static void broadcastToRoom(string message, List<PlayerSetup.Player> players, string playerId, bool excludeCaller = false)
         {
             int playerCount = players.Count;
 
@@ -116,14 +110,9 @@ namespace MIMWebClient.Core
             {
                 for (int i = 0; i < playerCount; i++)
                 {
-                    if (player.HubGuid != players[i].HubGuid)
+                    if (playerId != players[i].HubGuid)
                     {
-
-                        var name = Helpers.ReturnName(player, players[i], string.Empty);
-
-                        var fixMessage = message.Replace(player.Name, name);
-
-                        HubContext.getHubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(fixMessage);
+                        HubContext.getHubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(message);
                     }
                 }
             }
@@ -131,12 +120,7 @@ namespace MIMWebClient.Core
             {
                 for (int i = 0; i < playerCount; i++)
                 {
-
-                    var name = Helpers.ReturnName(player, players[i], string.Empty);
-
-                    var fixMessage = message.Replace(player.Name, name);
-
-                    HubContext.getHubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(fixMessage);
+                    HubContext.getHubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(message);
                 }
             }
 
@@ -167,7 +151,7 @@ namespace MIMWebClient.Core
 
                 SendToClient("Gods take note of your progress", playerId);
                 SendToClient("See you soon!", playerId);
-                broadcastToRoom(playerData.Name + " has left the realm", room.players, playerData, true);
+                broadcastToRoom(playerData.Name + " has left the realm", room.players, playerId, true);
 
                 HubContext.getHubContext.Clients.Client(playerId).quit();
 

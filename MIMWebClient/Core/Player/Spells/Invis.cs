@@ -97,9 +97,16 @@ namespace MIMWebClient.Core.Player.Skills
 
                 var playersInRoom = new List<Player>(room.players);
 
-                HubContext.broadcastToRoom(Helpers.ReturnName(player, null) + $" take hold of the {_target.name} between {Helpers.ReturnHisOrHers(player.Gender)} hands which starts to fade in and out of existence.", playersInRoom, player.HubGuid, true);
+                foreach (var character in room.players)
+                {
+                    if (character != player)
+                    {
+                        var hisOrHer = Helpers.ReturnHisOrHers(player, character);
+                        var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} takes hold of the {_target.name} between {hisOrHer} hands which starts to fade in and out of existence.";
 
-
+                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                    }
+                }
 
                 Task.Run(() => DoInvis(player, room));
 
@@ -115,8 +122,18 @@ namespace MIMWebClient.Core.Player.Skills
                     Score.UpdateUiPrompt(player);
                 
                     HubContext.SendToClient($"You start to fade in and out of existence.", player.HubGuid);
+ 
+                    foreach (var character in room.players)
+                    {
+                        if (character != player)
+                        {
+                            var hisOrHer = Helpers.ReturnHisOrHers(player, character);
+                            var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} starts to fade in and out of existence";
 
-                    HubContext.broadcastToRoom(Helpers.ReturnName(player, null) + " starts to fade in and out of existence", room.players, player.HubGuid, true);
+                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                        }
+                    }
+
 
                     Task.Run(() => DoInvis(player, room));
                      
@@ -139,14 +156,21 @@ namespace MIMWebClient.Core.Player.Skills
             if (_target == null)
             {
                 var castingTextAttacker =  $"You fade out of existence";
-
-                var castingTextRoom =  $"{Helpers.ReturnName(attacker, null)} fades out of existence.";
-
+ 
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
 
                 var excludePlayers = new List<string> {attacker.HubGuid};
+ 
+                foreach (var character in room.players)
+                {
+                    if (character != attacker)
+                    {
+                        var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
+                        var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)} fades out of existence.";
 
-                HubContext.SendToAllExcept(castingTextRoom, excludePlayers, room.players);
+                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                    }
+                }
 
                 attacker.invis = true;
 
@@ -155,7 +179,7 @@ namespace MIMWebClient.Core.Player.Skills
             {
                 var castingTextAttacker =  $"The {_target.name} fades out of existence.";
 
-                var castingTextRoom = $"The {_target.name} gfades out of existence.";
+                var castingTextRoom = $"The {_target.name} fades out of existence.";
 
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
                 HubContext.broadcastToRoom(castingTextRoom, room.players, attacker.HubGuid, true);

@@ -25,11 +25,21 @@ namespace MIMWebClient.Core.Player.Skills
             {
                 // find target if not in fight
                 HubContext.SendToClient("You pull your leg back", attacker.HubGuid);
-                HubContext.SendToClient(Helpers.ReturnName(attacker, null) + " pulls " + Helpers.ReturnHisOrHers(attacker.Gender) + " leg back ready to kick at you.", attacker.HubGuid,
+                HubContext.SendToClient(Helpers.ReturnName(attacker, null, null) + " pulls " + Helpers.ReturnHisOrHers(attacker, null) + " leg back ready to kick at you.", attacker.HubGuid,
                     attacker.Target.HubGuid, false, true);
-                HubContext.broadcastToRoom(
-                    Helpers.ReturnName(attacker, null) + " pulls " + Helpers.ReturnHisOrHers(attacker.Gender) +" leg back ready to kick at " + Helpers.ReturnName(attacker.Target, null),
-                    room.players, attacker.HubGuid, true);
+
+
+                foreach (var player in room.players)
+                {
+                    if (player != attacker && player != attacker.Target)
+                    {
+                        var hisOrHer = Helpers.ReturnHisOrHers(attacker, player);
+                        var roomMessage = $"{ Helpers.ReturnName(attacker, player, string.Empty)} pulls {hisOrHer} leg back ready to kick at {Helpers.ReturnName(attacker.Target, attacker, null)}";
+
+                        HubContext.SendToClient(roomMessage, player.HubGuid);
+                    }
+                }
+
 
                 Task.Run(() => DoKick(attacker, room));
 

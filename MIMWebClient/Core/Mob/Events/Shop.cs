@@ -83,10 +83,18 @@ namespace MIMWebClient.Core.Mob.Events
                             HubContext.SendToClient(
                                 "You buy " + article + itemToBuy.name + " from " + mob.Name,
                                 player.HubGuid);
-                            HubContext.broadcastToRoom(
-                                player.Name + " buys " + article + " " + itemToBuy.name +
-                                " from " +
-                                mob.Name, room.players, player.HubGuid, true);
+                           
+                            foreach (var character in room.players)
+                            {
+                                if (player != character)
+                                {
+                                    var hisOrHer = Helpers.ReturnHisOrHers(player, character);
+                                    var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} buys {article} {itemToBuy.name} from {mob.Name}";
+
+                                    HubContext.SendToClient(roomMessage, player.HubGuid);
+                                }
+                            }
+
                             Score.UpdateUiInventory(player);
                             //deduct gold
 

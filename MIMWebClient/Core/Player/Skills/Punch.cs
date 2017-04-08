@@ -29,7 +29,7 @@ namespace MIMWebClient.Core.Player.Skills
                     attacker.Target.HubGuid, false, true);
                 HubContext.broadcastToRoom(
                     attacker.Name + " clenches his fist and pulls his arm back aiming for " + attacker.Target.Name,
-                    room.players, attacker.HubGuid, true);
+                    room.players, attacker, true);
 
 
 
@@ -71,7 +71,7 @@ namespace MIMWebClient.Core.Player.Skills
                 {
                     HubContext.SendToClient("Your punch hits", attacker.HubGuid);
                     HubContext.SendToClient(attacker.Name + " punch hits you", attacker.HubGuid, attacker.Target.HubGuid, false, true);
-                    HubContext.broadcastToRoom(attacker.Name + " punches " + attacker.Target.Name, room.players, attacker.HubGuid, true);
+                    HubContext.broadcastToRoom(attacker.Name + " punches " + attacker.Target.Name, room.players, attacker, true);
                     attacker.Target.HitPoints -= dam;
                 }
               
@@ -83,7 +83,7 @@ namespace MIMWebClient.Core.Player.Skills
             {
                 HubContext.SendToClient("You swing a punch at " + attacker.Target.Name + " but miss", attacker.HubGuid);
                 HubContext.SendToClient(attacker.Name + " swings a punch at you but misses", attacker.HubGuid, attacker.Target.HubGuid, false, true);
-                HubContext.broadcastToRoom(attacker.Name + " swings at " + attacker.Target.Name + " but misses", room.players, attacker.HubGuid, true);
+                HubContext.broadcastToRoom(attacker.Name + " swings at " + attacker.Target.Name + " but misses", room.players, attacker, true);
             }
 
             _taskRunnning = false;
