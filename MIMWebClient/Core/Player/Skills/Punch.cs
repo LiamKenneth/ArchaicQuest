@@ -27,11 +27,18 @@ namespace MIMWebClient.Core.Player.Skills
                 HubContext.SendToClient("You clench your fist and pull your arm back", attacker.HubGuid);
                 HubContext.SendToClient(attacker.Name + " Pulls his arm back aiming a punch at you.", attacker.HubGuid,
                     attacker.Target.HubGuid, false, true);
-                HubContext.broadcastToRoom(
-                    attacker.Name + " clenches his fist and pulls his arm back aiming for " + attacker.Target.Name,
-                    room.players, attacker, true);
+                 
 
+                foreach (var character in room.players)
+                {
+                    if (attacker != character || attacker.Target != character)
+                    {
+                        var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
+                        var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)} clenches his fist and pulls his arm back aiming for {Helpers.ReturnName(attacker.Target, attacker, string.Empty)}";
 
+                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                    }
+                }
 
 
                 Task.Run(() => DoPunch(attacker, room));
@@ -71,7 +78,22 @@ namespace MIMWebClient.Core.Player.Skills
                 {
                     HubContext.SendToClient("Your punch hits", attacker.HubGuid);
                     HubContext.SendToClient(attacker.Name + " punch hits you", attacker.HubGuid, attacker.Target.HubGuid, false, true);
-                    HubContext.broadcastToRoom(attacker.Name + " punches " + attacker.Target.Name, room.players, attacker, true);
+                   
+
+                    foreach (var character in room.players)
+                    {
+                        if (attacker != character || attacker.Target != character)
+                        {
+                            var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
+                            var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)} punches {Helpers.ReturnName(attacker.Target, attacker, string.Empty)}";
+
+                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                        }
+                    }
+
+
+
+
                     attacker.Target.HitPoints -= dam;
                 }
               
@@ -83,7 +105,19 @@ namespace MIMWebClient.Core.Player.Skills
             {
                 HubContext.SendToClient("You swing a punch at " + attacker.Target.Name + " but miss", attacker.HubGuid);
                 HubContext.SendToClient(attacker.Name + " swings a punch at you but misses", attacker.HubGuid, attacker.Target.HubGuid, false, true);
-                HubContext.broadcastToRoom(attacker.Name + " swings at " + attacker.Target.Name + " but misses", room.players, attacker, true);
+                
+
+                foreach (var character in room.players)
+                {
+                    if (attacker != character || attacker.Target != character)
+                    {
+                        var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
+                        var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)} swings at  {Helpers.ReturnName(attacker.Target, attacker, string.Empty)} but misses";
+
+                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                    }
+                }
+
             }
 
             _taskRunnning = false;

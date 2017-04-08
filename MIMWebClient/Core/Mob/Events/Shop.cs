@@ -91,7 +91,7 @@ namespace MIMWebClient.Core.Mob.Events
                                     var hisOrHer = Helpers.ReturnHisOrHers(player, character);
                                     var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} buys {article} {itemToBuy.name} from {mob.Name}";
 
-                                    HubContext.SendToClient(roomMessage, player.HubGuid);
+                                    HubContext.SendToClient(roomMessage, character.HubGuid);
                                 }
                             }
 

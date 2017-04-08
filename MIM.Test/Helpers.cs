@@ -64,10 +64,10 @@ namespace MIM.Test
             var apple = "apple";
             var sword = "sword";
 
-            var returnedName = MIMWebClient.Core.Helpers.ReturnName(cat, null);
-            var returnedName2 = MIMWebClient.Core.Helpers.ReturnName(mollyCat, null);
-            var objName = MIMWebClient.Core.Helpers.ReturnName(null, apple);
-            var objName2 = MIMWebClient.Core.Helpers.ReturnName(null, sword);
+            var returnedName = MIMWebClient.Core.Helpers.ReturnName(cat, null, null);
+            var returnedName2 = MIMWebClient.Core.Helpers.ReturnName(mollyCat, null, null);
+            var objName = MIMWebClient.Core.Helpers.ReturnName(null, null, apple);
+            var objName2 = MIMWebClient.Core.Helpers.ReturnName(null, null, sword);
 
             Assert.That(returnedName, Is.EqualTo("a Cat"));
             Assert.That(returnedName2, Is.EqualTo("Molly"));

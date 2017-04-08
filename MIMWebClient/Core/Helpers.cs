@@ -118,15 +118,22 @@ namespace MIMWebClient.Core
         public static string ReturnName(PlayerSetup.Player player, PlayerSetup.Player target, string itemName)
         {
 
+            if (player == null && target == null)
+            {
+
+                var itemResult = AvsAnLib.AvsAn.Query(itemName).Article;
+
+
+                return FirstLetterToUpper(itemResult + " " + itemName);
+            }
+
             //TODO: ah a bug, if you have detects it will always say someone
             if (player.invis == true && target.DetectInvis == false || player.hidden == true && target.DetectHidden == false)
             {
                 return "Someone";
             }
 
-            if (player != null)
-            {
-
+         
                 var result = AvsAnLib.AvsAn.Query(player.Name).Article;
                 string name;
 
@@ -142,12 +149,8 @@ namespace MIMWebClient.Core
 
                 return name;
 
-            }
+           
 
-              var itemResult = AvsAnLib.AvsAn.Query(itemName).Article;
-
-
-            return FirstLetterToUpper(itemResult + " " + itemName);
 
         }
  

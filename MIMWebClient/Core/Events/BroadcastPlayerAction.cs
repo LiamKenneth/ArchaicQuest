@@ -12,7 +12,17 @@ namespace MIMWebClient.Core.Events
             HubContext.SendToClient(messageForPlayer, playerHub);
 
             var getPlayer = playersInRoom.FirstOrDefault(x => x.HubGuid.Equals(playerHub));
-            HubContext.broadcastToRoom(playerName + " " + messageForRoom, playersInRoom, getPlayer, true);
+           
+            foreach (var character in playersInRoom)
+            {
+                if (getPlayer != character)
+                {
+                  
+                    var roomMessage = $"{ Helpers.ReturnName(getPlayer, character, string.Empty)} says {messageForRoom}.";
+
+                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                }
+            }
         }
        
     }

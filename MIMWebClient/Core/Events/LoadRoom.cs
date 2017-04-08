@@ -344,7 +344,17 @@ namespace MIMWebClient.Core.Events
                                 HubContext.SendToClient("You look into the " + itemDescription.name + " but it is empty", player.HubGuid);
                             }
 
-                            HubContext.broadcastToRoom(player.Name + " looks in a " + itemDescription.name, room.players, player, true);
+                            
+                            foreach (var character in room.players)
+                            {
+                                if (player != character)
+                                {
+                                    
+                                    var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} looks in a {itemDescription.name}";
+
+                                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                                }
+                            }
                         }
                         else
                         {
@@ -399,7 +409,18 @@ namespace MIMWebClient.Core.Events
                         HubContext.SendToClient(descriptionText, player.HubGuid);
                      
                         Equipment.ShowEquipmentLook(mobDescription, player);
-                        HubContext.broadcastToRoom(player.Name + " looks at " + mobDescription.Name, roomData.players, player, true);
+                  
+
+                        foreach (var character in room.players)
+                        {
+                            if (player != character)
+                            {
+
+                                var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} looks at { Helpers.ReturnName(mobDescription, character, string.Empty)}";
+
+                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                            }
+                        }
                     }
                     else
                     {

@@ -132,6 +132,7 @@ namespace MIMWebClient.Core.Events
             if (defendingPlayer == null)
             {
                 HubContext.SendToClient("No one here", attacker.HubGuid);
+                attacker.Status = Player.PlayerStatus.Standing;
                 return null;
             }
 
@@ -145,12 +146,14 @@ namespace MIMWebClient.Core.Events
             if (attacker.HitPoints <= 0)
             {
                 HubContext.SendToClient("You cannot attack anything while dead", attacker.HubGuid);
+                attacker.Status = Player.PlayerStatus.Standing;
                 return null;
             }
 
             if (defendingPlayer.HitPoints <= 0)
             {
                 HubContext.SendToClient("They are already dead.", attacker.HubGuid);
+                attacker.Status = Player.PlayerStatus.Standing;
                 return null;
             }
 
