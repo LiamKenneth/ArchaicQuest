@@ -15,6 +15,17 @@ namespace MIMWebClient.Core.Player
 
                 HubContext.SendToClient("You wake and stand up", player.HubGuid);
 
+                foreach (var character in room.players)
+                {
+                    if (player != character)
+                    {
+
+                        var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} wakes and stands up.";
+
+                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                    }
+                }
+
                 if (!string.IsNullOrEmpty(room.EventWake))
                 {
                     Event.ParseCommand(room.EventWake, player, null, room, "wake");
@@ -47,6 +58,17 @@ namespace MIMWebClient.Core.Player
                 player.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
 
                 HubContext.SendToClient("You laydown and go to sleep", player.HubGuid);
+
+                foreach (var character in room.players)
+                {
+                    if (player != character)
+                    {
+
+                        var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} lays down and goes to sleep.";
+
+                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                    }
+                }
 
                 if (!string.IsNullOrEmpty(room.EventWake))
                 {

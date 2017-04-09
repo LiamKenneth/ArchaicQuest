@@ -57,10 +57,16 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (nth == 0) {  nth = -1;  }
 
+            if (!string.IsNullOrEmpty(objectToFind))
+            {
+                _target = FindItem.Item(player.Inventory, nth, objectToFind, Item.Item.ItemLocation.Inventory);
 
-            _target = FindItem.Item(player.Inventory, nth, objectToFind, Item.Item.ItemLocation.Inventory);
+            }
+            else
+            {
+                _target = null;
+            }
 
-             
             if (!_taskRunnning && _target != null)
             {
 

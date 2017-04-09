@@ -42,8 +42,10 @@ namespace MIMWebClient.Core.Events
             }
             else
             {
-                BroadcastPlayerAction.BroadcastPlayerActions(player.HubGuid, player.Name, room.players, "You don't see anything by that name here", player.Name + " something something...");
 
+                HubContext.SendToClient($"You don't see anything by that name here.", player.HubGuid);
+
+             
             }
 
             return null;

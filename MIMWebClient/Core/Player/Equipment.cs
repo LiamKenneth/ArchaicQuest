@@ -118,6 +118,8 @@ namespace MIMWebClient.Core.Player
         public static void WearItem(Player player, string itemToWear, bool wield = false)
         {
 
+            var room = Cache.getRoom(player);
+
             if (string.IsNullOrEmpty(itemToWear))
             {
                 HubContext.SendToClient("Wear what?", player.HubGuid);
@@ -179,6 +181,20 @@ namespace MIMWebClient.Core.Player
                 {
                     HubContext.SendToClient("You wear " + foundItem.name, player.HubGuid);
 
+                    var result = AvsAnLib.AvsAn.Query(foundItem.name);
+                    string article = result.Article;
+
+                    foreach (var character in room.players)
+                    {
+                        if (player != character)
+                        {
+
+                            var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} wears {article} {foundItem.name}";
+
+                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                        }
+                    }
+
                     //Wear event
 
                     CheckEvent.FindEvent(CheckEvent.EventType.Wear, player, foundItem.name);
@@ -186,6 +202,20 @@ namespace MIMWebClient.Core.Player
                 else
                 {
                     HubContext.SendToClient("You wield " + foundItem.name, player.HubGuid);
+
+                    var result = AvsAnLib.AvsAn.Query(foundItem.name);
+                    string article = result.Article;
+
+                    foreach (var character in room.players)
+                    {
+                        if (player != character)
+                        {
+
+                            var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} wields {article} {foundItem.name}";
+
+                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                        }
+                    }
                 }
                 Score.UpdateUiInventory(player);
                 Score.ReturnScoreUI(player);
@@ -233,10 +263,38 @@ namespace MIMWebClient.Core.Player
                             {
                                 HubContext.SendToClient("You wear." + item.name, player.HubGuid);
 
+                                var result = AvsAnLib.AvsAn.Query(item.name);
+                                string article = result.Article;
+
+                                foreach (var character in room.players)
+                                {
+                                    if (player != character)
+                                    {
+
+                                        var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} wears {article} {item.name}";
+
+                                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                                    }
+                                }
+
                             }
                             else
                             {
                                 HubContext.SendToClient("You wield." + item.name, player.HubGuid);
+
+                                var result = AvsAnLib.AvsAn.Query(item.name);
+                                string article = result.Article;
+
+                                foreach (var character in room.players)
+                                {
+                                    if (player != character)
+                                    {
+
+                                        var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} wields {article} {item.name}";
+
+                                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                                    }
+                                }
                             }
  
 
@@ -259,6 +317,7 @@ namespace MIMWebClient.Core.Player
         /// <param name="itemToRemove">Item to Remove</param>
         public static void RemoveItem(Player player, string itemToRemove, bool replaceWithOtherEQ = false, bool unwield = false)
         {
+            var room = Cache.getRoom(player);
 
             if (!itemToRemove.Equals("all", StringComparison.CurrentCultureIgnoreCase))
             {
@@ -302,11 +361,39 @@ namespace MIMWebClient.Core.Player
 
                 if (!unwield || !slot.Equals("wield", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    HubContext.SendToClient("You Remove." + foundItem.name, player.HubGuid);
+                    HubContext.SendToClient("You remove." + foundItem.name, player.HubGuid);
+
+                    var result = AvsAnLib.AvsAn.Query(foundItem.name);
+                    string article = result.Article;
+
+                    foreach (var character in room.players)
+                    {
+                        if (player != character)
+                        {
+
+                            var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} removes {article} {foundItem.name}";
+
+                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                        }
+                    }
                 }
                 else
                 {
-                    HubContext.SendToClient("You Unwield." + foundItem.name, player.HubGuid);
+                    HubContext.SendToClient("You nwield " + foundItem.name, player.HubGuid);
+
+                    var result = AvsAnLib.AvsAn.Query(foundItem.name);
+                    string article = result.Article;
+
+                    foreach (var character in room.players)
+                    {
+                        if (player != character)
+                        {
+
+                            var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} unwields {article} {foundItem.name}";
+
+                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                        }
+                    }
                 }
                 Score.UpdateUiInventory(player);
                 Score.ReturnScoreUI(player);
@@ -337,10 +424,38 @@ namespace MIMWebClient.Core.Player
                     {
                         HubContext.SendToClient("You remove " + item.name, player.HubGuid);
 
+                        var result = AvsAnLib.AvsAn.Query(item.name);
+                        string article = result.Article;
+
+                        foreach (var character in room.players)
+                        {
+                            if (player != character)
+                            {
+
+                                var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} remove {article} {item.name}";
+
+                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                            }
+                        }
+
                     }
                     else
                     {
                         HubContext.SendToClient("You unwield " + item.name, player.HubGuid);
+
+                        var result = AvsAnLib.AvsAn.Query(item.name);
+                        string article = result.Article;
+
+                        foreach (var character in room.players)
+                        {
+                            if (player != character)
+                            {
+
+                                var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} unwields {article} {item.name}";
+
+                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                            }
+                        }
                     }
 
                     item.location = Item.ItemLocation.Inventory;
