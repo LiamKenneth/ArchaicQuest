@@ -442,7 +442,7 @@ namespace MIMWebClient.Core.Events
                     {
                         HubContext.SendToClient(descriptionText, player.HubGuid);
                         Equipment.ShowEquipmentLook(playerDescription, player);
-                        HubContext.SendToClient(player.Name + " looks at you", targetPlayerId);
+                        HubContext.SendToClient(player.Name + " looks at you", playerDescription.HubGuid);
                     }
                     else
                     {
