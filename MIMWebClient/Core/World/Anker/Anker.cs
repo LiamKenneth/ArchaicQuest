@@ -431,13 +431,23 @@ namespace MIMWebClient.Core.World.Anker
             //test EQ
             var plate = FullPlateBody.BreastPlateOfTyr();
             room.items.Add(plate);
-            room.items.Add(FullPlateHelm.HelmOfTyr());
-            room.items.Add(FullPlateSleeves.SteelSleevesOfTyr());
-            room.items.Add(FullPlateBoots.BootsOfTyr());
-            room.items.Add(FullPlateGauntlet.GuantletOfTyr());
-            room.items.Add(FullPlateGreaves.SteelGreevesOfTyr());
 
+            var helm = FullPlateHelm.HelmOfTyr();
+            room.items.Add(helm);
 
+            var sleeves = FullPlateSleeves.SteelSleevesOfTyr();
+            room.items.Add(sleeves);
+
+            var boots = FullPlateBoots.BootsOfTyr();
+            room.items.Add(boots);
+
+            var guantlets = FullPlateGauntlet.GuantletOfTyr();
+            room.items.Add(guantlets);
+
+            var greeves = FullPlateGreaves.SteelGreevesOfTyr();
+            room.items.Add(greeves);
+
+ 
 
             return room;
         }

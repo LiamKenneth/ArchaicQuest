@@ -242,14 +242,22 @@ namespace MIMWebClient.Core.Events
                     roomData.mobs = new List<Player>();
                 }
 
-                var mobDescription = roomData.mobs.Find(x => x.Name.ToLower().Contains(commandOptions.ToLower()));
+                var mobDescription = (n == -1)
+                                          ? roomData.mobs.Find(x => x.Name.ToLower().Contains(commandOptions))
+                                          : roomData.mobs.FindAll(x => x.Name.ToLower().Contains(item))
+                                                .Skip(n - 1)
+                                                .FirstOrDefault();
 
                 if (roomData.players == null)
                 {
                     roomData.players = new List<Player>();
                 }
 
-                var playerDescription = roomData.players.Find(x => x.Name.ToLower().Contains(commandOptions.ToLower()));
+                var playerDescription =  (n == -1)
+                                          ? roomData.players.Find(x => x.Name.ToLower().Contains(commandOptions))
+                                          : roomData.players.FindAll(x => x.Name.ToLower().Contains(item))
+                                                .Skip(n - 1)
+                                                .FirstOrDefault();
 
                 var targetPlayerId = string.Empty;
                 if (playerDescription != null)
@@ -390,7 +398,10 @@ namespace MIMWebClient.Core.Events
                         }
                         else
                         {
-                            HubContext.SendToClient("You can't do that to a " + itemDescription.name, player.HubGuid);
+                            var result = AvsAnLib.AvsAn.Query(itemDescription.name);
+                            string article = result.Article;
+
+                            HubContext.SendToClient("You see nothing special about " + article + " " + itemDescription.name, player.HubGuid);
                         }
                     }
                 }

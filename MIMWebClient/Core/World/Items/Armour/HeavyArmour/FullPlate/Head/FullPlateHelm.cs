@@ -19,7 +19,7 @@ namespace MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Head
                 description = new Description()
                 {
                     look =
-                        "",
+                        "a metal domed helm",
                     exam =
                         "",
                     smell = "It doesn't seem to smell",
