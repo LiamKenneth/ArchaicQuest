@@ -30,7 +30,7 @@ namespace MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Body
                 location = Item.Item.ItemLocation.Room,
                 slot = Item.Item.EqSlot.Body,
                 type = Item.Item.ItemType.Armour,
-                name = "The breast plate of Tyr",
+                name = "Breast plate of Tyr",
                 ArmorRating = new ArmourRating()
                 {
                     Armour = 20,

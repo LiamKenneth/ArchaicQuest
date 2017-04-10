@@ -88,7 +88,7 @@ namespace MIMWebClient.Core.Events
                         var result = AvsAnLib.AvsAn.Query(item.name);
                         string article = result.Article;
 
-                        if (item.description?.room != null)
+                        if (!string.IsNullOrEmpty(item.description?.room))
                         {
                             itemList += $"<p class='roomItems'>{item.description.room}<p>";
                         }
@@ -332,7 +332,7 @@ namespace MIMWebClient.Core.Events
 
                         if (itemDescription.open == false)
                         {
-                            HubContext.SendToClient("You to to open the " + itemDescription.name + " before you can look inside", player.HubGuid);
+                            HubContext.SendToClient("You need to open the " + itemDescription.name + " before you can look inside", player.HubGuid);
                             return;
                         }
 

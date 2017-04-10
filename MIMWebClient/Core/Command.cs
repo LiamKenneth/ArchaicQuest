@@ -118,6 +118,11 @@ namespace MIMWebClient.Core
         public static  void ParseCommand(string input, PlayerSetup.Player playerData, Room.Room room = null)
         {
 
+            if (string.IsNullOrEmpty(input.Trim()))
+            {
+                HubContext.SendToClient("You need to enter a command, type help if you need it.", playerData.HubGuid);
+                return;
+            }
 
             //testing
             string enteredCommand = input;
@@ -148,7 +153,9 @@ namespace MIMWebClient.Core
                 }
                 else
                 {
-                    commandOptions = enteredCommand.Substring(enteredCommand.IndexOf(' ', 1)).Trim();
+                   
+                        commandOptions = enteredCommand.Substring(enteredCommand.IndexOf(' ', 1)).Trim();
+                  
                 }
                
             }
