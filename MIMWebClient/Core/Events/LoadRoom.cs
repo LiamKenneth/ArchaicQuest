@@ -185,6 +185,10 @@ namespace MIMWebClient.Core.Events
                     {
                         mobList += "<p class='roomItems'>" + article + " " + item.Name + " is sleeping.<p>";
                     }
+                    else 
+                    {
+                        mobList += "<p class='roomItems'>" + article + " " + item.Name + " is here.<p>";
+                    }
                 }
             }
 

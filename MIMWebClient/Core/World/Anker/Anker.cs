@@ -1402,7 +1402,7 @@ namespace MIMWebClient.Core.World.Anker
                 MaxHitPoints = 100,
                 HitPoints = 100,
                 Level = 1,
-                Status = Player.PlayerStatus.Busy,
+                Status = Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
                 Inventory = new List<Item.Item>(),
                 Emotes = new List<string>()
