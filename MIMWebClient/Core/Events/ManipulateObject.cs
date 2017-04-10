@@ -471,6 +471,7 @@ namespace MIMWebClient.Core.Events
                                     HubContext.SendToClient(roomMessage, character.HubGuid);
                                 }
                             }
+                            room.items.Remove(roomItems[i]);
                         }
                         else
                         {
