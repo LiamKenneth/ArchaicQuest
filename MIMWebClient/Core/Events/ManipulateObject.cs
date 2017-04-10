@@ -969,7 +969,7 @@ namespace MIMWebClient.Core.Events
             var thing = all.Last();
             var item = itemToGive;
 
-            var foundItem = player.Inventory.FirstOrDefault(x => item != null && x.name.StartsWith(item, StringComparison.CurrentCultureIgnoreCase));
+            var foundItem = player.Inventory.FirstOrDefault(x => item != null && x.name.ToLower().Contains(item.ToLower()));
             var foundThing = room.players.FirstOrDefault(x => thing != null && x.Name.StartsWith(thing, StringComparison.CurrentCultureIgnoreCase)) ??
                              room.mobs.FirstOrDefault(x => thing != null && x.Name.StartsWith(thing, StringComparison.CurrentCultureIgnoreCase));
 
@@ -990,7 +990,12 @@ namespace MIMWebClient.Core.Events
 
                         var result2 = AvsAnLib.AvsAn.Query(foundThing.Name);
                         string article2 = result2.Article;
-                        
+
+                        if (foundThing.KnownByName)
+                        {
+                            article2 = String.Empty;
+                        }
+
 
                         HubContext.SendToClient($"You give {article} {playerInv[i].name} to {article2} {foundThing.Name}.", player.HubGuid);
 
@@ -1042,13 +1047,18 @@ namespace MIMWebClient.Core.Events
                 var result2 = AvsAnLib.AvsAn.Query(foundThing.Name);
                 string article2 = result2.Article;
 
+                if (foundThing.KnownByName)
+                {
+                    article2 = String.Empty;
+                }
+
                 HubContext.SendToClient($"You give {article} {foundItem.name} to {article2} {foundThing.Name}.", player.HubGuid);
 
                 HubContext.SendToClient($"{Helpers.ReturnName(player, foundThing, string.Empty)} gives {article} {foundItem.name} to you.", foundThing.HubGuid);
 
                 foreach (var character in room.players)
                 {
-                    if (player != character || foundThing != player)
+                    if (player != character || foundThing != character)
                     {
 
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} gives {article} {foundItem.name} to {article2} {Helpers.ReturnName(foundThing, character, string.Empty)}.";
