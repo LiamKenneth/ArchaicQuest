@@ -82,14 +82,14 @@ namespace MIMWebClient.Core.Events
                 {
                     Thread.Sleep(120); // hack, sometimes the responses calls before the questions??
 
-                    if (!hasQuest)
-                    {
-                        var quest = mob.Quest.FirstOrDefault(x => x.Id.Equals(questId));
-                        HubContext.SendToClient(
-           mob.Name + " says to you " + quest.AlreadyOnQuestMessage, playerId,
-           null, true);
-                        return;
-                    }
+           //         if (hasQuest)
+           //         {
+           //             var quest = mob.Quest.FirstOrDefault(x => x.Id.Equals(questId));
+           //             HubContext.SendToClient(
+           //mob.Name + " says to you " + quest.AlreadyOnQuestMessage, playerId,
+           //null, true);
+           //             return;
+           //         }
 
 
                     HubContext.SendToClient(
