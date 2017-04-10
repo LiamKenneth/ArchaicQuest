@@ -106,7 +106,8 @@ namespace MIMWebClient.Core
                 {"wake", () => Status.WakePlayer(playerData, room)},
                 {"sleep", () => Status.SleepPlayer(playerData, room)},
                 {"greet", () => Greet.GreetMob(playerData, room, commandOptions)},
-                {"who", () => Who.Connected(playerData)}
+                {"who", () => Who.Connected(playerData)},
+                {"affects", () => Affect.Show(playerData)}
             };
  
 

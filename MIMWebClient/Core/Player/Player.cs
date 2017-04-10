@@ -125,6 +125,9 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("sk")]
         public List<Skill> Skills { get; set; }
 
+        [BsonElement("af")]
+        public List<Affect> Affects { get; set; } = new List<Affect>();
+
         //Game stats
         [BsonElement("ex")]
         public int Explored;

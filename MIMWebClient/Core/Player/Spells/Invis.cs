@@ -61,6 +61,24 @@ namespace MIMWebClient.Core.Player.Skills
             {
                 _target = FindItem.Item(player.Inventory, nth, objectToFind, Item.Item.ItemLocation.Inventory);
 
+                if (_target == null)
+                {
+                    var findPlayer = FindItem.Player(room.players, nth, objectToFind);
+                    var findMob = FindItem.Player(room.mobs, nth, objectToFind);
+
+                    if (findPlayer != null || findMob != null)
+                    {
+                        HubContext.SendToClient("You can only cast invis on yourself or items in your inventory.", player.HubGuid);
+
+                        return;
+                    } else
+                    {
+                        HubContext.SendToClient("You don't have that to turn invisible.", player.HubGuid);
+                        return;
+                    }
+
+                }
+
             }
             else
             {
@@ -179,6 +197,35 @@ namespace MIMWebClient.Core.Player.Skills
                 }
 
                 attacker.invis = true;
+                var invisAffect = new Affect
+                {
+                    Name = "Invis",
+                    Duration = InvisAb().Duration * attacker.Level
+                };
+                 
+
+                if (attacker.Affects != null)
+                {
+                    var checkExisting = attacker.Affects.FirstOrDefault(x => x.Name.Equals("Invis"));
+
+                    if (checkExisting == null)
+                    {
+                        attacker.Affects.Add(invisAffect);
+                    }
+                    else
+                    {
+                        checkExisting.Duration = InvisAb().Duration;
+                    }
+                   
+                }
+                else
+                {
+                    attacker.Affects = new List<Affect>();
+
+                    attacker.Affects.Add(invisAffect);
+
+                }
+               
 
             }
             else
@@ -191,6 +238,8 @@ namespace MIMWebClient.Core.Player.Skills
                 HubContext.broadcastToRoom(castingTextRoom, room.players, attacker.HubGuid, true);
 
                 _target.itemFlags.Add(Item.Item.ItemFlags.invis);
+
+             
 
             }
 
@@ -211,6 +260,7 @@ namespace MIMWebClient.Core.Player.Skills
                 SpellGroup = SpellGroupType.Illusion,
                 SkillType = Type.Spell,
                 CoolDown = 0,
+                Duration = 5,
                 Delay = 0,
                 LevelObtained = 2,
                 ManaCost = 10,

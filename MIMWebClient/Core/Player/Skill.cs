@@ -78,6 +78,9 @@ namespace MIMWebClient.Core.Player
         [BsonIgnore]    
         public int CoolDown { get; set; }
 
+        [BsonIgnore]
+        public int Duration { get; set; }
+
         //Says what status a skill can be used from
         // Fighting means in a fight only
         //Resting means everything
