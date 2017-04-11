@@ -52,27 +52,7 @@ namespace MIMWebClient.Core.Room
                 }
             }
 
-            if (player.Followers != null && player.Followers.Count > 0)
-            {
 
-                foreach (var follower in player.Followers)
-                {
-
-                    HubContext.SendToClient(Helpers.ReturnName(follower, player, string.Empty) + " follows you " + direction, player.HubGuid);
-                    HubContext.SendToClient("You follow " + Helpers.ReturnName(player, follower, string.Empty) + " " + direction, follower.HubGuid);
-
-                    if (follower.HubGuid == null)
-                    {
-                        Movement.MobMove(follower, player, room, directionOrigin);
-                    }
-                    else
-                    {
-                        Command.ParseCommand(directionOrigin, follower, room);
-                    }
-
-                }
-
-            }
 
 
 
@@ -119,8 +99,28 @@ namespace MIMWebClient.Core.Room
             
             }
 
+            //works for players but not mobs
+            if (player.Followers != null && player.Followers.Count > 0)
+            {
 
-           
+                foreach (var follower in player.Followers)
+                {
+
+                    HubContext.SendToClient(Helpers.ReturnName(follower, player, string.Empty) + " follows you " + direction, player.HubGuid);
+                    HubContext.SendToClient("You follow " + Helpers.ReturnName(player, follower, string.Empty) + " " + direction, follower.HubGuid);
+
+                    if (follower.HubGuid == null)
+                    {
+                        Movement.MobMove(follower, player, room, direction);
+                    }
+                    else
+                    {
+                        Command.ParseCommand(direction, follower, room);
+                    }
+
+                }
+
+            }
 
         }
 
