@@ -26,40 +26,61 @@ namespace MIMWebClient.Core.Events
 
         public static void ReturnScoreUI(Player playerData)
         {
-   
-            var context = HubContext.getHubContext;
-            context.Clients.Client(playerData.HubGuid).updateScore(playerData);
+
+            if (playerData.HubGuid != null)
+            {
+                var context = HubContext.getHubContext;
+                context.Clients.Client(playerData.HubGuid).updateScore(playerData);
+
+            }
         }
 
         public static void UpdateUiPrompt(Player playerData)
         {
 
-            var context = HubContext.getHubContext;
-            context.Clients.Client(playerData.HubGuid).updateStat(playerData.HitPoints, playerData.MaxHitPoints, "hp");
-            context.Clients.Client(playerData.HubGuid).updateStat(playerData.ManaPoints, playerData.MaxManaPoints, "mana");
-            context.Clients.Client(playerData.HubGuid).updateStat(playerData.MovePoints, playerData.MaxMovePoints, "endurance");
-            context.Clients.Client(playerData.HubGuid).updateStat(playerData.ExperienceToNextLevel, playerData.Experience, "tnl");
+            if (playerData.HubGuid != null)
+            {
+
+                var context = HubContext.getHubContext;
+                context.Clients.Client(playerData.HubGuid)
+                    .updateStat(playerData.HitPoints, playerData.MaxHitPoints, "hp");
+                context.Clients.Client(playerData.HubGuid)
+                    .updateStat(playerData.ManaPoints, playerData.MaxManaPoints, "mana");
+                context.Clients.Client(playerData.HubGuid)
+                    .updateStat(playerData.MovePoints, playerData.MaxMovePoints, "endurance");
+                context.Clients.Client(playerData.HubGuid)
+                    .updateStat(playerData.ExperienceToNextLevel, playerData.Experience, "tnl");
+
+            }
         }
 
         public static void UpdateUiInventory(Player playerData)
         {
 
-            var context = HubContext.getHubContext;
- 
+            if (playerData.HubGuid != null)
+            {
+                var context = HubContext.getHubContext;
 
-            context.Clients.Client(playerData.HubGuid).updateInventory(playerData.Inventory.Where(x => x.location == Item.Item.ItemLocation.Inventory));
-       
+
+                context.Clients.Client(playerData.HubGuid)
+                    .updateInventory(playerData.Inventory.Where(x => x.location == Item.Item.ItemLocation.Inventory));
+
+            }
+
         }
 
 
         public static void UpdateUiRoom(Player playerData, string room)
         {
-            //var room = new Room.Room();
-            //var currentRoom = p
-            var context = HubContext.getHubContext;
-            context.Clients.Client(playerData.HubGuid).UpdateUiRoom(room);
-            //context.Clients.Client(playerData.HubGuid).updateRoom(playerData.Inventory);
 
+            if (playerData.HubGuid != null)
+            {
+                //var room = new Room.Room();
+                //var currentRoom = p
+                var context = HubContext.getHubContext;
+                context.Clients.Client(playerData.HubGuid).UpdateUiRoom(room);
+                //context.Clients.Client(playerData.HubGuid).updateRoom(playerData.Inventory);
+            }
         }
     }
 }

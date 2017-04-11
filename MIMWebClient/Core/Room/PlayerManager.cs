@@ -42,5 +42,38 @@ namespace MIMWebClient.Core.Room
 
         }
 
+        public static void AddMobToRoom(Room room, Player mob)
+        {
+            var oldRoomData = room;
+            if (room.mobs == null)
+            {
+                room.mobs = new List<Player>();
+            }
+            room.mobs.Add(mob);
+
+            var newRoomData = room;
+
+            Cache.updateRoom(oldRoomData, newRoomData);
+        }
+
+        public static void RemoveMobFromRoom(Room room, Player mob)
+        {
+            var oldRoomData = room;
+            var playerToRemove = room.mobs.Find(p => p.Name == mob.Name);
+
+            if (playerToRemove != null)
+            {
+                room.mobs.Remove(playerToRemove);
+            }
+
+            var newRoomData = room;
+
+            Cache.updateRoom(oldRoomData, newRoomData);
+
+        }
+
+
+
+
     }
 }

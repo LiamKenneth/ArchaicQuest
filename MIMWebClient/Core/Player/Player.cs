@@ -128,6 +128,9 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("af")]
         public List<Affect> Affects { get; set; } = new List<Affect>();
 
+        [BsonElement("fol")]
+        public List<Player> Followers { get; set; } = new List<Player>();
+
         //Game stats
         [BsonElement("ex")]
         public int Explored;

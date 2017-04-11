@@ -133,17 +133,18 @@ namespace MIMWebClient.Core
                 return "Someone";
             }
 
-         
-                var result = AvsAnLib.AvsAn.Query(player.Name).Article;
-                string name;
 
-                if (player.KnownByName)
+            string name;
+
+            if (player.KnownByName)
                 {
                     name = player.Name;
                 }
                 else
                 {
-                    name = result + " " + player.Name;
+                var result = AvsAnLib.AvsAn.Query(player.Name).Article;
+               
+                name = result + " " + player.Name;
                 }
 
 

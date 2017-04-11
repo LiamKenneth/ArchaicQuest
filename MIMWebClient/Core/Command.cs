@@ -36,7 +36,7 @@ namespace MIMWebClient.Core
                 {"east", () => Movement.Move(playerData, room, "East")},
                 {"west", () => Movement.Move(playerData, room, "West")},
                 {"down", () => Movement.Move(playerData, room, "Down")},
-                {"up", () => Movement.Move(playerData, room, "Up")},
+                {"up", () => Movement.Move(playerData, room, "Up")},               
                 {"look", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look")},
                 {"l in", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look in")},
                 {"look in", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look in")},
@@ -107,7 +107,8 @@ namespace MIMWebClient.Core
                 {"sleep", () => Status.SleepPlayer(playerData, room)},
                 {"greet", () => Greet.GreetMob(playerData, room, commandOptions)},
                 {"who", () => Who.Connected(playerData)},
-                {"affects", () => Affect.Show(playerData)}
+                {"affects", () => Affect.Show(playerData)},
+                {"follow", () => Follow.FollowThing(playerData, room, commandOptions) }
             };
  
 

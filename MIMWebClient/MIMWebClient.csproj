@@ -243,6 +243,7 @@
     <Compile Include="Core\Events\FindNth.cs" />
     <Compile Include="Core\Events\FindWhere.cs" />
     <Compile Include="Core\Events\Flee.cs" />
+    <Compile Include="Core\Events\Follow.cs" />
     <Compile Include="Core\Events\Help.cs" />
     <Compile Include="Core\Events\LoadRoom.cs" />
     <Compile Include="Core\Events\ManipulateObject.cs" />
@@ -319,6 +320,7 @@
     <Compile Include="Core\World\Anker\Mobs\Anika.cs" />
     <Compile Include="Core\World\Anker\Mobs\Ferron.cs" />
     <Compile Include="Core\World\Anker\Mobs\Lance.cs" />
+    <Compile Include="Core\World\Anker\Scripts\VilliageIdiot.cs" />
     <Compile Include="Core\World\Areas.cs" />
     <Compile Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Arms\FullPlateSleeves.cs" />
     <Compile Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Body\FullPlateBody.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using MIMWebClient.Core.World.Tutorial;
 
 namespace MIMWebClient.Core.Room
@@ -12,50 +13,81 @@ namespace MIMWebClient.Core.Room
     {
         public static void EnterRoom(Player player, Room room, string direction = "")
         {
-           
+            var directionOrigin = oppositeDirection(direction, true); ;
             for (int i = 0; i < room.players.Count; i++)
             {
                 string name = Helpers.ReturnName(player, room.players[i], string.Empty);
                 string movement = "walks in "; // runs, hovers, crawls. Steps out of a portal, appears?
-                direction = oppositeDirection(direction);
+                direction = oppositeDirection(direction, false);
                 string enterText = name + " " + movement + direction;
 
-                if (player.Name != room.players[i].Name)
+                if (player.HubGuid != null)
                 {
-                    HubContext.getHubContext.Clients.Client(room.players[i].HubGuid).addNewMessageToPage(enterText);
+
+                    if (player.Name != room.players[i].Name)
+                    {
+                        HubContext.getHubContext.Clients.Client(room.players[i].HubGuid).addNewMessageToPage(enterText);
+                    }
+                    else
+                    {
+                        if (player.Status == Player.PlayerStatus.Standing)
+                        {
+                            enterText = "You walk in " + direction;
+                            HubContext.getHubContext.Clients.Client(room.players[i].HubGuid)
+                                .addNewMessageToPage(enterText);
+                        }
+
+                    }
+
+                    var roomdata = LoadRoom.DisplayRoom(room, room.players[i].Name);
+                    Score.UpdateUiRoom(room.players[i], roomdata);
                 }
                 else
                 {
-                    if (player.Status == Player.PlayerStatus.Standing)
+                    if (room.players[i].HubGuid != null)
                     {
-                        enterText = "You walk in " + direction;
-                        HubContext.getHubContext.Clients.Client(room.players[i].HubGuid).addNewMessageToPage(enterText);
+                        HubContext.SendToClient(enterText, room.players[i].HubGuid);
+                    }
+                  
+                }
+            }
+
+            if (player.Followers != null && player.Followers.Count > 0)
+            {
+
+                foreach (var follower in player.Followers)
+                {
+
+                    HubContext.SendToClient(Helpers.ReturnName(follower, player, string.Empty) + " follows you " + direction, player.HubGuid);
+                    HubContext.SendToClient("You follow " + Helpers.ReturnName(player, follower, string.Empty) + " " + direction, follower.HubGuid);
+
+                    if (follower.HubGuid == null)
+                    {
+                        Movement.MobMove(follower, player, room, directionOrigin);
+                    }
+                    else
+                    {
+                        Command.ParseCommand(directionOrigin, follower, room);
                     }
 
                 }
 
-                var roomdata = LoadRoom.DisplayRoom(room, room.players[i].Name);
-                Score.UpdateUiRoom(room.players[i], roomdata);
             }
 
-          
 
-            if (room.EventOnEnter != null)
-            {
-                Event.ParseCommand(room.EventOnEnter, player, null, room);
-            }
 
-            //NPC Enter event here
 
-            foreach (var mob in room.mobs)
-            {              
+            ////NPC Enter event here
 
-                if (mob.EventOnEnter != null)
-                {
-                    Event.ParseCommand(mob.EventOnEnter, player, mob, room);
-                }
+            //foreach (var mob in room.mobs)
+            //{              
 
-            }
+            //    if (mob.EventOnEnter != null)
+            //    {
+            //        Event.ParseCommand(mob.EventOnEnter, player, mob, room);
+            //    }
+
+            //}
 
 
         }
@@ -84,12 +116,52 @@ namespace MIMWebClient.Core.Room
 
                 var roomdata = LoadRoom.DisplayRoom(room, room.players[i].Name);
                 Score.UpdateUiRoom(room.players[i], roomdata);
+            
             }
+
+
+           
+
         }
 
-        public static string oppositeDirection(string direction)
+        public static string oppositeDirection(string direction, bool forMobMovement)
         {
+            if (forMobMovement)
+            {
+                switch (direction)
+                {
+                    case "North":
+                        {
+                            return "South";
+                        }
+                    case "East":
+                        {
+                            return "West";
+                        }
+                    case "West":
+                        {
+                            return "East";
+                        }
+                    case "South":
+                        {
+                            return "North";
+                        }
+                    case "Up":
+                        {
+                            return "Down";
+                        }
+                    case "Down":
+                        {
+                            return "Up";
+                        }
+                    default:
+                        {
+                            return string.Empty;
 
+                        }
+
+                }
+            }
 
             switch (direction)
             {
@@ -124,6 +196,8 @@ namespace MIMWebClient.Core.Room
                     }
 
             }
+
+           
 
         }
 
@@ -227,6 +301,15 @@ namespace MIMWebClient.Core.Room
                 room.exits = new List<Exit>();
             }
 
+            //if (player.Followers != null && player.Followers.Count > 0)
+            //{
+            //    foreach (var follower in player.Followers)
+            //    {
+            //        Command.ParseCommand(direction, follower, room);
+            //    }
+               
+            //}
+
             //Find Exit
             if (roomData.exits != null)
             {
@@ -300,7 +383,12 @@ namespace MIMWebClient.Core.Room
 
                                 if (mob.EventOnEnter != null)
                                 {
-                                    Event.ParseCommand(mob.EventOnEnter, player, mob, room);
+                                   Event.ParseCommand(mob.EventOnEnter, player, mob, room);
+                                }
+
+                                if (room.EventOnEnter != null)
+                                {
+                                    Event.ParseCommand(room.EventOnEnter, player, null, room);
                                 }
 
                                 foreach (var quest in player.QuestLog.Where(x => x.Completed == false))
@@ -311,7 +399,10 @@ namespace MIMWebClient.Core.Room
                                     }
                                 }
 
+                             
+
                             }
+
                         }
                     }
                     catch (Exception e)
@@ -324,6 +415,108 @@ namespace MIMWebClient.Core.Room
                     HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("There is no exit here");
 
                 }
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="room"></param>
+        /// <param name="direction"></param>
+        public static void MobMove(Player mob, Player ThingYourFollowing, Room room, string direction)
+        {
+
+            Room roomData = room;
+
+            if (roomData.exits == null)
+            {
+                room.exits = new List<Exit>();
+            }
+
+          
+            //Find Exit
+            if (roomData.exits != null)
+            {
+                var exit = roomData.exits.Find(x => x.name == direction);
+
+
+                if (exit != null)
+                {
+                    if (exit.open == false)
+                    {                    
+                        return;
+                    }
+
+                    //remove player from old room
+                    PlayerManager.RemoveMobFromRoom(roomData, mob);
+
+                    foreach (var character in room.players)
+                    {
+                        HubContext.SendToClient(Helpers.ReturnName(mob, ThingYourFollowing, String.Empty) + " follows " + ThingYourFollowing.Name, character.HubGuid);
+                    }
+
+                 
+                    //change player Location
+                    mob.Area = ThingYourFollowing.Area;
+                    mob.AreaId = ThingYourFollowing.AreaId;
+                    mob.Region = ThingYourFollowing.Region;
+
+                    //Get new room  
+                    try
+                    {
+                       
+                        Room getNewRoom = 
+                            Cache.ReturnRooms()
+                                .FirstOrDefault(
+                                    x => x.areaId == mob.AreaId && x.area == mob.Area && x.region == mob.Region);
+
+                        if (getNewRoom != null)
+                        {
+
+                            //enter message
+                               EnterRoom(mob, getNewRoom, direction);
+                            //add player to new room
+                            PlayerManager.AddMobToRoom(getNewRoom, mob);
+
+
+                            //NPC Enter event here
+                            foreach (var mobb in getNewRoom.mobs)
+                            {
+
+                                if (mobb.Greet)
+                                {
+                                    // Event.ParseCommand("greet", player, mob, getNewRoom);
+                                }
+                                else
+                                {
+                                    //mob might be aggro
+                                }
+
+ 
+
+                                if (mobb.EventOnEnter != null)
+                                {
+                                    Event.ParseCommand(mob.EventOnEnter, ThingYourFollowing, mobb, room);
+                                }
+
+                                if (room.EventOnEnter != null)
+                                {
+                                    Event.ParseCommand(room.EventOnEnter, mobb, null, room);
+                                }
+
+                              
+
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        //log error
+                    }
+                }
+        
             }
         }
 

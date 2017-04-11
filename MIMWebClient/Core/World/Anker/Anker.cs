@@ -895,6 +895,20 @@ namespace MIMWebClient.Core.World.Anker
             };
 
 
+            var idiot = new Player
+            {
+                Name = "The Village idiot",
+                KnownByName = true,
+                Recall = new Recall
+                {
+                    Region = "Anker",
+                    Area = "Anker",
+                    AreaId = 7
+                },
+                Gold = 10,
+                EventOnEnter = "AnkerIdiot" // might be more :P
+
+            };
 
 
             #region exits
@@ -957,7 +971,7 @@ namespace MIMWebClient.Core.World.Anker
             room.exits.Add(east);
             room.exits.Add(south);
             room.exits.Add(west);
-
+            room.mobs.Add(idiot);
 
 
             return room;

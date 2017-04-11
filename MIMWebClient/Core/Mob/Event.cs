@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MIMWebClient.Core.World.Anker.Scripts;
 
 namespace MIMWebClient.Core
 {
@@ -33,7 +34,8 @@ namespace MIMWebClient.Core
             eventList.Add("rescue", () => Tutorial.setUpAwakening(player, room, option, calledBy));
             eventList.Add("awakening awake", () => Tutorial.setUpRescue(player, room, option, calledBy));
             eventList.Add("wearEQ", () => Tutorial.setUpRescue(player, room, option, calledBy));
-            
+            eventList.Add("AnkerIdiot", () => VilliageIdiot.Annoy(player, mob, room));
+
             return eventList;
         }
 
