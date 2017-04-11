@@ -31,7 +31,7 @@ namespace MIMWebClient.Core.Update
                 UpdateHp(player, context);
                 UpdateMana(player, context);
                 UpdateEndurance(player, context);
-
+                UpdateAffects(player, context);
             }
         }
 
@@ -59,6 +59,7 @@ namespace MIMWebClient.Core.Update
                         UpdateHp(room.mobs[i], context);
                         UpdateMana(room.mobs[i], context);
                         UpdateEndurance(room.mobs[i], context);
+                        UpdateAffects(room.mobs[i], context);
 
                     }
                     #region add Mobs back
@@ -259,6 +260,62 @@ namespace MIMWebClient.Core.Update
 
             }
 
+        }
+
+        public static void UpdateAffects(PlayerSetup.Player player, IHubContext context)
+        {
+            try
+            {
+                if (player.Affects == null)
+                {
+                    return;
+                }
+
+                foreach (var af in player.Affects)
+                {
+
+                    if (af.Duration == 0 || af.Duration <= 0)
+                    {
+                        player.Affects.Remove(af);
+
+                        // put in method? or change way we handle invis
+                        if (af.Name == "Invis")
+                        {
+                            player.invis = false;
+                        }
+
+                        if (af.AffectLossMessageRoom != null)
+                        {
+                            HubContext.SendToClient(af.AffectLossMessagePlayer, player.HubGuid);
+                        }
+
+                        if (af.AffectLossMessageRoom != null)
+                        {
+                            var room = Cache.getRoom(player);
+
+                            foreach (var character in room.players)
+                            {
+                                if (player != character)
+                                {
+                                    HubContext.SendToClient(
+                                        Helpers.ReturnName(player, character, string.Empty) + " " +
+                                        af.AffectLossMessageRoom, character.HubGuid);
+
+                                }
+                            }
+
+                        }
+                    }
+
+                    af.Duration -= 1;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+
+            }
         }
 
         public static void UpdateEndurance(PlayerSetup.Player player, IHubContext context)

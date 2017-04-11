@@ -200,7 +200,9 @@ namespace MIMWebClient.Core.Player.Skills
                 var invisAffect = new Affect
                 {
                     Name = "Invis",
-                    Duration = InvisAb().Duration * attacker.Level
+                    Duration = InvisAb().Duration * attacker.Level,
+                    AffectLossMessagePlayer = "You are no longer invisbile.",
+                    AffectLossMessageRoom = "fades into existence."
                 };
                  
 
@@ -220,9 +222,11 @@ namespace MIMWebClient.Core.Player.Skills
                 }
                 else
                 {
-                    attacker.Affects = new List<Affect>();
+                    attacker.Affects = new List<Affect>
+                    {
+                        invisAffect
+                    };
 
-                    attacker.Affects.Add(invisAffect);
 
                 }
                
