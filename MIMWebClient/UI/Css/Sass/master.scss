@@ -25,11 +25,12 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 12px;
 
     tr td {
-        padding:5px;
+        padding: 5px;
     }
+
     tr:nth-child(even) {
-    background: #444;
-}
+        background: #444;
+    }
 
     @media screen and (min-width: 768px) {
         font-size: 15px;
@@ -78,15 +79,14 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     table {
-        width:100%;
-
+        width: 100%;
     }
 
     thead {
-        border-bottom:1px dashed #fff;
+        border-bottom: 1px dashed #fff;
 
-        td{
-            padding:5px;
+        td {
+            padding: 5px;
         }
     }
 }
@@ -297,11 +297,22 @@ pre {
 
 
 .progress {
-    background: #ccc!important;
+    background: #ccc !important;
+    text-align: center;
 
-    /*span {
-        position:absolute;
-        top:0;
-        left:50%;
-    }*/
+    div.statInfo {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0 auto;
+        width: 100%;
+    }
+}
+
+.xp-progress {
+    background: #ccc;
+}
+
+.progress-bar-warning {
+    background-color: #BA68C8;
 }

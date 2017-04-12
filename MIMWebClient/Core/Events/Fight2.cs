@@ -622,7 +622,7 @@ namespace MIMWebClient.Core.Events
                 room.items.Add(defenderCorpse);
                 room.corpses.Add(defender);
 
-                if (defender.Type == Player.PlayerTypes.Mob)
+                if (defender.Type == Player.PlayerTypes.Mob || string.IsNullOrEmpty(defender.HubGuid))
                 {
                     room.mobs.Remove(defender);
                 }

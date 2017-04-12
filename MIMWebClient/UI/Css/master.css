@@ -346,13 +346,18 @@ pre {
   background-color: #999; }
 
 .progress {
-    background: #ccc!important;
+  background: #ccc !important;
+  text-align: center; }
+  .progress div.statInfo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0 auto;
+    width: 100%; }
 
-}
+.xp-progress {
+  background: #ccc; }
 
+.progress-bar-warning {
+  background-color: #BA68C8; }
 
- .progress  span {
-        position:absolute;
-        top:0;
-        left:50%;
-    }
