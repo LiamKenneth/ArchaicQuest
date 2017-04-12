@@ -49,7 +49,7 @@ namespace MIMWebClient.Core.Events
                 context.Clients.Client(playerData.HubGuid)
                     .updateStat(playerData.MovePoints, playerData.MaxMovePoints, "endurance");
                 context.Clients.Client(playerData.HubGuid)
-                    .updateStat(playerData.ExperienceToNextLevel, playerData.Experience, "tnl");
+                    .updateStat(playerData.Experience, playerData.ExperienceToNextLevel, "tnl");
 
             }
         }

@@ -81,11 +81,16 @@ namespace MIMWebClient.Core.AI
         /// <returns>The room next to getRoom</returns>
         public Room.Room GetNeighbour(Room.Room getRoom)
         {
-            return CompletedRooms.FirstOrDefault(x =>
+            foreach (var connectingNode in getRoom.exits)
             {
-                var lastOrDefault = getRoom.exits.LastOrDefault();
-                return lastOrDefault != null && x.areaId == lastOrDefault.areaId;
-            });
+                var connectedRoom = CompletedRooms.FirstOrDefault(x => x.areaId.Equals(connectingNode.areaId));
+                if (connectedRoom != null)
+                {
+                    return connectedRoom;
+                }
+            }
+
+            return null;
 
         }
 

@@ -400,11 +400,13 @@
         $('#player-max-end').html(score.MaxMovePoints);
         $('#stat-max-endurance').html(score.MaxMovePoints);
 
+        $('#stat-tnl').html(score.ExperienceToNextLevel);
+
         $('#player-hitroll').html(score.HitRoll);
         $('#player-damroll').html(score.DamRoll);
         $('#player-wimpy').html(score.Wimpy);
 
-        console.log("a", score.ArmorRating)
+ 
         $('#player-armorDef').html(score.ArmorRating);
         $('#player-magicDef').html("N/A");
 
@@ -429,10 +431,8 @@
             return;
         }
 
-        
         var statPercentage = (stat / maxStat) * 100;
-
-        console.log("update stat " + statPercentage);
+ 
 
         if (statType == "hp") {
             document.getElementById('HP-bar').style.width = statPercentage + "%";
@@ -451,7 +451,11 @@
 
         if (statType == "tnl") {
 
+            statPercentage = (stat / maxStat) * 100;
+
             document.getElementById('tnl-bar').style.width = statPercentage + "%";
+            $('#stat-tnl').html(maxStat - stat);
+       
         }
 
     };
