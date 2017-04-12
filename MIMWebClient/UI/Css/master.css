@@ -345,3 +345,14 @@ pre {
 .ps-container:hover > .ps-scrollbar-y-rail:hover > .ps-scrollbar-y {
   background-color: #999; }
 
+.progress {
+    background: #ccc!important;
+
+}
+
+
+ .progress  span {
+        position:absolute;
+        top:0;
+        left:50%;
+    }

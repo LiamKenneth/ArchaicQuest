@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using MIMWebClient.Core.World.Tutorial;
 
 namespace MIMWebClient.Core.Room
@@ -403,8 +404,9 @@ namespace MIMWebClient.Core.Room
         /// <param name="player"></param>
         /// <param name="room"></param>
         /// <param name="direction"></param>
-        public static void MobMove(Player mob, Player ThingYourFollowing, Room room, string direction)
+        public static async Task MobMove(Player mob, Player ThingYourFollowing, Room room, string direction)
         {
+            await Task.Delay(250);
 
             Room roomData = room;
 
