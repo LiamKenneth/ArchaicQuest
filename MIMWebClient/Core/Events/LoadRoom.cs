@@ -73,6 +73,29 @@ namespace MIMWebClient.Core.Events
 
 
             var itemList = string.Empty;
+
+            ////clean items
+            //var conciseList = new List<Item.Item>();
+        
+            //foreach (var item in room.items)
+            //{
+            //    if (conciseList.FirstOrDefault(x => x.name.Equals(item.name)) == null)
+            //    {
+            //        conciseList.Add(item);
+            //    }
+            //    else
+            //    {
+            //        var getItem = conciseList.FirstOrDefault(x => x.Equals(item));
+
+            //        if (getItem != null)
+            //        {
+            //            getItem.count += 1;
+            //        }
+            //    }
+
+            //}
+            ////clean items
+
             foreach (var item in room.items)
             {
                 if (item != null)
@@ -90,11 +113,27 @@ namespace MIMWebClient.Core.Events
 
                         if (!string.IsNullOrEmpty(item.description?.room))
                         {
-                            itemList += $"<p class='roomItems'>{item.description.room}<p>";
+                            if (item.count > 0)
+                            {
+                                itemList += $"<p class='roomItems'>({item.count}) {item.description.room}<p>";
+                            }
+                            else
+                            {
+                                itemList += $"<p class='roomItems'>{item.description.room}<p>";
+                            }
+                           
                         }
                         else
                         {
-                            itemList += $"<p class='roomItems'>{ article} {item.name} is on the floor here.<p>";
+                            if (item.count > 0)
+                            {
+                                itemList += $"<p class='roomItems'>({item.count}) {item.name} are on the floor here.<p>";
+                            }
+                            else
+                            {
+                                itemList += $"<p class='roomItems'>{article} {item.name} is on the floor here.<p>";
+                            }
+                               
                         }
 
                         

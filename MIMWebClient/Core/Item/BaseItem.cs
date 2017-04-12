@@ -14,6 +14,8 @@ namespace MIMWebClient.Core.Item
         [BsonId]
         public ObjectId _id { get; set; }
 
+        [BsonIgnore]
+        public int count { get; set; } = 0;
         public string name { get; set; }
         public List<string> keywords { get; set; }
         public bool open { get; set; } = true;
