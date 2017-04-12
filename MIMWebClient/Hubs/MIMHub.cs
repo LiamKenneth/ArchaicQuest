@@ -60,18 +60,54 @@ namespace MIMWebClient.Hubs
         #endregion
 
         #region load and display room
-        public static Room getRoom(string playerId)
+        public static Room getRoom(Player Thing)
         {
             Player player;
 
-            if (_PlayerCache.TryGetValue(playerId, out player))
+            if (Thing.HubGuid != null)
             {
+                if (_PlayerCache.TryGetValue(Thing.HubGuid, out player))
+                {
+
+                    var RoomData = new LoadRoom
+                    {
+                        Region = player.Region,
+                        Area = player.Area,
+                        id = player.AreaId
+                    };
+
+
+                    Room getRoomData = null;
+
+                    var room = new Tuple<string, string, int>(RoomData.Region, RoomData.Area, RoomData.id);
+
+
+                    if (_AreaCache.TryGetValue(room, out getRoomData))
+                    {
+
+                        return getRoomData;
+
+                    }
+                    else
+                    {
+                        getRoomData = RoomData.LoadRoomFile();
+                        _AreaCache.TryAdd(room, getRoomData);
+
+
+                        return getRoomData;
+                    }
+                }
+            }
+            else
+            {
+                //mob
+                var mob = Thing;
 
                 var RoomData = new LoadRoom
                 {
-                    Region = player.Region,
-                    Area = player.Area,
-                    id = player.AreaId
+                    Region = mob.Region,
+                    Area = mob.Area,
+                    id = mob.AreaId
                 };
 
 
@@ -94,8 +130,8 @@ namespace MIMWebClient.Hubs
 
                     return getRoomData;
                 }
-            }
 
+            }
             return null;
         }
 

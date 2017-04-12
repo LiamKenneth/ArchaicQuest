@@ -53,21 +53,7 @@ namespace MIMWebClient.Core.Room
             }
 
 
-
-
-
-
-            ////NPC Enter event here
-
-            //foreach (var mob in room.mobs)
-            //{              
-
-            //    if (mob.EventOnEnter != null)
-            //    {
-            //        Event.ParseCommand(mob.EventOnEnter, player, mob, room);
-            //    }
-
-            //}
+ 
 
 
         }
@@ -99,11 +85,11 @@ namespace MIMWebClient.Core.Room
             
             }
 
-            //works for players but not mobs
+ 
             if (player.Followers != null && player.Followers.Count > 0)
             {
 
-                foreach (var follower in player.Followers)
+                foreach (var follower in player.Followers.ToList())
                 {
 
                     HubContext.SendToClient(Helpers.ReturnName(follower, player, string.Empty) + " follows you " + direction, player.HubGuid);
@@ -227,7 +213,7 @@ namespace MIMWebClient.Core.Room
             try
             {
                 //Room getNewRoom =  await HubProxy.MimHubServer.Invoke<Room>("getRoom", player.HubGuid);
-                Room getNewRoom = MIMWebClient.Hubs.MIMHub.getRoom(player.HubGuid);
+                Room getNewRoom = MIMWebClient.Hubs.MIMHub.getRoom(player);
 
                 if (getNewRoom != null)
                 {
@@ -301,15 +287,7 @@ namespace MIMWebClient.Core.Room
                 room.exits = new List<Exit>();
             }
 
-            //if (player.Followers != null && player.Followers.Count > 0)
-            //{
-            //    foreach (var follower in player.Followers)
-            //    {
-            //        Command.ParseCommand(direction, follower, room);
-            //    }
-               
-            //}
-
+ 
             //Find Exit
             if (roomData.exits != null)
             {
@@ -339,7 +317,7 @@ namespace MIMWebClient.Core.Room
                     try
                     {
                         //Room getNewRoom =  await HubProxy.MimHubServer.Invoke<Room>("getRoom", player.HubGuid);
-                        Room getNewRoom = MIMWebClient.Hubs.MIMHub.getRoom(player.HubGuid);
+                        Room getNewRoom = MIMWebClient.Hubs.MIMHub.getRoom(player);
 
                         if (getNewRoom != null)
                         {
@@ -381,12 +359,12 @@ namespace MIMWebClient.Core.Room
                                     }
                                 }
 
-                                if (mob.EventOnEnter != null)
+                                if (!string.IsNullOrEmpty(mob.EventOnEnter))
                                 {
                                    Event.ParseCommand(mob.EventOnEnter, player, mob, room);
                                 }
 
-                                if (room.EventOnEnter != null)
+                                if (!string.IsNullOrEmpty(room.EventOnEnter))
                                 {
                                     Event.ParseCommand(room.EventOnEnter, player, null, room);
                                 }
@@ -451,27 +429,17 @@ namespace MIMWebClient.Core.Room
 
                     //remove player from old room
                     PlayerManager.RemoveMobFromRoom(roomData, mob);
-
-                    foreach (var character in room.players)
-                    {
-                        HubContext.SendToClient(Helpers.ReturnName(mob, ThingYourFollowing, String.Empty) + " follows " + ThingYourFollowing.Name, character.HubGuid);
-                    }
-
-                 
+ 
                     //change player Location
-                    mob.Area = ThingYourFollowing.Area;
-                    mob.AreaId = ThingYourFollowing.AreaId;
-                    mob.Region = ThingYourFollowing.Region;
+                    mob.Area = exit.area;
+                    mob.AreaId = exit.areaId;
+                    mob.Region = exit.region;
 
                     //Get new room  
                     try
                     {
+                        Room getNewRoom = MIMWebClient.Hubs.MIMHub.getRoom(mob);
                        
-                        Room getNewRoom = 
-                            Cache.ReturnRooms()
-                                .FirstOrDefault(
-                                    x => x.areaId == mob.AreaId && x.area == mob.Area && x.region == mob.Region);
-
                         if (getNewRoom != null)
                         {
 
@@ -496,12 +464,12 @@ namespace MIMWebClient.Core.Room
 
  
 
-                                if (mobb.EventOnEnter != null)
+                                if (!string.IsNullOrEmpty(mobb.EventOnEnter))
                                 {
                                     Event.ParseCommand(mob.EventOnEnter, ThingYourFollowing, mobb, room);
                                 }
 
-                                if (room.EventOnEnter != null)
+                                if (!string.IsNullOrEmpty(room.EventOnEnter))
                                 {
                                     Event.ParseCommand(room.EventOnEnter, mobb, null, room);
                                 }
