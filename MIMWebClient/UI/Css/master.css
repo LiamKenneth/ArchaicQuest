@@ -206,8 +206,10 @@ pre {
 
 .showExit {
   position: relative;
-  background: url("/UI/img/compass.png") no-repeat center center;
   background-size: contain; }
+  .showExit svg {
+    height: 210px;
+    margin-left: 19px; }
 
 /* perfect-scrollbar v0.6.13 */
 .ps-container {
@@ -347,7 +349,11 @@ pre {
 
 .progress {
   background: #ccc !important;
-  text-align: center; }
+  text-align: center;
+  color: #111 !important;
+  margin-bottom: 5px; }
+  .progress span, .progress div {
+    color: #111 !important; }
   .progress div.statInfo {
     position: absolute;
     top: 0;

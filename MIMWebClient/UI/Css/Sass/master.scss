@@ -288,8 +288,13 @@ pre {
 
 .showExit {
     position: relative;
-    background: url('/UI/img/compass.png') no-repeat center center;
+ 
     background-size: contain;
+
+    svg {
+            height: 210px;
+    margin-left: 19px;
+    }
 }
 
 
@@ -299,7 +304,11 @@ pre {
 .progress {
     background: #ccc !important;
     text-align: center;
-
+    color: #111!important;
+    margin-bottom:5px;
+    span, div {
+         color: #111!important;
+    }
     div.statInfo {
         position: absolute;
         top: 0;

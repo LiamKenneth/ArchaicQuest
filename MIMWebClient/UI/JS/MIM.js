@@ -230,7 +230,7 @@
         },
         UI: {
             setWindowHeight: function () {
-                var viewPort = $(window).height() - 120;
+                var viewPort = $(window).height() - 95;
                 $("#discussion").css({ "height": viewPort, "max-height": viewPort });
             },
             openPanels: function () {
