@@ -332,6 +332,9 @@ namespace MIMWebClient.Core.Room
 
                             HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(roomDescription);
 
+                            //Show exits UI
+                            ShowUIExits(room, player.HubGuid);
+
                             //NPC Enter event here
                             foreach (var mob in getNewRoom.mobs)
                             {
@@ -488,6 +491,27 @@ namespace MIMWebClient.Core.Room
                 }
         
             }
+        }
+
+
+
+
+        public static void ShowUIExits(Room room, string id)
+        {
+            if (room == null || string.IsNullOrEmpty(id))
+            {
+                return;
+            }
+
+            var exits = new List<string>();
+            foreach (var exit in room.exits)
+            {
+                exits.Add(exit.name);
+            }
+
+            var context = HubContext.getHubContext;
+            context.Clients.Client(id).updateExits(exits);
+
         }
 
     }

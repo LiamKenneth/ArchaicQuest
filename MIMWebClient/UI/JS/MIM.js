@@ -461,6 +461,17 @@
     };
 
 
+    client.updateExits = function (exits) {
+        console.log(exits)
+        for (var i = 0; i < exits.length; i++) {
+            console.log(exits[i])
+            if (exits[i] == "North") {
+                $(".northNode").hide();
+            };
+        }
+
+    };
+
     client.UpdateUiRoom = function (room) {
 
     
