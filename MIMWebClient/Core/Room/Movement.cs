@@ -53,8 +53,20 @@ namespace MIMWebClient.Core.Room
                 }
             }
 
+            foreach (var mob in room.mobs)
+            {
 
- 
+                if (mob.EventOnEnter != null)
+                {
+                    Event.ParseCommand(mob.EventOnEnter, player, mob, room);
+                }
+
+            }
+
+            if (!string.IsNullOrEmpty(room.EventOnEnter))
+            {
+                Event.ParseCommand(room.EventOnEnter, player, null, room);
+            }
 
 
         }
@@ -363,15 +375,15 @@ namespace MIMWebClient.Core.Room
                                     }
                                 }
 
-                                if (!string.IsNullOrEmpty(mob.EventOnEnter))
-                                {
-                                   Event.ParseCommand(mob.EventOnEnter, player, mob, room);
-                                }
+                                //if (!string.IsNullOrEmpty(mob.EventOnEnter))
+                                //{
+                                //   Event.ParseCommand(mob.EventOnEnter, player, mob, room);
+                                //}
 
-                                if (!string.IsNullOrEmpty(room.EventOnEnter))
-                                {
-                                    Event.ParseCommand(room.EventOnEnter, player, null, room);
-                                }
+                                //if (!string.IsNullOrEmpty(room.EventOnEnter))
+                                //{
+                                //    Event.ParseCommand(room.EventOnEnter, player, null, room);
+                                //}
 
                                 foreach (var quest in player.QuestLog.Where(x => x.Completed == false))
                                 {

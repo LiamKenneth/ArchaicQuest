@@ -89,6 +89,17 @@ namespace MIMWebClient.Core.Player.Classes
 
             #endregion
 
+            #region  Give weaken
+
+            var weaken = Weaken.WeakenAb();
+
+            weaken.LevelObtained = 1;
+            weaken.Proficiency = 50;
+            weaken.MaxProficiency = 95;
+            mage.Skills.Add(weaken);
+
+            #endregion
+
             mage.ReclassOptions.Add(Ranger.RangerClass());
 
             return mage;

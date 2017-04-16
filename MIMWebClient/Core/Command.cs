@@ -83,6 +83,8 @@ namespace MIMWebClient.Core
                 {"cast continual light", () => ContinualLight.StarContinualLight(playerData, room, commandOptions)},
                 { "c invis", () => Invis.StartInvis(playerData, room, commandOptions)},
                 {"cast invis", () => Invis.StartInvis(playerData, room, commandOptions)},
+                { "c weaken", () => Weaken.StartWeaken(playerData, room, commandOptions)},
+                {"cast weaken", () => Weaken.StartWeaken(playerData, room, commandOptions)},
 
                 //skills
                 {"punch", () => Punch.StartPunch(playerData, room)},
