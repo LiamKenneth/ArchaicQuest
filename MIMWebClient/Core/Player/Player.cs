@@ -213,6 +213,24 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("ach")]
         public int Charisma;
 
+        [BsonElement("mas")]
+        public int MaxStrength;
+
+        [BsonElement("mad")]
+        public int MaxDexterity;
+
+        [BsonElement("mac")]
+        public int MaxConstitution;
+
+        [BsonElement("maw")]
+        public int MaxWisdom;
+
+        [BsonElement("mai")]
+        public int MaxIntelligence;
+
+        [BsonElement("mach")]
+        public int MaxCharisma;
+
         //location
         [BsonElement("re")]
         public string Region;

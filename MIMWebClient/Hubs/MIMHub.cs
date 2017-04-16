@@ -231,6 +231,12 @@ namespace MIMWebClient.Hubs
             PlayerData.Wisdom = wisdom;
             PlayerData.Intelligence = intelligence;
             PlayerData.Charisma = charisma;
+            PlayerData.MaxStrength = strength;
+            PlayerData.MaxConstitution = constitution;
+            PlayerData.MaxDexterity = dexterity;
+            PlayerData.MaxWisdom = wisdom;
+            PlayerData.MaxIntelligence = intelligence;
+            PlayerData.MaxCharisma = charisma;
 
             PlayerData.JoinedDate = DateTime.UtcNow;
             PlayerData.LastCommandTime = DateTime.UtcNow;

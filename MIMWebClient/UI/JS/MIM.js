@@ -373,17 +373,17 @@
         $('#player-alignment').html(playerData.AlignmentScore);
 
         $('#player-str').html(score.Strength);
-        $('#player-max-str').html(score.Strength);
+        $('#player-max-str').html(score.MaxStrength);
         $('#player-dex').html(score.Dexterity);
-        $('#player-max-dex').html(score.Dexterity);
+        $('#player-max-dex').html(score.MaxDexterity);
         $('#player-con').html(score.Constitution);
-        $('#player-max-con').html(score.Constitution);
+        $('#player-max-con').html(score.MaxConstitution);
         $('#player-wis').html(score.Wisdom);
-        $('#player-max-wis').html(score.Wisdom);
+        $('#player-max-wis').html(score.MaxWisdom);
         $('#player-int').html(score.Intelligence);
-        $('#player-max-int').html(score.Intelligence);
+        $('#player-max-int').html(score.MaxIntelligence);
         $('#player-cha').html(score.Charisma);
-        $('#player-max-cha').html(score.Charisma);
+        $('#player-max-cha').html(score.MaxCharisma);
 
         $('#player-hp').html(score.HitPoints);
         $('#stat-HP').html(score.HitPoints);
