@@ -149,8 +149,7 @@ namespace MIMWebClient.Core.Player.Skills
             }
 
             Score.ReturnScoreUI(_target);
-            Score.ReturnScore(_target);
-
+           
 
             _target = null;
             _taskRunnning = false;
