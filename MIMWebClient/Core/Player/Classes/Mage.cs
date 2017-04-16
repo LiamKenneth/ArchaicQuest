@@ -100,6 +100,18 @@ namespace MIMWebClient.Core.Player.Classes
 
             #endregion
 
+            #region  Give chill touch
+
+            var chillTouch = ChillTouch.ChillTouchAb();
+
+            chillTouch.LevelObtained = 1;
+            chillTouch.Proficiency = 50;
+            chillTouch.MaxProficiency = 95;
+            mage.Skills.Add(chillTouch);
+
+            #endregion
+
+
             mage.ReclassOptions.Add(Ranger.RangerClass());
 
             return mage;

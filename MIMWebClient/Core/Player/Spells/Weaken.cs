@@ -36,15 +36,17 @@ namespace MIMWebClient.Core.Player.Skills
                 _target = null;
             }
 
-            if (_target.Affects != null && _target.Affects.FirstOrDefault(x => x.Name.Equals("Weaken")) != null)
-            {
-                HubContext.SendToClient("They are already weaken.", player.HubGuid);
-                return;
-            }
-
 
             if (!_taskRunnning && _target != null)
             {
+
+
+                if (_target.Affects.FirstOrDefault(x => x.Name.Equals("Weaken")) != null)
+                {
+                    HubContext.SendToClient("They are already weaken.", player.HubGuid);
+                    return;
+                }
+
 
                 if (player.ManaPoints < WeakenAb().ManaCost)
                 {
