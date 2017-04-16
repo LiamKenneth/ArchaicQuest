@@ -462,11 +462,27 @@
 
 
     client.updateExits = function (exits) {
-        console.log(exits)
+        //reset
+        $(".northNode").hide();
+        $(".eastNode").hide();
+        $(".southNode").hide();
+        $(".westNode").hide();
+       // console.log(exits)
         for (var i = 0; i < exits.length; i++) {
-            console.log(exits[i])
+             console.log(exits[i])
             if (exits[i] == "North") {
-                $(".northNode").hide();
+                $(".northNode").show();
+            }
+            if (exits[i] == "East") {
+                $(".eastNode").show();
+            };
+
+            if (exits[i] == "South") {
+                $(".southNode").show();
+            };
+
+            if (exits[i] == "West") {
+                $(".westNode").show();
             };
         }
 

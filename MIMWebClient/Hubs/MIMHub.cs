@@ -323,6 +323,8 @@ namespace MIMWebClient.Hubs
                 PlayerManager.AddPlayerToRoom(roomData, player);
                 Movement.EnterRoom(player, roomData);
 
+                //Show exits UI
+                Movement.ShowUIExits(roomData, player.HubGuid);
                 //  Prompt.ShowPrompt(player);
 
                 Score.ReturnScoreUI(player);

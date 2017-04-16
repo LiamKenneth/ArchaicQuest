@@ -333,7 +333,7 @@ namespace MIMWebClient.Core.Room
                             HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(roomDescription);
 
                             //Show exits UI
-                            ShowUIExits(room, player.HubGuid);
+                            ShowUIExits(getNewRoom, player.HubGuid);
 
                             //NPC Enter event here
                             foreach (var mob in getNewRoom.mobs)
