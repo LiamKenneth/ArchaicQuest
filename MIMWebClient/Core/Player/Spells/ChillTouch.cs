@@ -97,6 +97,11 @@ namespace MIMWebClient.Core.Player.Skills
 
 
                 }
+                else
+                {
+                    HubContext.SendToClient("You can only cast chill touch on your self", player.HubGuid);
+
+                }
 
 
 
@@ -119,15 +124,14 @@ namespace MIMWebClient.Core.Player.Skills
 
             foreach (var character in room.players)
             {
-                if (character == attacker)
+                if (character != attacker)
                 {
-                    continue;
+
+                    var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
+                    var roomMessage = $"{Helpers.ReturnName(_target, character, string.Empty)}'s hands turn translucent as they turn to ice, their finger tips now resemble icicles.";
+
+                    HubContext.SendToClient(roomMessage, character.HubGuid);
                 }
-
-                var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
-                var roomMessage = $"{Helpers.ReturnName(_target, character, string.Empty)}'s hands turn translucent as they turn to ice, their finger tips now resemble icicles.";
-
-                HubContext.SendToClient(roomMessage, character.HubGuid);
 
             }
 

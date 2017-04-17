@@ -284,6 +284,13 @@ namespace MIMWebClient.Core.Update
                             player.invis = false;
                         }
 
+                        if (af.Name == "Chill Touch")
+                        {
+                            player.Equipment.Wielded = "Nothing";
+                            var chillTouch = player.Inventory.FirstOrDefault(x => x.name.Equals("Chill Touch"));
+                            player.Inventory.Remove(chillTouch);
+                        }
+
                         if (af.AffectLossMessageRoom != null)
                         {
                             HubContext.SendToClient(af.AffectLossMessagePlayer, player.HubGuid);
