@@ -87,6 +87,8 @@ namespace MIMWebClient.Core
                 {"cast weaken", () => Weaken.StartWeaken(playerData, room, commandOptions)},
                 { "c chill touch", () => ChillTouch.StartChillTouch(playerData, room, commandOptions)},
                 {"cast chill touch", () => ChillTouch.StartChillTouch(playerData, room, commandOptions)},
+                { "c fly", () => Fly.StartFly(playerData, room, commandOptions)},
+                {"cast fly", () => Fly.StartFly(playerData, room, commandOptions)},
 
                 //skills
                 {"punch", () => Punch.StartPunch(playerData, room)},

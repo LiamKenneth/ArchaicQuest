@@ -304,6 +304,7 @@
     <Compile Include="Core\Player\Spells\Armour.cs" />
     <Compile Include="Core\Player\Spells\MagicMissile.cs" />
     <Compile Include="Core\Player\Spells\ChillTouch.cs" />
+    <Compile Include="Core\Player\Spells\Fly.cs" />
     <Compile Include="Core\Player\Spells\Weaken.cs" />
     <Compile Include="Core\Player\Status.cs" />
     <Compile Include="Core\Room\Coordinates.cs" />

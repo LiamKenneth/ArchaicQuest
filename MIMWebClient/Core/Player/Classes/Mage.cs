@@ -111,6 +111,17 @@ namespace MIMWebClient.Core.Player.Classes
 
             #endregion
 
+            #region  Give fly
+
+            var fly = Fly.FlyAb();
+
+            fly.LevelObtained = 1;
+            fly.Proficiency = 50;
+            fly.MaxProficiency = 95;
+            mage.Skills.Add(fly);
+
+            #endregion
+
 
             mage.ReclassOptions.Add(Ranger.RangerClass());
 
