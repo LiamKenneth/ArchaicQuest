@@ -24,7 +24,7 @@ namespace MIMWebClient.Core.Room
                 if (player.Affects?.FirstOrDefault(
                         x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) != null)
                 {
-                    movement = "floats in " + direction;
+                    movement = "floats in ";
                 }
          
 
@@ -103,7 +103,7 @@ namespace MIMWebClient.Core.Room
                 if (player.Affects?.FirstOrDefault(
                       x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) != null)
                 {
-                    movement = "floats " + direction;
+                    movement = "floats ";
                 }
 
                 string exitDir = direction;                             // string prevDirection = "South";
