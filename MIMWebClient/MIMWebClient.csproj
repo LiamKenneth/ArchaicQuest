@@ -247,6 +247,7 @@
     <Compile Include="Core\Events\Help.cs" />
     <Compile Include="Core\Events\LoadRoom.cs" />
     <Compile Include="Core\Events\ManipulateObject.cs" />
+    <Compile Include="Core\Events\Map.cs" />
     <Compile Include="Core\Events\Save.cs" />
     <Compile Include="Core\Events\Score.cs" />
     <Compile Include="Core\Events\ShowSkills.cs" />

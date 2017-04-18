@@ -208,20 +208,20 @@ namespace MIMWebClient.Core.AI
             {
                 if (direction == "North" || direction == "East" || direction == "Up")
                 {
-                    return --coord;
+                    return coord - 2;
                 }
 
                 // else direction == "South" || direction == "West" || direction == "Down"
-                return ++coord;
+                return coord + 2;
             }
 
             if (direction == "North" || direction == "East" || direction == "Up")
             {
-                return ++coord;
+                return coord + 2;
             }
 
             //direction == "South" || direction == "West" || direction == "Down")
-            return --coord;
+            return coord - 2;
         }
 
         /// <summary>

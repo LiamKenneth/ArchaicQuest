@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MIMWebClient.Core.AI;
+using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Room;
 using MIMWebClient.Core.World;
 using NUnit.Framework;
@@ -25,23 +26,23 @@ namespace MIM.Test.Core.AI
             var modoActual = new Coordinates()
             {
                 X = 0,
-                Y = 2,
+                Y = 4,
                 Z = 0
             };
 
             var church = list.FirstOrDefault(x => x.areaId == 18);
             var churchActual = new Coordinates()
             {
-                X = 3,
-                Y = 1,
+                X = 6,
+                Y = 2,
                 Z = 0
             };
 
             var elder = list.FirstOrDefault(x => x.areaId == 13);
             var elderctual = new Coordinates()
             {
-                X = 2,
-                Y = 1,
+                X = 4,
+                Y = 2,
                 Z = 0
             };
 
@@ -59,6 +60,16 @@ namespace MIM.Test.Core.AI
 
             Assert.That(elder.coords.X, Is.EqualTo(elderctual.X));
             Assert.That(elder.coords.Y, Is.EqualTo(elderctual.Y));
+        }
+
+        [Test]
+        public void ShouldShowAMap()
+        {
+              var map = Map.GenerateGrid();
+ 
+                Console.WriteLine(map);
+           
+            Assert.That(map, !Is.Empty);
         }
     }
 }
