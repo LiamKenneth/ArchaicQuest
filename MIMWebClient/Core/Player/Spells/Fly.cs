@@ -108,34 +108,6 @@ namespace MIMWebClient.Core.Player.Skills
 
             await Task.Delay(500);
 
-
-            var castingTextAttacker =
-                   Helpers.ReturnName(_target, attacker, null) + " feet levitate off the ground.";
-
-            var castingTextDefender = "Your feet levitate off the ground.";
-
-            HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-            HubContext.SendToClient(castingTextDefender, _target.HubGuid);
-
-            foreach (var character in room.players)
-            {
-                if (character == attacker)
-                {
-                    continue;
-                }
-
-                if (character != _target)
-                {
-                    var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
-                    var roomMessage = $"{Helpers.ReturnName(_target, character, string.Empty)}'s feet rises off the ground.";
-
-                    HubContext.SendToClient(roomMessage, character.HubGuid);
-                }
-            }
-
-            _target.Strength -= 2;
-
-
             var flyAff = new Affect
             {
                 Name = "Fly",
@@ -145,20 +117,93 @@ namespace MIMWebClient.Core.Player.Skills
             };
 
 
-            if (_target.Affects == null)
-            {
-                _target.Affects = new List<Affect>();
-                _target.Affects.Add(flyAff);
 
+            if (_target == null)
+            {
+                var castingTextAttacker = "Your feet levitate off the ground.";
+
+                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
+
+                var excludePlayers = new List<string> { attacker.HubGuid };
+
+                foreach (var character in room.players)
+                {
+
+                    if (character == attacker)
+                    {
+                        continue;
+                    }
+
+                    if (character != attacker)
+                    {
+
+                        var roomMessage =
+                            $"{Helpers.ReturnName(attacker, character, string.Empty)}'s feet rise off the ground.";
+
+                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                    }
+                }
+
+
+                if (attacker.Affects == null)
+                {
+                    attacker.Affects = new List<Affect>();
+                    attacker.Affects.Add(flyAff);
+
+                }
+                else
+                {
+                    attacker.Affects.Add(flyAff);
+                }
             }
             else
             {
-                _target.Affects.Add(flyAff);
+                var castingTextAttacker =
+                     Helpers.ReturnName(_target, attacker, null) + "'s feet rise off the ground..";
+
+                var castingTextDefender = "Your feet levitate off the ground.";
+
+                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
+                HubContext.SendToClient(castingTextDefender, _target.HubGuid);
+
+                foreach (var character in room.players)
+                {
+
+                    if (character == attacker)
+                    {
+                        continue;
+                    }
+
+                    if (character != _target)
+                    {
+                        var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
+                        var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)}'s feet rise off the ground.";
+
+                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                    }
+                }
+
+                if (_target.Affects == null)
+                {
+                    _target.Affects = new List<Affect>();
+                    _target.Affects.Add(flyAff);
+
+                }
+                else
+                {
+                    _target.Affects.Add(flyAff);
+                }
+
+                Score.ReturnScoreUI(_target);
             }
 
-            Score.ReturnScoreUI(_target);
-           
+            //incase player status has changed from busy
+            if (attacker.Status == Player.PlayerStatus.Busy)
+            {
+                attacker.Status = Player.PlayerStatus.Standing;
+            }
 
+            attacker.Status = Player.PlayerStatus.Busy;
             _target = null;
             _taskRunnning = false;
 

@@ -163,19 +163,23 @@ namespace MIMWebClient.Core.Events
                     {
                         if (item.Status == Player.PlayerStatus.Standing)
                         {
-                            playerList += item.Name + " is here\r\n";
+                            playerList += LoadRoom.ShowObjectEffects(item) + " is here\r\n";
                         }
                         else if (item.Status == Player.PlayerStatus.Fighting)
                         {
-                            playerList += item.Name + " is fighting " + item.Target.Name + "\r\n";
+                            playerList += LoadRoom.ShowObjectEffects(item) + " is fighting " + item.Target.Name + "\r\n";
                         }
                         else if (item.Status == PlayerSetup.Player.PlayerStatus.Resting)
                         {
-                            playerList += item.Name + " is resting.";
+                            playerList += LoadRoom.ShowObjectEffects(item) + " is resting.";
                         }
                         else if (item.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
                         {
-                            playerList += item.Name + " is sleeping.";
+                            playerList += LoadRoom.ShowObjectEffects(item) + " is sleeping.";
+                        }
+                        else
+                        {
+                            playerList += LoadRoom.ShowObjectEffects(item) + " is here\r\n";
                         }
    
                     }
@@ -549,5 +553,44 @@ namespace MIMWebClient.Core.Events
 
             }
         }
+
+        public static string ShowObjectEffects(Player player)
+        {
+            var name = player.Name;
+
+            if (player.Affects?.FirstOrDefault(x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) != null)
+            {
+                name += " (Floating)";
+            }
+
+            if (player.Affects?.FirstOrDefault(x => x.Name.Equals("Hidden", StringComparison.CurrentCultureIgnoreCase)) != null)
+            {
+                name += " (Hidden)";
+            }
+
+            if (player.Affects?.FirstOrDefault(x => x.Name.Equals("Invis", StringComparison.CurrentCultureIgnoreCase)) != null)
+            {
+                name += " (Invis)";
+            }
+
+            return name;
+        }
+
+        //public string ShowObjectEffects(Item.Item item)
+        //{
+        //    var name = item.name;
+
+        //    if (item.Affects?.FirstOrDefault(x => x.Name.Equals("Hidden", StringComparison.CurrentCultureIgnoreCase)) != null)
+        //    {
+        //        name += " (Hidden)";
+        //    }
+
+        //    if (item.Affects?.FirstOrDefault(x => x.Name.Equals("Invis", StringComparison.CurrentCultureIgnoreCase)) != null)
+        //    {
+        //        name += " (Invis)";
+        //    }
+
+        //    return item.name;
+        //}
     }
 }

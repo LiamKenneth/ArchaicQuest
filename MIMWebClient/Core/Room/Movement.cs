@@ -19,6 +19,16 @@ namespace MIMWebClient.Core.Room
             {
                 string name = Helpers.ReturnName(player, room.players[i], string.Empty);
                 string movement = "walks in "; // runs, hovers, crawls. Steps out of a portal, appears?
+
+
+                if (player.Affects?.FirstOrDefault(
+                        x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) != null)
+                {
+                    movement = "floats in " + direction;
+                }
+         
+
+
                 direction = oppositeDirection(direction, false);
                 string enterText = name + " " + movement + direction;
 
@@ -33,7 +43,17 @@ namespace MIMWebClient.Core.Room
                     {
                         if (player.Status == Player.PlayerStatus.Standing)
                         {
-                            enterText = "You walk in " + direction;
+
+                            if ( player.Affects?.FirstOrDefault(
+                                    x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) != null)
+                            {
+                                enterText = "You float in " + direction;
+                            }
+                            else
+                            {
+                                enterText = "You walk in " + direction;
+                            }
+                          
                             HubContext.getHubContext.Clients.Client(room.players[i].HubGuid)
                                 .addNewMessageToPage(enterText);
                         }
@@ -79,6 +99,13 @@ namespace MIMWebClient.Core.Room
             {
                 string name = Helpers.ReturnName(player, room.players[i], string.Empty);
                 string movement = "walks "; // runs, hovers, crawls. Steps out of a portal, appears?
+
+                if (player.Affects?.FirstOrDefault(
+                      x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) != null)
+                {
+                    movement = "floats " + direction;
+                }
+
                 string exitDir = direction;                             // string prevDirection = "South";
                 string exitText = name + " " + movement + exitDir;
 
@@ -90,6 +117,13 @@ namespace MIMWebClient.Core.Room
                 else
                 {
                     exitText = "You walk " + direction;
+
+                    if (player.Affects?.FirstOrDefault(
+                      x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) != null)
+                    {
+                        exitText = "You float " + direction;
+                    }
+
                     HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(exitText);
                 }
 

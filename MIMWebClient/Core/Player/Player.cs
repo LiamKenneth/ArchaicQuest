@@ -33,7 +33,8 @@ namespace MIMWebClient.Core.PlayerSetup
             Dead = 6,
             Ghost = 7,
             Busy = 8,
- 
+            Floating = 9,
+
         }
 
         public enum PlayerTypes
