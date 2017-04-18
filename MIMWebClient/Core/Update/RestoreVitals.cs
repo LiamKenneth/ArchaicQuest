@@ -366,6 +366,8 @@ namespace MIMWebClient.Core.Update
                         context.Clients.Client(player.HubGuid)
                             .updateStat(player.MovePoints, player.MaxMovePoints, "endurance");
                     }
+
+                    Score.ReturnScoreUI(player);
                 }
             }
             catch (Exception ex)

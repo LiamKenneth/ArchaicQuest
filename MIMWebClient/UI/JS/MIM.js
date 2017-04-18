@@ -364,7 +364,7 @@
       
         var playerData = score;
 
-
+        console.log(score.MaxMovePoints)
         $('#player-name').html(score.Name);
         $('#player-level').html(score.Level);
         $('#player-race').html(playerData.Race);

@@ -450,7 +450,7 @@ namespace MIMWebClient.Core.Room
 
                             }
                             
-                            Score.UpdateUiPrompt(player);
+                            Score.ReturnScoreUI(player);
                         }
                     }
                     catch (Exception e)
