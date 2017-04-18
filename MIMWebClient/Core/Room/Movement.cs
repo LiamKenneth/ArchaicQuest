@@ -14,6 +14,7 @@ namespace MIMWebClient.Core.Room
     {
         public static void EnterRoom(Player player, Room room, string direction = "")
         {
+           
             var directionOrigin = oppositeDirection(direction, true); ;
             for (int i = 0; i < room.players.Count; i++)
             {
@@ -92,9 +93,9 @@ namespace MIMWebClient.Core.Room
         }
 
         public static void ExitRoom(Player player, Room room, string direction)
-        {
-          
+        {       
 
+            
             for (int i = 0; i < room.players.Count; i++)
             {
                 string name = Helpers.ReturnName(player, room.players[i], string.Empty);
@@ -155,6 +156,9 @@ namespace MIMWebClient.Core.Room
 
             }
 
+            player.MovePoints -= 1;
+            Score.UpdateUiPrompt(player);
+            
         }
 
         public static string oppositeDirection(string direction, bool forMobMovement)
@@ -327,6 +331,21 @@ namespace MIMWebClient.Core.Room
         public static void Move(Player player, Room room, string direction)
         {
 
+            if (player.MovePoints <= 0)
+            {
+                HubContext.SendToClient("You are exhausted an unable to move", player.HubGuid);
+
+                foreach (var character in room.players)
+                {
+                    if (character != player)
+                    {
+                        HubContext.SendToClient($"{Helpers.ReturnName(player, character, string.Empty)} tries to move but is too exhausted.", player.HubGuid);
+                    }
+                }
+                return;
+            }
+
+
             Room roomData = room;
 
             if (roomData.exits == null)
@@ -430,7 +449,8 @@ namespace MIMWebClient.Core.Room
                              
 
                             }
-
+                            
+                            Score.UpdateUiPrompt(player);
                         }
                     }
                     catch (Exception e)
