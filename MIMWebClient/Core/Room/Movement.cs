@@ -147,30 +147,36 @@ namespace MIMWebClient.Core.Room
 
                 if (player.Followers != null && player.Followers.Count > 0)
                 {
-
+                   
                     foreach (var follower in player.Followers.ToList())
                     {
-
-                        HubContext.SendToClient(
-                            Helpers.ReturnName(follower, player, string.Empty) + " follows you " + direction,
-                            player.HubGuid);
-                        HubContext.SendToClient(
-                            "You follow " + Helpers.ReturnName(player, follower, string.Empty) + " " + direction,
-                            follower.HubGuid);
-
-                        if (follower.HubGuid == null)
+                     
+                        if (follower.AreaId == player.AreaId && follower.Area == player.Area && follower.Region == player.Region)
                         {
-                            Movement.MobMove(follower, player, room, direction);
-                        }
-                        else
-                        {
-                            Command.ParseCommand(direction, follower, room);
+
+                            HubContext.SendToClient(
+                                Helpers.ReturnName(follower, player, string.Empty) + " follows you " + direction,
+                                player.HubGuid);
+                            HubContext.SendToClient(
+                                "You follow " + Helpers.ReturnName(player, follower, string.Empty) + " " + direction,
+                                follower.HubGuid);
+
+                            if (follower.HubGuid == null)
+                            {
+                                Movement.MobMove(follower, player, room, direction);
+                            }
+                            else
+                            {
+                                Command.ParseCommand(direction, follower, room);
+                            }
+
                         }
 
                     }
 
                 }
             }
+           
 
             if (!hasFly)
             {
@@ -347,6 +353,8 @@ namespace MIMWebClient.Core.Room
                             }
                         }
                     }
+
+                    ShowUIExits(getNewRoom, player.HubGuid);
                 }
             }
             catch (Exception e)

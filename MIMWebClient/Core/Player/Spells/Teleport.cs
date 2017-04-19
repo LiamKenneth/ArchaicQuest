@@ -15,7 +15,7 @@ namespace MIMWebClient.Core.Player.Skills
     public class Teleport : Skill
     {
         private static bool _taskRunnning = false;
-        private static Player _target = new Player();
+        
         public static Skill TeleportSkill { get; set; }
 
         public static void StartTeleport(Player player, Room room)
@@ -76,40 +76,39 @@ namespace MIMWebClient.Core.Player.Skills
 
             await Task.Delay(500);
  
-            if (_target == null)
-            {
+          
                 var castingTextAttacker = "You close your eyes and open them to find yourself somewhere else.";
 
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
              
                var goToRoom = Areas.ListOfRooms()[Helpers.diceRoll.Next(Areas.ListOfRooms().Count)];
 
-               
-                foreach (var character in room.players)
+
+            foreach (var character in room.players)
+            {
+
+                if (character == attacker)
                 {
-
-                    if (character == attacker)
-                    {
-                        continue;
-                    }
-
-                    if (character != attacker)
-                    {
-                        var hisHer = Helpers.ReturnHisOrHers(attacker, character, false);
-                        var roomMessage =
-                            $"{Helpers.ReturnName(attacker, character, string.Empty)} closes {hisHer} eyes and then vanishes, only wisps of smoke are left behind.";
-
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
-                    }
+                    continue;
                 }
+
+                if (character != attacker)
+                {
+                    var hisHer = Helpers.ReturnHisOrHers(attacker, character, false);
+                    var roomMessage =
+                        $"{Helpers.ReturnName(attacker, character, string.Empty)} closes {hisHer} eyes and then vanishes, only wisps of smoke are left behind.";
+
+                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                }
+
+            }
 
                 var randomExitFroMRandomRoom = goToRoom.exits[Helpers.diceRoll.Next(goToRoom.exits.Count)];
 
                 Movement.Teleport(attacker, room, randomExitFroMRandomRoom);
 
 
-            }
-
+            
             //incase player status has changed from busy
             if (attacker.Status == Player.PlayerStatus.Busy)
             {
@@ -117,7 +116,7 @@ namespace MIMWebClient.Core.Player.Skills
             }
 
             attacker.Status = Player.PlayerStatus.Busy;
-            _target = null;
+           
             _taskRunnning = false;
 
 

@@ -899,6 +899,9 @@ namespace MIMWebClient.Core.World.Anker
             {
                 Name = "The Village idiot",
                 KnownByName = true,
+                Region = "Anker",
+                Area = "Anker",
+                AreaId = 7,
                 Recall = new Recall
                 {
                     Region = "Anker",
