@@ -122,6 +122,38 @@ namespace MIMWebClient.Core.Player.Classes
 
             #endregion
 
+            #region  Give Faerie Fire
+
+            var faerieFire = FaerieFire.FaerieFireAB();
+
+            faerieFire.LevelObtained = 1;
+            faerieFire.Proficiency = 50;
+            faerieFire.MaxProficiency = 95;
+            mage.Skills.Add(faerieFire);
+
+            #endregion
+
+            #region  Give refresh
+
+            var refresh = Refresh.RefreshAb();
+
+            refresh.LevelObtained = 1;
+            refresh.Proficiency = 50;
+            refresh.MaxProficiency = 95;
+            mage.Skills.Add(refresh);
+
+            #endregion
+
+            #region  Give teleport
+
+            var teleport = Teleport.TeleporAb();
+
+            teleport.LevelObtained = 1;
+            teleport.Proficiency = 50;
+            teleport.MaxProficiency = 95;
+            mage.Skills.Add(teleport);
+
+            #endregion
 
             mage.ReclassOptions.Add(Ranger.RangerClass());
 

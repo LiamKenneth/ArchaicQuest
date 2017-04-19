@@ -140,30 +140,49 @@ namespace MIMWebClient.Core.Player.Skills
                 if (_target == null)
                 {
 
+                    if (player.ManaPoints < InvisAb().ManaCost)
+                    {
+                        HubContext.SendToClient("You attempt to draw energy but fail", player.HubGuid);
+
+                        return;
+                    }
+
                     //TODO REfactor
                     player.ManaPoints -= InvisAb().ManaCost;
 
                     Score.UpdateUiPrompt(player);
-                
-                    HubContext.SendToClient($"You start to fade in and out of existence.", player.HubGuid);
- 
-                    foreach (var character in room.players)
+
+                    var hasFaerieFire = player.Affects?.FirstOrDefault(
+                                            x => x.Name.Equals("Faerie Fire", StringComparison.CurrentCultureIgnoreCase)) !=
+                                        null;
+
+                    if (!hasFaerieFire)
                     {
-                        if (character != player)
+                        HubContext.SendToClient($"You start to fade in and out of existence.", player.HubGuid);
+
+                        foreach (var character in room.players)
                         {
-                            var hisOrHer = Helpers.ReturnHisOrHers(player, character);
-                            var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} starts to fade in and out of existence";
+                            if (character != player)
+                            {
+                                var hisOrHer = Helpers.ReturnHisOrHers(player, character);
+                                var roomMessage =
+                                    $"{Helpers.ReturnName(player, character, string.Empty)} starts to fade in and out of existence";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                            }
                         }
+
+
+                        Task.Run(() => DoInvis(player, room));
+
                     }
-
-
-                    Task.Run(() => DoInvis(player, room));
-                     
+                    else
+                    {
+                        HubContext.SendToClient($"You fail to turn invisible due to the glow of Faerie fire surrounding you.", player.HubGuid);
+                    }
                 }
 
-                 
+
 
             }
 

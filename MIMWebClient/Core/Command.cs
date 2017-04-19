@@ -89,6 +89,12 @@ namespace MIMWebClient.Core
                 {"cast chill touch", () => ChillTouch.StartChillTouch(playerData, room, commandOptions)},
                 { "c fly", () => Fly.StartFly(playerData, room, commandOptions)},
                 {"cast fly", () => Fly.StartFly(playerData, room, commandOptions)},
+                { "c refresh", () => Refresh.StartRefresh(playerData, room, commandOptions)},
+                {"cast refresh", () => Refresh.StartRefresh(playerData, room, commandOptions)},
+                { "c faerie fire", () => FaerieFire.StartFaerieFire(playerData, room, commandOptions)},
+                {"cast faerie fire", () => FaerieFire.StartFaerieFire(playerData, room, commandOptions)},
+                { "c teleport", () => Teleport.StartTeleport(playerData, room)},
+                {"cast teleport", () => Teleport.StartTeleport(playerData, room)},
 
                 //skills
                 {"punch", () => Punch.StartPunch(playerData, room)},

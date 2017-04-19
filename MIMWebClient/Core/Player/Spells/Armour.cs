@@ -75,6 +75,14 @@ namespace MIMWebClient.Core.Player.Skills
                 if (_target == null)
                 {
 
+
+                    if (player.ManaPoints < ArmourAb().ManaCost)
+                    {
+                        HubContext.SendToClient("You attempt to draw energy but fail", player.HubGuid);
+
+                        return;
+                    }
+
                     //TODO REfactor
                     player.ManaPoints -= ArmourAb().ManaCost;
 

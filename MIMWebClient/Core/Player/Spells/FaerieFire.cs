@@ -11,16 +11,16 @@ namespace MIMWebClient.Core.Player.Skills
     using MIMWebClient.Core.Room;
     using System.Threading.Tasks;
 
-    public class Fly : Skill
+    public class FaerieFire : Skill
     {
         private static bool _taskRunnning = false;
         private static Player _target = new Player();
-        public static Skill FlySkill { get; set; }
+        public static Skill FaerieFireSkill { get; set; }
 
-        public static void StartFly(Player player, Room room, string target = "")
+        public static void StartFaerieFire(Player player, Room room, string target = "")
         {
             //Check if player has spell
-            var hasSpell = Skill.CheckPlayerHasSkill(player, FlyAb().Name);
+            var hasSpell = Skill.CheckPlayerHasSkill(player, FaerieFireAB().Name);
 
             if (hasSpell == false)
             {
@@ -40,8 +40,7 @@ namespace MIMWebClient.Core.Player.Skills
             if (!_taskRunnning && _target != null)
             {
 
-
-                if (player.ManaPoints < FlyAb().ManaCost)
+                if (player.ManaPoints < FaerieFireAB().ManaCost)
                 {
                     HubContext.SendToClient("You fail to concerntrate due to lack of mana.", player.HubGuid);
 
@@ -50,57 +49,36 @@ namespace MIMWebClient.Core.Player.Skills
 
                 //TODO REfactor
 
-                player.ManaPoints -= FlyAb().ManaCost;
+                player.ManaPoints -= FaerieFireAB().ManaCost;
 
                 Score.UpdateUiPrompt(player);
 
-                HubContext.SendToClient("You utter volito autem.", player.HubGuid);
-
-                var playersInRoom = new List<Player>(room.players);
+                HubContext.SendToClient("You utter mediocris ignis.", player.HubGuid);
 
                 foreach (var character in room.players)
                 {
                     if (character != player)
                     {
                         var hisOrHer = Helpers.ReturnHisOrHers(player, character);
-                        var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} utters volito autem.";
+                        var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} utters mediocris ignis.";
 
                         HubContext.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
-                Task.Run(() => DoFly(player, room));
+                Task.Run(() => DoFaerieFire(player, room));
 
             }
             else
             {
 
-                player.ManaPoints -= FlyAb().ManaCost;
-
-                Score.UpdateUiPrompt(player);
-
-                HubContext.SendToClient("You utter volito autem.", player.HubGuid);
-
-                var playersInRoom = new List<Player>(room.players);
-
-                foreach (var character in room.players)
-                {
-                    if (character != player)
-                    {
-                        var hisOrHer = Helpers.ReturnHisOrHers(player, character);
-                        var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} utters volito autem.";
-
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
-                    }
-                }
-
-                Task.Run(() => DoFly(player, room));
+                HubContext.SendToClient("You can't cast this on yourself", player.HubGuid);
 
             }
 
         }
 
-        private static async Task DoFly(Player attacker, Room room)
+        private static async Task DoFaerieFire(Player attacker, Room room)
         {
             _taskRunnning = true;
             attacker.Status = Player.PlayerStatus.Busy;
@@ -108,60 +86,27 @@ namespace MIMWebClient.Core.Player.Skills
 
             await Task.Delay(500);
 
-            var flyAff = new Affect
+            var faerieFireAff = new Affect
             {
-                Name = "Fly",
+                Name = "Faerie Fire",
                 Duration = attacker.Level + 5,
-                AffectLossMessagePlayer = "You float back down to the ground.",
-                AffectLossMessageRoom = $" floats back down to the ground."
+                AffectLossMessagePlayer = "The Faerie fire surrounding you desapates.",
+                AffectLossMessageRoom = $" stops glowing as the Faerie fire desapates."
             };
 
 
 
             if (_target == null)
             {
-                var castingTextAttacker = "Your feet levitate off the ground.";
-
-                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-
-                var excludePlayers = new List<string> { attacker.HubGuid };
-
-                foreach (var character in room.players)
-                {
-
-                    if (character == attacker)
-                    {
-                        continue;
-                    }
-
-                    if (character != attacker)
-                    {
-
-                        var roomMessage =
-                            $"{Helpers.ReturnName(attacker, character, string.Empty)}'s feet rise off the ground.";
-
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
-                    }
-                }
-
-
-                if (attacker.Affects == null)
-                {
-                    attacker.Affects = new List<Affect>();
-                    attacker.Affects.Add(flyAff);
-
-                }
-                else
-                {
-                    attacker.Affects.Add(flyAff);
-                }
+               HubContext.SendToClient("You can't cast this on yourself", attacker.HubGuid);
+              
             }
             else
             {
                 var castingTextAttacker =
-                     Helpers.ReturnName(_target, attacker, null) + "'s feet rise off the ground.";
+                     Helpers.ReturnName(_target, attacker, null) + " is surrounded by pink glowing Faerie Fire.";
 
-                var castingTextDefender = "Your feet levitate off the ground.";
+                var castingTextDefender = "You are surrounded by pink glowing faerie fire.";
 
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
                 HubContext.SendToClient(castingTextDefender, _target.HubGuid);
@@ -177,7 +122,7 @@ namespace MIMWebClient.Core.Player.Skills
                     if (character != _target)
                     {
                         var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
-                        var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)}'s feet rise off the ground.";
+                        var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)} is surrounded by pink glowing Faerie Fire.";
 
                         HubContext.SendToClient(roomMessage, character.HubGuid);
                     }
@@ -186,12 +131,12 @@ namespace MIMWebClient.Core.Player.Skills
                 if (_target.Affects == null)
                 {
                     _target.Affects = new List<Affect>();
-                    _target.Affects.Add(flyAff);
+                    _target.Affects.Add(faerieFireAff);
 
                 }
                 else
                 {
-                    _target.Affects.Add(flyAff);
+                    _target.Affects.Add(faerieFireAff);
                 }
 
                 Score.ReturnScoreUI(_target);
@@ -210,13 +155,13 @@ namespace MIMWebClient.Core.Player.Skills
 
         }
 
-        public static Skill FlyAb()
+        public static Skill FaerieFireAB()
         {
 
 
             var skill = new Skill
             {
-                Name = "Fly",
+                Name = "Faerie Fire",
                 SpellGroup = SpellGroupType.Transmutation,
                 SkillType = Type.Spell,
                 CoolDown = 0,
@@ -227,14 +172,14 @@ namespace MIMWebClient.Core.Player.Skills
                 Proficiency = 1,
                 MaxProficiency = 95,
                 UsableFromStatus = "Standing",
-                Syntax = "cast fly <Target>"
+                Syntax = "cast 'Faerie Fire' <Target>"
             };
 
 
             var help = new Help
             {
                 Syntax = skill.Syntax,
-                HelpText = "Makes you hover, reducing movement costs, and avoiding some skills such as bash",
+                HelpText = "Makes the target glow red, reducing their ability to hide or sneak.",
                 DateUpdated = "17/04/2017"
 
             };

@@ -142,6 +142,13 @@ namespace MIMWebClient.Core.Player.Skills
                 if (_target == null)
                 {
 
+                    if (player.ManaPoints < ContinualLightAb().ManaCost)
+                    {
+                        HubContext.SendToClient("You attempt to draw energy but fail", player.HubGuid);
+
+                        return;
+                    }
+
                     //TODO REfactor
                     player.ManaPoints -= ContinualLightAb().ManaCost;
 
