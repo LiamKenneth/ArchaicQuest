@@ -55,7 +55,6 @@ namespace MIMWebClient.Core.Player.Classes
 
             #endregion
 
-
             #region  Give mage armor skill
 
             var armour = Armour.ArmourAb();
@@ -152,6 +151,17 @@ namespace MIMWebClient.Core.Player.Classes
             teleport.Proficiency = 50;
             teleport.MaxProficiency = 95;
             mage.Skills.Add(teleport);
+
+            #endregion
+
+            #region  Give blindness
+
+            var blindness = Blindness.BlindAb();
+
+            blindness.LevelObtained = 1;
+            blindness.Proficiency = 50;
+            blindness.MaxProficiency = 95;
+            mage.Skills.Add(blindness);
 
             #endregion
 

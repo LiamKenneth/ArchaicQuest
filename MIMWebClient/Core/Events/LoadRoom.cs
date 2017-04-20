@@ -245,6 +245,15 @@ namespace MIMWebClient.Core.Events
 
         public static void ReturnRoom(Player player, Room room, string commandOptions = "", string keyword = "")
         {
+            var isBlind = player.Affects?.FirstOrDefault(
+                       x => x.Name.Equals("Blindness", StringComparison.CurrentCultureIgnoreCase)) != null;
+
+            if (isBlind)
+            {
+                HubContext.SendToClient("You can't see a thing.", player.HubGuid);
+                return;
+            }
+
 
             Room roomData = room;
 

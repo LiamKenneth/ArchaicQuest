@@ -375,6 +375,9 @@ namespace MIMWebClient.Core.Room
         public static void Move(Player player, Room room, string direction)
         {
 
+            var isBlind = player.Affects?.FirstOrDefault(
+                          x => x.Name.Equals("Blindness", StringComparison.CurrentCultureIgnoreCase)) != null;
+
             if (player.MovePoints <= 0)
             {
                 HubContext.SendToClient("You are exhausted an unable to move", player.HubGuid);
@@ -442,7 +445,15 @@ namespace MIMWebClient.Core.Room
 
                             var roomDescription = LoadRoom.DisplayRoom(getNewRoom, player.Name);
 
-                            HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(roomDescription);
+                            if (!isBlind)
+                            {
+                                HubContext.getHubContext.Clients.Client(player.HubGuid)
+                                    .addNewMessageToPage(roomDescription);
+                            }
+                            else
+                            {
+                                HubContext.SendToClient("You can't see a thing.", player.HubGuid);
+                            }
 
                             //Show exits UI
                             ShowUIExits(getNewRoom, player.HubGuid);

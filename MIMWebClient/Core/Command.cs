@@ -75,26 +75,39 @@ namespace MIMWebClient.Core
                 //spells
                 {"c magic missile", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
                 {"cast magic missile", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
+
                 { "c armour", () => Armour.StartArmour(playerData, room, commandOptions)},
                 {"cast armour", () => Armour.StartArmour(playerData, room, commandOptions)},
+
                 { "c armor", () => Armour.StartArmour(playerData, room, commandOptions)},
                 {"cast armor", () => Armour.StartArmour(playerData, room, commandOptions)},
+
                 { "c continual light", () => ContinualLight.StarContinualLight(playerData, room, commandOptions)},
                 {"cast continual light", () => ContinualLight.StarContinualLight(playerData, room, commandOptions)},
+
                 { "c invis", () => Invis.StartInvis(playerData, room, commandOptions)},
                 {"cast invis", () => Invis.StartInvis(playerData, room, commandOptions)},
+
                 { "c weaken", () => Weaken.StartWeaken(playerData, room, commandOptions)},
                 {"cast weaken", () => Weaken.StartWeaken(playerData, room, commandOptions)},
+
                 { "c chill touch", () => ChillTouch.StartChillTouch(playerData, room, commandOptions)},
                 {"cast chill touch", () => ChillTouch.StartChillTouch(playerData, room, commandOptions)},
+
                 { "c fly", () => Fly.StartFly(playerData, room, commandOptions)},
                 {"cast fly", () => Fly.StartFly(playerData, room, commandOptions)},
+
                 { "c refresh", () => Refresh.StartRefresh(playerData, room, commandOptions)},
                 {"cast refresh", () => Refresh.StartRefresh(playerData, room, commandOptions)},
+
                 { "c faerie fire", () => FaerieFire.StartFaerieFire(playerData, room, commandOptions)},
                 {"cast faerie fire", () => FaerieFire.StartFaerieFire(playerData, room, commandOptions)},
+
                 { "c teleport", () => Teleport.StartTeleport(playerData, room)},
                 {"cast teleport", () => Teleport.StartTeleport(playerData, room)},
+
+                { "c blindness", () => Blindness.StartBlind(playerData, room, commandOptions)},
+                {"cast blindess", () => Blindness.StartBlind(playerData, room, commandOptions)},
 
                 //skills
                 {"punch", () => Punch.StartPunch(playerData, room)},
