@@ -109,6 +109,9 @@ namespace MIMWebClient.Core
                 { "c blindness", () => Blindness.StartBlind(playerData, room, commandOptions)},
                 {"cast blindess", () => Blindness.StartBlind(playerData, room, commandOptions)},
 
+                { "c haste", () => Haste.StartHaste(playerData, room, commandOptions)},
+                {"cast haste", () => Haste.StartHaste(playerData, room, commandOptions)},
+
                 //skills
                 {"punch", () => Punch.StartPunch(playerData, room)},
                 {"kick", () => Kick.StartKick(playerData, room)},

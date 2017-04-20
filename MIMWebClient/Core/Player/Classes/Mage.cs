@@ -165,6 +165,18 @@ namespace MIMWebClient.Core.Player.Classes
 
             #endregion
 
+            #region  Give haste
+
+            var haste = Haste.HasteAb();
+
+            haste.LevelObtained = 1;
+            haste.Proficiency = 50;
+            haste.MaxProficiency = 95;
+            mage.Skills.Add(haste);
+
+            #endregion
+
+
             mage.ReclassOptions.Add(Ranger.RangerClass());
 
             return mage;
