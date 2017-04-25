@@ -119,8 +119,8 @@ namespace MIMWebClient.Core.Events
             }
             //3000, 3 second timer needs to be a method taking in players dexterity, condition and spells to determine speed.
 
-            Task.Run(() => HitTarget(attacker, defender, room, 3000));
-            Task.Run(() => HitTarget(defender, attacker, room, 3000));
+            Task.Run(() => HitTarget(attacker, defender, room, Skill.ReturnActionSpeed(attacker, 3000)));
+            Task.Run(() => HitTarget(defender, attacker, room, Skill.ReturnActionSpeed(defender, 3000)));
 
         }
 
@@ -446,35 +446,42 @@ namespace MIMWebClient.Core.Events
                    
                     var damageText = DamageText(dam);
 
-
-                    HubContext.SendToClient("Your " + WeaponAttackName(attacker, skillUsed).Key + " " + damageText.Value + " " + Helpers.ReturnName(defender, attacker, null) + " [" + dam + "]", attacker.HubGuid);
-
-                    HubContext.SendToClient(Helpers.ReturnName(attacker,  defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value + " you [" + dam + "]", defender.HubGuid);
-
-                    HubContext.SendToAllExcept(Helpers.ReturnName(attacker, defender, null) +"'s " + WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value + " " + Helpers.ReturnName(defender, attacker,  null), room.fighting, room.players);
-
-                    defender.HitPoints -= dam;
-
-                    if (defender.HitPoints < 0)
+                    if (IsAlive(attacker, defender))
                     {
-                        defender.HitPoints = 0;
-                    }
-                   
 
-                    if (!IsAlive(attacker, defender))
-                    {
-                        IsDead(attacker, defender, room);
+                        HubContext.SendToClient("Your " + WeaponAttackName(attacker, skillUsed).Key + " " + damageText.Value + " " + Helpers.ReturnName(defender, attacker, null) + " [" + dam + "]", attacker.HubGuid);
+
+                        HubContext.SendToClient(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value + " you [" + dam + "]", defender.HubGuid);
+
+                        HubContext.SendToAllExcept(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value + " " + Helpers.ReturnName(defender, attacker, null), room.fighting, room.players);
+
+                        defender.HitPoints -= dam;
+
+                        if (defender.HitPoints < 0)
+                        {
+                            defender.HitPoints = 0;
+                        }
+
+
+                        if (!IsAlive(attacker, defender))
+                        {
+                            IsDead(attacker, defender, room);
+                        }
                     }
 
                 }
                 else
                 {
+                    if (IsAlive(attacker, defender))
+                    {
 
-                    HubContext.SendToClient("Your " + WeaponAttackName(attacker, skillUsed).Key + " misses " + Helpers.ReturnName(defender, attacker, null), attacker.HubGuid);
+                        HubContext.SendToClient("Your " + WeaponAttackName(attacker, skillUsed).Key + " misses " + Helpers.ReturnName(defender, attacker, null), attacker.HubGuid);
 
-                    HubContext.SendToClient(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key + " misses you ", defender.HubGuid);
+                        HubContext.SendToClient(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key + " misses you ", defender.HubGuid);
 
-                    HubContext.SendToAllExcept(Helpers.ReturnName(attacker, defender, null) +"'s " + WeaponAttackName(attacker, skillUsed).Key  + " misses " + Helpers.ReturnName(defender, attacker, null), room.fighting, room.players);
+                        HubContext.SendToAllExcept(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key + " misses " + Helpers.ReturnName(defender, attacker, null), room.fighting, room.players);
+
+                    }
                 }
             }
 
@@ -733,6 +740,15 @@ namespace MIMWebClient.Core.Events
             double blockSkill = 0.15;
             double parrySkill = 0;
             int dexterity = player.Dexterity;
+
+
+            var hasHaste = player.Affects?.FirstOrDefault(
+                             x => x.Name.Equals("Haste", StringComparison.CurrentCultureIgnoreCase)) != null;
+
+            if (hasHaste)
+            {
+                dexterity += 5;
+            }
 
             //((Agility / 5) + (Luck / 10)) * (0.75 + 0.5 * Current Fatigue / Maximum Fatigue)
 

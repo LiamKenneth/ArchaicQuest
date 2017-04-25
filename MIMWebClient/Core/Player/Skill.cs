@@ -100,7 +100,27 @@ namespace MIMWebClient.Core.Player
         public string Syntax { get; set; }
 
 
+        public static int ReturnActionSpeed(PlayerSetup.Player player, int speed)
+        {
 
+            var hasHaste = player.Affects?.FirstOrDefault(
+                             x => x.Name.Equals("Haste", StringComparison.CurrentCultureIgnoreCase)) != null;
+
+            var hasSlow = player.Affects?.FirstOrDefault(
+                            x => x.Name.Equals("Slow", StringComparison.CurrentCultureIgnoreCase)) != null;
+
+            if (hasSlow)
+            {
+                return speed * 2;
+            }
+
+            if (hasHaste)
+            {
+                return speed / 2;
+            }
+
+            return speed;
+        }
 
 
         public static bool CheckPlayerHasSkill(PlayerSetup.Player player, string skillName)
