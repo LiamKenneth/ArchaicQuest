@@ -112,6 +112,9 @@ namespace MIMWebClient.Core
                 { "c haste", () => Haste.StartHaste(playerData, room, commandOptions)},
                 {"cast haste", () => Haste.StartHaste(playerData, room, commandOptions)},
 
+                 { "c create spring", () => CreateSpring.StartCreateSpring(playerData, room)},
+                {"cast create spring", () => CreateSpring.StartCreateSpring(playerData, room)},
+
                 //skills
                 {"punch", () => Punch.StartPunch(playerData, room)},
                 {"kick", () => Kick.StartKick(playerData, room)},

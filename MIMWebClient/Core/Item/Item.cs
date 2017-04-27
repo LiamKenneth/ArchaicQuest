@@ -181,5 +181,9 @@ namespace MIMWebClient.Core.Item
         public int Gold { get; set; }
         public ArmourRating ArmorRating { get; set; }   
         public double Weight { get; set; }
+        /// <summary>
+        /// how many ticks till item decays
+        /// </summary>
+        public int decayTimer { get; set; } = 0;
     }
 }

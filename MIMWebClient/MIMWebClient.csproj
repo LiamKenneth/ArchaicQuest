@@ -299,6 +299,7 @@
     <Compile Include="Core\Player\Skills\HandtoHand.cs" />
     <Compile Include="Core\Player\Skills\Kick.cs" />
     <Compile Include="Core\Player\Spells.cs" />
+    <Compile Include="Core\Player\Spells\CreateSpring.cs" />
     <Compile Include="Core\Player\Spells\Haste.cs" />
     <Compile Include="Core\Player\Spells\FaerieFire.cs" />
     <Compile Include="Core\Player\Spells\Blindness.cs" />
@@ -351,6 +352,7 @@
     <Compile Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Hands\ScalemailHands.cs" />
     <Compile Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Head\ScalemailHead.cs" />
     <Compile Include="Core\World\Items\Armour\MediumArmour\ScaleMail\Legs\ScalemailLegs.cs" />
+    <Compile Include="Core\World\Items\Consumables\Drinks\MagicalSpring.cs" />
     <Compile Include="Core\World\Items\Consumables\Drinks\drink.cs" />
     <Compile Include="Core\World\Items\Consumables\Food\Food.cs" />
     <Compile Include="Core\World\Items\MiscEQ\Containers\Containers.cs" />
