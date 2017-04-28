@@ -177,6 +177,18 @@ namespace MIMWebClient.Core.Player.Classes
             #endregion
 
 
+            #region  Give create spring
+
+            var createSpring = CreateSpring.CreateSpringAb();
+
+            createSpring.LevelObtained = 1;
+            createSpring.Proficiency = 50;
+            createSpring.MaxProficiency = 95;
+            mage.Skills.Add(createSpring);
+
+            #endregion
+
+
             mage.ReclassOptions.Add(Ranger.RangerClass());
 
             return mage;

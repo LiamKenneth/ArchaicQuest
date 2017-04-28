@@ -59,7 +59,7 @@ namespace MIMWebClient.Core.Mob.Events
                                 speak = npc.DialogueTree[0];
                             }
 
-                            HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(npc.Name + " says to you " + speak.Message);
+                            HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(npc.Name + " says to you \"" + speak.Message + "\"");
                             var i = 1;
                             foreach (var respond in speak.PossibleResponse)
                             {

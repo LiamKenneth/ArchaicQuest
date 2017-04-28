@@ -18,14 +18,14 @@ namespace MIMWebClient.Core.Events
         {
             string playerId = player.HubGuid;
 
-            HubContext.SendToClient("You say " + message, playerId, null, false, false);
+            HubContext.SendToClient($"You say \"{message}\"", playerId, null, false, false);
              
             foreach (var character in room.players)
             {
                 if (player != character)
                 {
                   
-                    var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} says {message}";
+                    var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} says \"{message}\"";
 
                     HubContext.SendToClient(roomMessage, character.HubGuid);
                 }
@@ -92,8 +92,7 @@ namespace MIMWebClient.Core.Events
            //         }
 
 
-                    HubContext.SendToClient(
-                       mob.Name + " says to you " + response.Replace("$playerName", player.Name), playerId,
+                    HubContext.SendToClient(mob.Name + " says to you \"" + response.Replace("$playerName", player.Name) + "\"", playerId,
                        null, true);
 
 
@@ -103,7 +102,7 @@ namespace MIMWebClient.Core.Events
                     if (speak?.PossibleResponse.Count > 0)
                     {
                         HubContext.SendToClient(
-                            mob.Name + " says to you anything else?", playerId,
+                            mob.Name + " says to you \"anything else?\"", playerId,
                             null, true);
                     }
 
@@ -221,15 +220,15 @@ namespace MIMWebClient.Core.Events
             if (recipientPlayer != null)
             {
                 string recipientName = recipientPlayer.Name;
-                HubContext.SendToClient("You say to " + recipientName + " " + actualMessage, playerId, null, false, false);
-                HubContext.SendToClient(Helpers.ReturnName(player, recipientPlayer, string.Empty) + " says to you " + actualMessage, playerId, recipientName, true, true);
+                HubContext.SendToClient("You say to " + recipientName + " \"" + actualMessage + "\"", playerId, null, false, false);
+                HubContext.SendToClient(Helpers.ReturnName(player, recipientPlayer, string.Empty) + " says to you \"" + actualMessage + "\"", playerId, recipientName, true, true);
 
 
 
             }
             else
             {
-                HubContext.SendToClient("No one here by that name", playerId, null, false, false);
+                HubContext.SendToClient("No one here by that name.", playerId, null, false, false);
             }
         }
 
@@ -240,7 +239,7 @@ namespace MIMWebClient.Core.Events
 
             foreach (var pc in players)
             {
-                HubContext.SendToClient("Newbie: " + player.Name + " says " + message, pc.HubGuid);
+                HubContext.SendToClient("Newbie: " + player.Name + " says :" + message, pc.HubGuid);
             }
 
         }
@@ -251,7 +250,7 @@ namespace MIMWebClient.Core.Events
 
             foreach (var pc in players)
             {
-                HubContext.SendToClient("Gossip: " + player.Name + " says " + message, pc.HubGuid);
+                HubContext.SendToClient("Gossip: " + player.Name + " says :" + message, pc.HubGuid);
             }
 
         }
@@ -262,7 +261,7 @@ namespace MIMWebClient.Core.Events
 
             foreach (var pc in players)
             {
-                HubContext.SendToClient("OOC: " + player.Name + " says " + message, pc.HubGuid);
+                HubContext.SendToClient("OOC: " + player.Name + " says :" + message, pc.HubGuid);
             }
 
         }

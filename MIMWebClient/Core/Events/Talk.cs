@@ -33,9 +33,9 @@ namespace MIMWebClient.Core.Events
             if (recipientPlayer != null)
             {
                 string recipientName = recipientPlayer.Name;
-                HubContext.SendToClient("You say to " + recipientName + " " + actualMessage, playerId, null, false,
+                HubContext.SendToClient("You say to \"" + recipientName + "\" " + actualMessage, playerId, null, false,
                     false);
-                HubContext.SendToClient(player.Name + " says to you " + actualMessage, playerId, recipientName, true,
+                HubContext.SendToClient(player.Name + " says to you \"" + actualMessage + "\"", playerId, recipientName, true,
                     true);
 
 

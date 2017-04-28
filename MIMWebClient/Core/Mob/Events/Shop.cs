@@ -36,7 +36,7 @@ namespace MIMWebClient.Core.Mob.Events
                 }
 
                 //e.g Yes sure here are my wares.
-                HubContext.SendToClient(mob.Name + " says to you " + mob.sellerMessage, player.HubGuid);
+                HubContext.SendToClient(mob.Name + " says to you \"" + mob.sellerMessage + "\"", player.HubGuid);
 
                 //show player items
                 HubContext.SendToClient(itemsForSell, player.HubGuid);

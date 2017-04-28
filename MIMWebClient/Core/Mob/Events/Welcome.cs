@@ -14,7 +14,7 @@ namespace MIMWebClient.Core.Mob.Events
             var msg =
                 "Welcome to Anker! I am here to guide you and I will keep it brief. To move type the direction shown in the exit list. North for example or n for short. You can also get items or drop them. Wield weapons, wear armour and kill. Kill the cat if you like.";
 
-            HubContext.broadcastToRoom(mob.Name + " says " + msg, room.players, player.HubGuid);
+            HubContext.broadcastToRoom(mob.Name + " says \"" + msg + "\"", room.players, player.HubGuid);
         }
     }
 }

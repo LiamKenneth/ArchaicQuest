@@ -25,7 +25,7 @@ namespace MIMWebClient.Core.Mob.Events
                     foreach (var character in room.players)
                     {
                           
-                            var roomMessage = $"{ Helpers.ReturnName(mob, character, string.Empty)} says {greetMessageToRoom}";
+                            var roomMessage = $"{ Helpers.ReturnName(mob, character, string.Empty)} says \"{greetMessageToRoom}\"";
 
                             HubContext.SendToClient(roomMessage, character.HubGuid);
                          

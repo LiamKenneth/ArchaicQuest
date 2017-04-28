@@ -25,9 +25,11 @@ namespace MIMWebClient.Core.Update
                 return;
             }
 
-            foreach (var player in players)
+            // I suspect this is the reason the update failed
+            // player dropped out and invalidated the loop
+            // .toList should solve it if that's the issue
+            foreach (var player in players.ToList())
             {
-
                 UpdateHp(player, context);
                 UpdateMana(player, context);
                 UpdateEndurance(player, context);
@@ -51,8 +53,7 @@ namespace MIMWebClient.Core.Update
                 foreach (var room in rooms)
                 {
 
-                 
-
+                
                     for (int i = room.mobs.Count - 1; i >= 0; i--)
                     {
                         //update mob hp/mana/moves
