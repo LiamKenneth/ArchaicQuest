@@ -160,6 +160,7 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("st")]
         public PlayerStatus Status;
 
+        [JsonIgnore]
         [BsonElement("ta")]
         public Player Target;
 

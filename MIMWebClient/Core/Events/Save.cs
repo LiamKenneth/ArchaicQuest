@@ -55,22 +55,66 @@ namespace MIMWebClient.Core.Events
           
         }
 
+        public static void LogError(Error.Error error)
+        {
+
+            try
+            {
+                const string ConnectionString = DbServer;
+
+                // Create a MongoClient object by using the connection string
+                var client = new MongoClient(ConnectionString);
+
+                //Use the MongoClient to access the server
+                var database = client.GetDatabase("mimdb");
+
+                var collection = database.GetCollection<Error.Error>("Error");
+
+
+                
+                    collection.InsertOne(error);
+                
+
+            }
+            catch (Exception e)
+            {
+
+            }
+
+
+
+        }
+
         public static void UpdatePlayer(Player player)
         {
-            const string ConnectionString = DbServer;
+            try
+            {
+                const string ConnectionString = DbServer;
 
-            // Create a MongoClient object by using the connection string
-            var client = new MongoClient(ConnectionString);
+                // Create a MongoClient object by using the connection string
+                var client = new MongoClient(ConnectionString);
 
-            //Use the MongoClient to access the server
-            var database = client.GetDatabase("mimdb");
+                //Use the MongoClient to access the server
+                var database = client.GetDatabase("mimdb");
 
-            var collection = database.GetCollection<Player>("Player");
+                var collection = database.GetCollection<Player>("Player");
 
-             collection.ReplaceOne<Player>(x => x._id == player._id, player);
+                collection.ReplaceOne<Player>(x => x._id == player._id, player);
 
-            HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("The gods take note of your progress");
+                HubContext.getHubContext.Clients.Client(player.HubGuid)
+                    .addNewMessageToPage("The gods take note of your progress");
+            }
+            catch (Exception ex)
+            {
+                var log = new Error.Error
+                {
+                    Date = DateTime.Now,
+                    ErrorMessage = ex.InnerException.ToString(),
+                    MethodName = "Update player"
+                };
 
+                Save.LogError(log);
+            }
 
         }
 

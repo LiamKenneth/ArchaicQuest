@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using MIMWebClient.Core.Events;
 using MIMWebClient.Hubs;
 
 namespace MIMWebClient.Core.Update
@@ -85,14 +87,17 @@ namespace MIMWebClient.Core.Update
         /// <returns></returns>
         public static async Task UpdateTime()
         {
-            await Task.Delay(60000);
+            while (true)
+            {
+                await Task.Delay(5000);
+                Time.UpdateTIme();
 
-            Time.UpdateTIme();
+                EmoteMob();
+                EmoteRoom();
+                KickIdlePlayers();
+            }
 
-            await Task.Run(EmoteMob);
-            await Task.Run(EmoteRoom);
-            await Task.Run(KickIdlePlayers);
-            Init();
+
         }
 
 
@@ -101,48 +106,62 @@ namespace MIMWebClient.Core.Update
             await Task.Delay(300000);
             RestoreVitals.UpdateRooms();
 
-            HubContext.getHubContext.Clients.All.addNewMessageToPage("This is will update Rooms every 5 minutes and not block the game");
-
             CleanRoom();
         }
 
         public static async Task KickIdlePlayers()
         {
-      
-            foreach (var player in MIMHub._PlayerCache)
-            {  
-                if (player.Value != null && player.Value.LastCommandTime.AddMinutes(10) < DateTime.UtcNow)
+
+            try
+            {
+
+                foreach (var player in MIMHub._PlayerCache.ToList())
                 {
-                    HubContext.SendToClient("You disapear in the void", player.Value.HubGuid);
-
-                    var room =
-                        MIMHub._AreaCache.FirstOrDefault(
-                            x =>
-                                x.Value.area.Equals(player.Value.Area) && x.Value.areaId.Equals(player.Value.AreaId) &&
-                                x.Value.region.Equals(player.Value.Region));
-
-                    if (room.Value != null)
+                    if (player.Value != null && player.Value.LastCommandTime.AddMinutes(10) < DateTime.UtcNow)
                     {
-                        foreach (var players in room.Value.players)
-                        {
-                            HubContext.broadcastToRoom(player.Value.Name + " disapears in the void", room.Value.players,
-                                player.Value.HubGuid, true);
-                        }
+                        HubContext.SendToClient("You disapear in the void", player.Value.HubGuid);
 
-                        //room.Value.players.Remove(player.Value);
+                        var room =
+                            MIMHub._AreaCache.FirstOrDefault(
+                                x =>
+                                    x.Value.area.Equals(player.Value.Area) && x.Value.areaId.Equals(player.Value.AreaId) &&
+                                    x.Value.region.Equals(player.Value.Region));
+
+                        if (room.Value != null)
+                        {
+                            foreach (var players in room.Value.players.ToList())
+                            {
+                                HubContext.broadcastToRoom(player.Value.Name + " disapears in the void",
+                                    room.Value.players,
+                                    player.Value.HubGuid, true);
+                            }
+                        }
+                    }
+
+                    if (player.Value != null && player.Value.LastCommandTime.AddMinutes(20) < DateTime.UtcNow)
+                    {
+                        var room =
+                            MIMHub._AreaCache.FirstOrDefault(
+                                x =>
+                                    x.Value.area.Equals(player.Value.Area) && x.Value.areaId.Equals(player.Value.AreaId) &&
+                                    x.Value.region.Equals(player.Value.Region));
+
+                        Command.ParseCommand("quit", player.Value, room.Value);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
 
-                if (player.Value != null && player.Value.LastCommandTime.AddMinutes(20) < DateTime.UtcNow)
+                var log = new Error.Error
                 {
-                    var room =
-                        MIMHub._AreaCache.FirstOrDefault(
-                            x =>
-                                x.Value.area.Equals(player.Value.Area) && x.Value.areaId.Equals(player.Value.AreaId) &&
-                                x.Value.region.Equals(player.Value.Region));
+                    Date = DateTime.Now,
+                    ErrorMessage = ex.InnerException.ToString(),
+                    MethodName = "KickIdlePlayers"
+                };
 
-                    Command.ParseCommand("quit", player.Value, room.Value);
-                }
+                Save.LogError(log);
+
             }
         }
 

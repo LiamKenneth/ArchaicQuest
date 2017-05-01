@@ -368,6 +368,7 @@
     <Compile Include="Core\World\Tutorial\Ambush.cs" />
     <Compile Include="Core\World\Tutorial\Awakening.cs" />
     <Compile Include="Core\World\Tutorial\Tutorial.cs" />
+    <Compile Include="Error\Error.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -398,6 +399,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Core\PlayerSetup\Data\Img\RaceImg\human.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Error\error.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="favicon.ico" />

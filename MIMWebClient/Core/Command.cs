@@ -207,6 +207,14 @@ namespace MIMWebClient.Core
             }
             else
             {
+                var log = new Error.Error
+                {
+                    Date = DateTime.Now,
+                    ErrorMessage = commandOptions + " " + commandKey,
+                    MethodName = "Wrong command"
+                };
+
+                Save.LogError(log);
 
                 HubContext.SendToClient("Sorry you can't do that.", playerData.HubGuid);
             }

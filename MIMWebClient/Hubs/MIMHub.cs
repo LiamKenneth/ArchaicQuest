@@ -205,7 +205,22 @@ namespace MIMWebClient.Hubs
 
         public void SendToClient(string message, string id)
         {
-            Clients.Client(id).addNewMessageToPage(message);
+            try
+            {
+                Clients.Client(id).addNewMessageToPage(message);
+            }
+            catch (Exception ex)
+            {
+                var log = new Error.Error
+                {
+                    Date = DateTime.Now,
+                    ErrorMessage = ex.InnerException.ToString(),
+                    MethodName = "Send to Client"
+                };
+
+                Save.LogError(log);
+
+            }
         }
         #endregion
 

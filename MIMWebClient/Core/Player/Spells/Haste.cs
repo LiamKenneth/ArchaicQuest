@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Castle.Components.DictionaryAdapter.Xml;
 
 namespace MIMWebClient.Core.Player.Skills
 {
@@ -129,69 +130,101 @@ namespace MIMWebClient.Core.Player.Skills
 
             await Task.Delay(500);
 
-            if (_target == null)
+            try
             {
-                var castingTextAttacker = "You begin to move much faster.";
 
-                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-
-                foreach (var character in room.players)
+                if (_target == null)
                 {
-                    if (character != attacker)
+                    var castingTextAttacker = "You begin to move much faster.";
+
+                    HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
+
+                    foreach (var character in room.players.ToList())
                     {
-                        var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)} starts to blur as they move faster.";
+                        if (character != attacker)
+                        {
+                            var roomMessage =
+                                $"{Helpers.ReturnName(attacker, character, string.Empty)} starts to blur as they move faster.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                        }
                     }
-                }
 
 
-                if (attacker.Affects == null)
-                {
-                    attacker.Affects = new List<Affect> { hasteAff };
+                    if (attacker.Affects == null)
+                    {
+                        attacker.Affects = new List<Affect> {hasteAff};
+
+                    }
+                    else
+                    {
+                        attacker.Affects.Add(hasteAff);
+                    }
+
+                    var tempAttackerInfo = attacker;
+                    tempAttackerInfo.Target = null;
+
+                    Score.ReturnScoreUI(tempAttackerInfo);
 
                 }
                 else
                 {
-                    attacker.Affects.Add(hasteAff);
-                }
+                    var castingTextAttacker = Helpers.ReturnName(_target, attacker, null) +
+                                              " starts to blur as they move faster.";
 
-                Score.ReturnScoreUI(attacker);
+                    var castingTextDefender = "You begin to move much faster.";
 
-            }
-            else
-            {
-                var castingTextAttacker = Helpers.ReturnName(_target, attacker, null) + " starts to blur as they move faster.";
+                    HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
+                    HubContext.SendToClient(castingTextDefender, _target.HubGuid);
 
-                var castingTextDefender = "You begin to move much faster.";
-
-                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-                HubContext.SendToClient(castingTextDefender, _target.HubGuid);
- 
-                foreach (var character in room.players)
-                {
-                    if (character != attacker || character != _target)
+                    foreach (var character in room.players.ToList())
                     {
-                        var roomMessage = $"{Helpers.ReturnName(_target, character, string.Empty)} starts to blur as they move faster.";
+                        if (character != attacker || character != _target)
+                        {
+                            var roomMessage =
+                                $"{Helpers.ReturnName(_target, character, string.Empty)} starts to blur as they move faster.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                        }
                     }
+
+                    if (_target.Affects == null)
+                    {
+                        _target.Affects = new List<Affect> {hasteAff};
+
+                    }
+                    else
+                    {
+                        _target.Affects.Add(hasteAff);
+                    }
+
+                    Score.ReturnScoreUI(_target);
+
                 }
 
-                if (_target.Affects == null)
+                if (attacker.Target != null)
                 {
-                    _target.Affects = new List<Affect> { hasteAff };
-
+                    attacker.Status = Player.PlayerStatus.Fighting;
                 }
                 else
                 {
-                    _target.Affects.Add(hasteAff);
+                    attacker.Status = Player.PlayerStatus.Standing;
                 }
 
-                Score.ReturnScoreUI(_target);
+               
 
             }
+            catch (Exception ex)
+            {
+                var log = new Error.Error
+                {
+                    Date = DateTime.Now,
+                    ErrorMessage = ex.Message.ToString(),
+                    MethodName = "haste"
+                };
 
+                Save.LogError(log);
+            }
 
             _target = null;
             _taskRunnning = false;

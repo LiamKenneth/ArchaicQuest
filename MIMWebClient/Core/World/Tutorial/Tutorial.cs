@@ -21,125 +21,152 @@ namespace MIMWebClient.Core.World.Tutorial
 
         public static void setUpTut(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
-            Task.Run(() => Intro(player, room, step, calledBy));
+            Task.Run(async () => await Intro(player, room, step, calledBy));
         }
 
         public static async Task Intro(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
 
-            var npc = room.mobs.FirstOrDefault(x => x.Name.Equals("Wilhelm"));
-
-            if (string.IsNullOrEmpty(step))
+            try
             {
+                var npc = room.mobs.FirstOrDefault(x => x.Name.Equals("Wilhelm"));
 
-                HubContext.SendToClient(npc.Name + " says to you \"I don't think we have much further to go " + player.Name + ".\"", player.HubGuid);
-
-                await Task.Delay(2000);
-
-                HubContext.SendToClient("You hear a twig snap in the distance.", player.HubGuid);
-
-                await Task.Delay(2000);
-
-                HubContext.SendToClient(npc.Name + " looks at you with a face of terror and dread.", player.HubGuid);
-
-                await Task.Delay(3000);
-
-                HubContext.SendToClient(npc.Name + " says to you \"did you hear that " + player.Name + ".\"", player.HubGuid);
-
-                HubContext.SendToClient("<p class='RoomExits'>[Hint] Type say yes</p>", player.HubGuid);
-
-                /*
-                 *  add quest to player?
-                 *  
-                 *  show dialogue options
-                 *  yes / no
-                 *  regardless of what is picked proceed to nect step
-                 *  if nothing is picked repeat
-                 */
-
-
-
-            }
-
-            if (step.Equals("yes", StringComparison.CurrentCultureIgnoreCase))
-            {
-
-                await Task.Delay(1500);
-
-                HubContext.SendToClient("You look around but see nothing.", player.HubGuid);
-
-                await Task.Delay(1500);
-
-                HubContext.SendToClient("Suddenly a Goblin yells AARGH-tttack!!", player.HubGuid);
-
-                await Task.Delay(3000);
-
-                HubContext.SendToClient("You hear movement all around you.", player.HubGuid);
-
-                await Task.Delay(1500);
-
-                HubContext.SendToClient(npc.Name + " says to you \"here take this dagger " + player.Name +".\"", player.HubGuid);
-
-                var weapon = npc.Inventory.FirstOrDefault(x => x.name.Contains("dagger"));
-
-                if (weapon != null)
+                if (string.IsNullOrEmpty(step))
                 {
-                    player.Inventory.Add(weapon);
+
+                    HubContext.SendToClient(
+                        npc.Name + " says to you \"I don't think we have much further to go " + player.Name + ".\"",
+                        player.HubGuid);
+
+                    await Task.Delay(2000);
+
+                    HubContext.SendToClient("You hear a twig snap in the distance.", player.HubGuid);
+
+                    await Task.Delay(2000);
+
+                    HubContext.SendToClient(npc.Name + " looks at you with a face of terror and dread.", player.HubGuid);
+
+                    await Task.Delay(3000);
+
+                    HubContext.SendToClient(npc.Name + " says to you \"did you hear that " + player.Name + ".\"",
+                        player.HubGuid);
+
+                    HubContext.SendToClient("<p class='RoomExits'>[Hint] Type say yes</p>", player.HubGuid);
+
+                    /*
+                     *  add quest to player?
+                     *  
+                     *  show dialogue options
+                     *  yes / no
+                     *  regardless of what is picked proceed to nect step
+                     *  if nothing is picked repeat
+                     */
+
+
+
                 }
-
-
-                HubContext.SendToClient(npc.Name + " gives you a blunt dagger.", player.HubGuid);
-
-                Score.UpdateUiInventory(player);
-
-                await Task.Delay(1500);
-
-                HubContext.SendToClient(npc.Name + " says to you \"it's nothing special but it will help you. I belive the way to Ester is all north from here.\"", player.HubGuid);
-
-                await Task.Delay(3000);
-
-                HubContext.SendToClient("You hear movement getting closer.", player.HubGuid);
-
-                await Task.Delay(3000);              
-
-                HubContext.SendToClient("Suddenly 5 Goblins emerge from the bushes and fan out in a semi circle.", player.HubGuid);
-
-                await Task.Delay(3000);
-
-                HubContext.SendToClient(npc.Name + " yells \"GO " + player.Name + ", I'll hold them off. RUN! Run now to the North.\"", player.HubGuid);
-
-                while (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
+                var hasDagger = player.Inventory.FirstOrDefault(x => x.name.Contains("dagger"));
+                if (step.Equals("yes", StringComparison.CurrentCultureIgnoreCase) && hasDagger == null)
                 {
-                    await Task.Delay(30000);
 
-                    if (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
+                    await Task.Delay(1500);
+
+                    HubContext.SendToClient("You look around but see nothing.", player.HubGuid);
+
+                    await Task.Delay(1500);
+
+                    HubContext.SendToClient("Suddenly a Goblin yells AARGH-tttack!!", player.HubGuid);
+
+                    await Task.Delay(3000);
+
+                    HubContext.SendToClient("You hear movement all around you.", player.HubGuid);
+
+                    await Task.Delay(1500);
+
+                    HubContext.SendToClient(npc.Name + " says to you \"here take this dagger " + player.Name + ".\"",
+                        player.HubGuid);
+
+                    var weapon = npc.Inventory.FirstOrDefault(x => x.name.Contains("dagger"));
+
+                    if (weapon != null)
                     {
-                        HubContext.SendToClient(npc.Name + " yells \"GO\", " + player.Name + " \"I'll hold them off. RUN! Run now to the North.\"", player.HubGuid);
-
-                        HubContext.SendToClient("<p class='RoomExits'>[Hint] Type north or n for short to move north away from the ambush</p>", player.HubGuid);
+                        player.Inventory.Add(weapon);
                     }
 
+
+                    HubContext.SendToClient(npc.Name + " gives you a blunt dagger.", player.HubGuid);
+
+                    Score.UpdateUiInventory(player);
+
+                    await Task.Delay(1500);
+
+                    HubContext.SendToClient(
+                        npc.Name +
+                        " says to you \"it's nothing special but it will help you. I belive the way to Ester is all north from here.\"",
+                        player.HubGuid);
+
+                    await Task.Delay(3000);
+
+                    HubContext.SendToClient("You hear movement getting closer.", player.HubGuid);
+
+                    await Task.Delay(3000);
+
+                    HubContext.SendToClient("Suddenly 5 Goblins emerge from the bushes and fan out in a semi circle.",
+                        player.HubGuid);
+
+                    await Task.Delay(3000);
+
+                    HubContext.SendToClient(
+                        npc.Name + " yells \"GO " + player.Name + ", I'll hold them off. RUN! Run now to the North.\"",
+                        player.HubGuid);
+
+                    while (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
+                    {
+                        await Task.Delay(30000);
+
+                        if (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
+                        {
+                            HubContext.SendToClient(
+                                npc.Name + " yells \"GO\", " + player.Name +
+                                " \"I'll hold them off. RUN! Run now to the North.\"", player.HubGuid);
+
+                            HubContext.SendToClient(
+                                "<p class='RoomExits'>[Hint] Type north or n for short to move north away from the ambush</p>",
+                                player.HubGuid);
+                        }
+
+                    }
+
+
                 }
 
+                if (step.Equals("Attack") && calledBy.Equals("mob"))
+                {
+                    //blah blah
+                }
 
             }
-
-            if (step.Equals("Attack") && calledBy.Equals("mob"))
+            catch (Exception ex)
             {
-                //blah blah
+                var log = new Error.Error
+                {
+                    Date = DateTime.Now,
+                    ErrorMessage = ex.InnerException.ToString(),
+                    MethodName = "willhelm"
+                };
+
+                Save.LogError(log);
             }
-
-
         }
 
         public static void setUpRescue(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
-            Task.Run(() => AwakeningRescue(player, room, step, calledBy));
+            Task.Run(async () => await AwakeningRescue(player, room, step, calledBy));
         }
 
         public static void setUpAwakening(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
-            Task.Run(() => Awakening(player, room, step, calledBy));
+            Task.Run(async () => await Awakening(player, room, step, calledBy));
 
         }
 
@@ -167,142 +194,159 @@ namespace MIMWebClient.Core.World.Tutorial
                 }
             };
 
-            //to stop task firing twice
-            if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
+            try
             {
-                return;
-            }
-
-            var npc = room.mobs.FirstOrDefault(x => x.Name.Equals("Mortem"));
-
-            if (npc == null) return;
-
-            if (step.Equals("wake", StringComparison.CurrentCultureIgnoreCase))
-            {
-
-                //remove player from tutorial room
-                var oldRoom = Cache.ReturnRooms()
-                    .FirstOrDefault(
-                        x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"));
-
-                if (oldRoom != null && oldRoom.players.Contains(player))
-                {
-                    PlayerManager.RemovePlayerFromRoom(oldRoom, player);
-                }
-
- 
-                HubContext.SendToClient(npc.Name + " says \"Ah you are awake!\"", player.HubGuid);
-
-                await Task.Delay(2000);
-
-                HubContext.SendToClient(
-                    npc.Name + " says \"You were in a bad way when we found you, I didn't think you would wake.\"",
-                    player.HubGuid);
-
-                await Task.Delay(2000);
-
-                HubContext.SendToClient(npc.Name + " Gets a pair of trousers and a shirt and hands them to you",
-                    player.HubGuid);
-
-                player.Inventory.Add(ClothingBody.PlainTop());
-                player.Inventory.Add(ClothingLegs.PlainTrousers());
-
-                Score.UpdateUiInventory(player);
-
-                await Task.Delay(2000);
-
-                HubContext.SendToClient(npc.Name + " says \"Wear them, you can't walk around naked I am afraid.\"",
-                    player.HubGuid);
-
-                await Task.Delay(2000);
-
-                HubContext.SendToClient(
-                    "<p class='RoomExits'>[Hint] To view items you are carrying type Inventory or i for short</p>",
-                    player.HubGuid);
-
-                HubContext.SendToClient(npc.Name + " smiles at you.", player.HubGuid);
-
-                await Task.Delay(2000);
-
-                HubContext.SendToClient(
-                    "<p class='RoomExits'>[Hint] Type wear trousers and wear shirt or alternativily wear all</p>",
-                    player.HubGuid);
-
-            }
-
-            if (step != null && step.Contains("plain"))
-            {
-
+                //to stop task firing twice
                 if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
                 {
                     return;
                 }
 
+                var npc = room.mobs.FirstOrDefault(x => x.Name.Equals("Mortem"));
 
+                if (npc == null) return;
 
-                if (player.Equipment.Body.Equals(ClothingBody.PlainTop().name) && !player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name))
+                if (step.Equals("wake", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    HubContext.SendToClient(npc.Name + " says \"It fits well, don't forget to wear the trousers too.\"",
-                   player.HubGuid);
+
+                    //remove player from tutorial room
+                    var oldRoom = Cache.ReturnRooms()
+                        .FirstOrDefault(
+                            x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"));
+
+                    if (oldRoom != null && oldRoom.players.Contains(player))
+                    {
+                        PlayerManager.RemovePlayerFromRoom(oldRoom, player);
+                    }
+
+
+                    HubContext.SendToClient(npc.Name + " says \"Ah you are awake!\"", player.HubGuid);
 
                     await Task.Delay(2000);
 
-                    return;
-
-                }
-
-                if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) && !player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
-                {
-
-
-                    HubContext.SendToClient(npc.Name + " says \"It fits well, don't forget to wear the top too.\"",
-                   player.HubGuid);
+                    HubContext.SendToClient(
+                        npc.Name + " says \"You were in a bad way when we found you, I didn't think you would wake.\"",
+                        player.HubGuid);
 
                     await Task.Delay(2000);
 
-                    return;
+                    HubContext.SendToClient(npc.Name + " Gets a pair of trousers and a shirt and hands them to you",
+                        player.HubGuid);
+
+                    player.Inventory.Add(ClothingBody.PlainTop());
+                    player.Inventory.Add(ClothingLegs.PlainTrousers());
+
+                    Score.UpdateUiInventory(player);
+
+                    await Task.Delay(2000);
+
+                    HubContext.SendToClient(npc.Name + " says \"Wear them, you can't walk around naked I am afraid.\"",
+                        player.HubGuid);
+
+                    await Task.Delay(2000);
+
+                    HubContext.SendToClient(
+                        "<p class='RoomExits'>[Hint] To view items you are carrying type Inventory or i for short</p>",
+                        player.HubGuid);
+
+                    HubContext.SendToClient(npc.Name + " smiles at you.", player.HubGuid);
+
+                    await Task.Delay(2000);
+
+                    HubContext.SendToClient(
+                        "<p class='RoomExits'>[Hint] Type wear trousers and wear shirt or alternativily wear all</p>",
+                        player.HubGuid);
 
                 }
 
-                if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) && player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
+                if (step != null && step.Contains("plain"))
                 {
 
-                    HubContext.SendToClient(
-                        npc.Name +
-                        " says \"Excellent, I have one request for you and that is to speak to Lance the Elder of the village.\"",
-                        player.HubGuid);
-
-                    HubContext.SendToClient(
-                        npc.Name +
-                        " says \"He wants to know if you remember anything about the attack that may help him? We have been raided a few times of late.\"",
-                        player.HubGuid);
-
-                    HubContext.SendToClient(
-                        npc.Name +
-                        " says \"You will found him in the Square of Anker just leave south and follow the hill path in to town you can't miss the Square.\"",
-                        player.HubGuid);
+                    if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
+                    {
+                        return;
+                    }
 
 
 
+                    if (player.Equipment.Body.Equals(ClothingBody.PlainTop().name) &&
+                        !player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name))
+                    {
+                        HubContext.SendToClient(
+                            npc.Name + " says \"It fits well, don't forget to wear the trousers too.\"",
+                            player.HubGuid);
 
-                    player.QuestLog.Add(findLance);
+                        await Task.Delay(2000);
+
+                        return;
+
+                    }
+
+                    if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) &&
+                        !player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
+                    {
+
+
+                        HubContext.SendToClient(npc.Name + " says \"It fits well, don't forget to wear the top too.\"",
+                            player.HubGuid);
+
+                        await Task.Delay(2000);
+
+                        return;
+
+                    }
+
+                    if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) &&
+                        player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
+                    {
+
+                        HubContext.SendToClient(
+                            npc.Name +
+                            " says \"Excellent, I have one request for you and that is to speak to Lance the Elder of the village.\"",
+                            player.HubGuid);
+
+                        HubContext.SendToClient(
+                            npc.Name +
+                            " says \"He wants to know if you remember anything about the attack that may help him? We have been raided a few times of late.\"",
+                            player.HubGuid);
+
+                        HubContext.SendToClient(
+                            npc.Name +
+                            " says \"You will found him in the Square of Anker just leave south and follow the hill path in to town you can't miss the Square.\"",
+                            player.HubGuid);
 
 
 
 
-                    HubContext.SendToClient(
-     "New Quest added: Find and greet Lance. Type qlog to be reminded about quest information.",
-     player.HubGuid);
+                        player.QuestLog.Add(findLance);
 
 
-                    HubContext.SendToClient(
-                        npc.Name +
-                        " waves to you, may Tyr bless you.",
-                        player.HubGuid);
+
+
+                        HubContext.SendToClient(
+                            "New Quest added: Find and greet Lance. Type qlog to be reminded about quest information.",
+                            player.HubGuid);
+
+
+                        HubContext.SendToClient(
+                            npc.Name +
+                            " waves to you, may Tyr bless you.",
+                            player.HubGuid);
+                    }
 
                 }
             }
+            catch (Exception ex)
+            {
+                var log = new Error.Error
+                {
+                    Date = DateTime.Now,
+                    ErrorMessage = ex.InnerException.ToString(),
+                    MethodName = "mortem"
+                };
 
+                Save.LogError(log);
+            }
         }
 
 

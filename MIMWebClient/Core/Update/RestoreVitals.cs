@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using MIMWebClient.Core.Events;
+using MongoDB.Bson;
 
 namespace MIMWebClient.Core.Update
 {
@@ -30,10 +32,36 @@ namespace MIMWebClient.Core.Update
             // .toList should solve it if that's the issue
             foreach (var player in players.ToList())
             {
-                UpdateHp(player, context);
-                UpdateMana(player, context);
-                UpdateEndurance(player, context);
-                UpdateAffects(player, context);
+               
+
+                try
+                {
+
+                    if (player.Status != Player.PlayerStatus.Fighting)
+                    {
+                        UpdateHp(player, context);
+
+                        UpdateMana(player, context);
+
+                        UpdateEndurance(player, context);
+                    }
+
+                    UpdateAffects(player, context);
+ 
+                }
+                catch (Exception ex)
+                {
+                    var log = new Error.Error
+                    {
+                        Date = DateTime.Now,
+                        ErrorMessage = ex.InnerException.ToString(),
+                        MethodName = "KickIdlePlayers"
+                    };
+
+                    Save.LogError(log);
+
+                }
+
             }
         }
 
@@ -153,7 +181,14 @@ namespace MIMWebClient.Core.Update
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                var log = new Error.Error
+                {
+                    Date = DateTime.Now,
+                    ErrorMessage = ex.InnerException.ToString(),
+                    MethodName = "KickIdlePlayers"
+                };
+
+                Save.LogError(log);
 
             }
         }
@@ -206,7 +241,14 @@ namespace MIMWebClient.Core.Update
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                var log = new Error.Error
+                {
+                    Date = DateTime.Now,
+                    ErrorMessage = ex.InnerException.ToString(),
+                    MethodName = "updateHP"
+                };
+
+                Save.LogError(log);
 
             }
 
@@ -257,7 +299,14 @@ namespace MIMWebClient.Core.Update
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                var log = new Error.Error
+                {
+                    Date = DateTime.Now,
+                    ErrorMessage = ex.InnerException.ToString(),
+                    MethodName = "UpdateMana"
+                };
+
+                Save.LogError(log);
 
             }
 
@@ -272,12 +321,12 @@ namespace MIMWebClient.Core.Update
                     return;
                 }
 
-                foreach (var af in player.Affects)
+                foreach (var af in player.Affects.ToList())
                 {
 
                     if (af.Duration == 0 || af.Duration <= 0)
                     {
-                        player.Affects.Remove(af);
+                        
 
                         // put in method? or change way we handle invis
                         if (af.Name == "Invis")
@@ -301,9 +350,9 @@ namespace MIMWebClient.Core.Update
                         {
                             var room = Cache.getRoom(player);
 
-                            foreach (var character in room.players)
+                            foreach (var character in room.players.ToList())
                             {
-                                if (player != character)
+                                if (player != character && character.HubGuid != null)
                                 {
                                     HubContext.SendToClient(
                                         Helpers.ReturnName(player, character, string.Empty) + " " +
@@ -313,16 +362,27 @@ namespace MIMWebClient.Core.Update
                             }
 
                         }
-                    }
 
-                    af.Duration -= 1;
+                        player.Affects.Remove(af);
+                    }
+                    else
+                    {
+                        af.Duration -= 1;
+                    }
+                 
 
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                var log = new Error.Error
+                {
+                    Date = DateTime.Now,
+                    ErrorMessage = ex.InnerException.ToString(),
+                    MethodName = "Update Affects"
+                };
 
+                Save.LogError(log);
             }
         }
 
@@ -373,7 +433,14 @@ namespace MIMWebClient.Core.Update
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                var log = new Error.Error
+                {
+                    Date = DateTime.Now,
+                    ErrorMessage = ex.InnerException.ToString(),
+                    MethodName = "Update endurance"
+                };
+
+                Save.LogError(log);
 
             }
 

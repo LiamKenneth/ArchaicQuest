@@ -133,30 +133,61 @@ namespace MIMWebClient.Core
 
             //remove player from room and player cache
 
-            var oldRoom = room;
-
-            int playerIndex = room.players.FindIndex(x => x.HubGuid == playerId);
-            room.players.RemoveAt(playerIndex);
-
-            Cache.updateRoom(room, oldRoom);
-
-            PlayerSetup.Player playerData = null;
-            MIMHub._PlayerCache.TryRemove(playerId, out playerData);
-
-            if (playerData != null)
+            try
             {
 
+                var oldRoom = room;
 
-                Save.UpdatePlayer(playerData);
+                int playerIndex = room.players.FindIndex(x => x.HubGuid == playerId);
+                room.players.RemoveAt(playerIndex);
 
-                SendToClient("Gods take note of your progress", playerId);
-                SendToClient("See you soon!", playerId);
-                broadcastToRoom(playerData.Name + " has left the realm", room.players, playerId, true);
+                Cache.updateRoom(room, oldRoom);
 
-                HubContext.getHubContext.Clients.Client(playerId).quit();
+                PlayerSetup.Player playerData = null;
+                MIMHub._PlayerCache.TryRemove(playerId, out playerData);
+
+                if (playerData != null)
+                {
+
+
+                    Save.UpdatePlayer(playerData);
+
+                    SendToClient("Gods take note of your progress", playerId);
+                    SendToClient("See you soon!", playerId);
+                    broadcastToRoom(playerData.Name + " has left the realm", room.players, playerId, true);
+
+                    try
+                    {
+
+
+                        HubContext.getHubContext.Clients.Client(playerId).quit();
+                    }
+                    catch (Exception ex)
+                    {
+                        var log = new Error.Error
+                        {
+                            Date = DateTime.Now,
+                            ErrorMessage = ex.InnerException.ToString(),
+                            MethodName = "Quit"
+                        };
+
+                        Save.LogError(log);
+                    }
+
+                }
 
             }
+            catch (Exception ex)
+            {
+                var log = new Error.Error
+                {
+                    Date = DateTime.Now,
+                    ErrorMessage = ex.InnerException.ToString(),
+                    MethodName = "KickIdlePlayers"
+                };
 
+                Save.LogError(log);
+            }
 
 
 

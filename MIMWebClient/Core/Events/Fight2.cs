@@ -40,7 +40,7 @@ namespace MIMWebClient.Core.Events
 
             if (attacker.Target != null)
             {
-                HubContext.SendToClient("You can only concerntrate on one target", attacker.HubGuid);
+                HubContext.SendToClient("You can only fight one target.", attacker.HubGuid);
                 return;
             }
 
@@ -59,7 +59,7 @@ namespace MIMWebClient.Core.Events
 
             if (defender == null)
             {
-                HubContext.SendToClient("No one here by that name", attacker.HubGuid);
+                HubContext.SendToClient("No one here by that name.", attacker.HubGuid);
                 return;
             }
 
@@ -67,14 +67,7 @@ namespace MIMWebClient.Core.Events
 
             defender.Status = Player.PlayerStatus.Fighting;
 
-            if (!busy)
-            {
-                attacker.Status = Player.PlayerStatus.Fighting;
-            }
-            else
-            {
-                attacker.Status = Player.PlayerStatus.Busy;
-            }
+            attacker.Status = !busy ? Player.PlayerStatus.Fighting : Player.PlayerStatus.Busy;
           
 
             AddFightersIdtoRoom(attacker, defender, room);
@@ -119,8 +112,8 @@ namespace MIMWebClient.Core.Events
             }
             //3000, 3 second timer needs to be a method taking in players dexterity, condition and spells to determine speed.
 
-            Task.Run(() => HitTarget(attacker, defender, room, Skill.ReturnActionSpeed(attacker, 3000)));
-            Task.Run(() => HitTarget(defender, attacker, room, Skill.ReturnActionSpeed(defender, 3000)));
+            Task.Run(() => HitTarget(attacker, defender, room,  3000));
+            Task.Run(() => HitTarget(defender, attacker, room, 3000));
 
         }
 
@@ -229,7 +222,14 @@ namespace MIMWebClient.Core.Events
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                var log = new Error.Error
+                {
+                    Date = DateTime.Now,
+                    ErrorMessage = ex.InnerException.ToString(),
+                    MethodName = "fight"
+                };
+
+                Save.LogError(log);
 
             }
 
