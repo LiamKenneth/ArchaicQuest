@@ -430,6 +430,23 @@ namespace MIMWebClient.Core.PlayerSetup
 
           
         }
+
+        /// <summary>
+        /// USed for spells and skills for now
+        /// </summary>
+        /// <param name="player"></param>
+        public static void SetState(Player player)
+        {
+
+            if (player.Target != null)
+            {
+                player.Status = Player.PlayerStatus.Fighting;
+            }
+            else
+            {
+                player.Status = Player.PlayerStatus.Standing;
+            }
+        }
  
     }
 }

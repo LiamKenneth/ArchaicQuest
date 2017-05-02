@@ -28,6 +28,14 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
+            var canDoSkill = Skill.CanDoSkill(player);
+
+            if (!canDoSkill)
+            {
+                return;
+            }
+
+
             _target = Skill.FindTarget(target, room);
 
             //Fix issue if target has similar name to user and they use abbrivations to target them
@@ -55,14 +63,13 @@ namespace MIMWebClient.Core.Player.Skills
                 Score.UpdateUiPrompt(player);
 
                 HubContext.SendToClient("You utter volito autem.", player.HubGuid);
-
-                var playersInRoom = new List<Player>(room.players);
+ 
 
                 foreach (var character in room.players)
                 {
                     if (character != player)
                     {
-                        var hisOrHer = Helpers.ReturnHisOrHers(player, character);
+ 
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} utters volito autem.";
 
                         HubContext.SendToClient(roomMessage, character.HubGuid);
@@ -81,13 +88,13 @@ namespace MIMWebClient.Core.Player.Skills
 
                 HubContext.SendToClient("You utter volito autem.", player.HubGuid);
 
-                var playersInRoom = new List<Player>(room.players);
+ 
 
                 foreach (var character in room.players)
                 {
                     if (character != player)
                     {
-                        var hisOrHer = Helpers.ReturnHisOrHers(player, character);
+ 
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} utters volito autem.";
 
                         HubContext.SendToClient(roomMessage, character.HubGuid);
@@ -123,8 +130,7 @@ namespace MIMWebClient.Core.Player.Skills
                 var castingTextAttacker = "Your feet levitate off the ground.";
 
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-
-                var excludePlayers = new List<string> { attacker.HubGuid };
+ 
 
                 foreach (var character in room.players)
                 {
@@ -197,13 +203,7 @@ namespace MIMWebClient.Core.Player.Skills
                 Score.ReturnScoreUI(_target);
             }
 
-            //incase player status has changed from busy
-            if (attacker.Status == Player.PlayerStatus.Busy)
-            {
-                attacker.Status = Player.PlayerStatus.Standing;
-            }
-
-            attacker.Status = Player.PlayerStatus.Busy;
+            Player.SetState(attacker);
             _target = null;
             _taskRunnning = false;
 

@@ -27,6 +27,12 @@ namespace MIMWebClient.Core.Player.Skills
                 HubContext.SendToClient("You don't know that spell.", player.HubGuid);
                 return;
             }
+            var canDoSkill = Skill.CanDoSkill(player);
+
+            if (!canDoSkill)
+            {
+                return;
+            }
 
             _target = Skill.FindTarget(target, room);
 
@@ -188,7 +194,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             Score.ReturnScoreUI(_target);
 
-
+            Player.SetState(attacker);
             attacker = null;
             _taskRunnning = false;
 

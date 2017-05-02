@@ -19,6 +19,7 @@ namespace MIMWebClient.Core.Player.Skills
 
         public static void StartHaste(Player player, Room room, string target = "")
         {
+
             //Check if player has spell
             var hasSpell = Skill.CheckPlayerHasSkill(player, HasteAb().Name);
 
@@ -27,6 +28,15 @@ namespace MIMWebClient.Core.Player.Skills
                 HubContext.SendToClient("You don't know that spell.", player.HubGuid);
                 return;
             }
+
+            var canDoSkill = Skill.CanDoSkill(player);
+
+            if (!canDoSkill)
+            {
+                return;
+            }
+
+            player.Status = Player.PlayerStatus.Busy;
 
             _target = Skill.FindTarget(target, room);
 
@@ -161,10 +171,9 @@ namespace MIMWebClient.Core.Player.Skills
                         attacker.Affects.Add(hasteAff);
                     }
 
-                    var tempAttackerInfo = attacker;
-                    tempAttackerInfo.Target = null;
+                    Score.ReturnScoreUI(attacker);
 
-                    Score.ReturnScoreUI(tempAttackerInfo);
+
 
                 }
                 else
@@ -202,16 +211,8 @@ namespace MIMWebClient.Core.Player.Skills
 
                 }
 
-                if (attacker.Target != null)
-                {
-                    attacker.Status = Player.PlayerStatus.Fighting;
-                }
-                else
-                {
-                    attacker.Status = Player.PlayerStatus.Standing;
-                }
+                Player.SetState(attacker);
 
-               
 
             }
             catch (Exception ex)

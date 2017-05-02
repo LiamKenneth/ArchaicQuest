@@ -28,6 +28,13 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
+            var canDoSkill = Skill.CanDoSkill(player);
+
+            if (!canDoSkill)
+            {
+                return;
+            }
+
             _target = Skill.FindTarget(target, room);
 
             //Fix issue if target has similar name to user and they use abbrivations to target them
@@ -63,13 +70,10 @@ namespace MIMWebClient.Core.Player.Skills
 
                 HubContext.SendToClient("You utter nequaquam multus.", player.HubGuid);
 
-                var playersInRoom = new List<Player>(room.players);
-
                 foreach (var character in room.players)
                 {
                     if (character != player)
                     {
-                        var hisOrHer = Helpers.ReturnHisOrHers(player, character);
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} utters nequaquam multus.";
 
                         HubContext.SendToClient(roomMessage, character.HubGuid);
@@ -120,7 +124,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (character != _target)
                 {
-                    var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
+ 
                     var roomMessage = $"{Helpers.ReturnName(_target, character, string.Empty)}'s  muscles shrink making them look weaker.";
 
                     HubContext.SendToClient(roomMessage, character.HubGuid);
@@ -151,8 +155,8 @@ namespace MIMWebClient.Core.Player.Skills
             }
 
             Score.ReturnScoreUI(_target);
-           
 
+            Player.SetState(attacker);
             _target = null;
             _taskRunnning = false;
 

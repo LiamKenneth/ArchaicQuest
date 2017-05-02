@@ -21,13 +21,20 @@ namespace MIMWebClient.Core.Player.Skills
 
         public static void StartInvis (Player player, Room room, string commandOptions = "")
         {
- 
+
             //Check if player has spell
             var hasSpell = Skill.CheckPlayerHasSkill(player, InvisAb().Name);
 
             if (hasSpell == false)
             {
                 HubContext.SendToClient("You don't know that spell.", player.HubGuid);
+                return;
+            }
+
+            var canDoSkill = Skill.CanDoSkill(player);
+
+            if (!canDoSkill)
+            {
                 return;
             }
 
@@ -202,13 +209,11 @@ namespace MIMWebClient.Core.Player.Skills
  
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
 
-                var excludePlayers = new List<string> {attacker.HubGuid};
  
                 foreach (var character in room.players)
                 {
                     if (character != attacker)
                     {
-                        var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
                         var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)} fades out of existence.";
 
                         HubContext.SendToClient(roomMessage, character.HubGuid);
@@ -249,7 +254,6 @@ namespace MIMWebClient.Core.Player.Skills
 
                 }
                
-
             }
             else
             {
@@ -260,11 +264,11 @@ namespace MIMWebClient.Core.Player.Skills
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
                 HubContext.broadcastToRoom(castingTextRoom, room.players, attacker.HubGuid, true);
 
-                _target.itemFlags.Add(Item.Item.ItemFlags.invis);
-
-             
+                _target.itemFlags.Add(Item.Item.ItemFlags.invis);          
 
             }
+
+            Player.SetState(attacker);
 
             _target = null;
             _taskRunnning = false;

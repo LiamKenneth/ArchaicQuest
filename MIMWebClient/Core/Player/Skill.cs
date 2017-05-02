@@ -201,5 +201,39 @@ namespace MIMWebClient.Core.Player
             return null;
         }
 
+        public static bool CanDoSkill(PlayerSetup.Player player)
+        {
+            if (player.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
+            {
+                HubContext.SendToClient("You can't do that while asleep.", player.HubGuid);
+
+                return false;
+            }
+
+            if (player.Status == PlayerSetup.Player.PlayerStatus.Ghost)
+            {
+                HubContext.SendToClient("You can't do that while dead.", player.HubGuid);
+
+                return false;
+            }
+
+            if (player.Status == PlayerSetup.Player.PlayerStatus.Dead)
+            {
+                HubContext.SendToClient("You can't do that while dead.", player.HubGuid);
+
+                return false;
+            }
+
+            if (player.Status == PlayerSetup.Player.PlayerStatus.Resting)
+            {
+                HubContext.SendToClient("You can't do that while resting.", player.HubGuid);
+
+                return false;
+            }
+
+
+            return true;
+        }
+
     }
 }

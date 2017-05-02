@@ -29,6 +29,14 @@ namespace MIMWebClient.Core.Player.Skills
                 HubContext.SendToClient("You don't know that spell.", player.HubGuid);
                 return;
             }
+
+            var canDoSkill = Skill.CanDoSkill(player);
+
+            if (!canDoSkill)
+            {
+                return;
+            }
+
             if (!_taskRunnning)
             {
 
@@ -94,19 +102,8 @@ namespace MIMWebClient.Core.Player.Skills
                
                 room.items.Add(magicalSpring);
 
-             
 
-            //incase player status has changed from busy
-            if (attacker.Status == Player.PlayerStatus.Busy)
-            {
-                attacker.Status = Player.PlayerStatus.Standing;
-            }
-            else
-            {
-                attacker.Status = Player.PlayerStatus.Busy;
-            }
-
-           
+            Player.SetState(attacker);
             _taskRunnning = false;
         }
 

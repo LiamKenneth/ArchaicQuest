@@ -31,6 +31,13 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
+            var canDoSkill = Skill.CanDoSkill(player);
+
+            if (!canDoSkill)
+            {
+                return;
+            }
+
             #region refactor
 
             string[] options = commandOptions.Split(' ');
@@ -119,7 +126,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 HubContext.SendToClient($"You grasp {article} {_target.name} between your hands which starts to shimmer a slight {_color} colour", player.HubGuid);
 
-                var playersInRoom = new List<Player>(room.players);
+ 
 
                 foreach (var character in room.players)
                 {
@@ -160,7 +167,7 @@ namespace MIMWebClient.Core.Player.Skills
                     {
                         if (character != player)
                         {
-                            var hisOrHer = Helpers.ReturnHisOrHers(player, character);
+ 
                             var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} 's hands start to glow as they begin chanting the Continual light spell";
 
                             HubContext.SendToClient(roomMessage, character.HubGuid);
@@ -228,7 +235,7 @@ namespace MIMWebClient.Core.Player.Skills
                 _target.itemFlags.Add(Item.Item.ItemFlags.glow);
 
             }
-
+            Player.SetState(attacker);
             _target = null;
             _taskRunnning = false;
 

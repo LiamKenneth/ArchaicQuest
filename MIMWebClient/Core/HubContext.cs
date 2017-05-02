@@ -136,9 +136,19 @@ namespace MIMWebClient.Core
             try
             {
 
+                var Player = Cache.getPlayer(playerId);
+
+                if (Player?.Target != null)
+                {
+                    SendToClient("You can't quit during combat.", playerId);
+                    return;
+                }
+
                 var oldRoom = room;
 
                 int playerIndex = room.players.FindIndex(x => x.HubGuid == playerId);
+
+
                 room.players.RemoveAt(playerIndex);
 
                 Cache.updateRoom(room, oldRoom);
@@ -150,7 +160,7 @@ namespace MIMWebClient.Core
                 {
 
 
-                    Save.UpdatePlayer(playerData);
+                    Save.UpdatePlayer(Player);
 
                     SendToClient("Gods take note of your progress", playerId);
                     SendToClient("See you soon!", playerId);
@@ -183,7 +193,7 @@ namespace MIMWebClient.Core
                 {
                     Date = DateTime.Now,
                     ErrorMessage = ex.InnerException.ToString(),
-                    MethodName = "KickIdlePlayers"
+                    MethodName = "Quit"
                 };
 
                 Save.LogError(log);

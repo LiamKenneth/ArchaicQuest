@@ -17,6 +17,8 @@ namespace MIMWebClient.Core.Player.Skills
 
         public static void StartMagicMissile(Player attacker, Room room, string target = "")
         {
+
+
             //Check if player has spell
             var hasSpell =  Skill.CheckPlayerHasSkill(attacker, MagicMissileAb().Name);
 
@@ -25,6 +27,16 @@ namespace MIMWebClient.Core.Player.Skills
                 HubContext.SendToClient("You don't know that spell.", attacker.HubGuid);
                 return;
             }
+
+
+            var canDoSkill = Skill.CanDoSkill(attacker);
+
+            if (!canDoSkill)
+            {
+                return;
+            }
+
+            attacker.Status = Player.PlayerStatus.Busy;
 
             var foundTarget = Skill.FindTarget(target, room);
 
@@ -139,7 +151,8 @@ namespace MIMWebClient.Core.Player.Skills
 
 
             _taskRunnning = false;
-            attacker.Status = Player.PlayerStatus.Fighting;
+            Score.ReturnScoreUI(attacker);
+            Player.SetState(attacker);
 
         }
 

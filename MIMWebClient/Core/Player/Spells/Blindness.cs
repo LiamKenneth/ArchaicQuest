@@ -28,6 +28,13 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
+            var canDoSkill = Skill.CanDoSkill(player);
+
+            if (!canDoSkill)
+            {
+                return;
+            }
+
             _target = Skill.FindTarget(target, room);
 
             //Fix issue if target has similar name to user and they use abbrivations to target them
@@ -155,15 +162,7 @@ namespace MIMWebClient.Core.Player.Skills
                 Score.ReturnScoreUI(_target);
 
 
-            //incase player status has changed from busy
-            if (attacker.Status == Player.PlayerStatus.Busy)
-            {
-                attacker.Status = Player.PlayerStatus.Standing;
-            }
-            else
-            {
-                attacker.Status = Player.PlayerStatus.Busy;
-            }
+            Player.SetState(attacker);
 
             _target = null;
             _taskRunnning = false;

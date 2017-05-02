@@ -204,13 +204,9 @@ namespace MIMWebClient.Core.Player.Skills
                 Score.ReturnScoreUI(_target);
             }
 
-            //incase player status has changed from busy
-            if (attacker.Status == Player.PlayerStatus.Busy)
-            {
-                attacker.Status = Player.PlayerStatus.Standing;
-            }
+            Score.ReturnScoreUI(attacker);
+            Player.SetState(attacker);
 
-            attacker.Status = Player.PlayerStatus.Busy;
             _target = null;
             _taskRunnning = false;
 

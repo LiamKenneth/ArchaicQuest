@@ -89,7 +89,7 @@ namespace MIMWebClient.Core.Update
         {
             while (true)
             {
-                await Task.Delay(5000);
+                await Task.Delay(60000);
                 Time.UpdateTIme();
 
                 EmoteMob();

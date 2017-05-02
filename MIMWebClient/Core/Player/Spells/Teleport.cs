@@ -20,6 +20,7 @@ namespace MIMWebClient.Core.Player.Skills
 
         public static void StartTeleport(Player player, Room room)
         {
+
             //Check if player has spell
             var hasSpell = Skill.CheckPlayerHasSkill(player, TeleporAb().Name);
 
@@ -29,7 +30,14 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
-        
+
+            var canDoSkill = Skill.CanDoSkill(player);
+
+            if (!canDoSkill)
+            {
+                return;
+            }
+
 
             if (!_taskRunnning)
             {
@@ -108,15 +116,9 @@ namespace MIMWebClient.Core.Player.Skills
                 Movement.Teleport(attacker, room, randomExitFroMRandomRoom);
 
 
-            
-            //incase player status has changed from busy
-            if (attacker.Status == Player.PlayerStatus.Busy)
-            {
-                attacker.Status = Player.PlayerStatus.Standing;
-            }
 
-            attacker.Status = Player.PlayerStatus.Busy;
-           
+            Player.SetState(attacker);
+
             _taskRunnning = false;
 
 
