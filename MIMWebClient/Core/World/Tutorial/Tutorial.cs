@@ -102,7 +102,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                     HubContext.SendToClient(
                         npc.Name +
-                        " says to you \"it's nothing special but it will help you. I belive the way to Ester is all north from here.\"",
+                        " says to you \"it's nothing special but it will help you. I believe the way to Ester is all north from here.\"",
                         player.HubGuid);
 
                     await Task.Delay(3000);
@@ -254,7 +254,7 @@ namespace MIMWebClient.Core.World.Tutorial
                     await Task.Delay(2000);
 
                     HubContext.SendToClient(
-                        "<p class='RoomExits'>[Hint] Type wear trousers and wear shirt or alternativily wear all</p>",
+                        "<p class='RoomExits'>[Hint] Type wear trousers and wear shirt or alternatively wear all</p>",
                         player.HubGuid);
 
                 }
@@ -470,7 +470,7 @@ namespace MIMWebClient.Core.World.Tutorial
                     if (playerInRoom.Status != PlayerSetup.Player.PlayerStatus.Standing)
 
                     {
-                        HubContext.SendToClient("You feel better as a wave of warth surrounds your body", player.HubGuid);
+                        HubContext.SendToClient("You feel better as a wave of warmth surrounds your body", player.HubGuid);
 
                         await Task.Delay(2000);
 

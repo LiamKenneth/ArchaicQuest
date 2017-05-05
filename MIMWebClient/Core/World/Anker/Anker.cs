@@ -378,7 +378,7 @@ namespace MIMWebClient.Core.World.Anker
             dagger.itemFlags.Add(Item.Item.ItemFlags.glow);
 
             dagger.description.look = "This is just a blunt dagger";
-            dagger.description.exam = "This is an extremly blunt dagger";
+            dagger.description.exam = "This is an extremely blunt dagger";
 
 
 
@@ -561,7 +561,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 areaId = 3,
                 title = "Square walk, outside the stables of the Red Lion",
-                description = "<p>This corner of Square walk gives access to the stables of the Red lion. Mainly used by travellers to house their mounts." +
+                description = "<p>This corner of Square walk gives access to the stables of the Red lion. Mainly used by travelers to house their mounts." +
                               "bits of hay and manure litter the northern entrance to the stables. Square walk continues south and east to the entrance of The Red Lion. </p>",
 
                 //Defaults
@@ -724,7 +724,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 areaId = 5,
                 title = "Square walk, south west of the centre",
-                description = "<p>This dirt track here leads north and curves here to the west. A latern has been placed on the corner patch of grass to the light at night. Wild flowers dot either side of the dusty path. In the distance towards the south you see the back of some houses.</p>",
+                description = "<p>This dirt track here leads north and curves here to the west. A lantern has been placed on the corner patch of grass to the light at night. Wild flowers dot either side of the dusty path. In the distance towards the south you see the back of some houses.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -1252,7 +1252,7 @@ namespace MIMWebClient.Core.World.Anker
                 title = "Metal Medley",
                 description = "<p>A shovel protrudes from a mountain of coal leaning against a large roaring forge of hot yellow flames. Sacks of raw materials and broken metalwork rest in the corner off to the left.</p>" +
 
-                              "<p> Not far from the forge is a large anvil and workbench. Approns, metal tongs, hammers, chisels and a sledge hammer rest on the table in easy reach of the anvil. Racks fill the eastern wall housing an assortment of swords, daggers and spears. The other side are suits of basic chain mail armour and various sizes of shields on display either side of the exit leading west to commerce corner.</p>",
+                              "<p> Not far from the forge is a large anvil and workbench. Aprons, metal tongs, hammers, chisels and a sledge hammer rest on the table in easy reach of the anvil. Racks fill the eastern wall housing an assortment of swords, daggers and spears. The other side are suits of basic chain mail armour and various sizes of shields on display either side of the exit leading west to commerce corner.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -1332,7 +1332,7 @@ namespace MIMWebClient.Core.World.Anker
                 Name = "Modo",
                 KnownByName = true,
                 Type = Player.PlayerTypes.Mob,
-                Description = "The owner of The Red Lion is a tall and intimidating appearance. This long-bearded man immediatly makes you feel uncomfortable. He does not seem to notice you.",
+                Description = "The owner of The Red Lion is a tall and intimidating appearance. This long-bearded man immediately makes you feel uncomfortable. He does not seem to notice you.",
                 Strength = 15,
                 Dexterity = 16,
                 Constitution = 16,
@@ -1389,7 +1389,7 @@ namespace MIMWebClient.Core.World.Anker
                     "hi",
                      "greetings",
                 },
-                Response = "Hello there to you too $playerName come, grab a seat and i'll get you a Beer"
+                Response = "Hello there to you too $playerName come, grab a seat and I'll get you a Beer"
             };
 
 
@@ -1509,7 +1509,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 areaId = 14,
                 title = "Stables of The Red Lion",
-                description = "Hay scatter the floor here with the occasional moud of manure, Several posts under a roof allow you to secure a horse here." +
+                description = "Hay scatter the floor here with the occasional mound of manure, Several posts under a roof allow you to secure a horse here." +
                               "To the east a small door leads in to the Red Lion. South leads out from the wide doors to Square walk.",
 
                 //Defaults
@@ -1754,7 +1754,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 18,
                 title = "The Village Hall, Elder Chamber",
                 description = "A grand wooden desk faces the entrance taking over most of the room." +
-                              " A large sword is attacheed to the wall above the desk. To the east a bookcase covers the wall filled with books of all sizes and colours." +
+                              " A large sword is attached to the wall above the desk. To the east a bookcase covers the wall filled with books of all sizes and colours." +
                               " A fabric cloth hangs on the western wall bearing the crest of Anker. Torches wither side of the door light the room.",
 
                 //Defaults

@@ -44,7 +44,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 Name = "Mortem",
                 KnownByName = true,
                 Type = PlayerSetup.Player.PlayerTypes.Mob,
-                Description = "A blue cape of Tyr hangs down Mortems back who is covered in full platemail except for his heads and hands. A golden mace hangs upside down from his belt.",
+                Description = "A blue cape of Tyr hangs down Mortems back who is covered in full plate mail except for his heads and hands. A golden mace hangs upside down from his belt.",
                 Strength = 14,
                 Dexterity = 16,
                 Constitution = 18,

@@ -103,7 +103,7 @@ namespace MIMWebClient.Core.Update
 
         public static async Task UpdateRoom()
         {
-            await Task.Delay(5000);
+            await Task.Delay(300000);
 
             HubContext.getHubContext.Clients.All.addNewMessageToPage("updating room");
             RestoreVitals.UpdateRooms();
@@ -121,7 +121,7 @@ namespace MIMWebClient.Core.Update
                 {
                     if (player.Value != null && player.Value.LastCommandTime.AddMinutes(10) < DateTime.UtcNow)
                     {
-                        HubContext.SendToClient("You disapear in the void", player.Value.HubGuid);
+                        HubContext.SendToClient("You disappear in the void", player.Value.HubGuid);
 
                         var room =
                             MIMHub._AreaCache.FirstOrDefault(
@@ -133,7 +133,7 @@ namespace MIMWebClient.Core.Update
                         {
                             foreach (var players in room.Value.players.ToList())
                             {
-                                HubContext.broadcastToRoom(player.Value.Name + " disapears in the void",
+                                HubContext.broadcastToRoom(player.Value.Name + " disappears in the void",
                                     room.Value.players,
                                     player.Value.HubGuid, true);
                             }
