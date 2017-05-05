@@ -84,8 +84,17 @@ namespace MIMWebClient.Core.Events
                 room.fighting = new List<string>();
             }
 
-            room.fighting.Add(attacker.HubGuid);
-            room.fighting.Add(defender.HubGuid);
+            if (attacker.HubGuid != null)
+            {
+                room.fighting.Add(attacker.HubGuid);
+            }
+
+            if (defender.HubGuid != null)
+            {
+                room.fighting.Add(defender.HubGuid);
+            }
+
+            
 
         }
 
@@ -126,6 +135,7 @@ namespace MIMWebClient.Core.Events
             {
                 HubContext.SendToClient("No one here", attacker.HubGuid);
                 attacker.Status = Player.PlayerStatus.Standing;
+
                 return null;
             }
 
@@ -453,7 +463,16 @@ namespace MIMWebClient.Core.Events
 
                         HubContext.SendToClient(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value + " you [" + dam + "]", defender.HubGuid);
 
-                        HubContext.SendToAllExcept(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value + " " + Helpers.ReturnName(defender, attacker, null), room.fighting, room.players);
+                        
+
+                        foreach (var player in room.players)
+                        {
+                            if (player != attacker && player != defender)
+                            {
+                                HubContext.SendToClient(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value + " " + Helpers.ReturnName(defender, attacker, null), player.HubGuid);
+                            }
+                        }
+
 
                         defender.HitPoints -= dam;
 
@@ -479,7 +498,19 @@ namespace MIMWebClient.Core.Events
 
                         HubContext.SendToClient(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key + " misses you ", defender.HubGuid);
 
-                        HubContext.SendToAllExcept(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key + " misses " + Helpers.ReturnName(defender, attacker, null), room.fighting, room.players);
+                        foreach (var player in room.players)
+                        {
+                            if (player != attacker && player != defender)
+                            {
+                                HubContext.SendToClient(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key + " misses " + Helpers.ReturnName(defender, attacker, null), player.HubGuid);
+                            }
+                        }
+
+                      
+
+                    
+
+                     
 
                     }
                 }
@@ -597,12 +628,19 @@ namespace MIMWebClient.Core.Events
             if (defender.HitPoints <= 0)
             {
 
-                HubContext.SendToAllExcept(defender.Name + " dies ", room.fighting, room.players);
+                foreach (var player in room.players)
+                {
+                    if (player != defender)
+                    {
+                        HubContext.SendToClient(defender.Name + " dies ", player.HubGuid);
+                    }
+                    else
+                    {
+                        HubContext.SendToClient("You die", defender.HubGuid);
+                    }
+                }
 
-
-                HubContext.SendToClient("You die", defender.HubGuid);
-
-                HubContext.SendToClient(defender.Name + " dies", attacker.HubGuid);
+              
 
                 defender.Target = null;
 
@@ -627,7 +665,7 @@ namespace MIMWebClient.Core.Events
 
                 var oldRoom = room;
                 room.items.Add(defenderCorpse);
-                room.corpses.Add(defender);
+               room.corpses.Add(defender);
 
                 if (defender.Type == Player.PlayerTypes.Mob || string.IsNullOrEmpty(defender.HubGuid))
                 {
@@ -666,8 +704,49 @@ namespace MIMWebClient.Core.Events
                     Score.UpdateUiRoom(player, roomdata);
                 }
 
-                
+                if (attacker.HubGuid != null)
+                {
+                    room.fighting.Remove(attacker.HubGuid);
+                }
 
+                if (defender.HubGuid != null)
+                {
+                    room.fighting.Remove(defender.HubGuid);
+                }
+
+                //remove followers
+
+                if (defender.Following != null)
+                {
+
+                    if (defender.Followers.Count > 0)
+                    {
+                        foreach (var follower in defender.Followers)
+                        {
+                            if (follower.HubGuid != null)
+                            {
+                                HubContext.SendToClient("You stop following " + defender.Name, follower.HubGuid);
+                            }
+                           
+                        }
+                    }
+                   
+                    defender.Followers = null;
+                    defender.Following = null;
+
+                }
+
+                // check if defender is following?
+                if (attacker.Followers?.FirstOrDefault(x => x.Equals(defender)) != null)
+                {
+                    attacker.Followers.Remove(defender);
+
+                    if (attacker.HubGuid != null)
+                    {
+                        HubContext.SendToClient(defender.Name + " stops following you", attacker.HubGuid);
+                    }
+                   
+                }
             }
 
         }

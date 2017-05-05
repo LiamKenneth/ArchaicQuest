@@ -1132,10 +1132,10 @@ namespace MIMWebClient.Core.Events
             {
                 foundExit = FindItem.Exit(room.exits, nth, userInput);
 
-                if (foundExit.canLock == false)
+                if (foundExit?.canLock == false)
                 {
 
-                    HubContext.SendToClient("You can't lock that", player.HubGuid);
+                    HubContext.SendToClient("You can't unlock that", player.HubGuid);
 
                     return;
                 }
@@ -1146,7 +1146,7 @@ namespace MIMWebClient.Core.Events
 
                 if (foundItem.canLock == false)
                 {
-                    HubContext.SendToClient("You can't lock that", player.HubGuid);
+                    HubContext.SendToClient("You can't unlock that", player.HubGuid);
 
                     return;
                 }

@@ -103,7 +103,7 @@ namespace MIMWebClient.Core.Update
 
                                 if (corpse.Type.Equals(Player.PlayerTypes.Player))
                                 {
-                                    return;
+                                    continue;
                                 }
 
                                 var mobRoomOrigin =
@@ -115,7 +115,7 @@ namespace MIMWebClient.Core.Update
                                     x.area == mobRoomOrigin.area && x.areaId == mobRoomOrigin.areaId &&
                                     x.region == mobRoomOrigin.region);
 
-                                var originalMob = originalArea.mobs.Find(x => x.NPCId == corpse.NPCId);
+                                var originalMob = originalArea.mobs.Find(x => x == corpse);
 
 
 
@@ -185,7 +185,7 @@ namespace MIMWebClient.Core.Update
                 {
                     Date = DateTime.Now,
                     ErrorMessage = ex.InnerException.ToString(),
-                    MethodName = "KickIdlePlayers"
+                    MethodName = "Room update fucked"
                 };
 
                 Save.LogError(log);
@@ -199,6 +199,10 @@ namespace MIMWebClient.Core.Update
         {
             try
             {
+                if (player == null)
+                {
+                    return;
+                }
 
                 if (player.HitPoints <= player.MaxHitPoints)
                 {
@@ -233,6 +237,11 @@ namespace MIMWebClient.Core.Update
 
                     if (player.Type == Player.PlayerTypes.Player)
                     {
+                        if (player.HubGuid == null)
+                        {
+                            return;
+                        }
+
                         context.Clients.Client(player.HubGuid).updateStat(player.HitPoints, player.MaxHitPoints, "hp");
                     }
 
@@ -241,6 +250,7 @@ namespace MIMWebClient.Core.Update
             }
             catch (Exception ex)
             {
+
                 var log = new Error.Error
                 {
                     Date = DateTime.Now,
@@ -259,6 +269,13 @@ namespace MIMWebClient.Core.Update
 
             try
             {
+
+                if (player == null)
+                {
+                    return;
+                }
+
+
                 if (player.ManaPoints <= player.MaxHitPoints)
                 {
 
@@ -291,6 +308,11 @@ namespace MIMWebClient.Core.Update
 
                     if (player.Type == Player.PlayerTypes.Player)
                     {
+                        if (player.HubGuid == null)
+                        {
+                            return;
+                        }
+
                         context.Clients.Client(player.HubGuid)
                             .updateStat(player.ManaPoints, player.MaxManaPoints, "mana");
 
@@ -316,7 +338,7 @@ namespace MIMWebClient.Core.Update
         {
             try
             {
-                if (player.Affects == null)
+                if (player?.Affects == null)
                 {
                     return;
                 }
@@ -391,6 +413,11 @@ namespace MIMWebClient.Core.Update
 
             try
             {
+                if (player == null)
+                {
+                    return;
+                }
+
                 if (player.MovePoints <= player.MaxMovePoints)
                 {
 
@@ -423,6 +450,10 @@ namespace MIMWebClient.Core.Update
 
                     if (player.Type == Player.PlayerTypes.Player)
                     {
+                        if (player.HubGuid == null)
+                        {
+                            return;
+                        }
 
                         context.Clients.Client(player.HubGuid)
                             .updateStat(player.MovePoints, player.MaxMovePoints, "endurance");
