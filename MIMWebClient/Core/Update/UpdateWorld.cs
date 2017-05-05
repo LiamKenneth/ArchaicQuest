@@ -104,8 +104,7 @@ namespace MIMWebClient.Core.Update
         public static async Task UpdateRoom()
         {
             await Task.Delay(300000);
-
-            HubContext.getHubContext.Clients.All.addNewMessageToPage("updating room");
+ 
             RestoreVitals.UpdateRooms();
 
             CleanRoom();

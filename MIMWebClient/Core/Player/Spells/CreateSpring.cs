@@ -42,7 +42,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (player.ManaPoints < CreateSpringAb().ManaCost)
                 {
-                    HubContext.SendToClient("You fail to concerntrate due to lack of mana.", player.HubGuid);
+                    HubContext.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
 
                     return;
                 }
@@ -133,7 +133,7 @@ namespace MIMWebClient.Core.Player.Skills
             var help = new Help
             {
                 Syntax = skill.Syntax,
-                HelpText = "Create spring conjuresa mystical fountain from which you may drink from.",
+                HelpText = "Create spring conjures a mystical fountain from which you may drink from.",
                 DateUpdated = "27/04/2017"
 
             };

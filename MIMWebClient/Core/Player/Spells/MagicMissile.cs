@@ -66,11 +66,11 @@ namespace MIMWebClient.Core.Player.Skills
 
                 Score.UpdateUiPrompt(attacker);
 
-                HubContext.SendToClient("A red ball begins swirling between your hands as you begin chanting magic missle", attacker.HubGuid);
+                HubContext.SendToClient("A red ball begins swirling between your hands as you begin chanting magic missile", attacker.HubGuid);
 
-                HubContext.SendToClient($"A red ball begins swirling between {Helpers.ReturnName(attacker, attacker.Target, null)} 's hands as they begin chanting magic missle", attacker.HubGuid, attacker.Target.HubGuid, false, true);
+                HubContext.SendToClient($"A red ball begins swirling between {Helpers.ReturnName(attacker, attacker.Target, null)} 's hands as they begin chanting magic missile", attacker.HubGuid, attacker.Target.HubGuid, false, true);
 
-                HubContext.broadcastToRoom($"A red ball begins swirling between {Helpers.ReturnName(attacker, attacker.Target, null)} 's hands as they begin chanting magic missle", room.players, attacker.HubGuid, true);
+                HubContext.broadcastToRoom($"A red ball begins swirling between {Helpers.ReturnName(attacker, attacker.Target, null)} 's hands as they begin chanting magic missile", room.players, attacker.HubGuid, true);
 
                 Task.Run(() => DoMagicMissile(attacker, room));
 
@@ -83,7 +83,7 @@ namespace MIMWebClient.Core.Player.Skills
                     return;
                 }
 
-                HubContext.SendToClient("You are trying to cast magic missle", attacker.HubGuid);
+                HubContext.SendToClient("You are trying to cast magic missile", attacker.HubGuid);
 
             }
 

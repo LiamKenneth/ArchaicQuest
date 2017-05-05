@@ -50,7 +50,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (player.ManaPoints < FaerieFireAB().ManaCost)
                 {
-                    HubContext.SendToClient("You fail to concerntrate due to lack of mana.", player.HubGuid);
+                    HubContext.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
 
                     return;
                 }
@@ -98,8 +98,8 @@ namespace MIMWebClient.Core.Player.Skills
             {
                 Name = "Faerie Fire",
                 Duration = attacker.Level + 5,
-                AffectLossMessagePlayer = "The Faerie fire surrounding you desapates.",
-                AffectLossMessageRoom = $" stops glowing as the Faerie fire desapates."
+                AffectLossMessagePlayer = "The Faerie fire surrounding you decapitates.",
+                AffectLossMessageRoom = $" stops glowing as the Faerie fire decapitates."
             };
 
 

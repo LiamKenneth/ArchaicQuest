@@ -288,12 +288,12 @@ pre {
 
 .showExit {
     position: relative;
- 
     background-size: contain;
 
     svg {
-            height: 210px;
-    margin-left: 19px;
+        height: 210px;
+        margin: 0 auto;
+        width: 100%;
     }
 }
 
@@ -304,11 +304,13 @@ pre {
 .progress {
     background: #ccc !important;
     text-align: center;
-    color: #111!important;
-    margin-bottom:5px;
+    color: #111 !important;
+    margin-bottom: 5px;
+
     span, div {
-         color: #111!important;
+        color: #111 !important;
     }
+
     div.statInfo {
         position: absolute;
         top: 0;
@@ -327,4 +329,6 @@ pre {
 }
 
 
-.northNode, .nwNode, .neNode, .westNode, .eastNode, .swNode, .southNode, .seNode {display:none;}
+.northNode, .nwNode, .neNode, .westNode, .eastNode, .swNode, .southNode, .seNode {
+    display: none;
+}

@@ -209,7 +209,8 @@ pre {
   background-size: contain; }
   .showExit svg {
     height: 210px;
-    margin-left: 19px; }
+    margin: 0 auto;
+    width: 100%; }
 
 /* perfect-scrollbar v0.6.13 */
 .ps-container {

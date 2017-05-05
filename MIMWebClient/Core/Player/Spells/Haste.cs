@@ -52,7 +52,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (player.ManaPoints < HasteAb().ManaCost)
                 {
-                    HubContext.SendToClient("You fail to concerntrate due to lack of mana.", player.HubGuid);
+                    HubContext.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
 
                     return;
                 }

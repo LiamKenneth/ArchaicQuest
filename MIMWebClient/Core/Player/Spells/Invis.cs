@@ -115,7 +115,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (_target.itemFlags.Contains(Item.Item.ItemFlags.invis))
                 {
-                    HubContext.SendToClient("This item is already inivisble", player.HubGuid);
+                    HubContext.SendToClient("This item is already invisible", player.HubGuid);
                     return;
                 }
 
@@ -225,7 +225,7 @@ namespace MIMWebClient.Core.Player.Skills
                 {
                     Name = "Invis",
                     Duration = InvisAb().Duration * attacker.Level,
-                    AffectLossMessagePlayer = "You are no longer invisbile.",
+                    AffectLossMessagePlayer = "You are no longer invisible.",
                     AffectLossMessageRoom = "fades into existence."
                 };
                  
