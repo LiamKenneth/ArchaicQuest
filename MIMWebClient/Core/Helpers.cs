@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MIMWebClient.Core.Events;
 
 namespace MIMWebClient.Core
 {
@@ -117,42 +118,56 @@ namespace MIMWebClient.Core
         /// <returns></returns>
         public static string ReturnName(PlayerSetup.Player player, PlayerSetup.Player target, string itemName)
         {
-
-            if (player == null && target == null)
+            try
             {
 
-                var itemResult = AvsAnLib.AvsAn.Query(itemName).Article;
+                if (player == null && target == null)
+                {
+
+                    var itemResult = AvsAnLib.AvsAn.Query(itemName).Article;
 
 
-                return FirstLetterToUpper(itemResult + " " + itemName);
-            }
+                    return FirstLetterToUpper(itemResult + " " + itemName);
+                }
 
-            //TODO: ah a bug, if you have detects it will always say someone
-            if (player.invis == true && target.DetectInvis == false || player.hidden == true && target.DetectHidden == false)
-            {
-                return "Someone";
-            }
+                //TODO: ah a bug, if you have detects it will always say someone
+                if (player.invis == true && target.DetectInvis == false ||
+                    player.hidden == true && target.DetectHidden == false)
+                {
+                    return "Someone";
+                }
 
 
-            string name;
+                string name;
 
-            if (player.KnownByName)
+                if (player.KnownByName)
                 {
                     name = player.Name;
                 }
                 else
                 {
-                var result = AvsAnLib.AvsAn.Query(player.Name).Article;
-               
-                name = result + " " + player.Name;
+                    var result = AvsAnLib.AvsAn.Query(player.Name).Article;
+
+                    name = result + " " + player.Name;
                 }
 
 
                 return name;
 
-           
 
+            }
+            catch (Exception ex)
+            {
+                var log = new Error.Error
+                {
+                    Date = DateTime.Now,
+                    ErrorMessage = ex.InnerException.ToString(),
+                    MethodName = "return name"
+                };
 
+                Save.LogError(log);
+            }
+            return string.Empty;
         }
  
         /// <summary>

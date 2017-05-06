@@ -374,6 +374,18 @@ namespace MIMWebClient.Core.Room
         /// <param name="direction"></param>
         public static void Move(Player player, Room room, string direction)
         {
+            if (player.Status == Player.PlayerStatus.Fighting)
+            {
+                HubContext.SendToClient("You are fighting! Try fleeing.", player.HubGuid);
+                return;
+            }
+
+            if (player.Status == Player.PlayerStatus.Resting || player.Status == Player.PlayerStatus.Sleeping)
+            {
+                HubContext.SendToClient("You need to get up before you move.", player.HubGuid);
+                return;
+            }
+
 
             var isBlind = player.Affects?.FirstOrDefault(
                           x => x.Name.Equals("Blindness", StringComparison.CurrentCultureIgnoreCase)) != null;

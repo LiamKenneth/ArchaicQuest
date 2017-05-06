@@ -3,7 +3,7 @@
     //================================================================================
     // Setup the auto-generated proxy for the hub.
     //================================================================================
-    $.connection.hub.url = "/dev/signalr";
+    $.connection.hub.url = "/signalr";
 
     var chat = $.connection.mIMHub;
     var client = chat.client;
@@ -652,7 +652,7 @@
  
             $.ajax({
                     type: "get",
-                    url: "/dev/Home/Generatename"
+                    url: "/Home/Generatename"
                 })
                 .done(function(data) {
 

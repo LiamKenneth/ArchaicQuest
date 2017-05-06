@@ -35,6 +35,11 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
+            if (string.IsNullOrEmpty(target) && player.Target != null)
+            {
+                target = player.Target.Name;
+            }
+
             _target = Skill.FindTarget(target, room);
 
             //Fix issue if target has similar name to user and they use abbrivations to target them
@@ -50,7 +55,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (player.ManaPoints < BlindAb().ManaCost)
                 {
-                    HubContext.SendToClient("You fail to concerntrate due to lack of mana.", player.HubGuid);
+                    HubContext.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
 
                     return;
                 }
@@ -102,10 +107,14 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
-             //already blind check
-                if (_target.MovePoints >= _target.MaxMovePoints)
+            //already blind check
+            var isBlind = _target.Affects?.FirstOrDefault(
+                    x => x.Name.Equals("Blindness", StringComparison.CurrentCultureIgnoreCase)) != null;
+
+ 
+                if (isBlind)
                 {
-                    HubContext.SendToClient("They are already fully refreshed.", attacker.HubGuid);
+                    HubContext.SendToClient("They are already Blind.", attacker.HubGuid);
                 }
                 else
                 {

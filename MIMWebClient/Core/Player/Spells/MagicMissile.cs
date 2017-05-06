@@ -55,10 +55,18 @@ namespace MIMWebClient.Core.Player.Skills
                 {
                     HubContext.SendToClient("You clasp your hands together but fail to form any energy", attacker.HubGuid);
 
-                    var excludePlayerInBroadcast = new List<string> {attacker.HubGuid};
+               
+                    foreach (var character in room.players)
+                    {
 
-                    HubContext.SendToAllExcept($"{Helpers.ReturnName(attacker, attacker.Target, null)} clasps {Helpers.ReturnHisOrHers(attacker, attacker.Target)} hands together but fails to form any energy", excludePlayerInBroadcast, room.players);
-                    
+                        if (character != attacker)
+                        {
+                            HubContext.SendToClient($"{Helpers.ReturnName(attacker, attacker.Target, null)} clasps {Helpers.ReturnHisOrHers(attacker, attacker.Target)} hands together but fails to form any energy", attacker.HubGuid);
+                        }
+                       
+                    }
+
+                    Player.SetState(attacker);
                     return;
                 }
 
@@ -77,6 +85,8 @@ namespace MIMWebClient.Core.Player.Skills
             }
             else
             {
+                Player.SetState(attacker);
+
                 if (attacker.Target == null)
                 {
                     HubContext.SendToClient("Cast magic missile at whom?", attacker.HubGuid);
