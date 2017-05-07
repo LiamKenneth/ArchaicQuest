@@ -124,6 +124,7 @@ namespace MIMWebClient.Core
                 {"lock", () => ManipulateObject.LockItem(room, playerData, commandOptions, commandKey)},
                 {"open", () => ManipulateObject.Open(room, playerData, commandOptions, commandKey)},
                 {"close", () => ManipulateObject.Close(room, playerData, commandOptions, commandKey)},
+                {"drink", () => ManipulateObject.Drink(room, playerData, commandOptions, commandKey)},
                 {"help", () => Help.ShowHelp(commandOptions, playerData)},
                 {"time", Update.Time.ShowTime},
                 {"clock", Update.Time.ShowTime},
@@ -140,6 +141,7 @@ namespace MIMWebClient.Core
                 {"who", () => Who.Connected(playerData)},
                 {"affects", () => Affect.Show(playerData)},
                 {"follow", () => Follow.FollowThing(playerData, room, commandOptions) }
+               
             };
  
 

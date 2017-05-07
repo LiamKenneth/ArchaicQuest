@@ -246,7 +246,12 @@ namespace MIMWebClient.Core.Events
         }
 
        
-
+        /// <summary>
+        /// Finds the defending player or NPC
+        /// </summary>
+        /// <param name="room">Current room</param>
+        /// <param name="defender">Player or NPC name</param>
+        /// <returns></returns>
         public static Player FindTarget(Room room, string defender)
         {
             Player target = room.players.FirstOrDefault(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
