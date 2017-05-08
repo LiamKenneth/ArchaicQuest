@@ -6187,3 +6187,6 @@ pre {
 .northNode, .nwNode, .neNode, .westNode, .eastNode, .swNode, .southNode, .seNode {
   display: none; }
 
+#sendmessage {
+  color: #000; }
+
