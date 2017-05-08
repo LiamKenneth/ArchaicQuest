@@ -902,6 +902,7 @@ namespace MIMWebClient.Core.World.Anker
                 Region = "Anker",
                 Area = "Anker",
                 AreaId = 7,
+                Type = Player.PlayerTypes.Mob,
                 Recall = new Recall
                 {
                     Region = "Anker",

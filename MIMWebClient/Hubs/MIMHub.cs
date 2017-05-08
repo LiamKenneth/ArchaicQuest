@@ -231,30 +231,33 @@ namespace MIMWebClient.Hubs
         {
 
             //Creates and saves player
-            PlayerData = new Player();
+            PlayerData = new Player
+            {
+                HubGuid = id,
+                Name = name,
+                Email = email,
+                Password = password,
+                Gender = gender,
+                Race = race,
+                SelectedClass = selectedClass,
+                Strength = strength,
+                Constitution = constitution,
+                Dexterity = dexterity,
+                Wisdom = wisdom,
+                Intelligence = intelligence,
+                Charisma = charisma,
+                MaxStrength = strength,
+                MaxConstitution = constitution,
+                MaxDexterity = dexterity,
+                MaxWisdom = wisdom,
+                MaxIntelligence = intelligence,
+                MaxCharisma = charisma,
+                intoxicationMaxLevel = constitution,
+                Type = Player.PlayerTypes.Player,
+                JoinedDate = DateTime.UtcNow,
+                LastCommandTime = DateTime.UtcNow
+            };
 
-            PlayerData.HubGuid = id;
-            PlayerData.Name = name;
-            PlayerData.Email = email;
-            PlayerData.Password = password;
-            PlayerData.Gender = gender;
-            PlayerData.Race = race;
-            PlayerData.SelectedClass = selectedClass;
-            PlayerData.Strength = strength;
-            PlayerData.Constitution = constitution;
-            PlayerData.Dexterity = dexterity;
-            PlayerData.Wisdom = wisdom;
-            PlayerData.Intelligence = intelligence;
-            PlayerData.Charisma = charisma;
-            PlayerData.MaxStrength = strength;
-            PlayerData.MaxConstitution = constitution;
-            PlayerData.MaxDexterity = dexterity;
-            PlayerData.MaxWisdom = wisdom;
-            PlayerData.MaxIntelligence = intelligence;
-            PlayerData.MaxCharisma = charisma;
-
-            PlayerData.JoinedDate = DateTime.UtcNow;
-            PlayerData.LastCommandTime = DateTime.UtcNow;
 
             //add skills to player
             var classSelected = Core.Player.Classes.PlayerClass.ClassList()

@@ -57,7 +57,7 @@ namespace MIMWebClient.Core.PlayerSetup
         public DateTime LastCommandTime;
 
         [BsonElement("ty")]
-        public PlayerTypes Type;
+        public PlayerTypes Type = PlayerTypes.Mob;
 
         [BsonElement("e")]
         public string Email;
@@ -268,77 +268,106 @@ namespace MIMWebClient.Core.PlayerSetup
         public bool DetectHidden= false;
 
         [BsonElement("poi")]
-        public bool poinsoned = false;
+        public bool poisoned = false;
+
+
+        [BsonElement("itl")]
+        public int intoxicationLevel = 0;
+
+        [BsonElement("itml")]
+        //Equal to con
+        public int intoxicationMaxLevel = 12; 
+
 
         [BsonElement("qlog")]
         public List<Quest> QuestLog;
 
         //NPC Properties
         [BsonElement("ne")]
+        [BsonIgnoreIfNull]
         public List<string> Emotes;
 
         //NPC Properties
         [BsonElement("nid")]
+        [BsonIgnoreIfNull]
         public Guid NPCId;
 
         //NPC Properties
         [BsonElement("nr")]
+        [BsonIgnoreIfNull]
         public bool Roam;
 
         //NPC Properties
         [BsonElement("na")]
+        [BsonIgnoreIfNull]
         public bool Aggro;
 
         //NPC Properties
         [BsonElement("ng")]
+        [BsonIgnoreIfNull]
         public bool Greet = false;
         //NPC Properties
 
         [BsonElement("ngm")]
+        [BsonIgnoreIfNull]
         public string GreetMessage = String.Empty;
 
         //NPC Properties
         [BsonElement("ns")]
+        [BsonIgnoreIfNull]
         public bool Shop;
 
         [BsonElement("nsm")]
+        [BsonIgnoreIfNull]
         public string sellerMessage;
 
         //NPC Properties
         [BsonElement("nsi")]
+        [BsonIgnoreIfNull]
         public List<Item> itemsToSell;
 
         //NPC Properties
         [BsonElement("ndia")]
+        [BsonIgnoreIfNull]
         public List<Responses> Dialogue;
 
         //NPC Properties
         [BsonElement("ndiaT")]
+        [BsonIgnoreIfNull]
         public List<DialogTree> DialogueTree;
 
         [BsonElement("nqu")]
+        [BsonIgnoreIfNull]
         public List<Quest> Quest;
 
         //NPC Properties
         [BsonElement("nt")]
+        [BsonIgnoreIfNull]
         public bool Trainer;
 
         //NPC Properties
         [BsonElement("ngu")]
+        [BsonIgnoreIfNull]
         public bool Guard;
 
         [BsonElement("eoe")]
+        [BsonIgnoreIfNull]
         public string EventOnEnter;
 
-        [BsonElement("eow")] public string EventWake;
+        [BsonElement("eow")]
+        [BsonIgnoreIfNull]
+        public string EventWake;
 
+        [BsonIgnoreIfNull]
         [BsonElement("eoc")]
         public Dictionary<string, string> EventOnComunicate;
 
         [BsonElement("eowe")]
+        [BsonIgnoreIfNull]
         public string EventWear { get; set; }
 
         [BsonElement("nch")]
+        [BsonIgnoreIfNull]
         public bool NewbieChannel = true;
 
         [BsonElement("gch")]

@@ -103,11 +103,19 @@ namespace MIMWebClient.Core.Update
 
         public static async Task UpdateRoom()
         {
-            await Task.Delay(300000);
- 
-            RestoreVitals.UpdateRooms();
+            await Task.Delay(5000);
 
-            CleanRoom();
+            try
+            {
+                RestoreVitals.UpdateRooms();
+
+                CleanRoom();
+
+            }
+            catch (Exception ex)
+            {
+                
+            }
         }
 
         public static async Task KickIdlePlayers()

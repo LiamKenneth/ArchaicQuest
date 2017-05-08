@@ -101,7 +101,8 @@ namespace MIMWebClient.Core.Update
                             foreach (var corpse in room.corpses.ToList())
                             {
 
-                                if (corpse.Type.Equals(Player.PlayerTypes.Player))
+
+                            if (corpse.Type.Equals(Player.PlayerTypes.Player))
                                 {
                                     continue;
                                 }
@@ -115,15 +116,21 @@ namespace MIMWebClient.Core.Update
                                     x.area == mobRoomOrigin.area && x.areaId == mobRoomOrigin.areaId &&
                                     x.region == mobRoomOrigin.region);
 
-                                var originalMob = originalArea.mobs.Find(x => x == corpse);
+                                if (originalArea != null)
+                                {
 
+                                // potential bug with mobs that have the same name but only one carries an item
+                                // finding the origianl mob will probbaly match for one but not the other so the
+                                // mob with the other item never gets loaded.
+                                // potential way round it. random loot drops for mobs that don't have a name and are genric ie. rat
+                                // mobs like village idiot have set items
+                                    var originalMob = originalArea.mobs.Find(x => x.Name == corpse.Name);
 
+                                    room.items.Remove(room.items.Find(x => x.name.Contains(originalMob.Name)));
+                                    room.corpses.Remove(room.corpses.Find(x => x.Name.Equals(originalMob.Name)));
 
-                                room.items.Remove(room.items.Find(x => x.name.Contains(originalMob.Name)));
-                                room.corpses.Remove(room.corpses.Find(x => x.Name.Equals(originalMob.Name)));
-
-                                room.mobs.Add(originalMob);
-
+                                    room.mobs.Add(originalMob);
+                                }
                             }
 
                         }
