@@ -1832,7 +1832,7 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
-            if (foundItem.waterContainerSize > 0)
+            if (foundItem.waterContainerAmount > 0)
             {
                 var result = AvsAnLib.AvsAn.Query(foundItem.name);
                 string article = result.Article;
@@ -1840,6 +1840,8 @@ namespace MIMWebClient.Core.Events
                 HubContext.SendToClient(
                     $"You take a gulp of {foundItem.waterContainerLiquid} from {article} {foundItem.name}.",
                     player.HubGuid);
+
+                foundItem.waterContainerAmount--;
             }
             else
             {

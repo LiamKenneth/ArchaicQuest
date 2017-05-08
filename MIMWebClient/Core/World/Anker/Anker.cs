@@ -189,7 +189,7 @@ namespace MIMWebClient.Core.World.Anker
 
             bucketObj.container = true;
             bucketObj.waterContainer = true;
-            bucketObj.waterContainerSize = 15;
+            bucketObj.waterContainerAmount = 15;
             bucketObj.containerItems = new List<Item.Item>();
             bucketObj.isHiddenInRoom = true;
             bucketObj.name = "bucket";

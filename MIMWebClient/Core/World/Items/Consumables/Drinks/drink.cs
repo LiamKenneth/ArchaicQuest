@@ -25,7 +25,7 @@ namespace MIMWebClient.Core.World.Items.Consumables.Drinks
                     worth = 3
                 },
                 waterContainer = true,
-                waterContainerSize = 4,
+                waterContainerAmount = 4,
                 description = new Description()
                 {
                     exam = "This water skin is a thin hard oval shape covered in leather",

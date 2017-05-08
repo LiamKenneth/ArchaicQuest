@@ -19,7 +19,8 @@ namespace MIMWebClient.Core.World.Items.Consumables.Drinks
                 stuck = true,             
                 location = Item.Item.ItemLocation.Room,
                 waterContainer = true,
-                waterContainerSize = 999,
+                waterContainerAmount = 999,
+                waterContainerMaxAmount = 999,
                 description = new Description()
                 {
                     exam = "A magicial spring shoots water up in the air.",

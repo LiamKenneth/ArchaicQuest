@@ -45,9 +45,9 @@ namespace MIMWebClient.Core.Item
         /// <summary>
         /// How many times a player can drink from it
         /// </summary>
-        public int waterContainerSize { get; set; }
-        public int waterContainerMaxSize { get; set; }
-        public string waterContainerLiquid { get; set; } = "Water";
+        public int waterContainerAmount { get; set; }
+        public int waterContainerMaxAmount { get; set; }
+        public string waterContainerLiquid { get; set; } = "water";
         public bool locked { get; set; }
         /// <summary>
         /// Cannont remove item
