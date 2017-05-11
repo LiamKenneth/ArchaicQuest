@@ -1,31 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MIMWebClient.Core.Mob.Events;
 
 namespace MIMWebClient.Core
 {
-    using System.Collections.Concurrent;
-
     using MIMWebClient.Core.Events;
     using MIMWebClient.Core.Player;
     using MIMWebClient.Core.Room;
-
-    using Newtonsoft.Json.Linq;
-    using System.Threading;
-
     using MIMWebClient.Core.Player.Skills;
 
     public class Command
     {
 
-        public static List<string> _Buffer = new List<string>();
- 
-
-
-        //public static Dictionary<string, Action> commandList { get; set; }
+        /// <summary>
+        /// Command list for the game
+        /// </summary>
+        /// <param name="commandOptions">Everything after the 1st occurance of a space</param>
+        /// <param name="commandKey">The string before the 1st occurance of a space</param>
+        /// <param name="playerData">Player Data</param>
+        /// <param name="room">Current room</param>
+        /// <returns>Returns Dictionary of commands</returns>
         public static Dictionary<string, Action> Commands(string commandOptions,string commandKey,PlayerSetup.Player playerData,Room.Room room)
         {
 
@@ -149,7 +144,12 @@ namespace MIMWebClient.Core
         }
 
  
-
+        /// <summary>
+        /// Handles matching and calling the commands
+        /// </summary>
+        /// <param name="input">What the player typed in</param>
+        /// <param name="playerData">Player Data</param>
+        /// <param name="room">Current Room</param>
         public static  void ParseCommand(string input, PlayerSetup.Player playerData, Room.Room room = null)
         {
 

@@ -83,6 +83,7 @@ namespace MIMWebClient.Core
         /// <param name="message">message to send to all</param>
         /// <param name="excludeThesePlayers">list of HubGuid's to exclude</param>
         /// <param name="players">players to send message to</param>
+        [Obsolete("SendToAllExcept is deprecated, please use for loop over room.players instead")]
         public static void SendToAllExcept(string message, List<string> excludeThesePlayers, List<PlayerSetup.Player> players)
         {
             if (message == null)
