@@ -54,6 +54,8 @@ namespace MIMWebClient.Core.Events
 
             var updateOldRoom = new Tuple<string, string, int>(oldRoom.region, oldRoom.area, oldRoom.areaId);
 
+            MIMHub._AreaCache.TryUpdate(updateOldRoom, newRoom, oldRoom);
+
             if (MIMHub._AreaCache.TryUpdate(updateOldRoom, newRoom, oldRoom))
             {
                 return true;
@@ -116,13 +118,6 @@ namespace MIMWebClient.Core.Events
            var players = MIMHub._PlayerCache.Values.ToList();
 
             return players;
-        }
-
-        public static List<Player> ReturnMobs()
-        {
-            var mobs = MIMHub._PlayerCache.Values.ToList();
-
-            return mobs;
         }
 
         public static List<Room> ReturnRooms()

@@ -232,7 +232,6 @@
     <Compile Include="Core\AI\Pathfinding.cs" />
     <Compile Include="Core\Command.cs" />
     <Compile Include="Core\Data.cs" />
-    <Compile Include="Core\Events\BroadcastPlayerAction.cs" />
     <Compile Include="Core\Events\Cache.cs" />
     <Compile Include="Core\Events\CheckEvent.cs" />
     <Compile Include="Core\Events\Communicate.cs" />

@@ -13,6 +13,8 @@ namespace MIMWebClient.Core
     using MIMWebClient.Core.Events;
     using MIMWebClient.Core.Player;
     using MIMWebClient.Hubs;
+    using Room;
+
     public static class HubContext
     {
         private static IHubContext _getHubContext;
@@ -83,6 +85,7 @@ namespace MIMWebClient.Core
         /// <param name="message">message to send to all</param>
         /// <param name="excludeThesePlayers">list of HubGuid's to exclude</param>
         /// <param name="players">players to send message to</param>
+        [System.Obsolete("SendToAllExcept is deprecated, please use SendToClient in a forEach instead and exclude the players there.")]
         public static void SendToAllExcept(string message, List<string> excludeThesePlayers, List<PlayerSetup.Player> players)
         {
             if (message == null)
@@ -101,7 +104,7 @@ namespace MIMWebClient.Core
             }
 
         }
-
+        [System.Obsolete("broadcastToRoom is deprecated, please use SendToClient in a forEach instead and exclude the player there.")]
         public static void broadcastToRoom(string message, List<PlayerSetup.Player> players, string playerId, bool excludeCaller = false)
         {
             int playerCount = players.Count;
@@ -142,29 +145,19 @@ namespace MIMWebClient.Core
                 {
                     SendToClient("You can't quit during combat.", playerId);
                     return;
-                }
-
-                var oldRoom = room;
-
-                int playerIndex = room.players.FindIndex(x => x.HubGuid == playerId);
-
-
-                room.players.RemoveAt(playerIndex);
-
-                Cache.updateRoom(room, oldRoom);
-
-                PlayerSetup.Player playerData = null;
-                MIMHub._PlayerCache.TryRemove(playerId, out playerData);
-
-                if (playerData != null)
+                }     
+              
+                if (Player != null)
                 {
+
+                     PlayerManager.RemovePlayerFromRoom(room, Player);
 
 
                     Save.UpdatePlayer(Player);
 
                     SendToClient("Gods take note of your progress", playerId);
                     SendToClient("See you soon!", playerId);
-                    broadcastToRoom(playerData.Name + " has left the realm", room.players, playerId, true);
+                    broadcastToRoom(Player.Name + " has left the realm", room.players, playerId, true);
 
                     try
                     {

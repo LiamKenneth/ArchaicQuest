@@ -97,7 +97,7 @@ namespace MIMWebClient.Core
         /// <param name="Room"></param>
         /// <param name="player"></param>
         /// <returns></returns>
-
+        [Obsolete]
         public static PlayerSetup.Player FindPlayer(Room.Room Room, PlayerSetup.Player player)
         {
             var playerFound = Room.players.FirstOrDefault(x => x.Name.StartsWith(player.Name, StringComparison.CurrentCultureIgnoreCase))

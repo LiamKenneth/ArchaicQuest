@@ -15,7 +15,7 @@ namespace MIMWebClient.Core.AI
         private List<Room.Room> CompletedRooms { get; set; } = new List<Room.Room>();
 
         /// <summary>
-        /// search all rooms in AreaList assigning coords then checking neighbours 
+        /// search all rooms in AreaList assigning coords then checking neighbors 
         /// and repeating until AreaList is empty
         /// 
         /// Completed rooms are added to CompletedRooms and removed from AreaList
