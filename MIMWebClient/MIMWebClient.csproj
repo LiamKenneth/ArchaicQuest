@@ -299,6 +299,7 @@
     <Compile Include="Core\Player\Skills\HandtoHand.cs" />
     <Compile Include="Core\Player\Skills\Kick.cs" />
     <Compile Include="Core\Player\Spells.cs" />
+    <Compile Include="Core\Player\Spells\ShockingGrasp.cs" />
     <Compile Include="Core\Player\Spells\CreateSpring.cs" />
     <Compile Include="Core\Player\Spells\Haste.cs" />
     <Compile Include="Core\Player\Spells\FaerieFire.cs" />
