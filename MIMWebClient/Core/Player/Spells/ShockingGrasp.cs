@@ -13,11 +13,10 @@ namespace MIMWebClient.Core.Player.Skills
 
     public class ShockingGrasp : Skill
     {
-        private static bool _taskRunnning = false;
-        private static Player _target = new Player();
+ 
         public static Skill ShockingGraspSkill { get; set; }
 
-        public static void StartShockingGrasp(Player player, Room room, string target = "")
+        public void StartShockingGrasp(Player player, Room room, string target = "")
         {
             //Check if player has spell
             var hasSpell = Skill.CheckPlayerHasSkill(player, ShockingGraspAb().Name);
@@ -40,21 +39,36 @@ namespace MIMWebClient.Core.Player.Skills
                 target = player.Target.Name;
             }
 
-            _target = Skill.FindTarget(target, room);
-
+           var _target = Skill.FindTarget(target, room);
+ 
             //Fix issue if target has similar name to user and they use abbrivations to target them
             if (_target == player)
             {
                 _target = null;
             }
 
+            if (player.ActiveSkill != null)
+            {
 
-            if (!_taskRunnning && _target != null)
+                HubContext.SendToClient("wait till you have finished " + player.ActiveSkill.Name, player.HubGuid);
+                return;
+
+            }
+            else
+            {
+                player.ActiveSkill = ShockingGraspAb();
+            }
+ 
+
+      
+
+            if (_target != null)
             {
 
 
                 if (player.ManaPoints < ShockingGraspAb().ManaCost)
                 {
+
                     HubContext.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
 
                     return;
@@ -81,7 +95,7 @@ namespace MIMWebClient.Core.Player.Skills
                     }
                 }
 
-                Task.Run(() => DoShockingGrasp(player, room));
+                Task.Run(() => DoShockingGrasp(player, _target, room));
 
             }
             else if (_target == null)
@@ -92,9 +106,9 @@ namespace MIMWebClient.Core.Player.Skills
 
         }
 
-        private static async Task DoShockingGrasp(Player attacker, Room room)
+        private async Task DoShockingGrasp(Player attacker, Player target, Room room)
         {
-            _taskRunnning = true;
+          
             attacker.Status = Player.PlayerStatus.Busy;
 
             await Task.Delay(500);
@@ -106,44 +120,25 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
+            var die = new PlayerStats();
 
-            var castingTextAttacker =
-                Helpers.ReturnName(_target, attacker, null) + "'s eyes bind shut.";
+            var dam = die.dice(5, 6);
 
-            var castingTextDefender = "Your eyes bind shut.";
+            var toHit = Helpers.GetPercentage(attacker.Skills.Find(x => x.Name.Equals(ShockingGraspAb().Name, StringComparison.CurrentCultureIgnoreCase)).Proficiency, 95); // always 5% chance to miss
+            int chance = die.dice(1, 100);
 
-            HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-            HubContext.SendToClient(castingTextDefender, _target.HubGuid);
-
-            foreach (var character in room.players)
-            {
-
-                if (character == attacker)
-                {
-                    continue;
-                }
-
-                if (character != _target)
-                {
-                    var roomMessage =
-                        $"{Helpers.ReturnName(attacker, character, string.Empty)}'s eyes bind shut.";
-
-                    HubContext.SendToClient(roomMessage, character.HubGuid);
-                }
-            }
-
-          //  Fight2.ShowAttack(attacker, attacker.Target, room, toHit, chance, MagicMissileAb(), dam);
+            Fight2.ShowAttack(attacker, target, room, toHit, chance, ShockingGraspAb(), dam);
 
 
-
-            Score.ReturnScoreUI(_target);
+            Score.ReturnScoreUI(target);
 
 
             Player.SetState(attacker);
 
-            _target = null;
-            _taskRunnning = false;
+            Fight2.PerpareToFightBack(attacker, room, target.Name, true);
 
+            target = null;
+            attacker.ActiveSkill = null;
 
         }
 

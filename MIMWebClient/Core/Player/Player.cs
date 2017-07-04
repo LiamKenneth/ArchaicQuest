@@ -126,6 +126,15 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("sk")]
         public List<Skill> Skills { get; set; }
 
+        [BsonElement("ask")]
+        [BsonIgnoreIfNull]
+        public Skill ActiveSkill { get; set; }
+
+        [BsonElement("afig")]
+        [BsonIgnoreIfNull]
+        public bool ActiveFighting{ get; set; }
+
+
         [BsonElement("af")]
         public List<Affect> Affects { get; set; } = new List<Affect>();
 
@@ -466,6 +475,8 @@ namespace MIMWebClient.Core.PlayerSetup
         /// <param name="player"></param>
         public static void SetState(Player player)
         {
+
+
 
             if (player.Target != null)
             {

@@ -68,7 +68,7 @@ namespace MIMWebClient.Core
                 {"flee", () => Flee.fleeCombat(playerData, room)},
 
                 //spells
-                {"c magic missile", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
+                {"c magic missile", () =>  MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
                 {"cast magic missile", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
 
                 { "c armour", () => Armour.StartArmour(playerData, room, commandOptions)},
@@ -109,6 +109,19 @@ namespace MIMWebClient.Core
 
                  { "c create spring", () => CreateSpring.StartCreateSpring(playerData, room)},
                 {"cast create spring", () => CreateSpring.StartCreateSpring(playerData, room)},
+
+                { "c shocking grasp", () =>
+                {
+                    var shockingGRasp = new ShockingGrasp();
+
+                    shockingGRasp.StartShockingGrasp(playerData, room, commandOptions);
+                }},
+                {"cast shocking grasp", () => 
+                {
+                        var shockingGRasp = new ShockingGrasp();
+
+                        shockingGRasp.StartShockingGrasp(playerData, room, commandOptions);
+                    }},
 
                 //skills
                 {"punch", () => Punch.StartPunch(playerData, room)},

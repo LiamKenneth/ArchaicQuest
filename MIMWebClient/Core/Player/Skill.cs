@@ -151,6 +151,8 @@ namespace MIMWebClient.Core.Player
                 return String.Empty;
             }
 
+         
+
             // check to see if user typed "C magic target" or just "c magic"
             // if an actual target there wil lbe a space
             var targetLength = target.Count(x => x.Equals(' '));
@@ -172,7 +174,7 @@ namespace MIMWebClient.Core.Player
                 {
                     theTarget = target.Substring(target.LastIndexOf(' ') + 1);
                 }
-
+ 
 
                 return theTarget;
 
