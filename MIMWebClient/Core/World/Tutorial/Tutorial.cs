@@ -34,8 +34,8 @@ namespace MIMWebClient.Core.World.Tutorial
                 if (string.IsNullOrEmpty(step))
                 {
 
-                    HubContext.SendToClient(
-                        npc.Name + " says to you \"I don't think we have much further to go " + player.Name + ".\"",
+                    HubContext.SendToClient("<span class='sayColor'>" +
+                        npc.Name + " says to you \"I don't think we have much further to go " + player.Name + ".\"</span>",
                         player.HubGuid);
 
                     await Task.Delay(2000);
@@ -48,7 +48,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                     await Task.Delay(3000);
 
-                    HubContext.SendToClient(npc.Name + " says to you \"did you hear that " + player.Name + ".\"",
+                    HubContext.SendToClient("<span class='sayColor'>" +npc.Name + " says to you \"did you hear that " + player.Name + ".\"</span>",
                         player.HubGuid);
 
                     HubContext.SendToClient("<p class='RoomExits'>[Hint] Type say yes</p>", player.HubGuid);
@@ -83,7 +83,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                     await Task.Delay(1500);
 
-                    HubContext.SendToClient(npc.Name + " says to you \"here take this dagger " + player.Name + ".\"",
+                    HubContext.SendToClient("<span class='sayColor'>" + npc.Name + " says to you \"here take this dagger " + player.Name + ".\"",
                         player.HubGuid);
 
                     var weapon = npc.Inventory.FirstOrDefault(x => x.name.Contains("dagger"));
@@ -100,9 +100,9 @@ namespace MIMWebClient.Core.World.Tutorial
 
                     await Task.Delay(1500);
 
-                    HubContext.SendToClient(
+                    HubContext.SendToClient("<span class='sayColor'>" + 
                         npc.Name +
-                        " says to you \"it's nothing special but it will help you. I believe the way to Ester is all north from here.\"",
+                        " says to you \"it's nothing special but it will help you. I believe the way to Ester is all north from here.\"</span>",
                         player.HubGuid);
 
                     await Task.Delay(3000);
@@ -111,13 +111,17 @@ namespace MIMWebClient.Core.World.Tutorial
 
                     await Task.Delay(3000);
 
-                    HubContext.SendToClient("Suddenly 5 Goblins emerge from the bushes and fan out in a semi circle.",
+                    HubContext.SendToClient("Suddenly 5 Goblins emerge from the bushes and fan out in a semi circle behind you.",
                         player.HubGuid);
 
                     await Task.Delay(3000);
 
+                    HubContext.SendToClient("<span class='sayColor'>" +
+                        npc.Name + " yells \"GO " + player.Name + ", I'll hold them off. RUN! Run now to the North.\"</span>",
+                        player.HubGuid);
+
                     HubContext.SendToClient(
-                        npc.Name + " yells \"GO " + player.Name + ", I'll hold them off. RUN! Run now to the North.\"",
+                        "<p class='RoomExits'>[Hint] Type north or n for short to move north away from the ambush.</p>",
                         player.HubGuid);
 
                     while (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
@@ -126,9 +130,9 @@ namespace MIMWebClient.Core.World.Tutorial
 
                         if (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
                         {
-                            HubContext.SendToClient(
+                            HubContext.SendToClient("<span class='sayColor'>" +
                                 npc.Name + " yells \"GO\", " + player.Name +
-                                " \"I'll hold them off. RUN! Run now to the North.\"", player.HubGuid);
+                                " \"I'll hold them off. RUN! Run now to the North.\"</span>", player.HubGuid);
 
                             HubContext.SendToClient(
                                 "<p class='RoomExits'>[Hint] Type north or n for short to move north away from the ambush</p>",
@@ -220,17 +224,17 @@ namespace MIMWebClient.Core.World.Tutorial
                     }
 
 
-                    HubContext.SendToClient(npc.Name + " says \"Ah you are awake!\"", player.HubGuid);
+                    HubContext.SendToClient("<span class='sayColor'>" + npc.Name + " says \"Ah you are awake!\"</span>", player.HubGuid);
 
                     await Task.Delay(2000);
 
-                    HubContext.SendToClient(
-                        npc.Name + " says \"You were in a bad way when we found you, I didn't think you would wake.\"",
+                    HubContext.SendToClient("<span class='sayColor'>" + 
+                        npc.Name + " says \"You were in a bad way when we found you, I didn't think you would wake.\"</span>",
                         player.HubGuid);
 
                     await Task.Delay(2000);
 
-                    HubContext.SendToClient(npc.Name + " Gets a pair of trousers and a shirt and hands them to you",
+                    HubContext.SendToClient(npc.Name + " gets a pair of trousers, a plain top and hands them to you.",
                         player.HubGuid);
 
                     player.Inventory.Add(ClothingBody.PlainTop());
@@ -240,7 +244,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                     await Task.Delay(2000);
 
-                    HubContext.SendToClient(npc.Name + " says \"Wear them, you can't walk around naked I am afraid.\"",
+                    HubContext.SendToClient("<span class='sayColor'>" + npc.Name + " says \"Wear them, you can't walk around naked I am afraid.\"</span>",
                         player.HubGuid);
 
                     await Task.Delay(2000);
@@ -272,8 +276,8 @@ namespace MIMWebClient.Core.World.Tutorial
                     if (player.Equipment.Body.Equals(ClothingBody.PlainTop().name) &&
                         !player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name))
                     {
-                        HubContext.SendToClient(
-                            npc.Name + " says \"It fits well, don't forget to wear the trousers too.\"",
+                        HubContext.SendToClient("<span class='sayColor'>" + 
+                            npc.Name + " says \"It fits well, don't forget to wear the trousers too.\"</span>",
                             player.HubGuid);
 
                         await Task.Delay(2000);
@@ -287,7 +291,7 @@ namespace MIMWebClient.Core.World.Tutorial
                     {
 
 
-                        HubContext.SendToClient(npc.Name + " says \"It fits well, don't forget to wear the top too.\"",
+                        HubContext.SendToClient("<span class='sayColor'>" + npc.Name + " says \"It fits well, don't forget to wear the top too.\"</span>",
                             player.HubGuid);
 
                         await Task.Delay(2000);
@@ -300,19 +304,19 @@ namespace MIMWebClient.Core.World.Tutorial
                         player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
                     {
 
-                        HubContext.SendToClient(
+                        HubContext.SendToClient("<span class='sayColor'>" +
                             npc.Name +
-                            " says \"Excellent, I have one request for you and that is to speak to Lance the Elder of the village.\"",
+                            " says \"Excellent, I have one request for you and that is to speak to Lance the Elder of the village.\"</span>",
                             player.HubGuid);
 
-                        HubContext.SendToClient(
+                        HubContext.SendToClient("<span class='sayColor'>" +
                             npc.Name +
-                            " says \"He wants to know if you remember anything about the attack that may help him? We have been raided a few times of late.\"",
+                            " says \"He wants to know if you remember anything about the attack that may help him? We have been raided a few times of late.\"</span>",
                             player.HubGuid);
 
-                        HubContext.SendToClient(
+                        HubContext.SendToClient("<span class='sayColor'>" +
                             npc.Name +
-                            " says \"You will found him in the Square of Anker just leave south and follow the hill path in to town you can't miss the Square.\"",
+                            " says \"You will found him in the Square of Anker just leave south and follow the hill path in to town you can't miss the Square.\"</span>",
                             player.HubGuid);
 
 
@@ -324,7 +328,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
 
                         HubContext.SendToClient(
-                            "New Quest added: Find and greet Lance. Type qlog to be reminded about quest information.",
+                            "<span class='questColor'>New Quest added: <br />Find and greet Lance. <br />Type qlog to be reminded about quest information.</span>",
                             player.HubGuid);
 
 
@@ -441,7 +445,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                     await Task.Delay(2000);
 
-                    HubContext.SendToClient("Someone says to you \"You should be feeling better now, wake when you are ready.\"", player.HubGuid);
+                    HubContext.SendToClient("<span class='sayColor'>Someone says to you \"You should be feeling better now, wake when you are ready.\"</span>", player.HubGuid);
 
 
 
@@ -477,7 +481,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                         await Task.Delay(2000);
 
-                        HubContext.SendToClient("Someone says to you \"you should be feeling better now, wake when you are ready.\"", player.HubGuid);
+                        HubContext.SendToClient("<span class='sayColor'>Someone says to you \"You should be feeling better now, wake when you are ready.\"</span>", player.HubGuid);
 
                         await Task.Delay(2000);
 

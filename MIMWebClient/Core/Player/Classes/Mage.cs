@@ -176,6 +176,18 @@ namespace MIMWebClient.Core.Player.Classes
 
             #endregion
 
+            #region  Give Shocking grasp
+
+            var shockingGrasp = ShockingGrasp.ShockingGraspAb();
+
+            shockingGrasp.LevelObtained = 1;
+            shockingGrasp.Proficiency = 50;
+            shockingGrasp.MaxProficiency = 95;
+            mage.Skills.Add(shockingGrasp);
+
+            #endregion
+
+
 
             #region  Give create spring
 

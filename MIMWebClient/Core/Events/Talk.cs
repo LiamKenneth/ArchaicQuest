@@ -33,9 +33,9 @@ namespace MIMWebClient.Core.Events
             if (recipientPlayer != null)
             {
                 string recipientName = recipientPlayer.Name;
-                HubContext.SendToClient("You say to \"" + recipientName + "\" " + actualMessage, playerId, null, false,
+                HubContext.SendToClient("<span class='sayColor'>You say to " + recipientName + "/" + actualMessage + "\"</span>", playerId, null, false,
                     false);
-                HubContext.SendToClient(player.Name + " says to you \"" + actualMessage + "\"", playerId, recipientName, true,
+                HubContext.SendToClient("<span class='sayColor'>" + player.Name + " says to you \"" + actualMessage + "\"</span>", playerId, recipientName, true,
                     true);
 
 

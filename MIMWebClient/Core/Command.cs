@@ -1,31 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MIMWebClient.Core.Mob.Events;
 
 namespace MIMWebClient.Core
 {
-    using System.Collections.Concurrent;
-
     using MIMWebClient.Core.Events;
     using MIMWebClient.Core.Player;
     using MIMWebClient.Core.Room;
-
-    using Newtonsoft.Json.Linq;
-    using System.Threading;
-
     using MIMWebClient.Core.Player.Skills;
 
     public class Command
     {
 
-        public static List<string> _Buffer = new List<string>();
- 
-
-
-        //public static Dictionary<string, Action> commandList { get; set; }
+        /// <summary>
+        /// Command list for the game
+        /// </summary>
+        /// <param name="commandOptions">Everything after the 1st occurance of a space</param>
+        /// <param name="commandKey">The string before the 1st occurance of a space</param>
+        /// <param name="playerData">Player Data</param>
+        /// <param name="room">Current room</param>
+        /// <returns>Returns Dictionary of commands</returns>
         public static Dictionary<string, Action> Commands(string commandOptions,string commandKey,PlayerSetup.Player playerData,Room.Room room)
         {
 
@@ -73,7 +68,7 @@ namespace MIMWebClient.Core
                 {"flee", () => Flee.fleeCombat(playerData, room)},
 
                 //spells
-                {"c magic missile", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
+                {"c magic missile", () =>  MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
                 {"cast magic missile", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
 
                 { "c armour", () => Armour.StartArmour(playerData, room, commandOptions)},
@@ -115,6 +110,19 @@ namespace MIMWebClient.Core
                  { "c create spring", () => CreateSpring.StartCreateSpring(playerData, room)},
                 {"cast create spring", () => CreateSpring.StartCreateSpring(playerData, room)},
 
+                { "c shocking grasp", () =>
+                {
+                    var shockingGRasp = new ShockingGrasp();
+
+                    shockingGRasp.StartShockingGrasp(playerData, room, commandOptions);
+                }},
+                {"cast shocking grasp", () => 
+                {
+                        var shockingGRasp = new ShockingGrasp();
+
+                        shockingGRasp.StartShockingGrasp(playerData, room, commandOptions);
+                    }},
+
                 //skills
                 {"punch", () => Punch.StartPunch(playerData, room)},
                 {"kick", () => Kick.StartKick(playerData, room)},
@@ -140,8 +148,10 @@ namespace MIMWebClient.Core
                 {"greet", () => Greet.GreetMob(playerData, room, commandOptions)},
                 {"who", () => Who.Connected(playerData)},
                 {"affects", () => Affect.Show(playerData)},
-                {"follow", () => Follow.FollowThing(playerData, room, commandOptions) }
-               
+                {"follow", () => Follow.FollowThing(playerData, room, commandOptions) },
+
+                //admin
+                {"/debug", () => PlayerSetup.Player.DebugPlayer(playerData) }
             };
  
 
@@ -149,7 +159,12 @@ namespace MIMWebClient.Core
         }
 
  
-
+        /// <summary>
+        /// Handles matching and calling the commands
+        /// </summary>
+        /// <param name="input">What the player typed in</param>
+        /// <param name="playerData">Player Data</param>
+        /// <param name="room">Current Room</param>
         public static  void ParseCommand(string input, PlayerSetup.Player playerData, Room.Room room = null)
         {
 

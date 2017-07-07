@@ -87,6 +87,13 @@ namespace MIMWebClient.Core.Events
 
         public static void UpdatePlayer(Player player)
         {
+            if (player.Target != null)
+            {
+                HubContext.getHubContext.Clients.Client(player.HubGuid)
+                    .addNewMessageToPage("You can't save while fighting");
+                return;
+            }
+
             try
             {
                 const string ConnectionString = DbServer;

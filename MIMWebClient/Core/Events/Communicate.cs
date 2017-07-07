@@ -18,14 +18,14 @@ namespace MIMWebClient.Core.Events
         {
             string playerId = player.HubGuid;
 
-            HubContext.SendToClient($"You say \"{message}\"", playerId, null, false, false);
+            HubContext.SendToClient($"<span class='sayColor'>You say, \"{message}\"</span>", playerId, null, false, false);
              
             foreach (var character in room.players)
             {
                 if (player != character)
                 {
                   
-                    var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} says \"{message}\"";
+                    var roomMessage = $"<span class='sayColor'>{ Helpers.ReturnName(player, character, string.Empty)} says \"{message}\"</span>";
 
                     HubContext.SendToClient(roomMessage, character.HubGuid);
                 }
@@ -81,18 +81,8 @@ namespace MIMWebClient.Core.Events
                 if (response != String.Empty)
                 {
                     Thread.Sleep(120); // hack, sometimes the responses calls before the questions??
-
-           //         if (hasQuest)
-           //         {
-           //             var quest = mob.Quest.FirstOrDefault(x => x.Id.Equals(questId));
-           //             HubContext.SendToClient(
-           //mob.Name + " says to you " + quest.AlreadyOnQuestMessage, playerId,
-           //null, true);
-           //             return;
-           //         }
-
-
-                    HubContext.SendToClient(mob.Name + " says to you \"" + response.Replace("$playerName", player.Name) + "\"", playerId,
+ 
+                    HubContext.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"" + response.Replace("$playerName", player.Name) + "\"<span>", playerId,
                        null, true);
 
 
@@ -101,14 +91,14 @@ namespace MIMWebClient.Core.Events
 
                     if (speak?.PossibleResponse.Count > 0)
                     {
-                        HubContext.SendToClient(
-                            mob.Name + " says to you \"anything else?\"", playerId,
+                        HubContext.SendToClient("<span class='sayColor'>" +
+                            mob.Name + " says to you \"anything else?\"</span>", playerId,
                             null, true);
                     }
 
 
 
-                    var i = 1;
+                  
                     foreach (var respond in speak.PossibleResponse)
                     {
                         if (player.QuestLog != null && respond.QuestId > 0)
@@ -121,19 +111,19 @@ namespace MIMWebClient.Core.Events
                             {
                                 var textChoice =
                                     "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
-                                    respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " + respond.Response +
-                                    "</a>";
+                                    respond.Response + "\",\"" + player.HubGuid + "\")'> * [say, " + respond.Response +
+                                    "]</a>";
                                 HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
-                                i++;
+                            
                             }
                             else
                             {
                                 var textChoice =
                                     "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
-                                    respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " + respond.Response +
-                                    "</a>";
+                                    respond.Response + "\",\"" + player.HubGuid + "\")'>. * [say, " + respond.Response +
+                                    "]</a>";
                                 HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
-                                i++;
+                        
                             }
                         }
                     }
@@ -151,7 +141,7 @@ namespace MIMWebClient.Core.Events
                             //to player log
                             player.QuestLog.Add(quest);
 
-                            HubContext.SendToClient("<h5>Quest Added: </h5> "+  quest.Name, playerId);
+                            HubContext.SendToClient("<span class='questColor'>Quest Added:<br />"+  quest.Name + " </span> ", playerId);
 
                             if (GivePrerequisiteItem)
                             {
@@ -239,7 +229,7 @@ namespace MIMWebClient.Core.Events
 
             foreach (var pc in players)
             {
-                HubContext.SendToClient("Newbie: " + player.Name + " says :" + message, pc.HubGuid);
+                HubContext.SendToClient("<span style='color:red'>[Newbie] " + player.Name + ":</span> " + message, pc.HubGuid);
             }
 
         }
@@ -250,7 +240,7 @@ namespace MIMWebClient.Core.Events
 
             foreach (var pc in players)
             {
-                HubContext.SendToClient("Gossip: " + player.Name + " says :" + message, pc.HubGuid);
+                HubContext.SendToClient("<span style='color:#7CEECE'>[Gossip] " + player.Name + ":</span> " + message, pc.HubGuid);
             }
 
         }
@@ -261,7 +251,7 @@ namespace MIMWebClient.Core.Events
 
             foreach (var pc in players)
             {
-                HubContext.SendToClient("OOC: " + player.Name + " says :" + message, pc.HubGuid);
+                HubContext.SendToClient("<span style='color:#00AFF0'>[OOC] " + player.Name + ":</span> " + message, pc.HubGuid);
             }
 
         }

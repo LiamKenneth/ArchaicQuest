@@ -12,14 +12,14 @@
 body {
     background: #272624;
     color: #f1f1f1;
-    font-family: 'Slabo 27px', serif !important;
+    font-family: Verdana,Geneva,sans-serif !important;
 }
 
 
 h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
     font-size: 16px;
-    font-family: 'Slabo 27px', serif !important;
+    font-family: Verdana,Geneva,sans-serif !important;
 }
 
 #discussion {
@@ -36,16 +36,16 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     @media screen and (min-width: 768px) {
-        font-size: 15px;
+        font-size: 13px;
     }
 
     @media screen and (min-width: 992px) {
-        font-size: 15px;
+        font-size: 13px;
     }
 
 
     @media screen and (min-width: 1200px) {
-        font-size: 15px;
+        font-size: 13px;
     }
 
     p {
@@ -62,6 +62,12 @@ h1, h2, h3, h4, h5, h6 {
         padding-bottom: 5px;
     }
 
+    .sayColor {
+        color: #00ffff;
+    }
+
+    .questColor {color:yellow;}
+    
     .RoomExits {
         color: #2ecc71;
     }

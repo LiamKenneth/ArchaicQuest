@@ -126,6 +126,15 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("sk")]
         public List<Skill> Skills { get; set; }
 
+        [BsonElement("ask")]
+        [BsonIgnoreIfNull]
+        public Skill ActiveSkill { get; set; }
+
+        [BsonElement("afig")]
+        [BsonIgnoreIfNull]
+        public bool ActiveFighting{ get; set; }
+
+
         [BsonElement("af")]
         public List<Affect> Affects { get; set; } = new List<Affect>();
 
@@ -467,6 +476,8 @@ namespace MIMWebClient.Core.PlayerSetup
         public static void SetState(Player player)
         {
 
+
+
             if (player.Target != null)
             {
                 player.Status = Player.PlayerStatus.Fighting;
@@ -475,6 +486,15 @@ namespace MIMWebClient.Core.PlayerSetup
             {
                 player.Status = Player.PlayerStatus.Standing;
             }
+        }
+
+        public static void DebugPlayer(Player player)
+        {
+            HubContext.SendToClient("Debug:", player.HubGuid);
+            HubContext.SendToClient("Player Target: " + player.Target?.Name, player.HubGuid);
+            HubContext.SendToClient("Player is Fighting: " + player.ActiveFighting, player.HubGuid);
+            HubContext.SendToClient("Player Has active skill: " + player.ActiveSkill?.Name, player.HubGuid);
+            HubContext.SendToClient("Player status: " + player.Status, player.HubGuid);
         }
  
     }

@@ -31,12 +31,12 @@ namespace MIMWebClient.Core.Mob.Events
                 }
                 else
                 {
-                    HubContext.SendToClient("Sorry I have nothing to sell you.", player.HubGuid);
+                    HubContext.SendToClient("<span class='sayColor'>" + mob.Name + "says, \"Sorry I have nothing to sell you.\"</span>", player.HubGuid);
                     return;
                 }
 
                 //e.g Yes sure here are my wares.
-                HubContext.SendToClient(mob.Name + " says to you \"" + mob.sellerMessage + "\"", player.HubGuid);
+                HubContext.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"" + mob.sellerMessage + "\"</span>", player.HubGuid);
 
                 //show player items
                 HubContext.SendToClient(itemsForSell, player.HubGuid);
@@ -105,15 +105,13 @@ namespace MIMWebClient.Core.Mob.Events
                             HubContext.SendToClient("You can't afford " + article + " " + itemToBuy.name, player.HubGuid);
                         }
 
-
-
                     }
 
                 }
                 else
                 {
 
-                    HubContext.SendToClient("Sorry I don't sell that", player.HubGuid);
+                    HubContext.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"Sorry I don't sell that\"", player.HubGuid);
                 }
 
             }
