@@ -277,7 +277,7 @@ namespace MIMWebClient.Core.Room
 
 
             //remove player from old room
-            PlayerManager.RemovePlayerFromRoom(roomData, player);
+          //  PlayerManager.RemovePlayerFromRoom(roomData, player);
 
             //exit message
             ExitRoom(player, roomData, null, true);

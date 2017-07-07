@@ -60,6 +60,7 @@ namespace MIMWebClient.Core.Events
         public static string DisplayRoom(Room room, string playerName)
         {
 
+
             string roomTitle = room.title;
             string roomDescription = room.description;
 
@@ -71,6 +72,12 @@ namespace MIMWebClient.Core.Events
 
             var player = room.players.FirstOrDefault(x => x.Name.Equals(playerName));
 
+            if (player != null && player.Status == Player.PlayerStatus.Sleeping)
+            {
+                return "You can't see anything while asleep." ;
+            }
+
+           
 
             var itemList = string.Empty;
 

@@ -28,17 +28,17 @@ namespace MIMWebClient.Core.Room
 
         public static void RemovePlayerFromRoom(Room room, Player player)
         {
-            var oldRoomData = room;
-            var playerToRemove = room.players.Find(p => p.Name == player.Name);
-
-            if (playerToRemove != null)
-            {
-                room.players.Remove(playerToRemove);
+            if (room.players.Find(p => p.Name == player.Name) == null)
+            {              
+                return;
             }
 
-            var newRoomData = room;
+            var oldRoomData = room;
+            var playerToRemove = room.players.FindIndex(p => p.Name == player.Name);
 
-            Cache.updateRoom(oldRoomData, newRoomData);
+            room.players.RemoveAt(playerToRemove);
+
+            Cache.updateRoom(room, oldRoomData);
 
         }
 

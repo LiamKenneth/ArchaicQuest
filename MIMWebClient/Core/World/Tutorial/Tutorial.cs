@@ -378,6 +378,8 @@ namespace MIMWebClient.Core.World.Tutorial
 
             player.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
 
+            var oldPlayer = player;
+
             await Task.Delay(5000);
 
             if (string.IsNullOrEmpty(step))
@@ -404,6 +406,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                 if (templeRoom != null)
                 {
+                    PlayerManager.RemovePlayerFromRoom(room, oldPlayer);
                     Movement.Teleport(player, templeRoom, exit);
 
                 }
@@ -419,7 +422,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
 
                     var newRoom = loadRoom.LoadRoomFile();
-
+                    PlayerManager.RemovePlayerFromRoom(room, oldPlayer);  
                     Movement.Teleport(player, newRoom, exit);
                     //load from DB
                 }

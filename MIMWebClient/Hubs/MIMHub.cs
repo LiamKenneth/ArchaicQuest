@@ -46,10 +46,32 @@ namespace MIMWebClient.Hubs
             var room = new Tuple<string, string, int>(PlayerData.Region, PlayerData.Area, PlayerData.AreaId);
 
 
-            _AreaCache.TryGetValue(room, out RoomData);
 
+
+            if (_AreaCache.TryGetValue(room, out RoomData))
+            {
+                _AreaCache.TryGetValue(room, out RoomData);
+
+
+            }
+            else
+            {
+
+                var RoomLoadData = new LoadRoom
+                {
+                    Region = PlayerData.Region,
+                    Area = PlayerData.Area,
+                    id = PlayerData.AreaId
+                };
+                RoomData = RoomLoadData.LoadRoomFile();
+                _AreaCache.TryAdd(room, RoomData);
+
+
+
+            }
 
             HubContext.SendToClient("<p style='color:#999'>" + message + "<p/>", PlayerData.HubGuid);
+
 
             Command.ParseCommand(message, PlayerData, RoomData);
 
