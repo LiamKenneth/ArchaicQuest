@@ -261,6 +261,7 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
+            CheckEvent.FindEvent(CheckEvent.EventType.Look, player, "look");
 
             Room roomData = room;
 

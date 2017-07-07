@@ -34,8 +34,8 @@ namespace MIMWebClient.Core.World.Tutorial
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),
                 clean = true,
-                
-               
+                EventDeath = "tutorial",
+                EventLook = "tutorial",
 
 
             };
@@ -147,13 +147,11 @@ namespace MIMWebClient.Core.World.Tutorial
             didYouHearThat.PossibleResponse.Add(tut1a);
             didYouHearThat.PossibleResponse.Add(tut1b);
 
-          //  wilhelm.DialogueTree.Add(didYouHearThat);
+          //  wilhelm.DialogueTree.Add(didYouHearThat);Fw
 
 
          
             wilhelm.EventOnComunicate.Add("tutorial", "yes");
-         
-
 
             var attack = new Responses()
             {

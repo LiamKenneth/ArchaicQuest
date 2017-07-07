@@ -17,7 +17,9 @@ namespace MIMWebClient.Core.Events
             Wear,
             Remove,
             Get,
-            Drop
+            Drop,
+            Death,
+            Look
 
         }
 
@@ -42,6 +44,16 @@ namespace MIMWebClient.Core.Events
                 EvokeEvent(room, player, option);
             }
 
+            if (eventName.Equals(EventType.Look))
+            {
+                EvokeEvent(room, player, option);
+            }
+
+            if (eventName.Equals(EventType.Death))
+            {
+                EvokeEvent(room, player, option);
+            }
+
         }
 
         private static void EvokeEvent(Room.Room room, PlayerSetup.Player player, string option)
@@ -62,7 +74,25 @@ namespace MIMWebClient.Core.Events
 
                     Event.ParseCommand(triggerEvent, player, mob, room, option, "player");
                 }
+
+
+                if (!string.IsNullOrEmpty(mob.EventDeath))
+                {
+                    var triggerEvent = mob.EventDeath;
+
+                    Event.ParseCommand(triggerEvent, player, mob, room, option, "player");
+                }
             }
+
+
+            if (!string.IsNullOrEmpty(room.EventLook))
+            {
+                var triggerEvent = room.EventLook;
+
+                Event.ParseCommand(triggerEvent, player, null, room, option, "player");
+            }
+
+            
         }
 
     }

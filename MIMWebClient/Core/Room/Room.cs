@@ -73,6 +73,10 @@ namespace MIMWebClient.Core.Room
         public string EventWake { get; set; }
         [BsonElement("eowe")]
         public string EventWear { get; set; }
+        [BsonElement("eod")]
+        public string EventDeath { get; set; }
+        [BsonElement("eol")]
+        public string EventLook { get; set; }
 
 
     }

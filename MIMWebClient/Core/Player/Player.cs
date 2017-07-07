@@ -367,6 +367,10 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonIgnoreIfNull]
         public string EventWake;
 
+        [BsonElement("eod")]
+        [BsonIgnoreIfNull]
+        public string EventDeath;
+
         [BsonIgnoreIfNull]
         [BsonElement("eoc")]
         public Dictionary<string, string> EventOnComunicate;

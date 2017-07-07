@@ -709,6 +709,7 @@ namespace MIMWebClient.Core.Events
         {
             if (defender.HitPoints <= 0)
             {
+                CheckEvent.FindEvent(CheckEvent.EventType.Death, attacker, "death");
 
                 foreach (var player in room.players)
                 {
