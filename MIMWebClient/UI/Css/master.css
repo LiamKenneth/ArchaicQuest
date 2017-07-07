@@ -5823,12 +5823,12 @@ button.close {
 body {
   background: #272624;
   color: #f1f1f1;
-  font-family: 'Slabo 27px', serif !important; }
+  font-family: Verdana,Geneva,sans-serif !important; }
 
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
   font-size: 16px;
-  font-family: 'Slabo 27px', serif !important; }
+  font-family: Verdana,Geneva,sans-serif !important; }
 
 #discussion {
   position: relative;
@@ -5839,13 +5839,13 @@ h1, h2, h3, h4, h5, h6 {
     background: #444; }
   @media screen and (min-width: 768px) {
     #discussion {
-      font-size: 15px; } }
+      font-size: 13px; } }
   @media screen and (min-width: 992px) {
     #discussion {
-      font-size: 15px; } }
+      font-size: 13px; } }
   @media screen and (min-width: 1200px) {
     #discussion {
-      font-size: 15px; } }
+      font-size: 13px; } }
   #discussion p {
     max-width: 560px; }
   #discussion p:empty {
@@ -5854,6 +5854,10 @@ h1, h2, h3, h4, h5, h6 {
     color: #2ecc71;
     border-bottom: 1px dashed #555;
     padding-bottom: 5px; }
+  #discussion .sayColor {
+    color: #00ffff; }
+  #discussion .questColor {
+    color: yellow; }
   #discussion .RoomExits {
     color: #2ecc71; }
   #discussion .roomItems {

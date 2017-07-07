@@ -1146,9 +1146,9 @@ namespace MIMWebClient.Core.Events
 
                             var mobQuest = foundThing.Quest.FirstOrDefault(x => x.Id.Equals(quest.Id));
                             if (mobQuest != null)
-                                HubContext.SendToClient(
+                                HubContext.SendToClient("<span class='sayColor'>" +
                                     foundThing.Name + " says to you \"" +
-                                    mobQuest.RewardDialog.Message.Replace("$playerName", player.Name) + "\"",
+                                    mobQuest.RewardDialog.Message.Replace("$playerName", player.Name) + "\"</span>",
                                     player.HubGuid,
                                     null, true);
 

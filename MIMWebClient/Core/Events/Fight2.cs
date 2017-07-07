@@ -332,7 +332,7 @@ namespace MIMWebClient.Core.Events
         public static Player FindTarget(Room room, string defender)
         {
             Player target = room.players.FirstOrDefault(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
-                            ?? room.mobs.FirstOrDefault(x => x.Name.ToLower().Contains(defender.ToLower()));
+                            ?? room.mobs.FirstOrDefault(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase));
 
             return target;
         }
@@ -576,15 +576,15 @@ namespace MIMWebClient.Core.Events
                     if (IsAlive(attacker, defender))
                     {
 
-                        HubContext.SendToClient("Your " + WeaponAttackName(attacker, skillUsed).Key + " misses " + Helpers.ReturnName(defender, attacker, null), attacker.HubGuid);
+                        HubContext.SendToClient("Your " + WeaponAttackName(attacker, skillUsed).Key + " <span style='color:olive'>misses</span> " + Helpers.ReturnName(defender, attacker, null), attacker.HubGuid);
 
-                        HubContext.SendToClient(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key + " misses you ", defender.HubGuid);
+                        HubContext.SendToClient(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key + " <span style='color:olive'>misses</span> you ", defender.HubGuid);
 
                         foreach (var player in room.players)
                         {
                             if (player != attacker && player != defender)
                             {
-                                HubContext.SendToClient(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key + " misses " + Helpers.ReturnName(defender, attacker, null), player.HubGuid);
+                                HubContext.SendToClient(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key + " <span style='color:olive'>misses</span> " + Helpers.ReturnName(defender, attacker, null), player.HubGuid);
                             }
                         }
 
@@ -637,37 +637,37 @@ namespace MIMWebClient.Core.Events
                 case 2:
                 case 3:
                 case 4:
-                    return new KeyValuePair<string, string>("scratch", "scratches");
+                    return new KeyValuePair<string, string>("<span style='color:green'>scratch</span>", "<span style='color:green'>scratches</span>");
                 case 5:
                 case 6:
                 case 7:
                 case 8:
-                    return new KeyValuePair<string, string>("graze", "grazes");
+                    return new KeyValuePair<string, string>("<span style='color:green'>graze</span>", "<span style='color:green'>grazes</span>");
                 case 9:
                 case 10:
                 case 11:
                 case 12:
-                    return new KeyValuePair<string, string>("hit", "hits");
+                    return new KeyValuePair<string, string>("<span style='color:green'>hit</span>", "<span style='color:green'>hits</span>");
                 case 13:
                 case 14:
                 case 15:
                 case 16:
-                    return new KeyValuePair<string, string>("injure", "injures");
+                    return new KeyValuePair<string, string>("<span style='color:green'>injure</span>", "<span style='color:green'>injures</span>");
                 case 17:
                 case 18:
                 case 19:
                 case 20:
-                    return new KeyValuePair<string, string>("wound", "wounds");
+                    return new KeyValuePair<string, string>("<span style='color:green'>wound</span>", "<span style='color:green'>wounds</span>");
                 case 21:
                 case 22:
                 case 23:
                 case 24:
-                    return new KeyValuePair<string, string>("maul", "mauls");
+                    return new KeyValuePair<string, string>("<span style='color:green'>maul</span>", "<span style='color:green'>mauls</span>");
                 case 25:
                 case 26:
                 case 27:
                 case 28:
-                    return new KeyValuePair<string, string>("decimate", "decimates");
+                    return new KeyValuePair<string, string>("<span style='color:yellow'>decimate</span>", "<span style='color:yellow'decimates</span>");
                 case 29:
                 case 30:
                 case 31:
@@ -725,6 +725,8 @@ namespace MIMWebClient.Core.Events
               
 
                 defender.Target = null;
+                defender.ActiveFighting = false;
+                defender.Status = Player.PlayerStatus.Ghost;
 
 
                 //Turn corpse into room item

@@ -69,7 +69,9 @@ namespace MIMWebClient.Core.Player.Skills
                 if (player.ManaPoints < ShockingGraspAb().ManaCost)
                 {
 
+
                     HubContext.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
+                    player.ActiveSkill = null;
 
                     return;
                 }
@@ -116,7 +118,8 @@ namespace MIMWebClient.Core.Player.Skills
             if (attacker.ManaPoints < ShockingGraspAb().ManaCost)
             {
                 HubContext.SendToClient("You attempt to draw energy but fail", attacker.HubGuid);
-
+                attacker.ActiveSkill = null;
+                Player.SetState(attacker);
                 return;
             }
 

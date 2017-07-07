@@ -12,7 +12,7 @@ namespace MIMWebClient.Core.Player.Skills
 
     public class MagicMissile : Skill
     {
-        private static bool _taskRunnning = false;
+     
         public static Skill MagicMissilekill { get; set; }
 
         public static void StartMagicMissile(Player attacker, Room room, string target = "")
@@ -28,7 +28,6 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
-
             var canDoSkill = Skill.CanDoSkill(attacker);
 
             if (!canDoSkill)
@@ -36,36 +35,42 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
-            attacker.Status = Player.PlayerStatus.Busy;
-
-            var foundTarget = Skill.FindTarget(target, room);
-
-            if (foundTarget != null && attacker.Target == null && target != "")
+            if (string.IsNullOrEmpty(target) && attacker.Target != null)
             {
-              
-                Fight2.PerpareToFight(attacker, room, foundTarget.Name, true);
-          
+                target = attacker.Target.Name;
             }
 
-    
-            if (!_taskRunnning && attacker.Target != null)
+            var _target = Skill.FindTarget(target, room);
+
+            if (_target == attacker)
+            {
+                _target = null;
+            }
+
+            if (attacker.ActiveSkill != null)
+            {
+
+                HubContext.SendToClient("wait till you have finished " + attacker.ActiveSkill.Name, attacker.HubGuid);
+                return;
+
+            }
+            else
+            {
+                attacker.ActiveSkill = MagicMissileAb();
+                attacker.Target = _target;
+            }
+
+
+
+
+            if (attacker.Target != null)
             {
 
                 if (attacker.ManaPoints < MagicMissileAb().ManaCost)
                 {
-                    HubContext.SendToClient("You clasp your hands together but fail to form any energy", attacker.HubGuid);
-
-               
-                    foreach (var character in room.players)
-                    {
-
-                        if (character != attacker)
-                        {
-                            HubContext.SendToClient($"{Helpers.ReturnName(attacker, attacker.Target, null)} clasps {Helpers.ReturnHisOrHers(attacker, attacker.Target)} hands together but fails to form any energy", attacker.HubGuid);
-                        }
-                       
-                    }
-
+                    HubContext.SendToClient("You clasp your hands together but fail to form any energy",
+                        attacker.HubGuid);
+                    attacker.ActiveSkill = null;
                     Player.SetState(attacker);
                     return;
                 }
@@ -90,6 +95,8 @@ namespace MIMWebClient.Core.Player.Skills
                 if (attacker.Target == null)
                 {
                     HubContext.SendToClient("Cast magic missile at whom?", attacker.HubGuid);
+                    attacker.ActiveSkill = null;
+                    Player.SetState(attacker);
                     return;
                 }
 
@@ -101,11 +108,11 @@ namespace MIMWebClient.Core.Player.Skills
 
         private static async Task DoMagicMissile(Player attacker, Room room)
         {
-            _taskRunnning = true;
-            attacker.Status = Player.PlayerStatus.Busy;
+            attacker.ActiveSkill = MagicMissileAb();
+             attacker.Status = Player.PlayerStatus.Busy;
 
 
-            await Task.Delay(1000);
+            await Task.Delay(10000);
 
 
             //get attacker strength
@@ -157,10 +164,11 @@ namespace MIMWebClient.Core.Player.Skills
                 int chance = die.dice(1, 100);
                 Fight2.ShowAttack(attacker, attacker.Target, room, toHit, chance, MagicMissileAb(), dam);
             }
-           
+
+            Fight2.PerpareToFightBack(attacker, room, attacker.Target.Name, true);
 
 
-            _taskRunnning = false;
+            attacker.ActiveSkill = null;
             Score.ReturnScoreUI(attacker);
             Player.SetState(attacker);
 

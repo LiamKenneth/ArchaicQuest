@@ -487,6 +487,15 @@ namespace MIMWebClient.Core.PlayerSetup
                 player.Status = Player.PlayerStatus.Standing;
             }
         }
+
+        public static void DebugPlayer(Player player)
+        {
+            HubContext.SendToClient("Debug:", player.HubGuid);
+            HubContext.SendToClient("Player Target: " + player.Target?.Name, player.HubGuid);
+            HubContext.SendToClient("Player is Fighting: " + player.ActiveFighting, player.HubGuid);
+            HubContext.SendToClient("Player Has active skill: " + player.ActiveSkill?.Name, player.HubGuid);
+            HubContext.SendToClient("Player status: " + player.Status, player.HubGuid);
+        }
  
     }
 }

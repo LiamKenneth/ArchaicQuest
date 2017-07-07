@@ -148,8 +148,10 @@ namespace MIMWebClient.Core
                 {"greet", () => Greet.GreetMob(playerData, room, commandOptions)},
                 {"who", () => Who.Connected(playerData)},
                 {"affects", () => Affect.Show(playerData)},
-                {"follow", () => Follow.FollowThing(playerData, room, commandOptions) }
-               
+                {"follow", () => Follow.FollowThing(playerData, room, commandOptions) },
+
+                //admin
+                {"/debug", () => PlayerSetup.Player.DebugPlayer(playerData) }
             };
  
 
