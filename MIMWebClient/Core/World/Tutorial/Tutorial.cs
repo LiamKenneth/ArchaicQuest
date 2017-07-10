@@ -27,7 +27,6 @@ namespace MIMWebClient.Core.World.Tutorial
 
         public static async Task Intro(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
-
             try
             {
                 var npc = room.mobs.FirstOrDefault(x => x.Name.Equals("Wilhelm"));
@@ -36,7 +35,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 {
 
                     HubContext.SendToClient("<span class='sayColor'>" +
-                        npc.Name + " says to you \"I don't think we have much further to go " + player.Name + ".\"</span>",
+                                            npc.Name + " says to you \"I don't think we have much further to go " + player.Name + ".\"</span>",
                         player.HubGuid);
 
                     await Task.Delay(2000);
@@ -49,7 +48,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                     await Task.Delay(3000);
 
-                    HubContext.SendToClient("<span class='sayColor'>" +npc.Name + " says to you \"did you hear that " + player.Name + ".\"</span>",
+                    HubContext.SendToClient("<span class='sayColor'>" + npc.Name + " says to you \"did you hear that " + player.Name + ".\"</span>",
                         player.HubGuid);
 
                     HubContext.SendToClient("<p class='RoomExits'>[Hint] Type say yes</p>", player.HubGuid);
@@ -67,13 +66,8 @@ namespace MIMWebClient.Core.World.Tutorial
 
                 }
                 var hasDagger = player.Inventory.FirstOrDefault(x => x.name.Contains("dagger"));
-                if (step.Equals("yes", StringComparison.CurrentCultureIgnoreCase) && room.mobs.FirstOrDefault(x => x.Name.Equals("A weak Goblin", StringComparison.CurrentCultureIgnoreCase)) == null)
+                if (step.Equals("yes", StringComparison.CurrentCultureIgnoreCase) && hasDagger == null)
                 {
-
-                    var weakGoblin = Goblin.WeakGoblin();
-                    weakGoblin.EventDeath = "tutorial";
-
-                    room.mobs.Add(weakGoblin);
 
                     await Task.Delay(1500);
 
@@ -83,28 +77,14 @@ namespace MIMWebClient.Core.World.Tutorial
 
                     HubContext.SendToClient("Suddenly a Goblin yells AARGH-tttack!!", player.HubGuid);
 
-                    HubContext.SendToClient("<span class='sayColor'>" +
-                                            npc.Name + " says to you \"Do you see the Goblin? Trying looking." + player.Name + ".\"</span>",
+                    await Task.Delay(3000);
+
+                    HubContext.SendToClient("You hear movement all around you.", player.HubGuid);
+
+                    await Task.Delay(1500);
+
+                    HubContext.SendToClient("<span class='sayColor'>" + npc.Name + " says to you \"here take this dagger " + player.Name + ".\"",
                         player.HubGuid);
-
-                    HubContext.SendToClient(
-                        "<p class='RoomExits'>[Hint] Type look or l for short to look in the room. It will show you the area title, description, players, mobs and items in the area. <p>",
-                        player.HubGuid);
-
-                
-
-
-
-                }
-
-                if (step.Equals("look", StringComparison.CurrentCultureIgnoreCase) && hasDagger == null)
-                {
-
-                    HubContext.SendToClient(
-                        "<span class='sayColor'>" + npc.Name + " says to you \"here take this dagger " +
-                        player.Name + ".\"",
-                        player.HubGuid);
-
 
                     var weapon = npc.Inventory.FirstOrDefault(x => x.name.Contains("dagger"));
 
@@ -120,79 +100,30 @@ namespace MIMWebClient.Core.World.Tutorial
 
                     await Task.Delay(1500);
 
-
                     HubContext.SendToClient("<span class='sayColor'>" +
                                             npc.Name +
-                                            " says to you \"it's nothing special but it will help you kill this goblin.\"</span>",
+                                            " says to you \"It's nothing special but it will help you. If we get split up, head to Ester. The Adventurer Academy is there and will teach you everything you need to know, if I don't make.\"...</span>",
                         player.HubGuid);
-
-
-                    await Task.Delay(1500);
-
-
                     HubContext.SendToClient(
-                        "<p class='RoomExits'>[Hint] Type kill goblin or k goblin, to start combat with the goblin. Combat ends when one of the combatants flee or are reduced to 0 hitpoints(HP).<p>",
+                        "<p class='RoomExits'>[Hint] Type: wield dagger to wield the weapon, wear works too as does wear all.</p>",
                         player.HubGuid);
-
                     await Task.Delay(3000);
-                    HubContext.SendToClient("You hear movement all around you.", player.HubGuid);
-
-                    while (player.Status != PlayerSetup.Player.PlayerStatus.Fighting)
-                    {
-                        await Task.Delay(30000);
-
-                        if (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
-                        {
-
-                            HubContext.SendToClient("<span class='sayColor'>" +
-                                                    npc.Name +
-                                                    " says to you \"don't just stand there, kill the goblin.\"</span>",
-                                player.HubGuid);
-
-
-                            HubContext.SendToClient(
-                                "<p class='RoomExits'>[Hint] Type kill goblin or k goblin, to start combat with the goblin. Combat ends when one of the combatants flee or are reduced to 0 hitpoints(HP).<p>",
-                                player.HubGuid);
-                        }
-
-                    }
-
-
-
-                }
-
-                if (step.Equals("death", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    HubContext.SendToClient("<span class='sayColor'>" +
-                                            npc.Name +
-                                            " says to you \"nice work with that goblin, don't forget you have skills and spells to.\"</span>",
-                        player.HubGuid);
-
-                    await Task.Delay(1500);
-
-                    HubContext.SendToClient(
-                        "<p class='RoomExits'>[Hint] Type skills to see all your skills and spells.<p>",
-                        player.HubGuid);
-
-                    await Task.Delay(1500);
 
                     HubContext.SendToClient("You hear movement getting closer.", player.HubGuid);
 
                     await Task.Delay(3000);
 
-                    HubContext.SendToClient(
-                        "Suddenly 5 Goblins emerge from the bushes and fan out in a semi circle behind you.",
+                    HubContext.SendToClient("Suddenly 5 Goblins emerge from the bushes and fan out in a semi circle behind you.",
                         player.HubGuid);
 
                     await Task.Delay(3000);
 
                     HubContext.SendToClient("<span class='sayColor'>" +
-                                            npc.Name + " yells \"GO " + player.Name +
-                                            ", I'll hold them off. RUN! Run now to the North.\"</span>",
+                                            npc.Name + " yells \"GO " + player.Name + ", I'll hold them off. RUN! Run now to the North.\"</span>",
                         player.HubGuid);
 
                     HubContext.SendToClient(
-                        "<p class='RoomExits'>[Hint] Type north or n for short to move north away from the ambush.</p>",
+                        "<p class='RoomExits'>[Hint] Type: north or n for short to move north away from the ambush.</p>",
                         player.HubGuid);
 
                     while (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
@@ -203,8 +134,7 @@ namespace MIMWebClient.Core.World.Tutorial
                         {
                             HubContext.SendToClient("<span class='sayColor'>" +
                                                     npc.Name + " yells \"GO\", " + player.Name +
-                                                    " \"I'll hold them off. RUN! Run now to the North.\"</span>",
-                                player.HubGuid);
+                                                    " \"I'll hold them off. RUN! Run now to the North.\"</span>", player.HubGuid);
 
                             HubContext.SendToClient(
                                 "<p class='RoomExits'>[Hint] Type north or n for short to move north away from the ambush</p>",
@@ -212,10 +142,11 @@ namespace MIMWebClient.Core.World.Tutorial
                         }
 
                     }
+
+
                 }
 
-
-
+ 
 
             }
             catch (Exception ex)

@@ -34,7 +34,6 @@ namespace MIMWebClient.Core.World.Tutorial
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),
                 clean = true,
-                EventDeath = "tutorial",
                 EventLook = "tutorial",
 
 
