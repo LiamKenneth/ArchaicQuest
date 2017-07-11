@@ -6,6 +6,7 @@ using MIMWebClient.Core.Item;
 using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.Player;
 using MIMWebClient.Core.Room;
+using MIMWebClient.Core.World.Anker.Mobs.Easy;
 using Action = MIMWebClient.Core.Item.Action;
 
 namespace MIMWebClient.Core.World.Tutorial
@@ -178,6 +179,170 @@ namespace MIMWebClient.Core.World.Tutorial
             room.exits.Add(north);
           
             room.mobs.Add(wilhelm);         
+
+            return room;
+        }
+
+        public static Room.Room TutorialLostInTheWoods()
+        {
+
+            var room = new Room.Room
+            {
+                region = "Tutorial",
+                area = "Tutorial",
+                areaId = 1,
+                title = "Deep in the forest",
+                description = "<p>Behind you the sounds of swords clashing fill the night air along with never ending goblin screams echoing through the tall thick trees all around you. " +
+                              "Between the trees to the north west you see what looks to be a small camp with fire, Maybe you can get some help there.</p> <p class='RoomExits'>[Hint] You move by typing North, East, South, West or n/e/s/w for short. The Exit list will tell you which directions are possible.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<PlayerSetup.Player>(),
+                terrain = Room.Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<PlayerSetup.Player>(),
+                players = new List<PlayerSetup.Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+            var north = new Exit
+            {
+                name = "North",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 2,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = true,
+                canOpen = true,
+                open = true,
+                doorName = null
+
+            };
+
+
+            room.exits.Add(north);
+
+            return room;
+        }
+
+        public static Room.Room TutorialLostInTheWoods2()
+        {
+
+            var room = new Room.Room
+            {
+                region = "Tutorial",
+                area = "Tutorial",
+                areaId = 2,
+                title = "Deep in the forest",
+                description = "<p>Shadows flicker off the trees and shrubs caused by the glow of the camp fire to the east. All around you are tall thick tree, and impassable bushes, the fire is your only beceon of hope in this dense woodland.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<PlayerSetup.Player>(),
+                terrain = Room.Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<PlayerSetup.Player>(),
+                players = new List<PlayerSetup.Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+            var east = new Exit
+            {
+                name = "East",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 3,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = true,
+                canOpen = true,
+                open = true,
+                doorName = null
+
+            };
+
+            var south = new Exit
+            {
+                name = "South",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 1,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = true,
+                canOpen = true,
+                open = true,
+                doorName = null
+
+            };
+
+
+
+            room.exits.Add(east);
+            room.exits.Add(south);
+
+            return room;
+        }
+
+        public static Room.Room TutorialGoblinCamp()
+        {
+
+            var room = new Room.Room
+            {
+                region = "Tutorial",
+                area = "Tutorial",
+                areaId = 3,
+                title = "Deep in the forest",
+                description = "<p>Thick logs used for sitting face each other with a large fire between them at the centre of the camp. " +
+                              "A few bed rolls and discarded pieces of meat lay haphazardly across the ground. To the north and south are two small identical tents.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<PlayerSetup.Player>(),
+                terrain = Room.Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<PlayerSetup.Player>(),
+                players = new List<PlayerSetup.Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+            var west = new Exit
+            {
+                name = "West",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 2,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = true,
+                canOpen = true,
+                open = true,
+                doorName = null
+
+            };
+            
+           
+            room.mobs.Add(Goblin.WeakGoblin());
+
+
+            room.exits.Add(west);
 
             return room;
         }
