@@ -68,6 +68,12 @@ namespace MIMWebClient.Core.World.Tutorial
                 var hasDagger = player.Inventory.FirstOrDefault(x => x.name.Contains("dagger"));
                 if (step.Equals("yes", StringComparison.CurrentCultureIgnoreCase) && hasDagger == null)
                 {
+                    var weapon = npc.Inventory.FirstOrDefault(x => x.name.Contains("dagger"));
+
+                    if (weapon != null)
+                    {
+                        player.Inventory.Add(weapon);
+                    }
 
                     await Task.Delay(1500);
 
@@ -85,14 +91,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                     HubContext.SendToClient("<span class='sayColor'>" + npc.Name + " says to you \"here take this dagger " + player.Name + ".\"",
                         player.HubGuid);
-
-                    var weapon = npc.Inventory.FirstOrDefault(x => x.name.Contains("dagger"));
-
-                    if (weapon != null)
-                    {
-                        player.Inventory.Add(weapon);
-                    }
-
+                  
 
                     HubContext.SendToClient(npc.Name + " gives you a blunt dagger.", player.HubGuid);
 
@@ -125,23 +124,6 @@ namespace MIMWebClient.Core.World.Tutorial
                     HubContext.SendToClient(
                         "<p class='RoomExits'>[Hint] Type: north or n for short to move north away from the ambush.</p>",
                         player.HubGuid);
-
-                    while (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
-                    {
-                        await Task.Delay(30000);
-
-                        if (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
-                        {
-                            HubContext.SendToClient("<span class='sayColor'>" +
-                                                    npc.Name + " yells \"GO\", " + player.Name +
-                                                    " \"I'll hold them off. RUN! Run now to the North.\"</span>", player.HubGuid);
-
-                            HubContext.SendToClient(
-                                "<p class='RoomExits'>[Hint] Type north or n for short to move north away from the ambush</p>",
-                                player.HubGuid);
-                        }
-
-                    }
 
 
                 }
@@ -387,7 +369,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                     player.Area = "Tutorial";
                     player.Region = "Tutorial";
-                    player.AreaId = 1;
+                    player.AreaId = 3;
 
                     var exit = new Exit
                     {
@@ -432,7 +414,7 @@ namespace MIMWebClient.Core.World.Tutorial
                     var playerInRoom =
                         Cache.ReturnRooms()
                             .FirstOrDefault(
-                                x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"))
+                                x => x.area.Equals("Tutorial") && x.areaId.Equals(3) && x.region.Equals("Tutorial"))
                             .players.FirstOrDefault(x => x.Name.Equals(player.Name));
 
 
@@ -451,19 +433,13 @@ namespace MIMWebClient.Core.World.Tutorial
                             player.HubGuid);
 
 
-
                         await Task.Delay(2000);
 
-                        HubContext.SendToClient("<p class='RoomExits'>[Hint] Type wake to wake up</p>", player.HubGuid);
+                        HubContext.SendToClient("<p class='RoomExits'>[Hint] Type: wake to wake up</p>", player.HubGuid);
 
-                        await Task.Delay(30000);
-
-                        HubContext.SendToClient("<p class='RoomExits'>[Hint] Type wake to wake up</p>", player.HubGuid);
                     }
 
-
-
-                }
+            }
 
          
 
