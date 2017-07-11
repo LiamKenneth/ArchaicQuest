@@ -368,137 +368,104 @@ namespace MIMWebClient.Core.World.Tutorial
 
         public static async Task Awakening(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
-            //to stop task firing twice
-            if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
-            {
-                return;
-            }
-
-
-            player.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
-
-            var oldPlayer = player;
-
-            await Task.Delay(5000);
-
-            if (string.IsNullOrEmpty(step))
-            {
-
-                player.Area = "Tutorial";
-                player.Region = "Tutorial";
-                player.AreaId = 3;
-
-                var exit = new Exit
+       
+                //to stop task firing twice
+                if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
                 {
-                    area = player.Area,
-                    region = player.Region,
-                    areaId = player.AreaId
-                };
-
-
-                var templeRoom =
-                    Cache.ReturnRooms()
-                        .FirstOrDefault(
-                            x =>
-                                x.area.Equals(player.Area) && x.areaId.Equals(player.AreaId) &&
-                                x.region.Equals(player.Region));
-
-                if (templeRoom != null)
-                {
-                    PlayerManager.RemovePlayerFromRoom(room, oldPlayer);
-                    Movement.Teleport(player, templeRoom, exit);
-
+                    return;
                 }
-                else
+
+
+                player.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
+
+                var oldPlayer = player;
+
+                await Task.Delay(5000);
+
+                if (string.IsNullOrEmpty(step))
                 {
 
-                    var loadRoom = new LoadRoom
+                    player.Area = "Tutorial";
+                    player.Region = "Tutorial";
+                    player.AreaId = 1;
+
+                    var exit = new Exit
                     {
-                        Area = player.Area,
-                        id = player.AreaId,
-                        Region = player.Region
+                        area = player.Area,
+                        region = player.Region,
+                        areaId = player.AreaId
                     };
 
 
-                    var newRoom = loadRoom.LoadRoomFile();
-                    PlayerManager.RemovePlayerFromRoom(room, oldPlayer);  
-                    Movement.Teleport(player, newRoom, exit);
-                    //load from DB
-                }
+                    var templeRoom =
+                        Cache.ReturnRooms()
+                            .FirstOrDefault(
+                                x =>
+                                    x.area.Equals(player.Area) && x.areaId.Equals(player.AreaId) &&
+                                    x.region.Equals(player.Region));
 
-                //fix for random wake message hint showing
-
-                var playerInRoom =
-                    Cache.ReturnRooms()
-                        .FirstOrDefault(
-                            x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"))
-                        .players.FirstOrDefault(x => x.Name.Equals(player.Name));
-
-
-                //well this does not work
-                if (playerInRoom != null)
-                {
-                    await Task.Delay(3000);
-
-                    HubContext.SendToClient("You feel better as a wave of warmth surrounds your body", player.HubGuid);
-
-                    await Task.Delay(2000);
-
-                    HubContext.SendToClient("<span class='sayColor'>Someone says to you \"You should be feeling better now, wake when you are ready.\"</span>", player.HubGuid);
-
-
-
-                    await Task.Delay(2000);
-
-                    HubContext.SendToClient("<p class='RoomExits'>[Hint] Type wake to wake up</p>", player.HubGuid);
-                }
-
- 
-       
-
-                //loops forever because room.players does not get updated when player leaves the ambush room
-                // so this always tries to fire the messages below. as to why it sometimes it shows and sometimes does not, I have no idea.
-                while (playerInRoom !=null && playerInRoom.Area.Equals("Tutorial"))
-                {
-                    await Task.Delay(30000); // <-- is this the cause && the check below is not working
-
-                    playerInRoom =
-                  Cache.ReturnRooms()
-                      .FirstOrDefault(
-                          x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"))
-                      .players.FirstOrDefault(x => x.Name.Equals(player.Name));
-
-                    if (playerInRoom == null)
+                    if (templeRoom != null)
                     {
-                        return;
+                        PlayerManager.RemovePlayerFromRoom(room, oldPlayer);
+                        Movement.Teleport(player, templeRoom, exit);
+
+                    }
+                    else
+                    {
+
+                        var loadRoom = new LoadRoom
+                        {
+                            Area = player.Area,
+                            id = player.AreaId,
+                            Region = player.Region
+                        };
+
+
+                        var newRoom = loadRoom.LoadRoomFile();
+                        PlayerManager.RemovePlayerFromRoom(room, oldPlayer);
+                        Movement.Teleport(player, newRoom, exit);
+                        //load from DB
                     }
 
-                    if (playerInRoom.Status != PlayerSetup.Player.PlayerStatus.Standing)
+                    //fix for random wake message hint showing
 
+                    var playerInRoom =
+                        Cache.ReturnRooms()
+                            .FirstOrDefault(
+                                x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"))
+                            .players.FirstOrDefault(x => x.Name.Equals(player.Name));
+
+
+                    //well this does not work
+                    if (playerInRoom != null)
                     {
-                        HubContext.SendToClient("You feel better as a wave of warmth surrounds your body", player.HubGuid);
+                        await Task.Delay(3000);
+
+                        HubContext.SendToClient("You feel better as a wave of warmth surrounds your body",
+                            player.HubGuid);
 
                         await Task.Delay(2000);
 
-                        HubContext.SendToClient("<span class='sayColor'>Someone says to you \"You should be feeling better now, wake when you are ready.\"</span>", player.HubGuid);
+                        HubContext.SendToClient(
+                            "<span class='sayColor'>Someone says to you \"You should be feeling better now, wake when you are ready.\"</span>",
+                            player.HubGuid);
+
+
 
                         await Task.Delay(2000);
 
                         HubContext.SendToClient("<p class='RoomExits'>[Hint] Type wake to wake up</p>", player.HubGuid);
 
+                        await Task.Delay(30000);
 
-
+                        HubContext.SendToClient("<p class='RoomExits'>[Hint] Type wake to wake up</p>", player.HubGuid);
                     }
+
+
 
                 }
 
-
-
-            }
-
-
-
-
+         
 
         }
     }

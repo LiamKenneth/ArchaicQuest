@@ -89,7 +89,7 @@ namespace MIMWebClient.Core.Room
 
             if (!string.IsNullOrEmpty(room.EventOnEnter))
             {
-                Event.ParseCommand(room.EventOnEnter, player, null, room,;
+                Event.ParseCommand(room.EventOnEnter, player, null, room);
             }
 
 
