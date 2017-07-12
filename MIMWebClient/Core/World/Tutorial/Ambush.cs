@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Castle.Components.DictionaryAdapter;
 using MIMWebClient.Core.Item;
 using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.Player;
@@ -304,7 +305,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 region = "Tutorial",
                 area = "Tutorial",
                 areaId = 3,
-                title = "Deep in the forest",
+                title = "A goblin camp",
                 description = "<p>Thick logs used for sitting face each other with a large fire between them at the centre of the camp. " +
                               "A few bed rolls and discarded pieces of meat lay haphazardly across the ground. To the north and south are two small identical tents.</p>",
 
@@ -337,10 +338,163 @@ namespace MIMWebClient.Core.World.Tutorial
                 doorName = null
 
             };
-            
-           
+
+            var east = new Exit
+            {
+                name = "East",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 10,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = true,
+                canOpen = true,
+                open = true,
+                doorName = null
+
+            };
+
+
+            var north = new Exit
+            {
+                name = "North",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 4,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = true,
+                canOpen = true,
+                open = true,
+                doorName = null
+
+            };
+
+
             room.mobs.Add(Goblin.WeakGoblin());
 
+            room.Emotes.Add("The fire crackles and spits.");
+            room.Emotes.Add("You hear a howl in the distance.");
+            room.exits.Add(north);
+            room.exits.Add(east);
+            room.exits.Add(west);
+
+            return room;
+        }
+
+        public static Room.Room TutorialGoblinCampTentNorth()
+        {
+
+            var room = new Room.Room
+            {
+                region = "Tutorial",
+                area = "Tutorial",
+                areaId = 4,
+                title = "A tent in the goblin camp",
+                description = "<p>A small bed and wooden chest has been set up against the side of the tent, filling most of the space. A small cluttered desk sits on the other side leaving just about enough room to enter and leave.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<PlayerSetup.Player>(),
+                terrain = Room.Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<PlayerSetup.Player>(),
+                players = new List<PlayerSetup.Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+            var west = new Exit
+            {
+                name = "South",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 3,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = true,
+                canOpen = true,
+                open = true,
+                doorName = null
+
+            };
+
+            var leather = new Item.Item
+            {
+                armourType = Item.Item.ArmourType.Leather,
+                eqSlot = Item.Item.EqSlot.Body,
+                description = new Description()
+                {
+                    look =  "A basic looking leather vest.",
+                    exam =
+                        "A basic looking leather vest.",
+       
+                },
+                location = Item.Item.ItemLocation.Room,
+                slot = Item.Item.EqSlot.Body,
+                type = Item.Item.ItemType.Armour,
+                name = "A simple leather vest",
+                ArmorRating = new ArmourRating()
+                {
+                    Armour = 2,
+                    Magic = 0
+                },
+                itemFlags = new EditableList<Item.Item.ItemFlags>()
+                {
+                    Item.Item.ItemFlags.equipable
+                },
+                Weight = 0.2,
+                equipable = true,
+                keywords = new List<string>()
+                {
+                    "leather",
+                    "vest",
+                    "leather vest"
+                }
+
+            };
+
+            var chest = new Item.Item
+            {
+                name = "Basic looking wooden chest",
+                stuck = true,
+                type = Item.Item.ItemType.Container,
+                open = false,
+                canOpen = true,
+                container = true,
+                containerSize = 5,
+                location = Item.Item.ItemLocation.Room,
+                description = new Description()
+                {
+                    exam =
+            "A small poorly crafted wooden chest sits on the floor at the foot of the bed. There is no visible lock.",
+                    look = "A small poorly crafted wooden chest sits on the floor at the foot of the bed."
+                },
+                keywords = new List<string>()
+                {
+                    "Chest",
+                    "Wooden",
+                    "Wooden Chest"
+                },
+                containerItems = new List<Item.Item>()
+                {
+                    leather
+                }
+            };
+
+            room.items.Add(chest);
+
+
+            room.mobs.Add(Goblin.WeakGoblin());
+
+ 
+            room.Emotes.Add("You hear a howl in the distance.");
 
             room.exits.Add(west);
 
@@ -354,7 +508,7 @@ namespace MIMWebClient.Core.World.Tutorial
             {
                 region = "Tutorial",
                 area = "Tutorial",
-                areaId = 1,
+                areaId = 10,
                 title = "Deep in the forest",
                 description = "<p>You run forward, fleeing the ambush. You look back for one last time to see Wilhelm let out an ear piercing scream as he is over run by the goblins. " +
                               "Turning back around you greet a club that whacks you in the face sending you sprawling across the floor, your ears are ringing then everything goes black.</p>",

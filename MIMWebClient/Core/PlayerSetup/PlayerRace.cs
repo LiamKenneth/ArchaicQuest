@@ -38,12 +38,22 @@ namespace MIMWebClient.Core.PlayerSetup
         {
             var listOfRace = new List<PlayerRace>();
 
+
+            //Elves are slightly taller than humans, but have a much lighter build. " +
+            //    "They lack the strength and stamina of the other races, but are far more agile," +
+            //    " both in body and mind. Elves are superb mages and thieves, but have at best fair" +
+            //    " talent as warriors or priests. Elves resist charm spells most effectively," +
+            //    " due to their magical nature. They may see in the dark with infravision.
             //help text to replace just testing
-            string humanHelp = "Human info\r\n";
+            string humanHelp = "Humans are the most varied of the races in ArchaicQuest. " +
+                               "They come in different shapes, sizes, skin, hair and eye colour " +
+                               "They don't excell in any perticualy role but are good at most things " +
+                               "making them average at all classes." +
+                               " Humans are reccomended for beginners.";
  
             string humanImgURL =  "/UI/img/human.jpg";
 
-            string elfHelp = "Elf info";
+            string elfHelp = "Elves are slightly smaller and slimmer than Humans making them more agile but weaker";
 
             string ElfImgURL = "/UI/img/elf.jpg";
 

@@ -1529,7 +1529,7 @@ namespace MIMWebClient.Core.Events
             {
                 foundExit = FindItem.Exit(room.exits, nth, userInput);
 
-                if (foundExit.canOpen == false)
+                if (foundExit?.canOpen == false)
                 {
 
                     HubContext.SendToClient("You can't open that.", player.HubGuid);
