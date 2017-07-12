@@ -46,6 +46,7 @@ namespace UpdateDB
                 Ambush.TutorialLostInTheWoods2(),
                 Ambush.TutorialGoblinCamp(),
                 Ambush.TutorialGoblinCampTentNorth(),
+                Ambush.TutorialGoblinCampTentSouth(),
                 Awakening.TempleOfTyr(),
                 Anker.VillageSquare(),
                 Anker.SquareWalkOutsideTavern(),

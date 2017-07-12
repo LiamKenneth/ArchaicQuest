@@ -372,6 +372,23 @@ namespace MIMWebClient.Core.World.Tutorial
 
             };
 
+            var south = new Exit
+            {
+                name = "South",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 5,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = true,
+                canOpen = true,
+                open = true,
+                doorName = null
+
+            };
+
+
 
             room.mobs.Add(Goblin.WeakGoblin());
 
@@ -379,6 +396,7 @@ namespace MIMWebClient.Core.World.Tutorial
             room.Emotes.Add("You hear a howl in the distance.");
             room.exits.Add(north);
             room.exits.Add(east);
+            room.exits.Add(south);
             room.exits.Add(west);
 
             return room;
@@ -408,6 +426,15 @@ namespace MIMWebClient.Core.World.Tutorial
 
             };
 
+            var bed = new RoomObject
+            {
+                name = "Bed",
+                look = "The bed is unmade and the sheets are covered in stains.",
+                examine = "Under the pillow you see what looks like a pair of leather gloves poking out slightly."
+            };
+
+       
+            room.keywords.Add(bed);
 
             var west = new Exit
             {
@@ -460,6 +487,41 @@ namespace MIMWebClient.Core.World.Tutorial
 
             };
 
+            var leatherGloves = new Item.Item
+            {
+                armourType = Item.Item.ArmourType.Leather,
+                eqSlot = Item.Item.EqSlot.Hands,
+                description = new Description()
+                {
+                    look = "A basic pair leather gloves.",
+                    exam =
+                        "A basic pair leather gloves.",
+
+                },
+                location = Item.Item.ItemLocation.Room,
+                slot = Item.Item.EqSlot.Hands,
+                type = Item.Item.ItemType.Armour,
+                name = "A basic pair leather gloves",
+                ArmorRating = new ArmourRating()
+                {
+                    Armour = 2,
+                    Magic = 0
+                },
+                itemFlags = new EditableList<Item.Item.ItemFlags>()
+                {
+                    Item.Item.ItemFlags.equipable
+                },
+                Weight = 0.2,
+                equipable = true,
+                keywords = new List<string>()
+                {
+                    "leather",
+                    "gloves",
+                    "leather gloves"
+                }
+
+            };
+
             var chest = new Item.Item
             {
                 name = "Basic looking wooden chest",
@@ -488,8 +550,27 @@ namespace MIMWebClient.Core.World.Tutorial
                 }
             };
 
+            var bedContainer = new Item.Item
+            {
+                name = "bed",
+                stuck = true,
+                type = Item.Item.ItemType.Container,
+                open = true,
+                canOpen = false,
+                container = true,
+                containerSize = 5,
+                location = Item.Item.ItemLocation.Room,
+                description = new Description(),
+                keywords = new List<string>(),
+               isHiddenInRoom = true,
+                containerItems = new List<Item.Item>()
+                {
+                    leatherGloves
+                }
+            };
+ 
             room.items.Add(chest);
-
+            room.items.Add(bedContainer);
 
             room.mobs.Add(Goblin.WeakGoblin());
 
@@ -500,6 +581,128 @@ namespace MIMWebClient.Core.World.Tutorial
 
             return room;
         }
+
+        public static Room.Room TutorialGoblinCampTentSouth()
+        {
+
+            var room = new Room.Room
+            {
+                region = "Tutorial",
+                area = "Tutorial",
+                areaId = 5,
+                title = "A tent in the goblin camp",
+                description = "<p>A small bed and wooden chest has been set up against the side of the tent, filling most of the space. A small cluttered desk sits on the other side leaving just about enough room to enter and leave.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<PlayerSetup.Player>(),
+                terrain = Room.Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<PlayerSetup.Player>(),
+                players = new List<PlayerSetup.Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+            var west = new Exit
+            {
+                name = "North",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 3,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = true,
+                canOpen = true,
+                open = true,
+                doorName = null
+
+            };
+
+            var leather = new Item.Item
+            {
+                armourType = Item.Item.ArmourType.Leather,
+                eqSlot = Item.Item.EqSlot.Legs,
+                description = new Description()
+                {
+                    look = "A pair of worn leather trousers.",
+                    exam =
+                        "A pair of worn leather trousers.",
+
+                },
+                location = Item.Item.ItemLocation.Room,
+                slot = Item.Item.EqSlot.Legs,
+                type = Item.Item.ItemType.Armour,
+                name = "A pair of worn leather trousers",
+                ArmorRating = new ArmourRating()
+                {
+                    Armour = 2,
+                    Magic = 0
+                },
+                itemFlags = new EditableList<Item.Item.ItemFlags>()
+                {
+                    Item.Item.ItemFlags.equipable
+                },
+                Weight = 0.2,
+                equipable = true,
+                keywords = new List<string>()
+                {
+                    "leather",
+                    "trousers",
+                    "leather trousers",
+                    "pants"
+                }
+
+            };
+
+            var chest = new Item.Item
+            {
+                name = "Basic looking wooden chest",
+                stuck = true,
+                type = Item.Item.ItemType.Container,
+                open = false,
+                canOpen = true,
+                container = true,
+                containerSize = 5,
+                location = Item.Item.ItemLocation.Room,
+                description = new Description()
+                {
+                    exam =
+                        "A small poorly crafted wooden chest sits on the floor at the foot of the bed. There is no visible lock.",
+                    look = "A small poorly crafted wooden chest sits on the floor at the foot of the bed."
+                },
+                keywords = new List<string>()
+                {
+                    "Chest",
+                    "Wooden",
+                    "Wooden Chest"
+                },
+                containerItems = new List<Item.Item>()
+                {
+                    leather
+                }
+            };
+
+            room.items.Add(chest);
+
+            var goblin = Goblin.WeakGoblin();
+            goblin.Gold = 10;
+            
+
+            room.mobs.Add(goblin);
+
+
+            room.Emotes.Add("You hear a howl in the distance.");
+
+            room.exits.Add(west);
+
+            return room;
+        }
+
 
         public static Room.Room TutorialRoom2()
         {

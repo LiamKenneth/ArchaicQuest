@@ -499,7 +499,19 @@ namespace MIMWebClient.Core.PlayerSetup
             HubContext.SendToClient("Player is Fighting: " + player.ActiveFighting, player.HubGuid);
             HubContext.SendToClient("Player Has active skill: " + player.ActiveSkill?.Name, player.HubGuid);
             HubContext.SendToClient("Player status: " + player.Status, player.HubGuid);
+            HubContext.SendToClient("Player items: ", player.HubGuid);
+
+            if (player.Inventory != null)
+            {
+                foreach (var item in player.Inventory)
+                {
+                    HubContext.SendToClient(item.name + " " + item.location + " " + item.type, player.HubGuid);
+                }
+            }
+
+
+
         }
- 
+
     }
 }

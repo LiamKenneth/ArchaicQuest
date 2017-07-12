@@ -33,6 +33,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                 if (string.IsNullOrEmpty(step))
                 {
+    
 
                     HubContext.SendToClient("<span class='sayColor'>" +
                                             npc.Name + " says to you \"I don't think we have much further to go " + player.Name + ".\"</span>",
@@ -40,19 +41,50 @@ namespace MIMWebClient.Core.World.Tutorial
 
                     await Task.Delay(2000);
 
-                    HubContext.SendToClient("You hear a twig snap in the distance.", player.HubGuid);
+                    var playerInRoom =
+                        Cache.ReturnRooms()
+                            .FirstOrDefault(
+                                x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"))
+                            .players.FirstOrDefault(x => x.Name.Equals(player.Name));
 
-                    await Task.Delay(2000);
+                    if (playerInRoom != null)
+                    {
 
-                    HubContext.SendToClient(npc.Name + " looks at you with a face of terror and dread.", player.HubGuid);
+                        HubContext.SendToClient("You hear a twig snap in the distance.", player.HubGuid);
 
-                    await Task.Delay(3000);
+                        await Task.Delay(2000);
+                    }
 
-                    HubContext.SendToClient("<span class='sayColor'>" + npc.Name + " says to you \"did you hear that " + player.Name + ".\"</span>",
-                        player.HubGuid);
+                    playerInRoom =
+                        Cache.ReturnRooms()
+                            .FirstOrDefault(
+                                x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"))
+                            .players.FirstOrDefault(x => x.Name.Equals(player.Name));
 
-                    HubContext.SendToClient("<p class='RoomExits'>[Hint] Type say yes</p>", player.HubGuid);
+                    if (playerInRoom != null)
+                    {
 
+                        HubContext.SendToClient(npc.Name + " looks at you with a face of terror and dread.",
+                            player.HubGuid);
+
+                        await Task.Delay(3000);
+                    }
+
+                    playerInRoom =
+                        Cache.ReturnRooms()
+                            .FirstOrDefault(
+                                x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"))
+                            .players.FirstOrDefault(x => x.Name.Equals(player.Name));
+
+                    if (playerInRoom != null)
+                    {
+                        HubContext.SendToClient(
+                            "<span class='sayColor'>" + npc.Name + " says to you \"did you hear that " + player.Name +
+                            ".\"</span>",
+                            player.HubGuid);
+
+                        HubContext.SendToClient("<p class='RoomExits'>[Hint] Type say yes</p>", player.HubGuid);
+                    }
                     /*
                      *  add quest to player?
                      *  

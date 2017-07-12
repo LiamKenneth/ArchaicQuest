@@ -631,7 +631,6 @@ namespace MIMWebClient.Core.Events
                     if (!item.stuck)
                     {
 
-
                         if (item.type != Item.ItemType.Gold)
                         {
 
@@ -716,7 +715,7 @@ namespace MIMWebClient.Core.Events
 
 
                         container.containerItems.Remove(item);
-                        container.location = Item.ItemLocation.Inventory;
+                       item.location = Item.ItemLocation.Inventory;
                         player.Inventory.Add(item);
 
                         var result = AvsAnLib.AvsAn.Query(item.name);
