@@ -8,6 +8,8 @@ using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.Player;
 using MIMWebClient.Core.Room;
 using MIMWebClient.Core.World.Anker.Mobs.Easy;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Body;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Hands;
 using Action = MIMWebClient.Core.Item.Action;
 
 namespace MIMWebClient.Core.World.Tutorial
@@ -318,7 +320,8 @@ namespace MIMWebClient.Core.World.Tutorial
                 corpses = new List<PlayerSetup.Player>(),
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),
-                clean = true
+                clean = true,
+                EventOnEnter = "Give Leather Quest"
 
             };
 
@@ -433,7 +436,58 @@ namespace MIMWebClient.Core.World.Tutorial
                 examine = "Under the pillow you see what looks like a pair of leather gloves poking out slightly."
             };
 
-       
+            var desk = new RoomObject
+            {
+                name = "Desk",
+                look = "Pieces of paper, gold coins and bread crumbs lay scattered across the desk. A small candle placed on top of what looks like a map illuminates the tent with an orange glow.",
+                examine = "Pieces of paper, gold coins and bread crumbs lay scattered across the desk. A small candle placed on top of what looks like a map illuminates the tent with an orange glow.",
+            };
+
+            var paper = new RoomObject
+            {
+                name = "paper",
+                look = "You don't see anything worth taking except for what looks like a map.",
+                examine = "You don't see anything worth taking except for what looks like a map."
+            };
+
+         
+
+            var map =
+                "Hideout" +
+                "  x - x - x   x - x -" +
+                "          |   |" +
+                "          x - x - x";
+
+            var HideoutMap = new RoomObject
+            {
+                name = "map",
+                look = map,
+                examine = map
+            };
+
+            var mapToGoblinCave = new Item.Item
+            {
+               
+                description = new Description()
+                {
+                    look = "<pre>" + map + "<pre>",
+                    exam = "<pre>" + map + "<pre>",
+
+                },
+                location = Item.Item.ItemLocation.Room,
+            
+                type = Item.Item.ItemType.note,
+                name = "A basic map to a Goblin hideout",               
+                Weight = 0,
+                equipable = false,
+                isHiddenInRoom = true
+
+            };
+
+ 
+            room.keywords.Add(HideoutMap);
+            room.keywords.Add(paper);
+            room.keywords.Add(desk);
             room.keywords.Add(bed);
 
             var west = new Exit
@@ -452,76 +506,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
             };
 
-            var leather = new Item.Item
-            {
-                armourType = Item.Item.ArmourType.Leather,
-                eqSlot = Item.Item.EqSlot.Body,
-                description = new Description()
-                {
-                    look =  "A basic looking leather vest.",
-                    exam =
-                        "A basic looking leather vest.",
-       
-                },
-                location = Item.Item.ItemLocation.Room,
-                slot = Item.Item.EqSlot.Body,
-                type = Item.Item.ItemType.Armour,
-                name = "A simple leather vest",
-                ArmorRating = new ArmourRating()
-                {
-                    Armour = 2,
-                    Magic = 0
-                },
-                itemFlags = new EditableList<Item.Item.ItemFlags>()
-                {
-                    Item.Item.ItemFlags.equipable
-                },
-                Weight = 0.2,
-                equipable = true,
-                keywords = new List<string>()
-                {
-                    "leather",
-                    "vest",
-                    "leather vest"
-                }
-
-            };
-
-            var leatherGloves = new Item.Item
-            {
-                armourType = Item.Item.ArmourType.Leather,
-                eqSlot = Item.Item.EqSlot.Hands,
-                description = new Description()
-                {
-                    look = "A basic pair leather gloves.",
-                    exam =
-                        "A basic pair leather gloves.",
-
-                },
-                location = Item.Item.ItemLocation.Room,
-                slot = Item.Item.EqSlot.Hands,
-                type = Item.Item.ItemType.Armour,
-                name = "A basic pair leather gloves",
-                ArmorRating = new ArmourRating()
-                {
-                    Armour = 2,
-                    Magic = 0
-                },
-                itemFlags = new EditableList<Item.Item.ItemFlags>()
-                {
-                    Item.Item.ItemFlags.equipable
-                },
-                Weight = 0.2,
-                equipable = true,
-                keywords = new List<string>()
-                {
-                    "leather",
-                    "gloves",
-                    "leather gloves"
-                }
-
-            };
-
+           
             var chest = new Item.Item
             {
                 name = "Basic looking wooden chest",
@@ -546,7 +531,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 },
                 containerItems = new List<Item.Item>()
                 {
-                    leather
+                    LeatherBody.LeatherVest()
                 }
             };
 
@@ -565,12 +550,39 @@ namespace MIMWebClient.Core.World.Tutorial
                isHiddenInRoom = true,
                 containerItems = new List<Item.Item>()
                 {
-                    leatherGloves
+                    LeatherHands.LeatherGloves()
                 }
             };
- 
+
+            var deskContainer = new Item.Item
+            {
+                name = "desk",
+                stuck = true,
+                type = Item.Item.ItemType.Container,
+                open = true,
+                canOpen = false,
+                container = true,
+                containerSize = 5,
+                location = Item.Item.ItemLocation.Room,
+                description = new Description(),
+                keywords = new List<string>(),
+                isHiddenInRoom = true,
+                containerItems = new List<Item.Item>()
+                {
+                    LeatherHands.LeatherGloves()
+                }
+            };
+
+            deskContainer.containerItems.Add(mapToGoblinCave);
+            deskContainer.containerItems.Add(new Item.Item()
+            {
+                 Gold = 5,
+                 type = Item.Item.ItemType.Gold
+                 
+            });
             room.items.Add(chest);
             room.items.Add(bedContainer);
+            room.items.Add(deskContainer);
 
             room.mobs.Add(Goblin.WeakGoblin());
 
