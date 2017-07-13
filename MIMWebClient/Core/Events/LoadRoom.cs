@@ -323,6 +323,12 @@ namespace MIMWebClient.Core.Events
                                                 .Skip(n - 1)
                                                 .FirstOrDefault();
 
+                var playerItemDescription = (n == -1)
+                    ? player.Inventory.Find(x => x.name.ToLower().Contains(commandOptions))
+                    : player.Inventory.FindAll(x => x.name.ToLower().Contains(item))
+                        .Skip(n - 1)
+                        .FirstOrDefault();
+
                 var targetPlayerId = string.Empty;
                 if (playerDescription != null)
                 {
@@ -522,6 +528,89 @@ namespace MIMWebClient.Core.Events
                     else
                     {
                         HubContext.SendToClient("You can't do that to a " + playerDescription.Name, player.HubGuid);
+                    }
+                }
+                else if (playerItemDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
+                {
+                    string descriptionText = string.Empty;
+                    string broadcastAction = string.Empty;
+
+                    if (keyword.Equals("look in", StringComparison.InvariantCultureIgnoreCase))
+                    {
+
+                        if (playerItemDescription.open == false)
+                        {
+                            HubContext.SendToClient("You need to open the " + playerItemDescription.name + " before you can look inside", player.HubGuid);
+                            return;
+                        }
+
+                        if (playerItemDescription.container == true)
+                        {
+                            if (playerItemDescription.containerItems.Count > 0)
+                            {
+                                HubContext.SendToClient("You look into the " + playerItemDescription.name + " and see:", player.HubGuid);
+
+                                foreach (var containerItem in playerItemDescription.containerItems)
+                                {
+                                    HubContext.SendToClient(containerItem.name, player.HubGuid);
+                                }
+                            }
+                            else
+                            {
+                                HubContext.SendToClient("You look into the " + playerItemDescription.name + " but it is empty", player.HubGuid);
+                            }
+
+
+                            foreach (var character in room.players)
+                            {
+                                if (player != character)
+                                {
+
+                                    var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} looks in a {playerItemDescription.name}";
+
+                                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            HubContext.SendToClient(playerItemDescription.name + " is not a container", player.HubGuid);
+                        }
+                    }
+                    else if (keyword.StartsWith("look"))
+                    {
+                        descriptionText = playerItemDescription.description.look;
+                        broadcastAction = " looks at a " + playerItemDescription.name;
+                    }
+                    else if (keyword.StartsWith("examine"))
+                    {
+                        descriptionText = playerItemDescription.description.exam;
+                        broadcastAction = " looks closely at a " + playerItemDescription.name;
+                    }
+
+                    if (!keyword.Equals("look in", StringComparison.InvariantCultureIgnoreCase))
+                    {
+
+                        if (!string.IsNullOrEmpty(descriptionText))
+                        {
+                            HubContext.SendToClient(descriptionText, player.HubGuid);
+
+                            foreach (var players in room.players)
+                            {
+                                if (player.Name != players.Name)
+                                {
+                                    HubContext.SendToClient(player.Name + broadcastAction,
+                                        players.HubGuid);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var result = AvsAnLib.AvsAn.Query(playerItemDescription.name);
+                            string article = result.Article;
+
+                            HubContext.SendToClient("You see nothing special about " + article + " " + playerItemDescription.name, player.HubGuid);
+                        }
                     }
                 }
                 else if (roomExitDescription != null)
