@@ -258,11 +258,14 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 QuestFindMob = "Shaman",
                 RewardXp = 1000,
                 RewardGold = 500,
-                PrerequisiteItem = new Item.Item()
+                PrerequisiteItem = new List<Item.Item>()
+                {
+                    new Item.Item()
                 {
                     name = "Gold",
                     type = Item.Item.ItemType.Gold,
                     Gold = 120
+                }
                 },
                 QuestGiver = Lance.Name,
                 PrerequisiteItemEmote = "puts his hands in his money pounch and hands you some gold. \"Use this to get yourself a weapon and some armor from the shops north east of Anker.\" ",

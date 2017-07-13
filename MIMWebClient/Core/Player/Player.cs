@@ -455,7 +455,7 @@ namespace MIMWebClient.Core.PlayerSetup
             this.KnownByName = true;
            
             this.QuestLog = new List<Quest>();
-
+            this.Quest = new List<Quest>();
             this.EventWake = "";
             this.EventOnEnter = "";
             this.EventOnComunicate = new Dictionary<string, string>();

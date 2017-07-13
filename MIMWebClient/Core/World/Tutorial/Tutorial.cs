@@ -11,6 +11,7 @@ using MIMWebClient.Core.Player;
 using MIMWebClient.Core.Room;
 using MIMWebClient.Core.World.Anker.Mobs;
 using MIMWebClient.Core.World.Anker.Mobs.Easy;
+using MIMWebClient.Core.World.Anker.Quests;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Clothing.Legs;
 using MIMWebClient.Core.World.Items.Clothing.ClothingBody;
 using Cache = MIMWebClient.Core.Events.Cache;
@@ -31,6 +32,7 @@ namespace MIMWebClient.Core.World.Tutorial
             {
                 var npc = room.mobs.FirstOrDefault(x => x.Name.Equals("Wilhelm"));
 
+                
                 if (string.IsNullOrEmpty(step))
                 {
     
@@ -44,7 +46,7 @@ namespace MIMWebClient.Core.World.Tutorial
                     var playerInRoom =
                         Cache.ReturnRooms()
                             .FirstOrDefault(
-                                x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"))
+                                x => x.area.Equals("Tutorial") && x.areaId.Equals(0) && x.region.Equals("Tutorial"))
                             .players.FirstOrDefault(x => x.Name.Equals(player.Name));
 
                     if (playerInRoom != null)
@@ -58,7 +60,7 @@ namespace MIMWebClient.Core.World.Tutorial
                     playerInRoom =
                         Cache.ReturnRooms()
                             .FirstOrDefault(
-                                x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"))
+                                x => x.area.Equals("Tutorial") && x.areaId.Equals(0) && x.region.Equals("Tutorial"))
                             .players.FirstOrDefault(x => x.Name.Equals(player.Name));
 
                     if (playerInRoom != null)
@@ -73,7 +75,7 @@ namespace MIMWebClient.Core.World.Tutorial
                     playerInRoom =
                         Cache.ReturnRooms()
                             .FirstOrDefault(
-                                x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"))
+                                x => x.area.Equals("Tutorial") && x.areaId.Equals(0) && x.region.Equals("Tutorial"))
                             .players.FirstOrDefault(x => x.Name.Equals(player.Name));
 
                     if (playerInRoom != null)

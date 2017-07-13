@@ -29,7 +29,7 @@ namespace MIMWebClient.Hubs
         {
             var motd = Data.loadFile("/motd");
             // Call the broadcastMessage method to update clients.
-               SendToClient(motd);            
+              // SendToClient(motd);            
         }
 
         #region input from user

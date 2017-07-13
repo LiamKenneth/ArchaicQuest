@@ -47,7 +47,7 @@ namespace MIMWebClient.Core.Player
         /// Quest complete when player gains item
         /// </summary>
         public Item.Item QuestItem { get; set; }
-        public Item.Item PrerequisiteItem { get; set; }
+        public List<Item.Item> PrerequisiteItem { get; set; }
         public string PrerequisiteItemEmote { get; set; }
 
         /// <summary>
