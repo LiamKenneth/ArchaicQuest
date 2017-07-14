@@ -77,21 +77,6 @@ namespace MIMWebClient.Core.Room
                 }
             }
 
-            foreach (var mob in room.mobs)
-            {
-
-                if (mob.EventOnEnter != null)
-                {
-                    Event.ParseCommand(mob.EventOnEnter, player, mob, room);
-                }
-
-            }
-
-            if (!string.IsNullOrEmpty(room.EventOnEnter))
-            {
-                Event.ParseCommand(room.EventOnEnter, player, null, room);
-            }
-
 
         }
 
@@ -483,7 +468,7 @@ namespace MIMWebClient.Core.Room
                                     //mob might be aggro
                                 }
 
-                                if (mob.DialogueTree != null)
+                                if (mob.DialogueTree.Count > 0)
                                 {
                                     var speak = mob.DialogueTree[0];
 
@@ -503,7 +488,12 @@ namespace MIMWebClient.Core.Room
                                     }
                                 }
 
-            
+                                if (mob.EventOnEnter != null)
+                                {
+                                    Event.ParseCommand(mob.EventOnEnter, player, mob, room);
+                                }
+
+
 
                                 foreach (var quest in player.QuestLog.Where(x => x.Completed == false))
                                 {
@@ -515,7 +505,15 @@ namespace MIMWebClient.Core.Room
 
 
 
+
                             }
+
+ 
+                            if (!string.IsNullOrEmpty(getNewRoom.EventOnEnter))
+                            {
+                                Event.ParseCommand(getNewRoom.EventOnEnter, player, null, room);
+                            }
+
 
                             Score.ReturnScoreUI(player);
                         }

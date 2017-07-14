@@ -81,28 +81,7 @@ namespace MIMWebClient.Core.Events
 
             var itemList = string.Empty;
 
-            ////clean items
-            //var conciseList = new List<Item.Item>();
-        
-            //foreach (var item in room.items)
-            //{
-            //    if (conciseList.FirstOrDefault(x => x.name.Equals(item.name)) == null)
-            //    {
-            //        conciseList.Add(item);
-            //    }
-            //    else
-            //    {
-            //        var getItem = conciseList.FirstOrDefault(x => x.Equals(item));
-
-            //        if (getItem != null)
-            //        {
-            //            getItem.count += 1;
-            //        }
-            //    }
-
-            //}
-            ////clean items
-
+ 
             foreach (var item in room.items)
             {
                 if (item != null)
@@ -170,11 +149,21 @@ namespace MIMWebClient.Core.Events
                     {
                         if (item.Status == Player.PlayerStatus.Standing)
                         {
+
                             playerList += LoadRoom.ShowObjectEffects(item) + " is here\r\n";
                         }
                         else if (item.Status == Player.PlayerStatus.Fighting)
                         {
-                            playerList += LoadRoom.ShowObjectEffects(item) + " is fighting " + item.Target.Name + "\r\n";
+
+                            if (item.Name == player.Name)
+                            {
+                                playerList += "You are fighting " + item.Target.Name + "\r\n";
+                            }
+                            else
+                            {
+                                playerList += LoadRoom.ShowObjectEffects(item) + " is fighting " + item.Target.Name +
+                                              "\r\n";
+                            }
                         }
                         else if (item.Status == PlayerSetup.Player.PlayerStatus.Resting)
                         {
@@ -221,31 +210,30 @@ namespace MIMWebClient.Core.Events
 
                     if (item.Status == Player.PlayerStatus.Standing)
                     {
-                        mobList += "<p class='roomItems'>" + article + " " + item.Name + " is here.<p>";
+                        mobList += "<p class='roomMob'>" + article + " " + item.NPCLongName + ".<p>";
                     }
                     else if (item.Status == Player.PlayerStatus.Fighting)
                     {
-                        mobList += "<p class='roomItems'>" + article + " " + item.Name + " is fighting " + item.Target.Name + "</p>";
+                        mobList += "<p class='roomMob'>" + article + " " + item.Name + " is fighting " + item.Target.Name + ".</p>";
                     }
                     else if (item.Status == PlayerSetup.Player.PlayerStatus.Resting)
                     {
-                        mobList += "<p class='roomItems'>" + article + " " + item.Name + " is resting.<p>";
+                        mobList += "<p class='roomMob'>" + article + " " + item.Name + " is resting.<p>";
                     }
                     else if (item.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
                     {
-                        mobList += "<p class='roomItems'>" + article + " " + item.Name + " is sleeping.<p>";
+                        mobList += "<p class='roomMob'>" + article + " " + item.Name + " is sleeping.<p>";
                     }
                     else 
                     {
-                        mobList += "<p class='roomItems'>" + article + " " + item.Name + " is here.<p>";
+                        mobList += "<p class='roomMob'>" + article + " " + item.NPCLongName + "<p>";
                     }
                 }
             }
 
 
             string displayRoom = "<p class='roomTitle'>" + roomTitle + "<p><p class='roomDescription'>" + roomDescription + "</p> <p class='RoomExits'>[ Exits: " + exitList.ToLower() + " ]</p>" + itemList + "\r\n" + playerList + "\r\n" + mobList;
-
-            //  Score.UpdateUiRoom(room.players.FirstOrDefault(x => x.Name.Equals(playerName)), displayRoom);
+       
             return displayRoom;
 
         }
@@ -662,7 +650,7 @@ namespace MIMWebClient.Core.Events
 
         public static string ShowObjectEffects(Player player)
         {
-            var name = player.Name;
+            var name = player.Type == Player.PlayerTypes.Player ? player.Name : player.NPCLongName;
 
             if (player.Affects?.FirstOrDefault(x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) != null)
             {

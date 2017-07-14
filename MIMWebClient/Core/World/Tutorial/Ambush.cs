@@ -70,6 +70,7 @@ namespace MIMWebClient.Core.World.Tutorial
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Wilhelm",
+                NPCLongName = "Wilhelm is here, looking around nervously",
                 KnownByName = true,
                 Type = PlayerSetup.Player.PlayerTypes.Mob,
                 Description = "Wilhelm has matted black hair, sharp hazel eyes and a cropped beard. He wears chain mail and wields a short sword.",

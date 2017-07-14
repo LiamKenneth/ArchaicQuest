@@ -301,6 +301,10 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonIgnoreIfNull]
         public Guid NPCId;
 
+        [BsonElement("nln")]
+        [BsonIgnoreIfNull]
+        public String NPCLongName;
+
         //NPC Properties
         [BsonElement("nr")]
         [BsonIgnoreIfNull]

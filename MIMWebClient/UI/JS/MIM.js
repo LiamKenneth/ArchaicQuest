@@ -198,8 +198,7 @@
             var name = char.Name.toLowerCase();
                 name = name.charAt(0).toUpperCase() + name.slice(1);
             
-            // alert(char.name);
-            server.welcome();
+         
 
             server.charSetup($.connection.hub.id, name, char.Email, char.Password, char.Gender, char.Race, char.Class, char.Strength, char.Dexterity, char.Constitution, char.Wisdom, char.Intelligence, char.Charisma);
             //  server.loadRoom($.connection.hub.id);

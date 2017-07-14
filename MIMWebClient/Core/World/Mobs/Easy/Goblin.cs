@@ -18,7 +18,8 @@ namespace MIMWebClient.Core.World.Anker.Mobs.Easy
             var WeakGoblin = new PlayerSetup.Player
             {
                 NPCId = Guid.NewGuid(),
-                Name = "A weak Goblin",
+                Name = "A skinny hunched Goblin",
+                NPCLongName = "A skinny hunched goblin snarls at you",
                 KnownByName = true,
                 Type = PlayerSetup.Player.PlayerTypes.Mob,
                 Description = "A weak goblin",

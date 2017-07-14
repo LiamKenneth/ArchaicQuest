@@ -25,11 +25,11 @@ namespace MIMWebClient.Hubs
         public static Player PlayerData { get; set; }
 
 
-        public void Welcome()
+        public void Welcome(string id)
         {
             var motd = Data.loadFile("/motd");
             // Call the broadcastMessage method to update clients.
-              // SendToClient(motd);            
+                SendToClient(motd, id);            
         }
 
         #region input from user
@@ -298,6 +298,9 @@ namespace MIMWebClient.Hubs
                 //well, you get no skills bro
             }
 
+
+            Welcome(PlayerData.HubGuid);
+
             _PlayerCache.TryAdd(id, PlayerData);
 
             loadRoom(PlayerData, id);
@@ -317,6 +320,7 @@ namespace MIMWebClient.Hubs
             Score.ReturnScoreUI(PlayerData);
             Score.UpdateUiPrompt(PlayerData);
             Score.UpdateUiInventory(PlayerData);
+
 
         }
 
