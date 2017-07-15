@@ -36,7 +36,7 @@ namespace MIMWebClient.Core.PlayerSetup
             string mageImgURL = "/UI/img/human.jpg";
 
             classList.Add(new PlayerClass("Fighter", fighterInfo, fighterImgURL));
-            classList.Add(new PlayerClass("Theif", thiefInfo, thiefImgURL));
+            classList.Add(new PlayerClass("Thief", thiefInfo, thiefImgURL));
             classList.Add(new PlayerClass("Cleric", clericInfo, clericImgURL));
             classList.Add(new PlayerClass("Mage", mageInfo, mageImgURL));
 

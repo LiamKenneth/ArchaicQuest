@@ -33,6 +33,7 @@ namespace MIMWebClient.Core.Events
                     HubContext.SendToClient(player.Name + " Flee's from combat", player.Target.HubGuid);
 
                     player.Target = null;
+                    player.ActiveFighting = false;
 
                     Room.Movement.Move(player, room, room.exits[exit].name);
 

@@ -392,9 +392,11 @@ namespace MIMWebClient.Core.World.Tutorial
 
             };
 
+            var gobby = Goblin.WeakGoblin();
+            gobby.HitPoints = 100;
 
 
-            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(gobby);
 
             room.Emotes.Add("The fire crackles and spits.");
             room.Emotes.Add("You hear a howl in the distance.");
