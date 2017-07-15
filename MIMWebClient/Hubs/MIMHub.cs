@@ -301,6 +301,13 @@ namespace MIMWebClient.Hubs
 
             Welcome(PlayerData.HubGuid);
 
+            var helpMessage = "<div style='\r\n    border: 1px dashed #555;\r\n    padding: 20px;\r\n    margin-bottom: 20px; max-width:540px;\r\n'><h2 style='color:yellow; font-size:20px;'>Welcome to ArchaicQuest</h2>" +
+                              "<p>Prepare yourself for a great adventure. Help can be found by typing\r\nhelp start which will tell you the basic commands in the game.\r\n\r\nIf you are struggling you can ask for help on the newbie channel by typing \r\nnewbie \'Then your message here, without the quotes\'</p>" +
+                              "<p>We also have a help file system which is used by typing help <topic>. For example\r\nhelp move.\r\n\r\nA small tutorial will now teach the basics of the game, if you get stuck. Remember the newbie channel or help start and it goes without saying you have to read.</p> <p>Have fun and enjoy your time here.</p>" +
+                              "\r\n\r\n<p style='color:#999;'>“A reader lives a thousand lives before he dies, said Jojen. The man who never reads lives only one.”\r\n―</p> <em style='color:#999'>George R.R. Martin, A Dance with Dragons</em></div>";
+
+            SendToClient(helpMessage, PlayerData.HubGuid);
+
             _PlayerCache.TryAdd(id, PlayerData);
 
             loadRoom(PlayerData, id);
