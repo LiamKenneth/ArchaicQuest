@@ -312,8 +312,8 @@ namespace MIMWebClient.Core.Events
                                                 .FirstOrDefault();
 
                 var playerItemDescription = (n == -1)
-                    ? player.Inventory.Find(x => x.name.ToLower().Contains(commandOptions))
-                    : player.Inventory.FindAll(x => x.name.ToLower().Contains(item))
+                    ? player?.Inventory.Find(x => x.name.ToLower().Contains(commandOptions))
+                    : player?.Inventory.FindAll(x => x.name.ToLower().Contains(item))
                         .Skip(n - 1)
                         .FirstOrDefault();
 

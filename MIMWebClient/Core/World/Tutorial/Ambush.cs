@@ -8,8 +8,12 @@ using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.Player;
 using MIMWebClient.Core.Room;
 using MIMWebClient.Core.World.Anker.Mobs.Easy;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Arms;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Body;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Feet;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Hands;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Head;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Legs;
 using Action = MIMWebClient.Core.Item.Action;
 
 namespace MIMWebClient.Core.World.Tutorial
@@ -393,7 +397,6 @@ namespace MIMWebClient.Core.World.Tutorial
             };
 
             var gobby = Goblin.WeakGoblin();
-            gobby.HitPoints = 100;
 
 
             room.mobs.Add(gobby);
@@ -572,7 +575,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 isHiddenInRoom = true,
                 containerItems = new List<Item.Item>()
                 {
-                    LeatherHands.LeatherGloves()
+                    LeatherLegs.LeatherLeggings()
                 }
             };
 
@@ -637,42 +640,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 doorName = null
 
             };
-
-            var leather = new Item.Item
-            {
-                armourType = Item.Item.ArmourType.Leather,
-                eqSlot = Item.Item.EqSlot.Legs,
-                description = new Description()
-                {
-                    look = "A pair of worn leather trousers.",
-                    exam =
-                        "A pair of worn leather trousers.",
-
-                },
-                location = Item.Item.ItemLocation.Room,
-                slot = Item.Item.EqSlot.Legs,
-                type = Item.Item.ItemType.Armour,
-                name = "A pair of worn leather trousers",
-                ArmorRating = new ArmourRating()
-                {
-                    Armour = 2,
-                    Magic = 0
-                },
-                itemFlags = new EditableList<Item.Item.ItemFlags>()
-                {
-                    Item.Item.ItemFlags.equipable
-                },
-                Weight = 0.2,
-                equipable = true,
-                keywords = new List<string>()
-                {
-                    "leather",
-                    "trousers",
-                    "leather trousers",
-                    "pants"
-                }
-
-            };
+ 
 
             var chest = new Item.Item
             {
@@ -698,10 +666,42 @@ namespace MIMWebClient.Core.World.Tutorial
                 },
                 containerItems = new List<Item.Item>()
                 {
-                    leather
+                    LeatherArms.LeatherSleeves()
+
                 }
             };
 
+
+            var desk = new RoomObject
+            {
+                name = "Desk",
+                look = "Pieces of paper, gold coins and bread crumbs lay scattered across the desk. A leather hat lays next to a small candle which illuminates the tent with an orange glow.",
+                examine = "Pieces of paper, gold coins and bread crumbs lay scattered across the desk. A leather hat lays next to a small candle which illuminates the tent with an orange glow.",
+            };
+
+
+            var deskContainer = new Item.Item
+            {
+                name = "desk",
+                stuck = true,
+                type = Item.Item.ItemType.Container,
+                open = true,
+                canOpen = false,
+                container = true,
+                containerSize = 5,
+                location = Item.Item.ItemLocation.Room,
+                description = new Description(),
+                keywords = new List<string>(),
+                isHiddenInRoom = true,
+                containerItems = new List<Item.Item>()
+                {
+                    LeatherHead.LeatherHelmet()
+                }
+            };
+
+           room.keywords.Add(desk);
+            room.items.Add(LeatherFeet.LeatherBoots());
+            room.items.Add(deskContainer);
             room.items.Add(chest);
 
             var goblin = Goblin.WeakGoblin();

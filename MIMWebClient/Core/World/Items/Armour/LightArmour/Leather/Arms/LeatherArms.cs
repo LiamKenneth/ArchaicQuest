@@ -2,27 +2,27 @@
 using Castle.Components.DictionaryAdapter;
 using MIMWebClient.Core.Item;
 
-namespace MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Body
+namespace MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Arms
 {
-    public class LeatherBody
+    public class LeatherArms
     {
-        public static Item.Item LeatherVest()
+        public static Item.Item LeatherSleeves()
         {
 
-            var leatherVest = new Item.Item
+            var leatherSleeves = new Item.Item
             {
                 armourType = Item.Item.ArmourType.Leather,
-                eqSlot = Item.Item.EqSlot.Torso,
+                eqSlot = Item.Item.EqSlot.Arms,
                 description = new Description()
                 {
-                    look = "A basic looking leather vest.",
-                    exam = "A basic looking leather vest.",
+                    look = "A basic pair of leather sleeves.",
+                    exam = "A basic pair of leather sleeves.",
 
                 },
                 location = Item.Item.ItemLocation.Room,
-                slot = Item.Item.EqSlot.Body,
+                slot = Item.Item.EqSlot.Arms,
                 type = Item.Item.ItemType.Armour,
-                name = "A simple leather vest",
+                name = "A basic pair of leather sleeves.",
                 ArmorRating = new ArmourRating()
                 {
                     Armour = 2,
@@ -37,14 +37,14 @@ namespace MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Body
                 keywords = new List<string>()
                 {
                     "leather",
-                    "vest",
-                    "leather vest"
+                    "sleeves",
+                    "leather sleevs"
                 }
 
             };
 
 
-            return leatherVest;
+            return leatherSleeves;
         }
 
 
