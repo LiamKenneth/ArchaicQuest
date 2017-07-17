@@ -582,6 +582,7 @@ namespace MIMWebClient.Core.World.Tutorial
             deskContainer.containerItems.Add(mapToGoblinCave);
             deskContainer.containerItems.Add(new Item.Item()
             {
+                name = "Gold",
                  Gold = 5,
                  type = Item.Item.ItemType.Gold
                  

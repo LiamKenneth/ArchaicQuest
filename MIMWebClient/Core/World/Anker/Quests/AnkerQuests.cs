@@ -4,6 +4,12 @@ using System.Linq;
 using System.Web;
 using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.Player;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Arms;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Body;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Feet;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Hands;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Head;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Legs;
 
 namespace MIMWebClient.Core.World.Anker.Quests
 {
@@ -18,8 +24,16 @@ namespace MIMWebClient.Core.World.Anker.Quests
                 Description = "Find and wear all the peices of leather armour.",
                 RewardXp = 500,
                 Type = Quest.QuestType.FindItem,
-                
-                RewardDialog = new DialogTree()
+                QuestItem = new List<Item.Item>()
+                {
+                    LeatherHead.LeatherHelmet(),
+                    LeatherBody.LeatherVest(),
+                    LeatherLegs.LeatherLeggings(),
+                    LeatherArms.LeatherSleeves(),
+                    LeatherFeet.LeatherBoots(),
+                    LeatherHands.LeatherGloves()
+                },
+                 RewardDialog = new DialogTree()
                 {
                     Message = "a weapon appears in your inventory"
                 },

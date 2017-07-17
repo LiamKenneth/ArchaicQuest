@@ -38,6 +38,7 @@ namespace MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Hands
                 },
                 Weight = 0.2,
                 equipable = true,
+                QuestItem = true,
                 keywords = new List<string>()
                 {
                     "leather",

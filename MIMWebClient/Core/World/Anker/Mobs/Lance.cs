@@ -287,8 +287,9 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 Description = "I would like some beer from Modo please",
                 Name = "Buy beer from modo and give to lance",
                 Type = Quest.QuestType.FindItem,
-                QuestItem = new Item.Item
+                QuestItem = new List<Item.Item>()
                 {
+                  new Item.Item() { 
                     name = "Light Beer",
                     type = Item.Item.ItemType.Drink,
                     Gold = 3,
@@ -298,6 +299,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                         room = "A beer has been left on the floor"
                     },
                     slot = Item.Item.EqSlot.Hands
+}
                 },
                 RewardXp = 200,
                 QuestGiver = Lance.Name,

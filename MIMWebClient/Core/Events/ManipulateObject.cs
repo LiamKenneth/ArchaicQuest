@@ -499,6 +499,8 @@ namespace MIMWebClient.Core.Events
                                     HubContext.SendToClient(roomMessage, character.HubGuid);
                                 }
                             }
+
+
                             room.items.Remove(roomItems[i]);
                         }
                         else
@@ -588,6 +590,7 @@ namespace MIMWebClient.Core.Events
                             }
                         }
 
+
                         containerItems.Remove(containerItems[i]);
                     }
                     else
@@ -639,7 +642,7 @@ namespace MIMWebClient.Core.Events
                             room.items.Remove(item);
                             item.location = Item.ItemLocation.Inventory;
                             player.Inventory.Add(item);
-
+            
                             var result = AvsAnLib.AvsAn.Query(item.name);
                             string article = result.Article;
 
@@ -720,6 +723,7 @@ namespace MIMWebClient.Core.Events
                        item.location = Item.ItemLocation.Inventory;
                         player.Inventory.Add(item);
 
+
                         var result = AvsAnLib.AvsAn.Query(item.name);
                         string article = result.Article;
 
@@ -782,9 +786,11 @@ namespace MIMWebClient.Core.Events
             }
 
             //save to cache
+            Quest.CheckIfGetItemQuestsComplete(player);
             Cache.updateRoom(room, currentRoom);
             Cache.updatePlayer(player, currentPlayer);
             Score.UpdateUiInventory(player);
+            Score.ReturnScoreUI(player);
             var roomdata = LoadRoom.DisplayRoom(room, player.Name);
             Score.UpdateUiRoom(player, roomdata);
         }
@@ -807,7 +813,7 @@ namespace MIMWebClient.Core.Events
 
             if (all[0].Equals("all", StringComparison.InvariantCultureIgnoreCase))
             {
-                var playerInv = player.Inventory;
+                var playerInv = player.Inventory.Where(x => x.type != Item.ItemType.Gold).ToList();
                 var playerInvCount = player.Inventory.Count;
 
                 for (int i = playerInvCount - 1; i >= 0; i--)
@@ -1141,7 +1147,7 @@ namespace MIMWebClient.Core.Events
                     {
                         //Find quest requires player to give item to the mob.
 
-                        if (quest.QuestGiver == foundThing.Name && quest.QuestItem.name == foundItem.name)
+                        if (quest.QuestGiver == foundThing.Name && quest.QuestItem?.FirstOrDefault(x => x.name == foundItem.name) != null)
                         {
                             // player completed quest
 
