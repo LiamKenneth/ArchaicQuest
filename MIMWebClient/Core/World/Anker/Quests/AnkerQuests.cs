@@ -21,7 +21,14 @@ namespace MIMWebClient.Core.World.Anker.Quests
             var quest = new Quest()
             {
                 Name = "Get Equipped!",
-                Description = "Find and wear all the peices of leather armour.",
+                Description = "<div class='questColor'><p>Loot the goblin camp, there is 6 pieces of leather armour hidden here that you can use.</p>" +
+                              "<ul><li>Leather Helmet</li>" +
+                              "<li>Leather vest</li>" +
+                              "<li>Leather sleeves</li>" +
+                              "<li>Leather gloves</li>" +
+                              "<li>Leather leggings</li>" +
+                              "<li>Leather boots</li></ul>" +
+                              "<p>You will need to look and examine to find all these items.</p></div>",
                 RewardXp = 500,
                 Type = Quest.QuestType.FindItem,
                 QuestItem = new List<Item.Item>()
@@ -35,7 +42,7 @@ namespace MIMWebClient.Core.World.Anker.Quests
                 },
                  RewardDialog = new DialogTree()
                 {
-                    Message = "a weapon appears in your inventory"
+                    Message = "a weapon appears in your inventory...test"
                 },
                 
             };
