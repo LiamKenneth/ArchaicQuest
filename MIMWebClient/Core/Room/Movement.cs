@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MIMWebClient.Core.World.Tutorial;
+using MIMWebClient.Hubs;
 
 namespace MIMWebClient.Core.Room
 {
@@ -15,7 +16,7 @@ namespace MIMWebClient.Core.Room
         public static void EnterRoom(Player player, Room room, string direction = "", bool teleported = false)
         {
             var directionOrigin = oppositeDirection(direction, true);
-         
+
             for (int i = 0; i < room.players.Count; i++)
             {
 
@@ -132,10 +133,10 @@ namespace MIMWebClient.Core.Room
 
                 if (player.Followers != null && player.Followers.Count > 0)
                 {
-                   
+
                     foreach (var follower in player.Followers.ToList())
                     {
-                     
+
                         if (follower.AreaId == player.AreaId && follower.Area == player.Area && follower.Region == player.Region)
                         {
 
@@ -161,7 +162,7 @@ namespace MIMWebClient.Core.Room
 
                 }
             }
-           
+
 
             if (!hasFly)
             {
@@ -180,34 +181,34 @@ namespace MIMWebClient.Core.Room
                 switch (direction)
                 {
                     case "North":
-                    {
-                        return "South";
-                    }
+                        {
+                            return "South";
+                        }
                     case "East":
-                    {
-                        return "West";
-                    }
+                        {
+                            return "West";
+                        }
                     case "West":
-                    {
-                        return "East";
-                    }
+                        {
+                            return "East";
+                        }
                     case "South":
-                    {
-                        return "North";
-                    }
+                        {
+                            return "North";
+                        }
                     case "Up":
-                    {
-                        return "Down";
-                    }
+                        {
+                            return "Down";
+                        }
                     case "Down":
-                    {
-                        return "Up";
-                    }
+                        {
+                            return "Up";
+                        }
                     default:
-                    {
-                        return string.Empty;
+                        {
+                            return string.Empty;
 
-                    }
+                        }
 
                 }
             }
@@ -215,34 +216,34 @@ namespace MIMWebClient.Core.Room
             switch (direction)
             {
                 case "North":
-                {
-                    return "from the South";
-                }
+                    {
+                        return "from the South";
+                    }
                 case "East":
-                {
-                    return "from the West";
-                }
+                    {
+                        return "from the West";
+                    }
                 case "West":
-                {
-                    return "from the East";
-                }
+                    {
+                        return "from the East";
+                    }
                 case "South":
-                {
-                    return "from the North";
-                }
+                    {
+                        return "from the North";
+                    }
                 case "Up":
-                {
-                    return "from down the stairs";
-                }
+                    {
+                        return "from down the stairs";
+                    }
                 case "Down":
-                {
-                    return "" + "" + "from Upstairs";
-                }
+                    {
+                        return "" + "" + "from Upstairs";
+                    }
                 default:
-                {
-                    return string.Empty;
+                    {
+                        return string.Empty;
 
-                }
+                    }
 
             }
 
@@ -262,7 +263,7 @@ namespace MIMWebClient.Core.Room
 
 
             //remove player from old room
-          //  PlayerManager.RemovePlayerFromRoom(roomData, player);
+            //  PlayerManager.RemovePlayerFromRoom(roomData, player);
 
             //exit message
             ExitRoom(player, roomData, null, true);
@@ -508,7 +509,7 @@ namespace MIMWebClient.Core.Room
 
                             }
 
- 
+
                             if (!string.IsNullOrEmpty(getNewRoom.EventOnEnter))
                             {
                                 Event.ParseCommand(getNewRoom.EventOnEnter, player, null, room);
@@ -530,10 +531,10 @@ namespace MIMWebClient.Core.Room
                 }
             }
         }
-    
 
 
-    /// <summary>
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="player"></param>
@@ -550,23 +551,31 @@ namespace MIMWebClient.Core.Room
                 room.exits = new List<Exit>();
             }
 
-          
+
             //Find Exit
             if (roomData.exits != null)
             {
-                var exit = roomData.exits.Find(x => x.name == direction);
+                var exit = roomData.exits.Find(x => x.name.StartsWith(direction, StringComparison.CurrentCultureIgnoreCase));
 
 
                 if (exit != null)
                 {
                     if (exit.open == false)
-                    {                    
+                    {
                         return;
+                    }
+
+                    if (roomData.players.Count > 0)
+                    {
+                        foreach (var player in roomData.players)
+                        {
+                            HubContext.SendToClient(mob.Name + " leaves " + exit.name, player.HubGuid);
+                        }
                     }
 
                     //remove player from old room
                     PlayerManager.RemoveMobFromRoom(roomData, mob);
- 
+
                     //change player Location
                     mob.Area = exit.area;
                     mob.AreaId = exit.areaId;
@@ -576,12 +585,12 @@ namespace MIMWebClient.Core.Room
                     try
                     {
                         Room getNewRoom = MIMWebClient.Hubs.MIMHub.getRoom(mob);
-                       
+
                         if (getNewRoom != null)
                         {
 
                             //enter message
-                               EnterRoom(mob, getNewRoom, direction);
+                            EnterRoom(mob, getNewRoom, direction);
                             //add player to new room
                             PlayerManager.AddMobToRoom(getNewRoom, mob);
 
@@ -599,7 +608,7 @@ namespace MIMWebClient.Core.Room
                                     //mob might be aggro
                                 }
 
- 
+
 
                                 if (!string.IsNullOrEmpty(mobb.EventOnEnter))
                                 {
@@ -611,7 +620,7 @@ namespace MIMWebClient.Core.Room
                                     Event.ParseCommand(room.EventOnEnter, mobb, null, room);
                                 }
 
-                              
+
 
                             }
                         }
@@ -621,11 +630,35 @@ namespace MIMWebClient.Core.Room
                         //log error
                     }
                 }
-        
+
             }
         }
 
 
+        public static async Task MobWalk(Player mob)
+        {
+            if (mob.PathList == null)
+            {
+                return;
+            }
+
+            var room = MIMHub.getRoom(mob);
+            string pathDir;
+
+            if (mob.PathCount == 0 || mob.PathCount >= mob.PathList.Count)
+            {
+                pathDir = mob.PathList[0];
+            }
+            else
+            {
+                pathDir = mob.PathList[mob.PathCount];
+            }
+
+            await MobMove(mob, null, room, pathDir);
+
+            mob.PathCount++;
+
+        }
 
 
         public static void ShowUIExits(Room room, string id)

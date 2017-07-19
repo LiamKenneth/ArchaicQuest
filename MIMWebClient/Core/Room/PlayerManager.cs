@@ -59,7 +59,7 @@ namespace MIMWebClient.Core.Room
         public static void RemoveMobFromRoom(Room room, Player mob)
         {
             var oldRoomData = room;
-            var playerToRemove = room.mobs.Find(p => p.Name == mob.Name);
+            var playerToRemove = room.mobs.FirstOrDefault(p => p.Name == mob.Name);
 
             if (playerToRemove != null)
             {

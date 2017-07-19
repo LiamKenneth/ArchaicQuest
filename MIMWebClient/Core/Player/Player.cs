@@ -311,6 +311,15 @@ namespace MIMWebClient.Core.PlayerSetup
         public bool Roam;
 
         //NPC Properties
+        [BsonElement("nph")]
+        [BsonIgnoreIfNull]
+        public List<string> PathList;
+
+        [BsonElement("nphc")]
+        [BsonIgnoreIfNull]
+        public int PathCount;
+
+        //NPC Properties
         [BsonElement("na")]
         [BsonIgnoreIfNull]
         public bool Aggro;
@@ -483,8 +492,6 @@ namespace MIMWebClient.Core.PlayerSetup
         /// <param name="player"></param>
         public static void SetState(Player player)
         {
-
-
 
             if (player.Target != null)
             {

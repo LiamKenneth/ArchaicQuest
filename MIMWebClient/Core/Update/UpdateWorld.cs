@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using MIMWebClient.Core.Events;
+using MIMWebClient.Core.Room;
 using MIMWebClient.Hubs;
 
 namespace MIMWebClient.Core.Update
@@ -36,11 +37,11 @@ namespace MIMWebClient.Core.Update
 
             foreach (var room in MIMHub._AreaCache.Values)
             {
-                if (room.players.Count > 0 && room.mobs.Count > 0)
-                {
-                    // check mob emotes
 
-                    foreach (var mob in room.mobs)
+                foreach (var mob in room.mobs)
+                {
+
+                    if (room.players.Count > 0 && room.mobs.Count > 0)
                     {
                         if (mob.Emotes != null && mob.HitPoints > 0)
                         {
@@ -48,6 +49,11 @@ namespace MIMWebClient.Core.Update
                             var emoteIndex = Helpers.diceRoll.Next(mob.Emotes.Count);
                             HubContext.broadcastToRoom(mob.Name + " " + mob.Emotes[emoteIndex], room.players, String.Empty);
                         }
+                    }
+
+                    if (mob.HitPoints > 0 && mob.PathList != null)
+                    {
+                        Movement.MobWalk(mob);
                     }
                 }
             }
@@ -95,6 +101,7 @@ namespace MIMWebClient.Core.Update
                 EmoteMob();
                 EmoteRoom();
                 KickIdlePlayers();
+
             }
 
 
@@ -114,7 +121,7 @@ namespace MIMWebClient.Core.Update
             }
             catch (Exception ex)
             {
-                
+
             }
         }
 

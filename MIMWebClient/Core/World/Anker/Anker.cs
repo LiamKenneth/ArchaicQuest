@@ -319,7 +319,9 @@ namespace MIMWebClient.Core.World.Anker
                 NPCLongName = "Black and White cat",
                 Type = Player.PlayerTypes.Mob,
                 Description = "This black cat's fur looks in pristine condition despite being a stray.",
-
+                AreaId = 0,
+                Area = "Anker",
+                Region = "Anker",
                 Strength = 12,
                 Dexterity = 12,
                 Constitution = 12,
@@ -331,7 +333,20 @@ namespace MIMWebClient.Core.World.Anker
                 Level = 2,
                 Status = Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
-                Inventory = new List<Item.Item>()
+                Inventory = new List<Item.Item>(),
+                Recall = new Recall()
+                {
+                    Region = "Anker",
+                    Area = "Anker",
+                    AreaId = 0,
+                },
+                PathList = new List<string>()
+                {
+                    "w",
+                    "n",
+                    "e",
+                    "s"
+                }
 
 
             };
@@ -427,7 +442,7 @@ namespace MIMWebClient.Core.World.Anker
             cat2.Recall = recall;
 
             room.mobs.Add(cat);
-            room.mobs.Add(cat);
+            room.mobs.Add(cat2);
 
 
             //test EQ
@@ -449,7 +464,7 @@ namespace MIMWebClient.Core.World.Anker
             var greeves = FullPlateGreaves.SteelGreevesOfTyr();
             room.items.Add(greeves);
 
- 
+
 
             return room;
         }
@@ -2229,7 +2244,7 @@ namespace MIMWebClient.Core.World.Anker
             room.exits.Add(east);
             room.exits.Add(south);
             room.exits.Add(west);
- 
+
 
             return room;
         }
@@ -3132,7 +3147,7 @@ namespace MIMWebClient.Core.World.Anker
             room.exits.Add(east);
             room.exits.Add(South);
             room.exits.Add(west);
- 
+
 
             return room;
         }
@@ -3225,7 +3240,7 @@ namespace MIMWebClient.Core.World.Anker
             // Create Exits
 
             room.exits.Add(south);
-             
+
 
             return room;
         }
