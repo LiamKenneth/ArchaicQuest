@@ -22,6 +22,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Lance",
+                NPCLongName = "Lance",
                 KnownByName = true,
                 Type = PlayerSetup.Player.PlayerTypes.Mob,
                 Description = "The elder of the village anker",

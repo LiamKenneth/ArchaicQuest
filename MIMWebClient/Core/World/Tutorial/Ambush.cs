@@ -30,7 +30,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 area = "Tutorial",
                 areaId = 0,
                 title = "Deep in the forest",
-                description = "<p>Large trees tower high above all around you and Wilhelm as you tread lightly through the thick woods. No end to the forest is in sight, every way you look is endless amounts of bushes and trees with wide branches reaching out in everything direction blocking the sun.</p>",
+                description = "<p>Large trees tower high above all around you and Wilhelm as you tread lightly through the thick woods. No end to the forest is in sight, every way you look is endless amounts of bushes and trees with wide branches reaching out in everything direction blocking the sun.</p>  <p class='RoomExits'>[Hint] You move by typing North, East, South, West or n/e/s/w for short. The Exit list will tell you which directions are possible.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -201,7 +201,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 areaId = 1,
                 title = "Deep in the forest",
                 description = "<p>Behind you the sounds of swords clashing fill the night air along with never ending goblin screams echoing through the tall thick trees all around you. " +
-                              "Between the trees to the north west you see what looks to be a small camp with fire, Maybe you can get some help there.</p> <p class='RoomExits'>[Hint] You move by typing North, East, South, West or n/e/s/w for short. The Exit list will tell you which directions are possible.</p>",
+                              "Between the trees to the north west you see what looks to be a small camp with fire, Maybe you can get some help there.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -352,7 +352,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 name = "East",
                 area = "Tutorial",
                 region = "Tutorial",
-                areaId = 10,
+                areaId = 6,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false,
@@ -584,6 +584,7 @@ namespace MIMWebClient.Core.World.Tutorial
             {
                 name = "Gold",
                  Gold = 5,
+                 count = 5,
                  type = Item.Item.ItemType.Gold
                  
             });
@@ -719,6 +720,309 @@ namespace MIMWebClient.Core.World.Tutorial
             return room;
         }
 
+        public static Room.Room TutorialLostInTheWoods3()
+        {
+
+            var room = new Room.Room
+            {
+                region = "Tutorial",
+                area = "Tutorial",
+                areaId = 6,
+                title = "Deep in the forest",
+                description = "<p>The only light source is the faint light from the camp fire to the west. Errie shaped shadows flicker off the trees and shrubs. A path to the west leads deeper in to the forest.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<PlayerSetup.Player>(),
+                terrain = Room.Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<PlayerSetup.Player>(),
+                players = new List<PlayerSetup.Player>(),
+                fighting = new List<string>(),
+                clean = true,
+ 
+
+
+            };
+
+            var east = new Exit
+            {
+                name = "East",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 7,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = false,
+                canOpen = false,
+                open = true,
+                doorName = null
+
+            };
+
+
+            var west = new Exit
+            {
+                name = "West",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 3,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = false,
+                canOpen = false,
+                open = true,
+                doorName = null
+
+            };
+
+            room.exits.Add(east);
+            room.exits.Add(west);
+
+            return room;
+        }
+
+        public static Room.Room TutorialLostInTheWoods4()
+        {
+
+            var room = new Room.Room
+            {
+                region = "Tutorial",
+                area = "Tutorial",
+                areaId = 7,
+                title = "Deep in the forest",
+                description = "<p>The thick trees and foliage dominate the area, a path has been made towards the north. Faint flickering light can be seen to the west. The soft sound of water flowing can be heard to the south</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<PlayerSetup.Player>(),
+                terrain = Room.Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<PlayerSetup.Player>(),
+                players = new List<PlayerSetup.Player>(),
+                fighting = new List<string>(),
+                clean = true,
+
+
+
+            };
+
+            var west = new Exit
+            {
+                name = "West",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 6,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = false,
+                canOpen = false,
+                open = true,
+                doorName = null
+
+            };
+
+
+            var north = new Exit
+            {
+                name = "North",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 9,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = false,
+                canOpen = false,
+                open = true,
+                doorName = null
+
+            };
+
+            var south = new Exit
+            {
+                name = "South",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 8,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = false,
+                canOpen = false,
+                open = true,
+                doorName = null
+
+            };
+
+            room.exits.Add(north);
+
+            room.exits.Add(south);
+
+            room.exits.Add(west);
+            return room;
+        }
+
+        public static Room.Room TutorialLostInTheWoods5()
+        {
+
+            var room = new Room.Room
+            {
+                region = "Tutorial",
+                area = "Tutorial",
+                areaId = 8,
+                title = "A natural spring",
+                description = "<p>A small clearing surrounds a natural spring which trickles into a pool of water, it looks clean enough to drink as a small clear stream flows from it snaking further into the woods.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<PlayerSetup.Player>(),
+                terrain = Room.Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<PlayerSetup.Player>(),
+                players = new List<PlayerSetup.Player>(),
+                fighting = new List<string>(),
+                clean = true,
+
+
+
+            };
+
+ 
+
+            var north = new Exit
+            {
+                name = "North",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 7,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = false,
+                canOpen = false,
+                open = true,
+                doorName = null
+
+            };
+
+ 
+            room.exits.Add(north);
+
+            return room;
+        }
+
+        public static Room.Room TutorialLostInTheWoods6()
+        {
+
+            var room = new Room.Room
+            {
+                region = "Tutorial",
+                area = "Tutorial",
+                areaId = 9,
+                title = "Deep in the forest",
+                description = "<p>Thick tall trees are dotted all around you with thick bushes and brambles almost filling the gaps between. The vague path conintues in all directions all of which look the same.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<PlayerSetup.Player>(),
+                terrain = Room.Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<PlayerSetup.Player>(),
+                players = new List<PlayerSetup.Player>(),
+                fighting = new List<string>(),
+                clean = true,
+
+
+
+            };
+
+
+
+            var north = new Exit
+            {
+                name = "North",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 10,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = false,
+                canOpen = false,
+                open = true,
+                doorName = null
+
+            };
+
+
+            var east = new Exit
+            {
+                name = "East",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 10,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = false,
+                canOpen = false,
+                open = true,
+                doorName = null
+
+            };
+
+
+            var south = new Exit
+            {
+                name = "South",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 7,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = false,
+                canOpen = false,
+                open = true,
+                doorName = null
+
+            };
+
+
+
+            var west = new Exit
+            {
+                name = "West",
+                area = "Tutorial",
+                region = "Tutorial",
+                areaId = 10,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false,
+                canLock = false,
+                canOpen = false,
+                open = true,
+                doorName = null
+
+            };
+
+
+            room.exits.Add(north);
+            room.exits.Add(east);
+            room.exits.Add(south);
+            room.exits.Add(west);
+
+            return room;
+        }
+
 
         public static Room.Room TutorialRoom2()
         {
@@ -729,7 +1033,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 area = "Tutorial",
                 areaId = 10,
                 title = "Deep in the forest",
-                description = "<p>You run forward, fleeing the ambush. You look back for one last time to see Wilhelm let out an ear piercing scream as he is over run by the goblins. " +
+                description = "<p>You turn your head as you hear an ear piercing scream in the distant. No doubt in your mind that it was Wilhelm. " +
                               "Turning back around you greet a club that whacks you in the face sending you sprawling across the floor, your ears are ringing then everything goes black.</p>",
 
                 //Defaults

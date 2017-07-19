@@ -208,13 +208,15 @@ namespace MIMWebClient.Core.Events
                         article = string.Empty;
                     }
 
+                    var npcName = !string.IsNullOrEmpty(item.NPCLongName) ?item.NPCLongName : $"{item.Name} is here";
+
                     if (item.Status == Player.PlayerStatus.Standing)
                     {
-                        mobList += "<p class='roomMob'>" + article + " " + item.NPCLongName + ".<p>";
+                        mobList += "<p class='roomMob'>" + article + " " + npcName + ".<p>";
                     }
                     else if (item.Status == Player.PlayerStatus.Fighting)
                     {
-                        mobList += "<p class='roomMob'>" + article + " " + item.Name + " is fighting " + item.Target.Name + ".</p>";
+                        mobList += "<p class='roomMob'>" + article + " " + item.Name + " is fighting " + npcName + ".</p>";
                     }
                     else if (item.Status == PlayerSetup.Player.PlayerStatus.Resting)
                     {
@@ -226,7 +228,7 @@ namespace MIMWebClient.Core.Events
                     }
                     else 
                     {
-                        mobList += "<p class='roomMob'>" + article + " " + item.NPCLongName + "<p>";
+                        mobList += "<p class='roomMob'>" + article + " " + npcName + "<p>";
                     }
                 }
             }

@@ -316,6 +316,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Black and White cat",
+                NPCLongName = "Black and White cat",
                 Type = Player.PlayerTypes.Mob,
                 Description = "This black cat's fur looks in pristine condition despite being a stray.",
 
@@ -339,6 +340,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Black and White cat",
+                NPCLongName = "Black and White cat",
                 Type = Player.PlayerTypes.Mob,
                 Description = "This black cat's fur looks in pristine condition despite being a stray.",
                 Strength = 12,
@@ -898,6 +900,7 @@ namespace MIMWebClient.Core.World.Anker
             var idiot = new Player
             {
                 Name = "The Village idiot",
+                NPCLongName = "The Village idiot",
                 KnownByName = true,
                 Region = "Anker",
                 Area = "Anker",
@@ -1331,6 +1334,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Modo",
+                NPCLongName = "Modo",
                 KnownByName = true,
                 Type = Player.PlayerTypes.Mob,
                 Description = "The owner of The Red Lion is a tall and intimidating appearance. This long-bearded man immediately makes you feel uncomfortable. He does not seem to notice you.",
@@ -1408,6 +1412,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Dyten",
+                NPCLongName = "Dyten",
                 KnownByName = true,
                 Type = Player.PlayerTypes.Mob,
                 Description = "This weathered old man probably never leaves this place. His cloudy eyes seem to seek something at the bottom of his glass.",

@@ -213,6 +213,10 @@ namespace MIMWebClient.Hubs
             string roomData = ReturnRoom(id);
 
             this.Clients.Caller.addNewMessageToPage(roomData, true);
+
+            var room = getRoom(playerData);
+            //start tut
+            Tutorial.setUpTut(playerData, room, string.Empty, string.Empty);
             Score.UpdateUiRoom(playerData, roomData);
 
         }

@@ -36,6 +36,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Ferron",
+                NPCLongName = "Ferron",
                 KnownByName = true,
                 Type = PlayerSetup.Player.PlayerTypes.Mob,
                 Description = "The black smith",

@@ -35,7 +35,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 
                 if (string.IsNullOrEmpty(step))
                 {
-    
+                    await Task.Delay(1000);
 
                     HubContext.SendToClient("<span class='sayColor'>" +
                                             npc.Name + " says to you \"I don't think we have much further to go " + player.Name + ".\"</span>",
@@ -231,7 +231,7 @@ namespace MIMWebClient.Core.World.Tutorial
                     //remove player from tutorial room
                     var oldRoom = Cache.ReturnRooms()
                         .FirstOrDefault(
-                            x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"));
+                            x => x.area.Equals("Tutorial") && x.areaId.Equals(player.AreaId) && x.region.Equals("Tutorial"));
 
                     if (oldRoom != null && oldRoom.players.Contains(player))
                     {
@@ -247,81 +247,15 @@ namespace MIMWebClient.Core.World.Tutorial
                         npc.Name + " says \"You were in a bad way when we found you, I didn't think you would wake.\"</span>",
                         player.HubGuid);
 
-                    await Task.Delay(2000);
-
-                    HubContext.SendToClient(npc.Name + " gets a pair of trousers, a plain top and hands them to you.",
-                        player.HubGuid);
-
-                    player.Inventory.Add(ClothingBody.PlainTop());
-                    player.Inventory.Add(ClothingLegs.PlainTrousers());
-
-                    Score.UpdateUiInventory(player);
-
-                    await Task.Delay(2000);
-
-                    HubContext.SendToClient("<span class='sayColor'>" + npc.Name + " says \"Wear them, you can't walk around naked I am afraid.\"</span>",
-                        player.HubGuid);
-
-                    await Task.Delay(2000);
-
-                    HubContext.SendToClient(
-                        "<p class='RoomExits'>[Hint] To view items you are carrying type Inventory or i for short</p>",
-                        player.HubGuid);
-
                     HubContext.SendToClient(npc.Name + " smiles at you.", player.HubGuid);
 
                     await Task.Delay(2000);
 
-                    HubContext.SendToClient(
-                        "<p class='RoomExits'>[Hint] Type wear trousers and wear shirt or alternatively wear all</p>",
-                        player.HubGuid);
-
-                }
-
-                if (step != null && step.Contains("plain"))
-                {
-
-                    if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
-                    {
-                        return;
-                    }
-
-
-
-                    if (player.Equipment.Body.Equals(ClothingBody.PlainTop().name) &&
-                        !player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name))
-                    {
-                        HubContext.SendToClient("<span class='sayColor'>" + 
-                            npc.Name + " says \"It fits well, don't forget to wear the trousers too.\"</span>",
-                            player.HubGuid);
-
-                        await Task.Delay(2000);
-
-                        return;
-
-                    }
-
-                    if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) &&
-                        !player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
-                    {
-
-
-                        HubContext.SendToClient("<span class='sayColor'>" + npc.Name + " says \"It fits well, don't forget to wear the top too.\"</span>",
-                            player.HubGuid);
-
-                        await Task.Delay(2000);
-
-                        return;
-
-                    }
-
-                    if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) &&
-                        player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
-                    {
+                  
 
                         HubContext.SendToClient("<span class='sayColor'>" +
                             npc.Name +
-                            " says \"Excellent, I have one request for you and that is to speak to Lance the Elder of the village.\"</span>",
+                            " says \"Lance has been asking about you, he's the Elder of the village.\"</span>",
                             player.HubGuid);
 
                         HubContext.SendToClient("<span class='sayColor'>" +
@@ -331,7 +265,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                         HubContext.SendToClient("<span class='sayColor'>" +
                             npc.Name +
-                            " says \"You will found him in the Square of Anker just leave south and follow the hill path in to town you can't miss the Square.\"</span>",
+                            " says \"You will found him in the Square of Anker just leave south and follow the hill path into town, you can't miss the Square.\"</span>",
                             player.HubGuid);
 
 
@@ -351,7 +285,7 @@ namespace MIMWebClient.Core.World.Tutorial
                             npc.Name +
                             " waves to you, may Tyr bless you.",
                             player.HubGuid);
-                    }
+                 
 
                 }
             }
@@ -403,7 +337,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                     player.Area = "Tutorial";
                     player.Region = "Tutorial";
-                    player.AreaId = 3;
+                    player.AreaId = 11;
 
                     var exit = new Exit
                     {
@@ -448,7 +382,7 @@ namespace MIMWebClient.Core.World.Tutorial
                     var playerInRoom =
                         Cache.ReturnRooms()
                             .FirstOrDefault(
-                                x => x.area.Equals("Tutorial") && x.areaId.Equals(3) && x.region.Equals("Tutorial"))
+                                x => x.area.Equals("Tutorial") && x.areaId.Equals(11) && x.region.Equals("Tutorial"))
                             .players.FirstOrDefault(x => x.Name.Equals(player.Name));
 
 

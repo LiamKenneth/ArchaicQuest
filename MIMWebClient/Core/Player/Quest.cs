@@ -126,10 +126,21 @@ namespace MIMWebClient.Core.Player
                     HubContext.SendToClient("You gain " + findQuest.RewardXp, player.HubGuid);
                     HubContext.SendToClient("You gain " + findQuest.RewardGold, player.HubGuid);
 
+                    var rewardItem = findQuest?.RewardItem;
+
+                    if (rewardItem != null)
+                    {
+                        rewardItem.location = Item.Item.ItemLocation.Inventory;
+
+                        player.Inventory.Add(rewardItem);
+                    }
+
                     player.Experience += findQuest.RewardXp;
                     player.Gold = findQuest.RewardGold;
 
                     //check if player level
+                    var xp = new Experience();
+                    xp.GainLevel(player);
                     //update ui
                     Score.ReturnScoreUI(player);
                    

@@ -10,6 +10,7 @@ using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Feet;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Hands;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Head;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Legs;
+using MIMWebClient.Core.World.Items.Weapons.DaggerBasic;
 
 namespace MIMWebClient.Core.World.Anker.Quests
 {
@@ -30,6 +31,7 @@ namespace MIMWebClient.Core.World.Anker.Quests
                               "<li>Leather boots</li></ul>" +
                               "<p>You will need to look and examine to find all these items.</p></div>",
                 RewardXp = 500,
+                RewardGold = 20,
                 Type = Quest.QuestType.FindItem,
                 QuestItem = new List<Item.Item>()
                 {
@@ -42,8 +44,9 @@ namespace MIMWebClient.Core.World.Anker.Quests
                 },
                  RewardDialog = new DialogTree()
                 {
-                    Message = "a weapon appears in your inventory...test"
+                    Message = "A curved dagger appears in your inventory...test"
                 },
+                 RewardItem = DaggerBasic.BronzeCurvedDagger()
                 
             };
 
