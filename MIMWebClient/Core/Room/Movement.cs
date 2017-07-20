@@ -469,7 +469,7 @@ namespace MIMWebClient.Core.Room
                                     //mob might be aggro
                                 }
 
-                                if (mob.DialogueTree.Count > 0)
+                                if (mob.DialogueTree != null && mob.DialogueTree.Count > 0)
                                 {
                                     var speak = mob.DialogueTree[0];
 
@@ -542,8 +542,8 @@ namespace MIMWebClient.Core.Room
         /// <param name="direction"></param>
         public static async Task MobMove(Player mob, Player ThingYourFollowing, Room room, string direction)
         {
-            await Task.Delay(250);
 
+ 
             Room roomData = room;
 
             if (roomData.exits == null)
@@ -596,7 +596,7 @@ namespace MIMWebClient.Core.Room
 
 
                             //NPC Enter event here
-                            foreach (var mobb in getNewRoom.mobs)
+                            foreach (var mobb in getNewRoom.mobs.ToList())
                             {
 
                                 if (mobb.Greet)
@@ -647,14 +647,15 @@ namespace MIMWebClient.Core.Room
 
             if (mob.PathCount == 0 || mob.PathCount >= mob.PathList.Count)
             {
-                pathDir = mob.PathList[0];
+               mob.PathCount = 0;
+               pathDir = mob.PathList[0];
             }
             else
             {
                 pathDir = mob.PathList[mob.PathCount];
             }
 
-            await MobMove(mob, null, room, pathDir);
+            MobMove(mob, null, room, pathDir);
 
             mob.PathCount++;
 

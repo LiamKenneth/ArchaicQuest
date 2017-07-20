@@ -2292,28 +2292,10 @@ namespace MIMWebClient.Core.World.Anker
 
             };
 
-            var villager2 = new Player()
-            {
-                Name = "Female villager",
-                Gender = "Female",
-                Strength = 12,
-                Dexterity = 12,
-                Constitution = 12,
-                Wisdom = 12,
-                Intelligence = 12,
-                Charisma = 12,
-                Level = 10,
-                HitPoints = 210,
-                MaxHitPoints = 210,
-                MovePoints = 200,
-                MaxMovePoints = 200,
-                Description = "A female villager",
-                Type = Player.PlayerTypes.Mob
-
-            };
+            var alice = Alice.AliceNpc();
 
             room.mobs.Add(villager);
-            room.mobs.Add(villager2);
+            room.mobs.Add(alice);
 
             #region exits
 

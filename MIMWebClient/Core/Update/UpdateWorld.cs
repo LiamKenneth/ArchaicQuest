@@ -47,13 +47,9 @@ namespace MIMWebClient.Core.Update
                         {
                             await Task.Delay(5000);
                             var emoteIndex = Helpers.diceRoll.Next(mob.Emotes.Count);
-                            HubContext.broadcastToRoom(mob.Name + " " + mob.Emotes[emoteIndex], room.players, String.Empty);
+                            HubContext.broadcastToRoom(mob.Name + " " + mob.Emotes[emoteIndex], room.players,
+                                String.Empty);
                         }
-                    }
-
-                    if (mob.HitPoints > 0 && mob.PathList != null)
-                    {
-                        Movement.MobWalk(mob);
                     }
                 }
             }
@@ -183,11 +179,32 @@ namespace MIMWebClient.Core.Update
 
         public static async Task MoveMob()
         {
-            //await Task.Delay(5000);
 
-            //HubContext.getHubContext.Clients.All.addNewMessageToPage("This task will update Mobs every 5 seconds and not block the game");
+            try
+            {
+                while (true)
+                {
 
-            //UpdateMob();
+                    var delay = Helpers.Rand(250, 60000);
+                    await Task.Delay(delay);
+
+                    foreach (var room in MIMHub._AreaCache.Values)
+                    {
+                     
+                        foreach (var mob in room.mobs.ToList())
+                        {
+      
+                            if (mob.HitPoints > 0 && mob.PathList != null)
+                            {
+                                Movement.MobWalk(mob);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
 }

@@ -326,6 +326,7 @@
     <Compile Include="Core\Update\UpdateWorld.cs" />
     <Compile Include="Core\Util\TruncateString.cs" />
     <Compile Include="Core\World\Anker\Anker.cs" />
+    <Compile Include="Core\World\Anker\Mobs\Alice.cs" />
     <Compile Include="Core\World\Anker\Mobs\Anika.cs" />
     <Compile Include="Core\World\Anker\Mobs\Ferron.cs" />
     <Compile Include="Core\World\Anker\Mobs\Lance.cs" />
