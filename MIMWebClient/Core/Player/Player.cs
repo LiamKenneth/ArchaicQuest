@@ -144,6 +144,9 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonIgnore]
         public Player Following { get; set; }
 
+        [BsonIgnore]
+        public string Pose { get; set; }
+
         //Game stats
         [BsonElement("ex")]
         public int Explored;

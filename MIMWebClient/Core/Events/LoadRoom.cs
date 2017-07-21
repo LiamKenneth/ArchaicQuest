@@ -155,7 +155,7 @@ namespace MIMWebClient.Core.Events
                         else if (item.Status == Player.PlayerStatus.Fighting)
                         {
 
-                            if (item.Name == player.Name)
+                            if (item.Target.Name == player.Name)
                             {
                                 playerList += "You are fighting " + item.Target.Name + "\r\n";
                             }
@@ -216,7 +216,7 @@ namespace MIMWebClient.Core.Events
                     }
                     else if (item.Status == Player.PlayerStatus.Fighting)
                     {
-                        mobList += "<p class='roomMob'>" + article + " " + item.Name + " is fighting " + npcName + ".</p>";
+                        mobList += "<p class='roomMob'>" + article + " " + item.Name + " is fighting " + item.Target.Name + ".</p>";
                     }
                     else if (item.Status == PlayerSetup.Player.PlayerStatus.Resting)
                     {
@@ -224,7 +224,14 @@ namespace MIMWebClient.Core.Events
                     }
                     else if (item.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
                     {
-                        mobList += "<p class='roomMob'>" + article + " " + item.Name + " is sleeping.<p>";
+                        if (!string.IsNullOrEmpty(item.Pose))
+                        {
+                            mobList += "<p class='roomMob'>" + item.Pose +"<p>";
+                        }
+                        else
+                        {
+                            mobList += "<p class='roomMob'>" + article + " " + item.Name + " is sleeping.<p>";
+                        }
                     }
                     else 
                     {

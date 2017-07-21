@@ -196,7 +196,27 @@ namespace MIMWebClient.Core.Update
       
                             if (mob.HitPoints > 0 && mob.PathList != null)
                             {
-                                Movement.MobWalk(mob);
+                                if (mob.Guard || mob.AreaId != mob.Recall.AreaId)
+                                {
+                                   await Movement.MobWalk(mob);
+                                   await Task.Delay(120);
+                                }
+                              else
+                                {
+                                     if (Time.isDay())
+                                    {
+                                        mob.Pose = string.Empty;
+                                        mob.Status = PlayerSetup.Player.PlayerStatus.Standing;
+                                        await Movement.MobWalk(mob);
+                                        await Task.Delay(120);
+
+                                    }
+                                    else
+                                    {
+                                        mob.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
+                                        mob.Pose = mob.Name + " is here, sleeping on the bed";
+                                    }
+                                }
                             }
                         }
                     }

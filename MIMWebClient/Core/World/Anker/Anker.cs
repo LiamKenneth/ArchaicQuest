@@ -2060,7 +2060,7 @@ namespace MIMWebClient.Core.World.Anker
             #endregion
             room.exits.Add(north);
             room.exits.Add(south);
-
+            room.mobs.Add(AnkerGuard.AnkerGuardNpc2());
 
             return room;
         }
@@ -2292,10 +2292,22 @@ namespace MIMWebClient.Core.World.Anker
 
             };
 
-            var alice = Alice.AliceNpc();
+            var bed = new Item.Item()
+            {
+                name = "bed",
+                description = new Description()
+                {
+                    room = "A small bed up against the right wall",
+                    look = "The bed has a simple cotton blanket and a simple pillow"
+                },
+                stuck = true
+            };
 
+            room.items.Add(bed);
+ 
             room.mobs.Add(villager);
-            room.mobs.Add(alice);
+            room.mobs.Add(Alice.AliceNpc());
+ 
 
             #region exits
 
@@ -2321,6 +2333,7 @@ namespace MIMWebClient.Core.World.Anker
 
             return room;
         }
+
 
         public static Room AnkerHome2()
         {
@@ -2761,7 +2774,7 @@ namespace MIMWebClient.Core.World.Anker
 
             };
 
-
+            room.mobs.Add(AnkerGuard.AnkerGuardNpc());
 
 
             #region exits

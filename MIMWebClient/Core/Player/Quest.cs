@@ -123,8 +123,8 @@ namespace MIMWebClient.Core.Player
                     findQuest.Completed = true;
 
                     HubContext.SendToClient(findQuest.RewardDialog.Message, player.HubGuid);
-                    HubContext.SendToClient("You gain " + findQuest.RewardXp, player.HubGuid);
-                    HubContext.SendToClient("You gain " + findQuest.RewardGold, player.HubGuid);
+                    HubContext.SendToClient("You gain " + findQuest.RewardXp + " Experience Points", player.HubGuid);
+                    HubContext.SendToClient("You gain " + findQuest.RewardGold + " gold pieces", player.HubGuid);
 
                     var rewardItem = findQuest?.RewardItem;
 

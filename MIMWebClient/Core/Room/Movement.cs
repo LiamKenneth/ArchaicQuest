@@ -655,7 +655,7 @@ namespace MIMWebClient.Core.Room
                 pathDir = mob.PathList[mob.PathCount];
             }
 
-            MobMove(mob, null, room, pathDir);
+          await  MobMove(mob, null, room, pathDir);
 
             mob.PathCount++;
 
