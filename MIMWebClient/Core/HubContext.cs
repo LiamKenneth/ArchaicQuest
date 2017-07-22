@@ -153,6 +153,7 @@ namespace MIMWebClient.Core
                      PlayerManager.RemovePlayerFromRoom(room, Player);
 
 
+
                     Save.UpdatePlayer(Player);
 
                     SendToClient("Gods take note of your progress", playerId);

@@ -86,7 +86,7 @@ namespace MIMWebClient.Core.Events
                                                     "<li>emote</li></ul>" +
                                                     "<h2>Combat</h2><ul>" +
                                                     "<li>kill, cast, flee, skills, spells</li></ul>" +
-                                                    "<h2>Game infor</h2>" +
+                                                    "<h2>Game info</h2>" +
                                                     "<ul><li>who</li></ul>" +
                                                     "<h2>Rules</h2>" +
                                                     "<p>Rules here are simple, don't ruin the fun for other people or abuse any bugs.</p>" +

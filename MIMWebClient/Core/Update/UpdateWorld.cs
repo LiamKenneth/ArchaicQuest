@@ -158,6 +158,11 @@ namespace MIMWebClient.Core.Update
                                     x.Value.area.Equals(player.Value.Area) && x.Value.areaId.Equals(player.Value.AreaId) &&
                                     x.Value.region.Equals(player.Value.Region));
 
+
+                        PlayerSetup.Player removedChar = null;
+
+                      MIMHub._PlayerCache.TryRemove(player.Value.Name, out removedChar);
+    
                         Command.ParseCommand("quit", player.Value, room.Value);
                     }
                 }
