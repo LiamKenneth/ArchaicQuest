@@ -316,9 +316,12 @@ namespace MIMWebClient.Core.World.Anker
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Black and White cat",
+                NPCLongName = "Black and White cat",
                 Type = Player.PlayerTypes.Mob,
                 Description = "This black cat's fur looks in pristine condition despite being a stray.",
-
+                AreaId = 0,
+                Area = "Anker",
+                Region = "Anker",
                 Strength = 12,
                 Dexterity = 12,
                 Constitution = 12,
@@ -330,7 +333,20 @@ namespace MIMWebClient.Core.World.Anker
                 Level = 2,
                 Status = Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
-                Inventory = new List<Item.Item>()
+                Inventory = new List<Item.Item>(),
+                Recall = new Recall()
+                {
+                    Region = "Anker",
+                    Area = "Anker",
+                    AreaId = 0,
+                },
+                PathList = new List<string>()
+                {
+                    "w",
+                    "n",
+                    "e",
+                    "s"
+                }
 
 
             };
@@ -339,6 +355,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Black and White cat",
+                NPCLongName = "Black and White cat",
                 Type = Player.PlayerTypes.Mob,
                 Description = "This black cat's fur looks in pristine condition despite being a stray.",
                 Strength = 12,
@@ -425,7 +442,7 @@ namespace MIMWebClient.Core.World.Anker
             cat2.Recall = recall;
 
             room.mobs.Add(cat);
-            room.mobs.Add(cat);
+            room.mobs.Add(cat2);
 
 
             //test EQ
@@ -447,7 +464,7 @@ namespace MIMWebClient.Core.World.Anker
             var greeves = FullPlateGreaves.SteelGreevesOfTyr();
             room.items.Add(greeves);
 
- 
+
 
             return room;
         }
@@ -898,6 +915,7 @@ namespace MIMWebClient.Core.World.Anker
             var idiot = new Player
             {
                 Name = "The Village idiot",
+                NPCLongName = "The Village idiot",
                 KnownByName = true,
                 Region = "Anker",
                 Area = "Anker",
@@ -1331,6 +1349,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Modo",
+                NPCLongName = "Modo",
                 KnownByName = true,
                 Type = Player.PlayerTypes.Mob,
                 Description = "The owner of The Red Lion is a tall and intimidating appearance. This long-bearded man immediately makes you feel uncomfortable. He does not seem to notice you.",
@@ -1408,6 +1427,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Dyten",
+                NPCLongName = "Dyten",
                 KnownByName = true,
                 Type = Player.PlayerTypes.Mob,
                 Description = "This weathered old man probably never leaves this place. His cloudy eyes seem to seek something at the bottom of his glass.",
@@ -2040,7 +2060,7 @@ namespace MIMWebClient.Core.World.Anker
             #endregion
             room.exits.Add(north);
             room.exits.Add(south);
-
+            room.mobs.Add(AnkerGuard.AnkerGuardNpc2());
 
             return room;
         }
@@ -2224,7 +2244,7 @@ namespace MIMWebClient.Core.World.Anker
             room.exits.Add(east);
             room.exits.Add(south);
             room.exits.Add(west);
- 
+
 
             return room;
         }
@@ -2272,28 +2292,22 @@ namespace MIMWebClient.Core.World.Anker
 
             };
 
-            var villager2 = new Player()
+            var bed = new Item.Item()
             {
-                Name = "Female villager",
-                Gender = "Female",
-                Strength = 12,
-                Dexterity = 12,
-                Constitution = 12,
-                Wisdom = 12,
-                Intelligence = 12,
-                Charisma = 12,
-                Level = 10,
-                HitPoints = 210,
-                MaxHitPoints = 210,
-                MovePoints = 200,
-                MaxMovePoints = 200,
-                Description = "A female villager",
-                Type = Player.PlayerTypes.Mob
-
+                name = "bed",
+                description = new Description()
+                {
+                    room = "A small bed up against the right wall",
+                    look = "The bed has a simple cotton blanket and a simple pillow"
+                },
+                stuck = true
             };
 
+            room.items.Add(bed);
+ 
             room.mobs.Add(villager);
-            room.mobs.Add(villager2);
+            room.mobs.Add(Alice.AliceNpc());
+ 
 
             #region exits
 
@@ -2319,6 +2333,7 @@ namespace MIMWebClient.Core.World.Anker
 
             return room;
         }
+
 
         public static Room AnkerHome2()
         {
@@ -2759,7 +2774,7 @@ namespace MIMWebClient.Core.World.Anker
 
             };
 
-
+            room.mobs.Add(AnkerGuard.AnkerGuardNpc());
 
 
             #region exits
@@ -3127,7 +3142,7 @@ namespace MIMWebClient.Core.World.Anker
             room.exits.Add(east);
             room.exits.Add(South);
             room.exits.Add(west);
- 
+
 
             return room;
         }
@@ -3220,7 +3235,7 @@ namespace MIMWebClient.Core.World.Anker
             // Create Exits
 
             room.exits.Add(south);
-             
+
 
             return room;
         }

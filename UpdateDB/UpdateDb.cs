@@ -41,7 +41,16 @@ namespace UpdateDB
             var areas = new List<Room>
             {
                 Ambush.TutorialRoom1(),
-                Ambush.TutorialRoom2(),
+               Ambush.TutorialRoom2(),
+                Ambush.TutorialLostInTheWoods(),
+                Ambush.TutorialLostInTheWoods2(),
+                Ambush.TutorialLostInTheWoods3(),
+                Ambush.TutorialLostInTheWoods4(),
+                Ambush.TutorialLostInTheWoods5(),
+                 Ambush.TutorialLostInTheWoods6(),
+                Ambush.TutorialGoblinCamp(),
+                Ambush.TutorialGoblinCampTentNorth(),
+                Ambush.TutorialGoblinCampTentSouth(),
                 Awakening.TempleOfTyr(),
                 Anker.VillageSquare(),
                 Anker.SquareWalkOutsideTavern(),

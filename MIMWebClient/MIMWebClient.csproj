@@ -326,9 +326,12 @@
     <Compile Include="Core\Update\UpdateWorld.cs" />
     <Compile Include="Core\Util\TruncateString.cs" />
     <Compile Include="Core\World\Anker\Anker.cs" />
+    <Compile Include="Core\World\Anker\Mobs\AnkerGuard.cs" />
+    <Compile Include="Core\World\Anker\Mobs\Alice.cs" />
     <Compile Include="Core\World\Anker\Mobs\Anika.cs" />
     <Compile Include="Core\World\Anker\Mobs\Ferron.cs" />
     <Compile Include="Core\World\Anker\Mobs\Lance.cs" />
+    <Compile Include="Core\World\Anker\Quests\AnkerQuests.cs" />
     <Compile Include="Core\World\Anker\Scripts\VilliageIdiot.cs" />
     <Compile Include="Core\World\Areas.cs" />
     <Compile Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Arms\FullPlateSleeves.cs" />
@@ -340,6 +343,12 @@
     <Compile Include="Core\World\Items\Armour\LightArmour\Clothing\Body\ClothingBody.cs" />
     <Compile Include="Core\World\Items\Armour\LightArmour\Clothing\Body\RobeBasic.cs" />
     <Compile Include="Core\World\Items\Armour\LightArmour\Clothing\Legs\ClothingLegs.cs" />
+    <Compile Include="Core\World\Items\Armour\LightArmour\Leather\Arms\LeatherArms.cs" />
+    <Compile Include="Core\World\Items\Armour\LightArmour\Leather\Body\LeatherBody.cs" />
+    <Compile Include="Core\World\Items\Armour\LightArmour\Leather\Feet\LeatherBoots.cs" />
+    <Compile Include="Core\World\Items\Armour\LightArmour\Leather\Hands\LeatherHands.cs" />
+    <Compile Include="Core\World\Items\Armour\LightArmour\Leather\Head\LeatherHead.cs" />
+    <Compile Include="Core\World\Items\Armour\LightArmour\Leather\Legs\LeatherLegs.cs" />
     <Compile Include="Core\World\Items\Armour\LightArmour\Leather\Waist\LeatherBootBasic.cs" />
     <Compile Include="Core\World\Items\Armour\LightArmour\Padded\Arms\PaddedSleeves.cs" />
     <Compile Include="Core\World\Items\Armour\LightArmour\Padded\Body\PaddedBodyBasic.cs" />
@@ -365,6 +374,7 @@
     <Compile Include="Core\World\Items\Weapons\Staff\StaffBasic.cs" />
     <Compile Include="Core\World\Items\Weapons\Sword\Long\LongSwordBasic.cs" />
     <Compile Include="Core\World\Items\Weapons\Sword\Short\ShortSwordBasic.cs" />
+    <Compile Include="Core\World\Mobs\Easy\Goblin.cs" />
     <Compile Include="Core\World\Tutorial\Ambush.cs" />
     <Compile Include="Core\World\Tutorial\Awakening.cs" />
     <Compile Include="Core\World\Tutorial\Tutorial.cs" />
@@ -399,6 +409,7 @@
     <Content Include="Core\PlayerSetup\Data\Img\RaceImg\human.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Core\World\Anker\GoblinHideoutMap.txt" />
     <Content Include="Error\error.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -542,14 +553,8 @@
     <Folder Include="Core\World\Items\Armour\LightArmour\Clothing\Head\" />
     <Folder Include="Core\World\Items\Armour\LightArmour\Clothing\Waist\" />
     <Folder Include="Core\World\Items\Armour\LightArmour\Leather\AboutBody\" />
-    <Folder Include="Core\World\Items\Armour\LightArmour\Leather\Arms\" />
-    <Folder Include="Core\World\Items\Armour\LightArmour\Leather\Body\" />
     <Folder Include="Core\World\Items\Armour\LightArmour\Leather\Cloak\" />
     <Folder Include="Core\World\Items\Armour\LightArmour\Leather\Face\" />
-    <Folder Include="Core\World\Items\Armour\LightArmour\Leather\Feet\" />
-    <Folder Include="Core\World\Items\Armour\LightArmour\Leather\Hands\" />
-    <Folder Include="Core\World\Items\Armour\LightArmour\Leather\Head\" />
-    <Folder Include="Core\World\Items\Armour\LightArmour\Leather\Legs\" />
     <Folder Include="Core\World\Items\Armour\LightArmour\Padded\AboutBody\" />
     <Folder Include="Core\World\Items\Armour\LightArmour\Padded\Cloak\" />
     <Folder Include="Core\World\Items\Armour\LightArmour\Padded\Face\" />

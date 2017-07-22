@@ -348,39 +348,41 @@ namespace MIMWebClient.Core.Events
                                 return new KeyValuePair<Item, Item>(foundContainer, foundItem);
                             }
 
-                            for (int i = containerItemsCount - 1; i >= 0; i--)
+                            foreach (var containerItem in foundContainer.containerItems.ToList())
                             {
-                                if (foundContainer.containerItems[i].type != Item.ItemType.Gold ||
-                                    foundContainer.containerItems[i].type != Item.ItemType.Silver
-                                    || foundContainer.containerItems[i].type != Item.ItemType.Copper)
+                                
+                           
+                                if (containerItem.type != Item.ItemType.Gold ||
+                                    containerItem.type != Item.ItemType.Silver
+                                    || containerItem.type != Item.ItemType.Copper)
                                 {
 
 
 
-                                    foundContainer.containerItems[i].location = Item.ItemLocation.Inventory;
-                                    player.Inventory.Add(foundContainer.containerItems[i]);
+                                    containerItem.location = Item.ItemLocation.Inventory;
+                                    player.Inventory.Add(containerItem);
 
                                 }
                                 else
                                 {
-                                    if (foundContainer.containerItems[i].type == Item.ItemType.Gold)
+                                    if (containerItem.type == Item.ItemType.Gold)
                                     {
-                                        player.Gold += foundContainer.containerItems[i].count;
+                                        player.Gold += containerItem.count;
                                     }
 
-                                    if (foundContainer.containerItems[i].type == Item.ItemType.Silver)
+                                    if (containerItem.type == Item.ItemType.Silver)
                                     {
-                                        player.Silver += foundContainer.containerItems[i].count;
+                                        player.Silver += containerItem.count;
                                     }
 
-                                    if (foundContainer.containerItems[i].type == Item.ItemType.Copper)
+                                    if (containerItem.type == Item.ItemType.Copper)
                                     {
-                                        player.Copper += foundContainer.containerItems[i].count;
+                                        player.Copper +=containerItem.count;
                                     }
 
                                 }
 
-                                var result = AvsAnLib.AvsAn.Query(foundContainer.containerItems[i].name);
+                                var result = AvsAnLib.AvsAn.Query(foundContainer.name);
                                 string article = result.Article;
 
                                 var containerResult = AvsAnLib.AvsAn.Query(foundContainer.name);
@@ -388,7 +390,7 @@ namespace MIMWebClient.Core.Events
 
 
                                 HubContext.SendToClient(
-                                    $"You pick up {article} {foundContainer.containerItems[i].name} from {containerArticle} {foundContainer.name}.",
+                                    $"You pick up {article} {containerItem.name} from {containerArticle} {foundContainer.name}.",
                                     player.HubGuid);
 
                                 foreach (var character in room.players)
@@ -397,14 +399,14 @@ namespace MIMWebClient.Core.Events
                                     {
 
                                         var roomMessage =
-                                            $"{Helpers.ReturnName(player, character, string.Empty)} picks up {article} {foundContainer.containerItems[i].name} from {containerArticle} {foundContainer.name}.";
+                                            $"{Helpers.ReturnName(player, character, string.Empty)} picks up {article} {containerItem.name} from {containerArticle} {foundContainer.name}.";
 
                                         HubContext.SendToClient(roomMessage, character.HubGuid);
                                     }
                                 }
 
 
-                                foundContainer.containerItems.Remove(foundContainer.containerItems[i]);
+                                foundContainer.containerItems.Remove(containerItem);
                             }
                         }
                         else
@@ -497,6 +499,8 @@ namespace MIMWebClient.Core.Events
                                     HubContext.SendToClient(roomMessage, character.HubGuid);
                                 }
                             }
+
+
                             room.items.Remove(roomItems[i]);
                         }
                         else
@@ -586,6 +590,7 @@ namespace MIMWebClient.Core.Events
                             }
                         }
 
+
                         containerItems.Remove(containerItems[i]);
                     }
                     else
@@ -631,14 +636,13 @@ namespace MIMWebClient.Core.Events
                     if (!item.stuck)
                     {
 
-
                         if (item.type != Item.ItemType.Gold)
                         {
 
                             room.items.Remove(item);
                             item.location = Item.ItemLocation.Inventory;
                             player.Inventory.Add(item);
-
+            
                             var result = AvsAnLib.AvsAn.Query(item.name);
                             string article = result.Article;
 
@@ -716,8 +720,9 @@ namespace MIMWebClient.Core.Events
 
 
                         container.containerItems.Remove(item);
-                        container.location = Item.ItemLocation.Inventory;
+                       item.location = Item.ItemLocation.Inventory;
                         player.Inventory.Add(item);
+
 
                         var result = AvsAnLib.AvsAn.Query(item.name);
                         string article = result.Article;
@@ -781,9 +786,11 @@ namespace MIMWebClient.Core.Events
             }
 
             //save to cache
+            Quest.CheckIfGetItemQuestsComplete(player);
             Cache.updateRoom(room, currentRoom);
             Cache.updatePlayer(player, currentPlayer);
             Score.UpdateUiInventory(player);
+            Score.ReturnScoreUI(player);
             var roomdata = LoadRoom.DisplayRoom(room, player.Name);
             Score.UpdateUiRoom(player, roomdata);
         }
@@ -806,7 +813,7 @@ namespace MIMWebClient.Core.Events
 
             if (all[0].Equals("all", StringComparison.InvariantCultureIgnoreCase))
             {
-                var playerInv = player.Inventory;
+                var playerInv = player.Inventory.Where(x => x.type != Item.ItemType.Gold).ToList();
                 var playerInvCount = player.Inventory.Count;
 
                 for (int i = playerInvCount - 1; i >= 0; i--)
@@ -1140,7 +1147,7 @@ namespace MIMWebClient.Core.Events
                     {
                         //Find quest requires player to give item to the mob.
 
-                        if (quest.QuestGiver == foundThing.Name && quest.QuestItem.name == foundItem.name)
+                        if (quest.QuestGiver == foundThing.Name && quest.QuestItem?.FirstOrDefault(x => x.name == foundItem.name) != null)
                         {
                             // player completed quest
 
@@ -1529,7 +1536,7 @@ namespace MIMWebClient.Core.Events
             {
                 foundExit = FindItem.Exit(room.exits, nth, userInput);
 
-                if (foundExit.canOpen == false)
+                if (foundExit?.canOpen == false)
                 {
 
                     HubContext.SendToClient("You can't open that.", player.HubGuid);

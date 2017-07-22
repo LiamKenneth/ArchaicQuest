@@ -81,28 +81,7 @@ namespace MIMWebClient.Core.Events
 
             var itemList = string.Empty;
 
-            ////clean items
-            //var conciseList = new List<Item.Item>();
-        
-            //foreach (var item in room.items)
-            //{
-            //    if (conciseList.FirstOrDefault(x => x.name.Equals(item.name)) == null)
-            //    {
-            //        conciseList.Add(item);
-            //    }
-            //    else
-            //    {
-            //        var getItem = conciseList.FirstOrDefault(x => x.Equals(item));
-
-            //        if (getItem != null)
-            //        {
-            //            getItem.count += 1;
-            //        }
-            //    }
-
-            //}
-            ////clean items
-
+ 
             foreach (var item in room.items)
             {
                 if (item != null)
@@ -170,11 +149,21 @@ namespace MIMWebClient.Core.Events
                     {
                         if (item.Status == Player.PlayerStatus.Standing)
                         {
+
                             playerList += LoadRoom.ShowObjectEffects(item) + " is here\r\n";
                         }
                         else if (item.Status == Player.PlayerStatus.Fighting)
                         {
-                            playerList += LoadRoom.ShowObjectEffects(item) + " is fighting " + item.Target.Name + "\r\n";
+
+                            if (item.Target.Name == player.Name)
+                            {
+                                playerList += "You are fighting " + item.Target.Name + "\r\n";
+                            }
+                            else
+                            {
+                                playerList += LoadRoom.ShowObjectEffects(item) + " is fighting " + item.Target.Name +
+                                              "\r\n";
+                            }
                         }
                         else if (item.Status == PlayerSetup.Player.PlayerStatus.Resting)
                         {
@@ -219,33 +208,41 @@ namespace MIMWebClient.Core.Events
                         article = string.Empty;
                     }
 
+                    var npcName = !string.IsNullOrEmpty(item.NPCLongName) ?item.NPCLongName : $"{item.Name} is here";
+
                     if (item.Status == Player.PlayerStatus.Standing)
                     {
-                        mobList += "<p class='roomItems'>" + article + " " + item.Name + " is here.<p>";
+                        mobList += "<p class='roomMob'>" + article + " " + npcName + ".<p>";
                     }
                     else if (item.Status == Player.PlayerStatus.Fighting)
                     {
-                        mobList += "<p class='roomItems'>" + article + " " + item.Name + " is fighting " + item.Target.Name + "</p>";
+                        mobList += "<p class='roomMob'>" + article + " " + item.Name + " is fighting " + item.Target.Name + ".</p>";
                     }
                     else if (item.Status == PlayerSetup.Player.PlayerStatus.Resting)
                     {
-                        mobList += "<p class='roomItems'>" + article + " " + item.Name + " is resting.<p>";
+                        mobList += "<p class='roomMob'>" + article + " " + item.Name + " is resting.<p>";
                     }
                     else if (item.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
                     {
-                        mobList += "<p class='roomItems'>" + article + " " + item.Name + " is sleeping.<p>";
+                        if (!string.IsNullOrEmpty(item.Pose))
+                        {
+                            mobList += "<p class='roomMob'>" + item.Pose +"<p>";
+                        }
+                        else
+                        {
+                            mobList += "<p class='roomMob'>" + article + " " + item.Name + " is sleeping.<p>";
+                        }
                     }
                     else 
                     {
-                        mobList += "<p class='roomItems'>" + article + " " + item.Name + " is here.<p>";
+                        mobList += "<p class='roomMob'>" + article + " " + npcName + "<p>";
                     }
                 }
             }
 
 
             string displayRoom = "<p class='roomTitle'>" + roomTitle + "<p><p class='roomDescription'>" + roomDescription + "</p> <p class='RoomExits'>[ Exits: " + exitList.ToLower() + " ]</p>" + itemList + "\r\n" + playerList + "\r\n" + mobList;
-
-            //  Score.UpdateUiRoom(room.players.FirstOrDefault(x => x.Name.Equals(playerName)), displayRoom);
+       
             return displayRoom;
 
         }
@@ -261,6 +258,7 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
+            CheckEvent.FindEvent(CheckEvent.EventType.Look, player, "look");
 
             Room roomData = room;
 
@@ -321,6 +319,12 @@ namespace MIMWebClient.Core.Events
                                           : roomData.players.FindAll(x => x.Name.ToLower().Contains(item))
                                                 .Skip(n - 1)
                                                 .FirstOrDefault();
+
+                var playerItemDescription = (n == -1)
+                    ? player?.Inventory.Find(x => x.name.ToLower().Contains(commandOptions))
+                    : player?.Inventory.FindAll(x => x.name.ToLower().Contains(item))
+                        .Skip(n - 1)
+                        .FirstOrDefault();
 
                 var targetPlayerId = string.Empty;
                 if (playerDescription != null)
@@ -523,6 +527,89 @@ namespace MIMWebClient.Core.Events
                         HubContext.SendToClient("You can't do that to a " + playerDescription.Name, player.HubGuid);
                     }
                 }
+                else if (playerItemDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
+                {
+                    string descriptionText = string.Empty;
+                    string broadcastAction = string.Empty;
+
+                    if (keyword.Equals("look in", StringComparison.InvariantCultureIgnoreCase))
+                    {
+
+                        if (playerItemDescription.open == false)
+                        {
+                            HubContext.SendToClient("You need to open the " + playerItemDescription.name + " before you can look inside", player.HubGuid);
+                            return;
+                        }
+
+                        if (playerItemDescription.container == true)
+                        {
+                            if (playerItemDescription.containerItems.Count > 0)
+                            {
+                                HubContext.SendToClient("You look into the " + playerItemDescription.name + " and see:", player.HubGuid);
+
+                                foreach (var containerItem in playerItemDescription.containerItems)
+                                {
+                                    HubContext.SendToClient(containerItem.name, player.HubGuid);
+                                }
+                            }
+                            else
+                            {
+                                HubContext.SendToClient("You look into the " + playerItemDescription.name + " but it is empty", player.HubGuid);
+                            }
+
+
+                            foreach (var character in room.players)
+                            {
+                                if (player != character)
+                                {
+
+                                    var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} looks in a {playerItemDescription.name}";
+
+                                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            HubContext.SendToClient(playerItemDescription.name + " is not a container", player.HubGuid);
+                        }
+                    }
+                    else if (keyword.StartsWith("look"))
+                    {
+                        descriptionText = playerItemDescription.description.look;
+                        broadcastAction = " looks at a " + playerItemDescription.name;
+                    }
+                    else if (keyword.StartsWith("examine"))
+                    {
+                        descriptionText = playerItemDescription.description.exam;
+                        broadcastAction = " looks closely at a " + playerItemDescription.name;
+                    }
+
+                    if (!keyword.Equals("look in", StringComparison.InvariantCultureIgnoreCase))
+                    {
+
+                        if (!string.IsNullOrEmpty(descriptionText))
+                        {
+                            HubContext.SendToClient(descriptionText, player.HubGuid);
+
+                            foreach (var players in room.players)
+                            {
+                                if (player.Name != players.Name)
+                                {
+                                    HubContext.SendToClient(player.Name + broadcastAction,
+                                        players.HubGuid);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var result = AvsAnLib.AvsAn.Query(playerItemDescription.name);
+                            string article = result.Article;
+
+                            HubContext.SendToClient("You see nothing special about " + article + " " + playerItemDescription.name, player.HubGuid);
+                        }
+                    }
+                }
                 else if (roomExitDescription != null)
                 {
                     HubContext.SendToClient("You look " + roomExitDescription.name, player.HubGuid);
@@ -572,7 +659,7 @@ namespace MIMWebClient.Core.Events
 
         public static string ShowObjectEffects(Player player)
         {
-            var name = player.Name;
+            var name = player.Type == Player.PlayerTypes.Player ? player.Name : player.NPCLongName;
 
             if (player.Affects?.FirstOrDefault(x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) != null)
             {

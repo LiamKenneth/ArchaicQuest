@@ -261,11 +261,14 @@ namespace MIMWebClient.Core.Player
 
                             if (!wield || !slot.Equals("wield", StringComparison.CurrentCultureIgnoreCase))
                             {
-                                HubContext.SendToClient("You wear." + item.name, player.HubGuid);
 
                                 var result = AvsAnLib.AvsAn.Query(item.name);
                                 string article = result.Article;
 
+
+                                HubContext.SendToClient("You wear " + article + item.name, player.HubGuid);
+
+                              
                                 foreach (var character in room.players)
                                 {
                                     if (player != character)
@@ -280,10 +283,13 @@ namespace MIMWebClient.Core.Player
                             }
                             else
                             {
-                                HubContext.SendToClient("You wield." + item.name, player.HubGuid);
+
 
                                 var result = AvsAnLib.AvsAn.Query(item.name);
-                                string article = result.Article;
+                                string article = result.Article; 
+
+                                HubContext.SendToClient("You wield " + article + item.name, player.HubGuid);
+
 
                                 foreach (var character in room.players)
                                 {
@@ -486,6 +492,9 @@ namespace MIMWebClient.Core.Player
             }
 
         }
+
+
+
 
 
     }

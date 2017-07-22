@@ -19,11 +19,11 @@ namespace MIMWebClient.Core.Events
  
             if (findNth == -1)
             {
-                return collection.Find(x => x.name.ToLower().Contains(itemToFind) && x.location == findWear);
+                return collection.Find(x => x.name.ToLower().Contains(itemToFind.ToLower()) && x.location == findWear);
             }
 
 
-            return collection.FindAll(x => x.name.ToLower().Contains(itemToFind) && x.location == findWear).Skip(findNth - 1).FirstOrDefault();
+            return collection.FindAll(x => x.name.ToLower().Contains(itemToFind.ToLower()) && x.location == findWear).Skip(findNth - 1).FirstOrDefault();
 
         }
 

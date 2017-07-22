@@ -198,8 +198,7 @@
             var name = char.Name.toLowerCase();
                 name = name.charAt(0).toUpperCase() + name.slice(1);
             
-            // alert(char.name);
-            server.welcome();
+         
 
             server.charSetup($.connection.hub.id, name, char.Email, char.Password, char.Gender, char.Race, char.Class, char.Strength, char.Dexterity, char.Constitution, char.Wisdom, char.Intelligence, char.Charisma);
             //  server.loadRoom($.connection.hub.id);
@@ -230,7 +229,7 @@
         },
         UI: {
             setWindowHeight: function () {
-                var viewPort = $(window).height() - 95;
+                var viewPort = $(window).height() - 125;
                 $("#discussion").css({ "height": viewPort, "max-height": viewPort });
             },
             openPanels: function () {
@@ -354,7 +353,9 @@
     };
     //// Add a new message to the page ////
     client.addNewMessageToPage = function (message) {
+      
         $('#discussion').append("<p>" + message + "</p>");
+      
 
         $("#discussion").scrollTop($("#discussion")[0].scrollHeight);
     };
@@ -652,7 +653,7 @@
  
             $.ajax({
                     type: "get",
-                    url: "/Home/Generatename"
+                    url: "/dev/Home/Generatename"
                 })
                 .done(function(data) {
 

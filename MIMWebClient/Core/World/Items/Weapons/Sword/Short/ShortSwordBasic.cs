@@ -83,5 +83,41 @@ namespace MIMWebClient.Core.World.Items.Weapons.Sword.Short
 
             return Saber;
         }
+
+        public static Item.Item RustedShortSword()
+        {
+            var RustedShortSword = new Item.Item
+            {
+                name = "Rusted Short Sword",
+                Weight = 2,
+                equipable = true,
+                eqSlot = Item.Item.EqSlot.Wielded,
+                slot = Item.Item.EqSlot.Wielded,
+                location = Item.Item.ItemLocation.Inventory,
+                weaponSpeed = 1,
+                weaponType = Item.Item.WeaponType.ShortBlades,
+                attackType = Item.Item.AttackType.Slash,
+                stats = new Stats()
+                {
+                    damMax = 6,
+                    damMin = 1,
+                    damRoll = 0,
+                    minUsageLevel = 1,
+                    worth = 1
+                },
+                description = new Description()
+                {
+                    exam = "A thin rusted short sword",
+                    look = "A thin rusted short sword",
+                    room = "A thin rusted short sword",
+                    smell = "",
+                    taste = "",
+                    touch = "",
+                }
+
+            };
+
+            return RustedShortSword;
+        }
     }
 }

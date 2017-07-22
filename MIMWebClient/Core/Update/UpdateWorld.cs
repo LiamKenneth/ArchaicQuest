@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using MIMWebClient.Core.Events;
+using MIMWebClient.Core.Room;
 using MIMWebClient.Hubs;
 
 namespace MIMWebClient.Core.Update
@@ -36,17 +37,18 @@ namespace MIMWebClient.Core.Update
 
             foreach (var room in MIMHub._AreaCache.Values)
             {
-                if (room.players.Count > 0 && room.mobs.Count > 0)
-                {
-                    // check mob emotes
 
-                    foreach (var mob in room.mobs)
+                foreach (var mob in room.mobs)
+                {
+
+                    if (room.players.Count > 0 && room.mobs.Count > 0)
                     {
                         if (mob.Emotes != null && mob.HitPoints > 0)
                         {
                             await Task.Delay(5000);
                             var emoteIndex = Helpers.diceRoll.Next(mob.Emotes.Count);
-                            HubContext.broadcastToRoom(mob.Name + " " + mob.Emotes[emoteIndex], room.players, String.Empty);
+                            HubContext.broadcastToRoom(mob.Name + " " + mob.Emotes[emoteIndex], room.players,
+                                String.Empty);
                         }
                     }
                 }
@@ -95,6 +97,7 @@ namespace MIMWebClient.Core.Update
                 EmoteMob();
                 EmoteRoom();
                 KickIdlePlayers();
+
             }
 
 
@@ -114,7 +117,7 @@ namespace MIMWebClient.Core.Update
             }
             catch (Exception ex)
             {
-                
+
             }
         }
 
@@ -155,6 +158,11 @@ namespace MIMWebClient.Core.Update
                                     x.Value.area.Equals(player.Value.Area) && x.Value.areaId.Equals(player.Value.AreaId) &&
                                     x.Value.region.Equals(player.Value.Region));
 
+
+                        PlayerSetup.Player removedChar = null;
+
+                      MIMHub._PlayerCache.TryRemove(player.Value.Name, out removedChar);
+    
                         Command.ParseCommand("quit", player.Value, room.Value);
                     }
                 }
@@ -176,11 +184,52 @@ namespace MIMWebClient.Core.Update
 
         public static async Task MoveMob()
         {
-            //await Task.Delay(5000);
 
-            //HubContext.getHubContext.Clients.All.addNewMessageToPage("This task will update Mobs every 5 seconds and not block the game");
+            try
+            {
+                while (true)
+                {
 
-            //UpdateMob();
+                    var delay = Helpers.Rand(250, 60000);
+                    await Task.Delay(delay);
+
+                    foreach (var room in MIMHub._AreaCache.Values)
+                    {
+                     
+                        foreach (var mob in room.mobs.ToList())
+                        {
+      
+                            if (mob.HitPoints > 0 && mob.PathList != null)
+                            {
+                                if (mob.Guard || mob.AreaId != mob.Recall.AreaId)
+                                {
+                                   await Movement.MobWalk(mob);
+                                   await Task.Delay(120);
+                                }
+                              else
+                                {
+                                     if (Time.isDay())
+                                    {
+                                        mob.Pose = string.Empty;
+                                        mob.Status = PlayerSetup.Player.PlayerStatus.Standing;
+                                        await Movement.MobWalk(mob);
+                                        await Task.Delay(120);
+
+                                    }
+                                    else
+                                    {
+                                        mob.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
+                                        mob.Pose = mob.Name + " is here, sleeping on the bed";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
 }

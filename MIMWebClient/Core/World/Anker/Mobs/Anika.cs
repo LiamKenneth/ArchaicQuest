@@ -33,6 +33,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Anika",
+                NPCLongName = "Anika",
                 KnownByName = true,
                 Type = PlayerSetup.Player.PlayerTypes.Mob,
                 Description = "The shop keeper",

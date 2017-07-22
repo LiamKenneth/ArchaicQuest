@@ -22,6 +22,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Lance",
+                NPCLongName = "Lance",
                 KnownByName = true,
                 Type = PlayerSetup.Player.PlayerTypes.Mob,
                 Description = "The elder of the village anker",
@@ -258,11 +259,14 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 QuestFindMob = "Shaman",
                 RewardXp = 1000,
                 RewardGold = 500,
-                PrerequisiteItem = new Item.Item()
+                PrerequisiteItem = new List<Item.Item>()
+                {
+                    new Item.Item()
                 {
                     name = "Gold",
                     type = Item.Item.ItemType.Gold,
                     Gold = 120
+                }
                 },
                 QuestGiver = Lance.Name,
                 PrerequisiteItemEmote = "puts his hands in his money pounch and hands you some gold. \"Use this to get yourself a weapon and some armor from the shops north east of Anker.\" ",
@@ -284,8 +288,9 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 Description = "I would like some beer from Modo please",
                 Name = "Buy beer from modo and give to lance",
                 Type = Quest.QuestType.FindItem,
-                QuestItem = new Item.Item
+                QuestItem = new List<Item.Item>()
                 {
+                  new Item.Item() { 
                     name = "Light Beer",
                     type = Item.Item.ItemType.Drink,
                     Gold = 3,
@@ -295,6 +300,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                         room = "A beer has been left on the floor"
                     },
                     slot = Item.Item.EqSlot.Hands
+}
                 },
                 RewardXp = 200,
                 QuestGiver = Lance.Name,

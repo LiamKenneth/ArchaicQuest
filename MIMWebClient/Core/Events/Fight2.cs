@@ -709,6 +709,7 @@ namespace MIMWebClient.Core.Events
         {
             if (defender.HitPoints <= 0)
             {
+                CheckEvent.FindEvent(CheckEvent.EventType.Death, attacker, "death");
 
                 foreach (var player in room.players)
                 {
@@ -767,6 +768,7 @@ namespace MIMWebClient.Core.Events
                 {
                     attacker.Target = null;
                     attacker.Status = PlayerSetup.Player.PlayerStatus.Standing;
+                    attacker.ActiveFighting = false;
                 }
  
                 defender.Status = defender.Type == Player.PlayerTypes.Player ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;

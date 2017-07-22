@@ -21,7 +21,7 @@ namespace MIMWebClient.Core.World.Tutorial
             {
                 region = "Tutorial",
                 area = "Tutorial",
-                areaId = 3,
+                areaId = 11,
                 title = "Temple of Tyr",
                 description = "<p>A circular blue mosaic covers the centre of the temple with a gold fist and star underneath in the centre. Above is a dome roof with yellow tinted glass giving the area a golden glow. An Alter to Tyr is at the back with a large blue banner hanging from the wall with the same golden fist above the star. To the south the entrance to the Temple</p>",
 
@@ -42,6 +42,7 @@ namespace MIMWebClient.Core.World.Tutorial
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Mortem",
+                NPCLongName = "Mortem",
                 KnownByName = true,
                 Type = PlayerSetup.Player.PlayerTypes.Mob,
                 Description = "A blue cape of Tyr hangs down Mortems back who is covered in full plate mail except for his heads and hands. A golden mace hangs upside down from his belt.",

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MIMWebClient.Core.World.Anker.Quests;
 using MIMWebClient.Core.World.Anker.Scripts;
 
 namespace MIMWebClient.Core
@@ -30,9 +31,21 @@ namespace MIMWebClient.Core
 
             var eventList = new Dictionary<String, Action>();
             eventList.Add("greet", () => Greeting.greet(player, mob, room));
-            eventList.Add("tutorial", () => Tutorial.setUpTut(player, room, option, calledBy));
+            eventList.Add("tutorial", () =>  Tutorial.setUpTut(player, room, option, calledBy));
             eventList.Add("rescue", () => Tutorial.setUpAwakening(player, room, option, calledBy));
             eventList.Add("awakening awake", () => Tutorial.setUpRescue(player, room, option, calledBy));
+            eventList.Add("Give Leather Quest", () =>
+            {
+                if (player.QuestLog.FirstOrDefault(x => x.Name == AnkerQuests.TutorialLeatherQuest().Name) == null)
+                {
+
+                    player.QuestLog.Add(AnkerQuests.TutorialLeatherQuest());
+
+                    HubContext.SendToClient(
+                        "<span class='questColor'>New Quest added: " + AnkerQuests.TutorialLeatherQuest().Name + "<br />" + AnkerQuests.TutorialLeatherQuest().Description + "</span>",
+                        player.HubGuid);
+                }
+            });
             eventList.Add("wearEQ", () => Tutorial.setUpRescue(player, room, option, calledBy));
             eventList.Add("AnkerIdiot", () => VilliageIdiot.Annoy(player, mob, room));
 

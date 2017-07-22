@@ -10,6 +10,8 @@ using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.Player;
 using MIMWebClient.Core.Room;
 using MIMWebClient.Core.World.Anker.Mobs;
+using MIMWebClient.Core.World.Anker.Mobs.Easy;
+using MIMWebClient.Core.World.Anker.Quests;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Clothing.Legs;
 using MIMWebClient.Core.World.Items.Clothing.ClothingBody;
 using Cache = MIMWebClient.Core.Events.Cache;
@@ -26,33 +28,65 @@ namespace MIMWebClient.Core.World.Tutorial
 
         public static async Task Intro(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
-
             try
             {
                 var npc = room.mobs.FirstOrDefault(x => x.Name.Equals("Wilhelm"));
 
+                
                 if (string.IsNullOrEmpty(step))
                 {
+                    await Task.Delay(1000);
 
                     HubContext.SendToClient("<span class='sayColor'>" +
-                        npc.Name + " says to you \"I don't think we have much further to go " + player.Name + ".\"</span>",
+                                            npc.Name + " says to you \"I don't think we have much further to go " + player.Name + ".\"</span>",
                         player.HubGuid);
 
                     await Task.Delay(2000);
 
-                    HubContext.SendToClient("You hear a twig snap in the distance.", player.HubGuid);
+                    var playerInRoom =
+                        Cache.ReturnRooms()
+                            .FirstOrDefault(
+                                x => x.area.Equals("Tutorial") && x.areaId.Equals(0) && x.region.Equals("Tutorial"))
+                            .players.FirstOrDefault(x => x.Name.Equals(player.Name));
 
-                    await Task.Delay(2000);
+                    if (playerInRoom != null)
+                    {
 
-                    HubContext.SendToClient(npc.Name + " looks at you with a face of terror and dread.", player.HubGuid);
+                        HubContext.SendToClient("You hear a twig snap in the distance.", player.HubGuid);
 
-                    await Task.Delay(3000);
+                        await Task.Delay(2000);
+                    }
 
-                    HubContext.SendToClient("<span class='sayColor'>" +npc.Name + " says to you \"did you hear that " + player.Name + ".\"</span>",
-                        player.HubGuid);
+                    playerInRoom =
+                        Cache.ReturnRooms()
+                            .FirstOrDefault(
+                                x => x.area.Equals("Tutorial") && x.areaId.Equals(0) && x.region.Equals("Tutorial"))
+                            .players.FirstOrDefault(x => x.Name.Equals(player.Name));
 
-                    HubContext.SendToClient("<p class='RoomExits'>[Hint] Type say yes</p>", player.HubGuid);
+                    if (playerInRoom != null)
+                    {
 
+                        HubContext.SendToClient(npc.Name + " looks at you with a face of terror and dread.",
+                            player.HubGuid);
+
+                        await Task.Delay(3000);
+                    }
+
+                    playerInRoom =
+                        Cache.ReturnRooms()
+                            .FirstOrDefault(
+                                x => x.area.Equals("Tutorial") && x.areaId.Equals(0) && x.region.Equals("Tutorial"))
+                            .players.FirstOrDefault(x => x.Name.Equals(player.Name));
+
+                    if (playerInRoom != null)
+                    {
+                        HubContext.SendToClient(
+                            "<span class='sayColor'>" + npc.Name + " says to you \"did you hear that " + player.Name +
+                            ".\"</span>",
+                            player.HubGuid);
+
+                        HubContext.SendToClient("<p class='RoomExits'>[Hint] Type say yes</p>", player.HubGuid);
+                    }
                     /*
                      *  add quest to player?
                      *  
@@ -68,6 +102,12 @@ namespace MIMWebClient.Core.World.Tutorial
                 var hasDagger = player.Inventory.FirstOrDefault(x => x.name.Contains("dagger"));
                 if (step.Equals("yes", StringComparison.CurrentCultureIgnoreCase) && hasDagger == null)
                 {
+                    var weapon = npc.Inventory.FirstOrDefault(x => x.name.Contains("dagger"));
+
+                    if (weapon != null)
+                    {
+                        player.Inventory.Add(weapon);
+                    }
 
                     await Task.Delay(1500);
 
@@ -85,14 +125,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                     HubContext.SendToClient("<span class='sayColor'>" + npc.Name + " says to you \"here take this dagger " + player.Name + ".\"",
                         player.HubGuid);
-
-                    var weapon = npc.Inventory.FirstOrDefault(x => x.name.Contains("dagger"));
-
-                    if (weapon != null)
-                    {
-                        player.Inventory.Add(weapon);
-                    }
-
+                  
 
                     HubContext.SendToClient(npc.Name + " gives you a blunt dagger.", player.HubGuid);
 
@@ -100,11 +133,13 @@ namespace MIMWebClient.Core.World.Tutorial
 
                     await Task.Delay(1500);
 
-                    HubContext.SendToClient("<span class='sayColor'>" + 
-                        npc.Name +
-                        " says to you \"it's nothing special but it will help you. I believe the way to Ester is all north from here.\"</span>",
+                    HubContext.SendToClient("<span class='sayColor'>" +
+                                            npc.Name +
+                                            " says to you \"It's nothing special but it will help you. If we get split up, head to Ester. The Adventurer Academy is there and will teach you everything you need to know, if I don't make.\"...</span>",
                         player.HubGuid);
-
+                    HubContext.SendToClient(
+                        "<p class='RoomExits'>[Hint] Type: wield dagger to wield the weapon, wear works too as does wear all.</p>",
+                        player.HubGuid);
                     await Task.Delay(3000);
 
                     HubContext.SendToClient("You hear movement getting closer.", player.HubGuid);
@@ -117,37 +152,17 @@ namespace MIMWebClient.Core.World.Tutorial
                     await Task.Delay(3000);
 
                     HubContext.SendToClient("<span class='sayColor'>" +
-                        npc.Name + " yells \"GO " + player.Name + ", I'll hold them off. RUN! Run now to the North.\"</span>",
+                                            npc.Name + " yells \"GO " + player.Name + ", I'll hold them off. RUN! Run now to the North.\"</span>",
                         player.HubGuid);
 
                     HubContext.SendToClient(
-                        "<p class='RoomExits'>[Hint] Type north or n for short to move north away from the ambush.</p>",
+                        "<p class='RoomExits'>[Hint] Type: north or n for short to move north away from the ambush.</p>",
                         player.HubGuid);
 
-                    while (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
-                    {
-                        await Task.Delay(30000);
-
-                        if (room.players.FirstOrDefault(x => x.Name.Equals(player.Name)) != null)
-                        {
-                            HubContext.SendToClient("<span class='sayColor'>" +
-                                npc.Name + " yells \"GO\", " + player.Name +
-                                " \"I'll hold them off. RUN! Run now to the North.\"</span>", player.HubGuid);
-
-                            HubContext.SendToClient(
-                                "<p class='RoomExits'>[Hint] Type north or n for short to move north away from the ambush</p>",
-                                player.HubGuid);
-                        }
-
-                    }
-
 
                 }
 
-                if (step.Equals("Attack") && calledBy.Equals("mob"))
-                {
-                    //blah blah
-                }
+ 
 
             }
             catch (Exception ex)
@@ -216,7 +231,7 @@ namespace MIMWebClient.Core.World.Tutorial
                     //remove player from tutorial room
                     var oldRoom = Cache.ReturnRooms()
                         .FirstOrDefault(
-                            x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"));
+                            x => x.area.Equals("Tutorial") && x.areaId.Equals(player.AreaId) && x.region.Equals("Tutorial"));
 
                     if (oldRoom != null && oldRoom.players.Contains(player))
                     {
@@ -232,81 +247,15 @@ namespace MIMWebClient.Core.World.Tutorial
                         npc.Name + " says \"You were in a bad way when we found you, I didn't think you would wake.\"</span>",
                         player.HubGuid);
 
-                    await Task.Delay(2000);
-
-                    HubContext.SendToClient(npc.Name + " gets a pair of trousers, a plain top and hands them to you.",
-                        player.HubGuid);
-
-                    player.Inventory.Add(ClothingBody.PlainTop());
-                    player.Inventory.Add(ClothingLegs.PlainTrousers());
-
-                    Score.UpdateUiInventory(player);
-
-                    await Task.Delay(2000);
-
-                    HubContext.SendToClient("<span class='sayColor'>" + npc.Name + " says \"Wear them, you can't walk around naked I am afraid.\"</span>",
-                        player.HubGuid);
-
-                    await Task.Delay(2000);
-
-                    HubContext.SendToClient(
-                        "<p class='RoomExits'>[Hint] To view items you are carrying type Inventory or i for short</p>",
-                        player.HubGuid);
-
                     HubContext.SendToClient(npc.Name + " smiles at you.", player.HubGuid);
 
                     await Task.Delay(2000);
 
-                    HubContext.SendToClient(
-                        "<p class='RoomExits'>[Hint] Type wear trousers and wear shirt or alternatively wear all</p>",
-                        player.HubGuid);
-
-                }
-
-                if (step != null && step.Contains("plain"))
-                {
-
-                    if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
-                    {
-                        return;
-                    }
-
-
-
-                    if (player.Equipment.Body.Equals(ClothingBody.PlainTop().name) &&
-                        !player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name))
-                    {
-                        HubContext.SendToClient("<span class='sayColor'>" + 
-                            npc.Name + " says \"It fits well, don't forget to wear the trousers too.\"</span>",
-                            player.HubGuid);
-
-                        await Task.Delay(2000);
-
-                        return;
-
-                    }
-
-                    if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) &&
-                        !player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
-                    {
-
-
-                        HubContext.SendToClient("<span class='sayColor'>" + npc.Name + " says \"It fits well, don't forget to wear the top too.\"</span>",
-                            player.HubGuid);
-
-                        await Task.Delay(2000);
-
-                        return;
-
-                    }
-
-                    if (player.Equipment.Legs.Equals(ClothingLegs.PlainTrousers().name) &&
-                        player.Equipment.Body.Equals(ClothingBody.PlainTop().name))
-                    {
+                  
 
                         HubContext.SendToClient("<span class='sayColor'>" +
                             npc.Name +
-                            " says \"Excellent, I have one request for you and that is to speak to Lance the Elder of the village.\"</span>",
+                            " says \"Lance has been asking about you, he's the Elder of the village.\"</span>",
                             player.HubGuid);
 
                         HubContext.SendToClient("<span class='sayColor'>" +
@@ -316,7 +265,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                         HubContext.SendToClient("<span class='sayColor'>" +
                             npc.Name +
-                            " says \"You will found him in the Square of Anker just leave south and follow the hill path in to town you can't miss the Square.\"</span>",
+                            " says \"You will found him in the Square of Anker just leave south and follow the hill path into town, you can't miss the Square.\"</span>",
                             player.HubGuid);
 
 
@@ -336,7 +285,7 @@ namespace MIMWebClient.Core.World.Tutorial
                             npc.Name +
                             " waves to you, may Tyr bless you.",
                             player.HubGuid);
-                    }
+                 
 
                 }
             }
@@ -369,137 +318,98 @@ namespace MIMWebClient.Core.World.Tutorial
 
         public static async Task Awakening(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
-            //to stop task firing twice
-            if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
-            {
-                return;
-            }
-
-
-            player.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
-
-            var oldPlayer = player;
-
-            await Task.Delay(5000);
-
-            if (string.IsNullOrEmpty(step))
-            {
-
-                player.Area = "Tutorial";
-                player.Region = "Tutorial";
-                player.AreaId = 3;
-
-                var exit = new Exit
+       
+                //to stop task firing twice
+                if (player.QuestLog.FirstOrDefault(x => x.Name.Equals("Find and greet Lance")) != null)
                 {
-                    area = player.Area,
-                    region = player.Region,
-                    areaId = player.AreaId
-                };
-
-
-                var templeRoom =
-                    Cache.ReturnRooms()
-                        .FirstOrDefault(
-                            x =>
-                                x.area.Equals(player.Area) && x.areaId.Equals(player.AreaId) &&
-                                x.region.Equals(player.Region));
-
-                if (templeRoom != null)
-                {
-                    PlayerManager.RemovePlayerFromRoom(room, oldPlayer);
-                    Movement.Teleport(player, templeRoom, exit);
-
+                    return;
                 }
-                else
+
+
+                player.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
+
+                var oldPlayer = player;
+
+                await Task.Delay(5000);
+
+                if (string.IsNullOrEmpty(step))
                 {
 
-                    var loadRoom = new LoadRoom
+                    player.Area = "Tutorial";
+                    player.Region = "Tutorial";
+                    player.AreaId = 11;
+
+                    var exit = new Exit
                     {
-                        Area = player.Area,
-                        id = player.AreaId,
-                        Region = player.Region
+                        area = player.Area,
+                        region = player.Region,
+                        areaId = player.AreaId
                     };
 
 
-                    var newRoom = loadRoom.LoadRoomFile();
-                    PlayerManager.RemovePlayerFromRoom(room, oldPlayer);  
-                    Movement.Teleport(player, newRoom, exit);
-                    //load from DB
-                }
+                    var templeRoom =
+                        Cache.ReturnRooms()
+                            .FirstOrDefault(
+                                x =>
+                                    x.area.Equals(player.Area) && x.areaId.Equals(player.AreaId) &&
+                                    x.region.Equals(player.Region));
 
-                //fix for random wake message hint showing
-
-                var playerInRoom =
-                    Cache.ReturnRooms()
-                        .FirstOrDefault(
-                            x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"))
-                        .players.FirstOrDefault(x => x.Name.Equals(player.Name));
-
-
-                //well this does not work
-                if (playerInRoom != null)
-                {
-                    await Task.Delay(3000);
-
-                    HubContext.SendToClient("You feel better as a wave of warmth surrounds your body", player.HubGuid);
-
-                    await Task.Delay(2000);
-
-                    HubContext.SendToClient("<span class='sayColor'>Someone says to you \"You should be feeling better now, wake when you are ready.\"</span>", player.HubGuid);
-
-
-
-                    await Task.Delay(2000);
-
-                    HubContext.SendToClient("<p class='RoomExits'>[Hint] Type wake to wake up</p>", player.HubGuid);
-                }
-
- 
-       
-
-                //loops forever because room.players does not get updated when player leaves the ambush room
-                // so this always tries to fire the messages below. as to why it sometimes it shows and sometimes does not, I have no idea.
-                while (playerInRoom !=null && playerInRoom.Area.Equals("Tutorial"))
-                {
-                    await Task.Delay(30000); // <-- is this the cause && the check below is not working
-
-                    playerInRoom =
-                  Cache.ReturnRooms()
-                      .FirstOrDefault(
-                          x => x.area.Equals("Tutorial") && x.areaId.Equals(1) && x.region.Equals("Tutorial"))
-                      .players.FirstOrDefault(x => x.Name.Equals(player.Name));
-
-                    if (playerInRoom == null)
+                    if (templeRoom != null)
                     {
-                        return;
+                        PlayerManager.RemovePlayerFromRoom(room, oldPlayer);
+                        Movement.Teleport(player, templeRoom, exit);
+
+                    }
+                    else
+                    {
+
+                        var loadRoom = new LoadRoom
+                        {
+                            Area = player.Area,
+                            id = player.AreaId,
+                            Region = player.Region
+                        };
+
+
+                        var newRoom = loadRoom.LoadRoomFile();
+                        PlayerManager.RemovePlayerFromRoom(room, oldPlayer);
+                        Movement.Teleport(player, newRoom, exit);
+                        //load from DB
                     }
 
-                    if (playerInRoom.Status != PlayerSetup.Player.PlayerStatus.Standing)
+                    //fix for random wake message hint showing
 
+                    var playerInRoom =
+                        Cache.ReturnRooms()
+                            .FirstOrDefault(
+                                x => x.area.Equals("Tutorial") && x.areaId.Equals(11) && x.region.Equals("Tutorial"))
+                            .players.FirstOrDefault(x => x.Name.Equals(player.Name));
+
+
+                    //well this does not work
+                    if (playerInRoom != null)
                     {
-                        HubContext.SendToClient("You feel better as a wave of warmth surrounds your body", player.HubGuid);
+                        await Task.Delay(3000);
+
+                        HubContext.SendToClient("You feel better as a wave of warmth surrounds your body",
+                            player.HubGuid);
 
                         await Task.Delay(2000);
 
-                        HubContext.SendToClient("<span class='sayColor'>Someone says to you \"You should be feeling better now, wake when you are ready.\"</span>", player.HubGuid);
+                        HubContext.SendToClient(
+                            "<span class='sayColor'>Someone says to you \"You should be feeling better now, wake when you are ready.\"</span>",
+                            player.HubGuid);
+
 
                         await Task.Delay(2000);
 
-                        HubContext.SendToClient("<p class='RoomExits'>[Hint] Type wake to wake up</p>", player.HubGuid);
-
-
+                        HubContext.SendToClient("<p class='RoomExits'>[Hint] Type: wake to wake up</p>", player.HubGuid);
 
                     }
-
-                }
-
-
 
             }
 
-
-
-
+         
 
         }
     }

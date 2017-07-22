@@ -179,6 +179,7 @@ namespace MIMWebClient.Core.Item
         public bool isHiddenInRoom { get; set; }
         public int count { get; set; }
         public int Gold { get; set; }
+        public bool QuestItem { get; set; }
         public ArmourRating ArmorRating { get; set; }   
         public double Weight { get; set; }
         /// <summary>

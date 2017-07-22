@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
+using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Mob;
 
 namespace MIMWebClient.Core.Player
@@ -46,8 +47,8 @@ namespace MIMWebClient.Core.Player
         /// <summary>
         /// Quest complete when player gains item
         /// </summary>
-        public Item.Item QuestItem { get; set; }
-        public Item.Item PrerequisiteItem { get; set; }
+        public List<Item.Item> QuestItem { get; set; }
+        public List<Item.Item> PrerequisiteItem { get; set; }
         public string PrerequisiteItemEmote { get; set; }
 
         /// <summary>
@@ -64,14 +65,14 @@ namespace MIMWebClient.Core.Player
         /// </summary>
         public string QuestFindMob { get; set; }
 
-   
+
         public int RewardGold { get; set; }
         public int RewardXp { get; set; }
         public Item.Item RewardItem { get; set; }
         public DialogTree RewardDialog { get; set; }
         public string AlreadyOnQuestMessage { get; set; }
         public string QuestHint { get; set; }
-        public string QuestTrigger{ get; set; }
+        public string QuestTrigger { get; set; }
         public bool Completed { get; set; } = false;
 
         public static void QuestLog(PlayerSetup.Player player)
@@ -94,6 +95,59 @@ namespace MIMWebClient.Core.Player
                 HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You have no quests.");
             }
 
+        }
+
+
+        public static void CheckIfGetItemQuestsComplete(PlayerSetup.Player player)
+        {
+            var quests = player.QuestLog.Where(x => x.Type == Quest.QuestType.FindItem && x.Completed == false);
+            var playerInvQuestItems = player.Inventory.Where(x => x.QuestItem);
+            var invQuestItems = playerInvQuestItems as IList<Item.Item> ?? playerInvQuestItems.ToList();
+            foreach (var findQuest in quests)
+            {
+              
+                var compelete = false;
+                var currentItemsForQuest = new List<Item.Item>();
+                foreach (var questItem in findQuest.QuestItem)
+                {
+                    compelete = invQuestItems.Any(x => x.name.Equals(questItem.name, StringComparison.CurrentCultureIgnoreCase));
+
+                    if (compelete)
+                    {
+                        currentItemsForQuest.Add(questItem);
+                    }
+                }
+
+                if (compelete && currentItemsForQuest.Count == findQuest.QuestItem.Count)
+                {
+                    findQuest.Completed = true;
+
+                    HubContext.SendToClient(findQuest.RewardDialog.Message, player.HubGuid);
+                    HubContext.SendToClient("You gain " + findQuest.RewardXp + " Experience Points", player.HubGuid);
+                    HubContext.SendToClient("You gain " + findQuest.RewardGold + " gold pieces", player.HubGuid);
+
+                    var rewardItem = findQuest?.RewardItem;
+
+                    if (rewardItem != null)
+                    {
+                        rewardItem.location = Item.Item.ItemLocation.Inventory;
+
+                        player.Inventory.Add(rewardItem);
+                    }
+
+                    player.Experience += findQuest.RewardXp;
+                    player.Gold = findQuest.RewardGold;
+
+                    //check if player level
+                    var xp = new Experience();
+                    xp.GainLevel(player);
+                    //update ui
+                    Score.ReturnScoreUI(player);
+                   
+                }
+
+            }
+ 
         }
     }
 }

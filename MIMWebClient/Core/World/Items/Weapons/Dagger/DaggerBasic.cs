@@ -123,5 +123,43 @@ namespace MIMWebClient.Core.World.Items.Weapons.DaggerBasic
             return HiddenBlade;
         }
 
+        public static Item.Item BronzeCurvedDagger()
+        {
+            var BronzeCurvedDagger = new Item.Item
+            {
+                name = "A bronze curved dagger",
+                Weight = 4,
+                count = 1,
+                equipable = true,
+                eqSlot = Item.Item.EqSlot.Wielded,
+                slot = Item.Item.EqSlot.Wielded,
+                location = Item.Item.ItemLocation.Inventory,
+                weaponSpeed = 1,
+                weaponType = Item.Item.WeaponType.ShortBlades,
+                attackType = Item.Item.AttackType.Pierce,
+                stats = new Stats()
+                {
+                    damMax = 8,
+                    damMin = 1,
+                    damRoll = 1,
+                    minUsageLevel = 1,
+                    worth = 15
+                },
+                description = new Description()
+                {
+                    exam = "A bronze curved dagger",
+                    look = "A bronze curved dagger",
+                    room = "A bronze curved dagger",
+                    smell = "",
+                    taste = "",
+                    touch = "",
+                },
+                Gold = 120
+
+            };
+
+            return BronzeCurvedDagger;
+        }
+
     }
 }

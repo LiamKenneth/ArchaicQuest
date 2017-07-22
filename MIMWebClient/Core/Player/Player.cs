@@ -144,6 +144,9 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonIgnore]
         public Player Following { get; set; }
 
+        [BsonIgnore]
+        public string Pose { get; set; }
+
         //Game stats
         [BsonElement("ex")]
         public int Explored;
@@ -301,10 +304,23 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonIgnoreIfNull]
         public Guid NPCId;
 
+        [BsonElement("nln")]
+        [BsonIgnoreIfNull]
+        public String NPCLongName;
+
         //NPC Properties
         [BsonElement("nr")]
         [BsonIgnoreIfNull]
         public bool Roam;
+
+        //NPC Properties
+        [BsonElement("nph")]
+        [BsonIgnoreIfNull]
+        public List<string> PathList;
+
+        [BsonElement("nphc")]
+        [BsonIgnoreIfNull]
+        public int PathCount;
 
         //NPC Properties
         [BsonElement("na")]
@@ -366,6 +382,10 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("eow")]
         [BsonIgnoreIfNull]
         public string EventWake;
+
+        [BsonElement("eod")]
+        [BsonIgnoreIfNull]
+        public string EventDeath;
 
         [BsonIgnoreIfNull]
         [BsonElement("eoc")]
@@ -451,7 +471,7 @@ namespace MIMWebClient.Core.PlayerSetup
             this.KnownByName = true;
            
             this.QuestLog = new List<Quest>();
-
+            this.Quest = new List<Quest>();
             this.EventWake = "";
             this.EventOnEnter = "";
             this.EventOnComunicate = new Dictionary<string, string>();
@@ -476,8 +496,6 @@ namespace MIMWebClient.Core.PlayerSetup
         public static void SetState(Player player)
         {
 
-
-
             if (player.Target != null)
             {
                 player.Status = Player.PlayerStatus.Fighting;
@@ -495,7 +513,19 @@ namespace MIMWebClient.Core.PlayerSetup
             HubContext.SendToClient("Player is Fighting: " + player.ActiveFighting, player.HubGuid);
             HubContext.SendToClient("Player Has active skill: " + player.ActiveSkill?.Name, player.HubGuid);
             HubContext.SendToClient("Player status: " + player.Status, player.HubGuid);
+            HubContext.SendToClient("Player items: ", player.HubGuid);
+
+            if (player.Inventory != null)
+            {
+                foreach (var item in player.Inventory)
+                {
+                    HubContext.SendToClient(item.name + " " + item.location + " " + item.type, player.HubGuid);
+                }
+            }
+
+
+
         }
- 
+
     }
 }

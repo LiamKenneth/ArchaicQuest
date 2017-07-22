@@ -7,6 +7,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using MIMWebClient.Core.PlayerSetup;
 using MIMWebClient.Core.Update;
+using MIMWebClient.Core.World;
+using MIMWebClient.Hubs;
 
 namespace MIMWebClient
 {
@@ -22,6 +24,15 @@ namespace MIMWebClient
             UpdateWorld.CleanRoom();
             UpdateWorld.UpdateMob();
             PlayerName.GenerateHumanNames();
+
+            foreach (var area in Areas.ListOfRooms())
+            {
+
+                var room = new Tuple<string, string, int>(area.region, area.area, area.areaId);
+
+                MIMHub._AreaCache.TryAdd(room, area);
+
+            }
         }
     }
 }

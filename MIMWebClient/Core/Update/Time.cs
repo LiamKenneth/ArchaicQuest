@@ -146,6 +146,16 @@ namespace MIMWebClient.Core.Update
 
         }
 
+        public static bool isDay()
+        {
+
+            if (hour >= sunrise && hour <= moonRise)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static void ShowTime()
         {
 
