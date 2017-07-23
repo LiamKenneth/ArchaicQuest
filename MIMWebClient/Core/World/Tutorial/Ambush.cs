@@ -723,7 +723,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 Area = "Tutorial",
                 AreaId = 5
             };
-            room.mobs.Add(goblin);
+           
             goblin.Gold = 10;
             
 
@@ -910,6 +910,26 @@ namespace MIMWebClient.Core.World.Tutorial
 
 
             };
+
+            var pool = new Item.Item()
+            {
+                name = "pool of water",
+                isHiddenInRoom = true,
+                waterContainer = true,
+                waterContainerAmount = 999,
+                waterContainerLiquid = "fresh water",
+                waterContainerMaxAmount = 999,
+                stuck = true,
+                type = Item.Item.ItemType.Drink,
+                location = Item.Item.ItemLocation.Room,
+                description = new Description()
+                {
+                    look = "The cool water gently ripples as you look into the pool. What do you see?<br />",
+                    exam = "The cool water gently ripples as you look into the pool. What do you see?<br />"
+                }
+            };
+
+            room.items.Add(pool);
 
  
 
