@@ -15,8 +15,7 @@ namespace MIMWebClient.Core.Events
             var whoList = new StringBuilder();
             whoList.Append(Cache.ReturnPlayers().Count).Append(" Players currently playing <br />");
             foreach (var player in Cache.ReturnPlayers())
-            {
-                
+            { 
                     whoList.Append("<p>[")
                         .Append(player.Level)
                         .Append(" ")

@@ -59,6 +59,7 @@ namespace MIMWebClient.Core.Room
         public string title { get; set; }
         public string description { get; set; }
         public Terrain terrain { get; set; }
+        public bool InstantRePop { get; set; }
         public List<RoomObject> keywords { get; set; }
         public List<Exit> exits { get; set; }
         public List<PlayerSetup.Player> players { get; set; }

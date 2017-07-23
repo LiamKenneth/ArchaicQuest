@@ -3,6 +3,7 @@
 namespace MIMWebClient.Core.World
 {
     using MIMWebClient.Core.Room;
+    using MIMWebClient.Core.World.Tutorial;
 
     public static class Areas
     {
@@ -11,6 +12,17 @@ namespace MIMWebClient.Core.World
             var areas = new List<Room>
 
             {
+                  Ambush.TutorialRoom1(),
+               Ambush.TutorialRoom2(),
+                Ambush.TutorialLostInTheWoods(),
+                Ambush.TutorialLostInTheWoods2(),
+                Ambush.TutorialLostInTheWoods3(),
+                Ambush.TutorialLostInTheWoods4(),
+                Ambush.TutorialLostInTheWoods5(),
+                 Ambush.TutorialLostInTheWoods6(),
+                Ambush.TutorialGoblinCamp(),
+                Ambush.TutorialGoblinCampTentNorth(),
+                Ambush.TutorialGoblinCampTentSouth(),
                 Anker.Anker.VillageSquare(),
                 Anker.Anker.SquareWalkOutsideTavern(),
                 Anker.Anker.SquareWalkOutsideStables(),

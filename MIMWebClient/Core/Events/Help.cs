@@ -91,7 +91,7 @@ namespace MIMWebClient.Core.Events
                                                     "<h2>Rules</h2>" +
                                                     "<p>Rules here are simple, don't ruin the fun for other people or abuse any bugs.</p>" +
                                                     "<h2>Help Getting started</h2>" +
-                                                    "<p>Completing the tutorial     should be simple to do, if you find yourself in Anker wondering what to do next. I sugest you head to Ester and enroll in the adventure acaademy you will learn a lot more and be given many quests to complete. Hopefully you will make a few new friends along the way. Remember to read and examine everything. Many secrets are here to be found.</p>"
+                                                    "<p>Completing the tutorial should be simple to do, if you find yourself in Anker wondering what to do next. I sugest you head to Ester and enroll in the adventure acaademy you will learn a lot more and be given many quests to complete. Hopefully you will make a few new friends along the way. Remember to read and examine everything. Many secrets are here to be found.</p>"
 
             };
 

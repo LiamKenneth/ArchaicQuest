@@ -315,7 +315,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 title = "A goblin camp",
                 description = "<p>Thick logs used for sitting face each other with a large fire between them at the centre of the camp. " +
                               "A few bed rolls and discarded pieces of meat lay haphazardly across the ground. To the north and south are two small identical tents.</p>",
-
+                InstantRePop = true,
                 //Defaults
                 exits = new List<Exit>(),
                 items = new List<Item.Item>(),
@@ -396,11 +396,14 @@ namespace MIMWebClient.Core.World.Tutorial
 
             };
 
-            var gobby = Goblin.WeakGoblin();
-
-
-            room.mobs.Add(gobby);
-
+            var goblin = Goblin.WeakGoblin();
+            goblin.Recall = new Recall()
+            {
+                Region = "Tutorial",
+                Area = "Tutorial",
+                AreaId = 3
+            };
+            room.mobs.Add(goblin);
             room.Emotes.Add("The fire crackles and spits.");
             room.Emotes.Add("You hear a howl in the distance.");
             room.exits.Add(north);
@@ -421,7 +424,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 areaId = 4,
                 title = "A tent in the goblin camp",
                 description = "<p>A small bed and wooden chest has been set up against the side of the tent, filling most of the space. A small cluttered desk sits on the other side leaving just about enough room to enter and leave.</p>",
-
+                InstantRePop = true,
                 //Defaults
                 exits = new List<Exit>(),
                 items = new List<Item.Item>(),
@@ -592,7 +595,14 @@ namespace MIMWebClient.Core.World.Tutorial
             room.items.Add(bedContainer);
             room.items.Add(deskContainer);
 
-            room.mobs.Add(Goblin.WeakGoblin());
+            var goblin = Goblin.WeakGoblin();
+            goblin.Recall = new Recall()
+            {
+                Region = "Tutorial",
+                Area = "Tutorial",
+                AreaId = 4
+            };
+            room.mobs.Add(goblin);
 
  
             room.Emotes.Add("You hear a howl in the distance.");
@@ -612,7 +622,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 areaId = 5,
                 title = "A tent in the goblin camp",
                 description = "<p>A small bed and wooden chest has been set up against the side of the tent, filling most of the space. A small cluttered desk sits on the other side leaving just about enough room to enter and leave.</p>",
-
+                InstantRePop = true,
                 //Defaults
                 exits = new List<Exit>(),
                 items = new List<Item.Item>(),
@@ -707,6 +717,13 @@ namespace MIMWebClient.Core.World.Tutorial
             room.items.Add(chest);
 
             var goblin = Goblin.WeakGoblin();
+            goblin.Recall = new Recall()
+            {
+                Region = "Tutorial",
+                Area = "Tutorial",
+                AreaId = 5
+            };
+            room.mobs.Add(goblin);
             goblin.Gold = 10;
             
 
