@@ -58,7 +58,6 @@ namespace MIMWebClient.Core
                 {">", () => Communicate.SayTo(commandOptions, room, playerData)},
                 {"talkto", () => Talk.TalkTo(commandOptions, room, playerData)},
                 {"emote", () => Emote.EmoteActionToRoom(commandOptions, playerData)},
-                {"quit", () => HubContext.Quit(playerData.HubGuid, room)},
                 {"wear", () => Equipment.WearItem(playerData, commandOptions)},
                 {"remove", () => Equipment.RemoveItem(playerData, commandOptions)},
                 {"doff", () => Equipment.RemoveItem(playerData, commandOptions)},
@@ -149,7 +148,7 @@ namespace MIMWebClient.Core
                 {"who", () => Who.Connected(playerData)},
                 {"affects", () => Affect.Show(playerData)},
                 {"follow", () => Follow.FollowThing(playerData, room, commandOptions) },
-
+                  {"quit", () => HubContext.Quit(playerData.HubGuid, room)},
                 //admin
                 {"/debug", () => PlayerSetup.Player.DebugPlayer(playerData) }
             };

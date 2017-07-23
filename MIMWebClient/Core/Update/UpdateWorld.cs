@@ -129,7 +129,7 @@ namespace MIMWebClient.Core.Update
 
                 foreach (var player in MIMHub._PlayerCache.ToList())
                 {
-                    if (player.Value != null && player.Value.LastCommandTime.AddMinutes(10) < DateTime.UtcNow)
+                    if (player.Value != null && player.Value.LastCommandTime.AddMinutes(1) < DateTime.UtcNow)
                     {
                         HubContext.SendToClient("You disappear in the void", player.Value.HubGuid);
 
@@ -150,7 +150,7 @@ namespace MIMWebClient.Core.Update
                         }
                     }
 
-                    if (player.Value != null && player.Value.LastCommandTime.AddMinutes(20) < DateTime.UtcNow)
+                    if (player.Value != null && player.Value.LastCommandTime.AddMinutes(2) < DateTime.UtcNow)
                     {
                         var room =
                             MIMHub._AreaCache.FirstOrDefault(
@@ -161,9 +161,14 @@ namespace MIMWebClient.Core.Update
 
                         PlayerSetup.Player removedChar = null;
 
-                      MIMHub._PlayerCache.TryRemove(player.Value.Name, out removedChar);
+                      MIMHub._PlayerCache.TryRemove(player.Value.HubGuid, out removedChar);
+
+                        if (removedChar != null)
+                        {
+                            Command.ParseCommand("quit", player.Value, room.Value);
+                        }
     
-                        Command.ParseCommand("quit", player.Value, room.Value);
+                        
                     }
                 }
             }

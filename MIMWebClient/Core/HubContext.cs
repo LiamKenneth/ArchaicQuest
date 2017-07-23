@@ -156,6 +156,10 @@ namespace MIMWebClient.Core
 
                     Save.UpdatePlayer(Player);
 
+                    PlayerSetup.Player removedChar = null;
+
+                    MIMHub._PlayerCache.TryRemove(Player.HubGuid, out removedChar);
+
                     SendToClient("Gods take note of your progress", playerId);
                     SendToClient("See you soon!", playerId);
                     broadcastToRoom(Player.Name + " has left the realm", room.players, playerId, true);

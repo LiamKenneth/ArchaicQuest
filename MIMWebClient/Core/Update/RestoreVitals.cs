@@ -80,27 +80,26 @@ namespace MIMWebClient.Core.Update
                 
                 foreach (var room in rooms)
                 {
-
-                
-                    for (int i = room.mobs.Count - 1; i >= 0; i--)
+                    foreach (var mob in room.mobs.ToList())
                     {
-                        //update mob hp/mana/moves
-                        UpdateHp(room.mobs[i], context);
-                        UpdateMana(room.mobs[i], context);
-                        UpdateEndurance(room.mobs[i], context);
-                        UpdateAffects(room.mobs[i], context);
-
+                        UpdateHp(mob, context);
+                        UpdateMana(mob, context);
+                        UpdateEndurance(mob, context);
+                        UpdateAffects(mob, context);
                     }
+                 
+                    
                     #region add Mobs back
 
                  
-                        if (room.corpses.Count > 0 && room.players.Count == 0)
+                        if (room.corpses.Count > 0)
                         {
                             // decay corpse
 
                             foreach (var corpse in room.corpses.ToList())
                             {
 
+                          
 
                             if (corpse.Type.Equals(Player.PlayerTypes.Player))
                                 {
@@ -126,10 +125,14 @@ namespace MIMWebClient.Core.Update
                                 // mobs like village idiot have set items
                                     var originalMob = originalArea.mobs.Find(x => x.Name == corpse.Name);
 
+                                if (originalMob != null)
+                                {
                                     room.items.Remove(room.items.Find(x => x.name.Contains(originalMob.Name)));
                                     room.corpses.Remove(room.corpses.Find(x => x.Name.Equals(originalMob.Name)));
 
                                     room.mobs.Add(originalMob);
+                                }
+                              
                                 }
                             }
 
