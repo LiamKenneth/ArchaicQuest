@@ -2,7 +2,7 @@
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 
-[assembly: OwinStartup(typeof(MIMWebClient.Startup))]
+[assembly: OwinStartup("MIMWebClientConfig", typeof(MIMWebClient.Startup))]
 
 namespace MIMWebClient
 {
