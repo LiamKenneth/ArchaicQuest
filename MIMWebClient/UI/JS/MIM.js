@@ -25,6 +25,9 @@
     var email;
     var password;
 
+
+    var mainWindow = document.getElementById("discussion");
+    var mainWindowFragment = document.createDocumentFragment();
     //================================================================================
     // Helper Functions
     //================================================================================
@@ -353,10 +356,12 @@
     };
     //// Add a new message to the page ////
     client.addNewMessageToPage = function (message) {
-      
-        $('#discussion').append("<p>" + message + "</p>");
-      
-
+        console.time('addtopage');
+        var p = document.createElement('p');
+        p.innerHTML = message;
+        mainWindowFragment.appendChild(p);
+        mainWindow.appendChild(mainWindowFragment);
+        console.timeEnd('addtopage');
         $("#discussion").scrollTop($("#discussion")[0].scrollHeight);
     };
 

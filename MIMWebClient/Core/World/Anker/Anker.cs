@@ -2062,6 +2062,8 @@ namespace MIMWebClient.Core.World.Anker
             room.exits.Add(south);
             room.mobs.Add(AnkerGuard.AnkerGuardNpc2());
 
+       
+
             return room;
         }
 

@@ -599,17 +599,6 @@ namespace MIMWebClient.Core.Room
                             foreach (var mobb in getNewRoom.mobs.ToList())
                             {
 
-                                if (mobb.Greet)
-                                {
-                                    // Event.ParseCommand("greet", player, mob, getNewRoom);
-                                }
-                                else
-                                {
-                                    //mob might be aggro
-                                }
-
-
-
                                 if (!string.IsNullOrEmpty(mobb.EventOnEnter))
                                 {
                                     Event.ParseCommand(mob.EventOnEnter, ThingYourFollowing, mobb, room);
@@ -619,8 +608,6 @@ namespace MIMWebClient.Core.Room
                                 {
                                     Event.ParseCommand(room.EventOnEnter, mobb, null, room);
                                 }
-
-
 
                             }
                         }
