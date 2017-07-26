@@ -596,7 +596,7 @@ namespace MIMWebClient.Core.Room
 
 
                             //NPC Enter event here
-                            foreach (var mobb in getNewRoom.mobs.ToList())
+                            foreach (var mobb in getNewRoom.mobs.Where(x => x.EventOnEnter != null).ToList())
                             {
 
                                 if (!string.IsNullOrEmpty(mobb.EventOnEnter))
@@ -604,12 +604,14 @@ namespace MIMWebClient.Core.Room
                                     Event.ParseCommand(mob.EventOnEnter, ThingYourFollowing, mobb, room);
                                 }
 
-                                if (!string.IsNullOrEmpty(room.EventOnEnter))
-                                {
-                                    Event.ParseCommand(room.EventOnEnter, mobb, null, room);
-                                }
-
                             }
+
+
+                            if (!string.IsNullOrEmpty(room.EventOnEnter))
+                            {
+                                Event.ParseCommand(room.EventOnEnter, mob, null, room);
+                            }
+
                         }
                     }
                     catch (Exception e)

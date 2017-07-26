@@ -209,7 +209,7 @@ namespace MIMWebClient.Core.Update
                                 if (mob.Guard || mob.AreaId != mob.Recall.AreaId)
                                 {
                                    await Movement.MobWalk(mob);
-                                   await Task.Delay(120);
+                              
                                 }
                               else
                                 {
@@ -218,7 +218,7 @@ namespace MIMWebClient.Core.Update
                                         mob.Pose = string.Empty;
                                         mob.Status = PlayerSetup.Player.PlayerStatus.Standing;
                                         await Movement.MobWalk(mob);
-                                        await Task.Delay(120);
+                             
 
                                     }
                                     else
