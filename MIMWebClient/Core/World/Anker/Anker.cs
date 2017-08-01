@@ -2060,9 +2060,9 @@ namespace MIMWebClient.Core.World.Anker
             #endregion
             room.exits.Add(north);
             room.exits.Add(south);
-            room.mobs.Add(AnkerGuard.AnkerGuardNpc2());
 
-       
+            room.mobs.Add(AnkerGuard.AnkerGuardNpc2());
+     
 
             return room;
         }
@@ -3927,6 +3927,8 @@ namespace MIMWebClient.Core.World.Anker
             };
 
             room.mobs.Add(AnkerGuard.AnkerGuardNpc());
+
+            
 
 
             #region exits
