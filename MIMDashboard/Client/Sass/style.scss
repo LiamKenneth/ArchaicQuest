@@ -1,0 +1,13 @@
+﻿
+body {
+    color:green;
+
+    
+}
+
+p {
+    color:red;
+    &:hover {
+        color: blue;
+    }
+}

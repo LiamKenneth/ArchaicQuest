@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using MIMWebClient.Core.Events;
 
@@ -9,7 +10,7 @@ namespace MIMWebClient.Core.World.Anker.Scripts
     public class VilliageIdiot
     {
 
-        public static void Annoy(PlayerSetup.Player player, PlayerSetup.Player mob, Room.Room room)
+        public static async Task Annoy(PlayerSetup.Player player, PlayerSetup.Player mob, Room.Room room)
         {
             var phrase = RandomResponses();
             HubContext.SendToClient($"<span class='sayColor'>{mob.Name} says to you \"{phrase}\"</span>", player.HubGuid);
@@ -24,6 +25,7 @@ namespace MIMWebClient.Core.World.Anker.Scripts
 
             Follow.MobStalk(mob, player, room);
 
+            await Task.Delay(50);
         }
 
         public static string RandomResponses()
