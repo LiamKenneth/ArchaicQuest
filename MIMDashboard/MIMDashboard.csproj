@@ -317,6 +317,7 @@
     <Content Include=".babelrc" />
     <Content Include="Client\Sass\style.scss" />
     <None Include="Project_Readme.html" />
+    <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MIMWebClient\MIMWebClient.csproj">
