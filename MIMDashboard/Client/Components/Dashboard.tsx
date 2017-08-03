@@ -1,55 +1,36 @@
 import * as React from 'react';
-import * as ReactDom from 'react-dom';
-// import createStore  from 'redux';
-// let store = createStore({}, ['Use Redux'])
+import { connect } from 'react-redux';
+import { FetchData } from './PlayerStats/actions/player.action';
 
-import { GET_PLAYERS } from './PlayerStats/player.action';
 
 type stats = {
     newUsersDay: number,
     newUsersWeek: number,
-    newUserMonth: number,
+    newUsersMonth: number,
     errors: any,
-    loading: boolean
+    hasErrored: boolean,
+    isLoading: boolean
 
 }
 
 class Dashboard extends React.Component<stats> {
-    constructor(props: stats) {
-        super(props);
-
-        this.state = {
-            "newUsersDay": 0,
-            "newUsersWeek": 0,
-            "newUsersMonth": 0,
-            "errors": null,
-            "loading": true
-        }
-    }
-
-
+   
+    
     componentDidMount() {
-        let component = this;
-        fetch('./client/Components/fake.json')
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (json) {
-            //   this.props.getPlayer()
-               console.log(json)
-               
-            })
-            .catch(function (exception) {
-                console.log("Error fetching data: " + exception.message);
-            });
-    };
-
+        this.props.FetchData('./client/Components/fake.json');
+    }
 
     render() {
 
+          if (this.state.props.isLoading) {
+            return <p>Loading…</p>;
+        }
+
         return (
             <div className="dashboard">
-                <p>Dashboard, users: {this.state.newUsersDay}</p>
+
+
+                <p>Dashboard, users: {this.state.props.newUsersDay}</p>
 
             </div>
         )
@@ -57,4 +38,22 @@ class Dashboard extends React.Component<stats> {
 }
 
 
-export default Dashboard;
+const mapStateToProps = (state: stats) => {
+    return {
+        newUsersDay: state.newUsersDay,
+        newUsersWeek: state.newUsersWeek,
+        newUserMonth: state.newUsersMonth,
+        errors: state.errors,
+        hasErrored: state.hasErrored,
+        isLoading: state.isLoading
+    };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        FetchData: (url: string) => dispatch(FetchData(url))
+    };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
