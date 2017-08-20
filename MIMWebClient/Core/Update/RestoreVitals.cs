@@ -184,8 +184,19 @@ namespace MIMWebClient.Core.Update
                             }
                         }
                     }
+                    #endregion
+
+                    if (!string.IsNullOrEmpty(room.updateMessage))
+                    {
+                        foreach (var player in room.players)
+                        {
+                            HubContext.SendToClient(room.updateMessage, player.HubGuid);
+                        }
+                    }
                 }
-                #endregion
+
+
+
 
 
             }

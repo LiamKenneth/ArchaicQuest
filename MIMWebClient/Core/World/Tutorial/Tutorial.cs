@@ -231,7 +231,7 @@ namespace MIMWebClient.Core.World.Tutorial
                     //remove player from tutorial room
                     var oldRoom = Cache.ReturnRooms()
                         .FirstOrDefault(
-                            x => x.area.Equals("Tutorial") && x.areaId.Equals(player.AreaId) && x.region.Equals("Tutorial"));
+                            x => x.area.Equals("Tutorial") && x.areaId.Equals(10) && x.region.Equals("Tutorial"));
 
                     if (oldRoom != null && oldRoom.players.Contains(player))
                     {

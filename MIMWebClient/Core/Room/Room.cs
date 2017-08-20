@@ -58,6 +58,7 @@ namespace MIMWebClient.Core.Room
         public string modified { get; set; }
         public string title { get; set; }
         public string description { get; set; }
+        public string updateMessage { get; set; }
         public Terrain terrain { get; set; }
         public bool InstantRePop { get; set; }
         public List<RoomObject> keywords { get; set; }
