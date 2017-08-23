@@ -44,8 +44,7 @@ namespace MIMWebClient.Core.PlayerSetup
 
         }
 
-        [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId _id { get; set; }
+        public Guid Id { get; set; } 
 
         [BsonElement("hid")]
         public string HubGuid;
@@ -409,6 +408,7 @@ namespace MIMWebClient.Core.PlayerSetup
 
         public Player()
         {
+            this.Id = Guid.NewGuid();
             this.Type = PlayerTypes.Player;
             this.Level = 1;
             this.Description = this.Description ?? "You see nothing special about them.";

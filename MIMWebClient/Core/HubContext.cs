@@ -154,7 +154,7 @@ namespace MIMWebClient.Core
 
 
 
-                    Save.UpdatePlayer(Player);
+                    Save.SavePlayer(Player);
 
                     PlayerSetup.Player removedChar = null;
 

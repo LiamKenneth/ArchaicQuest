@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LiteDB;
 using MIMWebClient.Core.Player;
 
 namespace MIMWebClient.Core.Events
@@ -27,27 +28,23 @@ namespace MIMWebClient.Core.Events
 
         public Room LoadRoomFile()
         {
-            const string ConnectionString = "mongodb://testuser:password@ds052968.mlab.com:52968/mimdb";
-
-            // Create a MongoClient object by using the connection string
-            var client = new MongoClient(ConnectionString);
-
-            //Use the MongoClient to access the server
-            var database = client.GetDatabase("mimdb");
-
-            var collection = database.GetCollection<Room>("Room");
-
-
-
-            Room room = collection.Find(x => x.areaId == this.id && x.area == Area && x.region == Region).FirstOrDefault();
-
-
-            if (room != null)
+            using (var db = new LiteDatabase(@"C:\MyData.db"))
             {
-                return room;
-            }
 
-            throw new Exception("No Room found in the Database for areaId: " + id);
+
+                var col = db.GetCollection<Room>("Room");
+
+                Room room =
+                    col.Find(x => x.areaId == this.id && x.area == Area && x.region == Region).FirstOrDefault();
+
+
+                if (room != null)
+                {
+                    return room;
+                }
+
+                throw new Exception("No Room found in the Database for areaId: " + id);
+            }
         }
 
 
