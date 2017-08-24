@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ namespace MIMWebClient.Core.Events
 
         public Room LoadRoomFile()
         {
-            using (var db = new LiteDatabase(@"C:\MyData.db"))
+            using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
             {
 
 

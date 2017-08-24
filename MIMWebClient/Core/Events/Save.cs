@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
@@ -24,10 +25,10 @@ namespace MIMWebClient.Core.Events
 
             try
             {
-                using (var db = new LiteDatabase(@"C:\MyData.db"))
+                using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
                 {
                     var col = db.GetCollection<Player>("Player");
-                    col.Insert(player.Id, player); 
+                    col.Upsert(player); 
                 }
 
             }
@@ -43,7 +44,7 @@ namespace MIMWebClient.Core.Events
 
             try
             {
-                using (var db = new LiteDatabase(@"C:\MyData.db"))
+                using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
                 {
 
                     var col = db.GetCollection<Error.Error>("Error");
@@ -67,7 +68,7 @@ namespace MIMWebClient.Core.Events
 
         public static Player GetPlayer(string name)
         {
-            using (var db = new LiteDatabase(@"C:\MyData.db"))
+            using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
             {
 
                 var col = db.GetCollection<Player>("Player");
