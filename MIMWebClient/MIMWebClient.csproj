@@ -339,6 +339,7 @@
     <Compile Include="Core\Update\RestoreVitals.cs" />
     <Compile Include="Core\Update\Time.cs" />
     <Compile Include="Core\Update\UpdateWorld.cs" />
+    <Compile Include="Core\Util\DateTimeExtensions.cs" />
     <Compile Include="Core\Util\TruncateString.cs" />
     <Compile Include="Core\World\Anker\Anker.cs" />
     <Compile Include="Core\World\Anker\Mobs\AnkerGuard.cs" />

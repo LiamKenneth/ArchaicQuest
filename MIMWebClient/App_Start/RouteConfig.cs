@@ -17,7 +17,7 @@ namespace MIMWebClient
 
             routes.MapHttpRoute(
                 name: "API Default",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
 );
 

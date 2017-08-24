@@ -77,6 +77,10 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("g")]
         public string Gender { get; set; }
 
+        public int PlayTime { get; set; } = 0;
+
+        public int TotalPlayTime { get; set; } = 0;
+
         [BsonElement("r")]
         public string Race { get; set; }
 
