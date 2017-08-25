@@ -53,6 +53,9 @@ namespace MIMWebClient.Core.PlayerSetup
         public DateTime JoinedDate { get; set; }
 
         [BsonElement("lcd")]
+        public DateTime LastLoginTime { get; set; }
+
+        [BsonElement("lcd")]
         public DateTime LastCommandTime { get; set; }
 
         [BsonElement("ty")]
@@ -77,9 +80,9 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("g")]
         public string Gender { get; set; }
 
-        public int PlayTime { get; set; } = 0;
+        public long PlayTime { get; set; } = 0;
 
-        public int TotalPlayTime { get; set; } = 0;
+        public long TotalPlayTime { get; set; } = 0;
 
         [BsonElement("r")]
         public string Race { get; set; }

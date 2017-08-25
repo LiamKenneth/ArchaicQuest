@@ -21,13 +21,18 @@ namespace MIMWebClient.Controllers
         public int Before { get; set; }
     }
 
+    public class SignUps
+    {
+        public string Month { get; set; }
+        public int Count { get; set; }
+    }
+
     public class GameStatsController : ApiController
     {
         ///// <summary>
         ///// Returns list of logged in players
         ///// </summary>
         ///// <returns>Returns list of logged in players</returns>
-        //[Route("whoList")]
         [HttpGet]
         public IEnumerable<Player> ReturnWhoList()
         {
@@ -42,8 +47,7 @@ namespace MIMWebClient.Controllers
         [HttpGet]
         public IEnumerable<Stats> NewPlayers()
         {
-
-      
+    
             using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
             {
                 var thisWeek = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
@@ -76,6 +80,35 @@ namespace MIMWebClient.Controllers
             }
 
          
+        }
+
+        [HttpGet]
+        public IEnumerable<SignUps> SignUpCount(int monthCount)
+        {
+ 
+            using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+            {
+               
+                var col = db.GetCollection<Player>("Player");
+
+                var players = col.FindAll().ToList();
+                var signups = new List<SignUps>();
+                var months = DateTime.Now.AddMonths(-monthCount);
+
+                for (int i = 1; i <= monthCount; i++)
+                {
+                    signups.Add(new SignUps
+                    {
+                        Month = months.AddMonths(i).ToString("MMM") + " " + months.AddMonths(i).Year,
+                        Count = players.Where(x => x.JoinedDate.Month == months.AddMonths(i).Month).ToList().Count
+                    });
+                }
+                
+       
+                return signups;
+            }
+
+
         }
     }
 }

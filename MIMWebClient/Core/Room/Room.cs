@@ -47,7 +47,7 @@ namespace MIMWebClient.Core.Room
         }
 
         [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId _id { get; set; }
+        public Guid _id { get; set; }
         public string region { get; set; }
         public string area { get; set; }
         public int areaId { get; set; }

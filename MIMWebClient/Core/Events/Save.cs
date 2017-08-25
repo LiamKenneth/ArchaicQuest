@@ -28,6 +28,14 @@ namespace MIMWebClient.Core.Events
                 using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
                 {
                     var col = db.GetCollection<Player>("Player");
+
+
+                    var duration = player.LastLoginTime - player.LastCommandTime;
+
+                        player.PlayTime = (long)duration.TotalMilliseconds;
+
+                        player.TotalPlayTime += (long)duration.TotalMilliseconds;
+
                     col.Upsert(player); 
                 }
 

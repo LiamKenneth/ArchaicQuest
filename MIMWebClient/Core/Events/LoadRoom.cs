@@ -35,8 +35,7 @@ namespace MIMWebClient.Core.Events
 
                 var col = db.GetCollection<Room>("Room");
 
-                Room room =
-                    col.Find(x => x.areaId == this.id && x.area == Area && x.region == Region).FirstOrDefault();
+                var room = col.Find(x => x.areaId == this.id && x.area == Area && x.region == Region).FirstOrDefault();
 
 
                 if (room != null)
