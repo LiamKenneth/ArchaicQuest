@@ -30,7 +30,7 @@ namespace MIMWebClient.Core.Events
                     var col = db.GetCollection<Player>("Player");
 
 
-                    var duration = player.LastLoginTime.Millisecond <= 0 ? player.LastCommandTime.Millisecond : player.LastLoginTime.Millisecond - player.LastCommandTime.Millisecond;
+                    var duration = player.LastLoginTime.Ticks - player.LastCommandTime.Ticks;
 
                         player.PlayTime = duration;
 

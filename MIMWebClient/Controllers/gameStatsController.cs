@@ -23,6 +23,13 @@ namespace MIMWebClient.Controllers
         public int Before { get; set; }
     }
 
+    public class InfoCount
+    {
+        public string Name { get; set; }
+        public int Count { get; set; }
+    }
+
+
     public class UnfinshedQuest
     {
         public string Name { get; set; }
@@ -63,6 +70,81 @@ namespace MIMWebClient.Controllers
                 var quitLoc = col.FindAll();
                 
                 return quitLoc;
+            }
+        }
+
+        [HttpGet]
+        public IEnumerable<InfoCount> GetClassBreakdown()
+        {
+            using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+            {
+
+                var col = db.GetCollection<Player>("Player");
+
+                var Warrior = new InfoCount()
+                {
+                    Name = "Warrior",
+                    Count = 0
+                };
+
+                var Cleric = new InfoCount()
+                {
+                    Name = "Cleric",
+                    Count = 0
+                };
+
+                var Thief = new InfoCount()
+                {
+                    Name = "Thief",
+                    Count = 0
+                };
+
+                var Mage = new InfoCount()
+                {
+                    Name = "Mage",
+                    Count = 0
+                };
+
+
+                foreach (var player in col.FindAll())
+                {
+                    if (player.SelectedClass == "Warrior")
+                    {
+                        Warrior.Count += 1;
+
+                        continue;
+                    }
+
+                    if (player.SelectedClass == "Cleric")
+                    {
+                        Cleric.Count += 1;
+
+                        continue;
+                    }
+
+                    if (player.SelectedClass == "Mage")
+                    {
+                        Mage.Count += 1;
+
+                        continue;
+                    }
+
+                    if (player.SelectedClass == "Thief")
+                    {
+                        Thief.Count += 1;
+
+                        continue;
+                    }
+                }
+
+                var classBreakdown = new List<InfoCount>();
+
+                classBreakdown.Add(Warrior);
+                classBreakdown.Add(Cleric);
+                classBreakdown.Add(Mage);
+                classBreakdown.Add(Thief);
+
+                return classBreakdown;
             }
         }
 
