@@ -5,8 +5,10 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.InteropServices.ComTypes;
 using System.Web.Http;
 using LiteDB;
+using MIMWebClient.Core.Loging;
 using MIMWebClient.Core.PlayerSetup;
 using MIMWebClient.Core.Util;
 using MIMWebClient.Hubs;
@@ -21,10 +23,17 @@ namespace MIMWebClient.Controllers
         public int Before { get; set; }
     }
 
+    public class UnfinshedQuest
+    {
+        public string Name { get; set; }
+        public int Count { get; set; }
+    }
+
+
     public class SignUps
     {
         public string Month { get; set; }
-        public int Count { get; set; }
+        public int Count { get; set; }  
     }
 
     public class GameStatsController : ApiController
@@ -39,6 +48,45 @@ namespace MIMWebClient.Controllers
             return MIMHub._PlayerCache.Values.ToList();
         }
 
+        ///// <summary>
+        ///// Returns list of logged in players
+        ///// </summary>
+        ///// <returns>Returns list of logged in players</returns>
+        [HttpGet]
+        public IEnumerable<QuitLocation> ReturnQuitLocation()
+        {
+            using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+            {
+                
+                var col = db.GetCollection<QuitLocation>("QuitLocation");
+
+                var quitLoc = col.FindAll();
+                
+                return quitLoc;
+            }
+        }
+
+        [HttpGet]
+        public IEnumerable<Deaths> ReturnDeaths(string type)
+        {
+            using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+            {
+            
+                if (type == "mob")
+                {
+                    var deaths = db.GetCollection<Deaths>("Deaths").FindAll().Where(x => x.Type == Player.PlayerTypes.Mob.ToString());
+                    return deaths;
+                }
+                else
+                {
+                    var deaths = db.GetCollection<Deaths>("Deaths").FindAll().Where(x => x.Type == Player.PlayerTypes.Player.ToString());
+                    return deaths;
+                }
+                          
+            }
+        }
+
+ 
 
         /// <summary>
         /// Returns list of logged in players

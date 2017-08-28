@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
- 
- 
+using LiteDB;
+using MIMWebClient.Core.Loging;
+
 
 namespace MIMWebClient.Core.Events
 {
@@ -723,7 +725,31 @@ namespace MIMWebClient.Core.Events
                     }
                 }
 
-              
+                if (defender.Type == Player.PlayerTypes.Mob)
+                {
+                    using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+                    {
+                        var col = db.GetCollection<Deaths>("Deaths");
+
+                        var mobDeath = new Deaths
+                        {
+                            RoomName = room.title,
+                            Area = room.area,
+                            AreaId = room.areaId,
+                            Date = new DateTime(),
+                            KilledBy = defender.Target.Name,
+                            Id = Guid.NewGuid(),
+                            Type = defender.Type == Player.PlayerTypes.Mob ? Player.PlayerTypes.Mob.ToString() : Player.PlayerTypes.Player.ToString()
+                        };
+
+
+                        col.Insert(Guid.NewGuid(), mobDeath);
+                    }
+                }
+                
+
+             
+
 
                 defender.Target = null;
                 defender.ActiveFighting = false;

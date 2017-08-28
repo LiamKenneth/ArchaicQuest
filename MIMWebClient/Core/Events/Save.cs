@@ -30,11 +30,11 @@ namespace MIMWebClient.Core.Events
                     var col = db.GetCollection<Player>("Player");
 
 
-                    var duration = player.LastLoginTime - player.LastCommandTime;
+                    var duration = player.LastLoginTime.Millisecond <= 0 ? player.LastCommandTime.Millisecond : player.LastLoginTime.Millisecond - player.LastCommandTime.Millisecond;
 
-                        player.PlayTime = (long)duration.TotalMilliseconds;
+                        player.PlayTime = duration;
 
-                        player.TotalPlayTime += (long)duration.TotalMilliseconds;
+                        player.TotalPlayTime += duration;
 
                     col.Upsert(player); 
                 }

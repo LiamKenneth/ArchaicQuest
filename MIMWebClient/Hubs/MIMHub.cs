@@ -325,6 +325,8 @@ namespace MIMWebClient.Hubs
             MIMWebClient.Core.Room.PlayerManager.AddPlayerToRoom(roomData, PlayerData);
             Movement.EnterRoom(PlayerData, roomData);
 
+            PlayerData.LastLoginTime = DateTime.Now;
+
             Save.SavePlayer(PlayerData);
 
             // addToRoom(PlayerData.AreaId, roomData, PlayerData, "player");

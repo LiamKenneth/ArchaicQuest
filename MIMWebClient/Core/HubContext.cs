@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LiteDB;
+using MIMWebClient.Core.Loging;
 using MIMWebClient.Core.Player;
 
 namespace MIMWebClient.Core
@@ -150,9 +153,21 @@ namespace MIMWebClient.Core
                 if (Player != null)
                 {
 
-                     PlayerManager.RemovePlayerFromRoom(room, Player);
+                    using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+                    {
+                        var col = db.GetCollection<QuitLocation>("QuitLocation");
 
+                        var quitLoc = new QuitLocation
+                        {
+                            PlayerName = Player.Name,
+                            RoomName = room.title,
+                            RoomId = room.areaId
+                        };
 
+                        col.Insert(Guid.NewGuid(), quitLoc);
+                    }
+
+                    PlayerManager.RemovePlayerFromRoom(room, Player);
 
                     Save.SavePlayer(Player);
 
