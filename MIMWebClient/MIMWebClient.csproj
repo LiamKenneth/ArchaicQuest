@@ -338,6 +338,7 @@
     <Compile Include="Core\Room\PlayerManager.cs" />
     <Compile Include="Core\Room\Room.cs" />
     <Compile Include="Core\Room\RoomObject.cs" />
+    <Compile Include="Core\Room\SigmaMap.cs" />
     <Compile Include="Core\Update\RestoreVitals.cs" />
     <Compile Include="Core\Update\Time.cs" />
     <Compile Include="Core\Update\UpdateWorld.cs" />

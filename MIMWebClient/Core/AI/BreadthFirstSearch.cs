@@ -22,9 +22,23 @@ namespace MIMWebClient.Core.AI
         /// 
         /// </summary>
         /// <returns>Returns CompletedRooms which contains the list of rooms that have coordinates set</returns>
-        public List<Room.Room> AssignCoords()
+        public List<Room.Room> AssignCoords(string area = "", string region = "")
         {
-            var startingLoc = AreaList.FirstOrDefault(x => x.areaId == 0);
+
+            Room.Room startingLoc;
+
+            if (string.IsNullOrEmpty(area) || string.IsNullOrEmpty(region))
+            {
+                  startingLoc = AreaList.FirstOrDefault(x => x.areaId == 0);
+            }
+            else
+            {
+                AreaList = AreaList.Where(x => x.area == area && x.region == region).ToList();
+                startingLoc = AreaList.FirstOrDefault(x => x.areaId == 0);
+
+               
+            }
+          
             if (startingLoc == null) return null;
 
             SetCoords(startingLoc, new Coordinates());

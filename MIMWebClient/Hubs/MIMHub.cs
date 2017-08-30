@@ -10,6 +10,7 @@ using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Player;
 using MIMWebClient.Core;
 using MIMWebClient;
+using MIMWebClient.Core.AI;
 using MIMWebClient.Core.World.Tutorial;
 
 namespace MIMWebClient.Hubs
@@ -31,6 +32,8 @@ namespace MIMWebClient.Hubs
             // Call the broadcastMessage method to update clients.
                 SendToClient(motd, id);            
         }
+
+     
 
         #region input from user
         public void recieveFromClient(string message, String playerGuid)
