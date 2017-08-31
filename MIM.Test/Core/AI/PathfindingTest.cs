@@ -18,7 +18,7 @@ namespace MIM.Test.Core.AI
         {
             var roomSetUp = new BreadthFirstSearch();
 
-            var list = roomSetUp.AssignCoords();
+            var list = roomSetUp.AssignCoords("Anker", "Anker"); 
 
 
             var modo = list.FirstOrDefault(x => x.areaId == 2);

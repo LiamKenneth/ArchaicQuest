@@ -33,7 +33,8 @@ namespace MIMWebClient.Hubs
                 SendToClient(motd, id);            
         }
 
-     
+ 
+
 
         #region input from user
         public void recieveFromClient(string message, String playerGuid)
@@ -337,6 +338,8 @@ namespace MIMWebClient.Hubs
             Score.UpdateUiPrompt(PlayerData);
             Score.UpdateUiInventory(PlayerData);
 
+            SigmaMap.DrawMap(PlayerData.HubGuid);
+
 
         }
 
@@ -396,6 +399,8 @@ namespace MIMWebClient.Hubs
                 Score.ReturnScoreUI(player);
                 Score.UpdateUiPrompt(player);
                 Score.UpdateUiInventory(player);
+
+                SigmaMap.DrawMap(player.HubGuid);
 
 
 

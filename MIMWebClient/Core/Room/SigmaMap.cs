@@ -15,8 +15,8 @@ namespace MIMWebClient.Core.Room
     {
         public string id { get; set; }
         public string label { get; set; }
-        public int x { get; set; }
-        public int y { get; set; }
+        public string x { get; set; }
+        public string y { get; set; }
         public int size { get; set; } = 2;
         public int defaultLabelSize { get; set; } = 12;
     }
@@ -39,10 +39,10 @@ namespace MIMWebClient.Core.Room
 
 
 
-    public class SigmaMap
+    public static class SigmaMap
     {
 
-        public void DrawMap(string playerId)
+        public static  void DrawMap(string playerId)
         {
 
             var player = Cache.getPlayer(playerId);
@@ -53,16 +53,46 @@ namespace MIMWebClient.Core.Room
 
             var roomSetUp = new BreadthFirstSearch();
 
-        var list = roomSetUp.AssignCoords("Anker", "Anker");
+        var list = roomSetUp.AssignCoords("Tutorial", "Tutorial");
 
             foreach (var node in list)
             {
+
+                var x = "";
+                var y = "";
+
+                if (node.coords.X == 0)
+                {
+                    x = "0";
+                }
+                else if (node.coords.X > 0)
+                {
+                    x = (node.coords.X * -1).ToString();
+                }
+                else if(node.coords.X < 0)
+                {
+                    x = Math.Abs(node.coords.X).ToString();
+                }
+
+                if (node.coords.Y == 0)
+                {
+                    y = "0";
+                }
+                else if (node.coords.Y > 0)
+                {
+                    y = (node.coords.Y * -1).ToString();
+                }
+                else if (node.coords.Y < 0)
+                {
+                    y = Math.Abs(node.coords.Y).ToString();
+                }
+
                 var mapNode = new SigmaMapNode()
                 {
                     id = "node" + node.areaId,
                     label = node.title,
-                    x = node.coords.X,
-                    y = node.coords.Y,
+                    x = node.coords.X.ToString(),
+                    y = y,
                 };
 
                 nodes.Add(mapNode);
@@ -94,6 +124,9 @@ namespace MIMWebClient.Core.Room
                 //serialize object directly into file stream
                 serializer.Serialize(file, json);
             }
+
+            var context = HubContext.getHubContext;
+            context.Clients.Client(playerId).getMap(json);
 
 
         }

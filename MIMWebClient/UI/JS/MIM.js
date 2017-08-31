@@ -9,6 +9,8 @@
     var client = chat.client;
     var server = chat.server;
 
+    var mapData = "no data bro";
+
     //================================================================================
     // Global Variables for playerCreation
     //================================================================================
@@ -195,6 +197,11 @@
             var encodedValue = $('<div />').text(value).html();
             return encodedValue;
         },
+        getMap: function (value) {
+            console.log("this one...p")
+            console.log(value)
+            mapData = value;
+        },
         createCharacter: function (char) {
 
 
@@ -354,6 +361,13 @@
 
         $.connection.hub.stop();
     };
+
+    client.getMap = function (map) {
+        console.log("get me the map")
+        mapData = map;
+        client.UpdateMap();
+
+    }
     //// Add a new message to the page ////
     client.addNewMessageToPage = function (message) {
         console.time('addtopage');
@@ -498,9 +512,49 @@
 
     
        
-        $("#roomTitleInfo").html(room);
-      //  $("#roomDescInfo").html(description);
+     //    $("#roomTitleInfo").html(room);
+
+        client.UpdateMap();
+
     };
+
+    client.UpdateMap = function () {
+
+        $("#roomTitleInfo").html("");
+
+        var mapData = {"nodes":[
+{"id":"node1","label":"Deep in the forest","x":"0","y":"-1","size":2,"defaultLabelSize":12},{"id":"node0","label":"Deep in the forest","x":"0","y":"0","size":2,"defaultLabelSize":12},{"id":"node3","label":"A goblin camp","x":"1","y":"-2","size":2,"defaultLabelSize":12},{"id":"node2","label":"Deep in the forest","x":"0","y":"-2","size":2,"defaultLabelSize":12},{"id":"node5","label":"A tent in the goblin camp","x":"1","y":"-1","size":2,"defaultLabelSize":12},{"id":"node4","label":"A tent in the goblin camp","x":"1","y":"-3","size":2,"defaultLabelSize":12},{"id":"node7","label":"Deep in the forest","x":"3","y":"-2","size":2,"defaultLabelSize":12},{"id":"node6","label":"Deep in the forest","x":"2","y":"-2","size":2,"defaultLabelSize":12},{"id":"node10","label":"Deep in the forest","x":"3","y":"-4","size":2,"defaultLabelSize":12},{"id":"node9","label":"Deep in the forest","x":"3","y":"-3","size":2,"defaultLabelSize":12},{"id":"node8","label":"A natural spring","x":"3","y":"-1","size":2,"defaultLabelSize":12}],
+
+"edges":[
+{"id":"edge12","source":"node1","target":"node2","color":"#ccc"},{"id":"edge01","source":"node0","target":"node1","color":"#ccc"},{"id":"edge34","source":"node3","target":"node4","color":"#ccc"},{"id":"edge36","source":"node3","target":"node6","color":"#ccc"},{"id":"edge35","source":"node3","target":"node5","color":"#ccc"},{"id":"edge32","source":"node3","target":"node2","color":"#ccc"},{"id":"edge23","source":"node2","target":"node3","color":"#ccc"},{"id":"edge21","source":"node2","target":"node1","color":"#ccc"},{"id":"edge53","source":"node5","target":"node3","color":"#ccc"},{"id":"edge43","source":"node4","target":"node3","color":"#ccc"},{"id":"edge79","source":"node7","target":"node9","color":"#ccc"},{"id":"edge78","source":"node7","target":"node8","color":"#ccc"},{"id":"edge76","source":"node7","target":"node6","color":"#ccc"},{"id":"edge67","source":"node6","target":"node7","color":"#ccc"},{"id":"edge63","source":"node6","target":"node3","color":"#ccc"},{"id":"edge910","source":"node9","target":"node10","color":"#ccc"},{"id":"edge97","source":"node9","target":"node7","color":"#ccc"},{"id":"edge87","source":"node8","target":"node7","color":"#ccc"}]
+    };
+
+  
+        for (var i in mapData.nodes) {
+            if (mapData.nodes[i].id == "node0") {
+                mapData.nodes[i].color = "#2ECC71";
+
+                const s = new sigma({
+                    graph: mapData,
+                    container: 'roomTitleInfo',
+                    settings: {
+                        defaultNodeColor: '#ccc'
+                    },
+                    type: 'square'
+                });
+
+                s.cameras[0].goTo({
+                    x: 0,
+                    y: 0,
+                    angle: 0,
+                    ratio: 1
+                });
+                s.refresh();
+
+                break; //Stop this loop, we found it!
+            }
+        }
+    }
 
     client.updateInventory = function (inventory) {
    
