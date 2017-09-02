@@ -66,6 +66,7 @@ namespace MIMWebClient.Core.Room
 
                         var roomdata = LoadRoom.DisplayRoom(room, room.players[i].Name);
                         Score.UpdateUiRoom(room.players[i], roomdata);
+
                     }
                     else
                     {
@@ -78,7 +79,7 @@ namespace MIMWebClient.Core.Room
                 }
             }
 
-
+            Score.UpdateUiMap(player, room.areaId, room.area.ToLower(), room.region.ToLower(), room.coords.Z = 0);
         }
 
         public static void ExitRoom(Player player, Room room, string direction, bool teleported = false)

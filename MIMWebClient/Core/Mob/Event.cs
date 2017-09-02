@@ -29,6 +29,7 @@ namespace MIMWebClient.Core
         public static Dictionary<string, Action> Events(string eventName, PlayerSetup.Player player, PlayerSetup.Player mob, Room.Room room, string option = "", string calledBy = "")
         {
 
+
             var eventList = new Dictionary<String, Action>();
             eventList.Add("greet", () => Greeting.greet(player, mob, room));
             eventList.Add("tutorial", () =>  Tutorial.setUpTut(player, room, option, calledBy));

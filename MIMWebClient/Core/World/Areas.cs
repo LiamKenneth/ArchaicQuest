@@ -41,6 +41,7 @@ namespace MIMWebClient.Core.World
                 Anker.Anker.VillageHallEldersRoom(),
                 Anker.Anker.TempleRoad(),
                 Anker.Anker.TempleRoad2(),
+                Anker.Anker.TempleRoad3(),
                 Anker.Anker.TempleEntrance(),
                 Anker.Anker.PathToTheSquare(),
                 Anker.Anker.AnkerLane(),

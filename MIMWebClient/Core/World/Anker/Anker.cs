@@ -1838,7 +1838,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 areaId = 15,
                 title = "Temple Walk",
-                description = "<p>The path here leads east at an incline through a hill, the path cutting through the hill and curving up towards the temple of Tyr. To the west is the entrance to the square.</p>",
+                description = "<p>The path here leads east at an incline through a hill, the path curving up towards the temple of Tyr. To the west is the entrance to the square.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -1864,6 +1864,64 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 region = "Anker",
                 areaId = 7,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 16,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+            #endregion
+            room.exits.Add(east);
+            room.exits.Add(west);
+
+            return room;
+        }
+
+        public static Room TempleRoad3()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 42,
+                title = "Temple Walk",
+                description = "<p>The path here continues east, the incline getting steeper the higher you go towards the temple of Tyr. To the west is the path leading towards the entrance to the square.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+            #region exits
+
+
+            // Create Exits
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 15,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -1921,7 +1979,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "West",
                 area = "Anker",
                 region = "Anker",
-                areaId = 15,
+                areaId = 42,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false

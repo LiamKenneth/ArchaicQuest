@@ -63,6 +63,7 @@ namespace UpdateDB
                     Anker.VillageHallEldersRoom(),
                     Anker.TempleRoad(),
                     Anker.TempleRoad2(),
+                    Anker.TempleRoad3(),
                     Anker.TempleEntrance(),
                     Anker.PathToTheSquare(),
                     Anker.AnkerLane(),

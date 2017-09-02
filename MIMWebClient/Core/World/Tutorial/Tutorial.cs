@@ -180,7 +180,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
         public static void setUpRescue(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
-            Task.Run(async () => await AwakeningRescue(player, room, step, calledBy));
+            Task.Run(() => AwakeningRescue(player, room, step, calledBy));
         }
 
         public static void setUpAwakening(PlayerSetup.Player player, Room.Room room, string step, string calledBy)

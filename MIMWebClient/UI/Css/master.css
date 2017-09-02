@@ -6197,3 +6197,24 @@ pre {
 .roomMob {
   color: magenta; }
 
+li.Active:before, li.Shop:before, li.Guild:before, li.Room:before, li.Stairs:before {
+  display: inline-block;
+  background: #2ECC71;
+  width: 10px;
+  height: 11px;
+  content: "";
+  border-radius: 50px;
+  margin-right: 10px; }
+
+li.Shop:before {
+  background: #446CB3; }
+
+li.Guild:before {
+  background: #fed967; }
+
+li.Room:before {
+  background: #ccc; }
+
+li.Stairs:before {
+  background: #674172; }
+

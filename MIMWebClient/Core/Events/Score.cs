@@ -82,5 +82,18 @@ namespace MIMWebClient.Core.Events
                 //context.Clients.Client(playerData.HubGuid).updateRoom(playerData.Inventory);
             }
         }
+
+        public static void UpdateUiMap(Player playerData, int roomId, string area, string region, int zindex)
+        {
+
+            if (playerData.HubGuid != null)
+            {
+                //var room = new Room.Room();
+                //var currentRoom = p
+                var context = HubContext.getHubContext;
+                context.Clients.Client(playerData.HubGuid).UpdateUiMap(roomId, area, region, zindex);
+                //context.Clients.Client(playerData.HubGuid).updateRoom(playerData.Inventory);
+            }
+        }
     }
 }

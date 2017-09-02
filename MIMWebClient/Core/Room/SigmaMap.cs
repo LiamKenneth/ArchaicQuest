@@ -53,7 +53,7 @@ namespace MIMWebClient.Core.Room
 
             var roomSetUp = new BreadthFirstSearch();
 
-        var list = roomSetUp.AssignCoords("Tutorial", "Tutorial");
+        var list = roomSetUp.AssignCoords("Anker", "Anker");
 
             foreach (var node in list)
             {
