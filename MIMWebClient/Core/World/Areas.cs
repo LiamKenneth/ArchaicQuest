@@ -23,6 +23,7 @@ namespace MIMWebClient.Core.World
                 Ambush.TutorialGoblinCamp(),
                 Ambush.TutorialGoblinCampTentNorth(),
                 Ambush.TutorialGoblinCampTentSouth(),
+                Awakening.TempleOfTyr(),
                 Anker.Anker.VillageSquare(),
                 Anker.Anker.SquareWalkOutsideTavern(),
                 Anker.Anker.SquareWalkOutsideStables(),

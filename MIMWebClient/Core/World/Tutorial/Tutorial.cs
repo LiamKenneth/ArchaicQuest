@@ -330,7 +330,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                 var oldPlayer = player;
 
-                await Task.Delay(5000);
+             
 
                 if (string.IsNullOrEmpty(step))
                 {
@@ -377,9 +377,10 @@ namespace MIMWebClient.Core.World.Tutorial
                         //load from DB
                     }
 
-                    //fix for random wake message hint showing
+                //fix for random wake message hint showing
+                    await Task.Delay(500);
 
-                    var playerInRoom =
+                var playerInRoom =
                         Cache.ReturnRooms()
                             .FirstOrDefault(
                                 x => x.area.Equals("Tutorial") && x.areaId.Equals(11) && x.region.Equals("Tutorial"))
