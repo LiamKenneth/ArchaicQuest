@@ -412,9 +412,9 @@ namespace MIMWebClient.Core.Update
                     {
                         af.Duration -= 1;
                     }
-                 
-
                 }
+
+                Score.UpdateUiAffects(player);
             }
             catch (Exception ex)
             {

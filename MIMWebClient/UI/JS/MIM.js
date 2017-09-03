@@ -603,6 +603,17 @@
 
     };
 
+    client.updateQuestLog = function (qlog) {
+
+
+        $("#qlList").empty();
+
+        $("#qlList").append(qlog);
+
+
+
+    };
+
     client.updateAffects= function (affects) {
 
 
@@ -786,31 +797,26 @@
             console.log("click");
             var val = $(this).html();
 
-            if (val === "Newbie") {
-                $(".newbieChannelF").show();
-                $(".gossipChannelF").hide();
-                $(".oocChannelF").hide();
-                $(".roomChannelF").hide();
-            } else if (val === "Gossip") {
-                $(".newbieChannelF").hide();
-                $(".gossipChannelF").show();
-                $(".oocChannelF").hide();
-                $(".roomChannelF").hide();
-            } else if (val === "Room") {
-                $(".newbieChannelF").hide();
-                $(".gossipChannelF").hide();
-                $(".oocChannelF").hide();
-                $(".roomChannelF").show();
-            } else if (val === "OOC") {
-                $(".newbieChannelF").hide();
-                $(".gossipChannelF").hide();
-                $(".oocChannelF").show();
-                $(".roomChannelF").hide();
-            } else {
-                $(".newbieChannelF").show();
-                $(".gossipChannelF").show();
-                $(".oocChannelF").show();
-                $(".roomChannelF").show();
+            if (val === "Inv") {
+                $("#invList").show();
+                $("#eqList").hide();
+                $("#afList").hide();
+                $("#qlList").hide();
+            } else if (val === "EQ") {
+                $("#invList").hide();
+                $("#eqList").show();
+                $("#afList").hide();
+                $("#qlList").hide();
+            } else if (val === "Aff") {
+                $("#invList").hide();
+                $("#eqList").hide();
+                $("#afList").show();
+                $("#qlList").hide();
+            }   else {
+                $("#invList").hide();
+                $("#eqList").hide();
+                $("#afList").hide();
+                $("#qlList").show();
             }
 
 
@@ -936,7 +942,9 @@
         $('.js-score').perfectScrollbar();
         $('.js-room').perfectScrollbar();
         $('.js-channels').perfectScrollbar();
+        $('.js-info').perfectScrollbar();
 
+      
         var resizeTimer;
 
         $(window).on('resize', function (e) {
@@ -953,18 +961,7 @@
     });
 
 
-    function filterChannel(channel) {
-
-        if (channel === "newbie") {
-            $(".newbieChannel").show();
-            $(".gossipChannel").hide();
-            $(".oocChannel").hide();
-        } else {
-            $(".newbieChannel").show();
-            $(".gossipChannel").show();
-            $(".oocChannel").show();
-        }
-    }
+ 
 
     function maps(area, region, zindex) {
  

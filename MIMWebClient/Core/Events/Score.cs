@@ -85,6 +85,34 @@ namespace MIMWebClient.Core.Events
              
         }
 
+        public static void UpdateUiQlog(Player playerData)
+        {
+
+            if (playerData.HubGuid != null)
+            {
+                var context = HubContext.getHubContext;
+
+                var qlog = new StringBuilder();
+
+
+
+                qlog.Append("<div><p>Your current quests:</p></div>");
+
+                foreach (var quest in playerData.QuestLog)
+                {
+                    if (!quest.Completed)
+                    {
+                        qlog.Append("<p>" + quest.Name + "</p><br />");
+                        qlog.Append("<p>" + quest.Description + "</p>");
+                    }
+                }
+
+                context.Clients.Client(playerData.HubGuid).updateQuestLog(qlog.ToString());
+
+            }
+
+        }
+
         public static void UpdateUiAffects(Player playerData)
         {
 
@@ -110,7 +138,7 @@ namespace MIMWebClient.Core.Events
                         }
 
                         context.Clients.Client(playerData.HubGuid)
-                            .updateAffects(aff);
+                            .updateAffects(aff.ToString());
                     }
                     else
                     {

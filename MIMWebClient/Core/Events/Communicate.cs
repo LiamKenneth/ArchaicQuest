@@ -145,6 +145,7 @@ namespace MIMWebClient.Core.Events
                         {
                             //to player log
                             player.QuestLog.Add(quest);
+                            Score.UpdateUiQlog(player);
 
                             HubContext.SendToClient("<span class='questColor'>Quest Added:<br />"+  quest.Name + " </span> ", playerId);
 

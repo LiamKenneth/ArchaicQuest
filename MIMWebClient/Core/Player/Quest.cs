@@ -142,6 +142,7 @@ namespace MIMWebClient.Core.Player
                     var xp = new Experience();
                     xp.GainLevel(player);
                     //update ui
+                    Score.UpdateUiQlog(player);
                     Score.ReturnScoreUI(player);
                    
                 }

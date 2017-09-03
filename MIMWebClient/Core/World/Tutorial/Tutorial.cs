@@ -273,10 +273,10 @@ namespace MIMWebClient.Core.World.Tutorial
 
                         player.QuestLog.Add(findLance);
 
+                    Score.UpdateUiQlog(player);
 
 
-
-                        HubContext.SendToClient(
+                    HubContext.SendToClient(
                             "<span class='questColor'>New Quest added: <br />Find and greet Lance. <br />Type qlog to be reminded about quest information.</span>",
                             player.HubGuid);
 

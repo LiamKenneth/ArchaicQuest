@@ -159,21 +159,24 @@
             </div>
 
             <div id="info-inv" class="full-height" style="display: table; width: 100%; height: 44.3%; margin-top: 10px;">
-                <div style="display: table-cell; width: 100%;" class="window">
+                <div style="display: table-cell; width: 100%; max-height: 40vh; overflow: hidden;" class="window">
                     <ul class="list-inline list-unstyled">
                         <li><a class="infoFilter" href="javascript:void(0);" title="Inventory">Inv</a></li>
                         <li><a class="infoFilter" href="javascript:void(0);" title="Equipment">EQ</a></li>
                         <li><a class="infoFilter" href="javascript:void(0);" title="Affects">Aff</a></li>
                         <li><a class="infoFilter" href="javascript:void(0);" title="Quest Log">Qlog</a></li>
                     </ul>
+                    
+                    <div id="" class=" js-info" style="overflow-y: scroll;  max-height: 33vh;">
 
-                    <ul id="invList"></ul>
-                    
-                    <div id="eqList"></div>
-                    
-                    <ul id="afList"></ul>
-                    
-                    <div id="qlList"></div>
+                        <ul id="invList"></ul>
+
+                        <div id="eqList" style="display: none;"></div>
+
+                        <ul id="afList" style="display: none;"></ul>
+
+                        <div id="qlList" style="display: none;"></div>
+                    </div>
                 </div>
 
             </div>
