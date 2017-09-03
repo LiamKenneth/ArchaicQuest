@@ -33,6 +33,9 @@
 
     var mainWindow = document.getElementById("discussion");
     var mainWindowFragment = document.createDocumentFragment();
+
+    var channelWindow = document.getElementById("Channel");
+    var channelWindowFragment = document.createDocumentFragment();
     //================================================================================
     // Helper Functions
     //================================================================================
@@ -511,14 +514,13 @@
 
     };
 
-    client.UpdateUiRoom = function (room) {
+    client.UpdateUiChannels= function (channelText) {
+        console.log(channelText)
 
-    
-       
-     //    $("#roomTitleInfo").html(room);
-
-     //   client.UpdateMap(room);
-
+        var p = document.createElement('p');
+        p.innerHTML = channelText;
+        channelWindowFragment.appendChild(p);
+        channelWindow.appendChild(channelWindowFragment);
     };
 
 
@@ -677,7 +679,7 @@
 
     }
 
-    client.loginErrors = function (errors) {
+    client.ui = function (errors) {
 
 
 
@@ -858,6 +860,19 @@
         });
     });
 
+
+    function filterChannel(channel) {
+
+        if (channel === "newbie") {
+            $(".newbieChannel").show();
+            $(".gossipChannel").hide();
+            $(".oocChannel").hide();
+        } else {
+            $(".newbieChannel").show();
+            $(".gossipChannel").show();
+            $(".oocChannel").show();
+        }
+    }
 
     function maps(area, region, zindex) {
  

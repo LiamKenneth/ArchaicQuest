@@ -337,9 +337,7 @@ namespace MIMWebClient.Hubs
             Score.ReturnScoreUI(PlayerData);
             Score.UpdateUiPrompt(PlayerData);
             Score.UpdateUiInventory(PlayerData);
-
-            SigmaMap.DrawMap(PlayerData.HubGuid);
-
+ 
 
         }
 
@@ -400,9 +398,7 @@ namespace MIMWebClient.Hubs
                 Score.UpdateUiPrompt(player);
                 Score.UpdateUiInventory(player);
 
-                SigmaMap.DrawMap(player.HubGuid);
-
-
+              
 
 
             }

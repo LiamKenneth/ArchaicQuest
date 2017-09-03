@@ -69,6 +69,16 @@ namespace MIMWebClient.Core.Events
 
         }
 
+        public static void UpdateUIChannels(Player playerData, string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return;
+            }
+            var context = HubContext.getHubContext;
+            context.Clients.Client(playerData.HubGuid).UpdateUiChannels(text);
+
+        }
 
         public static void UpdateUiRoom(Player playerData, string room)
         {

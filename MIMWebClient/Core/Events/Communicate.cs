@@ -19,7 +19,9 @@ namespace MIMWebClient.Core.Events
             string playerId = player.HubGuid;
 
             HubContext.SendToClient($"<span class='sayColor'>You say, \"{message}\"</span>", playerId, null, false, false);
-             
+
+            Score.UpdateUIChannels(player, $"<span class='sayColor'>You say, \"{message}\"</span>");
+
             foreach (var character in room.players)
             {
                 if (player != character)
@@ -85,6 +87,7 @@ namespace MIMWebClient.Core.Events
                     HubContext.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"" + response.Replace("$playerName", player.Name) + "\"<span>", playerId,
                        null, true);
 
+                    Score.UpdateUIChannels(player, "<span class='sayColor'>" + mob.Name + " says to you \"" + response.Replace("$playerName", player.Name) + "\"<span>");
 
                     //check branch to show responses from
                     var speak = mob.DialogueTree.FirstOrDefault(x => x.Message.Equals(response));
@@ -213,7 +216,8 @@ namespace MIMWebClient.Core.Events
                 HubContext.SendToClient("You say to " + recipientName + " \"" + actualMessage + "\"", playerId, null, false, false);
                 HubContext.SendToClient(Helpers.ReturnName(player, recipientPlayer, string.Empty) + " says to you \"" + actualMessage + "\"", playerId, recipientName, true, true);
 
-
+                Score.UpdateUIChannels(player, "You say to " + recipientName + " \"" + actualMessage + "\"");
+                Score.UpdateUIChannels(recipientPlayer, Helpers.ReturnName(player, recipientPlayer, string.Empty) + " says to you \"" + actualMessage + "\"");
 
             }
             else
@@ -232,6 +236,8 @@ namespace MIMWebClient.Core.Events
                 HubContext.SendToClient("<span style='color:red'>[Newbie] " + player.Name + ":</span> " + message, pc.HubGuid);
             }
 
+            Score.UpdateUIChannels(player, "<span class='newbieChannel' style='color:red'>[Newbie] " + player.Name + ":</span> " + message);
+
         }
 
         public static void GossipChannel(string message, Player player)
@@ -243,6 +249,9 @@ namespace MIMWebClient.Core.Events
                 HubContext.SendToClient("<span style='color:#7CEECE'>[Gossip] " + player.Name + ":</span> " + message, pc.HubGuid);
             }
 
+            Score.UpdateUIChannels(player, "<span class='gossipChannel' style='color:#7CEECE'>[Gossip] " + player.Name + ":</span> " + message);
+
+
         }
 
         public static void OocChannel(string message, Player player)
@@ -253,6 +262,8 @@ namespace MIMWebClient.Core.Events
             {
                 HubContext.SendToClient("<span style='color:#00AFF0'>[OOC] " + player.Name + ":</span> " + message, pc.HubGuid);
             }
+
+            Score.UpdateUIChannels(player, "<span class='oocChannel' style='color:#00AFF0'>[OOC] " + player.Name + ":</span> " + message);
 
         }
 
