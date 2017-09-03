@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using MIMWebClient.Core.Player;
 
 namespace MIMWebClient.Core.Events
 {
@@ -69,14 +70,74 @@ namespace MIMWebClient.Core.Events
 
         }
 
-        public static void UpdateUIChannels(Player playerData, string text)
+        public static void UpdateUiEquipment(Player playerData)
+        {
+
+            if (playerData.HubGuid != null)
+            {
+                var context = HubContext.getHubContext;
+
+
+                context.Clients.Client(playerData.HubGuid)
+                    .updateEquipment( Equipment.DisplayEq(playerData, playerData.Equipment));
+
+            }
+             
+        }
+
+        public static void UpdateUiAffects(Player playerData)
+        {
+
+            if (playerData.HubGuid != null)
+            {
+                var context = HubContext.getHubContext;
+
+
+                if (playerData.Affects != null)
+                {
+
+                    if (playerData.Affects.Count > 0)
+                    {
+                        var aff = new StringBuilder();
+
+                        aff.Append("<li><p>You are affected by the following affects:</p></li>");
+                       
+
+                        foreach (var affect in playerData.Affects)
+                        {
+                            aff.Append("<li>" + affect.Name + " (" + affect.Duration + ") ticks</li> ");
+                            
+                        }
+
+                        context.Clients.Client(playerData.HubGuid)
+                            .updateAffects(aff);
+                    }
+                    else
+                    {
+                        context.Clients.Client(playerData.HubGuid)
+                            .updateAffects("You are not affected by anything.");
+                    }
+                }
+                else
+                {
+                    context.Clients.Client(playerData.HubGuid)
+                        .updateAffects("You are not affected by anything.");
+                }
+
+              
+
+            }
+
+        }
+
+        public static void UpdateUIChannels(Player playerData, string text, string className)
         {
             if (string.IsNullOrEmpty(text))
             {
                 return;
             }
             var context = HubContext.getHubContext;
-            context.Clients.Client(playerData.HubGuid).UpdateUiChannels(text);
+            context.Clients.Client(playerData.HubGuid).UpdateUiChannels(text, className);
 
         }
 

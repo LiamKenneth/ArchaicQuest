@@ -192,6 +192,7 @@ namespace MIMWebClient.Core.Player.Skills
                 attacker.Affects.Add(chillTouchAff);
             }
 
+            Score.UpdateUiAffects(_target);
             Score.ReturnScoreUI(_target);
 
             Player.SetState(attacker);

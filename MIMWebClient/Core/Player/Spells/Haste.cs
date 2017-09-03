@@ -172,6 +172,7 @@ namespace MIMWebClient.Core.Player.Skills
                     }
 
                     Score.ReturnScoreUI(attacker);
+                    Score.UpdateUiAffects(attacker);
 
 
 
@@ -206,7 +207,7 @@ namespace MIMWebClient.Core.Player.Skills
                     {
                         _target.Affects.Add(hasteAff);
                     }
-
+                    Score.UpdateUiAffects(_target);
                     Score.ReturnScoreUI(_target);
 
                 }

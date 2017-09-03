@@ -337,7 +337,8 @@ namespace MIMWebClient.Hubs
             Score.ReturnScoreUI(PlayerData);
             Score.UpdateUiPrompt(PlayerData);
             Score.UpdateUiInventory(PlayerData);
- 
+            Score.UpdateUiEquipment(PlayerData);
+            Score.UpdateUiAffects(PlayerData);
 
         }
 
@@ -397,8 +398,8 @@ namespace MIMWebClient.Hubs
                 Score.ReturnScoreUI(player);
                 Score.UpdateUiPrompt(player);
                 Score.UpdateUiInventory(player);
-
-              
+                Score.UpdateUiAffects(player);
+                Score.UpdateUiEquipment(player);
 
 
             }

@@ -514,11 +514,11 @@
 
     };
 
-    client.UpdateUiChannels= function (channelText) {
-        console.log(channelText)
-
+    client.UpdateUiChannels= function (channelText, channelClass) {
+    
         var p = document.createElement('p');
         p.innerHTML = channelText;
+        p.className  = channelClass;
         channelWindowFragment.appendChild(p);
         channelWindow.appendChild(channelWindowFragment);
     };
@@ -588,6 +588,28 @@
         for (var i = 0; i < inventoryCount; i++) {
             $("#invList").append("<li>" + inventory[i].name + "</li>");
         }
+
+
+    };
+
+    client.updateEquipment= function (eq) {
+
+       
+        $("#eqList").empty();
+        
+         $("#eqList").append(eq);
+        
+
+
+    };
+
+    client.updateAffects= function (affects) {
+
+
+        $("#afList").empty();
+
+        $("#afList").append(affects);
+
 
 
     };
@@ -725,6 +747,75 @@
         //// Start scripts
         MIM.init();
 
+        $(".channelFilter").click(function () {
+
+            var val = $(this).html();
+
+            if (val === "Newbie") {
+                $(".newbieChannelF").show();
+                $(".gossipChannelF").hide();
+                $(".oocChannelF").hide();
+                $(".roomChannelF").hide();
+            } else if (val === "Gossip") {
+                $(".newbieChannelF").hide();
+                $(".gossipChannelF").show();
+                $(".oocChannelF").hide();
+                $(".roomChannelF").hide();
+            } else if (val === "Room") {
+                $(".newbieChannelF").hide();
+                $(".gossipChannelF").hide();
+                $(".oocChannelF").hide();
+                $(".roomChannelF").show();
+            } else if (val === "OOC") {
+                $(".newbieChannelF").hide();
+                $(".gossipChannelF").hide();
+                $(".oocChannelF").show();
+                $(".roomChannelF").hide();
+            } else {
+                $(".newbieChannelF").show();
+                $(".gossipChannelF").show();
+                $(".oocChannelF").show();
+                $(".roomChannelF").show();
+            }
+
+
+        });
+
+        $(".infoFilter").click(function () {
+
+            console.log("click");
+            var val = $(this).html();
+
+            if (val === "Newbie") {
+                $(".newbieChannelF").show();
+                $(".gossipChannelF").hide();
+                $(".oocChannelF").hide();
+                $(".roomChannelF").hide();
+            } else if (val === "Gossip") {
+                $(".newbieChannelF").hide();
+                $(".gossipChannelF").show();
+                $(".oocChannelF").hide();
+                $(".roomChannelF").hide();
+            } else if (val === "Room") {
+                $(".newbieChannelF").hide();
+                $(".gossipChannelF").hide();
+                $(".oocChannelF").hide();
+                $(".roomChannelF").show();
+            } else if (val === "OOC") {
+                $(".newbieChannelF").hide();
+                $(".gossipChannelF").hide();
+                $(".oocChannelF").show();
+                $(".roomChannelF").hide();
+            } else {
+                $(".newbieChannelF").show();
+                $(".gossipChannelF").show();
+                $(".oocChannelF").show();
+                $(".roomChannelF").show();
+            }
+
+
+        });
+
 
         $(".js-generateName").click(function () {
 
@@ -844,6 +935,7 @@
         $('#discussion').perfectScrollbar();
         $('.js-score').perfectScrollbar();
         $('.js-room').perfectScrollbar();
+        $('.js-channels').perfectScrollbar();
 
         var resizeTimer;
 
