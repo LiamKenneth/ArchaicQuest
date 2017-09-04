@@ -11,12 +11,17 @@
 
             <div id="info-char" class="full-height" style="display: table; width: 100%; height: 50%;">
                 <div id="score" style="display: table-cell; width: 100%;" class="window">
+                    
+                    <ul class="list-inline list-unstyled">
+                        <li><a class="infoPlayerFilter" href="javascript:void(0);" title="Your stats">Score</a></li>
+                        <li><a class="infoPlayerFilter" href="javascript:void(0);" title="Add / edit and view your description">Description</a></li>
+                    </ul>
 
                     <div class="js-score" style="overflow-y: scroll; max-height: 40vh;">
-                        <h3 id="player-name" class="text-center">Malleus - </h3>
+                        <h3 id="player-name" class="text-center"></h3>
 
-                        <p class="text-center"><span id="player-gender"></span> <span id="player-race"></span> <span id="player-class"></span> Level <span id="player-level"></span></p>
-                        <p class="text-center">HP <span id="player-hp"></span>/<span id="player-max-hp"></span> Mana <span id="player-mana"></span>/<span id="player-max-mana"></span> Fatigue <span id="player-end"></span>/<span id="player-max-end"></span> </p>
+                        <p class="text-center"><span id="player-gender"></span> <span id="player-race"></span> <span id="player-class"></span> Level <span id="player-level"></span>
+                        </p>
 
                         <div class="scoreContainer">
                             <h3 class="text-center">Attributes</h3>
@@ -91,7 +96,7 @@
 
                             <table width="100%">
                                 <tr>
-                                    <td>Aignment</td>
+                                    <td>Alignment</td>
                                     <td><span class="pull-right"><span id="player-alignment"></span></span></td>
                                 </tr>
 
@@ -154,6 +159,13 @@
                             </table>
                         </div>
 
+                    </div>
+                    
+                    <div class="js-description" style="overflow-y: scroll; max-height: 40vh; display: none;">
+                        
+                        <div id="descriptionContainer">You see nothing special about them.</div>
+
+                        <a id="editDescription" href="javascript:void(0)" data-toggle="modal" data-target="#modalDescription">Edit Description</a>
                     </div>
                 </div>
             </div>
@@ -335,6 +347,25 @@
         </div>
 
 
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalDescription" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header description-header" style="">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Character Description</h4>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" rows="11" id="descriptionText"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="SaveDescription">Save changes</button>
+            </div>
+        </div>
     </div>
 </div>
 

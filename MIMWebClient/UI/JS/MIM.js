@@ -390,7 +390,7 @@
       
         var playerData = score;
 
-        console.log(score.MaxMovePoints)
+ 
         $('#player-name').html(score.Name);
         $('#player-level').html(score.Level);
         $('#player-race').html(playerData.Race);
@@ -410,21 +410,6 @@
         $('#player-max-int').html(score.MaxIntelligence);
         $('#player-cha').html(score.Charisma);
         $('#player-max-cha').html(score.MaxCharisma);
-
-        $('#player-hp').html(score.HitPoints);
-        $('#stat-HP').html(score.HitPoints);
-        $('#player-max-hp').html(score.MaxHitPoints);
-        $('#stat-max-HP').html(score.MaxHitPoints);
-
-        $('#player-mana').html(score.ManaPoints);
-        $('#stat-mana').html(score.ManaPoints);
-        $('#player-max-mana').html(score.MaxManaPoints);
-        $('#stat-max-mana').html(score.MaxManaPoints);
-
-        $('#player-end').html(score.MovePoints);
-        $('#stat-endurance').html(score.MovePoints);
-        $('#player-max-end').html(score.MaxMovePoints);
-        $('#stat-max-endurance').html(score.MaxMovePoints);
 
         $('#stat-tnl').html(score.ExperienceToNextLevel);
 
@@ -534,6 +519,11 @@
 
     };
 
+
+    client.UpdateUiDescription = function(ex) {
+
+
+    }
 
 
     client.UpdateMap = function (roomId, area, region, zindex) {
@@ -822,6 +812,33 @@
 
         });
 
+        $(".infoPlayerFilter").click(function () {
+
+            console.log("click");
+            var val = $(this).html();
+
+            if (val === "Score") {
+                $(".js-score").show();
+                $(".js-description").hide();
+                
+            } else {
+                $(".js-score").hide();
+                $(".js-description").show();
+           
+            }
+
+
+        });
+
+        
+
+        $("#SaveDescription").click(function () {
+
+            var desc = $("descriptionText").val();
+
+            server.updateDescription(desc, playerGuid);
+        });
+
 
         $(".js-generateName").click(function () {
 
@@ -943,6 +960,8 @@
         $('.js-room').perfectScrollbar();
         $('.js-channels').perfectScrollbar();
         $('.js-info').perfectScrollbar();
+        $('.js-description').perfectScrollbar();
+        
 
       
         var resizeTimer;

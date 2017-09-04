@@ -33,7 +33,23 @@ namespace MIMWebClient.Hubs
                 SendToClient(motd, id);            
         }
 
- 
+
+        #region updateDescription
+        public void UpdateDescription(string description, String playerGuid)
+        {
+
+
+            Player PlayerData;
+            Room RoomData;
+            _PlayerCache.TryGetValue(playerGuid, out PlayerData);
+
+
+            //save desc in db
+            //update desc UI
+
+
+        }
+        #endregion
 
 
         #region input from user
