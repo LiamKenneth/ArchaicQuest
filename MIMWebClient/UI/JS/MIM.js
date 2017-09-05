@@ -411,6 +411,16 @@
         $('#player-cha').html(score.Charisma);
         $('#player-max-cha').html(score.MaxCharisma);
 
+       
+        $('#stat-HP').html(score.HitPoints); 
+        $('#stat-max-HP').html(score.MaxHitPoints);
+
+        $('#stat-mana').html(score.ManaPoints);      
+        $('#stat-max-mana').html(score.MaxManaPoints);
+     
+        $('#stat-endurance').html(score.MovePoints); 
+        $('#stat-max-endurance').html(score.MaxMovePoints);
+
         $('#stat-tnl').html(score.ExperienceToNextLevel);
 
         $('#player-hitroll').html(score.HitRoll);
@@ -751,7 +761,8 @@
         $(".channelFilter").click(function () {
 
             var val = $(this).html();
-
+            $(".channelFilter").removeClass("activeUiLink");
+            $(this).addClass("activeUiLink");
             if (val === "Newbie") {
                 $(".newbieChannelF").show();
                 $(".gossipChannelF").hide();
@@ -786,26 +797,31 @@
 
             console.log("click");
             var val = $(this).html();
-
+            $(".infoFilter").removeClass("activeUiLink");
+            $(this).addClass("activeUiLink");
             if (val === "Inv") {
+                
                 $("#invList").show();
                 $("#eqList").hide();
                 $("#afList").hide();
                 $("#qlList").hide();
             } else if (val === "EQ") {
                 $("#invList").hide();
+               
                 $("#eqList").show();
                 $("#afList").hide();
                 $("#qlList").hide();
             } else if (val === "Aff") {
                 $("#invList").hide();
                 $("#eqList").hide();
+                
                 $("#afList").show();
                 $("#qlList").hide();
             }   else {
                 $("#invList").hide();
                 $("#eqList").hide();
                 $("#afList").hide();
+               
                 $("#qlList").show();
             }
 
@@ -816,7 +832,8 @@
 
             console.log("click");
             var val = $(this).html();
-
+            $(".infoPlayerFilter").removeClass("activeUiLink");
+            $(this).addClass("activeUiLink");
             if (val === "Score") {
                 $(".js-score").show();
                 $(".js-description").hide();
@@ -973,7 +990,10 @@
 
                 $('#discussion').perfectScrollbar('update');
                 $('.js-score').perfectScrollbar('update');
-
+                $('.js-room').perfectScrollbar('update');
+                $('.js-channels').perfectScrollbar('update');
+                $('.js-info').perfectScrollbar('update');
+                $('.js-description').perfectScrollbar('update');
             }, 250);
 
         });

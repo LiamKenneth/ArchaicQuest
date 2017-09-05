@@ -6221,3 +6221,6 @@ li.Stairs:before {
 .description-header {
   display: block !important; }
 
+.activeUiLink {
+  color: #f6d437 !important; }
+
