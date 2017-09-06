@@ -194,5 +194,24 @@ namespace MIMWebClient.Core.Events
                 //context.Clients.Client(playerData.HubGuid).updateRoom(playerData.Inventory);
             }
         }
+
+
+        public static void UpdateDescription(Player playerData, string description )
+        {
+
+            if (playerData.HubGuid != null)
+            {
+
+
+                playerData.Description = description;
+
+ 
+                //var room = new Room.Room();
+                //var currentRoom = p
+                var context = HubContext.getHubContext;
+                context.Clients.Client(playerData.HubGuid).UpdateUiDescription(description);
+                //context.Clients.Client(playerData.HubGuid).updateRoom(playerData.Inventory);
+            }
+        }
     }
 }

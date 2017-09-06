@@ -40,6 +40,11 @@
     // Helper Functions
     //================================================================================
     var MIM = {
+        setDesc: function (desc) {
+            console.log("setDesc ")
+            var guid = $.connection.hub.id;
+            server.updateDescription(desc, guid);
+        },
         getRaceInfo: function (getValue) {
             server.characterSetupWizard(getValue, "race");
         },
@@ -532,7 +537,7 @@
 
     client.UpdateUiDescription = function(ex) {
 
-
+        $("#descriptionContainer").html(ex)
     }
 
 
@@ -851,9 +856,10 @@
 
         $("#SaveDescription").click(function () {
 
-            var desc = $("descriptionText").val();
+  
+            var desc = $("#descriptionText").val();
 
-            server.updateDescription(desc, playerGuid);
+            MIM.setDesc(desc);
         });
 
 

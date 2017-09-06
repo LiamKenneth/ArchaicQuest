@@ -35,15 +35,16 @@ namespace MIMWebClient.Hubs
 
 
         #region updateDescription
-        public void UpdateDescription(string description, String playerGuid)
+        public void updateDescription(string description, String playerGuid)
         {
 
 
             Player PlayerData;
-            Room RoomData;
+         
             _PlayerCache.TryGetValue(playerGuid, out PlayerData);
 
 
+            Score.UpdateDescription(PlayerData, description);
             //save desc in db
             //update desc UI
 
