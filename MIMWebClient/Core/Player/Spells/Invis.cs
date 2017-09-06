@@ -252,8 +252,11 @@ namespace MIMWebClient.Core.Player.Skills
                     };
 
 
+
                 }
-               
+
+                Score.UpdateUiAffects(attacker);
+
             }
             else
             {

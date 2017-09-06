@@ -64,7 +64,13 @@ namespace MIMWebClient.Core.World.Tutorial
                 Emotes = new List<string>(),
                 EventOnComunicate = new Dictionary<string, string>(),
                 EventWake = "awakening awake",
-                EventWear = "awakening awake"
+                EventWear = "awakening awake",
+                Recall = new Recall()
+                {
+                    Area = room.area,
+                    AreaId = room.areaId,
+                    Region = room.region
+                }
 
             };
 

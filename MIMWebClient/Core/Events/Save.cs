@@ -2,11 +2,13 @@
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using LiteDB;
 using Microsoft.Ajax.Utilities;
 
 namespace MIMWebClient.Core.Events
@@ -17,36 +19,26 @@ namespace MIMWebClient.Core.Events
 
     public static class Save
     {
-        private const string DbServer = "mongodb://testuser:password@ds052968.mlab.com:52968/mimdb";
 
         public static void SavePlayer(Player player)
         {
 
             try
             {
-                const string ConnectionString = DbServer;
-
-                // Create a MongoClient object by using the connection string
-                var client = new MongoClient(ConnectionString);
-
-                //Use the MongoClient to access the server
-                var database = client.GetDatabase("mimdb");
-
-                var collection = database.GetCollection<Player>("Player");
-
-
-                var returnPlayer = collection.AsQueryable<Player>().FirstOrDefault(x => x.Name.Equals(player.Name));
-
-                //To solve issue with duplicate named chars being added to the database
-                if (returnPlayer == null)
+                using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
                 {
-                    collection.InsertOne(player);
+                    var col = db.GetCollection<Player>("Player");
+
+
+                    var duration = player.LastLoginTime.Ticks - player.LastCommandTime.Ticks;
+
+                        player.PlayTime = duration;
+
+                        player.TotalPlayTime += duration;
+
+                    col.Upsert(player); 
                 }
-                else
-                {
-                    UpdatePlayer(player);
-                }
-               
+
             }
             catch(Exception e)
             {
@@ -60,20 +52,15 @@ namespace MIMWebClient.Core.Events
 
             try
             {
-                const string ConnectionString = DbServer;
+                using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+                {
 
-                // Create a MongoClient object by using the connection string
-                var client = new MongoClient(ConnectionString);
+                    var col = db.GetCollection<Error.Error>("Error");
 
-                //Use the MongoClient to access the server
-                var database = client.GetDatabase("mimdb");
+                    col.Insert(Guid.NewGuid(), error);
 
-                var collection = database.GetCollection<Error.Error>("Error");
+                }
 
-
-                
-                    collection.InsertOne(error);
-                
 
             }
             catch (Exception e)
@@ -85,65 +72,22 @@ namespace MIMWebClient.Core.Events
 
         }
 
-        public static void UpdatePlayer(Player player)
-        {
-            if (player.Target != null)
-            {
-                HubContext.getHubContext.Clients.Client(player.HubGuid)
-                    .addNewMessageToPage("You can't save while fighting");
-                return;
-            }
-
-            try
-            {
-                const string ConnectionString = DbServer;
-
-                // Create a MongoClient object by using the connection string
-                var client = new MongoClient(ConnectionString);
-
-                //Use the MongoClient to access the server
-                var database = client.GetDatabase("mimdb");
-
-                var collection = database.GetCollection<Player>("Player");
-
-                collection.ReplaceOne<Player>(x => x._id == player._id, player);
-
-                HubContext.getHubContext.Clients.Client(player.HubGuid)
-                    .addNewMessageToPage("The gods take note of your progress");
-            }
-            catch (Exception ex)
-            {
-                var log = new Error.Error
-                {
-                    Date = DateTime.Now,
-                    ErrorMessage = ex.InnerException.ToString(),
-                    MethodName = "Update player"
-                };
-
-                Save.LogError(log);
-            }
-
-        }
+       
 
         public static Player GetPlayer(string name)
         {
-            const string ConnectionString = DbServer;
+            using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+            {
 
-            // Create a MongoClient object by using the connection string
-            var client = new MongoClient(ConnectionString);
+                var col = db.GetCollection<Player>("Player");
 
-            //Use the MongoClient to access the server
-            var database = client.GetDatabase("mimdb");
+                var cleanName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(name.ToLower());
 
-            var collection = database.GetCollection<Player>("Player");
+                var returnPlayer = col.FindOne(x => x.Name.Equals(cleanName));
 
-            var cleanName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(name.ToLower());
+                return returnPlayer;
 
-            var returnPlayer = collection.AsQueryable<Player>().FirstOrDefault(x => x.Name.Equals(cleanName)); 
-
-            return returnPlayer;
-
-
+            }
 
         }
     }

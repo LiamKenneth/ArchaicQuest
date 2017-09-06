@@ -180,7 +180,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
         public static void setUpRescue(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
         {
-            Task.Run(async () => await AwakeningRescue(player, room, step, calledBy));
+            Task.Run(() => AwakeningRescue(player, room, step, calledBy));
         }
 
         public static void setUpAwakening(PlayerSetup.Player player, Room.Room room, string step, string calledBy)
@@ -231,7 +231,7 @@ namespace MIMWebClient.Core.World.Tutorial
                     //remove player from tutorial room
                     var oldRoom = Cache.ReturnRooms()
                         .FirstOrDefault(
-                            x => x.area.Equals("Tutorial") && x.areaId.Equals(player.AreaId) && x.region.Equals("Tutorial"));
+                            x => x.area.Equals("Tutorial") && x.areaId.Equals(10) && x.region.Equals("Tutorial"));
 
                     if (oldRoom != null && oldRoom.players.Contains(player))
                     {
@@ -273,10 +273,10 @@ namespace MIMWebClient.Core.World.Tutorial
 
                         player.QuestLog.Add(findLance);
 
+                    Score.UpdateUiQlog(player);
 
 
-
-                        HubContext.SendToClient(
+                    HubContext.SendToClient(
                             "<span class='questColor'>New Quest added: <br />Find and greet Lance. <br />Type qlog to be reminded about quest information.</span>",
                             player.HubGuid);
 
@@ -330,7 +330,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
                 var oldPlayer = player;
 
-                await Task.Delay(5000);
+             
 
                 if (string.IsNullOrEmpty(step))
                 {
@@ -377,9 +377,10 @@ namespace MIMWebClient.Core.World.Tutorial
                         //load from DB
                     }
 
-                    //fix for random wake message hint showing
+                //fix for random wake message hint showing
+                    await Task.Delay(500);
 
-                    var playerInRoom =
+                var playerInRoom =
                         Cache.ReturnRooms()
                             .FirstOrDefault(
                                 x => x.area.Equals("Tutorial") && x.areaId.Equals(11) && x.region.Equals("Tutorial"))

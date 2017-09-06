@@ -10,6 +10,7 @@ using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Player;
 using MIMWebClient.Core;
 using MIMWebClient;
+using MIMWebClient.Core.AI;
 using MIMWebClient.Core.World.Tutorial;
 
 namespace MIMWebClient.Hubs
@@ -31,6 +32,26 @@ namespace MIMWebClient.Hubs
             // Call the broadcastMessage method to update clients.
                 SendToClient(motd, id);            
         }
+
+
+        #region updateDescription
+        public void updateDescription(string description, String playerGuid)
+        {
+
+
+            Player PlayerData;
+         
+            _PlayerCache.TryGetValue(playerGuid, out PlayerData);
+
+
+            Score.UpdateDescription(PlayerData, description);
+            //save desc in db
+            //update desc UI
+
+
+        }
+        #endregion
+
 
         #region input from user
         public void recieveFromClient(string message, String playerGuid)
@@ -325,13 +346,17 @@ namespace MIMWebClient.Hubs
             MIMWebClient.Core.Room.PlayerManager.AddPlayerToRoom(roomData, PlayerData);
             Movement.EnterRoom(PlayerData, roomData);
 
+            PlayerData.LastLoginTime = DateTime.Now;
+
             Save.SavePlayer(PlayerData);
 
             // addToRoom(PlayerData.AreaId, roomData, PlayerData, "player");
             Score.ReturnScoreUI(PlayerData);
             Score.UpdateUiPrompt(PlayerData);
             Score.UpdateUiInventory(PlayerData);
-
+            Score.UpdateUiEquipment(PlayerData);
+            Score.UpdateUiAffects(PlayerData);
+            Score.UpdateUiQlog(PlayerData);
 
         }
 
@@ -391,8 +416,10 @@ namespace MIMWebClient.Hubs
                 Score.ReturnScoreUI(player);
                 Score.UpdateUiPrompt(player);
                 Score.UpdateUiInventory(player);
-
-
+                Score.UpdateUiAffects(player);
+                Score.UpdateUiEquipment(player);
+                Score.UpdateUiQlog(player);
+                Score.UpdateDescription(player, player.Description);
 
 
             }

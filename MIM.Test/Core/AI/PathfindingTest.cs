@@ -18,7 +18,7 @@ namespace MIM.Test.Core.AI
         {
             var roomSetUp = new BreadthFirstSearch();
 
-            var list = roomSetUp.AssignCoords();
+            var list = roomSetUp.AssignCoords("Anker", "Anker"); 
 
 
             var modo = list.FirstOrDefault(x => x.areaId == 2);
@@ -59,6 +59,51 @@ namespace MIM.Test.Core.AI
 
             Assert.That(elder.coords.X, Is.EqualTo(elderctual.X));
             Assert.That(elder.coords.Y, Is.EqualTo(elderctual.Y));
+        }
+
+        [Test]
+        public void ShouldMapTutorial()
+        {
+            var roomSetUp = new BreadthFirstSearch();
+
+            var list = roomSetUp.AssignCoords("Tutorial", "Tutorial");
+
+
+            var gobCamp = list.FirstOrDefault(x => x.areaId == 3);
+            var gobCampActual = new Coordinates()
+            {
+                X = 1,
+                Y = 2,
+                Z = 0
+            };
+
+    
+
+            foreach (var i in list.OrderBy(x => x.areaId))
+            {
+                Console.WriteLine("roomID " + i.areaId + " (" + i.coords.X + ", " + i.coords.Y + ")");
+            }
+
+
+            Assert.That(gobCamp.coords.X, Is.EqualTo(gobCampActual.X));
+            Assert.That(gobCamp.coords.Y, Is.EqualTo(gobCampActual.Y));
+
+          
+        }
+
+
+
+        [Test]
+        public void DisplaySigmaArrays()
+        {
+           new SigmaMap().DrawMap("1");
+ 
+        
+
+
+            Assert.That(true, Is.EqualTo(true));
+           
+
         }
     }
 }

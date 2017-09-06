@@ -44,78 +44,84 @@ namespace MIMWebClient.Core.PlayerSetup
 
         }
 
-        [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId _id { get; set; }
+        public int Id { get; set; }
 
         [BsonElement("hid")]
         public string HubGuid;
 
         [BsonElement("sd")]
-        public DateTime JoinedDate;
+        public DateTime JoinedDate { get; set; }
 
         [BsonElement("lcd")]
-        public DateTime LastCommandTime;
+        public DateTime LastLoginTime { get; set; }
+
+        [BsonElement("lcd")]
+        public DateTime LastCommandTime { get; set; }
 
         [BsonElement("ty")]
-        public PlayerTypes Type = PlayerTypes.Mob;
+        public PlayerTypes Type { get; set; } = PlayerTypes.Mob;
 
         [BsonElement("e")]
-        public string Email;
+        public string Email { get; set; }
 
         [BsonElement("de")]
-        public string Description;
+        public string Description { get; set; }
 
         [BsonElement("p")]
-        public string Password;
+        public string Password { get; set; }
 
         // General Info
         [BsonElement("n")]
-        public string Name;
+        public string Name { get; set; }
 
         [BsonElement("kn")]
-        public bool KnownByName;
+        public bool KnownByName { get; set; }
 
         [BsonElement("g")]
-        public string Gender;
+        public string Gender { get; set; }
+
+        public long PlayTime { get; set; } = 0;
+
+        public long TotalPlayTime { get; set; } = 0;
 
         [BsonElement("r")]
-        public string Race;
+        public string Race { get; set; }
 
         [BsonElement("sc")]
-        public string SelectedClass;
+        public string SelectedClass { get; set; }
 
         [BsonElement("lvl")]
-        public int Level;
+        public int Level { get; set; }
 
         [BsonElement("ali")]
-        public int AlignmentScore;
+        public int AlignmentScore { get; set; }
 
         [BsonElement("txp")]
-        public int TotalExperience;
+        public int TotalExperience { get; set; }
 
         [BsonElement("xp")]
-        public int Experience;
+        public int Experience { get; set; }
 
         [BsonElement("tnl")]
-        public int ExperienceToNextLevel;
+        public int ExperienceToNextLevel { get; set; }
 
         [BsonElement("hp")]
-        public int HitPoints;
+        public int HitPoints { get; set; }
 
         [BsonElement("mhp")]
-        public int MaxHitPoints;
+        public int MaxHitPoints { get; set; }
 
         [BsonElement("mp")]
-        public int ManaPoints;
+        public int ManaPoints { get; set; }
 
         [BsonElement("mmp")]
-        public int MaxManaPoints;
+        public int MaxManaPoints { get; set; }
 
         [BsonElement("mvp")]
-        public int MovePoints;
+        public int MovePoints { get; set; }
 
         [BsonElement("mmvp")]
-        public int MaxMovePoints;
+        public int MaxMovePoints { get; set; }
 
         [BsonElement("in")]
         public List<Item> Inventory { get; set; }
@@ -128,171 +134,171 @@ namespace MIMWebClient.Core.PlayerSetup
 
         [BsonElement("ask")]
         [BsonIgnoreIfNull]
-        public Skill ActiveSkill { get; set; }
+        public Skill ActiveSkill;
 
         [BsonElement("afig")]
         [BsonIgnoreIfNull]
-        public bool ActiveFighting{ get; set; }
+        public bool ActiveFighting;
 
 
         [BsonElement("af")]
         public List<Affect> Affects { get; set; } = new List<Affect>();
 
         [BsonIgnore]
-        public List<Player> Followers { get; set; } = new List<Player>();
+        public List<Player> Followers = new List<Player>();
 
         [BsonIgnore]
-        public Player Following { get; set; }
+        public Player Following;
 
         [BsonIgnore]
         public string Pose { get; set; }
 
         //Game stats
         [BsonElement("ex")]
-        public int Explored;
+        public int Explored { get; set; }
 
         [BsonElement("hr")]
-        public int HitRoll;
+        public int HitRoll { get; set; }
 
         [BsonElement("dr")]
-        public int DamRoll;
+        public int DamRoll { get; set; }
 
         [BsonElement("wi")]
-        public int Wimpy;
+        public int Wimpy { get; set; }
 
         [BsonElement("hrs")]
-        public int Hours;
+        public int Hours { get; set; }
 
         [BsonElement("we")]
-        public int Weight;
+        public int Weight { get; set; }
 
         [BsonElement("mwe")]
-        public int MaxWeight;
+        public int MaxWeight { get; set; }
 
         [BsonElement("st")]
-        public PlayerStatus Status;
+        public PlayerStatus Status { get; set; }
 
         [JsonIgnore]
         [BsonElement("ta")]
-        public Player Target;
+        public Player Target { get; set; }
 
         [BsonElement("arr")]
-        public int ArmorRating;
+        public int ArmorRating { get; set; }
 
         [BsonElement("s")]
-        public int Saves;
+        public int Saves { get; set; }
 
         //Kills
         [BsonElement("mk")]
-        public int MobKills;
+        public int MobKills { get; set; }
 
         [BsonElement("md")]
-        public int MobDeaths;
+        public int MobDeaths { get; set; }
 
         [BsonElement("pk")]
-        public int Pkills;
+        public int Pkills { get; set; }
 
         [BsonElement("pd")]
-        public int PkDeaths;
+        public int PkDeaths { get; set; }
 
         [BsonElement("pkp")]
-        public int PkPoints;
+        public int PkPoints { get; set; }
 
         //Money
         [BsonElement("gp")]
-        public int Gold;
+        public int Gold { get; set; }
 
         [BsonElement("sp")]
-        public int Silver;
+        public int Silver { get; set; }
 
         [BsonElement("cp")]
-        public int Copper;
+        public int Copper { get; set; }
 
         // attributes
         [BsonElement("as")]
-        public int Strength;
+        public int Strength { get; set; }
 
         [BsonElement("ad")]
-        public int Dexterity;
+        public int Dexterity { get; set; }
 
         [BsonElement("ac")]
-        public int Constitution;
+        public int Constitution { get; set; }
 
         [BsonElement("aw")]
-        public int Wisdom;
+        public int Wisdom { get; set; }
 
         [BsonElement("ai")]
-        public int Intelligence;
+        public int Intelligence { get; set; }
 
         [BsonElement("ach")]
-        public int Charisma;
+        public int Charisma { get; set; }
 
         [BsonElement("mas")]
-        public int MaxStrength;
+        public int MaxStrength { get; set; }
 
         [BsonElement("mad")]
-        public int MaxDexterity;
+        public int MaxDexterity { get; set; }
 
         [BsonElement("mac")]
-        public int MaxConstitution;
+        public int MaxConstitution { get; set; }
 
         [BsonElement("maw")]
-        public int MaxWisdom;
+        public int MaxWisdom { get; set; }
 
         [BsonElement("mai")]
-        public int MaxIntelligence;
+        public int MaxIntelligence { get; set; }
 
         [BsonElement("mach")]
-        public int MaxCharisma;
+        public int MaxCharisma { get; set; }
 
         //location
         [BsonElement("re")]
-        public string Region;
+        public string Region { get; set; }
 
         [BsonElement("ar")]
-        public string Area;
+        public string Area { get; set; }
 
         [BsonElement("ari")]
-        public int AreaId;
+        public int AreaId { get; set; }
 
         [BsonElement("rec")]
-        public Recall Recall;
+        public Recall Recall { get; set; }
 
         [BsonElement("pra")]
-        public int Practices;
+        public int Practices { get; set; }
 
         [BsonElement("tra")]
-        public int Trains;
+        public int Trains { get; set; }
 
         [BsonElement("ndec")]
-        public bool nonDectect = false;
+        public bool nonDectect { get; set; } = false;
 
         [BsonElement("inv")]
-        public bool invis = false;
+        public bool invis { get; set; } = false;
 
         [BsonElement("dinv")]
-        public bool DetectInvis = false;
+        public bool DetectInvis { get; set; } = false;
 
         [BsonElement("hidd")]
-        public bool hidden = false;
+        public bool hidden { get; set; } = false;
 
         [BsonElement("dhidd")]
-        public bool DetectHidden= false;
+        public bool DetectHidden { get; set; } = false;
 
         [BsonElement("poi")]
-        public bool poisoned = false;
+        public bool poisoned { get; set; } = false;
 
 
         [BsonElement("itl")]
-        public int intoxicationLevel = 0;
+        public int intoxicationLevel { get; set; } = 0;
 
         [BsonElement("itml")]
         //Equal to con
-        public int intoxicationMaxLevel = 12; 
+        public int intoxicationMaxLevel { get; set; } = 12;
 
 
         [BsonElement("qlog")]
-        public List<Quest> QuestLog;
+        public List<Quest> QuestLog { get; set; }
 
         //NPC Properties
         [BsonElement("ne")]
@@ -363,7 +369,7 @@ namespace MIMWebClient.Core.PlayerSetup
 
         [BsonElement("nqu")]
         [BsonIgnoreIfNull]
-        public List<Quest> Quest;
+        public List<Quest> Quest { get; set; }
 
         //NPC Properties
         [BsonElement("nt")]
@@ -393,22 +399,23 @@ namespace MIMWebClient.Core.PlayerSetup
 
         [BsonElement("eowe")]
         [BsonIgnoreIfNull]
-        public string EventWear { get; set; }
+        public string EventWear;
 
         [BsonElement("nch")]
         [BsonIgnoreIfNull]
-        public bool NewbieChannel = true;
+        public bool NewbieChannel { get; set; } = true;
 
         [BsonElement("gch")]
-        public bool GossipChannel = true;
+        public bool GossipChannel { get; set; } = true;
 
         [BsonElement("och")]
-        public bool OocChannel = true;
+        public bool OocChannel { get; set; } = true;
 
 
 
         public Player()
         {
+
             this.Type = PlayerTypes.Player;
             this.Level = 1;
             this.Description = this.Description ?? "You see nothing special about them.";
@@ -432,10 +439,10 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Status = PlayerStatus.Standing; // enum property? 1 standing
             this.Target = null;
             this.Inventory = this.Inventory ?? (this.Inventory = new List<Item>());
-       
- 
-            this.Skills  = new List<Skill>();
- 
+
+
+            this.Skills = new List<Skill>();
+
 
             //kills
             this.MobKills = 0;
@@ -458,18 +465,18 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Equipment = this.Equipment ?? (this.Equipment = new Equipment());
             this.Equipment.Floating = this.Equipment.Floating;
             this.Equipment.Head = Equipment.Head;
-            this.Equipment.Face = Equipment.Face;         
+            this.Equipment.Face = Equipment.Face;
             this.Equipment.Neck = Equipment.Neck;
             this.Equipment.Neck2 = Equipment.Neck2;
             this.Equipment.Body = Equipment.Body;
-            this.Equipment.Waist = Equipment.Waist;         
+            this.Equipment.Waist = Equipment.Waist;
             this.Equipment.Legs = Equipment.Legs;
             this.Equipment.Feet = Equipment.Feet;
 
             this.Practices = 10;
             this.Trains = 10;
             this.KnownByName = true;
-           
+
             this.QuestLog = new List<Quest>();
             this.Quest = new List<Quest>();
             this.EventWake = "";
@@ -486,7 +493,7 @@ namespace MIMWebClient.Core.PlayerSetup
 
             this.Recall = recall;
 
-          
+
         }
 
         /// <summary>

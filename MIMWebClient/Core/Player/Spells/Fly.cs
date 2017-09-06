@@ -161,6 +161,8 @@ namespace MIMWebClient.Core.Player.Skills
                 {
                     attacker.Affects.Add(flyAff);
                 }
+
+                Score.UpdateUiAffects(attacker);
             }
             else
             {
@@ -201,6 +203,7 @@ namespace MIMWebClient.Core.Player.Skills
                 }
 
                 Score.ReturnScoreUI(_target);
+                Score.UpdateUiAffects(_target);
             }
 
             Player.SetState(attacker);

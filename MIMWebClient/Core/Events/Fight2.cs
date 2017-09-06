@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
- 
- 
+using LiteDB;
+using MIMWebClient.Core.Loging;
+
 
 namespace MIMWebClient.Core.Events
 {
@@ -210,6 +212,8 @@ namespace MIMWebClient.Core.Events
             if (defendingPlayer == null)
             {
                 HubContext.SendToClient("No one here", attacker.HubGuid);
+                attacker.ActiveFighting = false;
+                attacker.Target = null;
                 attacker.Status = Player.PlayerStatus.Standing;
 
                 return null;
@@ -226,6 +230,8 @@ namespace MIMWebClient.Core.Events
             {
                 HubContext.SendToClient("You cannot attack anything while dead", attacker.HubGuid);
                 attacker.Status = Player.PlayerStatus.Standing;
+                attacker.ActiveFighting = false;
+                attacker.Target = null;
                 return null;
             }
 
@@ -233,6 +239,8 @@ namespace MIMWebClient.Core.Events
             {
                 HubContext.SendToClient("They are already dead.", attacker.HubGuid);
                 attacker.Status = Player.PlayerStatus.Standing;
+                attacker.ActiveFighting = false;
+                attacker.Target = null;
                 return null;
             }
 
@@ -723,7 +731,31 @@ namespace MIMWebClient.Core.Events
                     }
                 }
 
-              
+                if (defender.Type == Player.PlayerTypes.Mob)
+                {
+                    using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+                    {
+                        var col = db.GetCollection<Deaths>("Deaths");
+
+                        var mobDeath = new Deaths
+                        {
+                            RoomName = room.title,
+                            Area = room.area,
+                            AreaId = room.areaId,
+                            Date = new DateTime(),
+                            KilledBy = defender.Target.Name,
+                            Id = Guid.NewGuid(),
+                            Type = defender.Type == Player.PlayerTypes.Mob ? Player.PlayerTypes.Mob.ToString() : Player.PlayerTypes.Player.ToString()
+                        };
+
+
+                        col.Insert(Guid.NewGuid(), mobDeath);
+                    }
+                }
+                
+
+             
+
 
                 defender.Target = null;
                 defender.ActiveFighting = false;

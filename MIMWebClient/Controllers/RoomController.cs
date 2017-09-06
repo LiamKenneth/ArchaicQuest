@@ -21,6 +21,7 @@ namespace MIMWebClient.Controllers.Admin.Room
         public RoomController()
         {
 
+
             const string ConnectionString = "mongodb://testuser:password@ds052968.mlab.com:52968/mimdb";
 
             // Create a MongoClient object by using the connection string

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using MIMWebClient.Core.Events;
 
 namespace MIMWebClient.Core.Player
 {
@@ -43,6 +44,8 @@ namespace MIMWebClient.Core.Player
                 }
 
                 Command.ParseCommand("look", player, room);
+
+                CheckEvent.FindEvent(CheckEvent.EventType.Wake, player, "awakening awake");
             }
 
             else

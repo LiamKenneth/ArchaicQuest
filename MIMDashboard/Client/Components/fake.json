@@ -1,0 +1,12 @@
+{
+        "newUsersDay":"2",
+        "newUsersWeekh": "24",
+        "newUsersMonth": "127",
+        "errors": {
+            "count": "1",
+            "errLog":[{
+            "err": "loot",
+            "type": "wrong command"
+            }]
+        }
+    }

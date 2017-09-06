@@ -66,6 +66,7 @@ namespace MIMWebClient.Core.Room
 
                         var roomdata = LoadRoom.DisplayRoom(room, room.players[i].Name);
                         Score.UpdateUiRoom(room.players[i], roomdata);
+
                     }
                     else
                     {
@@ -78,7 +79,7 @@ namespace MIMWebClient.Core.Room
                 }
             }
 
-
+            Score.UpdateUiMap(player, room.areaId, room.area.ToLower(), room.region.ToLower(), room.coords.Z = 0);
         }
 
         public static void ExitRoom(Player player, Room room, string direction, bool teleported = false)
@@ -596,33 +597,20 @@ namespace MIMWebClient.Core.Room
 
 
                             //NPC Enter event here
-                            foreach (var mobb in getNewRoom.mobs.ToList())
+                            foreach (var mobb in getNewRoom.mobs.Where(x => x.EventOnEnter != null).ToList())
                             {
-
-                                if (mobb.Greet)
-                                {
-                                    // Event.ParseCommand("greet", player, mob, getNewRoom);
-                                }
-                                else
-                                {
-                                    //mob might be aggro
-                                }
-
-
 
                                 if (!string.IsNullOrEmpty(mobb.EventOnEnter))
                                 {
                                     Event.ParseCommand(mob.EventOnEnter, ThingYourFollowing, mobb, room);
                                 }
-
-                                if (!string.IsNullOrEmpty(room.EventOnEnter))
-                                {
-                                    Event.ParseCommand(room.EventOnEnter, mobb, null, room);
-                                }
-
-
-
                             }
+
+                            if (!string.IsNullOrEmpty(room.EventOnEnter))
+                            {
+                                Event.ParseCommand(room.EventOnEnter, mob, null, room);
+                            }
+
                         }
                     }
                     catch (Exception e)

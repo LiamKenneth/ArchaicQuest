@@ -6,17 +6,22 @@
 
     <a id="open-left-panel" href="javascript:void(0);" class="full-height visible-xs" style="position: absolute; top: -120px; left: 0; width: 22%; z-index: 900"></a>
 
-    <div class="row full-height">
-        <div id="left-panel" class="col-xs-12 col-sm-3  hidden-xs full-height" style="display: table;">
+    <div class="row full-height"  style=" overflow: hidden;">
+        <div id="left-panel" class="col-xs-12 col-sm-3  hidden-xs full-height " style="display: table; overflow: hidden;">
 
             <div id="info-char" class="full-height" style="display: table; width: 100%; height: 50%;">
                 <div id="score" style="display: table-cell; width: 100%;" class="window">
+                    
+                    <ul class="list-inline list-unstyled">
+                        <li><a class="infoPlayerFilter activeUiLink" href="javascript:void(0);" title="Your stats">Score</a></li>
+                        <li><a class="infoPlayerFilter" href="javascript:void(0);" title="Add / edit and view your description">Description</a></li>
+                    </ul>
 
                     <div class="js-score" style="overflow-y: scroll; max-height: 40vh;">
-                        <h3 id="player-name" class="text-center">Malleus - </h3>
+                        <h3 id="player-name" class="text-center"></h3>
 
-                        <p class="text-center"><span id="player-gender"></span> <span id="player-race"></span> <span id="player-class"></span> Level <span id="player-level"></span></p>
-                        <p class="text-center">HP <span id="player-hp"></span>/<span id="player-max-hp"></span> Mana <span id="player-mana"></span>/<span id="player-max-mana"></span> Fatigue <span id="player-end"></span>/<span id="player-max-end"></span> </p>
+                        <p class="text-center"><span id="player-gender"></span> <span id="player-race"></span> <span id="player-class"></span> Level <span id="player-level"></span>
+                        </p>
 
                         <div class="scoreContainer">
                             <h3 class="text-center">Attributes</h3>
@@ -91,7 +96,7 @@
 
                             <table width="100%">
                                 <tr>
-                                    <td>Aignment</td>
+                                    <td>Alignment</td>
                                     <td><span class="pull-right"><span id="player-alignment"></span></span></td>
                                 </tr>
 
@@ -155,14 +160,35 @@
                         </div>
 
                     </div>
+                    
+                    <div class="js-description" style="overflow-y: scroll; max-height: 40vh; display: none;">
+                        
+                        <pre id="descriptionContainer">You see nothing special about them.</pre>
+
+                        <a id="editDescription" href="javascript:void(0)" data-toggle="modal" data-target="#modalDescription">Edit Description</a>
+                    </div>
                 </div>
             </div>
 
             <div id="info-inv" class="full-height" style="display: table; width: 100%; height: 44.3%; margin-top: 10px;">
-                <div style="display: table-cell; width: 100%;" class="window">
-                    <h3 class="text-center">Inventory</h3>
+                <div style="display: table-cell; width: 100%; max-height: 40vh; overflow: hidden;" class="window">
+                    <ul class="list-inline list-unstyled">
+                        <li><a class="infoFilter activeUiLink" href="javascript:void(0);" title="Inventory">Inv</a></li>
+                        <li><a class="infoFilter" href="javascript:void(0);" title="Equipment">EQ</a></li>
+                        <li><a class="infoFilter" href="javascript:void(0);" title="Affects">Aff</a></li>
+                        <li><a class="infoFilter" href="javascript:void(0);" title="Quest Log">Qlog</a></li>
+                    </ul>
+                    
+                    <div id="" class="js-info" style="position: relative; overflow-y: scroll;  max-height: 33vh;">
 
-                    <ul id="invList"></ul>
+                        <ul id="invList"></ul>
+
+                        <div id="eqList" style="display: none;"></div>
+
+                        <ul id="afList" style="display: none;"></ul>
+
+                        <div id="qlList" style="display: none;"></div>
+                    </div>
                 </div>
 
             </div>
@@ -171,74 +197,46 @@
 
             <div id="discussion" class="full-height window" style="overflow-y: scroll; padding: 15px;"></div>
         </div>
-        <div id="right-panel" class="col-xs-12 col-sm-3 hidden-xs full-height" style="display: table;">
+        <div id="right-panel" class="col-xs-12 col-sm-3 hidden-xs full-height" style="">
 
             <div id="info-room" class="full-height" style="display: table; width: 100%; height: 50%;">
 
 
-                <div style="display: table-cell; width: 100%;" class="window">
+                <div style=" width: 100%; height: 47vh;" class="window">
 
-                    <div class="js-room" style="overflow-y: scroll; max-height: 40vh;">
-                        <h3>Room Info</h3>
+                    <div class="js-room" style=" ">
+                        <h3>Map Key:</h3>
+                        <ul class="list-inline list-unstyled">
+                            <li class="Active">You</li>
+                            <li class="Shop">Shop</li>
+                            <li class="Guild">Guild</li>
+                            <li class="Room">Room</li>
+                            <li class="Stairs">Stairs</li>
+                        </ul>
+                        <div id="roomTitleInfo" style="top: 0;
 
-                        <span id="roomTitleInfo"></span>
+  height:40vh;
+  width:100%"></div>
                     </div>
                 </div>
 
             </div>
 
             <div id="info-quest" class="full-height" style="display: table; width: 100%; height: 44.3%; margin-top: 10px;">
-                <div style="display: table-cell; width: 100%;" class="window showExit">
-                    <h3>Exits</h3>
+                <div style="display: table-cell; width: 100%; max-height: 40vh; overflow: hidden;" class="window showExit">
+                    <ul class="list-inline list-unstyled">
+                        <li class="">Channels:</li>
+                        <li><a class="channelFilter activeUiLink" href="javascript:void(0);">All</a></li>
+                        <li><a class="channelFilter" href="javascript:void(0);">Newbie</a></li>
+                        <li><a class="channelFilter" href="javascript:void(0);">Gossip</a></li>
+                        <li><a class="channelFilter" href="javascript:void(0);">Room</a></li>
+                        <li><a class="channelFilter" href="javascript:void(0);">OOC</a></li>
+                    </ul>
 
-                  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                         viewBox="0 0 183.5 182" style="enable-background:new 0 0 183.5 182;" xml:space="preserve">
-                        <!-- center -->
-<rect id="XMLID_1_" x="75.5" y="75.5" style="fill:#5CB85C;stroke:#000000;stroke-miterlimit:10;" width="31" height="31" />
+                    <div id="Channel" class="js-channels" style="overflow-y: scroll; max-height: 33vh;">
 
-                        <!-- north -->
-<line id="XMLID_2_" style="fill:none;stroke:#ccc;stroke-miterlimit:10;" x1="91" y1="75.5" x2="91" y2="31.5" class="northNode" />
-<rect id="XMLID_3_" x="76" y="0.5" style="fill:#CCCCCC;stroke:#000000;stroke-miterlimit:10;" width="31" height="31" class="northNode" />
 
-                        <!-- east -->
-<line id="XMLID_4_" style="fill:none;stroke:#ccc;stroke-miterlimit:10;" x1="151.5" y1="91" x2="107.5" y2="91" class="eastNode" />
-<rect id="XMLID_10_" x="152" y="75.5" style="fill:#CCCCCC;stroke:#000000;stroke-miterlimit:10;" width="31" height="31" class="eastNode" />
-
-                        <!-- south -->
-<line id="XMLID_6_" style="fill:none;stroke:#ccc;stroke-miterlimit:10;" x1="92" y1="150.5" x2="92" y2="106.5" class="southNode" />
-<rect id="XMLID_9_" x="76.5" y="150.5" style="fill:#CCCCCC;stroke:#000000;stroke-miterlimit:10;" width="31" height="31" class="southNode" />
-
-                        <!-- west -->
-<line id="XMLID_5_" style="fill:none;stroke:#ccc;stroke-miterlimit:10;" x1="75.5" y1="91" x2="31.5" y2="91" class="westNode" />
-<rect id="XMLID_11_" x="0.5" y="76" style="fill:#CCCCCC;stroke:#000000;stroke-miterlimit:10;" width="31" height="31" class="westNode" />
-
-                        <!-- ne -->
-<rect id="XMLID_12_" x="152" y="0.5" style="fill:#CCCCCC;stroke:#000000;stroke-miterlimit:10;" width="31" height="31" class="neNode" />
-<line id="XMLID_13_" style="fill:none;stroke:#ccc;stroke-miterlimit:10;" x1="151.824" y1="31.195" x2="106.388" y2="76.229" class="neNode" />
-
-                        <!-- sw -->
-<line id="XMLID_14_" style="fill:none;stroke:#ccc;stroke-miterlimit:10;" x1="75.863" y1="106.235" x2="30.349" y2="151.189" class="swNode" />
-<rect id="XMLID_15_" x="0.5" y="150.5" style="fill:#CCCCCC;stroke:#000000;stroke-miterlimit:10;" width="31" height="31" class="swNode" />
-
-                        <!-- se -->
-<rect id="XMLID_16_" x="152" y="150.5" style="fill:#CCCCCC;stroke:#000000;stroke-miterlimit:10;" width="31" height="31" class="seNode" />
- <line id="XMLID_21_" style="fill:none;stroke:#ccc;stroke-miterlimit:10;" x1="152.061" y1="150.988" x2="106.151" y2="106.437" class="seNode" />
-
-                        <!-- nw -->
-<rect id="XMLID_17_" x="0.5" y="0.5" style="fill:#CCCCCC;stroke:#000000;stroke-miterlimit:10;" width="31" height="31" class="nwNode" />
-                    <polyline id="XMLID_22_" style="fill:none;stroke:#ccc;stroke-miterlimit:10;" points="76.114,75.575 75.065,74.534
-	31.25,31.063 " class="nwNode" />
-
-<text id="XMLID_23_" transform="matrix(1 0 0 1 87.6665 19.4998)" style="font-family:'Consolas', monospace; font-size:12px;" class="northNode">N</text>
-<text id="XMLID_25_" transform="matrix(1 0 0 1 8.6649 19.4998)" style="font-family:'Consolas', monospace; font-size:12px;" class="nwNode">NW</text>
-<text id="XMLID_28_" transform="matrix(1 0 0 1 160.9998 19.4998)" style="font-family:'Consolas', monospace; font-size:12px;" class="neNode">NE</text>
-<text id="XMLID_36_" transform="matrix(1 0 0 1 11.7498 95.2498)" style="font-family:'Consolas', monospace; font-size:12px;" class="westNode">W</text>
-<text id="XMLID_39_" transform="matrix(1 0 0 1 164.3748 95.4998)" style="font-family:'Consolas', monospace; font-size:12px;" class="eastNode">E</text>
-<text id="XMLID_40_" transform="matrix(1 0 0 1 7.9998 169.9996)" style="font-family:'Consolas', monospace; font-size:12px;" class="swNode">SW</text>
-<text id="XMLID_43_" transform="matrix(1 0 0 1 89.1248 169.9995)" style="font-family:'Consolas', monospace; font-size:12px;" class="southNode">S</text>
-<text id="XMLID_44_" transform="matrix(1 0 0 1 160.9996 170.4996)" style="font-family:'Consolas', monospace; font-size:12px;" class="seNode">SE</text>
-</svg>
-
+                    </div>
                 </div>
             </div>
         </div>
@@ -352,11 +350,32 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="modalDescription" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header description-header" style="">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Character Description</h4>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" rows="11" id="descriptionText"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="SaveDescription">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts {
     <!--Script references. -->
     <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
     <!--Reference the SignalR library. -->
     <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.0/sigma.min.js"></script>
     <!--Reference the autogenerated SignalR hub script. -->
     <script src="~/signalr/hubs"></script>
     <!--SignalR script to update the chat page and send messages.-->

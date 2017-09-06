@@ -219,7 +219,7 @@ namespace MIMWebClient.Core.Player
                 }
                 Score.UpdateUiInventory(player);
                 Score.ReturnScoreUI(player);
-
+                Score.UpdateUiEquipment(player);
             }
             else
             {
@@ -313,7 +313,7 @@ namespace MIMWebClient.Core.Player
             Score.UpdateUiInventory(player);
             Score.ReturnScoreUI(player);
             Cache.updatePlayer(player, oldPlayer);
-
+            Score.UpdateUiEquipment(player);
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace MIMWebClient.Core.Player
                 }
                 Score.UpdateUiInventory(player);
                 Score.ReturnScoreUI(player);
-
+                Score.UpdateUiEquipment(player);
                 if (replaceWithOtherEQ)
                 {
                     return; // we don't need to update the cache
@@ -489,6 +489,7 @@ namespace MIMWebClient.Core.Player
                 Score.UpdateUiInventory(player);
                 Score.ReturnScoreUI(player);
                 Cache.updatePlayer(player, oldPlayer);
+                Score.UpdateUiEquipment(player);
             }
 
         }

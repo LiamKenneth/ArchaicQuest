@@ -146,7 +146,7 @@ namespace MIMWebClient.Core.Player.Skills
                 {
                     _target.Affects.Add(faerieFireAff);
                 }
-
+                Score.UpdateUiAffects(_target);
                 Score.ReturnScoreUI(_target);
             }
 

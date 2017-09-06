@@ -167,7 +167,7 @@ namespace MIMWebClient.Core.Player.Skills
                 _target.Affects.Add(blindAff);
             }
 
-
+            Score.UpdateUiAffects(_target);
                 Score.ReturnScoreUI(_target);
 
 

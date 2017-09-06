@@ -48,7 +48,7 @@ namespace MIMWebClient.Core
                 {"drop", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey)},
                 {"give", () => ManipulateObject.GiveItem(room, playerData, commandOptions, commandKey, "killable")},
                 {"put", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey)},
-                {"save", () => Save.UpdatePlayer(playerData)},
+                {"save", () => Save.SavePlayer(playerData)},
                 {"'", () => Communicate.Say(commandOptions, playerData, room)},
                 {"newbie", () => Communicate.NewbieChannel(commandOptions, playerData)},
                 {"gossip", () => Communicate.GossipChannel(commandOptions, playerData)},

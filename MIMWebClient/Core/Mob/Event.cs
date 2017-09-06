@@ -29,6 +29,7 @@ namespace MIMWebClient.Core
         public static Dictionary<string, Action> Events(string eventName, PlayerSetup.Player player, PlayerSetup.Player mob, Room.Room room, string option = "", string calledBy = "")
         {
 
+
             var eventList = new Dictionary<String, Action>();
             eventList.Add("greet", () => Greeting.greet(player, mob, room));
             eventList.Add("tutorial", () =>  Tutorial.setUpTut(player, room, option, calledBy));
@@ -40,6 +41,7 @@ namespace MIMWebClient.Core
                 {
 
                     player.QuestLog.Add(AnkerQuests.TutorialLeatherQuest());
+                    Score.UpdateUiQlog(player);
 
                     HubContext.SendToClient(
                         "<span class='questColor'>New Quest added: " + AnkerQuests.TutorialLeatherQuest().Name + "<br />" + AnkerQuests.TutorialLeatherQuest().Description + "</span>",
@@ -47,7 +49,7 @@ namespace MIMWebClient.Core
                 }
             });
             eventList.Add("wearEQ", () => Tutorial.setUpRescue(player, room, option, calledBy));
-            eventList.Add("AnkerIdiot", () => VilliageIdiot.Annoy(player, mob, room));
+            eventList.Add("AnkerIdiot", async () => await VilliageIdiot.Annoy(player, mob, room));
 
             return eventList;
         }

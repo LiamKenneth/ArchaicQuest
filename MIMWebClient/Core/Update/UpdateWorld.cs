@@ -106,7 +106,7 @@ namespace MIMWebClient.Core.Update
 
         public static async Task UpdateRoom()
         {
-            await Task.Delay(5000);
+            await Task.Delay(45000);
 
             try
             {
@@ -129,7 +129,7 @@ namespace MIMWebClient.Core.Update
 
                 foreach (var player in MIMHub._PlayerCache.ToList())
                 {
-                    if (player.Value != null && player.Value.LastCommandTime.AddMinutes(1) < DateTime.UtcNow)
+                    if (player.Value != null && player.Value.LastCommandTime.AddMinutes(10) < DateTime.UtcNow)
                     {
                         HubContext.SendToClient("You disappear in the void", player.Value.HubGuid);
 
@@ -150,7 +150,7 @@ namespace MIMWebClient.Core.Update
                         }
                     }
 
-                    if (player.Value != null && player.Value.LastCommandTime.AddMinutes(2) < DateTime.UtcNow)
+                    if (player.Value != null && player.Value.LastCommandTime.AddMinutes(20) < DateTime.UtcNow)
                     {
                         var room =
                             MIMHub._AreaCache.FirstOrDefault(
@@ -209,7 +209,7 @@ namespace MIMWebClient.Core.Update
                                 if (mob.Guard || mob.AreaId != mob.Recall.AreaId)
                                 {
                                    await Movement.MobWalk(mob);
-                                   await Task.Delay(120);
+                              
                                 }
                               else
                                 {
@@ -218,7 +218,7 @@ namespace MIMWebClient.Core.Update
                                         mob.Pose = string.Empty;
                                         mob.Status = PlayerSetup.Player.PlayerStatus.Standing;
                                         await Movement.MobWalk(mob);
-                                        await Task.Delay(120);
+                             
 
                                     }
                                     else

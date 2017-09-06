@@ -43,6 +43,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 fighting = new List<string>(),
                 clean = true,
                 EventLook = "tutorial",
+                updateMessage = "A loud screech echos through the forest."
 
 
             };
@@ -212,7 +213,8 @@ namespace MIMWebClient.Core.World.Tutorial
                 corpses = new List<PlayerSetup.Player>(),
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),
-                clean = true
+                clean = true,
+                updateMessage = "A loud screech echos through the forest."
 
             };
 
@@ -259,7 +261,8 @@ namespace MIMWebClient.Core.World.Tutorial
                 corpses = new List<PlayerSetup.Player>(),
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),
-                clean = true
+                clean = true,
+                updateMessage = "A loud screech echos through the forest."
 
             };
 
@@ -326,7 +329,8 @@ namespace MIMWebClient.Core.World.Tutorial
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),
                 clean = true,
-                EventOnEnter = "Give Leather Quest"
+                EventOnEnter = "Give Leather Quest",
+                updateMessage = "A loud screech echos through the forest."
 
             };
 
@@ -434,7 +438,8 @@ namespace MIMWebClient.Core.World.Tutorial
                 corpses = new List<PlayerSetup.Player>(),
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),
-                clean = true
+                clean = true,
+                updateMessage = "A loud screech echos through the forest."
 
             };
 
@@ -462,10 +467,10 @@ namespace MIMWebClient.Core.World.Tutorial
          
 
             var map =
-                "Hideout" +
-                "  x - x - x   x - x -" +
-                "          |   |" +
-                "          x - x - x";
+                "<pre>Hideout" +
+                "  o-o-o o-o-o-o\r\n" +
+                "      | |   |\r\n" +
+                "      o-o   o-o-x</pre>";
 
             var HideoutMap = new RoomObject
             {
@@ -632,7 +637,8 @@ namespace MIMWebClient.Core.World.Tutorial
                 corpses = new List<PlayerSetup.Player>(),
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),
-                clean = true
+                clean = true,
+                updateMessage = "A loud screech echos through the forest."
 
             };
 
@@ -758,7 +764,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),
                 clean = true,
- 
+                updateMessage = "A loud screech echos through the forest."
 
 
             };
@@ -823,7 +829,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),
                 clean = true,
-
+                updateMessage = "A loud screech echos through the forest."
 
 
             };
@@ -906,7 +912,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),
                 clean = true,
-
+                updateMessage = "A loud screech echos through the forest."
 
 
             };
@@ -976,7 +982,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),
                 clean = true,
-
+                updateMessage = "A loud screech echos through the forest."
 
 
             };
@@ -1083,7 +1089,8 @@ namespace MIMWebClient.Core.World.Tutorial
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),
                 clean = true,
-                EventOnEnter = "rescue"
+                EventOnEnter = "rescue",
+                updateMessage = "A loud screech echos through the forest."
 
 
             };

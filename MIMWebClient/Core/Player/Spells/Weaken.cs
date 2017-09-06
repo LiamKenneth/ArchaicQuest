@@ -155,6 +155,7 @@ namespace MIMWebClient.Core.Player.Skills
             }
 
             Score.ReturnScoreUI(_target);
+            Score.UpdateUiAffects(_target);
 
             Player.SetState(attacker);
             _target = null;

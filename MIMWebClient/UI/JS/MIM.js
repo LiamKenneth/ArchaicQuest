@@ -9,6 +9,8 @@
     var client = chat.client;
     var server = chat.server;
 
+    var mapData = "no data bro";
+
     //================================================================================
     // Global Variables for playerCreation
     //================================================================================
@@ -25,10 +27,24 @@
     var email;
     var password;
 
+    var roomId;
+    var region;
+    var area;
+
+    var mainWindow = document.getElementById("discussion");
+    var mainWindowFragment = document.createDocumentFragment();
+
+    var channelWindow = document.getElementById("Channel");
+    var channelWindowFragment = document.createDocumentFragment();
     //================================================================================
     // Helper Functions
     //================================================================================
     var MIM = {
+        setDesc: function (desc) {
+            console.log("setDesc ")
+            var guid = $.connection.hub.id;
+            server.updateDescription(desc, guid);
+        },
         getRaceInfo: function (getValue) {
             server.characterSetupWizard(getValue, "race");
         },
@@ -192,6 +208,11 @@
             var encodedValue = $('<div />').text(value).html();
             return encodedValue;
         },
+        getMap: function (value) {
+            console.log("this one...p")
+            console.log(value)
+            mapData = value;
+        },
         createCharacter: function (char) {
 
 
@@ -351,12 +372,21 @@
 
         $.connection.hub.stop();
     };
+
+    client.getMap = function (map) {
+        console.log("get me the map")
+        mapData = map;
+        client.UpdateMap();
+
+    }
     //// Add a new message to the page ////
     client.addNewMessageToPage = function (message) {
-      
-        $('#discussion').append("<p>" + message + "</p>");
-      
-
+        console.time('addtopage');
+        var p = document.createElement('p');
+        p.innerHTML = message;
+        mainWindowFragment.appendChild(p);
+        mainWindow.appendChild(mainWindowFragment);
+        console.timeEnd('addtopage');
         $("#discussion").scrollTop($("#discussion")[0].scrollHeight);
     };
 
@@ -365,7 +395,7 @@
       
         var playerData = score;
 
-        console.log(score.MaxMovePoints)
+ 
         $('#player-name').html(score.Name);
         $('#player-level').html(score.Level);
         $('#player-race').html(playerData.Race);
@@ -386,19 +416,14 @@
         $('#player-cha').html(score.Charisma);
         $('#player-max-cha').html(score.MaxCharisma);
 
-        $('#player-hp').html(score.HitPoints);
-        $('#stat-HP').html(score.HitPoints);
-        $('#player-max-hp').html(score.MaxHitPoints);
+       
+        $('#stat-HP').html(score.HitPoints); 
         $('#stat-max-HP').html(score.MaxHitPoints);
 
-        $('#player-mana').html(score.ManaPoints);
-        $('#stat-mana').html(score.ManaPoints);
-        $('#player-max-mana').html(score.MaxManaPoints);
+        $('#stat-mana').html(score.ManaPoints);      
         $('#stat-max-mana').html(score.MaxManaPoints);
-
-        $('#player-end').html(score.MovePoints);
-        $('#stat-endurance').html(score.MovePoints);
-        $('#player-max-end').html(score.MaxMovePoints);
+     
+        $('#stat-endurance').html(score.MovePoints); 
         $('#stat-max-endurance').html(score.MaxMovePoints);
 
         $('#stat-tnl').html(score.ExperienceToNextLevel);
@@ -489,13 +514,72 @@
 
     };
 
-    client.UpdateUiRoom = function (room) {
-
+    client.UpdateUiChannels= function (channelText, channelClass) {
     
-       
-        $("#roomTitleInfo").html(room);
-      //  $("#roomDescInfo").html(description);
+        var p = document.createElement('p');
+        p.innerHTML = channelText;
+        p.className  = channelClass;
+        channelWindowFragment.appendChild(p);
+        channelWindow.appendChild(channelWindowFragment);
     };
+
+
+    client.UpdateUiMap = function (roomId, area, region, zindex) {
+
+
+
+        //    $("#roomTitleInfo").html(room);
+        console.log(area)
+        client.UpdateMap(roomId, area, region, zindex);
+
+    };
+
+
+    client.UpdateUiDescription = function(ex) {
+
+        $("#descriptionContainer").html(ex)
+    }
+
+
+    client.UpdateMap = function (roomId, area, region, zindex) {
+
+        if (typeof roomId == 'undefined') {
+            roomId = 0;
+        }
+
+        $("#roomTitleInfo").html("");
+
+        var mapData = maps(area, region, "0");
+
+        console.log(mapData)
+
+  
+        for (var i in mapData.nodes) {
+            if (mapData.nodes[i].id == "node" + roomId) {
+                mapData.nodes[i].color = "#2ECC71";
+
+                const s = new sigma({
+                    graph: mapData,
+                    container: 'roomTitleInfo',
+                    settings: {
+                        defaultNodeColor: '#ccc',
+                        labelThreshold : 5000
+                    },
+                    type: 'square'
+                });
+
+                s.cameras[0].goTo({
+                    x: parseInt(mapData.nodes[i].x),
+                    y: parseInt(mapData.nodes[i].y),
+                    angle: 0,
+                    ratio: 1
+                });
+                s.refresh();
+
+                break; //Stop this loop, we found it!
+            }
+        }
+    }
 
     client.updateInventory = function (inventory) {
    
@@ -509,6 +593,39 @@
         for (var i = 0; i < inventoryCount; i++) {
             $("#invList").append("<li>" + inventory[i].name + "</li>");
         }
+
+
+    };
+
+    client.updateEquipment= function (eq) {
+
+       
+        $("#eqList").empty();
+        
+         $("#eqList").append(eq);
+        
+
+
+    };
+
+    client.updateQuestLog = function (qlog) {
+
+
+        $("#qlList").empty();
+
+        $("#qlList").append(qlog);
+
+
+
+    };
+
+    client.updateAffects= function (affects) {
+
+
+        $("#afList").empty();
+
+        $("#afList").append(affects);
+
 
 
     };
@@ -600,7 +717,7 @@
 
     }
 
-    client.loginErrors = function (errors) {
+    client.ui = function (errors) {
 
 
 
@@ -645,6 +762,105 @@
 
         //// Start scripts
         MIM.init();
+
+        $(".channelFilter").click(function () {
+
+            var val = $(this).html();
+            $(".channelFilter").removeClass("activeUiLink");
+            $(this).addClass("activeUiLink");
+            if (val === "Newbie") {
+                $(".newbieChannelF").show();
+                $(".gossipChannelF").hide();
+                $(".oocChannelF").hide();
+                $(".roomChannelF").hide();
+            } else if (val === "Gossip") {
+                $(".newbieChannelF").hide();
+                $(".gossipChannelF").show();
+                $(".oocChannelF").hide();
+                $(".roomChannelF").hide();
+            } else if (val === "Room") {
+                $(".newbieChannelF").hide();
+                $(".gossipChannelF").hide();
+                $(".oocChannelF").hide();
+                $(".roomChannelF").show();
+            } else if (val === "OOC") {
+                $(".newbieChannelF").hide();
+                $(".gossipChannelF").hide();
+                $(".oocChannelF").show();
+                $(".roomChannelF").hide();
+            } else {
+                $(".newbieChannelF").show();
+                $(".gossipChannelF").show();
+                $(".oocChannelF").show();
+                $(".roomChannelF").show();
+            }
+
+
+        });
+
+        $(".infoFilter").click(function () {
+
+            console.log("click");
+            var val = $(this).html();
+            $(".infoFilter").removeClass("activeUiLink");
+            $(this).addClass("activeUiLink");
+            if (val === "Inv") {
+                
+                $("#invList").show();
+                $("#eqList").hide();
+                $("#afList").hide();
+                $("#qlList").hide();
+            } else if (val === "EQ") {
+                $("#invList").hide();
+               
+                $("#eqList").show();
+                $("#afList").hide();
+                $("#qlList").hide();
+            } else if (val === "Aff") {
+                $("#invList").hide();
+                $("#eqList").hide();
+                
+                $("#afList").show();
+                $("#qlList").hide();
+            }   else {
+                $("#invList").hide();
+                $("#eqList").hide();
+                $("#afList").hide();
+               
+                $("#qlList").show();
+            }
+
+
+        });
+
+        $(".infoPlayerFilter").click(function () {
+
+            console.log("click");
+            var val = $(this).html();
+            $(".infoPlayerFilter").removeClass("activeUiLink");
+            $(this).addClass("activeUiLink");
+            if (val === "Score") {
+                $(".js-score").show();
+                $(".js-description").hide();
+                
+            } else {
+                $(".js-score").hide();
+                $(".js-description").show();
+           
+            }
+
+
+        });
+
+        
+
+        $("#SaveDescription").click(function () {
+
+  
+            var desc = $("#descriptionText").val();
+
+            MIM.setDesc(desc);
+        });
 
 
         $(".js-generateName").click(function () {
@@ -765,7 +981,12 @@
         $('#discussion').perfectScrollbar();
         $('.js-score').perfectScrollbar();
         $('.js-room').perfectScrollbar();
+        $('.js-channels').perfectScrollbar();
+        $('.js-info').perfectScrollbar();
+        $('.js-description').perfectScrollbar();
+        
 
+      
         var resizeTimer;
 
         $(window).on('resize', function (e) {
@@ -775,11 +996,136 @@
 
                 $('#discussion').perfectScrollbar('update');
                 $('.js-score').perfectScrollbar('update');
-
+                $('.js-room').perfectScrollbar('update');
+                $('.js-channels').perfectScrollbar('update');
+                $('.js-info').perfectScrollbar('update');
+                $('.js-description').perfectScrollbar('update');
             }, 250);
 
         });
     });
+
+
+ 
+
+    function maps(area, region, zindex) {
+ 
+
+        var key = area + region + zindex;
+    
+      
+      var  map = {
+           "tutorialtutorial0" : {
+                "nodes": [
+                    {
+                        "id": "node1",
+                        "label": "Deep in the forest",
+                        "x": "0",
+                        "y": "-1",
+                        "size": 2,
+                        "defaultLabelSize": 12
+                    },
+                    {
+                        "id": "node0",
+                        "label": "Deep in the forest",
+                        "x": "0",
+                        "y": "0",
+                        "size": 2,
+                        "defaultLabelSize": 12
+                    },
+                    { "id": "node3", "label": "A goblin camp", "x": "1", "y": "-2", "size": 2, "defaultLabelSize": 12 },
+                    {
+                        "id": "node2",
+                        "label": "Deep in the forest",
+                        "x": "0",
+                        "y": "-2",
+                        "size": 2,
+                        "defaultLabelSize": 12
+                    },
+                    {
+                        "id": "node5",
+                        "label": "A tent in the goblin camp",
+                        "x": "1",
+                        "y": "-1",
+                        "size": 2,
+                        "defaultLabelSize": 12
+                    },
+                    {
+                        "id": "node4",
+                        "label": "A tent in the goblin camp",
+                        "x": "1",
+                        "y": "-3",
+                        "size": 2,
+                        "defaultLabelSize": 12
+                    },
+                    {
+                        "id": "node7",
+                        "label": "Deep in the forest",
+                        "x": "3",
+                        "y": "-2",
+                        "size": 2,
+                        "defaultLabelSize": 12
+                    },
+                    {
+                        "id": "node6",
+                        "label": "Deep in the forest",
+                        "x": "2",
+                        "y": "-2",
+                        "size": 2,
+                        "defaultLabelSize": 12
+                    },
+                    {
+                        "id": "node10",
+                        "label": "Deep in the forest",
+                        "x": "3",
+                        "y": "-4",
+                        "size": 2,
+                        "defaultLabelSize": 12
+                    },
+                    {
+                        "id": "node9",
+                        "label": "Deep in the forest",
+                        "x": "3",
+                        "y": "-3",
+                        "size": 2,
+                        "defaultLabelSize": 12
+                    },
+                    {
+                        "id": "node8",
+                        "label": "A natural spring",
+                        "x": "3",
+                        "y": "-1",
+                        "size": 2,
+                        "defaultLabelSize": 12
+                    }
+                ],
+                "edges": [
+                    { "id": "edge12", "source": "node1", "target": "node2", "color": "#ccc" },
+                    { "id": "edge01", "source": "node0", "target": "node1", "color": "#ccc" },
+                    { "id": "edge34", "source": "node3", "target": "node4", "color": "#ccc" },
+                    { "id": "edge36", "source": "node3", "target": "node6", "color": "#ccc" },
+                    { "id": "edge35", "source": "node3", "target": "node5", "color": "#ccc" },
+                    { "id": "edge32", "source": "node3", "target": "node2", "color": "#ccc" },
+                    { "id": "edge23", "source": "node2", "target": "node3", "color": "#ccc" },
+                    { "id": "edge21", "source": "node2", "target": "node1", "color": "#ccc" },
+                    { "id": "edge53", "source": "node5", "target": "node3", "color": "#ccc" },
+                    { "id": "edge43", "source": "node4", "target": "node3", "color": "#ccc" },
+                    { "id": "edge79", "source": "node7", "target": "node9", "color": "#ccc" },
+                    { "id": "edge78", "source": "node7", "target": "node8", "color": "#ccc" },
+                    { "id": "edge76", "source": "node7", "target": "node6", "color": "#ccc" },
+                    { "id": "edge67", "source": "node6", "target": "node7", "color": "#ccc" },
+                    { "id": "edge63", "source": "node6", "target": "node3", "color": "#ccc" },
+                    { "id": "edge910", "source": "node9", "target": "node10", "color": "#ccc" },
+                    { "id": "edge97", "source": "node9", "target": "node7", "color": "#ccc" },
+                    { "id": "edge87", "source": "node8", "target": "node7", "color": "#ccc" }
+                ]
+          },
+           "ankeranker0": { "nodes": [{ "id": "node1", "label": "Square walk, outside the Red Lion", "x": "0", "y": "-1", "size": 2, "defaultLabelSize": 12 }, { "id": "node8", "label": "Square walk, east of the centre", "x": "1", "y": "0", "size": 2, "defaultLabelSize": 12 }, { "id": "node6", "label": "Square walk, south of the centre", "x": "0", "y": "1", "size": 2, "defaultLabelSize": 12 }, { "id": "node4", "label": "Square walk, west of the centre", "x": "-1", "y": "0", "size": 2, "defaultLabelSize": 12 }, { "id": "node0", "label": "Village Square", "x": "0", "y": "0", "size": 2, "defaultLabelSize": 12 }, { "id": "node11", "label": "The Village Hall", "x": "3", "y": "0", "size": 2, "defaultLabelSize": 12 }, { "id": "node10", "label": "Village Hall Entrance", "x": "2", "y": "0", "size": 2, "defaultLabelSize": 12 }, { "id": "node14", "label": "Stables of The Red Lion", "x": "-1", "y": "-2", "size": 2, "defaultLabelSize": 12 }, { "id": "node2", "label": "The Red Lion", "x": "0", "y": "-2", "size": 2, "defaultLabelSize": 12 }, { "id": "node5", "label": "Square walk, south west of the centre", "x": "-1", "y": "1", "size": 2, "defaultLabelSize": 12 }, { "id": "node15", "label": "Temple Walk", "x": "2", "y": "1", "size": 2, "defaultLabelSize": 12 }, { "id": "node19", "label": "A path to the square", "x": "1", "y": "2", "size": 2, "defaultLabelSize": 12 }, { "id": "node7", "label": "Square walk, Entrance", "x": "1", "y": "1", "size": 2, "defaultLabelSize": 12 }, { "id": "node12", "label": "Odds and sods shoppe", "x": "1", "y": "-2", "size": 2, "defaultLabelSize": 12 }, { "id": "node13", "label": "Metal Medley", "x": "2", "y": "-1", "size": 2, "defaultLabelSize": 12 }, { "id": "node9", "label": "Square walk, commerce corner", "x": "1", "y": "-1", "size": 2, "defaultLabelSize": 12 }, { "id": "node3", "label": "Square walk, outside the stables of the Red Lion", "x": "-1", "y": "-1", "size": 2, "defaultLabelSize": 12 }, { "id": "node22", "label": "Anker Lane", "x": "2", "y": "3", "size": 2, "defaultLabelSize": 12 }, { "id": "node21", "label": "Anker Lane", "x": "0", "y": "3", "size": 2, "defaultLabelSize": 12 }, { "id": "node20", "label": "Middle of Anker Lane", "x": "1", "y": "3", "size": 2, "defaultLabelSize": 12 }, { "id": "node16", "label": "Temple Walk", "x": "4", "y": "1", "size": 2, "defaultLabelSize": 12 }, { "id": "node42", "label": "Temple Walk", "x": "3", "y": "1", "size": 2, "defaultLabelSize": 12 }, { "id": "node18", "label": "The Village Hall, Elder Chamber", "x": "3", "y": "-1", "size": 2, "defaultLabelSize": 12 }, { "id": "node32", "label": "A small cosy home", "x": "2", "y": "4", "size": 2, "defaultLabelSize": 12 }, { "id": "node31", "label": "A small cosy home", "x": "2", "y": "2", "size": 2, "defaultLabelSize": 12 }, { "id": "node29", "label": "A small cosy home", "x": "0", "y": "4", "size": 2, "defaultLabelSize": 12 }, { "id": "node28", "label": "A small cosy home", "x": "0", "y": "2", "size": 2, "defaultLabelSize": 12 }, { "id": "node33", "label": "A small cosy home", "x": "3", "y": "2", "size": 2, "defaultLabelSize": 12 }, { "id": "node24", "label": "Anker Lane", "x": "4", "y": "3", "size": 2, "defaultLabelSize": 12 }, { "id": "node34", "label": "A small cosy home", "x": "3", "y": "4", "size": 2, "defaultLabelSize": 12 }, { "id": "node23", "label": "Anker Lane", "x": "3", "y": "3", "size": 2, "defaultLabelSize": 12 }, { "id": "node26", "label": "A small cosy home", "x": "-1", "y": "2", "size": 2, "defaultLabelSize": 12 }, { "id": "node27", "label": "A small cosy home", "x": "-1", "y": "4", "size": 2, "defaultLabelSize": 12 }, { "id": "node37", "label": "Anker Lane", "x": "-2", "y": "3", "size": 2, "defaultLabelSize": 12 }, { "id": "node25", "label": "Anker Lane", "x": "-1", "y": "3", "size": 2, "defaultLabelSize": 12 }, { "id": "node17", "label": "Temple Entrance", "x": "4", "y": "0", "size": 2, "defaultLabelSize": 12 }, { "id": "node36", "label": "A small cosy home", "x": "4", "y": "4", "size": 2, "defaultLabelSize": 12 }, { "id": "node35", "label": "A small cosy home", "x": "4", "y": "2", "size": 2, "defaultLabelSize": 12 }, { "id": "node38", "label": "A small cosy home", "x": "-2", "y": "2", "size": 2, "defaultLabelSize": 12 }, { "id": "node39", "label": "A small cosy home", "x": "-2", "y": "4", "size": 2, "defaultLabelSize": 12 }], "edges": [{ "id": "edge12", "source": "node1", "target": "node2", "color": "#ccc" }, { "id": "edge19", "source": "node1", "target": "node9", "color": "#ccc" }, { "id": "edge10", "source": "node1", "target": "node0", "color": "#ccc" }, { "id": "edge13", "source": "node1", "target": "node3", "color": "#ccc" }, { "id": "edge89", "source": "node8", "target": "node9", "color": "#ccc" }, { "id": "edge810", "source": "node8", "target": "node10", "color": "#ccc" }, { "id": "edge80", "source": "node8", "target": "node0", "color": "#ccc" }, { "id": "edge87", "source": "node8", "target": "node7", "color": "#ccc" }, { "id": "edge60", "source": "node6", "target": "node0", "color": "#ccc" }, { "id": "edge67", "source": "node6", "target": "node7", "color": "#ccc" }, { "id": "edge65", "source": "node6", "target": "node5", "color": "#ccc" }, { "id": "edge43", "source": "node4", "target": "node3", "color": "#ccc" }, { "id": "edge40", "source": "node4", "target": "node0", "color": "#ccc" }, { "id": "edge45", "source": "node4", "target": "node5", "color": "#ccc" }, { "id": "edge01", "source": "node0", "target": "node1", "color": "#ccc" }, { "id": "edge08", "source": "node0", "target": "node8", "color": "#ccc" }, { "id": "edge06", "source": "node0", "target": "node6", "color": "#ccc" }, { "id": "edge04", "source": "node0", "target": "node4", "color": "#ccc" }, { "id": "edge1118", "source": "node11", "target": "node18", "color": "#ccc" }, { "id": "edge1110", "source": "node11", "target": "node10", "color": "#ccc" }, { "id": "edge1011", "source": "node10", "target": "node11", "color": "#ccc" }, { "id": "edge108", "source": "node10", "target": "node8", "color": "#ccc" }, { "id": "edge142", "source": "node14", "target": "node2", "color": "#ccc" }, { "id": "edge143", "source": "node14", "target": "node3", "color": "#ccc" }, { "id": "edge214", "source": "node2", "target": "node14", "color": "#ccc" }, { "id": "edge21", "source": "node2", "target": "node1", "color": "#ccc" }, { "id": "edge54", "source": "node5", "target": "node4", "color": "#ccc" }, { "id": "edge56", "source": "node5", "target": "node6", "color": "#ccc" }, { "id": "edge1516", "source": "node15", "target": "node16", "color": "#ccc" }, { "id": "edge157", "source": "node15", "target": "node7", "color": "#ccc" }, { "id": "edge197", "source": "node19", "target": "node7", "color": "#ccc" }, { "id": "edge1920", "source": "node19", "target": "node20", "color": "#ccc" }, { "id": "edge78", "source": "node7", "target": "node8", "color": "#ccc" }, { "id": "edge715", "source": "node7", "target": "node15", "color": "#ccc" }, { "id": "edge719", "source": "node7", "target": "node19", "color": "#ccc" }, { "id": "edge76", "source": "node7", "target": "node6", "color": "#ccc" }, { "id": "edge129", "source": "node12", "target": "node9", "color": "#ccc" }, { "id": "edge139", "source": "node13", "target": "node9", "color": "#ccc" }, { "id": "edge912", "source": "node9", "target": "node12", "color": "#ccc" }, { "id": "edge913", "source": "node9", "target": "node13", "color": "#ccc" }, { "id": "edge98", "source": "node9", "target": "node8", "color": "#ccc" }, { "id": "edge91", "source": "node9", "target": "node1", "color": "#ccc" }, { "id": "edge314", "source": "node3", "target": "node14", "color": "#ccc" }, { "id": "edge31", "source": "node3", "target": "node1", "color": "#ccc" }, { "id": "edge34", "source": "node3", "target": "node4", "color": "#ccc" }, { "id": "edge2231", "source": "node22", "target": "node31", "color": "#ccc" }, { "id": "edge2223", "source": "node22", "target": "node23", "color": "#ccc" }, { "id": "edge2232", "source": "node22", "target": "node32", "color": "#ccc" }, { "id": "edge2220", "source": "node22", "target": "node20", "color": "#ccc" }, { "id": "edge2128", "source": "node21", "target": "node28", "color": "#ccc" }, { "id": "edge2120", "source": "node21", "target": "node20", "color": "#ccc" }, { "id": "edge2129", "source": "node21", "target": "node29", "color": "#ccc" }, { "id": "edge2125", "source": "node21", "target": "node25", "color": "#ccc" }, { "id": "edge2019", "source": "node20", "target": "node19", "color": "#ccc" }, { "id": "edge2022", "source": "node20", "target": "node22", "color": "#ccc" }, { "id": "edge2021", "source": "node20", "target": "node21", "color": "#ccc" }, { "id": "edge1642", "source": "node16", "target": "node42", "color": "#ccc" }, { "id": "edge1617", "source": "node16", "target": "node17", "color": "#ccc" }, { "id": "edge4216", "source": "node42", "target": "node16", "color": "#ccc" }, { "id": "edge4215", "source": "node42", "target": "node15", "color": "#ccc" }, { "id": "edge1811", "source": "node18", "target": "node11", "color": "#ccc" }, { "id": "edge3222", "source": "node32", "target": "node22", "color": "#ccc" }, { "id": "edge3122", "source": "node31", "target": "node22", "color": "#ccc" }, { "id": "edge2921", "source": "node29", "target": "node21", "color": "#ccc" }, { "id": "edge2821", "source": "node28", "target": "node21", "color": "#ccc" }, { "id": "edge3323", "source": "node33", "target": "node23", "color": "#ccc" }, { "id": "edge2435", "source": "node24", "target": "node35", "color": "#ccc" }, { "id": "edge2436", "source": "node24", "target": "node36", "color": "#ccc" }, { "id": "edge2423", "source": "node24", "target": "node23", "color": "#ccc" }, { "id": "edge3423", "source": "node34", "target": "node23", "color": "#ccc" }, { "id": "edge2333", "source": "node23", "target": "node33", "color": "#ccc" }, { "id": "edge2324", "source": "node23", "target": "node24", "color": "#ccc" }, { "id": "edge2334", "source": "node23", "target": "node34", "color": "#ccc" }, { "id": "edge2322", "source": "node23", "target": "node22", "color": "#ccc" }, { "id": "edge2625", "source": "node26", "target": "node25", "color": "#ccc" }, { "id": "edge2725", "source": "node27", "target": "node25", "color": "#ccc" }, { "id": "edge3738", "source": "node37", "target": "node38", "color": "#ccc" }, { "id": "edge3725", "source": "node37", "target": "node25", "color": "#ccc" }, { "id": "edge3739", "source": "node37", "target": "node39", "color": "#ccc" }, { "id": "edge2526", "source": "node25", "target": "node26", "color": "#ccc" }, { "id": "edge2521", "source": "node25", "target": "node21", "color": "#ccc" }, { "id": "edge2527", "source": "node25", "target": "node27", "color": "#ccc" }, { "id": "edge2537", "source": "node25", "target": "node37", "color": "#ccc" }, { "id": "edge1716", "source": "node17", "target": "node16", "color": "#ccc" }, { "id": "edge3624", "source": "node36", "target": "node24", "color": "#ccc" }, { "id": "edge3524", "source": "node35", "target": "node24", "color": "#ccc" }, { "id": "edge3837", "source": "node38", "target": "node37", "color": "#ccc" }, { "id": "edge3937", "source": "node39", "target": "node37", "color": "#ccc" }] }
+      };
+
+      return map[key] || null;
+
+    }
 
 });
 
