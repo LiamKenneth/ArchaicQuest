@@ -419,6 +419,7 @@ namespace MIMWebClient.Hubs
                 Score.UpdateUiAffects(player);
                 Score.UpdateUiEquipment(player);
                 Score.UpdateUiQlog(player);
+                Score.UpdateDescription(player, player.Description);
 
 
             }
