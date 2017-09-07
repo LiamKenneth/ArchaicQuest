@@ -5887,16 +5887,11 @@ pre {
   background: #272624;
   border: 4px solid #525045;
   box-shadow: inset 0px 0px 15px 2px #000000,0px 0px 15px 8px #000;
-  max-height: 90vh;
-  overflow-y: scroll;
-  /* Medium devices (desktops, 992px and up) */ }
-  @media (min-width: 992px) {
-    .modal-content {
-      overflow-y: initial; } }
+  max-height: 90vh; }
 
 .modal-body {
-  overflow: scroll;
-  max-height: 80vh;
+  overflow-y: scroll;
+  max-height: 73vh;
   /* Medium devices (desktops, 992px and up) */ }
   @media (min-width: 992px) {
     .modal-body {
@@ -6237,4 +6232,8 @@ li.Stairs:before {
 
 .activeUiLink {
   color: #f6d437 !important; }
+
+.infoFilter, .infoPlayerFilter, .channelFilter {
+  position: relative;
+  z-index: 999; }
 

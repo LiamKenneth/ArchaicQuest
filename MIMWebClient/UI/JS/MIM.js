@@ -3,7 +3,7 @@
     //================================================================================
     // Setup the auto-generated proxy for the hub.
     //================================================================================
-    $.connection.hub.url = "/staging/signalr";
+    $.connection.hub.url = "/signalr";
 
     var chat = $.connection.mIMHub;
     var client = chat.client;
@@ -293,10 +293,11 @@
                     if (rightPanel === false) {
 
                         //map
-                        client.UpdateMap(groomId, garea, gregion, gzindex);
+                       
                         $("#right-panel").attr("style", "display: table!important;");
                         $("#main-panel").hide();
                         rightPanel = true;
+                        client.UpdateMap(groomId, garea, gregion, gzindex);
                     }
                     else {
                         $("#right-panel").attr("style", "display: none!important;");
