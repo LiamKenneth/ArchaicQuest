@@ -3,7 +3,7 @@
     //================================================================================
     // Setup the auto-generated proxy for the hub.
     //================================================================================
-    $.connection.hub.url = "/signalr";
+    $.connection.hub.url = "/staging/signalr";
 
     var chat = $.connection.mIMHub;
     var client = chat.client;
@@ -27,9 +27,10 @@
     var email;
     var password;
 
-    var roomId;
-    var region;
-    var area;
+    var groomId;
+    var gregion;
+    var garea;
+    var gzindex;
 
     var mainWindow = document.getElementById("discussion");
     var mainWindowFragment = document.createDocumentFragment();
@@ -281,6 +282,8 @@
                 var rightPanel = false;
                 $("#open-right-panel").click(function () {
 
+
+
                     if (leftPanel == true) {
                         $("#left-panel").attr("style", "display: none!important;");
                         $("#main-panel").show();
@@ -288,6 +291,9 @@
                     }
 
                     if (rightPanel === false) {
+
+                        //map
+                        client.UpdateMap(groomId, garea, gregion, gzindex);
                         $("#right-panel").attr("style", "display: table!important;");
                         $("#main-panel").hide();
                         rightPanel = true;
@@ -527,9 +533,12 @@
     client.UpdateUiMap = function (roomId, area, region, zindex) {
 
 
+        groomId = roomId;
+        garea = area;
+        gregion = region;
+        gzindex = zindex;
 
-        //    $("#roomTitleInfo").html(room);
-        console.log(area)
+ 
         client.UpdateMap(roomId, area, region, zindex);
 
     };
@@ -869,7 +878,7 @@
  
             $.ajax({
                     type: "get",
-                    url: "/dev/Home/Generatename"
+                    url: "/staging/Home/Generatename"
                 })
                 .done(function(data) {
 

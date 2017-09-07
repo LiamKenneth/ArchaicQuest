@@ -29,7 +29,7 @@ namespace MIMWebClient.Core.Events
 
         public Room LoadRoomFile()
         {
-            using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+            using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
             {
 
 

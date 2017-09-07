@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -25,7 +26,7 @@ namespace MIMWebClient.Core.Events
 
             try
             {
-                using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+                using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
                 {
                     var col = db.GetCollection<Player>("Player");
 
@@ -52,7 +53,7 @@ namespace MIMWebClient.Core.Events
 
             try
             {
-                using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+                using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
                 {
 
                     var col = db.GetCollection<Error.Error>("Error");
@@ -76,7 +77,7 @@ namespace MIMWebClient.Core.Events
 
         public static Player GetPlayer(string name)
         {
-            using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+            using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
             {
 
                 var col = db.GetCollection<Player>("Player");

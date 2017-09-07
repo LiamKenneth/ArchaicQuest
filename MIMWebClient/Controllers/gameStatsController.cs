@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -62,7 +63,7 @@ namespace MIMWebClient.Controllers
         [HttpGet]
         public IEnumerable<QuitLocation> ReturnQuitLocation()
         {
-            using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+            using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
             {
                 
                 var col = db.GetCollection<QuitLocation>("QuitLocation");
@@ -76,7 +77,7 @@ namespace MIMWebClient.Controllers
         [HttpGet]
         public IEnumerable<InfoCount> GetClassBreakdown()
         {
-            using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+            using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
             {
 
                 var col = db.GetCollection<Player>("Player");
@@ -151,7 +152,7 @@ namespace MIMWebClient.Controllers
         [HttpGet]
         public IEnumerable<Deaths> ReturnDeaths(string type)
         {
-            using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+            using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
             {
             
                 if (type == "mob")
@@ -178,7 +179,7 @@ namespace MIMWebClient.Controllers
         public IEnumerable<Stats> NewPlayers()
         {
     
-            using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+            using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
             {
                 var thisWeek = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
                 var col = db.GetCollection<Player>("Player");
@@ -216,7 +217,7 @@ namespace MIMWebClient.Controllers
         public IEnumerable<SignUps> SignUpCount(int monthCount)
         {
  
-            using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+            using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
             {
                
                 var col = db.GetCollection<Player>("Player");
