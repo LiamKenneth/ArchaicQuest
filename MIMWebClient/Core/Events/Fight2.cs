@@ -796,13 +796,11 @@ namespace MIMWebClient.Core.Events
                 }
 
                 defender.Target = null;
-
-                if (attacker.Target.Name == defender.Name)
-                {
+ 
                     attacker.Target = null;
                     attacker.Status = PlayerSetup.Player.PlayerStatus.Standing;
                     attacker.ActiveFighting = false;
-                }
+            
  
                 defender.Status = defender.Type == Player.PlayerTypes.Player ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;
 
