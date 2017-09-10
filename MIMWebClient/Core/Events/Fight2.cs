@@ -105,10 +105,13 @@ namespace MIMWebClient.Core.Events
  
             AddFightersIdtoRoom(attacker, defender, room, false);
 
-            if (attacker.Target == null)
+            if (IsAlive(defender, attacker))
             {
-                attacker.Target = defender;
-                attacker.Status = Player.PlayerStatus.Fighting;
+                if (attacker.Target == null)
+                {
+                    attacker.Target = defender;
+                    attacker.Status = Player.PlayerStatus.Fighting;
+                }
             }
 
             StartFight(defender, attacker, room);
@@ -149,6 +152,7 @@ namespace MIMWebClient.Core.Events
 
                 if (!defender.ActiveFighting)
                 {
+                    defender.ActiveFighting = true;
                     Task.Run(() => HitTarget(defender, attacker, room, 1500));
 
                 }
@@ -177,6 +181,7 @@ namespace MIMWebClient.Core.Events
 
                 if (!attacker.ActiveFighting)
                 {
+                    attacker.ActiveFighting = true;
                     Task.Run(() => HitTarget(attacker, defender, room, 1500));
                 }
            
@@ -199,9 +204,9 @@ namespace MIMWebClient.Core.Events
             if (nth == -1)
             {
                   defendingPlayer =
-                    room.players.FirstOrDefault(
+                    room.players.Where(x => x.HitPoints > 0).ToList().FirstOrDefault(
                         x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
-                    ?? room.mobs.FirstOrDefault(x => x.Name.ToLower().Contains(defender.ToLower()));
+                    ?? room.mobs.Where(x => x.HitPoints > 0).ToList().First(x => x.Name.ToLower().Contains(defender.ToLower()));
             }
             else
             {
@@ -254,7 +259,7 @@ namespace MIMWebClient.Core.Events
             try
             {
 
-                attacker.ActiveFighting = true;
+             
 
                 while (attacker.HitPoints > 0 && defender.HitPoints > 0)
                 {
@@ -284,7 +289,7 @@ namespace MIMWebClient.Core.Events
                             double offense = Offense(attacker);
                             double evasion = Evasion(defender);
 
-                            double toHit = (offense/evasion)*100;
+                            double toHit = (offense / evasion) * 100;
                             int chance = D100();
 
                             Player checkAttackerAgainAfterDelay = FindValidTarget(room, defender.Name, attacker);
@@ -293,6 +298,15 @@ namespace MIMWebClient.Core.Events
                             if (checkAttackerAgainAfterDelay == null || checkDefenderAgainAfterDelay == null)
                             {
                                 //Fixes bug where fleeing you would still get hit and hit back while in another room.
+                                if (attacker.Target.HitPoints <= 0)
+                                {
+
+                                    attacker.Status = Player.PlayerStatus.Standing;
+                                    attacker.ActiveFighting = false;
+                                    attacker.Target = null;
+
+                                }
+                              
                                 return;
                             }
 
@@ -308,12 +322,30 @@ namespace MIMWebClient.Core.Events
                                 Score.UpdateUiPrompt(defender);
                             }
                         }
+                        else
+                        {
+                            if (attacker.Target.HitPoints <= 0)
+                            {
+                                attacker.Status = Player.PlayerStatus.Standing;
+                                attacker.ActiveFighting = false;
+                                attacker.Target = null;
+                            }
+                        }
 
 
 
                     }
+                    else
+                    {
+                        if (attacker.Target.HitPoints <= 0)
+                        {
+                            attacker.Status = Player.PlayerStatus.Standing;
+                            attacker.ActiveFighting = false;
+                            attacker.Target = null;
+                        }
+                    }
                 }
-
+ 
 
             }
             catch (Exception ex)
@@ -340,8 +372,11 @@ namespace MIMWebClient.Core.Events
         /// <returns></returns>
         public static Player FindTarget(Room room, string defender)
         {
-            Player target = room.players.FirstOrDefault(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
-                            ?? room.mobs.FirstOrDefault(x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase));
+          
+            Player target = 
+                room.players.Where(x => x.HitPoints > 0).ToList().FirstOrDefault(
+                    x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
+                ?? room.mobs.Where(x => x.HitPoints > 0).ToList().First(x => x.Name.ToLower().Contains(defender.ToLower()));
 
             return target;
         }
@@ -718,7 +753,11 @@ namespace MIMWebClient.Core.Events
         {
             if (defender.HitPoints <= 0)
             {
-                CheckEvent.FindEvent(CheckEvent.EventType.Death, attacker, "death");
+
+                if (!string.IsNullOrEmpty(defender.EventDeath))
+                {
+                    CheckEvent.FindEvent(CheckEvent.EventType.Death, attacker, "death");
+                }
 
                 foreach (var player in room.players)
                 {
@@ -795,7 +834,7 @@ namespace MIMWebClient.Core.Events
                     //Add slain player to recall
                 }
 
-                defender.Target = null;
+ 
  
                     attacker.Target = null;
                     attacker.Status = PlayerSetup.Player.PlayerStatus.Standing;

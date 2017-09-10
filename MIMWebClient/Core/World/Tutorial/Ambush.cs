@@ -332,7 +332,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 EventOnEnter = "Give Leather Quest",
                 updateMessage = "A loud screech echos through the forest."
 
-            };
+            };  
 
 
             var west = new Exit
@@ -401,13 +401,38 @@ namespace MIMWebClient.Core.World.Tutorial
             };
 
             var goblin = Goblin.WeakGoblin();
+            var goblin2 = Goblin.WeakGoblin();
+            var goblin3 = Goblin.WeakGoblin();
+
             goblin.Recall = new Recall()
             {
                 Region = "Tutorial",
                 Area = "Tutorial",
                 AreaId = 3
             };
-            room.mobs.Add(goblin);
+
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.WeakGoblin());
+
+
             room.Emotes.Add("The fire crackles and spits.");
             room.Emotes.Add("You hear a howl in the distance.");
             room.exits.Add(north);
