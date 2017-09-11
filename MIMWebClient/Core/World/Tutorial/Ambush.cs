@@ -718,8 +718,8 @@ namespace MIMWebClient.Core.World.Tutorial
             var desk = new RoomObject
             {
                 name = "Desk",
-                look = "Pieces of paper, gold coins and bread crumbs lay scattered across the desk. A leather hat lays next to a small candle which illuminates the tent with an orange glow.",
-                examine = "Pieces of paper, gold coins and bread crumbs lay scattered across the desk. A leather hat lays next to a small candle which illuminates the tent with an orange glow.",
+                look = "Pieces of paper, gold coins and bread crumbs lay scattered across the desk. A leather helmet lays next to a small candle which illuminates the tent with an orange glow.",
+                examine = "Pieces of paper, gold coins and bread crumbs lay scattered across the desk. A leather helmet lays next to a small candle which illuminates the tent with an orange glow.",
             };
 
 

@@ -34,6 +34,14 @@ namespace MIMWebClient.Core.Events
         /// <returns></returns>
         public static void PerpareToFight(Player attacker, Room room, string defenderName, bool busy = false)
         {
+
+
+            //fixes issue where fight task fails to run as the attacker fighting is still set to true
+            //unsure how this happens
+            if (attacker.ActiveFighting == true && attacker.Target == null)
+            {
+                attacker.ActiveFighting = false;
+            }
             
 
             if (attacker == null)
@@ -43,7 +51,7 @@ namespace MIMWebClient.Core.Events
 
             if (attacker.Target != null)
             {
-                HubContext.SendToClient("You can only fight one target.", attacker.HubGuid);
+                HubContext.SendToClient("You are already fighting!!.", attacker.HubGuid);
                 return;
             }
 
@@ -201,6 +209,23 @@ namespace MIMWebClient.Core.Events
             string itemToFind = findObject.Value;
 
             Player defendingPlayer = null;
+
+            if (room.mobs.Count <= 0)
+            {
+                HubContext.SendToClient("You don't see anything to kill that matches that name", attacker.HubGuid);
+                attacker.ActiveFighting = false;
+                attacker.Target = null;
+                attacker.Status = Player.PlayerStatus.Standing;
+            }
+
+            if (room.players.Count <= 0)
+            {
+                HubContext.SendToClient("You don't see anything to kill that matches that name", attacker.HubGuid);
+                attacker.ActiveFighting = false;
+                attacker.Target = null;
+                attacker.Status = Player.PlayerStatus.Standing;
+            }
+
             if (nth == -1)
             {
                   defendingPlayer =
@@ -344,6 +369,7 @@ namespace MIMWebClient.Core.Events
                             attacker.Target = null;
                         }
                     }
+                     
                 }
  
 
@@ -461,14 +487,26 @@ namespace MIMWebClient.Core.Events
         public static int HandToHandDamage(Player attacker)
         {
             var die = new PlayerStats();
-            var handToHand = die.dice(1, 6);
+            var handToHandDam = die.dice(1, 6);
 
             double handToHandSkill = attacker.Skills.Find(x => x.Name.Equals("HandToHand"))?.Proficiency ?? 0;
 
-            var handToHandSkillModifier = (handToHandSkill / handToHand) * 100;
-            var damage = (int)((handToHandSkillModifier + handToHand) * 1);
+            var damage = CalculateSkillBonus(handToHandSkill, handToHandDam);
 
             return damage;
+        }
+
+        /// <summary>
+        /// Get the damage based on the skill proficiency
+        /// </summary>
+        /// <param name="skillProficiency">decimal of the skill Proficiency 0.1 - 1</param>
+        /// <param name="damage">the dice roll for the skill or damage</param>
+        /// <returns>int of damage</returns>
+        public static int CalculateSkillBonus(double skillProficiency, int damage)
+        {
+            var skillModifier = (skillProficiency / damage) * 100;
+
+            return  (int)((skillModifier + damage) * 1);
         }
 
         /// <summary>
@@ -834,12 +872,7 @@ namespace MIMWebClient.Core.Events
                     //Add slain player to recall
                 }
 
- 
- 
-                    attacker.Target = null;
-                    attacker.Status = PlayerSetup.Player.PlayerStatus.Standing;
-                    attacker.ActiveFighting = false;
-            
+
  
                 defender.Status = defender.Type == Player.PlayerTypes.Player ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;
 
@@ -906,6 +939,13 @@ namespace MIMWebClient.Core.Events
                     }
                    
                 }
+
+
+
+                attacker.Target = null;
+                attacker.Status = PlayerSetup.Player.PlayerStatus.Standing;
+                attacker.ActiveFighting = false;
+
             }
 
         }
