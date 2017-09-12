@@ -309,6 +309,11 @@
     <Compile Include="Core\Player\Races\PlayerRace.cs" />
     <Compile Include="Core\Player\Recall.cs" />
     <Compile Include="Core\Player\Skill.cs" />
+    <Compile Include="Core\Player\Skills\SecondAttack.cs" />
+    <Compile Include="Core\Player\Skills\Mount.cs" />
+    <Compile Include="Core\Player\Skills\Parry.cs" />
+    <Compile Include="Core\Player\Skills\BluntWeapons.cs" />
+    <Compile Include="Core\Player\Skills\LongBlades.cs" />
     <Compile Include="Core\Player\Skills\Template-skill.cs" />
     <Compile Include="Core\Player\Skills\Punch.cs" />
     <Compile Include="Core\Player\Skills\ShortBlades.cs" />

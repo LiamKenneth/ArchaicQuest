@@ -85,11 +85,8 @@ namespace MIMWebClient.Core.Player.Classes
 
             #region  Give fighter longblade skill
 
-            var longblade = Punch.PunchAb();
-            longblade.Name = "Long Blade";
-            longblade.LevelObtained = 3;
-            longblade.Proficiency = 1;
-            longblade.MaxProficiency = 95;
+            var longblade = LongBlades.LongBladesAb();
+          
             fighter.Skills.Add(longblade);
 
             #endregion

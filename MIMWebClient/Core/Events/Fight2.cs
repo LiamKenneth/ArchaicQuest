@@ -42,7 +42,7 @@ namespace MIMWebClient.Core.Events
             {
                 attacker.ActiveFighting = false;
             }
-            
+
 
             if (attacker == null)
             {
@@ -79,7 +79,7 @@ namespace MIMWebClient.Core.Events
             defender.Status = Player.PlayerStatus.Fighting;
 
             attacker.Status = !busy ? Player.PlayerStatus.Fighting : Player.PlayerStatus.Busy;
-          
+
 
             AddFightersIdtoRoom(attacker, defender, room);
 
@@ -110,7 +110,7 @@ namespace MIMWebClient.Core.Events
             }
 
             defender.Status = Player.PlayerStatus.Fighting;
- 
+
             AddFightersIdtoRoom(attacker, defender, room, false);
 
             if (IsAlive(defender, attacker))
@@ -144,7 +144,7 @@ namespace MIMWebClient.Core.Events
                 room.fighting.Add(defender.HubGuid);
             }
 
-            
+
 
         }
 
@@ -152,7 +152,7 @@ namespace MIMWebClient.Core.Events
         public static void StartFight(Player attacker, Player defender, Room room)
         {
 
-        
+
 
             if (defender.Target == null || defender.Target == attacker)
             {
@@ -192,12 +192,12 @@ namespace MIMWebClient.Core.Events
                     attacker.ActiveFighting = true;
                     Task.Run(() => HitTarget(attacker, defender, room, 1500));
                 }
-           
+
             }
             //3000, 3 second timer needs to be a method taking in players dexterity, condition and spells to determine speed.
 
-       
-              
+
+
         }
 
         public static Player FindValidTarget(Room room, string defender, Player attacker)
@@ -228,17 +228,17 @@ namespace MIMWebClient.Core.Events
 
             if (nth == -1)
             {
-                  defendingPlayer =
-                    room.players.Where(x => x.HitPoints > 0).ToList().FirstOrDefault(
-                        x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
-                    ?? room.mobs.Where(x => x.HitPoints > 0).ToList().First(x => x.Name.ToLower().Contains(defender.ToLower()));
+                defendingPlayer =
+                  room.players.Where(x => x.HitPoints > 0).ToList().FirstOrDefault(
+                      x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
+                  ?? room.mobs.Where(x => x.HitPoints > 0).ToList().First(x => x.Name.ToLower().Contains(defender.ToLower()));
             }
             else
             {
-                  defendingPlayer =
-                   room.players.Skip(nth - 1).FirstOrDefault(x => x.Name.StartsWith(itemToFind, StringComparison.CurrentCultureIgnoreCase)) ?? room.mobs.Skip(nth - 1).FirstOrDefault(x => x.Name.ToLower().Contains(itemToFind.ToLower()));
+                defendingPlayer =
+                 room.players.Skip(nth - 1).FirstOrDefault(x => x.Name.StartsWith(itemToFind, StringComparison.CurrentCultureIgnoreCase)) ?? room.mobs.Skip(nth - 1).FirstOrDefault(x => x.Name.ToLower().Contains(itemToFind.ToLower()));
             }
-         
+
 
             if (defendingPlayer == null)
             {
@@ -284,7 +284,7 @@ namespace MIMWebClient.Core.Events
             try
             {
 
-             
+
 
                 while (attacker.HitPoints > 0 && defender.HitPoints > 0)
                 {
@@ -331,12 +331,17 @@ namespace MIMWebClient.Core.Events
                                     attacker.Target = null;
 
                                 }
-                              
+
                                 return;
                             }
 
+
+
+
                             ShowAttack(attacker, defender, room, toHit, chance, null);
 
+
+                            attacker.MovePoints = attacker.MovePoints - Helpers.Rand(1, 5);
 
                             if (attacker.Type == Player.PlayerTypes.Player)
                             {
@@ -369,9 +374,9 @@ namespace MIMWebClient.Core.Events
                             attacker.Target = null;
                         }
                     }
-                     
+
                 }
- 
+
 
             }
             catch (Exception ex)
@@ -389,7 +394,7 @@ namespace MIMWebClient.Core.Events
 
         }
 
-       
+
         /// <summary>
         /// Finds the defending player or NPC
         /// </summary>
@@ -398,8 +403,8 @@ namespace MIMWebClient.Core.Events
         /// <returns></returns>
         public static Player FindTarget(Room room, string defender)
         {
-          
-            Player target = 
+
+            Player target =
                 room.players.Where(x => x.HitPoints > 0).ToList().FirstOrDefault(
                     x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
                 ?? room.mobs.Where(x => x.HitPoints > 0).ToList().First(x => x.Name.ToLower().Contains(defender.ToLower()));
@@ -506,7 +511,7 @@ namespace MIMWebClient.Core.Events
         {
             var skillModifier = (skillProficiency / damage) * 100;
 
-            return  (int)((skillModifier + damage) * 1);
+            return (int)((skillModifier + damage) * 1);
         }
 
         /// <summary>
@@ -517,7 +522,7 @@ namespace MIMWebClient.Core.Events
         public static int Damage(Player attacker, Player defender, int criticalHit)
         {
             // (Weapon Damage * Strength Modifier * Condition Modifier * Critical Hit Modifier) / Armor Reduction.
-           
+
             int damage;
 
             var weapon = GetAttackerWepon(attacker);
@@ -575,8 +580,8 @@ namespace MIMWebClient.Core.Events
 
             }
 
-          //  var checkPlural = new EnglishPluralizationService();
-            
+            //  var checkPlural = new EnglishPluralizationService();
+
 
             //Skill / spell name here
             return new KeyValuePair<string, string>(skillUsed.Name, skillUsed.Name);
@@ -608,74 +613,97 @@ namespace MIMWebClient.Core.Events
         /// <param name="damage">This is used for skills and spells only</param>
         public static void ShowAttack(Player attacker, Player defender, Room room, double toHit, int chance, Skill skillUsed, int damage = 0)
         {
-            bool alive = IsAlive(attacker, defender);
-            int IsCritical = CriticalHit(toHit, chance);
-
-            if (alive)
+            for (int i = 0; i < 1; i++)
             {
 
-                if (toHit > chance)
+
+                bool alive = IsAlive(attacker, defender);
+                int IsCritical = CriticalHit(toHit, chance);
+
+                if (alive)
                 {
-                    var dam = damage > 0 ? damage : Damage(attacker, defender, IsCritical);
-                   
-                    var damageText = DamageText(dam);
 
-                    if (IsAlive(attacker, defender))
+                    if (toHit > chance)
                     {
+                        var dam =  damage > 0 ? damage : Damage(attacker, defender, IsCritical);
 
-                        HubContext.SendToClient("Your " + WeaponAttackName(attacker, skillUsed).Key + " " + damageText.Value.ToLower() + " " + Helpers.ReturnName(defender, attacker, null) + " [" + dam + "]", attacker.HubGuid);
+                        var damageText = DamageText(dam);
 
-                        HubContext.SendToClient(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value.ToLower() + " you [" + dam + "]", defender.HubGuid);
-
-                        
-
-                        foreach (var player in room.players)
+                        if (IsAlive(attacker, defender))
                         {
-                            if (player != attacker && player != defender)
+
+                            HubContext.SendToClient(
+                                "Your " + WeaponAttackName(attacker, skillUsed).Key + " " + damageText.Value.ToLower() +
+                                " " + Helpers.ReturnName(defender, attacker, null) + " [" + dam + "]", attacker.HubGuid);
+
+                            HubContext.SendToClient(
+                                Helpers.ReturnName(attacker, defender, null) + "'s " +
+                                WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value.ToLower() +
+                                " you [" + dam + "]", defender.HubGuid);
+
+
+
+                            foreach (var player in room.players)
                             {
-                                HubContext.SendToClient(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value.ToLower() + " " + Helpers.ReturnName(defender, attacker, null), player.HubGuid);
+                                if (player != attacker && player != defender)
+                                {
+                                    HubContext.SendToClient(
+                                        Helpers.ReturnName(attacker, defender, null) + "'s " +
+                                        WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value.ToLower() +
+                                        " " + Helpers.ReturnName(defender, attacker, null), player.HubGuid);
+                                }
+                            }
+
+
+                            defender.HitPoints -= dam;
+
+                            if (defender.HitPoints < 0)
+                            {
+                                defender.HitPoints = 0;
+                            }
+
+
+                            if (!IsAlive(attacker, defender))
+                            {
+                                IsDead(attacker, defender, room);
                             }
                         }
 
-
-                        defender.HitPoints -= dam;
-
-                        if (defender.HitPoints < 0)
-                        {
-                            defender.HitPoints = 0;
-                        }
-
-
-                        if (!IsAlive(attacker, defender))
-                        {
-                            IsDead(attacker, defender, room);
-                        }
                     }
-
-                }
-                else
-                {
-                    if (IsAlive(attacker, defender))
+                    else
                     {
-
-                        HubContext.SendToClient("Your " + WeaponAttackName(attacker, skillUsed).Key + " <span style='color:olive'>misses</span> " + Helpers.ReturnName(defender, attacker, null), attacker.HubGuid);
-
-                        HubContext.SendToClient(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key + " <span style='color:olive'>misses</span> you ", defender.HubGuid);
-
-                        foreach (var player in room.players)
+                        if (IsAlive(attacker, defender))
                         {
-                            if (player != attacker && player != defender)
+
+                            HubContext.SendToClient(
+                                "Your " + WeaponAttackName(attacker, skillUsed).Key +
+                                " <span style='color:olive'>misses</span> " +
+                                Helpers.ReturnName(defender, attacker, null), attacker.HubGuid);
+
+                            HubContext.SendToClient(
+                                Helpers.ReturnName(attacker, defender, null) + "'s " +
+                                WeaponAttackName(attacker, skillUsed).Key +
+                                " <span style='color:olive'>misses</span> you ", defender.HubGuid);
+
+                            foreach (var player in room.players)
                             {
-                                HubContext.SendToClient(Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key + " <span style='color:olive'>misses</span> " + Helpers.ReturnName(defender, attacker, null), player.HubGuid);
+                                if (player != attacker && player != defender)
+                                {
+                                    HubContext.SendToClient(
+                                        Helpers.ReturnName(attacker, defender, null) + "'s " +
+                                        WeaponAttackName(attacker, skillUsed).Key +
+                                        " <span style='color:olive'>misses</span> " +
+                                        Helpers.ReturnName(defender, attacker, null), player.HubGuid);
+                                }
                             }
+
+
+
+
+
+
+
                         }
-
-                      
-
-                    
-
-                     
-
                     }
                 }
             }
@@ -830,9 +858,9 @@ namespace MIMWebClient.Core.Events
                         col.Insert(Guid.NewGuid(), mobDeath);
                     }
                 }
-                
 
-             
+
+
 
 
                 defender.Target = null;
@@ -856,11 +884,11 @@ namespace MIMWebClient.Core.Events
 
                 }
 
-                
+
 
                 var oldRoom = room;
                 room.items.Add(defenderCorpse);
-               room.corpses.Add(defender);
+                room.corpses.Add(defender);
 
                 if (defender.Type == Player.PlayerTypes.Mob || string.IsNullOrEmpty(defender.HubGuid))
                 {
@@ -873,7 +901,7 @@ namespace MIMWebClient.Core.Events
                 }
 
 
- 
+
                 defender.Status = defender.Type == Player.PlayerTypes.Player ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;
 
                 Cache.updateRoom(room, oldRoom);
@@ -919,10 +947,10 @@ namespace MIMWebClient.Core.Events
                             {
                                 HubContext.SendToClient("You stop following " + defender.Name, follower.HubGuid);
                             }
-                           
+
                         }
                     }
-                   
+
                     defender.Followers = null;
                     defender.Following = null;
 
@@ -937,7 +965,7 @@ namespace MIMWebClient.Core.Events
                     {
                         HubContext.SendToClient(defender.Name + " stops following you", attacker.HubGuid);
                     }
-                   
+
                 }
 
 
@@ -1035,6 +1063,6 @@ namespace MIMWebClient.Core.Events
             return evade;
         }
 
-     
+
     }
 }
