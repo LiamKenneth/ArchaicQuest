@@ -601,6 +601,8 @@ namespace MIMWebClient.Core.Events
             return 1;
         }
 
+
+
         /// <summary>
         /// Shows attack and damage to player
         /// </summary>
@@ -613,7 +615,31 @@ namespace MIMWebClient.Core.Events
         /// <param name="damage">This is used for skills and spells only</param>
         public static void ShowAttack(Player attacker, Player defender, Room room, double toHit, int chance, Skill skillUsed, int damage = 0)
         {
-            for (int i = 0; i < 1; i++)
+
+            var numberOfAttacks = 1;
+            var secondAttack = attacker.Skills.FirstOrDefault(x => x.Name.Equals("Second Attack"));
+            var thirdAttack = attacker.Skills.FirstOrDefault(x => x.Name.Equals("Third Attack"));
+
+            if (secondAttack != null)
+            {
+                if (Helpers.SkillSuccess(secondAttack.Proficiency))
+                {
+                    numberOfAttacks += 1;
+                }
+
+                if (thirdAttack != null)
+                {   
+                    //higher chance of fail if second attack is not fully trained
+                    if (Helpers.SkillSuccess(thirdAttack.Proficiency - (95 - secondAttack.Proficiency)))
+                    {
+                        numberOfAttacks += 1;
+                    }
+                }
+            }
+
+
+
+            for (int i = 0; i < numberOfAttacks; i++)
             {
 
 

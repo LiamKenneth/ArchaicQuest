@@ -186,6 +186,21 @@ namespace MIMWebClient.Core
             return str.ToUpper();
         }
 
+
+        /// <summary>
+        /// Does skill succeed
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static bool SkillSuccess(int skillProfiency)
+        {
+            var skillPercentage = GetPercentage(skillProfiency, 95);
+
+            var d100 = Rand(1, 100);
+
+            return  skillPercentage > d100;
+        }
+
         public static string ReturnHisOrHers(PlayerSetup.Player player, PlayerSetup.Player target, bool plural = true)
         {
             if (player.invis == true && target.DetectInvis == false || player.hidden == true && target.DetectHidden == false)
