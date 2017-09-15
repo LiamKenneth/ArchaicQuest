@@ -91,6 +91,15 @@ namespace MIMWebClient.Core.Player.Classes
 
             #endregion
 
+
+            #region  Give fighter secondAttack skill
+
+            var secondAttack = SecondAttack.SecondAttackAb();
+            secondAttack.Proficiency = 95;
+            fighter.Skills.Add(secondAttack);
+
+            #endregion
+
             fighter.ReclassOptions.Add(Ranger.RangerClass());
 
             return fighter;

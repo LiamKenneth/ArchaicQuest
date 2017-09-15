@@ -1070,7 +1070,7 @@ namespace MIMWebClient.Core.Events
 
                         foreach (var character in room.players)
                         {
-                            if (player != character || foundThing != player)
+                            if (player.Name != character.Name && character.Name != foundThing.Name)
                             {
 
                                 var roomMessage =
@@ -1081,7 +1081,7 @@ namespace MIMWebClient.Core.Events
                         }
 
                         player.Inventory.Remove(playerInv[i]);
-
+                      
                     }
                 }
             }
@@ -1129,7 +1129,7 @@ namespace MIMWebClient.Core.Events
 
                 foreach (var character in room.players)
                 {
-                    if (player != character || foundThing != character)
+                    if (player.Name != character.Name  && character.Name != foundThing.Name)
                     {
 
                         var roomMessage =
@@ -1170,8 +1170,8 @@ namespace MIMWebClient.Core.Events
             Cache.updateRoom(room, currentRoom);
             Cache.updatePlayer(player, currentPlayer);
             Score.UpdateUiInventory(player);
-            var roomdata = LoadRoom.DisplayRoom(room, player.Name);
-            Score.UpdateUiRoom(player, roomdata);
+            Score.UpdateUiInventory(foundThing);
+ 
         }
 
 

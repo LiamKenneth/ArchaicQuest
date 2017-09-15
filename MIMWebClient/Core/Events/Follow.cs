@@ -27,11 +27,14 @@ namespace MIMWebClient.Core.Events
                 }
 
 
+            }else if (options.Length >= 1)
+            {
+                objectToFind = options[0];
             }
 
             var findPerson = FindItem.Player(room.players, nth, objectToFind);
 
-            if (findPerson == null) { return; }
+            if (findPerson == null) { HubContext.SendToClient("No one here by that name to follow.", follower.HubGuid);  return; }
 
             if (findPerson.Followers == null)
             {
@@ -50,11 +53,35 @@ namespace MIMWebClient.Core.Events
             }
             else
             {
+
+                if (findPerson.Name == follower.Name)
+                {
+                    if (follower.Following != null)
+                    {
+                        HubContext.SendToClient($"You stop following {follower.Name}.", findPerson.HubGuid);
+                       var toRemove = follower.Following?.Followers.FirstOrDefault(x => x.Name == follower.Name);
+
+                        if (toRemove != null)
+                        {
+                            toRemove.Following.Followers.Remove(follower);
+                            follower.Following.Followers.Remove(toRemove);
+                        }
+                    }
+                    else
+                    {
+                        HubContext.SendToClient($"You can't follow yourself.", findPerson.HubGuid);
+                    }
+
+                   
+                    
+                    return;
+                }
                 HubContext.SendToClient($"{Helpers.ReturnName(follower, findPerson, String.Empty)} begins following you", findPerson.HubGuid);
+                HubContext.SendToClient($"You follow {Helpers.ReturnName(findPerson, follower, String.Empty)}", follower.HubGuid);
 
                 foreach (var character in room.players)
                 {
-                    if (character != follower || character != findPerson)
+                    if (character.Name != follower.Name && character != findPerson)
                     {
                         HubContext.SendToClient($"{Helpers.ReturnName(follower, findPerson, String.Empty)} begins following {Helpers.ReturnName(findPerson, follower, String.Empty)}", character.HubGuid);
                     }

@@ -628,7 +628,7 @@ namespace MIMWebClient.Core.Events
                 }
 
                 if (thirdAttack != null)
-                {   
+                {
                     //higher chance of fail if second attack is not fully trained
                     if (Helpers.SkillSuccess(thirdAttack.Proficiency - (95 - secondAttack.Proficiency)))
                     {
@@ -651,7 +651,7 @@ namespace MIMWebClient.Core.Events
 
                     if (toHit > chance)
                     {
-                        var dam =  damage > 0 ? damage : Damage(attacker, defender, IsCritical);
+                        var dam = damage > 0 ? damage : Damage(attacker, defender, IsCritical);
 
                         var damageText = DamageText(dam);
 
@@ -897,6 +897,8 @@ namespace MIMWebClient.Core.Events
                 //Turn corpse into room item
                 var defenderCorpse = new Item
                 {
+                    type = Item.ItemType.Container,
+                    equipable = false,
                     name = "The corpse of " + defender.Name,
                     container = true,
                     containerItems = new List<Item>(),
