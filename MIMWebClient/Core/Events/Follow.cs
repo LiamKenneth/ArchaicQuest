@@ -89,6 +89,7 @@ namespace MIMWebClient.Core.Events
                 }
 
                 findPerson.Followers.Add(follower);
+                follower.Following = findPerson;
             }
         }
 
