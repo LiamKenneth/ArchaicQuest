@@ -285,6 +285,11 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("dhidd")]
         public bool DetectHidden { get; set; } = false;
 
+
+ 
+        public bool CanFollow { get; set; } = true;
+
+
         [BsonElement("poi")]
         public bool poisoned { get; set; } = false;
 

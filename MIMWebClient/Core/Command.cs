@@ -148,6 +148,7 @@ namespace MIMWebClient.Core
                 {"who", () => Who.Connected(playerData)},
                 {"affects", () => Affect.Show(playerData)},
                 {"follow", () => Follow.FollowThing(playerData, room, commandOptions) },
+                 {"nofollow", () => Follow.FollowThing(playerData, room, "noFollow") },
                   {"quit", () => HubContext.Quit(playerData.HubGuid, room)},
                 //admin
                 {"/debug", () => PlayerSetup.Player.DebugPlayer(playerData) }
