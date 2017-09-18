@@ -19,6 +19,7 @@ namespace MIMWebClient.Core.Events
                 {
                     HubContext.SendToClient($"You stop following {follower.Following.Name}.", follower.HubGuid);
                     follower.Following?.Followers.Remove(follower);
+                    follower.Following = null;
                 }
 
                 if (follower.Followers != null)
@@ -30,6 +31,8 @@ namespace MIMWebClient.Core.Events
                         follow.Following = null;
                     }
                 }
+
+                follower.Followers = null;
 
                 return;
             }
@@ -94,9 +97,11 @@ namespace MIMWebClient.Core.Events
                 {
                     if (follower.Following != null)
                     {
+                        
                         follower.Following.Followers.Remove(follower);
-                        HubContext.SendToClient($"You stop following {follower.Following.Name}.", findPerson.HubGuid);                    
-                       
+                        HubContext.SendToClient($"You stop following {follower.Following.Name}.", findPerson.HubGuid);
+                        follower.Following = null;
+
                     }
                     else
                     {
@@ -110,7 +115,13 @@ namespace MIMWebClient.Core.Events
 
                 if (!findPerson.CanFollow)
                 {
-                    HubContext.SendToClient($"{Helpers.ReturnName(follower, findPerson, String.Empty)} does not want to be followed", findPerson.HubGuid);
+                    HubContext.SendToClient($"{Helpers.ReturnName(findPerson, follower, String.Empty)} does not want to be followed", follower.HubGuid);
+                    return;
+                }
+
+                if (findPerson.Following?.Name == follower.Name)
+                {
+                    HubContext.SendToClient($"You can't follow {Helpers.ReturnName(findPerson, follower, String.Empty)} as they are following you.", follower.HubGuid);
                     return;
                 }
 
