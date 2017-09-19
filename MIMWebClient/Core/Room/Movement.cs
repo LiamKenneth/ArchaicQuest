@@ -165,7 +165,7 @@ namespace MIMWebClient.Core.Room
             }
 
 
-            if (!hasFly)
+            if (!hasFly || player.Mount == null)
             {
                 player.MovePoints -= 1;
             }
