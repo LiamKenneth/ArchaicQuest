@@ -172,7 +172,7 @@ namespace MIMWebClient.Core.Events
                         }
                         else if (item.Status == PlayerSetup.Player.PlayerStatus.Mounted)
                         {
-                            playerList += LoadRoom.ShowObjectEffects(item) + " is here riding " + Helpers.ReturnName(null, null, player.Mount) + ".";
+                            playerList += LoadRoom.ShowObjectEffects(item) + " is here riding " + Helpers.ReturnName(null, null, item.Mount.Name).ToLower() + ".";
                         }
                         else
                         {

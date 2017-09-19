@@ -129,7 +129,9 @@ namespace MIMWebClient.Core
                 //skills
                 {"punch", () => Punch.StartPunch(playerData, room)},
                 {"kick", () => Kick.StartKick(playerData, room)},
+                {"ride", () => Mount.StartMount(playerData, room, commandOptions)},
                 {"mount", () => Mount.StartMount(playerData, room, commandOptions)},
+                {"dismount", () => Mount.Dismount(playerData, room, commandOptions)},
 
 
                 //

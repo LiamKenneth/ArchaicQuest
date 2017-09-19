@@ -91,11 +91,6 @@ namespace MIMWebClient.Core.Player.Skills
                     return;
                 }
 
-                if (!string.IsNullOrEmpty(_target.NpcRider))
-                {
-                    HubContext.SendToClient($"You can't mount{Helpers.ReturnName(null, null, _target.Name)} as they are already mounted.", player.HubGuid);
-                }
-
                 HubContext.SendToClient($"You mount {Helpers.ReturnName(null, null, _target.Name)}", player.HubGuid);
 
                 
@@ -112,9 +107,9 @@ namespace MIMWebClient.Core.Player.Skills
                 }
 
                 player.Status = Player.PlayerStatus.Mounted;
-                player.Mount = _target.Name;
-                _target.NpcRider = player.Name;
+                player.Mount = _target;
 
+                room.mobs.Remove(_target);
 
             }
             else if (_target == null)
@@ -125,5 +120,37 @@ namespace MIMWebClient.Core.Player.Skills
 
         }
 
+
+        public static void Dismount(Player player, Room room, string target = "")
+        {
+
+
+            if (player.Mount == null)
+            {
+                HubContext.SendToClient($"You are not mounted.",  player.HubGuid);
+                return;
+            }
+
+            HubContext.SendToClient($"You dismount {Helpers.ReturnName(null, null, player.Mount.Name).ToLower()}", player.HubGuid);
+
+
+            foreach (var character in room.players)
+            {
+                if (character != player)
+                {
+
+                    var roomMessage =
+                        $"{Helpers.ReturnName(player, character, string.Empty)} dismounts {Helpers.ReturnName(null, null, player.Mount.Name).ToLower()}.";
+
+                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                }
+            }
+
+            player.Status = Player.PlayerStatus.Standing;
+            room.mobs.Add(player.Mount);
+            player.Mount = null;
+
+           
+        }
     }
 }

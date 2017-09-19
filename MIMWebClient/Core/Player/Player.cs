@@ -308,9 +308,8 @@ namespace MIMWebClient.Core.PlayerSetup
 
         public bool IsMount { get; set; } = false;
 
-        public string Mount { get; set; }
-        // Used for mounts t ocheck if rider matches mount
-        public string NpcRider { get; set; }
+        public Player Mount { get; set; }
+  
 
         //NPC Properties
         [BsonElement("ne")]
