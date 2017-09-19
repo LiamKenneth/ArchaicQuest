@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using MIMWebClient.Core.World;
 
 namespace MIMWebClient.Core.Events
 {
@@ -229,6 +230,29 @@ namespace MIMWebClient.Core.Events
             {
                 HubContext.SendToClient("No one here by that name.", playerId, null, false, false);
             }
+        }
+
+        public static void Yell(string message, Room room, Player player)
+        {
+
+            var rooms = Cache.ReturnRooms().Where(x => x.area.Equals(room.area));
+            var yellMessage = $"<span class='yellColor'>You yell \"{message}\"</span>";
+            HubContext.SendToClient(yellMessage, player.HubGuid);
+
+            foreach (var area in rooms)
+            {
+                foreach (var i in area.players)
+                {
+                    if (i.Name != player.Name)
+                    {
+                        var roomMessage = $"<span class='yellColor'>{ Helpers.ReturnName(player, i, string.Empty)} yells \"{message}\"</span>";
+                        HubContext.SendToClient(roomMessage, i.HubGuid);
+                    }
+                   
+                }
+            }
+
+
         }
 
 

@@ -100,6 +100,15 @@ namespace MIMWebClient.Core.Player.Classes
 
             #endregion
 
+
+            #region  Give fighter Mount skill
+
+            var mount = Mount.MountAb();
+            mount.Proficiency = 95;
+            fighter.Skills.Add(mount);
+
+            #endregion
+
             fighter.ReclassOptions.Add(Ranger.RangerClass());
 
             return fighter;

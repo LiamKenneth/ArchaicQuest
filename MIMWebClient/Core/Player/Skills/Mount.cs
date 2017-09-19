@@ -14,7 +14,7 @@ namespace MIMWebClient.Core.Player.Skills
 
     public class Mount: Skill
     {
-
+        private static Player _target = new Player();
         public static Skill MountSkill { get; set; }
         public static Skill MountAb()
         {
@@ -49,6 +49,80 @@ namespace MIMWebClient.Core.Player.Skills
 
             return MountSkill;
             
+        }
+
+        public static void StartMount(Player player, Room room, string target = "")
+        {
+            //Check if player has spell
+            var hasSkill = Skill.CheckPlayerHasSkill(player, MountAb().Name);
+
+            if (hasSkill == false)
+            {
+                HubContext.SendToClient("You don't know how to ride mounts.", player.HubGuid);
+                return;
+            }
+
+            var canDoSkill = Skill.CanDoSkill(player);
+
+            if (!canDoSkill)
+            {
+                return;
+            }
+
+            if (string.IsNullOrEmpty(target) && player.Target != null)
+            {
+                target = player.Target.Name;
+            }
+
+            _target = room.mobs.FirstOrDefault(x => x.Name.ToLower().Contains(target.ToLower()));
+
+            //Fix issue if target has similar name to user and they use abbrivations to target them
+            if (_target == player)
+            {
+                _target = null;
+            }
+
+            if ( _target != null)
+            {
+
+                if (!_target.IsMount)
+                {
+                    HubContext.SendToClient($"You can't mount {Helpers.ReturnName(null, null, _target.Name)}.", player.HubGuid);
+                    return;
+                }
+
+                if (!string.IsNullOrEmpty(_target.NpcRider))
+                {
+                    HubContext.SendToClient($"You can't mount{Helpers.ReturnName(null, null, _target.Name)} as they are already mounted.", player.HubGuid);
+                }
+
+                HubContext.SendToClient($"You mount {Helpers.ReturnName(null, null, _target.Name)}", player.HubGuid);
+
+                
+                foreach (var character in room.players)
+                {
+                    if (character != player)
+                    {
+
+                        var roomMessage =
+                            $"{Helpers.ReturnName(player, character, string.Empty)} mounts {Helpers.ReturnName(null, null, _target.Name)}.";
+
+                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                    }
+                }
+
+                player.Status = Player.PlayerStatus.Mounted;
+                player.Mount = _target.Name;
+                _target.NpcRider = player.Name;
+
+
+            }
+            else if (_target == null)
+            {
+                HubContext.SendToClient("You don't see that here?", player.HubGuid);
+            }
+
+
         }
 
     }

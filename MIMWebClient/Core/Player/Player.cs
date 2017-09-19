@@ -34,6 +34,7 @@ namespace MIMWebClient.Core.PlayerSetup
             Ghost = 7,
             Busy = 8,
             Floating = 9,
+            Mounted = 10,
 
         }
 
@@ -304,6 +305,12 @@ namespace MIMWebClient.Core.PlayerSetup
 
         [BsonElement("qlog")]
         public List<Quest> QuestLog { get; set; }
+
+        public bool IsMount { get; set; } = false;
+
+        public string Mount { get; set; }
+        // Used for mounts t ocheck if rider matches mount
+        public string NpcRider { get; set; }
 
         //NPC Properties
         [BsonElement("ne")]

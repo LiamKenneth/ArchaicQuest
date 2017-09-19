@@ -38,6 +38,8 @@ namespace MIMWebClient.Core.Events
                         player.TotalPlayTime += duration;
 
                     col.Upsert(player); 
+
+                    HubContext.SendToClient("Gods take note of your progress", player.HubGuid);
                 }
 
             }

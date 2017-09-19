@@ -170,6 +170,10 @@ namespace MIMWebClient.Core.Events
                         {
                             playerList += LoadRoom.ShowObjectEffects(item) + " is sleeping.";
                         }
+                        else if (item.Status == PlayerSetup.Player.PlayerStatus.Mounted)
+                        {
+                            playerList += LoadRoom.ShowObjectEffects(item) + " is here riding " + Helpers.ReturnName(null, null, player.Mount) + ".";
+                        }
                         else
                         {
                             playerList += LoadRoom.ShowObjectEffects(item) + " is here\r\n";

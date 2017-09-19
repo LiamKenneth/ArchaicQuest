@@ -436,6 +436,13 @@ namespace MIMWebClient.Core.Room
                             //add player to new room
                             PlayerManager.AddPlayerToRoom(getNewRoom, player);
 
+                            if (!string.IsNullOrEmpty(player.Mount))
+                            {
+                                var mount = Core.Player.Skill.FindTarget(player.Mount, room);
+                                PlayerManager.AddPlayerToRoom(getNewRoom, mount);
+                            }
+                      
+
                             //enter message
                             EnterRoom(player, getNewRoom, direction);
 
