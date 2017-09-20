@@ -705,42 +705,47 @@ namespace MIMWebClient.Core.Events
 
                             //Randomly pick to output dodge, parry, miss
 
-                            var rand = Helpers.Rand(1, 100);
+                            var rand = Helpers.Rand(1, 4);
                             var message = "misses";
+                            var observerMessage = string.Empty;
 
-                            if (rand <= 33)
+                            if (rand <= 1)
                             {
-                                message = "missess";
+                                message = "Your " + WeaponAttackName(attacker, skillUsed).Key +
+                                          " <span style='color:olive'>misses</span> " +
+                                          Helpers.ReturnName(defender, attacker, null);
+
+                                observerMessage = Helpers.ReturnName(attacker, defender, null) + "'s " +
+                                                  WeaponAttackName(attacker, skillUsed).Key +
+                                                  " <span style='color:olive'> " + message + "</span> " +
+                                                  Helpers.ReturnName(defender, attacker, null);
                             }
-                            else if (rand > 33 && rand <= 66)
+                            else if (rand > 1 && rand <= 2)
                             {
-                                message = "dodges";
+                                message = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>dodges</span> your " +
+                                          WeaponAttackName(attacker, skillUsed).Key;
+
+                                observerMessage = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>dodges</span>" + Helpers.ReturnName(defender, attacker, null) + "'s" + WeaponAttackName(attacker, skillUsed).Key;
                             }
                             else
                             {
-                                message = "parries";
+                                message = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>parries</span> your " +
+                                          WeaponAttackName(attacker, skillUsed).Key;
+
+                                observerMessage = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>parries</span>" + Helpers.ReturnName(defender, attacker, null) + "'s" + WeaponAttackName(attacker, skillUsed).Key;
                             }
 
 
-                            HubContext.SendToClient(
-                                "Your " + WeaponAttackName(attacker, skillUsed).Key +
-                                " <span style='color:olive'> " + message + "</span> " +
-                                Helpers.ReturnName(defender, attacker, null), attacker.HubGuid);
-
-                            HubContext.SendToClient(
-                                Helpers.ReturnName(attacker, defender, null) + "'s " +
-                                WeaponAttackName(attacker, skillUsed).Key +
-                                " <span style='color:olive'> " + message + "</span> you ", defender.HubGuid);
+                            HubContext.SendToClient(message, attacker.HubGuid);
+                            
+         
 
                             foreach (var player in room.players)
                             {
                                 if (player != attacker && player != defender)
                                 {
                                     HubContext.SendToClient(
-                                        Helpers.ReturnName(attacker, defender, null) + "'s " +
-                                        WeaponAttackName(attacker, skillUsed).Key +
-                                        " <span style='color:olive'> " + message + "</span> " +
-                                        Helpers.ReturnName(defender, attacker, null), player.HubGuid);
+                                      observerMessage, player.HubGuid);
                                 }
                             }
 
