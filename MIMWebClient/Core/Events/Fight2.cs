@@ -651,6 +651,8 @@ namespace MIMWebClient.Core.Events
 
                     if (toHit > chance)
                     {
+  
+
                         var dam = damage > 0 ? damage : Damage(attacker, defender, IsCritical);
 
                         var damageText = DamageText(dam);
@@ -701,15 +703,34 @@ namespace MIMWebClient.Core.Events
                         if (IsAlive(attacker, defender))
                         {
 
+                            //Randomly pick to output dodge, parry, miss
+
+                            var rand = Helpers.Rand(1, 100);
+                            var message = "misses";
+
+                            if (rand <= 33)
+                            {
+                                message = "missess";
+                            }
+                            else if (rand > 33 && rand <= 66)
+                            {
+                                message = "dodges";
+                            }
+                            else
+                            {
+                                message = "parries";
+                            }
+                     
+
                             HubContext.SendToClient(
                                 "Your " + WeaponAttackName(attacker, skillUsed).Key +
-                                " <span style='color:olive'>misses</span> " +
+                                " <span style='color:olive'> " + message +"</span> " +
                                 Helpers.ReturnName(defender, attacker, null), attacker.HubGuid);
 
                             HubContext.SendToClient(
                                 Helpers.ReturnName(attacker, defender, null) + "'s " +
                                 WeaponAttackName(attacker, skillUsed).Key +
-                                " <span style='color:olive'>misses</span> you ", defender.HubGuid);
+                                " <span style='color:olive'> " + message + "</span> you ", defender.HubGuid);
 
                             foreach (var player in room.players)
                             {
@@ -718,7 +739,7 @@ namespace MIMWebClient.Core.Events
                                     HubContext.SendToClient(
                                         Helpers.ReturnName(attacker, defender, null) + "'s " +
                                         WeaponAttackName(attacker, skillUsed).Key +
-                                        " <span style='color:olive'>misses</span> " +
+                                        " <span style='color:olive'> " + message + "</span> " +
                                         Helpers.ReturnName(defender, attacker, null), player.HubGuid);
                                 }
                             }
@@ -1072,7 +1093,8 @@ namespace MIMWebClient.Core.Events
         {
             double evasionSkill = 0.75;
             double blockSkill = 0.15;
-            double parrySkill = 0;
+            double parrySkill = 1;
+            double dodgeSkill = 1;
             int dexterity = player.Dexterity;
 
 
@@ -1086,7 +1108,7 @@ namespace MIMWebClient.Core.Events
 
             //((Agility / 5) + (Luck / 10)) * (0.75 + 0.5 * Current Fatigue / Maximum Fatigue)
 
-            double evade = evasionSkill + blockSkill + parrySkill + (dexterity / 5) * (0.75 + 0.5 * player.MovePoints / player.MaxMovePoints);
+            double evade = evasionSkill + blockSkill + parrySkill + dodgeSkill + (dexterity / 5) * (0.75 + 0.5 * player.MovePoints / player.MaxMovePoints);
 
             return evade;
         }
