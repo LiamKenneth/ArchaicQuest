@@ -651,7 +651,7 @@ namespace MIMWebClient.Core.Events
 
                     if (toHit > chance)
                     {
-  
+
 
                         var dam = damage > 0 ? damage : Damage(attacker, defender, IsCritical);
 
@@ -720,11 +720,11 @@ namespace MIMWebClient.Core.Events
                             {
                                 message = "parries";
                             }
-                     
+
 
                             HubContext.SendToClient(
                                 "Your " + WeaponAttackName(attacker, skillUsed).Key +
-                                " <span style='color:olive'> " + message +"</span> " +
+                                " <span style='color:olive'> " + message + "</span> " +
                                 Helpers.ReturnName(defender, attacker, null), attacker.HubGuid);
 
                             HubContext.SendToClient(
