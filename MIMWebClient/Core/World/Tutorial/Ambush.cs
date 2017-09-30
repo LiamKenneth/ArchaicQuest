@@ -431,6 +431,8 @@ namespace MIMWebClient.Core.World.Tutorial
             room.mobs.Add(Goblin.WeakGoblin());
             room.mobs.Add(Goblin.WeakGoblin());
             room.mobs.Add(Goblin.WeakGoblin());
+            room.mobs.Add(Goblin.GoblinWarrior());
+
 
 
             room.Emotes.Add("The fire crackles and spits.");

@@ -67,6 +67,7 @@ namespace MIMWebClient.Core.Room
                         var roomdata = LoadRoom.DisplayRoom(room, room.players[i].Name);
                         Score.UpdateUiRoom(room.players[i], roomdata);
 
+             
                     }
                     else
                     {
@@ -78,6 +79,7 @@ namespace MIMWebClient.Core.Room
                     }
                 }
             }
+
 
             Score.UpdateUiMap(player, room.areaId, room.area.ToLower(), room.region.ToLower(), room.coords.Z = 0);
         }
@@ -456,6 +458,15 @@ namespace MIMWebClient.Core.Room
                             ShowUIExits(getNewRoom, player.HubGuid);
 
                             //NPC Enter event here
+
+
+                            foreach (var mob in getNewRoom.mobs.Where(x => x.Aggro).ToList())
+                            {
+                                HubContext.SendToClient($"{mob.Name} screams and attacks you", player.HubGuid);
+                                Player.MobAttack(player, mob, getNewRoom);
+                            }
+
+
                             foreach (var mob in getNewRoom.mobs)
                             {
 
@@ -463,10 +474,7 @@ namespace MIMWebClient.Core.Room
                                 {
                                     // Event.ParseCommand("greet", player, mob, getNewRoom);
                                 }
-                                else
-                                {
-                                    //mob might be aggro
-                                }
+                              
 
                                 if (mob.DialogueTree != null && mob.DialogueTree.Count > 0)
                                 {

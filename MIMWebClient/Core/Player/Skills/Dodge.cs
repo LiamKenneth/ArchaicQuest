@@ -12,22 +12,22 @@ namespace MIMWebClient.Core.Player.Skills
     using MIMWebClient.Core.PlayerSetup;
     using MIMWebClient.Core.Room;
 
-    public class Parry: Skill
+    public class Dodge: Skill
     {
 
-        public static Skill ParrySkill { get; set; }
-        public static Skill ParryAb()
+        public static Skill DodgeSkill { get; set; }
+        public static Skill DodgeAb()
         {
                   
-            if (ParrySkill != null)
+            if (DodgeSkill != null)
             {
-               return ParrySkill;
+               return DodgeSkill;
             }
             else
             {
                 var skill = new Skill
                 {
-                    Name = "Parry",
+                    Name = "Dodge",
                     CoolDown = 0,
                     Delay = 0,
                     LevelObtained = 1,
@@ -38,16 +38,16 @@ namespace MIMWebClient.Core.Player.Skills
                     Syntax = "Passive command",
                     HelpText = new Help()
                     {
-                        HelpText = "Parry help text",
+                        HelpText = "Dodge help text",
                         DateUpdated = new DateTime().ToShortDateString()
                     }
                 };
 
 
-                ParrySkill = skill;
+                DodgeSkill = skill;
             }
 
-            return ParrySkill;
+            return DodgeSkill;
             
         }
 

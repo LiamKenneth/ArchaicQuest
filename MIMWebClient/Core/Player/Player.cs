@@ -524,6 +524,13 @@ namespace MIMWebClient.Core.PlayerSetup
             }
         }
 
+
+        public static void MobAttack(Player player, Player mob, Room.Room room)
+        {
+            Command.ParseCommand($"kill {player.Name}", mob, room);
+         
+        }
+
         public static void DebugPlayer(Player player)
         {
             HubContext.SendToClient("Debug:", player.HubGuid);

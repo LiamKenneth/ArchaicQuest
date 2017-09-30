@@ -161,7 +161,7 @@ namespace MIMWebClient.Core.Events
                 if (!defender.ActiveFighting)
                 {
                     defender.ActiveFighting = true;
-                    Task.Run(() => HitTarget(defender, attacker, room, 1500));
+                    Task.Run(() => HitTarget(defender, attacker, room, 2000));
 
                 }
 
@@ -183,14 +183,14 @@ namespace MIMWebClient.Core.Events
                     int chance = D100();
 
 
-                    ShowAttack(attacker, defender, room, toHit, chance, null);
+                        ShowAttack(attacker, defender, room, toHit, chance, null);
 
                 }
 
                 if (!attacker.ActiveFighting)
                 {
                     attacker.ActiveFighting = true;
-                    Task.Run(() => HitTarget(attacker, defender, room, 1500));
+                    Task.Run(() => HitTarget(attacker, defender, room, 2000));
                 }
 
             }
@@ -529,7 +529,7 @@ namespace MIMWebClient.Core.Events
 
             if (weapon != null)
             {
-                Helpers helper = new Helpers();
+                var helper = new Helpers();
                 damage = helper.dice(1, weapon.stats.damMin, weapon.stats.damMax);
             }
             else
@@ -571,10 +571,9 @@ namespace MIMWebClient.Core.Events
 
                     return new KeyValuePair<string, string>(weapon.name, weapon.name);
                 }
-                else
-                {
+            
                     return new KeyValuePair<string, string>("hit", "hit");
-                }
+                
                 /// weapon.attackType = Item.AttackTypes.Slash;
                 //add attack string to weapons
 
@@ -617,28 +616,30 @@ namespace MIMWebClient.Core.Events
         {
 
             var numberOfAttacks = 1;
-            var secondAttack = attacker.Skills.FirstOrDefault(x => x.Name.Equals("Second Attack"));
-            var thirdAttack = attacker.Skills.FirstOrDefault(x => x.Name.Equals("Third Attack"));
-
-            if (secondAttack != null)
+            if (attacker.Skills != null)
             {
-                if (Helpers.SkillSuccess(secondAttack.Proficiency))
-                {
-                    numberOfAttacks += 1;
-                }
+                var secondAttack = attacker.Skills.FirstOrDefault(x => x.Name.Equals("Second Attack"));
+                var thirdAttack = attacker.Skills.FirstOrDefault(x => x.Name.Equals("Third Attack"));
 
-                if (thirdAttack != null)
+                if (secondAttack != null)
                 {
-                    //higher chance of fail if second attack is not fully trained
-                    if (Helpers.SkillSuccess(thirdAttack.Proficiency - (95 - secondAttack.Proficiency)))
+                    if (Helpers.SkillSuccess(secondAttack.Proficiency))
                     {
                         numberOfAttacks += 1;
+                    }
+
+                    if (thirdAttack != null)
+                    {
+                        //higher chance of fail if second attack is not fully trained
+                        if (Helpers.SkillSuccess(thirdAttack.Proficiency - (95 - secondAttack.Proficiency)))
+                        {
+                            numberOfAttacks += 1;
+                        }
                     }
                 }
             }
 
-
-
+ 
             for (int i = 0; i < numberOfAttacks; i++)
             {
 
@@ -707,7 +708,7 @@ namespace MIMWebClient.Core.Events
 
                             var rand = Helpers.Rand(1, 4);
                             var message = "misses";
-                            var observerMessage = string.Empty;
+                            string observerMessage;
 
                             if (rand <= 1)
                             {
@@ -1096,10 +1097,13 @@ namespace MIMWebClient.Core.Events
 
         public static double Evasion(Player player)
         {
-            double evasionSkill = 0.75;
-            double blockSkill = 0.15;
-            double parrySkill = 1;
-            double dodgeSkill = 1;
+            var dodge = player.Skills.FirstOrDefault(x => x.Name.Equals("Dodge"));
+            var parry = player.Skills.FirstOrDefault(x => x.Name.Equals("Parry"));
+            var block = player.Skills.FirstOrDefault(x => x.Name.Equals("Shield Block"));
+
+            double blockSkill = string.IsNullOrEmpty(player.Equipment.Shield) ? 0 : block?.Proficiency / 95 ?? 0;
+            double parrySkill = parry?.Proficiency / 95 ?? 0;
+            double dodgeSkill = dodge?.Proficiency / 95 ?? 0;  
             int dexterity = player.Dexterity;
 
 
@@ -1113,7 +1117,7 @@ namespace MIMWebClient.Core.Events
 
             //((Agility / 5) + (Luck / 10)) * (0.75 + 0.5 * Current Fatigue / Maximum Fatigue)
 
-            double evade = evasionSkill + blockSkill + parrySkill + dodgeSkill + (dexterity / 5) * (0.75 + 0.5 * player.MovePoints / player.MaxMovePoints);
+            double evade =  blockSkill + parrySkill + dodgeSkill + (dexterity / 5) * (0.75 + 0.5 * player.MovePoints / player.MaxMovePoints);
 
             return evade;
         }

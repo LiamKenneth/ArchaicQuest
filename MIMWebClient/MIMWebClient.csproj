@@ -309,6 +309,8 @@
     <Compile Include="Core\Player\Races\PlayerRace.cs" />
     <Compile Include="Core\Player\Recall.cs" />
     <Compile Include="Core\Player\Skill.cs" />
+    <Compile Include="Core\Player\Skills\ShieldBlock.cs" />
+    <Compile Include="Core\Player\Skills\Dodge.cs" />
     <Compile Include="Core\Player\Skills\SecondAttack.cs" />
     <Compile Include="Core\Player\Skills\Mount.cs" />
     <Compile Include="Core\Player\Skills\Parry.cs" />
