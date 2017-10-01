@@ -460,12 +460,7 @@ namespace MIMWebClient.Core.Room
                             //NPC Enter event here
 
 
-                            foreach (var mob in getNewRoom.mobs.Where(x => x.Aggro).ToList())
-                            {
-                                HubContext.SendToClient($"{mob.Name} screams and attacks you", player.HubGuid);
-                                Player.MobAttack(player, mob, getNewRoom);
-                            }
-
+                 
 
                             foreach (var mob in getNewRoom.mobs)
                             {
@@ -511,10 +506,14 @@ namespace MIMWebClient.Core.Room
                                     }
                                 }
 
-
-
-
                             }
+
+                            foreach (var mob in getNewRoom.mobs.Where(x => x.Aggro).ToList())
+                            {
+                                HubContext.SendToClient($"{mob.Name} screams and attacks you", player.HubGuid);
+                                Player.MobAttack(player, mob, getNewRoom);
+                            }
+
 
 
                             if (!string.IsNullOrEmpty(getNewRoom.EventOnEnter))
