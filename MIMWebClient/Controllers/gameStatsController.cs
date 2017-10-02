@@ -156,6 +156,83 @@ namespace MIMWebClient.Controllers
         }
 
         [System.Web.Http.HttpGet]
+        public string GetRaceBreakdown()
+        {
+            using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
+            {
+
+                var col = db.GetCollection<Player>("Player");
+
+                var Human = new InfoCount()
+                {
+                    Name = "Human",
+                    Value = 0
+                };
+
+                var Elf = new InfoCount()
+                {
+                    Name = "Elf",
+                    Value = 0
+                };
+
+                var DarkElf = new InfoCount()
+                {
+                    Name = "Dark Elf",
+                    Value = 0
+                };
+
+                var Dwarf = new InfoCount()
+                {
+                    Name = "Dwarf",
+                    Value = 0
+                };
+
+
+                foreach (var player in col.FindAll())
+                {
+                    if (player.Race == "Human")
+                    {
+                        Human.Value += 1;
+
+                        continue;
+                    }
+
+                    if (player.Race == "Elf")
+                    {
+                        Elf.Value += 1;
+
+                        continue;
+                    }
+
+                    if (player.Race == "Dark Elf")
+                    {
+                        DarkElf.Value += 1;
+
+                        continue;
+                    }
+
+                    if (player.SelectedClass == "Dwarf")
+                    {
+                        Dwarf.Value += 1;
+
+                        continue;
+                    }
+                }
+
+                var raceBreakdown = new List<InfoCount>();
+
+                raceBreakdown.Add(Human);
+                raceBreakdown.Add(Elf);
+                raceBreakdown.Add(DarkElf);
+                raceBreakdown.Add(Dwarf);
+
+                var json = JsonConvert.SerializeObject(raceBreakdown);
+
+                return json;
+            }
+        }
+
+        [System.Web.Http.HttpGet]
         public IEnumerable<Deaths> ReturnDeaths(string type)
         {
             using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
