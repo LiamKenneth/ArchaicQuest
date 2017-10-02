@@ -8,11 +8,13 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices.ComTypes;
 using System.Web.Http;
+using System.Web.Mvc;
 using LiteDB;
 using MIMWebClient.Core.Loging;
 using MIMWebClient.Core.PlayerSetup;
 using MIMWebClient.Core.Util;
 using MIMWebClient.Hubs;
+using Newtonsoft.Json;
 
 namespace MIMWebClient.Controllers
 {
@@ -26,8 +28,10 @@ namespace MIMWebClient.Controllers
 
     public class InfoCount
     {
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
-        public int Count { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public int Value { get; set; }
     }
 
 
@@ -50,7 +54,7 @@ namespace MIMWebClient.Controllers
         ///// Returns list of logged in players
         ///// </summary>
         ///// <returns>Returns list of logged in players</returns>
-        [HttpGet]
+        [System.Web.Http.HttpGet]
         public IEnumerable<Player> ReturnWhoList()
         {
             return MIMHub._PlayerCache.Values.ToList();
@@ -60,7 +64,7 @@ namespace MIMWebClient.Controllers
         ///// Returns list of logged in players
         ///// </summary>
         ///// <returns>Returns list of logged in players</returns>
-        [HttpGet]
+        [System.Web.Http.HttpGet]
         public IEnumerable<QuitLocation> ReturnQuitLocation()
         {
             using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
@@ -74,8 +78,8 @@ namespace MIMWebClient.Controllers
             }
         }
 
-        [HttpGet]
-        public IEnumerable<InfoCount> GetClassBreakdown()
+        [System.Web.Http.HttpGet]
+        public string GetClassBreakdown()
         {
             using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
             {
@@ -85,25 +89,25 @@ namespace MIMWebClient.Controllers
                 var Warrior = new InfoCount()
                 {
                     Name = "Warrior",
-                    Count = 0
+                    Value = 0
                 };
 
                 var Cleric = new InfoCount()
                 {
                     Name = "Cleric",
-                    Count = 0
+                    Value = 0
                 };
 
                 var Thief = new InfoCount()
                 {
                     Name = "Thief",
-                    Count = 0
+                    Value = 0
                 };
 
                 var Mage = new InfoCount()
                 {
                     Name = "Mage",
-                    Count = 0
+                    Value = 0
                 };
 
 
@@ -111,28 +115,28 @@ namespace MIMWebClient.Controllers
                 {
                     if (player.SelectedClass == "Warrior")
                     {
-                        Warrior.Count += 1;
+                        Warrior.Value += 1;
 
                         continue;
                     }
 
                     if (player.SelectedClass == "Cleric")
                     {
-                        Cleric.Count += 1;
+                        Cleric.Value += 1;
 
                         continue;
                     }
 
                     if (player.SelectedClass == "Mage")
                     {
-                        Mage.Count += 1;
+                        Mage.Value += 1;
 
                         continue;
                     }
 
                     if (player.SelectedClass == "Thief")
                     {
-                        Thief.Count += 1;
+                        Thief.Value += 1;
 
                         continue;
                     }
@@ -145,11 +149,13 @@ namespace MIMWebClient.Controllers
                 classBreakdown.Add(Mage);
                 classBreakdown.Add(Thief);
 
-                return classBreakdown;
+               var json = JsonConvert.SerializeObject(classBreakdown);
+
+                return json;
             }
         }
 
-        [HttpGet]
+        [System.Web.Http.HttpGet]
         public IEnumerable<Deaths> ReturnDeaths(string type)
         {
             using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
@@ -175,7 +181,7 @@ namespace MIMWebClient.Controllers
         /// Returns list of logged in players
         /// </summary>
         /// <returns>Returns list of logged in players</returns>
-        [HttpGet]
+        [System.Web.Http.HttpGet]
         public IEnumerable<Stats> NewPlayers()
         {
     
@@ -213,7 +219,7 @@ namespace MIMWebClient.Controllers
          
         }
 
-        [HttpGet]
+        [System.Web.Http.HttpGet]
         public IEnumerable<SignUps> SignUpCount(int monthCount)
         {
  
