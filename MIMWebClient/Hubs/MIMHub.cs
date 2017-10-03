@@ -393,7 +393,8 @@ namespace MIMWebClient.Hubs
                     }
                 }
 
-                player.LastCommandTime = DateTime.UtcNow;
+                player.LastCommandTime = DateTime.Now;
+                player.LastLoginTime = DateTime.Now;
 
                 _PlayerCache.TryAdd(id, player);
 

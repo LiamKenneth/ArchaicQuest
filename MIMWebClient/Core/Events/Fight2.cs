@@ -901,7 +901,7 @@ namespace MIMWebClient.Core.Events
                             RoomName = room.title,
                             Area = room.area,
                             AreaId = room.areaId,
-                            Date = new DateTime(),
+                            Date = DateTime.UtcNow,
                             KilledBy = defender.Target.Name,
                             Id = Guid.NewGuid(),
                             Type = defender.Type == Player.PlayerTypes.Mob ? Player.PlayerTypes.Mob.ToString() : Player.PlayerTypes.Player.ToString()

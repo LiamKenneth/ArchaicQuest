@@ -13,6 +13,7 @@ using LiteDB;
 using MIMWebClient.Core.Loging;
 using MIMWebClient.Core.PlayerSetup;
 using MIMWebClient.Core.Util;
+using MIMWebClient.Core.World;
 using MIMWebClient.Hubs;
 using Newtonsoft.Json;
 
@@ -41,12 +42,40 @@ namespace MIMWebClient.Controllers
         public int Count { get; set; }
     }
 
+    public class ErrorList
+    {
+        public string name { get; set; }
+        public int count { get; set; }
+        public string type { get; set; }
+    }
 
-    public class SignUps
+    public class PlayerList
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public int level { get; set; }
+        [JsonProperty(PropertyName = "class")]
+        public string className { get; set; }
+        public string race { get; set; }
+        public string lastPlayed { get; set; }
+    }
+
+    public class WhoList: PlayerList
+    {
+        public string location { get; set; }
+        public string idle { get; set; }
+        public string playingTime { get; set; }
+    }
+
+
+
+
+    public class MonthStat
     {
         public string Month { get; set; }
         public int Count { get; set; }  
     }
+
 
     public class GameStatsController : ApiController
     {
@@ -233,6 +262,170 @@ namespace MIMWebClient.Controllers
         }
 
         [System.Web.Http.HttpGet]
+        public string GetGenderBreakdown()
+        {
+            using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
+            {
+
+                var col = db.GetCollection<Player>("Player");
+
+                var Male = new InfoCount()
+                {
+                    Name = "Male",
+                    Value = 0
+                };
+
+                var Female = new InfoCount()
+                {
+                    Name = "Female",
+                    Value = 0
+                };
+ 
+
+
+                foreach (var player in col.FindAll())
+                {
+                    if (player.Gender == "Male")
+                    {
+                        Male.Value += 1;
+
+                        continue;
+                    }
+
+                    if (player.Gender == "Female")
+                    {
+                        Female.Value += 1;
+
+                        continue;
+                    }
+  
+                }
+
+                var genderBreakdown = new List<InfoCount>();
+
+                genderBreakdown.Add(Male);
+                genderBreakdown.Add(Female);
+ 
+
+                var json = JsonConvert.SerializeObject(genderBreakdown);
+
+                return json;
+            }
+        }
+
+        [System.Web.Http.HttpGet]
+        public string GetAllPlayers()
+        {
+            using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
+            {
+
+                var col = db.GetCollection<Player>("Player");
+
+                var players = new List<PlayerList>();
+          
+
+
+                foreach (var player in col.FindAll())
+                {
+                    var x = new PlayerList()
+                    {
+                        id = player.Id,
+                        className = player.SelectedClass,
+                        lastPlayed =  Math.Round((DateTime.Now - player.LastLoginTime).TotalDays) + " day(s) ago",
+                        level = player.Level,
+                        name = player.Name,
+                        race = player.Race
+                    };
+
+                    players.Add(x);
+
+                }
+
+               
+                var json = JsonConvert.SerializeObject(players);
+
+                return json;
+            }
+        }
+
+        [System.Web.Http.HttpGet]
+        public string GetErrors()
+        {
+            using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
+            {
+
+                var col = db.GetCollection<Error.Error>("Error");
+
+                var errors = new List<ErrorList>();
+
+
+                foreach (var err in col.FindAll())
+                {
+                    var x = new ErrorList()
+                    {
+                            name = err.ErrorMessage,
+                            type = err.MethodName,
+                    };
+
+                    if (errors.Find(y => y.name == x.name) != null)
+                    {
+                        errors.Find(y => y.name == x.name).count++;
+                    }
+                    else
+                    {
+                        errors.Add(x);
+                    }
+        
+
+                }
+
+
+                var json = JsonConvert.SerializeObject(errors);
+
+                return json;
+            }
+        }
+
+        [System.Web.Http.HttpGet]
+        public string GetWhoList()
+        {
+            using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
+            {
+
+                var col = MIMHub._PlayerCache.Values;
+
+                var players = new List<WhoList>();
+
+
+
+                foreach (var player in col)
+                {
+                    var who = new WhoList()
+                    {
+                        id = player.Id,
+                        className = player.SelectedClass,
+                        lastPlayed = Math.Round((DateTime.Now - player.LastLoginTime).TotalHours) + " hours(s) ago",
+                        level = player.Level,
+                        name = player.Name,
+                        race = player.Race,
+                        location = Areas.ListOfRooms().FirstOrDefault(x => x.areaId == player.AreaId && x.area == player.Area && x.region == player.Region).title ?? "Unknown",
+                        playingTime = Math.Round((DateTime.Now - player.LastLoginTime).TotalHours) + " hours(s)",
+                        idle = Math.Round((DateTime.Now - player.LastCommandTime).TotalMinutes) + " minutes(s)"
+
+                    };
+
+                    players.Add(who);
+
+                }
+
+
+                var json = JsonConvert.SerializeObject(players);
+
+                return json;
+            }
+        }
+
+        [System.Web.Http.HttpGet]
         public IEnumerable<Deaths> ReturnDeaths(string type)
         {
             using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
@@ -251,6 +444,7 @@ namespace MIMWebClient.Controllers
                           
             }
         }
+
 
  
 
@@ -277,7 +471,7 @@ namespace MIMWebClient.Controllers
                 var playersYesterday = playersThisMonth.Where(x => x.JoinedDate.Date == DateTime.Today.AddDays(-1)).ToList().Count();
 
 
-                var averagePlayTime = col.FindAll().ToList().Average(x => x.PlayTime);
+                double averagePlayTime = col.FindAll().ToList().Average(x => x.PlayTime);
                 var longestPlayTime = col.FindAll().ToList().Max(x => x.PlayTime);
                 var shortestPlayTime = col.FindAll().ToList().Min(x => x.PlayTime);
                 var stats = new List<Stats>()
@@ -285,9 +479,9 @@ namespace MIMWebClient.Controllers
                     new Stats {Stat = "Month", Now = playersThisMonth.Count(), Before = playersLastMonth.Count()},
                     new Stats {Stat = "Week", Now = playersThisWeek, Before = playersLastWeek},
                     new Stats {Stat = "today", Now = playersToday, Before = playersYesterday},
-                    new Stats {Stat = "Average Play Time", Now = (int)averagePlayTime, Before = 0},
-                    new Stats {Stat = "Longest Play Time", Now = (int)longestPlayTime, Before = 0},
-                    new Stats {Stat = "Shortest Play Time", Now = (int)shortestPlayTime, Before = 0},
+                    new Stats {Stat = "Average Play Time", Now = (int)TimeSpan.FromTicks((long)averagePlayTime).TotalMinutes, Before = 0},
+                    new Stats {Stat = "Longest Play Time", Now = TimeSpan.FromTicks(longestPlayTime).Minutes, Before = 0},
+                    new Stats {Stat = "Shortest Play Time", Now = TimeSpan.FromTicks(shortestPlayTime).Minutes, Before = 0},
                 };
 
                 return stats;
@@ -297,7 +491,7 @@ namespace MIMWebClient.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public IEnumerable<SignUps> SignUpCount(int monthCount)
+        public IEnumerable<MonthStat> SignUpCount(int monthCount)
         {
  
             using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
@@ -306,12 +500,12 @@ namespace MIMWebClient.Controllers
                 var col = db.GetCollection<Player>("Player");
 
                 var players = col.FindAll().ToList();
-                var signups = new List<SignUps>();
+                var signups = new List<MonthStat>();
                 var months = DateTime.Now.AddMonths(-monthCount);
 
                 for (int i = 1; i <= monthCount; i++)
                 {
-                    signups.Add(new SignUps
+                    signups.Add(new MonthStat
                     {
                         Month = months.AddMonths(i).ToString("MMM") + " " + months.AddMonths(i).Year,
                         Count = players.Where(x => x.JoinedDate.Month == months.AddMonths(i).Month).ToList().Count
@@ -320,6 +514,36 @@ namespace MIMWebClient.Controllers
                 
        
                 return signups;
+            }
+
+
+        }
+
+
+        [System.Web.Http.HttpGet]
+        public IEnumerable<MonthStat> MobKillCount(int monthCount)
+        {
+
+            using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
+            {
+
+                var col = db.GetCollection<Deaths>("Deaths");
+
+                var kills = col.FindAll().ToList();
+                var mobDeaths = new List<MonthStat>();
+                var months = DateTime.Now.AddMonths(-monthCount);
+
+                for (int i = 1; i <= monthCount; i++)
+                {
+                    mobDeaths.Add(new MonthStat
+                    {
+                        Month = months.AddMonths(i).ToString("MMM") + " " + months.AddMonths(i).Year,
+                        Count = kills.Where(x => x.Date.Month == months.AddMonths(i).Month).ToList().Count
+                    });
+                }
+
+
+                return mobDeaths;
             }
 
 

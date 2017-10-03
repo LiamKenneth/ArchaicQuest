@@ -244,7 +244,7 @@ namespace MIMWebClient.Core
                 HubContext.SendToClient("Sorry you can't do that.", playerData.HubGuid);
             }
 
-            playerData.LastCommandTime = DateTime.UtcNow;
+            playerData.LastCommandTime = DateTime.Now;
 
             Score.UpdateUiPrompt(playerData);
            
