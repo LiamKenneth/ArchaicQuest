@@ -58,6 +58,7 @@ namespace MIMWebClient.Controllers
         public string className { get; set; }
         public string race { get; set; }
         public string lastPlayed { get; set; }
+        public string totalHoursPlayed { get; set; }
     }
 
     public class WhoList: PlayerList
@@ -117,7 +118,7 @@ namespace MIMWebClient.Controllers
 
                 var Warrior = new InfoCount()
                 {
-                    Name = "Warrior",
+                    Name = "Fighter",
                     Value = 0
                 };
 
@@ -142,7 +143,7 @@ namespace MIMWebClient.Controllers
 
                 foreach (var player in col.FindAll())
                 {
-                    if (player.SelectedClass == "Warrior")
+                    if (player.SelectedClass == "Fighter")
                     {
                         Warrior.Value += 1;
 
@@ -285,14 +286,14 @@ namespace MIMWebClient.Controllers
 
                 foreach (var player in col.FindAll())
                 {
-                    if (player.Gender == "Male")
+                    if (player.Gender == "male")
                     {
                         Male.Value += 1;
 
                         continue;
                     }
 
-                    if (player.Gender == "Female")
+                    if (player.Gender == "female")
                     {
                         Female.Value += 1;
 
@@ -334,7 +335,8 @@ namespace MIMWebClient.Controllers
                         lastPlayed =  Math.Round((DateTime.Now - player.LastLoginTime).TotalDays) + " day(s) ago",
                         level = player.Level,
                         name = player.Name,
-                        race = player.Race
+                        race = player.Race,
+                        totalHoursPlayed = new DateTime(player.TotalPlayTime).Hour + " hour(s)",
                     };
 
                     players.Add(x);
@@ -469,10 +471,10 @@ namespace MIMWebClient.Controllers
 
                 var playersToday= playersThisMonth.Where(x => x.JoinedDate.Date == DateTime.Today).ToList().Count();
                 var playersYesterday = playersThisMonth.Where(x => x.JoinedDate.Date == DateTime.Today.AddDays(-1)).ToList().Count();
+ 
 
-
-                double averagePlayTime = col.FindAll().ToList().Average(x => x.PlayTime);
-                var longestPlayTime = col.FindAll().ToList().Max(x => x.PlayTime);
+                double averagePlayTime = new DateTime((long)col.FindAll().Select(x => x.PlayTime).Average()).Minute;
+                var longestPlayTime = new DateTime((long)col.FindAll().Select(x => x.PlayTime).Max()).Minute;
                 var shortestPlayTime = col.FindAll().ToList().Min(x => x.PlayTime);
                 var stats = new List<Stats>()
                 {
@@ -480,8 +482,8 @@ namespace MIMWebClient.Controllers
                     new Stats {Stat = "Week", Now = playersThisWeek, Before = playersLastWeek},
                     new Stats {Stat = "today", Now = playersToday, Before = playersYesterday},
                     new Stats {Stat = "Average Play Time", Now = (int)TimeSpan.FromTicks((long)averagePlayTime).TotalMinutes, Before = 0},
-                    new Stats {Stat = "Longest Play Time", Now = TimeSpan.FromTicks(longestPlayTime).Minutes, Before = 0},
-                    new Stats {Stat = "Shortest Play Time", Now = TimeSpan.FromTicks(shortestPlayTime).Minutes, Before = 0},
+                    new Stats {Stat = "Longest Play Time", Now = (int)TimeSpan.FromTicks((long)longestPlayTime).TotalMinutes, Before = 0},
+                    new Stats {Stat = "Shortest Play Time", Now = db.GetCollection<Deaths>("Deaths").FindAll().Where(x => x.Type == Player.PlayerTypes.Player.ToString()).Count() },
                 };
 
                 return stats;
