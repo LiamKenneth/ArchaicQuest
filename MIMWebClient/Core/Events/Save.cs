@@ -31,11 +31,11 @@ namespace MIMWebClient.Core.Events
                     var col = db.GetCollection<Player>("Player");
 
 
-                    var duration = player.LastLoginTime.Ticks - player.LastCommandTime.Ticks;
+                    var duration = DateTime.Now.Subtract(player.LastLoginTime);
 
-                        player.PlayTime = duration;
+                        player.PlayTime = (long) duration.TotalMinutes;
 
-                        player.TotalPlayTime += duration;
+                        player.TotalPlayTime += (long)duration.TotalMinutes;
 
                     col.Upsert(player); 
 

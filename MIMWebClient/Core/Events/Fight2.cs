@@ -890,6 +890,26 @@ namespace MIMWebClient.Core.Events
                     }
                 }
 
+                using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
+                {
+                    var col = db.GetCollection<Deaths>("Deaths");
+
+                    var mobDeath = new Deaths
+                    {
+                        RoomName = room.title,
+                        Area = room.area,
+                        AreaId = room.areaId,
+                        Date = DateTime.UtcNow,
+                        KilledBy = defender.Target.Name,
+                        Id = Guid.NewGuid(),
+                        Type = defender.Type == Player.PlayerTypes.Mob ? Player.PlayerTypes.Mob.ToString() : Player.PlayerTypes.Player.ToString()
+                    };
+
+
+                    col.Insert(Guid.NewGuid(), mobDeath);
+                }
+
+
 
                 defender.Target = null;
                 defender.ActiveFighting = false;
@@ -1004,25 +1024,7 @@ namespace MIMWebClient.Core.Events
                 attacker.Status = PlayerSetup.Player.PlayerStatus.Standing;
                 attacker.ActiveFighting = false;
 
-                using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
-                {
-                    var col = db.GetCollection<Deaths>("Deaths");
-
-                    var mobDeath = new Deaths
-                    {
-                        RoomName = room.title,
-                        Area = room.area,
-                        AreaId = room.areaId,
-                        Date = DateTime.UtcNow,
-                        KilledBy = defender.Target.Name,
-                        Id = Guid.NewGuid(),
-                        Type = defender.Type == Player.PlayerTypes.Mob ? Player.PlayerTypes.Mob.ToString() : Player.PlayerTypes.Player.ToString()
-                    };
-
-
-                    col.Insert(Guid.NewGuid(), mobDeath);
-                }
-
+               
 
             }
 

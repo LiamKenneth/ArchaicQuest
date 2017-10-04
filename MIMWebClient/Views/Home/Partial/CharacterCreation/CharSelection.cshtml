@@ -25,7 +25,7 @@
                     <label class="radio-inline">
 
                         @{
-                            @Html.RadioButtonFor(input => input.Gender, "male", new { id = "male", @checked = true, name = "Male" })
+                            @Html.RadioButtonFor(input => input.Gender, "Male", new { id = "Male", @checked = true, name = "Male" })
                             @:Male
                         }
                     </label>
@@ -33,7 +33,7 @@
                     <label class="radio-inline">
 
                         @{
-                            @Html.RadioButtonFor(input => input.Gender, "female", new { id = "female", name = "Female" })
+                            @Html.RadioButtonFor(input => input.Gender, "Female", new { id = "Female", name = "Female" })
                             @:Female
                         }
                     </label>

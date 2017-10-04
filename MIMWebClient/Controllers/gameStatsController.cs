@@ -49,6 +49,13 @@ namespace MIMWebClient.Controllers
         public string type { get; set; }
     }
 
+    public class QuitList
+    {
+        public string name { get; set; }
+        public int roomId { get; set; }
+        public string roomName { get; set; }
+    }
+
     public class PlayerList
     {
         public int id { get; set; }
@@ -57,6 +64,7 @@ namespace MIMWebClient.Controllers
         [JsonProperty(PropertyName = "class")]
         public string className { get; set; }
         public string race { get; set; }
+        public string gender { get; set; }
         public string lastPlayed { get; set; }
         public string totalHoursPlayed { get; set; }
     }
@@ -95,7 +103,7 @@ namespace MIMWebClient.Controllers
         ///// </summary>
         ///// <returns>Returns list of logged in players</returns>
         [System.Web.Http.HttpGet]
-        public IEnumerable<QuitLocation> ReturnQuitLocation()
+        public string ReturnQuitLocation()
         {
             using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
             {
@@ -103,8 +111,23 @@ namespace MIMWebClient.Controllers
                 var col = db.GetCollection<QuitLocation>("QuitLocation");
 
                 var quitLoc = col.FindAll();
-                
-                return quitLoc;
+
+                var quits = new List<QuitList>();
+
+                foreach (var q in quitLoc)
+                {
+                    var x = new QuitList()
+                    {
+                        roomId = q.RoomId,
+                        roomName = q.RoomName,
+                        name = q.PlayerName,
+                    };
+
+                    quits.Add(x);
+                }
+                var json = JsonConvert.SerializeObject(quits);
+
+                return json;
             }
         }
 
@@ -286,14 +309,14 @@ namespace MIMWebClient.Controllers
 
                 foreach (var player in col.FindAll())
                 {
-                    if (player.Gender == "male")
+                    if (player.Gender == "Male")
                     {
                         Male.Value += 1;
 
                         continue;
                     }
 
-                    if (player.Gender == "female")
+                    if (player.Gender == "Female")
                     {
                         Female.Value += 1;
 
@@ -336,6 +359,7 @@ namespace MIMWebClient.Controllers
                         level = player.Level,
                         name = player.Name,
                         race = player.Race,
+                        gender = player.Gender,
                         totalHoursPlayed = new DateTime(player.TotalPlayTime).Hour + " hour(s)",
                     };
 
@@ -387,6 +411,8 @@ namespace MIMWebClient.Controllers
                 return json;
             }
         }
+
+   
 
         [System.Web.Http.HttpGet]
         public string GetWhoList()
@@ -473,16 +499,19 @@ namespace MIMWebClient.Controllers
                 var playersYesterday = playersThisMonth.Where(x => x.JoinedDate.Date == DateTime.Today.AddDays(-1)).ToList().Count();
  
 
-                double averagePlayTime = new DateTime((long)col.FindAll().Select(x => x.PlayTime).Average()).Minute;
-                var longestPlayTime = new DateTime((long)col.FindAll().Select(x => x.PlayTime).Max()).Minute;
+                var averagePlayTime =  (int)col.FindAll().Select(x => x.PlayTime).ToArray().Average();
+                var longestPlayTime = (int)col.FindAll().Select(x => x.PlayTime).Max();
                 var shortestPlayTime = col.FindAll().ToList().Min(x => x.PlayTime);
+
+ 
+
                 var stats = new List<Stats>()
                 {
                     new Stats {Stat = "Month", Now = playersThisMonth.Count(), Before = playersLastMonth.Count()},
                     new Stats {Stat = "Week", Now = playersThisWeek, Before = playersLastWeek},
                     new Stats {Stat = "today", Now = playersToday, Before = playersYesterday},
-                    new Stats {Stat = "Average Play Time", Now = (int)TimeSpan.FromTicks((long)averagePlayTime).TotalMinutes, Before = 0},
-                    new Stats {Stat = "Longest Play Time", Now = (int)TimeSpan.FromTicks((long)longestPlayTime).TotalMinutes, Before = 0},
+                    new Stats {Stat = "Average Play Time", Now = averagePlayTime, Before = 0},
+                    new Stats {Stat = "Longest Play Time", Now = longestPlayTime, Before = 0},
                     new Stats {Stat = "Shortest Play Time", Now = db.GetCollection<Deaths>("Deaths").FindAll().Where(x => x.Type == Player.PlayerTypes.Player.ToString()).Count() },
                 };
 
