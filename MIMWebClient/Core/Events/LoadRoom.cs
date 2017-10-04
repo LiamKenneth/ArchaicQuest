@@ -29,7 +29,7 @@ namespace MIMWebClient.Core.Events
 
         public Room LoadRoomFile()
         {
-            using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+            using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
             {
 
 
@@ -169,6 +169,10 @@ namespace MIMWebClient.Core.Events
                         else if (item.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
                         {
                             playerList += LoadRoom.ShowObjectEffects(item) + " is sleeping.";
+                        }
+                        else if (item.Status == PlayerSetup.Player.PlayerStatus.Mounted)
+                        {
+                            playerList += LoadRoom.ShowObjectEffects(item) + " is here riding " + Helpers.ReturnName(null, null, item.Mount.Name).ToLower() + ".";
                         }
                         else
                         {

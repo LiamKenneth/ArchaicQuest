@@ -34,6 +34,7 @@ namespace MIMWebClient.Core.PlayerSetup
             Ghost = 7,
             Busy = 8,
             Floating = 9,
+            Mounted = 10,
 
         }
 
@@ -285,6 +286,11 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("dhidd")]
         public bool DetectHidden { get; set; } = false;
 
+
+ 
+        public bool CanFollow { get; set; } = true;
+
+
         [BsonElement("poi")]
         public bool poisoned { get; set; } = false;
 
@@ -299,6 +305,11 @@ namespace MIMWebClient.Core.PlayerSetup
 
         [BsonElement("qlog")]
         public List<Quest> QuestLog { get; set; }
+
+        public bool IsMount { get; set; } = false;
+
+        public Player Mount { get; set; }
+  
 
         //NPC Properties
         [BsonElement("ne")]
@@ -511,6 +522,13 @@ namespace MIMWebClient.Core.PlayerSetup
             {
                 player.Status = Player.PlayerStatus.Standing;
             }
+        }
+
+
+        public static void MobAttack(Player player, Player mob, Room.Room room)
+        {
+            Command.ParseCommand($"kill {player.Name}", mob, room);
+         
         }
 
         public static void DebugPlayer(Player player)

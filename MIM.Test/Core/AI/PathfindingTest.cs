@@ -93,17 +93,6 @@ namespace MIM.Test.Core.AI
 
 
 
-        [Test]
-        public void DisplaySigmaArrays()
-        {
-           new SigmaMap().DrawMap("1");
  
-        
-
-
-            Assert.That(true, Is.EqualTo(true));
-           
-
-        }
     }
 }

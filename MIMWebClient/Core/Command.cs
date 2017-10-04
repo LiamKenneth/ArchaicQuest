@@ -43,6 +43,7 @@ namespace MIMWebClient.Core
                 {"inventory", () => Inventory.ReturnInventory(playerData.Inventory, playerData)},
                 {"equipment", () => Equipment.ShowEquipment(playerData)},
                 {"garb", () => Equipment.ShowEquipment(playerData)},
+                {"loot", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item")},
                 {"get", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item")},
                 {"take", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item")},
                 {"drop", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey)},
@@ -53,9 +54,12 @@ namespace MIMWebClient.Core
                 {"newbie", () => Communicate.NewbieChannel(commandOptions, playerData)},
                 {"gossip", () => Communicate.GossipChannel(commandOptions, playerData)},
                 {"ooc", () => Communicate.OocChannel(commandOptions, playerData)},
+                {"yes", () => Communicate.Say("Yes", playerData, room)},
+                {"no", () => Communicate.Say("No", playerData, room)},
                 {"say", () => Communicate.Say(commandOptions, playerData, room)},
                 {"sayto", () => Communicate.SayTo(commandOptions, room, playerData)},
                 {">", () => Communicate.SayTo(commandOptions, room, playerData)},
+                {"yell", () => Communicate.Yell(commandOptions, room, playerData)},
                 {"talkto", () => Talk.TalkTo(commandOptions, room, playerData)},
                 {"emote", () => Emote.EmoteActionToRoom(commandOptions, playerData)},
                 {"wear", () => Equipment.WearItem(playerData, commandOptions)},
@@ -125,6 +129,10 @@ namespace MIMWebClient.Core
                 //skills
                 {"punch", () => Punch.StartPunch(playerData, room)},
                 {"kick", () => Kick.StartKick(playerData, room)},
+                {"ride", () => Mount.StartMount(playerData, room, commandOptions)},
+                {"mount", () => Mount.StartMount(playerData, room, commandOptions)},
+                {"dismount", () => Mount.Dismount(playerData, room, commandOptions)},
+
 
                 //
                 {"unlock", () => ManipulateObject.UnlockItem(room, playerData, commandOptions, commandKey)},
@@ -148,6 +156,7 @@ namespace MIMWebClient.Core
                 {"who", () => Who.Connected(playerData)},
                 {"affects", () => Affect.Show(playerData)},
                 {"follow", () => Follow.FollowThing(playerData, room, commandOptions) },
+                 {"nofollow", () => Follow.FollowThing(playerData, room, "noFollow") },
                   {"quit", () => HubContext.Quit(playerData.HubGuid, room)},
                 //admin
                 {"/debug", () => PlayerSetup.Player.DebugPlayer(playerData) }
@@ -235,7 +244,7 @@ namespace MIMWebClient.Core
                 HubContext.SendToClient("Sorry you can't do that.", playerData.HubGuid);
             }
 
-            playerData.LastCommandTime = DateTime.UtcNow;
+            playerData.LastCommandTime = DateTime.Now;
 
             Score.UpdateUiPrompt(playerData);
            

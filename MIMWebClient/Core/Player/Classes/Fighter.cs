@@ -85,12 +85,27 @@ namespace MIMWebClient.Core.Player.Classes
 
             #region  Give fighter longblade skill
 
-            var longblade = Punch.PunchAb();
-            longblade.Name = "Long Blade";
-            longblade.LevelObtained = 3;
-            longblade.Proficiency = 1;
-            longblade.MaxProficiency = 95;
+            var longblade = LongBlades.LongBladesAb();
+          
             fighter.Skills.Add(longblade);
+
+            #endregion
+
+
+            #region  Give fighter secondAttack skill
+
+            var secondAttack = SecondAttack.SecondAttackAb();
+            secondAttack.Proficiency = 95;
+            fighter.Skills.Add(secondAttack);
+
+            #endregion
+
+
+            #region  Give fighter Mount skill
+
+            var mount = Mount.MountAb();
+            mount.Proficiency = 95;
+            fighter.Skills.Add(mount);
 
             #endregion
 

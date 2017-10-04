@@ -89,7 +89,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
              
-               var goToRoom = Areas.ListOfRooms()[Helpers.diceRoll.Next(Areas.ListOfRooms().Count)];
+               var goToRoom = Areas.ListOfRoomsCanTeleport()[Helpers.diceRoll.Next(Areas.ListOfRooms().Count)];
 
 
             foreach (var character in room.players)

@@ -30,7 +30,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 area = "Tutorial",
                 areaId = 0,
                 title = "Deep in the forest",
-                description = "<p>Large trees tower high above all around you and Wilhelm as you tread lightly through the thick woods. No end to the forest is in sight, every way you look is endless amounts of bushes and trees with wide branches reaching out in everything direction blocking the sun.</p>  <p class='RoomExits'>[Hint] You move by typing North, East, South, West or n/e/s/w for short. The Exit list will tell you which directions are possible.</p>",
+                description = "<p>Large trees tower high above all around you and Wilhelm as you tread lightly through the thick woods. No end to the forest is in sight, every way you look is endless amounts of bushes and trees with wide branches reaching out in every direction blocking the sun.</p>  <p class='RoomExits'>[Hint] You move by typing North, East, South, West or n/e/s/w for short. The Exit list will tell you which directions are possible.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -202,7 +202,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 areaId = 1,
                 title = "Deep in the forest",
                 description = "<p>Behind you the sounds of swords clashing fill the night air along with never ending goblin screams echoing through the tall thick trees all around you. " +
-                              "Between the trees to the north west you see what looks to be a small camp with fire, Maybe you can get some help there.</p>",
+                              "Between the trees to the north west you see what looks to be a small camp with a fire, Maybe you can get some help there.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -250,7 +250,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 area = "Tutorial",
                 areaId = 2,
                 title = "Deep in the forest",
-                description = "<p>Shadows flicker off the trees and shrubs caused by the glow of the camp fire to the east. All around you are tall thick tree, and impassable bushes, the fire is your only beceon of hope in this dense woodland.</p>",
+                description = "<p>Shadows flicker off the trees and shrubs caused by the glow of the camp fire to the east. All around you are tall thick tree, and impassable bushes, the fire is your only beacon of hope in this dense woodland.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -332,7 +332,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 EventOnEnter = "Give Leather Quest",
                 updateMessage = "A loud screech echos through the forest."
 
-            };
+            };  
 
 
             var west = new Exit
@@ -401,13 +401,40 @@ namespace MIMWebClient.Core.World.Tutorial
             };
 
             var goblin = Goblin.WeakGoblin();
+            var goblin2 = Goblin.WeakGoblin();
+            var goblin3 = Goblin.WeakGoblin();
+
             goblin.Recall = new Recall()
             {
                 Region = "Tutorial",
                 Area = "Tutorial",
                 AreaId = 3
             };
-            room.mobs.Add(goblin);
+
+            room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.WeakGoblin());
+            //room.mobs.Add(Goblin.GoblinWarrior());
+
+
+
             room.Emotes.Add("The fire crackles and spits.");
             room.Emotes.Add("You hear a howl in the distance.");
             room.exits.Add(north);
@@ -693,8 +720,8 @@ namespace MIMWebClient.Core.World.Tutorial
             var desk = new RoomObject
             {
                 name = "Desk",
-                look = "Pieces of paper, gold coins and bread crumbs lay scattered across the desk. A leather hat lays next to a small candle which illuminates the tent with an orange glow.",
-                examine = "Pieces of paper, gold coins and bread crumbs lay scattered across the desk. A leather hat lays next to a small candle which illuminates the tent with an orange glow.",
+                look = "Pieces of paper, gold coins and bread crumbs lay scattered across the desk. A leather helmet lays next to a small candle which illuminates the tent with an orange glow.",
+                examine = "Pieces of paper, gold coins and bread crumbs lay scattered across the desk. A leather helmet lays next to a small candle which illuminates the tent with an orange glow.",
             };
 
 

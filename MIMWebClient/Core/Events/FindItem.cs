@@ -29,8 +29,9 @@ namespace MIMWebClient.Core.Events
 
         public static PlayerSetup.Player Player (List<PlayerSetup.Player> collection, int findNth, string itemToFind)
         {
+ 
 
-            if (collection == null)
+            if (collection == null || string.IsNullOrEmpty(itemToFind))
             {
                 return null;
             }

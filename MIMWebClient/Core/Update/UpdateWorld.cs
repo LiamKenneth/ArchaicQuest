@@ -203,6 +203,11 @@ namespace MIMWebClient.Core.Update
                      
                         foreach (var mob in room.mobs.ToList())
                         {
+
+                            if (mob.ActiveFighting)
+                            {
+                                continue;
+                            }
       
                             if (mob.HitPoints > 0 && mob.PathList != null)
                             {

@@ -31,6 +31,16 @@ namespace MIM.Test.Core.Player
         }
 
         [Test]
+        public void Should_Confirm_Skill_Succeeded()
+        {
+
+            var skillWorked = MIMWebClient.Core.Helpers.SkillSuccess(50);
+
+            Assert.IsTrue(skillWorked);
+
+        }
+
+        [Test]
         public void Should_Confirm_Player_Does_Not_Have_Skill()
         {
             var player = new MIMWebClient.Core.PlayerSetup.Player()

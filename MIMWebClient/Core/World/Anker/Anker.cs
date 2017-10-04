@@ -1583,7 +1583,8 @@ namespace MIMWebClient.Core.World.Anker
                 Level = 15,
                 Status = Player.PlayerStatus.Busy,
                 Skills = new List<Skill>(),
-                Inventory = new List<Item.Item>()
+                Inventory = new List<Item.Item>(),
+                IsMount = true
             };
 
             var recall = new Recall

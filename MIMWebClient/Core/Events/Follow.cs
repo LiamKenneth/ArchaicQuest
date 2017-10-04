@@ -10,6 +10,43 @@ namespace MIMWebClient.Core.Events
         public static void FollowThing(PlayerSetup.Player follower, Room.Room room, string thingToFollow)
         {
 
+            if (thingToFollow == "noFollow" && follower.CanFollow)
+            {
+                follower.CanFollow = false;
+                HubContext.SendToClient("You can no longer be followed.", follower.HubGuid);
+
+                if (follower.Following != null)
+                {
+                    HubContext.SendToClient($"You stop following {follower.Following.Name}.", follower.HubGuid);
+                    follower.Following?.Followers.Remove(follower);
+                    follower.Following = null;
+                }
+
+                if (follower.Followers != null)
+                {
+                    foreach (var follow in follower.Followers)
+                    {
+                        HubContext.SendToClient($"You stop following {follower.Name}.", follow.HubGuid);
+                        HubContext.SendToClient($"{follow.Name} stops following you.", follower.HubGuid);
+                        follow.Following = null;
+                    }
+                }
+
+                follower.Followers = null;
+
+                return;
+            }
+
+            if (thingToFollow == "noFollow" && !follower.CanFollow)
+            {
+                follower.CanFollow = true;
+                HubContext.SendToClient("You can now be followed.", follower.HubGuid);
+
+                return;
+            }
+
+            follower.CanFollow = true;
+
             string[] options = thingToFollow.Split(' ');
             int nth = -1;
             string getNth = string.Empty;
@@ -27,11 +64,14 @@ namespace MIMWebClient.Core.Events
                 }
 
 
+            }else if (options.Length >= 1)
+            {
+                objectToFind = options[0];
             }
 
             var findPerson = FindItem.Player(room.players, nth, objectToFind);
 
-            if (findPerson == null) { return; }
+            if (findPerson == null) { HubContext.SendToClient("No one here by that name to follow.", follower.HubGuid);  return; }
 
             if (findPerson.Followers == null)
             {
@@ -39,6 +79,8 @@ namespace MIMWebClient.Core.Events
             }
 
             //check if player already following player
+
+    
 
             if (findPerson.Followers.Contains(follower))
             {
@@ -50,11 +92,45 @@ namespace MIMWebClient.Core.Events
             }
             else
             {
+
+                if (findPerson.Name == follower.Name)
+                {
+                    if (follower.Following != null)
+                    {
+                        
+                        follower.Following.Followers.Remove(follower);
+                        HubContext.SendToClient($"You stop following {follower.Following.Name}.", findPerson.HubGuid);
+                        follower.Following = null;
+
+                    }
+                    else
+                    {
+                        HubContext.SendToClient($"You can't follow yourself.", findPerson.HubGuid);
+                    }
+
+                   
+                    
+                    return;
+                }
+
+                if (!findPerson.CanFollow)
+                {
+                    HubContext.SendToClient($"{Helpers.ReturnName(findPerson, follower, String.Empty)} does not want to be followed", follower.HubGuid);
+                    return;
+                }
+
+                if (findPerson.Following?.Name == follower.Name)
+                {
+                    HubContext.SendToClient($"You can't follow {Helpers.ReturnName(findPerson, follower, String.Empty)} as they are following you.", follower.HubGuid);
+                    return;
+                }
+
                 HubContext.SendToClient($"{Helpers.ReturnName(follower, findPerson, String.Empty)} begins following you", findPerson.HubGuid);
+                HubContext.SendToClient($"You follow {Helpers.ReturnName(findPerson, follower, String.Empty)}", follower.HubGuid);
 
                 foreach (var character in room.players)
                 {
-                    if (character != follower || character != findPerson)
+                    if (character.Name != follower.Name && character != findPerson)
                     {
                         HubContext.SendToClient($"{Helpers.ReturnName(follower, findPerson, String.Empty)} begins following {Helpers.ReturnName(findPerson, follower, String.Empty)}", character.HubGuid);
                     }
@@ -62,6 +138,7 @@ namespace MIMWebClient.Core.Events
                 }
 
                 findPerson.Followers.Add(follower);
+                follower.Following = findPerson;
             }
         }
 

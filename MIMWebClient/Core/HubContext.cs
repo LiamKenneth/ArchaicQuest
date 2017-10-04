@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -153,7 +154,7 @@ namespace MIMWebClient.Core
                 if (Player != null)
                 {
 
-                    using (var db = new LiteDatabase(ConfigurationManager.AppSettings["database"]))
+                    using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
                     {
                         var col = db.GetCollection<QuitLocation>("QuitLocation");
 
