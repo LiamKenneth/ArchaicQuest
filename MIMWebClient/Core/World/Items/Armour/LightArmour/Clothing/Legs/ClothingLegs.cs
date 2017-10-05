@@ -31,7 +31,7 @@ namespace MIMWebClient.Core.World.Items.Armour.LightArmour.Clothing.Legs
                 location = Item.Item.ItemLocation.Inventory,
                 slot = Item.Item.EqSlot.Legs,
                 type = Item.Item.ItemType.Armour,
-                name = "A pair of plain trousers",
+                name = "Pair of plain trousers",
                 ArmorRating = new ArmourRating()
                 {
                     Armour = 1,

@@ -22,7 +22,7 @@ namespace MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Body
                 location = Item.Item.ItemLocation.Room,
                 slot = Item.Item.EqSlot.Body,
                 type = Item.Item.ItemType.Armour,
-                name = "A simple leather vest",
+                name = "Simple leather vest",
                 ArmorRating = new ArmourRating()
                 {
                     Armour = 2,

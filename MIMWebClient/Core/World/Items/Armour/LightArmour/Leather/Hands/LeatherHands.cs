@@ -26,7 +26,7 @@ namespace MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Hands
                 location = Item.Item.ItemLocation.Room,
                 slot = Item.Item.EqSlot.Hands,
                 type = Item.Item.ItemType.Armour,
-                name = "A basic pair leather gloves",
+                name = "Basic pair leather gloves",
                 ArmorRating = new ArmourRating()
                 {
                     Armour = 2,

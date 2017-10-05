@@ -30,7 +30,7 @@ namespace MIMWebClient.Core.World.Items.Clothing.ClothingBody
                 location = Item.Item.ItemLocation.Inventory,
                 slot = Item.Item.EqSlot.Body,
                 type = Item.Item.ItemType.Armour,
-                name = "A plain top",
+                name = "Plain top",
                 ArmorRating = new ArmourRating()
                 {
                     Armour = 1,

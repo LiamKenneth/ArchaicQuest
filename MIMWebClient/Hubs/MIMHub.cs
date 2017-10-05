@@ -347,6 +347,7 @@ namespace MIMWebClient.Hubs
             Movement.EnterRoom(PlayerData, roomData);
 
             PlayerData.LastLoginTime = DateTime.Now;
+            PlayerData.LastCommandTime = DateTime.Now;
 
             Save.SavePlayer(PlayerData);
 
