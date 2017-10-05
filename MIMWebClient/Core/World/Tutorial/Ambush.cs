@@ -401,9 +401,7 @@ namespace MIMWebClient.Core.World.Tutorial
             };
 
             var goblin = Goblin.WeakGoblin();
-            var goblin2 = Goblin.WeakGoblin();
-            var goblin3 = Goblin.WeakGoblin();
-
+ 
             goblin.Recall = new Recall()
             {
                 Region = "Tutorial",
@@ -411,28 +409,8 @@ namespace MIMWebClient.Core.World.Tutorial
                 AreaId = 3
             };
 
-            room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.WeakGoblin());
-            //room.mobs.Add(Goblin.GoblinWarrior());
-
+            room.mobs.Add(goblin);
+ 
 
 
             room.Emotes.Add("The fire crackles and spits.");

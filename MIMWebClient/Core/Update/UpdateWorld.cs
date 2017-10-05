@@ -145,7 +145,7 @@ namespace MIMWebClient.Core.Update
                             {
                                 HubContext.broadcastToRoom(player.Value.Name + " disappears in the void",
                                     room.Value.players,
-                                    player.Value.HubGuid, true);
+                                    players.HubGuid, true);
                             }
                         }
                     }
@@ -158,16 +158,7 @@ namespace MIMWebClient.Core.Update
                                     x.Value.area.Equals(player.Value.Area) && x.Value.areaId.Equals(player.Value.AreaId) &&
                                     x.Value.region.Equals(player.Value.Region));
 
-
-                        PlayerSetup.Player removedChar = null;
-
-                      MIMHub._PlayerCache.TryRemove(player.Value.HubGuid, out removedChar);
-
-                        if (removedChar != null)
-                        {
                             Command.ParseCommand("quit", player.Value, room.Value);
-                        }
-    
                         
                     }
                 }

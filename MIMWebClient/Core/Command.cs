@@ -235,7 +235,7 @@ namespace MIMWebClient.Core
                 var log = new Error.Error
                 {
                     Date = DateTime.Now,
-                    ErrorMessage = commandOptions + " " + commandKey,
+                    ErrorMessage = commandKey + " " + commandOptions,
                     MethodName = "Wrong command"
                 };
 

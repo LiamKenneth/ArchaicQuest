@@ -391,6 +391,7 @@ namespace MIMWebClient.Controllers
                     {
                             name = err.ErrorMessage,
                             type = err.MethodName,
+                            count = 1
                     };
 
                     if (errors.Find(y => y.name == x.name) != null)

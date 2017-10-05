@@ -186,7 +186,7 @@ namespace MIMWebClient.Core.Update
                     }
                     #endregion
 
-                    if (!string.IsNullOrEmpty(room.updateMessage))
+                    if (!string.IsNullOrEmpty(room.updateMessage) && room.players.Count != 0)
                     {
                         foreach (var player in room.players)
                         {

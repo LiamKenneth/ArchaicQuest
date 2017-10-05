@@ -110,7 +110,7 @@ namespace MIMWebClient.Core.Events
                         {
                             if (item.count > 0)
                             {
-                                itemList += $"<p class='roomItems'>({item.count}) {item.name} are on the floor here.<p>";
+                                itemList += $"<p class='roomItems'>({item.count}) {article} {item.name}'s are on the floor here.<p>";
                             }
                             else
                             {
@@ -147,36 +147,36 @@ namespace MIMWebClient.Core.Events
                         if (item.Status == Player.PlayerStatus.Standing)
                         {
 
-                            playerList += LoadRoom.ShowObjectEffects(item) + " is here\r\n";
+                            playerList += "<p>" + LoadRoom.ShowObjectEffects(item) + " is here.</p>";
                         }
                         else if (item.Status == Player.PlayerStatus.Fighting)
                         {
 
                             if (item.Target.Name == player.Name)
                             {
-                                playerList += "You are fighting " + item.Target.Name + "\r\n";
+                                playerList += "<p>You are fighting " + item.Target.Name + "</p>";
                             }
                             else
                             {
-                                playerList += LoadRoom.ShowObjectEffects(item) + " is fighting " + item.Target.Name +
-                                              "\r\n";
+                                playerList += "<p>" + LoadRoom.ShowObjectEffects(item) + " is fighting " + item.Target.Name +
+                                              "</p>";
                             }
                         }
                         else if (item.Status == PlayerSetup.Player.PlayerStatus.Resting)
                         {
-                            playerList += LoadRoom.ShowObjectEffects(item) + " is resting.";
+                            playerList += "<p>" + LoadRoom.ShowObjectEffects(item) + " is resting here.</p>";
                         }
                         else if (item.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
                         {
-                            playerList += LoadRoom.ShowObjectEffects(item) + " is sleeping.";
+                            playerList += "<p>" + LoadRoom.ShowObjectEffects(item) + " is sleeping here.</p>";
                         }
                         else if (item.Status == PlayerSetup.Player.PlayerStatus.Mounted)
                         {
-                            playerList += LoadRoom.ShowObjectEffects(item) + " is here riding " + Helpers.ReturnName(null, null, item.Mount.Name).ToLower() + ".";
+                            playerList += "<p>" + LoadRoom.ShowObjectEffects(item) + " is here riding " + Helpers.ReturnName(null, null, item.Mount.Name).ToLower() + ".</p>";
                         }
                         else
                         {
-                            playerList += LoadRoom.ShowObjectEffects(item) + " is here\r\n";
+                            playerList += "<p>" + LoadRoom.ShowObjectEffects(item) + " is here.</p>";
                         }
    
                     }
@@ -410,9 +410,13 @@ namespace MIMWebClient.Core.Events
                             {
                                 HubContext.SendToClient("You look into the " + itemDescription.name + " and see:", player.HubGuid);
 
+
                                 foreach (var containerItem in itemDescription.containerItems)
                                 {
-                                    HubContext.SendToClient(containerItem.name, player.HubGuid);
+                                    var result = AvsAnLib.AvsAn.Query(containerItem.name);
+                                    string article = result.Article;
+                              
+                                    HubContext.SendToClient(article.ToUpper() + " " + containerItem.name, player.HubGuid);
                                 }
                             }
                             else
@@ -550,7 +554,10 @@ namespace MIMWebClient.Core.Events
 
                                 foreach (var containerItem in playerItemDescription.containerItems)
                                 {
-                                    HubContext.SendToClient(containerItem.name, player.HubGuid);
+                                    var result = AvsAnLib.AvsAn.Query(containerItem.name);
+                                    string article = result.Article;
+
+                                    HubContext.SendToClient(article.ToUpper() + " " + containerItem.name, player.HubGuid);
                                 }
                             }
                             else

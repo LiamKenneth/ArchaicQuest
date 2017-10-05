@@ -22,8 +22,12 @@ namespace MIMWebClient.Core.Player
 
                 foreach (var item in player.Inventory.Where(x => x.location == Item.ItemLocation.Inventory))
                 {
-                   
-                    inventoryItems.Append(item.name).AppendLine();
+
+                    var result = AvsAnLib.AvsAn.Query(item.name);
+                    string article = result.Article;
+
+
+                    inventoryItems.Append(article.ToUpper() + " " + item.name).AppendLine();
                 }
                 
 

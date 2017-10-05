@@ -20,6 +20,11 @@ namespace MIMWebClient.Core.Room
             for (int i = 0; i < room.players.Count; i++)
             {
 
+                if (room.players[i].Status == Player.PlayerStatus.Sleeping)
+                {
+                    continue;
+                }
+
                 if (teleported == false)
                 {
                     string name = Helpers.ReturnName(player, room.players[i], string.Empty);
