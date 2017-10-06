@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AvsAnLib;
 using LiteDB;
 using MIMWebClient.Core.Player;
 
@@ -386,7 +387,8 @@ namespace MIMWebClient.Core.Events
                     }
                     else
                     {
-                        HubContext.SendToClient("You can't do that to a " + roomDescription.name, player.HubGuid);
+      
+                        HubContext.SendToClient("You see nothing special about the " + roomDescription.name + ".", player.HubGuid);
                     }
 
                 }

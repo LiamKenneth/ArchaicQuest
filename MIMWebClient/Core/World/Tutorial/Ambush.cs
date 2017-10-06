@@ -23,7 +23,7 @@ namespace MIMWebClient.Core.World.Tutorial
         public static Room.Room TutorialRoom1()
         {
 
-    
+
             var room = new Room.Room
             {
                 region = "Tutorial",
@@ -48,7 +48,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
             };
 
-        
+
             room.Emotes.Add("You hear the sound of bushes and trees rustling all around you");
             room.Emotes.Add("*SNAP* You hear the distinctive sound of a stick snapping");
             // Create Exits
@@ -67,7 +67,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 doorName = null
 
             };
-           
+
 
 
             //Create Mobs
@@ -96,12 +96,12 @@ namespace MIMWebClient.Core.World.Tutorial
                 GreetMessage = "I don't think we have much further to go, ",
                 Emotes = new List<string>(),
                 EventOnComunicate = new Dictionary<string, string>(),
-                  EventOnEnter = "tutorial"
+                EventOnEnter = "tutorial"
 
             };
 
             wilhelm.Emotes.Add("looks around nervously");
-        
+
             var dagger = new Item.Item
             {
                 actions = new Item.Action(),
@@ -120,9 +120,9 @@ namespace MIMWebClient.Core.World.Tutorial
 
             dagger.description.look = "This is just a blunt dagger";
             dagger.description.exam = "This blunt dagger is better suited to buttering bread than killing";
-          
+
             wilhelm.Inventory.Add(dagger);
-           
+
             var recall = new Recall
             {
                 Area = room.area,
@@ -137,7 +137,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 Id = "tut1",
                 Message = "Did you hear that?",
                 PossibleResponse = new List<Responses>(),
-                
+
             };
 
             var tut1a = new Responses()
@@ -156,19 +156,19 @@ namespace MIMWebClient.Core.World.Tutorial
             didYouHearThat.PossibleResponse.Add(tut1a);
             didYouHearThat.PossibleResponse.Add(tut1b);
 
-          //  wilhelm.DialogueTree.Add(didYouHearThat);Fw
+            //  wilhelm.DialogueTree.Add(didYouHearThat);Fw
 
 
-         
+
             wilhelm.EventOnComunicate.Add("tutorial", "yes");
 
             var attack = new Responses()
             {
                 QuestionId = "tut1",
-                MatchPhrase = tut1a.Response,               
+                MatchPhrase = tut1a.Response,
                 Response = "AAAHG-ATACK!!!!",
                 Keyword = new List<string>()
-               
+
             };
 
             attack.Keyword.Add(tut1a.Response);
@@ -184,10 +184,10 @@ namespace MIMWebClient.Core.World.Tutorial
 
             attackb.Keyword.Add(tut1b.Response);
 
-         
+
             room.exits.Add(north);
-          
-            room.mobs.Add(wilhelm);         
+
+            room.mobs.Add(wilhelm);
 
             return room;
         }
@@ -257,7 +257,22 @@ namespace MIMWebClient.Core.World.Tutorial
                 items = new List<Item.Item>(),
                 mobs = new List<PlayerSetup.Player>(),
                 terrain = Room.Room.Terrain.Field,
-                keywords = new List<RoomObject>(),
+                keywords = new List<RoomObject>()
+                {
+                    new RoomObject()
+                    {
+                    name = "fire",
+                    look = "As you look closer towards the fire, you notice this is not a human camp. Danger may be ahead."
+                    },
+                    new RoomObject()
+                    {
+                        name = "trees"
+                    },
+                    new RoomObject()
+                    {
+                        name = "shrubs"
+                    }
+                 },
                 corpses = new List<PlayerSetup.Player>(),
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),
@@ -265,6 +280,8 @@ namespace MIMWebClient.Core.World.Tutorial
                 updateMessage = "A loud screech echos through the forest."
 
             };
+
+
 
 
             var east = new Exit
@@ -332,7 +349,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 EventOnEnter = "Give Leather Quest",
                 updateMessage = "A loud screech echos through the forest."
 
-            };  
+            };
 
 
             var west = new Exit
@@ -401,7 +418,7 @@ namespace MIMWebClient.Core.World.Tutorial
             };
 
             var goblin = Goblin.WeakGoblin();
- 
+
             goblin.Recall = new Recall()
             {
                 Region = "Tutorial",
@@ -410,7 +427,7 @@ namespace MIMWebClient.Core.World.Tutorial
             };
 
             room.mobs.Add(goblin);
- 
+
 
 
             room.Emotes.Add("The fire crackles and spits.");
@@ -469,7 +486,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 examine = "You don't see anything worth taking except for what looks like a map."
             };
 
-         
+
 
             var map =
                 "<pre>Hideout" +
@@ -486,7 +503,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
             var mapToGoblinCave = new Item.Item
             {
-               
+
                 description = new Description()
                 {
                     look = "<pre>" + map + "<pre>",
@@ -494,16 +511,16 @@ namespace MIMWebClient.Core.World.Tutorial
 
                 },
                 location = Item.Item.ItemLocation.Room,
-            
+
                 type = Item.Item.ItemType.note,
-                name = "A basic map to a Goblin hideout",               
+                name = "A basic map to a Goblin hideout",
                 Weight = 0,
                 equipable = false,
                 isHiddenInRoom = true
 
             };
 
- 
+
             room.keywords.Add(HideoutMap);
             room.keywords.Add(paper);
             room.keywords.Add(desk);
@@ -525,7 +542,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
             };
 
-           
+
             var chest = new Item.Item
             {
                 name = "Basic looking wooden chest",
@@ -566,7 +583,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 location = Item.Item.ItemLocation.Room,
                 description = new Description(),
                 keywords = new List<string>(),
-               isHiddenInRoom = true,
+                isHiddenInRoom = true,
                 containerItems = new List<Item.Item>()
                 {
                     LeatherHands.LeatherGloves()
@@ -596,10 +613,10 @@ namespace MIMWebClient.Core.World.Tutorial
             deskContainer.containerItems.Add(new Item.Item()
             {
                 name = "Gold",
-                 Gold = 5,
-                 count = 5,
-                 type = Item.Item.ItemType.Gold
-                 
+                Gold = 5,
+                count = 5,
+                type = Item.Item.ItemType.Gold
+
             });
             room.items.Add(chest);
             room.items.Add(bedContainer);
@@ -614,7 +631,7 @@ namespace MIMWebClient.Core.World.Tutorial
             };
             room.mobs.Add(goblin);
 
- 
+
             room.Emotes.Add("You hear a howl in the distance.");
 
             room.exits.Add(west);
@@ -663,7 +680,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 doorName = null
 
             };
- 
+
 
             var chest = new Item.Item
             {
@@ -722,7 +739,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 }
             };
 
-           room.keywords.Add(desk);
+            room.keywords.Add(desk);
             room.items.Add(LeatherFeet.LeatherBoots());
             room.items.Add(deskContainer);
             room.items.Add(chest);
@@ -734,9 +751,9 @@ namespace MIMWebClient.Core.World.Tutorial
                 Area = "Tutorial",
                 AreaId = 5
             };
-           
+
             goblin.Gold = 10;
-            
+
 
             room.mobs.Add(goblin);
 
@@ -942,7 +959,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
             room.items.Add(pool);
 
- 
+
 
             var north = new Exit
             {
@@ -960,7 +977,7 @@ namespace MIMWebClient.Core.World.Tutorial
 
             };
 
- 
+
             room.exits.Add(north);
 
             return room;
@@ -1099,8 +1116,8 @@ namespace MIMWebClient.Core.World.Tutorial
 
 
             };
- 
-     
+
+
 
             return room;
         }

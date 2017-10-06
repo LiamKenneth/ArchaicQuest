@@ -251,8 +251,10 @@
         },
         UI: {
             setWindowHeight: function () {
-                var viewPort = $(window).height() - 125;
+                var viewPort = $(window).height() - 145;
                 $("#discussion").css({ "height": viewPort, "max-height": viewPort });
+                $("#info-inv").css({ "height": viewPort / 2 - 68, "max-height": viewPort / 2 - 68 });   
+                $("#info-quest").css({ "height": viewPort / 2 - 68, "max-height": viewPort / 2 - 68 });   
             },
             openPanels: function () {
 

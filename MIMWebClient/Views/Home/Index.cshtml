@@ -4,290 +4,309 @@
 }
 <div class="container-fluid  full-height" style="margin-top: -73px;">
 
-    <a id="open-left-panel" href="javascript:void(0);" class="full-height visible-xs  visible-sm" style="position: absolute; top: -120px; left: 0; width: 22%; z-index: 900"></a>
+<a id="open-left-panel" href="javascript:void(0);" class="full-height visible-xs  visible-sm" style="position: absolute; top: -120px; left: 0; width: 22%; z-index: 900"></a>
 
-    <div class="row full-height"  style=" overflow: hidden;">
-        <div id="left-panel" class="col-xs-12 col-md-3 hidden-xs hidden-sm   full-height " style="display: table; overflow: hidden;">
+<div class="row full-height"  style=" overflow: hidden;">
+<div id="left-panel" class="col-xs-12 col-md-3 hidden-xs hidden-sm   full-height " style="display: table; overflow: hidden;">
 
-            <div id="info-char" class="full-height" style="display: table; width: 100%; height: 50%;">
-                <div id="score" style="display: table-cell; width: 100%;" class="window">
+    <div id="info-char" class="full-height" style="display: table; width: 100%; height: 50%;">
+        <div id="score" style="display: table-cell; width: 100%;" class="window">
                     
-                    <ul class="list-inline list-unstyled">
-                        <li><a class="infoPlayerFilter activeUiLink" href="javascript:void(0);" title="Your stats">Score</a></li>
-                        <li><a class="infoPlayerFilter" href="javascript:void(0);" title="Add / edit and view your description">Description</a></li>
-                    </ul>
+            <ul class="list-inline list-unstyled">
+                <li><a class="infoPlayerFilter activeUiLink" href="javascript:void(0);" title="Your stats">Score</a></li>
+                <li><a class="infoPlayerFilter" href="javascript:void(0);" title="Add / edit and view your description">Description</a></li>
+            </ul>
 
-                    <div class="js-score" style="overflow-y: scroll; max-height: 40vh;">
-                        <h3 id="player-name" class="text-center"></h3>
+            <div class="js-score" style="overflow-y: scroll; max-height: 40vh;">
+                <h3 id="player-name" class="text-center"></h3>
 
-                        <p class="text-center"><span id="player-gender"></span> <span id="player-race"></span> <span id="player-class"></span> Level <span id="player-level"></span>
-                        </p>
+                <p class="text-center"><span id="player-gender"></span> <span id="player-race"></span> <span id="player-class"></span> Level <span id="player-level"></span>
+                </p>
 
-                        <div class="scoreContainer">
-                            <h3 class="text-center">Attributes</h3>
+                <div class="scoreContainer">
+                    <h3 class="text-center">Attributes</h3>
 
-                            <table width="100%">
-                                <tr>
-                                    <td>Strength</td>
-                                    <td> <span class="pull-right"> <span id="player-str"></span> / <span id="player-max-str"></span> </span> </td>
-                                </tr>
-                                <tr>
-                                    <td>Dexterity</td>
-                                    <td> <span class="pull-right"><span id="player-dex"></span> / <span id="player-max-dex"></span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Constitution</td>
-                                    <td> <span class="pull-right"> <span id="player-con"></span> / <span id="player-max-con"></span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Intelligence</td>
-                                    <td> <span class="pull-right"><span id="player-int"></span> / <span id="player-max-int"></span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Wisdom</td>
-                                    <td><span class="pull-right"><span id="player-wis"></span> / <span id="player-max-wis"></span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Charisma</td>
-                                    <td> <span class="pull-right"><span id="player-cha"></span> / <span id="player-max-cha"></span></span></td>
-                                </tr>
-                            </table>
-                        </div>
+                    <table width="100%">
+                        <tr>
+                            <td>Strength</td>
+                            <td> <span class="pull-right"> <span id="player-str"></span> / <span id="player-max-str"></span> </span> </td>
+                        </tr>
+                        <tr>
+                            <td>Dexterity</td>
+                            <td> <span class="pull-right"><span id="player-dex"></span> / <span id="player-max-dex"></span></span></td>
+                        </tr>
+                        <tr>
+                            <td>Constitution</td>
+                            <td> <span class="pull-right"> <span id="player-con"></span> / <span id="player-max-con"></span></span></td>
+                        </tr>
+                        <tr>
+                            <td>Intelligence</td>
+                            <td> <span class="pull-right"><span id="player-int"></span> / <span id="player-max-int"></span></span></td>
+                        </tr>
+                        <tr>
+                            <td>Wisdom</td>
+                            <td><span class="pull-right"><span id="player-wis"></span> / <span id="player-max-wis"></span></span></td>
+                        </tr>
+                        <tr>
+                            <td>Charisma</td>
+                            <td> <span class="pull-right"><span id="player-cha"></span> / <span id="player-max-cha"></span></span></td>
+                        </tr>
+                    </table>
+                </div>
 
-                        <div class="scoreContainer">
-                            <h3 class="text-center">Armour</h3>
+                <div class="scoreContainer">
+                    <h3 class="text-center">Armour</h3>
 
-                            <table width="100%">
-                                <tr>
-                                    <td>Armour</td>
-                                    <td><span class="pull-right"><span id="player-armorDef"></span></span></td>
-                                </tr>
+                    <table width="100%">
+                        <tr>
+                            <td>Armour</td>
+                            <td><span class="pull-right"><span id="player-armorDef"></span></span></td>
+                        </tr>
 
-                                <tr>
-                                    <td>Magic</td>
-                                    <td><span class="pull-right"><span id="player-magicDef"></span></span></td>
-                                </tr>
+                        <tr>
+                            <td>Magic</td>
+                            <td><span class="pull-right"><span id="player-magicDef"></span></span></td>
+                        </tr>
 
-                            </table>
-                        </div>
+                    </table>
+                </div>
 
-                        <div class="scoreContainer">
-                            <h3 class="text-center">Offence</h3>
+                <div class="scoreContainer">
+                    <h3 class="text-center">Offence</h3>
 
-                            <table width="100%">
-                                <tr>
-                                    <td>Hit Roll</td>
-                                    <td> <span class="pull-right"> <span id="player-hitroll"></span> </span> </td>
-                                </tr>
-                                <tr>
-                                    <td>Dam Roll</td>
-                                    <td> <span class="pull-right"><span id="player-damroll"></span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Wimpy</td>
-                                    <td> <span class="pull-right"> <span id="player-wimpy"></span></span></td>
-                                </tr>
+                    <table width="100%">
+                        <tr>
+                            <td>Hit Roll</td>
+                            <td> <span class="pull-right"> <span id="player-hitroll"></span> </span> </td>
+                        </tr>
+                        <tr>
+                            <td>Dam Roll</td>
+                            <td> <span class="pull-right"><span id="player-damroll"></span></span></td>
+                        </tr>
+                        <tr>
+                            <td>Wimpy</td>
+                            <td> <span class="pull-right"> <span id="player-wimpy"></span></span></td>
+                        </tr>
 
-                            </table>
-                        </div>
+                    </table>
+                </div>
 
-                        <div class="scoreContainer">
-                            <h3 class="text-center">Misc</h3>
+                <div class="scoreContainer">
+                    <h3 class="text-center">Misc</h3>
 
-                            <table width="100%">
-                                <tr>
-                                    <td>Alignment</td>
-                                    <td><span class="pull-right"><span id="player-alignment"></span></span></td>
-                                </tr>
+                    <table width="100%">
+                        <tr>
+                            <td>Alignment</td>
+                            <td><span class="pull-right"><span id="player-alignment"></span></span></td>
+                        </tr>
 
-                                <tr>
-                                    <td>Experience</td>
-                                    <td><span class="pull-right"><span id="player-experience"></span></span></td>
-                                </tr>
+                        <tr>
+                            <td>Experience</td>
+                            <td><span class="pull-right"><span id="player-experience"></span></span></td>
+                        </tr>
 
-                                <tr>
-                                    <td>Weight</td>
-                                    <td><span class="pull-right"><span id="player-weight"></span> of <span id="player-max-weight"></span></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Status</td>
-                                    <td><span class="pull-right"><span id="player-status"></span></span></td>
-                                </tr>
-
-
-                            </table>
-                        </div>
-
-                        <div class="scoreContainer">
-                            <h3 class="text-center">Stats</h3>
-
-                            <table width="100%">
-                                <tr>
-                                    <td>Hours</td>
-                                    <td> <span class="pull-right"> <span id="player-hours"></span> </span> </td>
-                                </tr>
-                                <tr>
-                                    <td>Quest Points</td>
-                                    <td> <span class="pull-right">N/A</span></td>
-                                </tr>
+                        <tr>
+                            <td>Weight</td>
+                            <td><span class="pull-right"><span id="player-weight"></span> of <span id="player-max-weight"></span></span></td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td><span class="pull-right"><span id="player-status"></span></span></td>
+                        </tr>
 
 
-                            </table>
-                        </div>
+                    </table>
+                </div>
 
-                        <div class="scoreContainer">
-                            <h3 class="text-center">Money</h3>
+                <div class="scoreContainer">
+                    <h3 class="text-center">Stats</h3>
 
-                            <table width="100%">
-                                <tr>
-                                    <td>Copper</td>
-                                    <td><span class="pull-right"><span id="player-copper"></span></span></td>
-                                </tr>
-
-                                <tr>
-                                    <td>Silver</td>
-                                    <td><span class="pull-right"><span id="player-silver"></span></span></td>
-                                </tr>
-
-
-                                <tr>
-                                    <td>Gold</td>
-                                    <td><span class="pull-right"><span id="player-gold"></span></span></td>
-                                </tr>
+                    <table width="100%">
+                        <tr>
+                            <td>Hours</td>
+                            <td> <span class="pull-right"> <span id="player-hours"></span> </span> </td>
+                        </tr>
+                        <tr>
+                            <td>Quest Points</td>
+                            <td> <span class="pull-right">N/A</span></td>
+                        </tr>
 
 
-                            </table>
-                        </div>
+                    </table>
+                </div>
 
-                    </div>
+                <div class="scoreContainer">
+                    <h3 class="text-center">Money</h3>
+
+                    <table width="100%">
+                        <tr>
+                            <td>Copper</td>
+                            <td><span class="pull-right"><span id="player-copper"></span></span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Silver</td>
+                            <td><span class="pull-right"><span id="player-silver"></span></span></td>
+                        </tr>
+
+
+                        <tr>
+                            <td>Gold</td>
+                            <td><span class="pull-right"><span id="player-gold"></span></span></td>
+                        </tr>
+
+
+                    </table>
+                </div>
+
+            </div>
                     
-                    <div class="js-description" style="overflow-y: scroll; max-height: 40vh; display: none;">
+            <div class="js-description" style="overflow-y: scroll; max-height: 40vh; display: none;">
                         
-                        <pre id="descriptionContainer">You see nothing special about them.</pre>
+                <pre id="descriptionContainer">You see nothing special about them.</pre>
 
-                        <a id="editDescription" href="javascript:void(0)" data-toggle="modal" data-target="#modalDescription">Edit Description</a>
-                    </div>
-                </div>
-            </div>
-
-            <div id="info-inv" class="full-height" style="display: table; width: 100%; height: 44.3%; margin-top: 10px;">
-                <div style="display: table-cell; width: 100%; max-height: 40vh; overflow: hidden;" class="window">
-                    <ul class="list-inline list-unstyled">
-                        <li><a class="infoFilter activeUiLink" href="javascript:void(0);" title="Inventory">Inv</a></li>
-                        <li><a class="infoFilter" href="javascript:void(0);" title="Equipment">EQ</a></li>
-                        <li><a class="infoFilter" href="javascript:void(0);" title="Affects">Aff</a></li>
-                        <li><a class="infoFilter" href="javascript:void(0);" title="Quest Log">Qlog</a></li>
-                    </ul>
-                    
-                    <div id="" class="js-info" style="position: relative; overflow-y: scroll;  max-height: 33vh;">
-
-                        <ul id="invList"></ul>
-
-                        <div id="eqList" style="display: none;"></div>
-
-                        <ul id="afList" style="display: none;"></ul>
-
-                        <div id="qlList" style="display: none;"></div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <div id="main-panel" class="col-xs-12 col-md-6 full-height">
-
-            <div id="discussion" class="full-height window" style="overflow-y: scroll; padding: 15px;"></div>
-        </div>
-        <div id="right-panel" class="col-xs-12 col-md-3 hidden-xs hidden-sm full-height" style="">
-
-            <div id="info-room" class="full-height" style="display: table; width: 100%; height: 50%;">
-
-
-                <div style=" width: 100%; height: 47vh;" class="window">
-
-                    <div class="js-room" style=" ">
-                        <h3>Map Key:</h3>
-                        <ul class="list-inline list-unstyled">
-                            <li class="Active">You</li>
-                            <li class="Shop">Shop</li>
-                            <li class="Guild">Guild</li>
-                            <li class="Room">Room</li>
-                            <li class="Stairs">Stairs</li>
-                        </ul>
-                        <div id="roomTitleInfo" style="top: 0;
-
-  height:35vh;
-  width:100%"></div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div id="info-quest" class="full-height" style="display: table; width: 100%; height: 44.3%; margin-top: 10px;">
-                <div style="display: table-cell; width: 100%; max-height: 40vh; overflow: hidden;" class="window showExit">
-                    <ul class="list-inline list-unstyled">
-                        <li class="">Channels:</li>
-                        <li><a class="channelFilter activeUiLink" href="javascript:void(0);">All</a></li>
-                        <li><a class="channelFilter" href="javascript:void(0);">Newbie</a></li>
-                        <li><a class="channelFilter" href="javascript:void(0);">Gossip</a></li>
-                        <li><a class="channelFilter" href="javascript:void(0);">Room</a></li>
-                        <li><a class="channelFilter" href="javascript:void(0);">OOC</a></li>
-                    </ul>
-
-                    <div id="Channel" class="js-channels" style="overflow-y: scroll; max-height: 33vh;">
-
-
-                    </div>
-                </div>
+                <a id="editDescription" href="javascript:void(0)" data-toggle="modal" data-target="#modalDescription">Edit Description</a>
             </div>
         </div>
     </div>
 
+    <div id="info-inv" class="full-height" style="display: table; width: 100%; height: 44.3%; margin-top: 10px;">
+        <div style="display: table-cell; width: 100%; max-height: 40vh; overflow: hidden;" class="window">
+            <ul class="list-inline list-unstyled">
+                <li><a class="infoFilter activeUiLink" href="javascript:void(0);" title="Inventory">Inv</a></li>
+                <li><a class="infoFilter" href="javascript:void(0);" title="Equipment">EQ</a></li>
+                <li><a class="infoFilter" href="javascript:void(0);" title="Affects">Aff</a></li>
+                <li><a class="infoFilter" href="javascript:void(0);" title="Quest Log">Qlog</a></li>
+            </ul>
+                    
+            <div id="" class="js-info" style="position: relative; overflow-y: scroll;  max-height: 33vh;">
 
-    <a id="open-right-panel" href="javascript:void(0);" class="full-height visible-xs visible-sm" style="position: absolute; top: -120px; right: 0; width: 22%; z-index: 900"></a>
+                <ul id="invList"></ul>
+
+                <div id="eqList" style="display: none;"></div>
+
+                <ul id="afList" style="display: none;"></ul>
+
+                <div id="qlList" style="display: none;"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="main-panel" class="col-xs-12 col-md-6 full-height">
+
+    <div id="discussion" class="full-height window" style="overflow-y: scroll; padding: 15px;"></div>
+</div>
+<div id="right-panel" class="col-xs-12 col-md-3 hidden-xs hidden-sm full-height" style="">
+
+    <div id="info-room" class="full-height" style="display: table; width: 100%; height: 50%;">
+
+
+        <div style=" width: 100%; height: 47vh;" class="window">
+
+            <div class="js-room" style=" ">
+                <h3>Map Key:</h3>
+                <ul class="list-inline list-unstyled">
+                    <li class="Active">You</li>
+                    <li class="Shop">Shop</li>
+                    <li class="Guild">Guild</li>
+                    <li class="Room">Room</li>
+                    <li class="Stairs">Stairs</li>
+                </ul>
+                <div id="roomTitleInfo" style="top: 0;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          height:35vh;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          width:100%"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="info-quest" class="full-height" style="display: table; width: 100%; height: 44.3%; margin-top: 10px;">
+        <div style="display: table-cell; width: 100%; max-height: 40vh; overflow: hidden;" class="window showExit">
+            <ul class="list-inline list-unstyled">
+                <li class="">Channels:</li>
+                <li><a class="channelFilter activeUiLink" href="javascript:void(0);">All</a></li>
+                <li><a class="channelFilter" href="javascript:void(0);">Newbie</a></li>
+                <li><a class="channelFilter" href="javascript:void(0);">Gossip</a></li>
+                <li><a class="channelFilter" href="javascript:void(0);">Room</a></li>
+                <li><a class="channelFilter" href="javascript:void(0);">OOC</a></li>
+            </ul>
+
+            <div id="Channel" class="js-channels" style="overflow-y: scroll; max-height: 33vh;">
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<a id="open-right-panel" href="javascript:void(0);" class="full-height visible-xs visible-sm" style="position: absolute; top: -120px; right: 0; width: 22%; z-index: 900"></a>
 
 
 
 
-    <div class="modal" tabindex="-1" role="dialog" data-show="true" style="display: block;" id="signUpModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="row">
-                        <div class="col-xs-4 active raceBreadCrumb">
-                            <span class="hidden-xs">Choose</span> Race
-                        </div>
-                        <div class="col-xs-4 classBreadCrumb">
-                            <span class="hidden-xs">Choose</span> Class
-                        </div>
-                        <div class="col-xs-4 infoBreadCrumb">
-                            <span class="hidden-xs">Character</span> Info
-                        </div>
+<div class="modal" tabindex="-1" role="dialog" data-show="true" style="display: block;" id="signUpModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-xs-4 active raceBreadCrumb">
+                        <span class="hidden-xs">Choose</span> Race
+                    </div>
+                    <div class="col-xs-4 classBreadCrumb">
+                        <span class="hidden-xs">Choose</span> Class
+                    </div>
+                    <div class="col-xs-4 infoBreadCrumb">
+                        <span class="hidden-xs">Character</span> Info
                     </div>
                 </div>
-                <div class="modal-body">
+            </div>
+            <div class="modal-body">
 
 
-                    @{ Html.RenderPartial("~/Views/Home/Partial/Account/Login.cshtml"); }
+                @{ Html.RenderPartial("~/Views/Home/Partial/Account/Login.cshtml"); }
 
-                    @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/RaceSelection.cshtml"); }
+                @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/RaceSelection.cshtml"); }
 
-                    @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/ClassSelection.cshtml"); }
+                @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/ClassSelection.cshtml"); }
 
-                    @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/CharSelection.cshtml"); }
+                @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/CharSelection.cshtml"); }
 
-                    <!-- TODO: Stat Partial & Char info partial -->
+                <!-- TODO: Stat Partial & Char info partial -->
 
-                </div>
+            </div>
 
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </div>
+
+
+
 <div class="container-fluid" style="position: absolute; bottom: 0; width: 100%">
+    
+    <div class="quick-buttons">
+        <ul class="list-unstyled list-inline">
+            <li><a href="#">Help</a></li>
+            <li><a href="#">North</a></li>
+            <li><a href="#">East</a></li>
+            <li><a href="#">West</a></li>
+            <li><a href="#">South</a></li>
+            <li><a href="#">look</a></li>
+            <li><a href="#">get</a></li>
+            <li><a href="#">drop</a></li>
+            <li><a href="#">wear</a></li>
+            <li><a href="#">wield</a></li>
+            <li><a href="#">kill</a></li>
+        </ul>
+    </div>
     <div class="row">
         <div class="col-xs-3">
             <div class="progress">
-                <div id="HP-bar" class="progress-bar progress-bar-danger" role="progressbar" style="width:0%">
+                <div id="HP-bar" class="progress-bar progress-bar-danger" role="progressbar" style="width: 0%">
                     <div class="statInfo">
                         <span id="stat-HP"></span>/<span id="stat-max-HP"></span>
                     </div>
@@ -297,7 +316,7 @@
         </div>
         <div class="col-xs-3">
             <div class="progress">
-                <div id="mana-bar" class="progress-bar progress-bar-info" role="progressbar" style="width:0%">
+                <div id="mana-bar" class="progress-bar progress-bar-info" role="progressbar" style="width: 0%">
                     <div class="statInfo">
                         <span id="stat-mana"></span>/<span id="stat-max-mana"></span>
                     </div>
@@ -311,7 +330,7 @@
                 <div class="statInfo">
                     <span id="stat-endurance"></span>/<span id="stat-max-endurance"></span>
                 </div>
-                <div id="end-bar" class="progress-bar progress-bar-success" role="progressbar" style="width:0%">
+                <div id="end-bar" class="progress-bar progress-bar-success" role="progressbar" style="width: 0%">
 
                 </div>
 
@@ -323,7 +342,7 @@
                 <div class="statInfo">
                     <span id="stat-tnl"></span> tnl
                 </div>
-                <div id="tnl-bar" class="progress-bar progress-bar-warning" role="progressbar" style="width:0%">
+                <div id="tnl-bar" class="progress-bar progress-bar-warning" role="progressbar" style="width: 0%">
 
 
                 </div>
@@ -336,7 +355,7 @@
     <div class="row">
         <div class="col-xs-12" style="position: relative;">
             <form onSubmit="return false;">
-                <input type="text" id="message" class="form-control" placeholder="Type here..." autofocus style="background: #101010; color: #f1f1f1; margin-bottom: 15px;" autocomplete="off" />
+                <input type="text" id="message" class="form-control" placeholder="Type here..." autofocus style="background: #101010; color: #f1f1f1; margin-bottom: 15px;" autocomplete="off"/>
                 <button type="submit" id="sendmessage" style="position: absolute; right: 25px; top: 5px; background: #fed967; border: 1px solid #ff8c00">send</button>
             </form>
         </div>

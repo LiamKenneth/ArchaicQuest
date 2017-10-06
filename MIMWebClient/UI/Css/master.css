@@ -6241,3 +6241,9 @@ li.Stairs:before {
   .modal-dialog {
     width: 700px; } }
 
+.quick-buttons a {
+  display: inline-block;
+  background: #fff;
+  color: #555;
+  padding: 10px 20px; }
+
