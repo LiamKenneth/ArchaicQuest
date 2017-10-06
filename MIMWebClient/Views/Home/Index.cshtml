@@ -253,16 +253,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="row">
-                        <div class="col-xs-3 active raceBreadCrumb">
+                        <div class="col-xs-4 active raceBreadCrumb">
                             <span class="hidden-xs">Choose</span> Race
                         </div>
-                        <div class="col-xs-3 classBreadCrumb">
+                        <div class="col-xs-4 classBreadCrumb">
                             <span class="hidden-xs">Choose</span> Class
                         </div>
-                        <div class="col-xs-3 statsBreadCrumb">
-                            <span class="hidden-xs">Roll</span> Stats
-                        </div>
-                        <div class="col-xs-3 infoBreadCrumb">
+                        <div class="col-xs-4 infoBreadCrumb">
                             <span class="hidden-xs">Character</span> Info
                         </div>
                     </div>
@@ -275,8 +272,6 @@
                     @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/RaceSelection.cshtml"); }
 
                     @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/ClassSelection.cshtml"); }
-
-                    @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/StatSelection.cshtml"); }
 
                     @{ Html.RenderPartial("~/Views/Home/Partial/CharacterCreation/CharSelection.cshtml"); }
 

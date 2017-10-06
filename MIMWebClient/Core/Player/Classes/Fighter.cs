@@ -30,7 +30,8 @@ namespace MIMWebClient.Core.Player.Classes
                 MaxEnduranceGain = 15,
                 MinEnduranceGain = 11,
                 StatBonusStr = 1,
-                StatBonusCon = 1
+                StatBonusCon = 1,
+               
 
             };
 

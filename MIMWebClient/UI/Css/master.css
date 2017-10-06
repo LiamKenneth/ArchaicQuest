@@ -5857,7 +5857,7 @@ h1, h2, h3, h4, h5, h6 {
   #discussion .sayColor {
     color: #00ffff; }
   #discussion .questColor {
-    color: yellow; }
+    color: #f6d437; }
   #discussion .RoomExits {
     color: #2ecc71; }
   #discussion .roomItems {
@@ -6236,4 +6236,8 @@ li.Stairs:before {
 .infoFilter, .infoPlayerFilter, .channelFilter {
   position: relative;
   z-index: 999; }
+
+@media all and (min-width: 768px) {
+  .modal-dialog {
+    width: 700px; } }
 

@@ -274,8 +274,10 @@ namespace MIMWebClient.Hubs
 
         #region  Character Wizard & Setup
 
-        public void charSetup(string id, string name, string email, string password, string gender, string race, string selectedClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma)
+        public void charSetup(string id, string name, string email, string password, string gender, string race, string selectedClass)
         {
+
+            var raceStats = PlayerRace.selectRace(race);
 
             //Creates and saves player
             PlayerData = new Player
@@ -287,19 +289,19 @@ namespace MIMWebClient.Hubs
                 Gender = gender,
                 Race = race,
                 SelectedClass = selectedClass,
-                Strength = strength,
-                Constitution = constitution,
-                Dexterity = dexterity,
-                Wisdom = wisdom,
-                Intelligence = intelligence,
-                Charisma = charisma,
-                MaxStrength = strength,
-                MaxConstitution = constitution,
-                MaxDexterity = dexterity,
-                MaxWisdom = wisdom,
-                MaxIntelligence = intelligence,
-                MaxCharisma = charisma,
-                intoxicationMaxLevel = constitution,
+                Strength = raceStats.str,
+                Constitution = raceStats.con,
+                Dexterity = raceStats.dex,
+                Wisdom = raceStats.wis,
+                Intelligence = raceStats.inte,
+                Charisma = raceStats.cha,
+                MaxStrength = raceStats.str,
+                MaxConstitution = raceStats.con,
+                MaxDexterity = raceStats.dex,
+                MaxWisdom = raceStats.wis,
+                MaxIntelligence = raceStats.inte,
+                MaxCharisma = raceStats.cha,
+                intoxicationMaxLevel = raceStats.con,
                 Type = Player.PlayerTypes.Player,
                 JoinedDate = DateTime.UtcNow,
                 LastCommandTime = DateTime.UtcNow

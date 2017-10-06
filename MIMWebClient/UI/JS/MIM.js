@@ -3,7 +3,7 @@
     //================================================================================
     // Setup the auto-generated proxy for the hub.
     //================================================================================
-    $.connection.hub.url = "/dev/signalr";
+    $.connection.hub.url = "/signalr";
 
     var chat = $.connection.mIMHub;
     var client = chat.client;
@@ -106,38 +106,38 @@
             $("#selectedClassBtn").click(function () {
                 server.getStats();
                 classStep.style.display = "none";
-                statsStep.style.display = "block";
+                infoStep.style.display = "block";
                 modelHeaderDiv.removeClass("active");
-                $(".statsBreadCrumb").addClass("active");
+                $(".infoBreadCrumb").addClass("active");
             });
 
             $("#backToClass").click(function () {
 
                 classStep.style.display = "block";
-                statsStep.style.display = "none";
+                infoStep.style.display = "none";
                 modelHeaderDiv.removeClass("active");
                 classBreadCrumb.addClass("active");
             });
 
-            $("#backToStats").click(function () {
+            //$("#backToStats").click(function () {
 
-                statsStep.style.display = "block";
-                infoStep.style.display = "none";
-                modelHeaderDiv.removeClass("active");
-                statsBreadCrumb.addClass("active");
-            });
+            //    statsStep.style.display = "block";
+            //    infoStep.style.display = "none";
+            //    modelHeaderDiv.removeClass("active");
+            //    statsBreadCrumb.addClass("active");
+            //});
 
-            $("#reRollStats").click(function () {
-                server.getStats();
-            });
+            //$("#reRollStats").click(function () {
+            //    server.getStats();
+            //});
 
-            $("#selectedStatsBtn").click(function () {
-                // server.getStats();
-                statsStep.style.display = "none";
-                infoStep.style.display = "block";
-                modelHeaderDiv.removeClass("active");
-                $(".infoBreadCrumb").addClass("active");
-            });
+            //$("#selectedStatsBtn").click(function () {
+            //    // server.getStats();
+            //    statsStep.style.display = "none";
+            //    infoStep.style.display = "block";
+            //    modelHeaderDiv.removeClass("active");
+            //    $(".infoBreadCrumb").addClass("active");
+            //});
 
             $("#createCharWizard").click(function () {
                 document.getElementById('login').style.display = "none";
@@ -222,8 +222,8 @@
             
          
 
-            server.charSetup($.connection.hub.id, name, char.Email, char.Password, char.Gender, char.Race, char.Class, char.Strength, char.Dexterity, char.Constitution, char.Wisdom, char.Intelligence, char.Charisma);
-            //  server.loadRoom($.connection.hub.id);
+            server.charSetup($.connection.hub.id, name, char.Email, char.Password, char.Gender, char.Race, char.Class);
+
 
             document.getElementById('signUpModal').style.display = "none";
 

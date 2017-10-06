@@ -15,6 +15,7 @@ using MIMWebClient.Core.World.Anker.Quests;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Clothing.Legs;
 using MIMWebClient.Core.World.Items.Clothing.ClothingBody;
 using Cache = MIMWebClient.Core.Events.Cache;
+using MIMWebClient.Core.Item;
 
 namespace MIMWebClient.Core.World.Tutorial
 {
@@ -102,12 +103,27 @@ namespace MIMWebClient.Core.World.Tutorial
                 var hasDagger = player.Inventory.FirstOrDefault(x => x.name.Contains("dagger"));
                 if (step.Equals("yes", StringComparison.CurrentCultureIgnoreCase) && hasDagger == null)
                 {
-                    var weapon = npc.Inventory.FirstOrDefault(x => x.name.Contains("dagger"));
-
-                    if (weapon != null)
+                    var dagger = new Item.Item
                     {
-                        player.Inventory.Add(weapon);
-                    }
+                        actions = new Item.Action(),
+                        name = "Blunt dagger",
+                        eqSlot = Item.Item.EqSlot.Wielded,
+                        weaponType = Item.Item.WeaponType.ShortBlades,
+                        stats = new Item.Stats { damMin = 2, damMax = 4, minUsageLevel = 1 },
+                        type = Item.Item.ItemType.Weapon,
+                        equipable = true,
+                        attackType = Item.Item.AttackType.Pierce,
+                        slot = Item.Item.EqSlot.Wielded,
+                        location = Item.Item.ItemLocation.Inventory,
+                        description = new Description(),
+
+                    };
+                    dagger.description.look = "This is just a blunt dagger";
+                    dagger.description.exam = "This blunt dagger is better suited to buttering bread than killing";
+
+
+                    player.Inventory.Add(dagger);
+                  
 
                     await Task.Delay(1500);
 

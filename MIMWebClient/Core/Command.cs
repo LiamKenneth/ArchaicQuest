@@ -33,17 +33,25 @@ namespace MIMWebClient.Core
                 {"down", () => Movement.Move(playerData, room, "Down")},
                 {"up", () => Movement.Move(playerData, room, "Up")},               
                 {"look", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look")},
+                {"look at", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look")},
+                {"l at", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look")},
                 {"l in", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look in")},
                 {"look in", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look in")},
+                {"search", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look")},
+                {"search in", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look in")},
                 {"examine", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "examine")},
                 {"touch", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "touch")},
                 {"smell", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "smell")},
                 {"taste", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "taste")},
                 {"score", () => Score.ReturnScore(playerData)},
                 {"inventory", () => Inventory.ReturnInventory(playerData.Inventory, playerData)},
+                {"eq", () => Equipment.ShowEquipment(playerData)},
+                {"equip", () => Equipment.WearItem(playerData, commandOptions)},            
                 {"equipment", () => Equipment.ShowEquipment(playerData)},
                 {"garb", () => Equipment.ShowEquipment(playerData)},
                 {"loot", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item")},
+                {"pick up", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item")},
+                {"plunder", () => ManipulateObject.GetItem(room, playerData, "all " + commandOptions, commandKey, "item")},
                 {"get", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item")},
                 {"take", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item")},
                 {"drop", () => ManipulateObject.DropItem(room, playerData, commandOptions, commandKey)},
@@ -62,12 +70,14 @@ namespace MIMWebClient.Core
                 {"yell", () => Communicate.Yell(commandOptions, room, playerData)},
                 {"talkto", () => Talk.TalkTo(commandOptions, room, playerData)},
                 {"emote", () => Emote.EmoteActionToRoom(commandOptions, playerData)},
+                {"use", () => Equipment.WearItem(playerData, commandOptions)},
                 {"wear", () => Equipment.WearItem(playerData, commandOptions)},
                 {"remove", () => Equipment.RemoveItem(playerData, commandOptions)},
                 {"doff", () => Equipment.RemoveItem(playerData, commandOptions)},
                 {"wield", () => Equipment.WearItem(playerData, commandOptions, true)},
                 {"unwield", () => Equipment.RemoveItem(playerData, commandOptions, false, true)},
                 {"kill", () => Fight2.PerpareToFight(playerData, room, commandOptions)},
+                {"attack", () => Fight2.PerpareToFight(playerData, room, commandOptions)},
                 {"flee", () => Flee.fleeCombat(playerData, room)},
 
                 //spells
@@ -141,9 +151,13 @@ namespace MIMWebClient.Core
                 {"close", () => ManipulateObject.Close(room, playerData, commandOptions, commandKey)},
                 {"drink", () => ManipulateObject.Drink(room, playerData, commandOptions, commandKey)},
                 {"help", () => Help.ShowHelp(commandOptions, playerData)},
+                {"commands", () => Help.ShowHelp(commandOptions, playerData)},
+                {"/help", () => Help.ShowHelp(commandOptions, playerData)},
+                {"?", () => Help.ShowHelp(commandOptions, playerData)},
                 {"time", Update.Time.ShowTime},
                 {"clock", Update.Time.ShowTime},
                 {"skills", () => ShowSkills.ShowPlayerSkills(playerData, commandOptions)},
+                {"spells", () => ShowSkills.ShowPlayerSkills(playerData, commandOptions)},
                 {"skills all", () => ShowSkills.ShowPlayerSkills(playerData, commandOptions)},
                 {"practice", () => Trainer.Practice(playerData, room, commandOptions)},
                 {"list", () => Shop.listItems(playerData, room)},
@@ -196,7 +210,7 @@ namespace MIMWebClient.Core
             if (commands.Length >= 2)
             {
            
-                if ((commands[1].Equals("in", StringComparison.InvariantCultureIgnoreCase) || commands[1].Equals("at", StringComparison.InvariantCultureIgnoreCase)))
+                if ((commands[1].Equals("in", StringComparison.InvariantCultureIgnoreCase) || commands[1].Equals("at", StringComparison.InvariantCultureIgnoreCase) || commands[1].Equals("up", StringComparison.InvariantCultureIgnoreCase)))
                 {
                     commandKey = commands[0] + " " + commands[1];
                     commandOptions =  enteredCommand.Substring(enteredCommand.IndexOf(commands[2], StringComparison.Ordinal)).Trim();  
