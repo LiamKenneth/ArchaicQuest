@@ -10,25 +10,22 @@ namespace MIMWebClient.Core
     {
         public IEnumerable<String> List()
         {
-            return this.List(null, false);
+            return List(this, false);
         }
 
         public IEnumerable<String> List(bool article)
         {
-            return this.List(null, article);
+            return List(this, article);
         }
 
-        public IEnumerable<String> List(Func<Item.Item, bool> filter)
+        public static IEnumerable<String> List(IEnumerable<Item.Item> items)
         {
-            return this.List(filter, false);
+            return List(items, false);
         }
 
-        public IEnumerable<String> List(Func<Item.Item, bool> filter, bool article)
+        public static IEnumerable<String> List(IEnumerable<Item.Item> items, bool article)
         {
-            var list = this.AsEnumerable();
-            if(filter != null) list = list.Where(filter);
-
-            return list.GroupBy(t => t.name).Select(group => new
+            return items.GroupBy(t => t.name).Select(group => new
             {
                 Name = group.Key,
                 Count = group.Count()

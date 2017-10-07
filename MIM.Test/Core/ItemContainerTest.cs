@@ -39,14 +39,6 @@ namespace MIM.Test.Core
         }
 
         [Test]
-        public void ShouldApplyPredicate()
-        {
-            var expected = new List<string> { vestName };
-
-            Assert.That(container.List(x => x.name == vestName).ToList(), Is.EquivalentTo(expected));
-        }
-
-        [Test]
         public void ShouldUseArticle()
         {
             var vestArticle = AvsAnLib.AvsAn.Query(vestName).Article; ;

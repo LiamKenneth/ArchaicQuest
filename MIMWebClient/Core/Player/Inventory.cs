@@ -20,7 +20,7 @@ namespace MIMWebClient.Core.Player
                 var itemList = new StringBuilder();
                 itemList.Append("You are carrying:").AppendLine();
 
-                foreach(var item in inventory.List((x => x.location == Item.ItemLocation.Inventory))){
+                foreach(var item in ItemContainer.List(inventory.Where(x => x.location == Item.ItemLocation.Inventory))){
                     itemList.AppendLine(item);
                 }               
 
