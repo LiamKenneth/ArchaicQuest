@@ -341,7 +341,34 @@ namespace MIMWebClient.Core.World.Tutorial
                 items = new List<Item.Item>(),
                 mobs = new List<PlayerSetup.Player>(),
                 terrain = Room.Room.Terrain.Field,
-                keywords = new List<RoomObject>(),
+                keywords = new List<RoomObject>()
+                {
+                new RoomObject()
+                {
+                name = "thick logs",
+                look = "Chopped logs have been placed around the fire, they still contain the tree bark and no attempts have been made to make them comfortable. You notice the letters D.R scratched into the bark."
+            },
+            new RoomObject()
+            {
+                name = "fire",
+                look = "The flames of fire dance around giving off a comfortable heat."
+            },
+            new RoomObject()
+            {
+                name = "meat",
+                look = "You can't tell what kind of meat it is, could be human. You can be sure though it's not edible by the maggots covering it."
+            },
+                    new RoomObject()
+             {
+                name = "bed rolls",
+                look = "The bed rolls are stained, covered in all colours of dirt. Nothing seems to be contained inside of them."
+            },
+                    new RoomObject()
+                    {
+                        name = "tent",
+                        look = "Looks to be occupied, you can see a silhouette of something moving around inside."
+                    }
+            },
                 corpses = new List<PlayerSetup.Player>(),
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),
@@ -456,7 +483,20 @@ namespace MIMWebClient.Core.World.Tutorial
                 items = new List<Item.Item>(),
                 mobs = new List<PlayerSetup.Player>(),
                 terrain = Room.Room.Terrain.Field,
-                keywords = new List<RoomObject>(),
+                keywords = new List<RoomObject>() {
+                    new RoomObject()
+                    {
+                    name = "gold coins"
+                     },
+                    new RoomObject()
+                    {
+                        name = "small candle"
+                    },
+                    new RoomObject()
+                    {
+                        name = "bread crumbs"
+                    }
+                },
                 corpses = new List<PlayerSetup.Player>(),
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),
@@ -612,10 +652,12 @@ namespace MIMWebClient.Core.World.Tutorial
             deskContainer.containerItems.Add(mapToGoblinCave);
             deskContainer.containerItems.Add(new Item.Item()
             {
-                name = "Gold",
+                name = "some gold coins",
                 Gold = 5,
                 count = 5,
-                type = Item.Item.ItemType.Gold
+                type = Item.Item.ItemType.Gold,
+                location = Item.Item.ItemLocation.Room
+
 
             });
             room.items.Add(chest);
@@ -655,7 +697,24 @@ namespace MIMWebClient.Core.World.Tutorial
                 items = new List<Item.Item>(),
                 mobs = new List<PlayerSetup.Player>(),
                 terrain = Room.Room.Terrain.Field,
-                keywords = new List<RoomObject>(),
+                keywords = new List<RoomObject>() {
+                    new RoomObject()
+                    {
+                        name = "gold coins"
+                    },
+                    new RoomObject()
+                    {
+                        name = "paper"
+                    },
+                    new RoomObject()
+                    {
+                        name = "small candle"
+                    },
+                    new RoomObject()
+                    {
+                        name = "bread crumbs"
+                    }
+                },
                 corpses = new List<PlayerSetup.Player>(),
                 players = new List<PlayerSetup.Player>(),
                 fighting = new List<string>(),

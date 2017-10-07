@@ -1,5 +1,6 @@
 ﻿@import "../Lib/_bootstrap.scss";
-
+@import "slick-theme.scss";
+@import "slick.scss";
 .notVisible {
     display: none;
 }
@@ -410,9 +411,29 @@ li.Stairs:before {
 }
 }
 
+.quick-buttons {
+    top: -10px;
+    margin: 10px 29px;
+}
+
 .quick-buttons a {
     display: inline-block;
-    background: #fff;
-    color: #555;
-    padding:10px 20px;
+    border: 1px solid #525045;
+    margin-bottom: 10px;
+    color: #fed967;
+    box-shadow: inset 0 0 15px 2px #000;
+    padding: 10px 20px;
+    min-width: 100px;
+    text-align: center;
+    margin: 0 8px;
+}
+
+.tooltip.top .tooltip-arrow {
+    border-top-color: #fed967;
+}
+.tooltip-inner {
+    color: #111;
+    background-color: #fed967;
+    border-radius: 0;
+    font-size: 16px;
 }
