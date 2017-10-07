@@ -18,15 +18,15 @@ namespace MIMWebClient.Core
             return this.List(null, article);
         }
 
-        public IEnumerable<String> List(Func<Item.Item, bool> predicate)
+        public IEnumerable<String> List(Func<Item.Item, bool> filter)
         {
-            return this.List(predicate, false);
+            return this.List(filter, false);
         }
 
-        public IEnumerable<String> List(Func<Item.Item, bool> predicate, bool article)
+        public IEnumerable<String> List(Func<Item.Item, bool> filter, bool article)
         {
             var list = this.AsEnumerable();
-            if(predicate != null) list = list.Where(predicate);
+            if(filter != null) list = list.Where(filter);
 
             return list.GroupBy(t => t.name).Select(group => new
             {
