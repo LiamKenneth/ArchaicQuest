@@ -413,12 +413,9 @@ namespace MIMWebClient.Core.Events
                                 HubContext.SendToClient("You look into the " + itemDescription.name + " and see:", player.HubGuid);
 
 
-                                foreach (var containerItem in itemDescription.containerItems)
+                                foreach (var containerItem in itemDescription.containerItems.List())
                                 {
-                                    var result = AvsAnLib.AvsAn.Query(containerItem.name);
-                                    string article = result.Article;
-                              
-                                    HubContext.SendToClient(article.ToUpper() + " " + containerItem.name, player.HubGuid);
+                                    HubContext.SendToClient(containerItem, player.HubGuid);
                                 }
                             }
                             else
@@ -554,12 +551,9 @@ namespace MIMWebClient.Core.Events
                             {
                                 HubContext.SendToClient("You look into the " + playerItemDescription.name + " and see:", player.HubGuid);
 
-                                foreach (var containerItem in playerItemDescription.containerItems)
+                                foreach (var containerItem in playerItemDescription.containerItems.List())
                                 {
-                                    var result = AvsAnLib.AvsAn.Query(containerItem.name);
-                                    string article = result.Article;
-
-                                    HubContext.SendToClient(article.ToUpper() + " " + containerItem.name, player.HubGuid);
+                                    HubContext.SendToClient(containerItem, player.HubGuid);
                                 }
                             }
                             else

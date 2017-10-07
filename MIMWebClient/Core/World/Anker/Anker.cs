@@ -152,7 +152,7 @@ namespace MIMWebClient.Core.World.Anker
             {
 
                 name = "Wooden Chest",
-                containerItems = new List<Item.Item>(),
+                containerItems = new ItemContainer(),
                 canLock = true,
                 containerSize = 10,
                 container = true,
@@ -190,7 +190,7 @@ namespace MIMWebClient.Core.World.Anker
             bucketObj.container = true;
             bucketObj.waterContainer = true;
             bucketObj.waterContainerAmount = 15;
-            bucketObj.containerItems = new List<Item.Item>();
+            bucketObj.containerItems = new ItemContainer();
             bucketObj.isHiddenInRoom = true;
             bucketObj.name = "bucket";
             bucketObj.location = Item.Item.ItemLocation.Room;
@@ -333,7 +333,7 @@ namespace MIMWebClient.Core.World.Anker
                 Level = 2,
                 Status = Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
-                Inventory = new List<Item.Item>(),
+                Inventory = new ItemContainer(),
                 Recall = new Recall()
                 {
                     Region = "Anker",
@@ -369,7 +369,7 @@ namespace MIMWebClient.Core.World.Anker
                 Level = 2,
                 Status = Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
-                Inventory = new List<Item.Item>()
+                Inventory = new ItemContainer()
 
 
             };
@@ -1364,7 +1364,7 @@ namespace MIMWebClient.Core.World.Anker
                 Level = 10,
                 Status = Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
-                Inventory = new List<Item.Item>(),
+                Inventory = new ItemContainer(),
                 Dialogue = new List<Responses>(),
                 Emotes = new List<string>(),
                 Shop = true,
@@ -1442,7 +1442,7 @@ namespace MIMWebClient.Core.World.Anker
                 Level = 1,
                 Status = Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
-                Inventory = new List<Item.Item>(),
+                Inventory = new ItemContainer(),
                 Emotes = new List<string>()
             };
 
@@ -1563,7 +1563,7 @@ namespace MIMWebClient.Core.World.Anker
                 Level = 5,
                 Status = Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
-                Inventory = new List<Item.Item>()
+                Inventory = new ItemContainer()
             };
 
             var blackhorse = new Player
@@ -1583,7 +1583,7 @@ namespace MIMWebClient.Core.World.Anker
                 Level = 15,
                 Status = Player.PlayerStatus.Busy,
                 Skills = new List<Skill>(),
-                Inventory = new List<Item.Item>(),
+                Inventory = new ItemContainer(),
                 IsMount = true
             };
 

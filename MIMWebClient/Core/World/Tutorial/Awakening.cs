@@ -58,7 +58,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 Gold = 450,
                 Status = PlayerSetup.Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
-                Inventory = new List<Item.Item>(),
+                Inventory = new ItemContainer(),
                 DialogueTree = new List<DialogTree>(),
                 Greet = false,
                 Emotes = new List<string>(),

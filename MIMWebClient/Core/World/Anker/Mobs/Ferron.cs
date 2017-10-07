@@ -51,7 +51,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 Level = 20,
                 Status = PlayerSetup.Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
-                Inventory = new List<Item.Item>(),
+                Inventory = new ItemContainer(),
                 Trainer = false,
                 Greet = true,
                 Shop = true,

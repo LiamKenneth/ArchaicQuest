@@ -246,6 +246,7 @@
     <Compile Include="Core\AI\Node.cs" />
     <Compile Include="Core\AI\Pathfinding.cs" />
     <Compile Include="Core\Command.cs" />
+    <Compile Include="Core\ItemContainer.cs" />
     <Compile Include="Core\Data.cs" />
     <Compile Include="Core\Events\Cache.cs" />
     <Compile Include="Core\Events\CheckEvent.cs" />

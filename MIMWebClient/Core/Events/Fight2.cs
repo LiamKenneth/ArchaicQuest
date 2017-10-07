@@ -923,7 +923,7 @@ namespace MIMWebClient.Core.Events
                     equipable = false,
                     name = "The corpse of " + defender.Name,
                     container = true,
-                    containerItems = new List<Item>(),
+                    containerItems = new ItemContainer(),
                     description = new Description { look = "The slain corpse of " + defender.Name + " is here.", room = "The slain corpse of " + defender.Name }
                 };
 

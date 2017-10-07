@@ -90,7 +90,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 Level = 10,
                 Status = PlayerSetup.Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
-                Inventory = new List<Item.Item>(),
+                Inventory = new ItemContainer(),
                 DialogueTree = new List<DialogTree>(),
                 Greet = false,
                 GreetMessage = "I don't think we have much further to go, ",
@@ -565,7 +565,7 @@ namespace MIMWebClient.Core.World.Tutorial
                     "Wooden",
                     "Wooden Chest"
                 },
-                containerItems = new List<Item.Item>()
+                containerItems = new ItemContainer()
                 {
                     LeatherBody.LeatherVest()
                 }
@@ -584,7 +584,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 description = new Description(),
                 keywords = new List<string>(),
                 isHiddenInRoom = true,
-                containerItems = new List<Item.Item>()
+                containerItems = new ItemContainer()
                 {
                     LeatherHands.LeatherGloves()
                 }
@@ -603,7 +603,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 description = new Description(),
                 keywords = new List<string>(),
                 isHiddenInRoom = true,
-                containerItems = new List<Item.Item>()
+                containerItems = new ItemContainer()
                 {
                     LeatherLegs.LeatherLeggings()
                 }
@@ -704,7 +704,7 @@ namespace MIMWebClient.Core.World.Tutorial
                     "Wooden",
                     "Wooden Chest"
                 },
-                containerItems = new List<Item.Item>()
+                containerItems = new ItemContainer()
                 {
                     LeatherArms.LeatherSleeves()
 
@@ -733,7 +733,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 description = new Description(),
                 keywords = new List<string>(),
                 isHiddenInRoom = true,
-                containerItems = new List<Item.Item>()
+                containerItems = new ItemContainer()
                 {
                     LeatherHead.LeatherHelmet()
                 }

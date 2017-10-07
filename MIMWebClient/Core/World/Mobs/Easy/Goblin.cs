@@ -43,7 +43,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs.Easy
                 Level = 1,
                 Status = PlayerSetup.Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
-                Inventory = new List<Item.Item>()
+                Inventory = new ItemContainer()
                 {
                     leatherVest,
                     rustedSword
@@ -105,7 +105,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs.Easy
                 Aggro = true,
                 Status = PlayerSetup.Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
-                Inventory = new List<Item.Item>()
+                Inventory = new ItemContainer()
                 {
                     leatherVest,
                     rustedSword

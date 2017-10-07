@@ -594,7 +594,6 @@
     }
 
     client.updateInventory = function (inventory) {
-   
         var inventoryCount = inventory.length;
 
         if (inventory == 0) {
@@ -603,9 +602,8 @@
         }
         $("#invList").empty();
         for (var i = 0; i < inventoryCount; i++) {
-            $("#invList").append("<li>" + inventory[i].name + "</li>");
+            $("#invList").append("<li>" + inventory[i] + "</li>");
         }
-
 
     };
 

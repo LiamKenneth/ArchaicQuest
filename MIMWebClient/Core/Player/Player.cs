@@ -125,7 +125,7 @@ namespace MIMWebClient.Core.PlayerSetup
         public int MaxMovePoints { get; set; }
 
         [BsonElement("in")]
-        public List<Item> Inventory { get; set; }
+        public ItemContainer Inventory { get; set; }
 
         [BsonElement("eq")]
         public Equipment Equipment { get; set; }
@@ -449,7 +449,7 @@ namespace MIMWebClient.Core.PlayerSetup
             this.MaxWeight = 70; // class to workout
             this.Status = PlayerStatus.Standing; // enum property? 1 standing
             this.Target = null;
-            this.Inventory = this.Inventory ?? (this.Inventory = new List<Item>());
+            this.Inventory = this.Inventory ?? (this.Inventory = new ItemContainer());
 
 
             this.Skills = new List<Skill>();
