@@ -265,9 +265,7 @@ namespace MIMWebClient.Core.Player
                                 var result = AvsAnLib.AvsAn.Query(item.name);
                                 string article = result.Article;
 
-
-                                HubContext.SendToClient("You wear " + article + item.name, player.HubGuid);
-
+                                HubContext.SendToClient("You wear " + article + " " + item.name, player.HubGuid);
                               
                                 foreach (var character in room.players)
                                 {
@@ -367,7 +365,7 @@ namespace MIMWebClient.Core.Player
 
                 if (!unwield || !slot.Equals("wield", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    HubContext.SendToClient("You remove." + foundItem.name, player.HubGuid);
+                    HubContext.SendToClient("You remove " + foundItem.name, player.HubGuid);
 
                     var result = AvsAnLib.AvsAn.Query(foundItem.name);
                     string article = result.Article;
