@@ -383,7 +383,7 @@ namespace MIMWebClient.Core.Player
                 }
                 else
                 {
-                    HubContext.SendToClient("You nwield " + foundItem.name, player.HubGuid);
+                    HubContext.SendToClient("You unwield " + foundItem.name, player.HubGuid);
 
                     var result = AvsAnLib.AvsAn.Query(foundItem.name);
                     string article = result.Article;

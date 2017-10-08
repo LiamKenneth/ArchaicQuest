@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -464,9 +465,17 @@
     <Content Include="UI\Css\Lib\_bootstrap-compass.scss" />
     <Content Include="UI\Css\Lib\_bootstrap-mincer.scss" />
     <Content Include="UI\Css\Lib\_bootstrap-sprockets.scss" />
+    <Content Include="UI\Css\Sass\fonts\slick.svg" />
+    <Content Include="UI\Css\Sass\slick-theme.scss" />
+    <Content Include="UI\Css\Sass\slick.scss" />
+    <Content Include="UI\Css\Sass\fonts\slick.eot" />
+    <Content Include="UI\Css\Sass\fonts\slick.ttf" />
+    <Content Include="UI\Css\Sass\fonts\slick.woff" />
     <None Include="UI\Css\Sass\_perfect-scrollbar.scss" />
     <Content Include="UI\img\compass.png" />
+    <Content Include="UI\JS\bootstrap.min.js" />
     <Content Include="UI\JS\perfect-scrollbar.jquery.min.js" />
+    <Content Include="UI\JS\slick.min.js" />
     <Content Include="WorldBuilding\Village\Ankar.txt" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

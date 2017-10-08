@@ -253,8 +253,8 @@
             setWindowHeight: function () {
                 var viewPort = $(window).height() - 145;
                 $("#discussion").css({ "height": viewPort, "max-height": viewPort });
-                $("#info-inv").css({ "height": viewPort / 2 - 68, "max-height": viewPort / 2 - 68 });   
-                $("#info-quest").css({ "height": viewPort / 2 - 68, "max-height": viewPort / 2 - 68 });   
+                $("#info-inv").css({ "height": viewPort / 2 - 47, "max-height": viewPort / 2 - 47 });   
+                $("#info-quest").css({ "height": viewPort / 2 - 51, "max-height": viewPort / 2 - 51 });   
             },
             openPanels: function () {
 
@@ -363,6 +363,33 @@
                 }, 250);
 
             });
+
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $(".quick-buttons a").click(function () {
+                $('#message').val($(this).text() + " ");
+                $('#message').focus();
+
+                if ($(this).data("type") === "instant") {
+                    $('#sendmessage').click();
+                }
+              
+                
+
+
+            });
+ 
+            $('.quick-buttons').slick({
+                dots: false,
+                infinite: true,
+                speed: 300,
+                slidesToShow: 1,
+                slidesToScroll: 2,
+                centerMode: false,
+                variableWidth: true,
+
+                });
+           
         }
     }
 
