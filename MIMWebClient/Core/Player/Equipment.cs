@@ -265,9 +265,7 @@ namespace MIMWebClient.Core.Player
                                 var result = AvsAnLib.AvsAn.Query(item.name);
                                 string article = result.Article;
 
-
                                 HubContext.SendToClient("You wear " + article + " " + item.name, player.HubGuid);
-
                               
                                 foreach (var character in room.players)
                                 {
