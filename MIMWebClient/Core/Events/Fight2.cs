@@ -643,17 +643,14 @@ namespace MIMWebClient.Core.Events
             for (int i = 0; i < numberOfAttacks; i++)
             {
 
-
                 bool alive = IsAlive(attacker, defender);
                 int IsCritical = CriticalHit(toHit, chance);
 
                 if (alive)
                 {
-
                     if (toHit > chance)
                     {
-
-
+                        
                         var dam = damage > 0 ? damage : Damage(attacker, defender, IsCritical);
 
                         var damageText = DamageText(dam);
@@ -669,8 +666,6 @@ namespace MIMWebClient.Core.Events
                                 Helpers.ReturnName(attacker, defender, null) + "'s " +
                                 WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value.ToLower() +
                                 " you [" + dam + "]", defender.HubGuid);
-
-
 
                             foreach (var player in room.players)
                             {
@@ -705,41 +700,45 @@ namespace MIMWebClient.Core.Events
                         {
 
                             //Randomly pick to output dodge, parry, miss
-
                             var rand = Helpers.Rand(1, 4);
-                            var message = "misses";
-                            string observerMessage;
+                            string attackerMessage, defenderMessage, observerMessage;
 
                             if (rand <= 1)
                             {
-                                message = "Your " + WeaponAttackName(attacker, skillUsed).Key +
+                                attackerMessage = "Your " + WeaponAttackName(attacker, skillUsed).Key +
                                           " <span style='color:olive'>misses</span> " +
                                           Helpers.ReturnName(defender, attacker, null);
 
+                                defenderMessage = Helpers.ReturnName(attacker, defender, null) + "'s " +
+                                                  WeaponAttackName(attacker, skillUsed).Key +
+                                                  " <span style='color:olive'>misses</span> you ";
+
                                 observerMessage = Helpers.ReturnName(attacker, defender, null) + "'s " +
                                                   WeaponAttackName(attacker, skillUsed).Key +
-                                                  " <span style='color:olive'> " + message + "</span> " +
+                                                  " <span style='color:olive'>misses</span> " +
                                                   Helpers.ReturnName(defender, attacker, null);
                             }
                             else if (rand > 1 && rand <= 2)
                             {
-                                message = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>dodges</span> your " +
+                                attackerMessage = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>dodges</span> your " +
                                           WeaponAttackName(attacker, skillUsed).Key;
+
+                                defenderMessage = "You <span style='color:olive'>dodge</span> " + Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key;
 
                                 observerMessage = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>dodges</span>" + Helpers.ReturnName(defender, attacker, null) + "'s" + WeaponAttackName(attacker, skillUsed).Key;
                             }
                             else
                             {
-                                message = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>parries</span> your " +
+                                attackerMessage = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>parries</span> your " +
                                           WeaponAttackName(attacker, skillUsed).Key;
+
+                                defenderMessage = "You <span style='color:olive'>parry</span> " + Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key;
 
                                 observerMessage = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>parries</span>" + Helpers.ReturnName(defender, attacker, null) + "'s" + WeaponAttackName(attacker, skillUsed).Key;
                             }
 
-
-                            HubContext.SendToClient(message, attacker.HubGuid);
-                            
-         
+                            HubContext.SendToClient(attackerMessage, attacker.HubGuid);
+                            HubContext.SendToClient(defenderMessage, defender.HubGuid);
 
                             foreach (var player in room.players)
                             {
@@ -749,12 +748,6 @@ namespace MIMWebClient.Core.Events
                                       observerMessage, player.HubGuid);
                                 }
                             }
-
-
-
-
-
-
 
                         }
                     }
