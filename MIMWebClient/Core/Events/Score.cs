@@ -64,7 +64,7 @@ namespace MIMWebClient.Core.Events
 
 
                 context.Clients.Client(playerData.HubGuid)
-                    .updateInventory(playerData.Inventory.Where(x => x.location == Item.Item.ItemLocation.Inventory && x.type != Item.Item.ItemType.Gold));
+                    .updateInventory(ItemContainer.List(playerData.Inventory.Where(x => x.location == Item.Item.ItemLocation.Inventory && x.type != Item.Item.ItemType.Gold), true));
 
             }
 

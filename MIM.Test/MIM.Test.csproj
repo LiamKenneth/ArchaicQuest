@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AvsAn, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AvsAn.2.2.0.0\lib\net20\AvsAn.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit3TestAdapter.3.4.1\lib\Mono.Cecil.dll</HintPath>
       <Private>True</Private>
@@ -74,6 +77,7 @@
   <ItemGroup>
     <Compile Include="Core\AI\PathfindingTest.cs" />
     <Compile Include="Core\Events\CommunicateTest.cs" />
+    <Compile Include="Core\ItemContainerTest.cs" />
     <Compile Include="Core\PlayerSetup\PlayerClassTest.cs" />
     <Compile Include="Core\PlayerSetup\PlayerRaceTest.cs" />
     <Compile Include="Core\PlayerSetup\PlayerStatsTest.cs" />

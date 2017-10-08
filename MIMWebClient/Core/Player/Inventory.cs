@@ -12,26 +12,19 @@ namespace MIMWebClient.Core.Player
     public class Inventory
     {
 
-        public static void ReturnInventory(List<Item> inventory, Player player)
+        public static void ReturnInventory(ItemContainer inventory, Player player)
         {
-            if (inventory != null)
+            if (inventory != null && inventory.Count > 0)
             {
-               
-                var inventoryItems = new StringBuilder();;
-                inventoryItems.Append("You are carrying:").AppendLine();
 
-                foreach (var item in player.Inventory.Where(x => x.location == Item.ItemLocation.Inventory))
-                {
+                var itemList = new StringBuilder();
+                itemList.Append("You are carrying:").AppendLine();
 
-                    var result = AvsAnLib.AvsAn.Query(item.name);
-                    string article = result.Article;
+                foreach(var item in ItemContainer.List(inventory.Where(x => x.location == Item.ItemLocation.Inventory), true)){
+                    itemList.AppendLine(item);
+                }               
 
-
-                    inventoryItems.Append(article.ToUpper() + " " + item.name).AppendLine();
-                }
-                
-
-                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(inventoryItems.ToString());
+                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(itemList.ToString());
             }
             else
             {
