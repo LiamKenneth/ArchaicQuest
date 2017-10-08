@@ -413,7 +413,7 @@ namespace MIMWebClient.Core.Events
                                 HubContext.SendToClient("You look into the " + itemDescription.name + " and see:", player.HubGuid);
 
 
-                                foreach (var containerItem in itemDescription.containerItems.List())
+                                foreach (var containerItem in itemDescription.containerItems.List(true))
                                 {
                                     HubContext.SendToClient(containerItem, player.HubGuid);
                                 }
@@ -551,7 +551,7 @@ namespace MIMWebClient.Core.Events
                             {
                                 HubContext.SendToClient("You look into the " + playerItemDescription.name + " and see:", player.HubGuid);
 
-                                foreach (var containerItem in playerItemDescription.containerItems.List())
+                                foreach (var containerItem in playerItemDescription.containerItems.List(true))
                                 {
                                     HubContext.SendToClient(containerItem, player.HubGuid);
                                 }

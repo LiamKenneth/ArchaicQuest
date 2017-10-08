@@ -1,4 +1,5 @@
-﻿using MIMWebClient.Core;
+﻿using MIMWebClient;
+using MIMWebClient.Core;
 using MIMWebClient.Core.Item;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Body;
 using MIMWebClient.Core.World.Items.Weapons.Sword.Short;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MIMHelpers = MIMWebClient.Core.Helpers;
 
 namespace MIM.Test.Core
 {
@@ -41,8 +43,8 @@ namespace MIM.Test.Core
         [Test]
         public void ShouldUseArticle()
         {
-            var vestArticle = AvsAnLib.AvsAn.Query(vestName).Article; ;
-            var swordArticle = AvsAnLib.AvsAn.Query(swordName).Article;
+            var vestArticle = MIMHelpers.FirstLetterToUpper(AvsAnLib.AvsAn.Query(vestName).Article);
+            var swordArticle = MIMHelpers.FirstLetterToUpper(AvsAnLib.AvsAn.Query(swordName).Article);
             
             var expected = new List<string> { vestArticle + " " + vestName, swordArticle + " " + swordName + " x2" };
 
