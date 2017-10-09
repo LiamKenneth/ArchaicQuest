@@ -166,6 +166,7 @@ namespace MIMWebClient.Core
                 {"qlog", () => Quest.QuestLog(playerData)},
                 {"wake", () => Status.WakePlayer(playerData, room)},
                 {"sleep", () => Status.SleepPlayer(playerData, room)},
+                {"rest", () => Status.RestPlayer(playerData, room)},
                 {"greet", () => Greet.GreetMob(playerData, room, commandOptions)},
                 {"who", () => Who.Connected(playerData)},
                 {"affects", () => Affect.Show(playerData)},
@@ -205,8 +206,6 @@ namespace MIMWebClient.Core
             string commandOptions = string.Empty;
             // testing
 
-           
- 
             if (commands.Length >= 2)
             {
            
