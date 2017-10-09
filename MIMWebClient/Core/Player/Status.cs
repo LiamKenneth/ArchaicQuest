@@ -32,7 +32,7 @@ namespace MIMWebClient.Core.Player
                     Event.ParseCommand(room.EventWake, player, null, room, "wake");
                 }
 
- 
+
                 foreach (var mob in room.mobs)
                 {
 
@@ -40,7 +40,7 @@ namespace MIMWebClient.Core.Player
                     {
                         Event.ParseCommand(mob.EventWake, player, mob, room, "wake");
                     }
- 
+
                 }
 
                 Command.ParseCommand("look", player, room);
@@ -93,6 +93,34 @@ namespace MIMWebClient.Core.Player
             else
             {
                 HubContext.SendToClient("You are already asleep", player.HubGuid);
+            }
+        }
+
+        public static void RestPlayer(PlayerSetup.Player player, Room.Room room)
+        {
+            if (player.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
+            {
+                HubContext.SendToClient("You are sleeping.", player.HubGuid);
+                return;
+            }
+            else if (player.Status == PlayerSetup.Player.PlayerStatus.Resting)
+            {
+                HubContext.SendToClient("You are already resting.", player.HubGuid);
+                return;
+            }
+
+            player.Status = PlayerSetup.Player.PlayerStatus.Resting;
+
+            HubContext.SendToClient("You sit down and rest.", player.HubGuid);
+
+            foreach (var character in room.players)
+            {
+                if (player != character)
+                {
+                    var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} sits down and rests.";
+
+                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                }
             }
         }
     }
