@@ -21,7 +21,7 @@ namespace MIMWebClient.Core
         /// <param name="playerData">Player Data</param>
         /// <param name="room">Current room</param>
         /// <returns>Returns Dictionary of commands</returns>
-        public static Dictionary<string, Action> Commands(string commandOptions,string commandKey,PlayerSetup.Player playerData,Room.Room room)
+        public static Dictionary<string, Action> Commands(string commandOptions, string commandKey, PlayerSetup.Player playerData, Room.Room room)
         {
 
             var commandList = new Dictionary<String, Action>
@@ -31,7 +31,7 @@ namespace MIMWebClient.Core
                 {"east", () => Movement.Move(playerData, room, "East")},
                 {"west", () => Movement.Move(playerData, room, "West")},
                 {"down", () => Movement.Move(playerData, room, "Down")},
-                {"up", () => Movement.Move(playerData, room, "Up")},               
+                {"up", () => Movement.Move(playerData, room, "Up")},
                 {"look", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look")},
                 {"look at", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look")},
                 {"l at", () => LoadRoom.ReturnRoom(playerData, room, commandOptions, "look")},
@@ -46,7 +46,7 @@ namespace MIMWebClient.Core
                 {"score", () => Score.ReturnScore(playerData)},
                 {"inventory", () => Inventory.ReturnInventory(playerData.Inventory, playerData)},
                 {"eq", () => Equipment.ShowEquipment(playerData)},
-                {"equip", () => Equipment.WearItem(playerData, commandOptions)},            
+                {"equip", () => Equipment.WearItem(playerData, commandOptions)},
                 {"equipment", () => Equipment.ShowEquipment(playerData)},
                 {"garb", () => Equipment.ShowEquipment(playerData)},
                 {"loot", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item")},
@@ -129,7 +129,7 @@ namespace MIMWebClient.Core
 
                     shockingGRasp.StartShockingGrasp(playerData, room, commandOptions);
                 }},
-                {"cast shocking grasp", () => 
+                {"cast shocking grasp", () =>
                 {
                         var shockingGRasp = new ShockingGrasp();
 
@@ -162,32 +162,35 @@ namespace MIMWebClient.Core
                 {"practice", () => Trainer.Practice(playerData, room, commandOptions)},
                 {"list", () => Shop.listItems(playerData, room)},
                 {"buy", () => Shop.buyItems(playerData, room, commandOptions)},
+                {"sell", () => Shop.sellItems(playerData, room, commandOptions)},
                 {"quest log", () => Quest.QuestLog(playerData)},
                 {"qlog", () => Quest.QuestLog(playerData)},
                 {"wake", () => Status.WakePlayer(playerData, room)},
                 {"sleep", () => Status.SleepPlayer(playerData, room)},
+                {"rest", () => Status.RestPlayer(playerData, room)},
+                {"stand", () => Status.StandPlayer(playerData, room)},
                 {"greet", () => Greet.GreetMob(playerData, room, commandOptions)},
                 {"who", () => Who.Connected(playerData)},
                 {"affects", () => Effect.Show(playerData)},
                 {"follow", () => Follow.FollowThing(playerData, room, commandOptions) },
-                 {"nofollow", () => Follow.FollowThing(playerData, room, "noFollow") },
-                  {"quit", () => HubContext.Instance.Quit(playerData.HubGuid, room)},
+                {"nofollow", () => Follow.FollowThing(playerData, room, "noFollow") },
+                {"quit", () => HubContext.Instance.Quit(playerData.HubGuid, room)},
                 //admin
                 {"/debug", () => PlayerSetup.Player.DebugPlayer(playerData) }
             };
- 
+
 
             return commandList;
         }
 
- 
+
         /// <summary>
         /// Handles matching and calling the commands
         /// </summary>
         /// <param name="input">What the player typed in</param>
         /// <param name="playerData">Player Data</param>
         /// <param name="room">Current Room</param>
-        public static  void ParseCommand(string input, PlayerSetup.Player playerData, Room.Room room = null)
+        public static void ParseCommand(string input, PlayerSetup.Player playerData, Room.Room room = null)
         {
 
             if (string.IsNullOrEmpty(input.Trim()))
@@ -201,19 +204,17 @@ namespace MIMWebClient.Core
             string[] commands = enteredCommand.Split(' ');
             string commandKey = commands[0];
 
-          
+
             string commandOptions = string.Empty;
             // testing
 
-           
- 
             if (commands.Length >= 2)
             {
-           
+
                 if ((commands[1].Equals("in", StringComparison.InvariantCultureIgnoreCase) || commands[1].Equals("at", StringComparison.InvariantCultureIgnoreCase) || commands[1].Equals("up", StringComparison.InvariantCultureIgnoreCase)))
                 {
                     commandKey = commands[0] + " " + commands[1];
-                    commandOptions =  enteredCommand.Substring(enteredCommand.IndexOf(commands[2], StringComparison.Ordinal)).Trim();  
+                    commandOptions = enteredCommand.Substring(enteredCommand.IndexOf(commands[2], StringComparison.Ordinal)).Trim();
                 }
                 else if (commandKey.Equals("c", StringComparison.InvariantCultureIgnoreCase) || commandKey.Equals("cast", StringComparison.InvariantCultureIgnoreCase) && commands.Length > 1)
                 {
@@ -225,23 +226,23 @@ namespace MIMWebClient.Core
                 }
                 else
                 {
-                   
-                        commandOptions = enteredCommand.Substring(enteredCommand.IndexOf(' ', 1)).Trim();
-                  
+
+                    commandOptions = enteredCommand.Substring(enteredCommand.IndexOf(' ', 1)).Trim();
+
                 }
-               
+
             }
- 
-             //TODO: do this only once
-            var command =  Command.Commands(commandOptions, commandKey, playerData, room);
- 
+
+            //TODO: do this only once
+            var command = Command.Commands(commandOptions, commandKey, playerData, room);
+
             var fire = command.FirstOrDefault(x => x.Key.StartsWith(commandKey, StringComparison.InvariantCultureIgnoreCase));
- 
+
             if (fire.Value != null)
             {
-                 fire.Value();
+                fire.Value();
 
-            
+
 
             }
             else
@@ -261,7 +262,7 @@ namespace MIMWebClient.Core
             playerData.LastCommandTime = DateTime.Now;
 
             Score.UpdateUiPrompt(playerData);
-           
+
         }
 
     }

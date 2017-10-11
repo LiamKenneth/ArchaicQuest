@@ -32,7 +32,7 @@ namespace MIMWebClient.Core.Player
                     Event.ParseCommand(room.EventWake, player, null, room, "wake");
                 }
 
- 
+
                 foreach (var mob in room.mobs)
                 {
 
@@ -40,7 +40,7 @@ namespace MIMWebClient.Core.Player
                     {
                         Event.ParseCommand(mob.EventWake, player, mob, room, "wake");
                     }
- 
+
                 }
 
                 Command.ParseCommand("look", player, room);
@@ -89,10 +89,97 @@ namespace MIMWebClient.Core.Player
 
                 }
             }
-
+            else if (player.Status == PlayerSetup.Player.PlayerStatus.Fighting)
+            {
+                HubContext.SendToClient("You are in a middle of a fight!", player.HubGuid);
+                return;
+            }
             else
             {
                 HubContext.Instance.SendToClient("You are already asleep", player.HubGuid);
+            }
+        }
+
+        public static void RestPlayer(PlayerSetup.Player player, Room.Room room)
+        {
+            if (player.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
+            {
+                HubContext.SendToClient("You are sleeping.", player.HubGuid);
+                return;
+            }
+            else if (player.Status == PlayerSetup.Player.PlayerStatus.Resting)
+            {
+                HubContext.SendToClient("You are already resting.", player.HubGuid);
+                return;
+            }
+            else if (player.Status == PlayerSetup.Player.PlayerStatus.Fighting)
+            {
+                HubContext.SendToClient("You are in a middle of a fight!", player.HubGuid);
+                return;
+            }
+
+                player.Status = PlayerSetup.Player.PlayerStatus.Resting;
+
+            HubContext.SendToClient("You sit down and rest.", player.HubGuid);
+
+            foreach (var character in room.players)
+            {
+                if (player != character)
+                {
+                    var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} sits down and rests.";
+
+                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                }
+            }
+        }
+
+        public static void StandPlayer(PlayerSetup.Player player, Room.Room room)
+        {
+            if (player.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
+            {
+                HubContext.SendToClient("You wake and stand up.", player.HubGuid);
+                player.Status = PlayerSetup.Player.PlayerStatus.Standing;
+
+                foreach (var character in room.players)
+                {
+                    if (player != character)
+                    {
+                        var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} wakes and stands up.";
+
+                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                    }
+                }
+
+                return;
+            }
+            else if (player.Status == PlayerSetup.Player.PlayerStatus.Resting)
+            {
+                HubContext.SendToClient("You stop resting and stand up.", player.HubGuid);
+
+                player.Status = PlayerSetup.Player.PlayerStatus.Standing;
+
+                foreach (var character in room.players)
+                {
+                    if (player != character)
+                    {
+                        var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} stops resting and stands up.";
+
+                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                    }
+                }
+
+
+                return;
+            }
+            else if (player.Status == PlayerSetup.Player.PlayerStatus.Fighting)
+            {
+                HubContext.SendToClient("You are in a middle of a fight!", player.HubGuid);
+                return;
+            }
+            else if (player.Status == PlayerSetup.Player.PlayerStatus.Standing)
+            {
+                HubContext.SendToClient("You are standing already.", player.HubGuid);
+                return;
             }
         }
     }

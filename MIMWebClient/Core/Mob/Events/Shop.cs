@@ -106,12 +106,93 @@ namespace MIMWebClient.Core.Mob.Events
                         }
 
                     }
+                    else
+                    {
+                        HubContext.SendToClient("I don't have that item.", player.HubGuid);
+                    }
 
                 }
                 else
                 {
 
                     HubContext.Instance.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"Sorry I don't sell that\"", player.HubGuid);
+                }
+
+            }
+
+        }
+
+        public static void sellItems(PlayerSetup.Player player, Room.Room room, string itemName)
+        {
+
+            var mob = room.mobs.FirstOrDefault(x => x.Shop.Equals(true));
+
+            if (mob != null)
+            {
+
+
+                if (mob.Shop)
+                {
+
+                    if (string.IsNullOrEmpty(itemName))
+                    {
+                        HubContext.SendToClient("Sell? Sell what?", player.HubGuid);
+                        return;
+                    }
+
+                    var itemToSell = player.Inventory.FirstOrDefault(x => x.name.ToLower().Contains(itemName.ToLower()));
+
+                    if (itemToSell != null)
+                    {
+                        var oldPlayerInfo = player;
+                        var result = AvsAnLib.AvsAn.Query(itemToSell.name);
+                        string article = result.Article;
+
+                        //Can afford
+
+
+                            itemToSell.location = Item.Item.ItemLocation.Inventory;
+                            mob.itemsToSell.Add(itemToSell);
+                          
+
+                            foreach (var character in room.players)
+                            {
+                                if (player != character)
+                                {
+                                    var hisOrHer = Helpers.ReturnHisOrHers(player, character);
+                                    var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} sells {article} {itemToSell.name} to {mob.Name}.";
+
+                                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                                }
+                            }
+
+
+                        var value = itemToSell.Gold > 0 ? itemToSell.Gold : 1;
+
+                        player.Gold += value;
+
+                        HubContext.SendToClient(
+                              "You sell " + article + " " + itemToSell.name + " to " + mob.Name + " for " + value + " gold.",
+                              player.HubGuid);
+
+                        player.Inventory.Remove(itemToSell);
+
+                        Cache.updatePlayer(oldPlayerInfo, player);
+
+
+                        Score.UpdateUiInventory(player);
+                    }
+                    else
+                    {
+                        HubContext.SendToClient("You don't have that item.", player.HubGuid);
+                    }
+
+
+                }
+                else
+                {
+
+                    HubContext.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"Sorry I don't want to buy anything.\"", player.HubGuid);
                 }
 
             }
