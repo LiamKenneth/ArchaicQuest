@@ -24,11 +24,11 @@ namespace MIMWebClient.Core.Player
                     itemList.AppendLine(item);
                 }               
 
-                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(itemList.ToString());
+                HubContext.Instance.AddNewMessageToPage(player.HubGuid, itemList.ToString());
             }
             else
             {
-                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You are not carrying anything.");
+                HubContext.Instance.AddNewMessageToPage(player.HubGuid, "You are not carrying anything.");
             }
         }
     }

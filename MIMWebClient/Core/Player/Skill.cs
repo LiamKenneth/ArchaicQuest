@@ -103,10 +103,10 @@ namespace MIMWebClient.Core.Player
         public static int ReturnActionSpeed(PlayerSetup.Player player, int speed)
         {
 
-            var hasHaste = player.Affects?.FirstOrDefault(
+            var hasHaste = player.Effects?.FirstOrDefault(
                              x => x.Name.Equals("Haste", StringComparison.CurrentCultureIgnoreCase)) != null;
 
-            var hasSlow = player.Affects?.FirstOrDefault(
+            var hasSlow = player.Effects?.FirstOrDefault(
                             x => x.Name.Equals("Slow", StringComparison.CurrentCultureIgnoreCase)) != null;
 
             if (hasSlow)
@@ -207,28 +207,28 @@ namespace MIMWebClient.Core.Player
         {
             if (player.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
             {
-                HubContext.SendToClient("You can't do that while asleep.", player.HubGuid);
+                HubContext.Instance.SendToClient("You can't do that while asleep.", player.HubGuid);
 
                 return false;
             }
 
             if (player.Status == PlayerSetup.Player.PlayerStatus.Ghost)
             {
-                HubContext.SendToClient("You can't do that while dead.", player.HubGuid);
+                HubContext.Instance.SendToClient("You can't do that while dead.", player.HubGuid);
 
                 return false;
             }
 
             if (player.Status == PlayerSetup.Player.PlayerStatus.Dead)
             {
-                HubContext.SendToClient("You can't do that while dead.", player.HubGuid);
+                HubContext.Instance.SendToClient("You can't do that while dead.", player.HubGuid);
 
                 return false;
             }
 
             if (player.Status == PlayerSetup.Player.PlayerStatus.Resting)
             {
-                HubContext.SendToClient("You can't do that while resting.", player.HubGuid);
+                HubContext.Instance.SendToClient("You can't do that while resting.", player.HubGuid);
 
                 return false;
             }

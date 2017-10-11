@@ -79,24 +79,24 @@ namespace MIMWebClient.Core.Update
                     case 1:
                     case 2:
                     case 3:
-                        HubContext.getHubContext.Clients.All.addNewMessageToPage(
+                        HubContext.Instance.AddNewMessageToPage(
                             "The moon is slowly moving west across the sky.");
                         break;
                     case 9:
-                        HubContext.getHubContext.Clients.All.addNewMessageToPage("The moon slowly sets in the west.");
+                        HubContext.Instance.AddNewMessageToPage("The moon slowly sets in the west.");
                         break;
                     case 11:
-                        HubContext.getHubContext.Clients.All.addNewMessageToPage("The sun slowly rises from the east.");
+                        HubContext.Instance.AddNewMessageToPage("The sun slowly rises from the east.");
                         break;
                     case 13:
-                        HubContext.getHubContext.Clients.All.addNewMessageToPage(
+                        HubContext.Instance.AddNewMessageToPage(
                             "The sun has risen from the east, the day has begun.");
                         break;
                     case 24:
-                        HubContext.getHubContext.Clients.All.addNewMessageToPage("The sun is high in the sky.");
+                        HubContext.Instance.AddNewMessageToPage("The sun is high in the sky.");
                         break;
                     default:
-                        HubContext.getHubContext.Clients.All.addNewMessageToPage(
+                        HubContext.Instance.AddNewMessageToPage(
                             "The sun is slowly moving west across the sky.");
                         break;
                 }
@@ -108,17 +108,17 @@ namespace MIMWebClient.Core.Update
                 switch (tickCount)
                 {
                     case 36:
-                        HubContext.getHubContext.Clients.All.addNewMessageToPage("The sun slowly sets in the west.");
+                        HubContext.Instance.AddNewMessageToPage("The sun slowly sets in the west.");
                         break;
                     case 40:
-                        HubContext.getHubContext.Clients.All.addNewMessageToPage("The moon slowly rises in the west.");
+                        HubContext.Instance.AddNewMessageToPage("The moon slowly rises in the west.");
                         break;
                     case 43:
-                        HubContext.getHubContext.Clients.All.addNewMessageToPage(
+                        HubContext.Instance.AddNewMessageToPage(
                             "The moon has risen from the east, the night has begun.");
                         break;
                     default:
-                        HubContext.getHubContext.Clients.All.addNewMessageToPage("The moon is high in the sky.");
+                        HubContext.Instance.AddNewMessageToPage("The moon is high in the sky.");
                         break;
 
 
@@ -159,7 +159,7 @@ namespace MIMWebClient.Core.Update
         public static void ShowTime()
         {
 
-            HubContext.getHubContext.Clients.All.addNewMessageToPage("The time is " + AddZero(hour) + ":" + AddZero(minute));
+            HubContext.Instance.AddNewMessageToPage("The time is " + AddZero(hour) + ":" + AddZero(minute));
 
         }
 

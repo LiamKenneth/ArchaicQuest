@@ -12,7 +12,7 @@ namespace MIMWebClient.Core.Player
     /// Fighting : haste, weaken, blind
     /// 
     /// </summary>
-    public class Affect
+    public class Effect
     {
         public string Name { get; set; }
         public int Duration { get; set; }
@@ -23,26 +23,26 @@ namespace MIMWebClient.Core.Player
         {
             try
             {
-                if (player.Affects != null)
+                if (player.Effects != null)
                 {
 
-                    if (player.Affects.Count > 0)
+                    if (player.Effects.Count > 0)
                     {
-                        HubContext.SendToClient("You are affected by the following affects:", player.HubGuid);
+                        HubContext.Instance.SendToClient("You are affected by the following affects:", player.HubGuid);
 
-                        foreach (var affect in player.Affects)
+                        foreach (var affect in player.Effects)
                         {
-                            HubContext.SendToClient(affect.Name + " (" + affect.Duration + ") ticks ", player.HubGuid);
+                            HubContext.Instance.SendToClient(affect.Name + " (" + affect.Duration + ") ticks ", player.HubGuid);
                         }
                     }
                     else
                     {
-                        HubContext.SendToClient("You are not affected by anything.", player.HubGuid);
+                        HubContext.Instance.SendToClient("You are not affected by anything.", player.HubGuid);
                     }
                 }
                 else
                 {
-                    HubContext.SendToClient("You are not affected by anything.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You are not affected by anything.", player.HubGuid);
                 }
             }
 

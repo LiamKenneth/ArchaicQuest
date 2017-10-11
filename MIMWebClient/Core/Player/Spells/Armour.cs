@@ -23,7 +23,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (hasSpell == false)
             {
-                HubContext.SendToClient("You don't know that spell.", player.HubGuid);
+                HubContext.Instance.SendToClient("You don't know that spell.", player.HubGuid);
                 return;
             }
 
@@ -49,7 +49,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (player.ManaPoints < ArmourAb().ManaCost)
                 {
-                    HubContext.SendToClient("You attempt to draw energy to your hands but fail", player.HubGuid);
+                    HubContext.Instance.SendToClient("You attempt to draw energy to your hands but fail", player.HubGuid);
 
                     return;
                 }
@@ -60,7 +60,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 Score.UpdateUiPrompt(player);
 
-                HubContext.SendToClient("Your hands start to glow as you begin chanting the armour spell", player.HubGuid);
+                HubContext.Instance.SendToClient("Your hands start to glow as you begin chanting the armour spell", player.HubGuid);
 
                 var playersInRoom = new List<Player>(room.players);
 
@@ -71,7 +71,7 @@ namespace MIMWebClient.Core.Player.Skills
                         var hisOrHer = Helpers.ReturnHisOrHers(player, character);
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} 's hands start to glow as they begin chanting the Armour spell";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -86,7 +86,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                     if (player.ManaPoints < ArmourAb().ManaCost)
                     {
-                        HubContext.SendToClient("You attempt to draw energy but fail", player.HubGuid);
+                        HubContext.Instance.SendToClient("You attempt to draw energy but fail", player.HubGuid);
 
                         return;
                     }
@@ -96,7 +96,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                     Score.UpdateUiPrompt(player);
 
-                    HubContext.SendToClient("Your hands start to glow as you begin chanting the armour spell", player.HubGuid);
+                    HubContext.Instance.SendToClient("Your hands start to glow as you begin chanting the armour spell", player.HubGuid);
  
                     foreach (var character in room.players)
                     {
@@ -105,7 +105,7 @@ namespace MIMWebClient.Core.Player.Skills
                             var hisOrHer = Helpers.ReturnHisOrHers(player, character);
                             var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} 's hands start to glow as they begin chanting the Armour spell";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
@@ -132,7 +132,7 @@ namespace MIMWebClient.Core.Player.Skills
                 var castingTextAttacker =
                     "You place your hands upon your chest engulfing yourself in a white protective glow.";
 
-                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
+                HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
 
                 var excludePlayers = new List<string> {attacker.HubGuid};
 
@@ -143,7 +143,7 @@ namespace MIMWebClient.Core.Player.Skills
                         var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
                         var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)} places {hisOrHer} hands upon {hisOrHer} chest engulfing themselves in a white protective glow.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -159,8 +159,8 @@ namespace MIMWebClient.Core.Player.Skills
 
                 var castingTextDefender = Helpers.ReturnName(attacker, _target, null) + " touches your chest engulfing you in a white protective glow.";
 
-                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-                HubContext.SendToClient(castingTextDefender, _target.HubGuid);
+                HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
+                HubContext.Instance.SendToClient(castingTextDefender, _target.HubGuid);
  
                 foreach (var character in room.players)
                 {
@@ -169,7 +169,7 @@ namespace MIMWebClient.Core.Player.Skills
                         var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
                         var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)} touches {Helpers.ReturnName(_target, character, string.Empty)} engulfing them in a white protective glow.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 

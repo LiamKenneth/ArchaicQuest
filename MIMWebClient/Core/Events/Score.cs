@@ -21,8 +21,7 @@ namespace MIMWebClient.Core.Events
         {
             string scoreTest = "Score:\r\n Name: " + playerData.Name + " Race: " + playerData.Race;
 
-            var context = HubContext.getHubContext;
-            context.Clients.Client(playerData.HubGuid).addNewMessageToPage(scoreTest);
+            HubContext.Instance.AddNewMessageToPage(playerData.HubGuid, scoreTest);
         }
 
         public static void ReturnScoreUI(Player playerData)
@@ -30,8 +29,7 @@ namespace MIMWebClient.Core.Events
 
             if (playerData.HubGuid != null)
             {
-                var context = HubContext.getHubContext;
-                context.Clients.Client(playerData.HubGuid).updateScore(playerData);
+                HubContext.Instance.UpdateScore(playerData);
 
             }
         }
@@ -42,15 +40,11 @@ namespace MIMWebClient.Core.Events
             if (playerData.HubGuid != null)
             {
 
-                var context = HubContext.getHubContext;
-                context.Clients.Client(playerData.HubGuid)
-                    .updateStat(playerData.HitPoints, playerData.MaxHitPoints, "hp");
-                context.Clients.Client(playerData.HubGuid)
-                    .updateStat(playerData.ManaPoints, playerData.MaxManaPoints, "mana");
-                context.Clients.Client(playerData.HubGuid)
-                    .updateStat(playerData.MovePoints, playerData.MaxMovePoints, "endurance");
-                context.Clients.Client(playerData.HubGuid)
-                    .updateStat(playerData.Experience, playerData.ExperienceToNextLevel, "tnl");
+                var context = HubContext.Instance;
+                context.UpdateStat(playerData.HubGuid, playerData.HitPoints, playerData.MaxHitPoints, "hp");
+                context.UpdateStat(playerData.HubGuid, playerData.ManaPoints, playerData.MaxManaPoints, "mana");
+                context.UpdateStat(playerData.HubGuid, playerData.MovePoints, playerData.MaxMovePoints, "endurance");
+                context.UpdateStat(playerData.HubGuid, playerData.Experience, playerData.ExperienceToNextLevel, "tnl");
 
             }
         }
@@ -60,11 +54,7 @@ namespace MIMWebClient.Core.Events
 
             if (playerData.HubGuid != null)
             {
-                var context = HubContext.getHubContext;
-
-
-                context.Clients.Client(playerData.HubGuid)
-                    .updateInventory(ItemContainer.List(playerData.Inventory.Where(x => x.location == Item.Item.ItemLocation.Inventory && x.type != Item.Item.ItemType.Gold), true));
+                HubContext.Instance.UpdateInventory(playerData.HubGuid, ItemContainer.List(playerData.Inventory.Where(x => x.location == Item.Item.ItemLocation.Inventory && x.type != Item.Item.ItemType.Gold), true));
 
             }
 
@@ -75,12 +65,7 @@ namespace MIMWebClient.Core.Events
 
             if (playerData.HubGuid != null)
             {
-                var context = HubContext.getHubContext;
-
-
-                context.Clients.Client(playerData.HubGuid)
-                    .updateEquipment( Equipment.DisplayEq(playerData, playerData.Equipment));
-
+                HubContext.Instance.UpdateEquipment(playerData.HubGuid, Equipment.DisplayEq(playerData, playerData.Equipment));
             }
              
         }
@@ -90,11 +75,8 @@ namespace MIMWebClient.Core.Events
 
             if (playerData.HubGuid != null)
             {
-                var context = HubContext.getHubContext;
 
                 var qlog = new StringBuilder();
-
-
 
                 qlog.Append("<div><p>Your current quests:</p></div>");
 
@@ -107,7 +89,7 @@ namespace MIMWebClient.Core.Events
                     }
                 }
 
-                context.Clients.Client(playerData.HubGuid).updateQuestLog(qlog.ToString());
+                HubContext.Instance.UpdateQuestLog(playerData.HubGuid, qlog.ToString());
 
             }
 
@@ -118,38 +100,35 @@ namespace MIMWebClient.Core.Events
 
             if (playerData.HubGuid != null)
             {
-                var context = HubContext.getHubContext;
+                var context = HubContext.Instance;
 
 
-                if (playerData.Affects != null)
+                if (playerData.Effects != null)
                 {
 
-                    if (playerData.Affects.Count > 0)
+                    if (playerData.Effects.Count > 0)
                     {
                         var aff = new StringBuilder();
 
                         aff.Append("<li><p>You are affected by the following affects:</p></li>");
                        
 
-                        foreach (var affect in playerData.Affects)
+                        foreach (var affect in playerData.Effects)
                         {
                             aff.Append("<li>" + affect.Name + " (" + affect.Duration + ") ticks</li> ");
                             
                         }
 
-                        context.Clients.Client(playerData.HubGuid)
-                            .updateAffects(aff.ToString());
+                        context.UpdateEffects(playerData.HubGuid, aff.ToString());
                     }
                     else
                     {
-                        context.Clients.Client(playerData.HubGuid)
-                            .updateAffects("You are not affected by anything.");
+                        context.UpdateEffects(playerData.HubGuid, "You are not affected by anything.");
                     }
                 }
                 else
                 {
-                    context.Clients.Client(playerData.HubGuid)
-                        .updateAffects("You are not affected by anything.");
+                    context.UpdateEffects(playerData.HubGuid, "You are not affected by anything.");
                 }
 
               
@@ -164,8 +143,7 @@ namespace MIMWebClient.Core.Events
             {
                 return;
             }
-            var context = HubContext.getHubContext;
-            context.Clients.Client(playerData.HubGuid).UpdateUiChannels(text, className);
+            HubContext.Instance.UpdateUiChannels(playerData.HubGuid, text, className);
 
         }
 
@@ -176,8 +154,7 @@ namespace MIMWebClient.Core.Events
             {
                 //var room = new Room.Room();
                 //var currentRoom = p
-                var context = HubContext.getHubContext;
-                context.Clients.Client(playerData.HubGuid).UpdateUiRoom(room);
+                HubContext.Instance.UpdateUIRoom(playerData.HubGuid, room);
                 //context.Clients.Client(playerData.HubGuid).updateRoom(playerData.Inventory);
             }
         }
@@ -189,8 +166,7 @@ namespace MIMWebClient.Core.Events
             {
                 //var room = new Room.Room();
                 //var currentRoom = p
-                var context = HubContext.getHubContext;
-                context.Clients.Client(playerData.HubGuid).UpdateUiMap(roomId, area, region, zindex);
+                HubContext.Instance.UpdateUiMap(playerData.HubGuid, roomId, area, region, zindex);
                 //context.Clients.Client(playerData.HubGuid).updateRoom(playerData.Inventory);
             }
         }
@@ -208,8 +184,7 @@ namespace MIMWebClient.Core.Events
  
                 //var room = new Room.Room();
                 //var currentRoom = p
-                var context = HubContext.getHubContext;
-                context.Clients.Client(playerData.HubGuid).UpdateUiDescription(description);
+                HubContext.Instance.UpdateUiDescription(playerData.HubGuid, description);
                 //context.Clients.Client(playerData.HubGuid).updateRoom(playerData.Inventory);
             }
         }

@@ -43,7 +43,7 @@ namespace MIMWebClient.Core.Events
             else
             {
 
-                HubContext.SendToClient($"You don't see anything by that name here.", player.HubGuid);
+                HubContext.Instance.SendToClient($"You don't see anything by that name here.", player.HubGuid);
 
              
             }

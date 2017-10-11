@@ -43,7 +43,7 @@ namespace MIMWebClient.Core
                     player.QuestLog.Add(AnkerQuests.TutorialLeatherQuest());
                     Score.UpdateUiQlog(player);
 
-                    HubContext.SendToClient(
+                    HubContext.Instance.SendToClient(
                         "<span class='questColor'>New Quest added: " + AnkerQuests.TutorialLeatherQuest().Name + "<br />" + AnkerQuests.TutorialLeatherQuest().Description + "</span>",
                         player.HubGuid);
                 }

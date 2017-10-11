@@ -24,7 +24,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (hasSpell == false)
             {
-                HubContext.SendToClient("You don't know that spell.", player.HubGuid);
+                HubContext.Instance.SendToClient("You don't know that spell.", player.HubGuid);
                 return;
             }
 
@@ -43,7 +43,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (player.ManaPoints < RefreshAb().ManaCost)
                 {
-                    HubContext.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
 
                     return;
                 }
@@ -54,7 +54,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 Score.UpdateUiPrompt(player);
 
-                HubContext.SendToClient("You utter et refocillabatur.", player.HubGuid);
+                HubContext.Instance.SendToClient("You utter et refocillabatur.", player.HubGuid);
 
                 var playersInRoom = new List<Player>(room.players);
 
@@ -65,7 +65,7 @@ namespace MIMWebClient.Core.Player.Skills
                    
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} utters et refocillabatur.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -79,7 +79,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 Score.UpdateUiPrompt(player);
 
-                HubContext.SendToClient("You utter et refocillabatur.", player.HubGuid);
+                HubContext.Instance.SendToClient("You utter et refocillabatur.", player.HubGuid);
 
                 var playersInRoom = new List<Player>(room.players);
 
@@ -90,7 +90,7 @@ namespace MIMWebClient.Core.Player.Skills
                         var hisOrHer = Helpers.ReturnHisOrHers(player, character);
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} utters volito autem.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -110,7 +110,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (attacker.ManaPoints < RefreshAb().ManaCost)
             {
-                HubContext.SendToClient("You attempt to draw energy but fail", attacker.HubGuid);
+                HubContext.Instance.SendToClient("You attempt to draw energy but fail", attacker.HubGuid);
 
                 return;
             }
@@ -123,11 +123,11 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (attacker.MovePoints >= attacker.MaxMovePoints)
                 {
-                    HubContext.SendToClient("You are already fully refreshed.", attacker.HubGuid);
+                    HubContext.Instance.SendToClient("You are already fully refreshed.", attacker.HubGuid);
                 }
                 else
                 {
-                    HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
+                    HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
 
                     foreach (var character in room.players)
                     {
@@ -143,7 +143,7 @@ namespace MIMWebClient.Core.Player.Skills
                             var roomMessage =
                                 $"{Helpers.ReturnName(attacker, character, string.Empty)} looks refreshed.";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
@@ -163,7 +163,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (_target.MovePoints >= _target.MaxMovePoints)
                 {
-                    HubContext.SendToClient("They are already fully refreshed.", attacker.HubGuid);
+                    HubContext.Instance.SendToClient("They are already fully refreshed.", attacker.HubGuid);
                 }
                 else
                 {
@@ -172,8 +172,8 @@ namespace MIMWebClient.Core.Player.Skills
 
                     var castingTextDefender = "You feel refreshed.";
 
-                    HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-                    HubContext.SendToClient(castingTextDefender, _target.HubGuid);
+                    HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
+                    HubContext.Instance.SendToClient(castingTextDefender, _target.HubGuid);
 
                     foreach (var character in room.players)
                     {
@@ -188,7 +188,7 @@ namespace MIMWebClient.Core.Player.Skills
                             var roomMessage =
                                 $"{Helpers.ReturnName(attacker, character, string.Empty)} looks refreshed.";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 

@@ -125,11 +125,8 @@ namespace MIMWebClient.Core.Room
                 serializer.Serialize(file, json);
             }
 
-            var context = HubContext.getHubContext;
-            context.Clients.Client(playerId).getMap(json);
-
-
+            HubContext.Instance.GetMap(playerId, json);
         }
 
-}
+    }
 }

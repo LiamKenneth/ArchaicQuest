@@ -19,7 +19,7 @@ namespace MIMWebClient.Core.Events
         {
             string playerId = player.HubGuid;
 
-            HubContext.SendToClient($"<span class='sayColor'>You say, \"{message}\"</span>", playerId, null, false, false);
+            HubContext.Instance.SendToClient($"<span class='sayColor'>You say, \"{message}\"</span>", playerId, null, false, false);
 
             Score.UpdateUIChannels(player, $"<span class='sayColor'>You say, \"{message}\"</span>", "roomChannelF");
 
@@ -32,7 +32,7 @@ namespace MIMWebClient.Core.Events
 
                     Score.UpdateUIChannels(character, $"<span class='sayColor'>{ Helpers.ReturnName(player, character, string.Empty)} says \"{message}\"</span>", "roomChannelF");
 
-                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                    HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                 }
             }
 
@@ -87,7 +87,7 @@ namespace MIMWebClient.Core.Events
                 {
                     Thread.Sleep(120); // hack, sometimes the responses calls before the questions??
  
-                    HubContext.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"" + response.Replace("$playerName", player.Name) + "\"<span>", playerId,
+                    HubContext.Instance.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"" + response.Replace("$playerName", player.Name) + "\"<span>", playerId,
                        null, true);
 
                     Score.UpdateUIChannels(player, "<span class='sayColor'>" + mob.Name + " says to you \"" + response.Replace("$playerName", player.Name) + "\"<span>", "roomChannelF");
@@ -97,7 +97,7 @@ namespace MIMWebClient.Core.Events
 
                     if (speak?.PossibleResponse.Count > 0)
                     {
-                        HubContext.SendToClient("<span class='sayColor'>" +
+                        HubContext.Instance.SendToClient("<span class='sayColor'>" +
                             mob.Name + " says to you \"anything else?\"</span>", playerId,
                             null, true);
                     }
@@ -119,7 +119,7 @@ namespace MIMWebClient.Core.Events
                                     "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
                                     respond.Response + "\",\"" + player.HubGuid + "\")'> * [say, " + respond.Response +
                                     "]</a>";
-                                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
+                                HubContext.Instance.AddNewMessageToPage(player.HubGuid, textChoice);
                             
                             }
                             else
@@ -128,7 +128,7 @@ namespace MIMWebClient.Core.Events
                                     "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
                                     respond.Response + "\",\"" + player.HubGuid + "\")'>. * [say, " + respond.Response +
                                     "]</a>";
-                                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
+                                HubContext.Instance.AddNewMessageToPage(player.HubGuid, textChoice);
                         
                             }
                         }
@@ -148,7 +148,7 @@ namespace MIMWebClient.Core.Events
                             player.QuestLog.Add(quest);
                             Score.UpdateUiQlog(player);
 
-                            HubContext.SendToClient("<span class='questColor'>Quest Added:<br />"+  quest.Name + " </span> ", playerId);
+                            HubContext.Instance.SendToClient("<span class='questColor'>Quest Added:<br />"+  quest.Name + " </span> ", playerId);
 
                             if (GivePrerequisiteItem)
                             {
@@ -162,12 +162,12 @@ namespace MIMWebClient.Core.Events
 
                                         var roomMessage = $"{ Helpers.ReturnName(mob, character, string.Empty)}  {quest.PrerequisiteItemEmote}";
 
-                                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                                     }
                                 }
 
 
-                                HubContext.SendToClient("You get 5 gold from " + mob.Name, playerId);
+                                HubContext.Instance.SendToClient("You get 5 gold from " + mob.Name, playerId);
                             }
                         }
 
@@ -219,8 +219,8 @@ namespace MIMWebClient.Core.Events
             if (recipientPlayer != null)
             {
                 string recipientName = recipientPlayer.Name;
-                HubContext.SendToClient("You say to " + recipientName + " \"" + actualMessage + "\"", playerId, null, false, false);
-                HubContext.SendToClient(Helpers.ReturnName(player, recipientPlayer, string.Empty) + " says to you \"" + actualMessage + "\"", playerId, recipientName, true, true);
+                HubContext.Instance.SendToClient("You say to " + recipientName + " \"" + actualMessage + "\"", playerId, null, false, false);
+                HubContext.Instance.SendToClient(Helpers.ReturnName(player, recipientPlayer, string.Empty) + " says to you \"" + actualMessage + "\"", playerId, recipientName, true, true);
 
                 Score.UpdateUIChannels(player, "You say to " + recipientName + " \"" + actualMessage + "\"", "roomChannelF");
                 Score.UpdateUIChannels(recipientPlayer, Helpers.ReturnName(player, recipientPlayer, string.Empty) + " says to you \"" + actualMessage + "\"", "roomChannelF");
@@ -228,7 +228,7 @@ namespace MIMWebClient.Core.Events
             }
             else
             {
-                HubContext.SendToClient("No one here by that name.", playerId, null, false, false);
+                HubContext.Instance.SendToClient("No one here by that name.", playerId, null, false, false);
             }
         }
 
@@ -237,7 +237,7 @@ namespace MIMWebClient.Core.Events
 
             var rooms = Cache.ReturnRooms().Where(x => x.area.Equals(room.area));
             var yellMessage = $"<span class='yellColor'>You yell \"{message}\"</span>";
-            HubContext.SendToClient(yellMessage, player.HubGuid);
+            HubContext.Instance.SendToClient(yellMessage, player.HubGuid);
 
             foreach (var area in rooms)
             {
@@ -246,7 +246,7 @@ namespace MIMWebClient.Core.Events
                     if (i.Name != player.Name)
                     {
                         var roomMessage = $"<span class='yellColor'>{ Helpers.ReturnName(player, i, string.Empty)} yells \"{message}\"</span>";
-                        HubContext.SendToClient(roomMessage, i.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, i.HubGuid);
                     }
                    
                 }
@@ -262,7 +262,7 @@ namespace MIMWebClient.Core.Events
 
             foreach (var pc in players)
             {
-                HubContext.SendToClient("<span style='color:red'>[Newbie] " + player.Name + ":</span> " + message, pc.HubGuid);
+                HubContext.Instance.SendToClient("<span style='color:red'>[Newbie] " + player.Name + ":</span> " + message, pc.HubGuid);
                 Score.UpdateUIChannels(pc, "<span class='newbieChannel' style='color:red'>[Newbie] " + player.Name + ":</span> " + message, "newbieChannelF");
             }
 
@@ -276,7 +276,7 @@ namespace MIMWebClient.Core.Events
 
             foreach (var pc in players)
             {
-                HubContext.SendToClient("<span style='color:#7CEECE'>[Gossip] " + player.Name + ":</span> " + message, pc.HubGuid);
+                HubContext.Instance.SendToClient("<span style='color:#7CEECE'>[Gossip] " + player.Name + ":</span> " + message, pc.HubGuid);
                 Score.UpdateUIChannels(pc, "<span class='gossipChannel' style='color:#7CEECE'>[Gossip] " + player.Name + ":</span> " + message, "gossipChannelF");
             }
 
@@ -291,7 +291,7 @@ namespace MIMWebClient.Core.Events
 
             foreach (var pc in players)
             {
-                HubContext.SendToClient("<span style='color:#00AFF0'>[OOC] " + player.Name + ":</span> " + message, pc.HubGuid);
+                HubContext.Instance.SendToClient("<span style='color:#00AFF0'>[OOC] " + player.Name + ":</span> " + message, pc.HubGuid);
                 Score.UpdateUIChannels(pc, "<span class='oocChannel' style='color:#00AFF0'>[OOC] " + player.Name + ":</span> " + message, "oocChannelF");
             }
 

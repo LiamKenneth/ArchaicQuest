@@ -29,7 +29,7 @@ namespace MIMWebClient.Core.Events
                  
             }
 
-            HubContext.SendToClient(whoList.ToString(), playerData.HubGuid);
+            HubContext.Instance.SendToClient(whoList.ToString(), playerData.HubGuid);
         }
     }
 }

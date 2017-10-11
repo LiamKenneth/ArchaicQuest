@@ -15,7 +15,7 @@ namespace MIMWebClient.Core.Mob.Events
 
             if (npc == null)
             {
-                HubContext.SendToClient("No one here by the name of " + mob, player.HubGuid);
+                HubContext.Instance.SendToClient("No one here by the name of " + mob, player.HubGuid);
                 return;
             }
 
@@ -39,7 +39,7 @@ namespace MIMWebClient.Core.Mob.Events
                     {
 
                      
-                     //   HubContext.SendToClient(qlog.RewardDialog.Message, player.HubGuid);
+                     //   HubContext.Instance.SendToClient(qlog.RewardDialog.Message, player.HubGuid);
 
                         if (npc.DialogueTree != null && npc.DialogueTree.Count >= 1)
                         {
@@ -59,12 +59,12 @@ namespace MIMWebClient.Core.Mob.Events
                                 speak = npc.DialogueTree[0];
                             }
 
-                            HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(npc.Name + " says to you \"" + speak.Message + "\"");
+                            HubContext.Instance.AddNewMessageToPage(player.HubGuid, npc.Name + " says to you \"" + speak.Message + "\"");
                             var i = 1;
                             foreach (var respond in speak.PossibleResponse)
                             {
                                 var textChoice = "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " + respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " + respond.Response + "</a>";
-                                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
+                                HubContext.Instance.AddNewMessageToPage(player.HubGuid, textChoice);
                                 i++;
 
                             }
@@ -73,7 +73,7 @@ namespace MIMWebClient.Core.Mob.Events
                         qlog.Completed = true;
                         player.Experience += qlog.RewardXp;
 
-                        HubContext.SendToClient(qlog.Name + " Completed, you are rewarded " + qlog.RewardXp + " xp", player.HubGuid);
+                        HubContext.Instance.SendToClient(qlog.Name + " Completed, you are rewarded " + qlog.RewardXp + " xp", player.HubGuid);
 
                         return;
 
@@ -82,11 +82,11 @@ namespace MIMWebClient.Core.Mob.Events
 
                 if (dialogue != null)
                 {
-                    HubContext.SendToClient(dialogue.Message, player.HubGuid);
+                    HubContext.Instance.SendToClient(dialogue.Message, player.HubGuid);
                 }
                 else
                 {
-                    HubContext.SendToClient(npc.Name + " greets you back", player.HubGuid);
+                    HubContext.Instance.SendToClient(npc.Name + " greets you back", player.HubGuid);
                 }
             }
 

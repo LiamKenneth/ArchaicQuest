@@ -40,15 +40,15 @@ namespace MIMWebClient.Core.Player
         public static void ShowEquipment(Player player)
         {
  
-            HubContext.SendToClient("You are wearing:", player.HubGuid);
+            HubContext.Instance.SendToClient("You are wearing:", player.HubGuid);
 
-            HubContext.SendToClient(DisplayEq(player, player.Equipment), player.HubGuid);
+            HubContext.Instance.SendToClient(DisplayEq(player, player.Equipment), player.HubGuid);
             
         }
 
         public static void ShowEquipmentLook(Player mob, Player viewer)
         {
-            HubContext.SendToClient(DisplayEq(mob, mob.Equipment), viewer.HubGuid);
+            HubContext.Instance.SendToClient(DisplayEq(mob, mob.Equipment), viewer.HubGuid);
         }
 
         public static string ReturnEqName(Player mob, string eq)
@@ -122,7 +122,7 @@ namespace MIMWebClient.Core.Player
 
             if (string.IsNullOrEmpty(itemToWear))
             {
-                HubContext.SendToClient("Wear what?", player.HubGuid);
+                HubContext.Instance.SendToClient("Wear what?", player.HubGuid);
                 return;
             }
 
@@ -142,11 +142,11 @@ namespace MIMWebClient.Core.Player
                 {
                     if (wield)
                     {
-                        HubContext.SendToClient("You do not have that item to wield.", player.HubGuid);
+                        HubContext.Instance.SendToClient("You do not have that item to wield.", player.HubGuid);
                         return;
                     }
 
-                    HubContext.SendToClient("You do not have that item to wear.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You do not have that item to wear.", player.HubGuid);
                     return;
                 }
 
@@ -179,7 +179,7 @@ namespace MIMWebClient.Core.Player
 
                 if (!wield || !slot.Equals(Item.EqSlot.Wielded.ToString()))
                 {
-                    HubContext.SendToClient("You wear " + foundItem.name, player.HubGuid);
+                    HubContext.Instance.SendToClient("You wear " + foundItem.name, player.HubGuid);
 
                     var result = AvsAnLib.AvsAn.Query(foundItem.name);
                     string article = result.Article;
@@ -191,7 +191,7 @@ namespace MIMWebClient.Core.Player
 
                             var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} wears {article} {foundItem.name}";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
@@ -201,7 +201,7 @@ namespace MIMWebClient.Core.Player
                 }
                 else
                 {
-                    HubContext.SendToClient("You wield " + foundItem.name, player.HubGuid);
+                    HubContext.Instance.SendToClient("You wield " + foundItem.name, player.HubGuid);
 
                     var result = AvsAnLib.AvsAn.Query(foundItem.name);
                     string article = result.Article;
@@ -213,7 +213,7 @@ namespace MIMWebClient.Core.Player
 
                             var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} wields {article} {foundItem.name}";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
                 }
@@ -265,7 +265,7 @@ namespace MIMWebClient.Core.Player
                                 var result = AvsAnLib.AvsAn.Query(item.name);
                                 string article = result.Article;
 
-                                HubContext.SendToClient("You wear " + article + " " + item.name, player.HubGuid);
+                                HubContext.Instance.SendToClient("You wear " + article + " " + item.name, player.HubGuid);
                               
                                 foreach (var character in room.players)
                                 {
@@ -274,7 +274,7 @@ namespace MIMWebClient.Core.Player
 
                                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} wears {article} {item.name}";
 
-                                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                                     }
                                 }
 
@@ -286,7 +286,7 @@ namespace MIMWebClient.Core.Player
                                 var result = AvsAnLib.AvsAn.Query(item.name);
                                 string article = result.Article; 
 
-                                HubContext.SendToClient("You wield " + article + item.name, player.HubGuid);
+                                HubContext.Instance.SendToClient("You wield " + article + item.name, player.HubGuid);
 
 
                                 foreach (var character in room.players)
@@ -296,7 +296,7 @@ namespace MIMWebClient.Core.Player
 
                                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} wields {article} {item.name}";
 
-                                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                                     }
                                 }
                             }
@@ -336,11 +336,11 @@ namespace MIMWebClient.Core.Player
                 {
                     if (unwield)
                     {
-                        HubContext.SendToClient("You do not have that item to unwield.", player.HubGuid);
+                        HubContext.Instance.SendToClient("You do not have that item to unwield.", player.HubGuid);
                         return;
                     }
 
-                    HubContext.SendToClient("You are not wearing that item.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You are not wearing that item.", player.HubGuid);
                     return;
                 }
 
@@ -365,7 +365,7 @@ namespace MIMWebClient.Core.Player
 
                 if (!unwield || !slot.Equals("wield", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    HubContext.SendToClient("You remove " + foundItem.name, player.HubGuid);
+                    HubContext.Instance.SendToClient("You remove " + foundItem.name, player.HubGuid);
 
                     var result = AvsAnLib.AvsAn.Query(foundItem.name);
                     string article = result.Article;
@@ -377,13 +377,13 @@ namespace MIMWebClient.Core.Player
 
                             var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} removes {article} {foundItem.name}";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
                 }
                 else
                 {
-                    HubContext.SendToClient("You unwield " + foundItem.name, player.HubGuid);
+                    HubContext.Instance.SendToClient("You unwield " + foundItem.name, player.HubGuid);
 
                     var result = AvsAnLib.AvsAn.Query(foundItem.name);
                     string article = result.Article;
@@ -395,7 +395,7 @@ namespace MIMWebClient.Core.Player
 
                             var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} unwields {article} {foundItem.name}";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
                 }
@@ -426,7 +426,7 @@ namespace MIMWebClient.Core.Player
 
                     if (item.eqSlot != Item.EqSlot.Wielded)
                     {
-                        HubContext.SendToClient("You remove " + item.name, player.HubGuid);
+                        HubContext.Instance.SendToClient("You remove " + item.name, player.HubGuid);
 
                         var result = AvsAnLib.AvsAn.Query(item.name);
                         string article = result.Article;
@@ -438,14 +438,14 @@ namespace MIMWebClient.Core.Player
 
                                 var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} remove {article} {item.name}";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
 
                     }
                     else
                     {
-                        HubContext.SendToClient("You unwield " + item.name, player.HubGuid);
+                        HubContext.Instance.SendToClient("You unwield " + item.name, player.HubGuid);
 
                         var result = AvsAnLib.AvsAn.Query(item.name);
                         string article = result.Article;
@@ -457,7 +457,7 @@ namespace MIMWebClient.Core.Player
 
                                 var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} unwields {article} {item.name}";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
                     }
@@ -481,7 +481,7 @@ namespace MIMWebClient.Core.Player
 
                 if (!wornItems.Any())
                 {
-                    HubContext.SendToClient("You aren't wearing anything to remove.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You aren't wearing anything to remove.", player.HubGuid);
                 }
 
                 Score.UpdateUiInventory(player);

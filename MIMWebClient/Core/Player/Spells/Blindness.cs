@@ -24,7 +24,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (hasSpell == false)
             {
-                HubContext.SendToClient("You don't know that spell.", player.HubGuid);
+                HubContext.Instance.SendToClient("You don't know that spell.", player.HubGuid);
                 return;
             }
 
@@ -55,7 +55,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (player.ManaPoints < BlindAb().ManaCost)
                 {
-                    HubContext.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
 
                     return;
                 }
@@ -66,7 +66,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 Score.UpdateUiPrompt(player);
 
-                HubContext.SendToClient("You utter oculi caecorum", player.HubGuid);
+                HubContext.Instance.SendToClient("You utter oculi caecorum", player.HubGuid);
 
                 var playersInRoom = new List<Player>(room.players);
 
@@ -78,7 +78,7 @@ namespace MIMWebClient.Core.Player.Skills
                         var roomMessage =
                             $"{Helpers.ReturnName(player, character, string.Empty)} utters oculi caecorum.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -87,7 +87,7 @@ namespace MIMWebClient.Core.Player.Skills
             }
             else if (_target == null)
             {
-                HubContext.SendToClient("You can't cast this on yourself", player.HubGuid);
+                HubContext.Instance.SendToClient("You can't cast this on yourself", player.HubGuid);
             }
         
 
@@ -102,19 +102,19 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (attacker.ManaPoints < BlindAb().ManaCost)
             {
-                HubContext.SendToClient("You attempt to draw energy but fail", attacker.HubGuid);
+                HubContext.Instance.SendToClient("You attempt to draw energy but fail", attacker.HubGuid);
 
                 return;
             }
 
             //already blind check
-            var isBlind = _target.Affects?.FirstOrDefault(
+            var isBlind = _target.Effects?.FirstOrDefault(
                     x => x.Name.Equals("Blindness", StringComparison.CurrentCultureIgnoreCase)) != null;
 
  
                 if (isBlind)
                 {
-                    HubContext.SendToClient("They are already Blind.", attacker.HubGuid);
+                    HubContext.Instance.SendToClient("They are already Blind.", attacker.HubGuid);
                 }
                 else
                 {
@@ -123,8 +123,8 @@ namespace MIMWebClient.Core.Player.Skills
 
                     var castingTextDefender = "Your eyes bind shut.";
 
-                    HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-                    HubContext.SendToClient(castingTextDefender, _target.HubGuid);
+                    HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
+                    HubContext.Instance.SendToClient(castingTextDefender, _target.HubGuid);
 
                     foreach (var character in room.players)
                     {
@@ -139,7 +139,7 @@ namespace MIMWebClient.Core.Player.Skills
                             var roomMessage =
                                 $"{Helpers.ReturnName(attacker, character, string.Empty)}'s eyes bind shut.";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
@@ -148,7 +148,7 @@ namespace MIMWebClient.Core.Player.Skills
             //add blind affect
 
 
-            var blindAff = new Affect
+            var blindAff = new Effect
             {
                 Name = "Blindness",
                 Duration = attacker.Level + 5,
@@ -157,14 +157,14 @@ namespace MIMWebClient.Core.Player.Skills
             };
 
 
-            if (_target.Affects == null)
+            if (_target.Effects == null)
             {
-                _target.Affects = new List<Affect> {blindAff};
+                _target.Effects = new List<Effect> {blindAff};
 
             }
             else
             {
-                _target.Affects.Add(blindAff);
+                _target.Effects.Add(blindAff);
             }
 
             Score.UpdateUiAffects(_target);

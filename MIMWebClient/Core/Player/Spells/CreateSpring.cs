@@ -26,7 +26,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (hasSpell == false)
             {
-                HubContext.SendToClient("You don't know that spell.", player.HubGuid);
+                HubContext.Instance.SendToClient("You don't know that spell.", player.HubGuid);
                 return;
             }
 
@@ -42,7 +42,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (player.ManaPoints < CreateSpringAb().ManaCost)
                 {
-                    HubContext.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
 
                     return;
                 }
@@ -52,7 +52,7 @@ namespace MIMWebClient.Core.Player.Skills
                 Score.UpdateUiPrompt(player);
 
 
-                HubContext.SendToClient($"You utter aqua fons.", player.HubGuid);
+                HubContext.Instance.SendToClient($"You utter aqua fons.", player.HubGuid);
 
   
                 foreach (var character in room.players)
@@ -62,7 +62,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} utters aqua fons.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -85,7 +85,7 @@ namespace MIMWebClient.Core.Player.Skills
  
                 var castingTextAttacker = $"A pool of water suddenly appears on the floor and starts to spew water in the air.";
 
-                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
+                HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
 
                 foreach (var character in room.players)
                 {
@@ -94,7 +94,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                         var roomMessage = $"A pool of water suddenly appears on the floor and starts to spew water in the air.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 

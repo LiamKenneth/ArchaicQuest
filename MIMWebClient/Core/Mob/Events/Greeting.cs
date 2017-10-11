@@ -27,7 +27,7 @@ namespace MIMWebClient.Core.Mob.Events
                           
                             var roomMessage = $"{ Helpers.ReturnName(mob, character, string.Empty)} says \"{greetMessageToRoom}\"";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                          
                     }
                 }

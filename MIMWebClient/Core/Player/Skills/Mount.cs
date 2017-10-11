@@ -58,7 +58,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (hasSkill == false)
             {
-                HubContext.SendToClient("You don't know how to ride mounts.", player.HubGuid);
+                HubContext.Instance.SendToClient("You don't know how to ride mounts.", player.HubGuid);
                 return;
             }
 
@@ -87,11 +87,11 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (!_target.IsMount)
                 {
-                    HubContext.SendToClient($"You can't mount {Helpers.ReturnName(null, null, _target.Name)}.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"You can't mount {Helpers.ReturnName(null, null, _target.Name)}.", player.HubGuid);
                     return;
                 }
 
-                HubContext.SendToClient($"You mount {Helpers.ReturnName(null, null, _target.Name)}", player.HubGuid);
+                HubContext.Instance.SendToClient($"You mount {Helpers.ReturnName(null, null, _target.Name)}", player.HubGuid);
 
                 
                 foreach (var character in room.players)
@@ -102,7 +102,7 @@ namespace MIMWebClient.Core.Player.Skills
                         var roomMessage =
                             $"{Helpers.ReturnName(player, character, string.Empty)} mounts {Helpers.ReturnName(null, null, _target.Name)}.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -114,7 +114,7 @@ namespace MIMWebClient.Core.Player.Skills
             }
             else if (_target == null)
             {
-                HubContext.SendToClient("You don't see that here?", player.HubGuid);
+                HubContext.Instance.SendToClient("You don't see that here?", player.HubGuid);
             }
 
 
@@ -127,11 +127,11 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (player.Mount == null)
             {
-                HubContext.SendToClient($"You are not mounted.",  player.HubGuid);
+                HubContext.Instance.SendToClient($"You are not mounted.",  player.HubGuid);
                 return;
             }
 
-            HubContext.SendToClient($"You dismount {Helpers.ReturnName(null, null, player.Mount.Name).ToLower()}", player.HubGuid);
+            HubContext.Instance.SendToClient($"You dismount {Helpers.ReturnName(null, null, player.Mount.Name).ToLower()}", player.HubGuid);
 
 
             foreach (var character in room.players)
@@ -142,7 +142,7 @@ namespace MIMWebClient.Core.Player.Skills
                     var roomMessage =
                         $"{Helpers.ReturnName(player, character, string.Empty)} dismounts {Helpers.ReturnName(null, null, player.Mount.Name).ToLower()}.";
 
-                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                    HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                 }
             }
 

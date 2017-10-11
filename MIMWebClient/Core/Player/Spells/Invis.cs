@@ -27,7 +27,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (hasSpell == false)
             {
-                HubContext.SendToClient("You don't know that spell.", player.HubGuid);
+                HubContext.Instance.SendToClient("You don't know that spell.", player.HubGuid);
                 return;
             }
 
@@ -75,12 +75,12 @@ namespace MIMWebClient.Core.Player.Skills
 
                     if (findPlayer != null || findMob != null)
                     {
-                        HubContext.SendToClient("You can only cast invis on yourself or items in your inventory.", player.HubGuid);
+                        HubContext.Instance.SendToClient("You can only cast invis on yourself or items in your inventory.", player.HubGuid);
 
                         return;
                     } else
                     {
-                        HubContext.SendToClient("You don't have that to turn invisible.", player.HubGuid);
+                        HubContext.Instance.SendToClient("You don't have that to turn invisible.", player.HubGuid);
                         return;
                     }
 
@@ -97,7 +97,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (player.ManaPoints < InvisAb().ManaCost)
                 {
-                    HubContext.SendToClient("You attempt to draw energy but fail", player.HubGuid);
+                    HubContext.Instance.SendToClient("You attempt to draw energy but fail", player.HubGuid);
 
                     return;
                 }
@@ -115,7 +115,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (_target.itemFlags.Contains(Item.Item.ItemFlags.invis))
                 {
-                    HubContext.SendToClient("This item is already invisible", player.HubGuid);
+                    HubContext.Instance.SendToClient("This item is already invisible", player.HubGuid);
                     return;
                 }
 
@@ -124,7 +124,7 @@ namespace MIMWebClient.Core.Player.Skills
                 string article = result.Article;
 
 
-                HubContext.SendToClient($"You take hold of the {_target.name} between your hands which starts to fade in and out of existence", player.HubGuid);
+                HubContext.Instance.SendToClient($"You take hold of the {_target.name} between your hands which starts to fade in and out of existence", player.HubGuid);
 
                 var playersInRoom = new List<Player>(room.players);
 
@@ -135,7 +135,7 @@ namespace MIMWebClient.Core.Player.Skills
                         var hisOrHer = Helpers.ReturnHisOrHers(player, character);
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} takes hold of the {_target.name} between {hisOrHer} hands which starts to fade in and out of existence.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -149,7 +149,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                     if (player.ManaPoints < InvisAb().ManaCost)
                     {
-                        HubContext.SendToClient("You attempt to draw energy but fail", player.HubGuid);
+                        HubContext.Instance.SendToClient("You attempt to draw energy but fail", player.HubGuid);
 
                         return;
                     }
@@ -159,13 +159,13 @@ namespace MIMWebClient.Core.Player.Skills
 
                     Score.UpdateUiPrompt(player);
 
-                    var hasFaerieFire = player.Affects?.FirstOrDefault(
+                    var hasFaerieFire = player.Effects?.FirstOrDefault(
                                             x => x.Name.Equals("Faerie Fire", StringComparison.CurrentCultureIgnoreCase)) !=
                                         null;
 
                     if (!hasFaerieFire)
                     {
-                        HubContext.SendToClient($"You start to fade in and out of existence.", player.HubGuid);
+                        HubContext.Instance.SendToClient($"You start to fade in and out of existence.", player.HubGuid);
 
                         foreach (var character in room.players)
                         {
@@ -175,7 +175,7 @@ namespace MIMWebClient.Core.Player.Skills
                                 var roomMessage =
                                     $"{Helpers.ReturnName(player, character, string.Empty)} starts to fade in and out of existence";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
 
@@ -185,7 +185,7 @@ namespace MIMWebClient.Core.Player.Skills
                     }
                     else
                     {
-                        HubContext.SendToClient($"You fail to turn invisible due to the glow of Faerie fire surrounding you.", player.HubGuid);
+                        HubContext.Instance.SendToClient($"You fail to turn invisible due to the glow of Faerie fire surrounding you.", player.HubGuid);
                     }
                 }
 
@@ -207,7 +207,7 @@ namespace MIMWebClient.Core.Player.Skills
             {
                 var castingTextAttacker =  $"You fade out of existence";
  
-                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
+                HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
 
  
                 foreach (var character in room.players)
@@ -216,12 +216,12 @@ namespace MIMWebClient.Core.Player.Skills
                     {
                         var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)} fades out of existence.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
                 attacker.invis = true;
-                var invisAffect = new Affect
+                var invisAffect = new Effect
                 {
                     Name = "Invis",
                     Duration = InvisAb().Duration * attacker.Level,
@@ -230,13 +230,13 @@ namespace MIMWebClient.Core.Player.Skills
                 };
                  
 
-                if (attacker.Affects != null)
+                if (attacker.Effects != null)
                 {
-                    var checkExisting = attacker.Affects.FirstOrDefault(x => x.Name.Equals("Invis"));
+                    var checkExisting = attacker.Effects.FirstOrDefault(x => x.Name.Equals("Invis"));
 
                     if (checkExisting == null)
                     {
-                        attacker.Affects.Add(invisAffect);
+                        attacker.Effects.Add(invisAffect);
                     }
                     else
                     {
@@ -246,7 +246,7 @@ namespace MIMWebClient.Core.Player.Skills
                 }
                 else
                 {
-                    attacker.Affects = new List<Affect>
+                    attacker.Effects = new List<Effect>
                     {
                         invisAffect
                     };
@@ -264,8 +264,8 @@ namespace MIMWebClient.Core.Player.Skills
 
                 var castingTextRoom = $"The {_target.name} fades out of existence.";
 
-                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-                HubContext.broadcastToRoom(castingTextRoom, room.players, attacker.HubGuid, true);
+                HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
+                HubContext.Instance.BroadcastToRoom(castingTextRoom, room.players, attacker.HubGuid, true);
 
                 _target.itemFlags.Add(Item.Item.ItemFlags.invis);          
 

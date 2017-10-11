@@ -47,8 +47,7 @@ namespace MIMWebClient.Core.Update
                         {
                             await Task.Delay(5000);
                             var emoteIndex = Helpers.diceRoll.Next(mob.Emotes.Count);
-                            HubContext.broadcastToRoom(mob.Name + " " + mob.Emotes[emoteIndex], room.players,
-                                String.Empty);
+                            HubContext.Instance.BroadcastToRoom(mob.Name + " " + mob.Emotes[emoteIndex], room.players, String.Empty);
                         }
                     }
                 }
@@ -72,7 +71,7 @@ namespace MIMWebClient.Core.Update
                     {
 
                         var emoteIndex = Helpers.diceRoll.Next(room.Emotes.Count);
-                        HubContext.broadcastToRoom(room.Emotes[emoteIndex], room.players, String.Empty);
+                        HubContext.Instance.BroadcastToRoom(room.Emotes[emoteIndex], room.players, String.Empty);
                     }
 
                 }
@@ -131,7 +130,7 @@ namespace MIMWebClient.Core.Update
                 {
                     if (player.Value != null && player.Value.LastCommandTime.AddMinutes(10) < DateTime.Now)
                     {
-                        HubContext.SendToClient("You disappear in the void", player.Value.HubGuid);
+                        HubContext.Instance.SendToClient("You disappear in the void", player.Value.HubGuid);
 
                         var room =
                             MIMHub._AreaCache.FirstOrDefault(
@@ -143,7 +142,7 @@ namespace MIMWebClient.Core.Update
                         {
                             foreach (var players in room.Value.players.ToList())
                             {
-                                HubContext.broadcastToRoom(player.Value.Name + " disappears in the void",
+                                HubContext.Instance.BroadcastToRoom(player.Value.Name + " disappears in the void",
                                     room.Value.players,
                                     players.HubGuid, true);
                             }

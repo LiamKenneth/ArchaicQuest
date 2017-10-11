@@ -23,6 +23,7 @@ namespace MIMWebClient.Core
         /// <returns>Returns Dictionary of commands</returns>
         public static Dictionary<string, Action> Commands(string commandOptions, string commandKey, PlayerSetup.Player playerData, Room.Room room)
         {
+            var context = HubContext.Instance;
 
             var commandList = new Dictionary<String, Action>
             {
@@ -165,16 +166,16 @@ namespace MIMWebClient.Core
                 {"sell", () => Shop.sellItems(playerData, room, commandOptions)},
                 {"quest log", () => Quest.QuestLog(playerData)},
                 {"qlog", () => Quest.QuestLog(playerData)},
-                {"wake", () => Status.WakePlayer(playerData, room)},
-                {"sleep", () => Status.SleepPlayer(playerData, room)},
-                {"rest", () => Status.RestPlayer(playerData, room)},
-                {"stand", () => Status.StandPlayer(playerData, room)},
+                {"wake", () => Status.WakePlayer(context, playerData, room)},
+                {"sleep", () => Status.SleepPlayer(context, playerData, room)},
+                {"rest", () => Status.RestPlayer(context, playerData, room)},
+                {"stand", () => Status.StandPlayer(context, playerData, room)},
                 {"greet", () => Greet.GreetMob(playerData, room, commandOptions)},
                 {"who", () => Who.Connected(playerData)},
-                {"affects", () => Affect.Show(playerData)},
+                {"affects", () => Effect.Show(playerData)},
                 {"follow", () => Follow.FollowThing(playerData, room, commandOptions) },
                 {"nofollow", () => Follow.FollowThing(playerData, room, "noFollow") },
-                {"quit", () => HubContext.Quit(playerData.HubGuid, room)},
+                {"quit", () => HubContext.Instance.Quit(playerData.HubGuid, room)},
                 //admin
                 {"/debug", () => PlayerSetup.Player.DebugPlayer(playerData) }
             };
@@ -195,7 +196,7 @@ namespace MIMWebClient.Core
 
             if (string.IsNullOrEmpty(input.Trim()))
             {
-                HubContext.SendToClient("You need to enter a command, type help if you need it.", playerData.HubGuid);
+                HubContext.Instance.SendToClient("You need to enter a command, type help if you need it.", playerData.HubGuid);
                 return;
             }
 
@@ -256,7 +257,7 @@ namespace MIMWebClient.Core
 
                 Save.LogError(log);
 
-                HubContext.SendToClient("Sorry you can't do that.", playerData.HubGuid);
+                HubContext.Instance.SendToClient("Sorry you can't do that.", playerData.HubGuid);
             }
 
             playerData.LastCommandTime = DateTime.Now;

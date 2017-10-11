@@ -30,16 +30,15 @@ namespace MIMWebClient.Core.Events
                 {
                     var col = db.GetCollection<Player>("Player");
 
-
                     var duration = DateTime.Now.Subtract(player.LastLoginTime);
 
-                        player.PlayTime = (long) duration.TotalMinutes;
+                    player.PlayTime = (long) duration.TotalMinutes;
 
-                        player.TotalPlayTime += (long)duration.TotalMinutes;
+                    player.TotalPlayTime += (long)duration.TotalMinutes;
 
                     col.Upsert(player); 
 
-                    HubContext.SendToClient("Gods take note of your progress", player.HubGuid);
+                    HubContext.Instance.SendToClient("Gods take note of your progress", player.HubGuid);
                 }
 
             }

@@ -31,20 +31,20 @@ namespace MIMWebClient.Core.Mob.Events
                 }
                 else
                 {
-                    HubContext.SendToClient("<span class='sayColor'>" + mob.Name + "says, \"Sorry I have nothing to sell you.\"</span>", player.HubGuid);
+                    HubContext.Instance.SendToClient("<span class='sayColor'>" + mob.Name + "says, \"Sorry I have nothing to sell you.\"</span>", player.HubGuid);
                     return;
                 }
 
                 //e.g Yes sure here are my wares.
-                HubContext.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"" + mob.sellerMessage + "\"</span>", player.HubGuid);
+                HubContext.Instance.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"" + mob.sellerMessage + "\"</span>", player.HubGuid);
 
                 //show player items
-                HubContext.SendToClient(itemsForSell, player.HubGuid);
+                HubContext.Instance.SendToClient(itemsForSell, player.HubGuid);
 
             }
             else
             {
-                HubContext.SendToClient("There is no merchant here", player.HubGuid);
+                HubContext.Instance.SendToClient("There is no merchant here", player.HubGuid);
             }
         }
 
@@ -62,7 +62,7 @@ namespace MIMWebClient.Core.Mob.Events
 
                     if (string.IsNullOrEmpty(itemName))
                     {
-                        HubContext.SendToClient("Buy? Buy what?", player.HubGuid);
+                        HubContext.Instance.SendToClient("Buy? Buy what?", player.HubGuid);
                         return;
                     }
 
@@ -80,7 +80,7 @@ namespace MIMWebClient.Core.Mob.Events
 
                             itemToBuy.location = Item.Item.ItemLocation.Inventory;
                             player.Inventory.Add(itemToBuy);
-                            HubContext.SendToClient(
+                            HubContext.Instance.SendToClient(
                                 "You buy " + article + itemToBuy.name + " from " + mob.Name,
                                 player.HubGuid);
                            
@@ -91,7 +91,7 @@ namespace MIMWebClient.Core.Mob.Events
                                     var hisOrHer = Helpers.ReturnHisOrHers(player, character);
                                     var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} buys {article} {itemToBuy.name} from {mob.Name}";
 
-                                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                                    HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                                 }
                             }
 
@@ -102,20 +102,20 @@ namespace MIMWebClient.Core.Mob.Events
                         }
                         else
                         {
-                            HubContext.SendToClient("You can't afford " + article + " " + itemToBuy.name, player.HubGuid);
+                            HubContext.Instance.SendToClient("You can't afford " + article + " " + itemToBuy.name, player.HubGuid);
                         }
 
                     }
                     else
                     {
-                        HubContext.SendToClient("I don't have that item.", player.HubGuid);
+                        HubContext.Instance.SendToClient("I don't have that item.", player.HubGuid);
                     }
 
                 }
                 else
                 {
 
-                    HubContext.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"Sorry I don't sell that\"", player.HubGuid);
+                    HubContext.Instance.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"Sorry I don't sell that\"", player.HubGuid);
                 }
 
             }
@@ -136,7 +136,7 @@ namespace MIMWebClient.Core.Mob.Events
 
                     if (string.IsNullOrEmpty(itemName))
                     {
-                        HubContext.SendToClient("Sell? Sell what?", player.HubGuid);
+                        HubContext.Instance.SendToClient("Sell? Sell what?", player.HubGuid);
                         return;
                     }
 
@@ -162,7 +162,7 @@ namespace MIMWebClient.Core.Mob.Events
                                     var hisOrHer = Helpers.ReturnHisOrHers(player, character);
                                     var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} sells {article} {itemToSell.name} to {mob.Name}.";
 
-                                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                                    HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                                 }
                             }
 
@@ -171,7 +171,7 @@ namespace MIMWebClient.Core.Mob.Events
 
                         player.Gold += value;
 
-                        HubContext.SendToClient(
+                        HubContext.Instance.SendToClient(
                               "You sell " + article + " " + itemToSell.name + " to " + mob.Name + " for " + value + " gold.",
                               player.HubGuid);
 
@@ -184,7 +184,7 @@ namespace MIMWebClient.Core.Mob.Events
                     }
                     else
                     {
-                        HubContext.SendToClient("You don't have that item.", player.HubGuid);
+                        HubContext.Instance.SendToClient("You don't have that item.", player.HubGuid);
                     }
 
 
@@ -192,7 +192,7 @@ namespace MIMWebClient.Core.Mob.Events
                 else
                 {
 
-                    HubContext.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"Sorry I don't want to buy anything.\"", player.HubGuid);
+                    HubContext.Instance.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"Sorry I don't want to buy anything.\"", player.HubGuid);
                 }
 
             }

@@ -43,14 +43,14 @@ namespace MIMWebClient.Core.Events
 
             if (help.Value == null)
             {
-                HubContext.SendToClient("No help found for '" + keyword + "'. The gods will be notified.", player.HubGuid);
+                HubContext.Instance.SendToClient("No help found for '" + keyword + "'. The gods will be notified.", player.HubGuid);
                 //Logs missing help
                 return;
             }
 
             var helpText = help.Value.Syntax + " " + help.Value.HelpText;
 
-            HubContext.SendToClient(helpText, player.HubGuid);
+            HubContext.Instance.SendToClient(helpText, player.HubGuid);
         }
 
         /// <summary>

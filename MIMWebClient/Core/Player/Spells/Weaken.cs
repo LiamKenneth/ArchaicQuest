@@ -24,7 +24,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (hasSpell == false)
             {
-                HubContext.SendToClient("You don't know that spell.", player.HubGuid);
+                HubContext.Instance.SendToClient("You don't know that spell.", player.HubGuid);
                 return;
             }
 
@@ -48,16 +48,16 @@ namespace MIMWebClient.Core.Player.Skills
             {
 
 
-                if (_target.Affects.FirstOrDefault(x => x.Name.Equals("Weaken")) != null)
+                if (_target.Effects.FirstOrDefault(x => x.Name.Equals("Weaken")) != null)
                 {
-                    HubContext.SendToClient("They are already weaken.", player.HubGuid);
+                    HubContext.Instance.SendToClient("They are already weaken.", player.HubGuid);
                     return;
                 }
 
 
                 if (player.ManaPoints < WeakenAb().ManaCost)
                 {
-                    HubContext.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
 
                     return;
                 }
@@ -68,7 +68,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 Score.UpdateUiPrompt(player);
 
-                HubContext.SendToClient("You utter nequaquam multus.", player.HubGuid);
+                HubContext.Instance.SendToClient("You utter nequaquam multus.", player.HubGuid);
 
                 foreach (var character in room.players)
                 {
@@ -76,7 +76,7 @@ namespace MIMWebClient.Core.Player.Skills
                     {
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} utters nequaquam multus.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -88,7 +88,7 @@ namespace MIMWebClient.Core.Player.Skills
                 if (_target == null)
                 {
 
-                    HubContext.SendToClient("You need to cast Weaken on a target", player.HubGuid);
+                    HubContext.Instance.SendToClient("You need to cast Weaken on a target", player.HubGuid);
 
                 }
 
@@ -112,8 +112,8 @@ namespace MIMWebClient.Core.Player.Skills
 
             var castingTextDefender = "You feel weaker as your muscles shrink.";
 
-            HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-            HubContext.SendToClient(castingTextDefender, _target.HubGuid);
+            HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
+            HubContext.Instance.SendToClient(castingTextDefender, _target.HubGuid);
 
             foreach (var character in room.players)
             {
@@ -127,14 +127,14 @@ namespace MIMWebClient.Core.Player.Skills
  
                     var roomMessage = $"{Helpers.ReturnName(_target, character, string.Empty)}'s  muscles shrink making them look weaker.";
 
-                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                    HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                 }
             }
 
             _target.Strength -= 2;
 
 
-            var weakenAff = new Affect
+            var weakenAff = new Effect
             {
                 Name = "Weaken",
                 Duration = attacker.Level + 5,
@@ -143,15 +143,15 @@ namespace MIMWebClient.Core.Player.Skills
             };
 
 
-            if (_target.Affects == null)
+            if (_target.Effects == null)
             {
-                _target.Affects = new List<Affect>();
-                _target.Affects.Add(weakenAff);
+                _target.Effects = new List<Effect>();
+                _target.Effects.Add(weakenAff);
 
             }
             else
             {
-                _target.Affects.Add(weakenAff);
+                _target.Effects.Add(weakenAff);
             }
 
             Score.ReturnScoreUI(_target);

@@ -91,7 +91,7 @@ namespace MIMWebClient.Hubs
 
             }
 
-            HubContext.SendToClient("<p style='color:#999'>" + message + "<p/>", PlayerData.HubGuid);
+            HubContext.Instance.SendToClient("<p style='color:#999'>" + message + "<p/>", PlayerData.HubGuid);
 
 
             Command.ParseCommand(message, PlayerData, RoomData);
@@ -391,7 +391,7 @@ namespace MIMWebClient.Hubs
 
                         SendToClient("You have been logged in elsewhere, goodbye", alreadyLogged.Value.HubGuid);
                         SendToClient("Kicking off your old connection", id);
-                        HubContext.getHubContext.Clients.Client(alreadyLogged.Value.HubGuid).quit();
+                        HubContext.Instance.Quit(alreadyLogged.Value.HubGuid);
 
                     }
                 }

@@ -24,7 +24,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (hasSpell == false)
             {
-                HubContext.SendToClient("You don't know that spell.", attacker.HubGuid);
+                HubContext.Instance.SendToClient("You don't know that spell.", attacker.HubGuid);
                 return;
             }
 
@@ -50,7 +50,7 @@ namespace MIMWebClient.Core.Player.Skills
             if (attacker.ActiveSkill != null)
             {
 
-                HubContext.SendToClient("wait till you have finished " + attacker.ActiveSkill.Name, attacker.HubGuid);
+                HubContext.Instance.SendToClient("wait till you have finished " + attacker.ActiveSkill.Name, attacker.HubGuid);
                 return;
 
             }
@@ -68,7 +68,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (attacker.ManaPoints < MagicMissileAb().ManaCost)
                 {
-                    HubContext.SendToClient("You clasp your hands together but fail to form any energy",
+                    HubContext.Instance.SendToClient("You clasp your hands together but fail to form any energy",
                         attacker.HubGuid);
                     attacker.ActiveSkill = null;
                     Player.SetState(attacker);
@@ -79,11 +79,11 @@ namespace MIMWebClient.Core.Player.Skills
 
                 Score.UpdateUiPrompt(attacker);
 
-                HubContext.SendToClient("A red ball begins swirling between your hands as you begin chanting magic missile", attacker.HubGuid);
+                HubContext.Instance.SendToClient("A red ball begins swirling between your hands as you begin chanting magic missile", attacker.HubGuid);
 
-                HubContext.SendToClient($"A red ball begins swirling between {Helpers.ReturnName(attacker, attacker.Target, null)} 's hands as they begin chanting magic missile", attacker.HubGuid, attacker.Target.HubGuid, false, true);
+                HubContext.Instance.SendToClient($"A red ball begins swirling between {Helpers.ReturnName(attacker, attacker.Target, null)} 's hands as they begin chanting magic missile", attacker.HubGuid, attacker.Target.HubGuid, false, true);
 
-                HubContext.broadcastToRoom($"A red ball begins swirling between {Helpers.ReturnName(attacker, attacker.Target, null)} 's hands as they begin chanting magic missile", room.players, attacker.HubGuid, true);
+                HubContext.Instance.BroadcastToRoom($"A red ball begins swirling between {Helpers.ReturnName(attacker, attacker.Target, null)} 's hands as they begin chanting magic missile", room.players, attacker.HubGuid, true);
 
                 Task.Run(() => DoMagicMissile(attacker, room));
 
@@ -94,13 +94,13 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (attacker.Target == null)
                 {
-                    HubContext.SendToClient("Cast magic missile at whom?", attacker.HubGuid);
+                    HubContext.Instance.SendToClient("Cast magic missile at whom?", attacker.HubGuid);
                     attacker.ActiveSkill = null;
                     Player.SetState(attacker);
                     return;
                 }
 
-                HubContext.SendToClient("You are trying to cast magic missile", attacker.HubGuid);
+                HubContext.Instance.SendToClient("You are trying to cast magic missile", attacker.HubGuid);
 
             }
 
@@ -153,9 +153,9 @@ namespace MIMWebClient.Core.Player.Skills
           
 
             //level dependant but for testing launch 4 balls
-            HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-            HubContext.SendToClient(castingTextDefender, attacker.Target.HubGuid);
-            HubContext.SendToAllExcept(castingTextRoom, room.fighting, room.players);
+            HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
+            HubContext.Instance.SendToClient(castingTextDefender, attacker.Target.HubGuid);
+            HubContext.Instance.SendToAllExcept(castingTextRoom, room.fighting, room.players);
 
             for (int i = 0; i < ballCount; i++)
             {

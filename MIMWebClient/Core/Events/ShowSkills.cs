@@ -22,12 +22,12 @@ namespace MIMWebClient.Core.Events
             {
               
 
-                HubContext.SendToClient("You currently know these skills:", player.HubGuid);
+                HubContext.Instance.SendToClient("You currently know these skills:", player.HubGuid);
 
                 foreach (var skill in player.Skills)
                 {
 
-                    HubContext.SendToClient(
+                    HubContext.Instance.SendToClient(
                         "Level " + skill.LevelObtained + ": " + skill.Name + " " + skill.Proficiency + "%",
                         player.HubGuid);
                 }
@@ -38,14 +38,14 @@ namespace MIMWebClient.Core.Events
         {
             var getClassSkills = GetSkills(player);
 
-            HubContext.SendToClient("You will eventually learn these skills:", player.HubGuid);
+            HubContext.Instance.SendToClient("You will eventually learn these skills:", player.HubGuid);
 
             var skills = getClassSkills.OrderBy(o => o.LevelObtained).ToList();
 
             foreach (var skill in skills)
             {
 
-                HubContext.SendToClient("Level " + skill.LevelObtained + ": " + skill.Name + " " + skill.Proficiency + "%", player.HubGuid);
+                HubContext.Instance.SendToClient("Level " + skill.LevelObtained + ": " + skill.Name + " " + skill.Proficiency + "%", player.HubGuid);
             }
 
         }
