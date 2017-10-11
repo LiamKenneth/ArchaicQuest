@@ -91,7 +91,7 @@ namespace MIMWebClient.Core.Player
             }
             else if (player.Status == PlayerSetup.Player.PlayerStatus.Fighting)
             {
-                HubContext.SendToClient("You are in a middle of a fight!", player.HubGuid);
+                HubContext.Instance.SendToClient("You are in a middle of a fight!", player.HubGuid);
                 return;
             }
             else
@@ -104,23 +104,23 @@ namespace MIMWebClient.Core.Player
         {
             if (player.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
             {
-                HubContext.SendToClient("You are sleeping.", player.HubGuid);
+                HubContext.Instance.SendToClient("You are sleeping.", player.HubGuid);
                 return;
             }
             else if (player.Status == PlayerSetup.Player.PlayerStatus.Resting)
             {
-                HubContext.SendToClient("You are already resting.", player.HubGuid);
+                HubContext.Instance.SendToClient("You are already resting.", player.HubGuid);
                 return;
             }
             else if (player.Status == PlayerSetup.Player.PlayerStatus.Fighting)
             {
-                HubContext.SendToClient("You are in a middle of a fight!", player.HubGuid);
+                HubContext.Instance.SendToClient("You are in a middle of a fight!", player.HubGuid);
                 return;
             }
 
                 player.Status = PlayerSetup.Player.PlayerStatus.Resting;
 
-            HubContext.SendToClient("You sit down and rest.", player.HubGuid);
+            HubContext.Instance.SendToClient("You sit down and rest.", player.HubGuid);
 
             foreach (var character in room.players)
             {
@@ -128,7 +128,7 @@ namespace MIMWebClient.Core.Player
                 {
                     var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} sits down and rests.";
 
-                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                    HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                 }
             }
         }
@@ -137,7 +137,7 @@ namespace MIMWebClient.Core.Player
         {
             if (player.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
             {
-                HubContext.SendToClient("You wake and stand up.", player.HubGuid);
+                HubContext.Instance.SendToClient("You wake and stand up.", player.HubGuid);
                 player.Status = PlayerSetup.Player.PlayerStatus.Standing;
 
                 foreach (var character in room.players)
@@ -146,7 +146,7 @@ namespace MIMWebClient.Core.Player
                     {
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} wakes and stands up.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -154,7 +154,7 @@ namespace MIMWebClient.Core.Player
             }
             else if (player.Status == PlayerSetup.Player.PlayerStatus.Resting)
             {
-                HubContext.SendToClient("You stop resting and stand up.", player.HubGuid);
+                HubContext.Instance.SendToClient("You stop resting and stand up.", player.HubGuid);
 
                 player.Status = PlayerSetup.Player.PlayerStatus.Standing;
 
@@ -164,7 +164,7 @@ namespace MIMWebClient.Core.Player
                     {
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} stops resting and stands up.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -173,12 +173,12 @@ namespace MIMWebClient.Core.Player
             }
             else if (player.Status == PlayerSetup.Player.PlayerStatus.Fighting)
             {
-                HubContext.SendToClient("You are in a middle of a fight!", player.HubGuid);
+                HubContext.Instance.SendToClient("You are in a middle of a fight!", player.HubGuid);
                 return;
             }
             else if (player.Status == PlayerSetup.Player.PlayerStatus.Standing)
             {
-                HubContext.SendToClient("You are standing already.", player.HubGuid);
+                HubContext.Instance.SendToClient("You are standing already.", player.HubGuid);
                 return;
             }
         }
