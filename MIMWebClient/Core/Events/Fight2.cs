@@ -51,7 +51,7 @@ namespace MIMWebClient.Core.Events
 
             if (attacker.Target != null)
             {
-                HubContext.SendToClient("You are already fighting!!.", attacker.HubGuid);
+                HubContext.Instance.SendToClient("You are already fighting!!.", attacker.HubGuid);
                 return;
             }
 
@@ -70,7 +70,7 @@ namespace MIMWebClient.Core.Events
 
             if (defender == null)
             {
-                HubContext.SendToClient("No one here by that name.", attacker.HubGuid);
+                HubContext.Instance.SendToClient("No one here by that name.", attacker.HubGuid);
                 return;
             }
 
@@ -105,7 +105,7 @@ namespace MIMWebClient.Core.Events
 
             if (defender == null)
             {
-                HubContext.SendToClient("No one here by that name.", attacker.HubGuid);
+                HubContext.Instance.SendToClient("No one here by that name.", attacker.HubGuid);
                 return;
             }
 
@@ -212,7 +212,7 @@ namespace MIMWebClient.Core.Events
 
             if (room.mobs.Count <= 0)
             {
-                HubContext.SendToClient("You don't see anything to kill that matches that name", attacker.HubGuid);
+                HubContext.Instance.SendToClient("You don't see anything to kill that matches that name", attacker.HubGuid);
                 attacker.ActiveFighting = false;
                 attacker.Target = null;
                 attacker.Status = Player.PlayerStatus.Standing;
@@ -220,7 +220,7 @@ namespace MIMWebClient.Core.Events
 
             if (room.players.Count <= 0)
             {
-                HubContext.SendToClient("You don't see anything to kill that matches that name", attacker.HubGuid);
+                HubContext.Instance.SendToClient("You don't see anything to kill that matches that name", attacker.HubGuid);
                 attacker.ActiveFighting = false;
                 attacker.Target = null;
                 attacker.Status = Player.PlayerStatus.Standing;
@@ -242,7 +242,7 @@ namespace MIMWebClient.Core.Events
 
             if (defendingPlayer == null)
             {
-                HubContext.SendToClient("No one here", attacker.HubGuid);
+                HubContext.Instance.SendToClient("No one here", attacker.HubGuid);
                 attacker.ActiveFighting = false;
                 attacker.Target = null;
                 attacker.Status = Player.PlayerStatus.Standing;
@@ -252,14 +252,14 @@ namespace MIMWebClient.Core.Events
 
             if (attacker.Name.Equals(defendingPlayer.Name))
             {
-                HubContext.SendToClient("You can't kill yourself", attacker.HubGuid);
+                HubContext.Instance.SendToClient("You can't kill yourself", attacker.HubGuid);
                 return null;
             }
 
 
             if (attacker.HitPoints <= 0)
             {
-                HubContext.SendToClient("You cannot attack anything while dead", attacker.HubGuid);
+                HubContext.Instance.SendToClient("You cannot attack anything while dead", attacker.HubGuid);
                 attacker.Status = Player.PlayerStatus.Standing;
                 attacker.ActiveFighting = false;
                 attacker.Target = null;
@@ -268,7 +268,7 @@ namespace MIMWebClient.Core.Events
 
             if (defendingPlayer.HitPoints <= 0)
             {
-                HubContext.SendToClient("They are already dead.", attacker.HubGuid);
+                HubContext.Instance.SendToClient("They are already dead.", attacker.HubGuid);
                 attacker.Status = Player.PlayerStatus.Standing;
                 attacker.ActiveFighting = false;
                 attacker.Target = null;
@@ -294,7 +294,7 @@ namespace MIMWebClient.Core.Events
 
                     if (target == null)
                     {
-                        HubContext.SendToClient("No one here by that name", attacker.HubGuid);
+                        HubContext.Instance.SendToClient("No one here by that name", attacker.HubGuid);
                         return;
                     }
 
@@ -658,11 +658,11 @@ namespace MIMWebClient.Core.Events
                         if (IsAlive(attacker, defender))
                         {
 
-                            HubContext.SendToClient(
+                            HubContext.Instance.SendToClient(
                                 "Your " + WeaponAttackName(attacker, skillUsed).Key + " " + damageText.Value.ToLower() +
                                 " " + Helpers.ReturnName(defender, attacker, null) + " [" + dam + "]", attacker.HubGuid);
 
-                            HubContext.SendToClient(
+                            HubContext.Instance.SendToClient(
                                 Helpers.ReturnName(attacker, defender, null) + "'s " +
                                 WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value.ToLower() +
                                 " you [" + dam + "]", defender.HubGuid);
@@ -671,7 +671,7 @@ namespace MIMWebClient.Core.Events
                             {
                                 if (player != attacker && player != defender)
                                 {
-                                    HubContext.SendToClient(
+                                    HubContext.Instance.SendToClient(
                                         Helpers.ReturnName(attacker, defender, null) + "'s " +
                                         WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value.ToLower() +
                                         " " + Helpers.ReturnName(defender, attacker, null), player.HubGuid);
@@ -737,14 +737,14 @@ namespace MIMWebClient.Core.Events
                                 observerMessage = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>parries</span>" + Helpers.ReturnName(defender, attacker, null) + "'s" + WeaponAttackName(attacker, skillUsed).Key;
                             }
 
-                            HubContext.SendToClient(attackerMessage, attacker.HubGuid);
-                            HubContext.SendToClient(defenderMessage, defender.HubGuid);
+                            HubContext.Instance.SendToClient(attackerMessage, attacker.HubGuid);
+                            HubContext.Instance.SendToClient(defenderMessage, defender.HubGuid);
 
                             foreach (var player in room.players)
                             {
                                 if (player != attacker && player != defender)
                                 {
-                                    HubContext.SendToClient(
+                                    HubContext.Instance.SendToClient(
                                       observerMessage, player.HubGuid);
                                 }
                             }
@@ -875,11 +875,11 @@ namespace MIMWebClient.Core.Events
                 {
                     if (player != defender)
                     {
-                        HubContext.SendToClient(defender.Name + " dies ", player.HubGuid);
+                        HubContext.Instance.SendToClient(defender.Name + " dies ", player.HubGuid);
                     }
                     else
                     {
-                        HubContext.SendToClient("You die", defender.HubGuid);
+                        HubContext.Instance.SendToClient("You die", defender.HubGuid);
                     }
                 }
 
@@ -954,7 +954,7 @@ namespace MIMWebClient.Core.Events
                 int xpGain = xp.GainXp(attacker, defender);
                 attacker.Experience += xpGain;
                 attacker.TotalExperience += xpGain;
-                HubContext.SendToClient(xpGain + "XP", attacker.HubGuid);
+                HubContext.Instance.SendToClient(xpGain + "XP", attacker.HubGuid);
 
                 xp.GainLevel(attacker);
                 //calc xp
@@ -988,7 +988,7 @@ namespace MIMWebClient.Core.Events
                         {
                             if (follower.HubGuid != null)
                             {
-                                HubContext.SendToClient("You stop following " + defender.Name, follower.HubGuid);
+                                HubContext.Instance.SendToClient("You stop following " + defender.Name, follower.HubGuid);
                             }
 
                         }
@@ -1006,7 +1006,7 @@ namespace MIMWebClient.Core.Events
 
                     if (attacker.HubGuid != null)
                     {
-                        HubContext.SendToClient(defender.Name + " stops following you", attacker.HubGuid);
+                        HubContext.Instance.SendToClient(defender.Name + " stops following you", attacker.HubGuid);
                     }
 
                 }
@@ -1097,7 +1097,7 @@ namespace MIMWebClient.Core.Events
             int dexterity = player.Dexterity;
 
 
-            var hasHaste = player.Affects?.FirstOrDefault(
+            var hasHaste = player.Effects?.FirstOrDefault(
                              x => x.Name.Equals("Haste", StringComparison.CurrentCultureIgnoreCase)) != null;
 
             if (hasHaste)

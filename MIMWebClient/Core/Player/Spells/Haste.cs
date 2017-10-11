@@ -25,7 +25,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (hasSpell == false)
             {
-                HubContext.SendToClient("You don't know that spell.", player.HubGuid);
+                HubContext.Instance.SendToClient("You don't know that spell.", player.HubGuid);
                 return;
             }
 
@@ -52,7 +52,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (player.ManaPoints < HasteAb().ManaCost)
                 {
-                    HubContext.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
 
                     return;
                 }
@@ -63,7 +63,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 Score.UpdateUiPrompt(player);
 
-                HubContext.SendToClient("You utter citus multo festina.", player.HubGuid);
+                HubContext.Instance.SendToClient("You utter citus multo festina.", player.HubGuid);
 
  
 
@@ -74,7 +74,7 @@ namespace MIMWebClient.Core.Player.Skills
  
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} utters citus multo festina.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -89,7 +89,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                     if (player.ManaPoints < HasteAb().ManaCost)
                     {
-                        HubContext.SendToClient("You attempt to draw energy but fail", player.HubGuid);
+                        HubContext.Instance.SendToClient("You attempt to draw energy but fail", player.HubGuid);
 
                         return;
                     }
@@ -99,7 +99,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                     Score.UpdateUiPrompt(player);
 
-                    HubContext.SendToClient("You utter citus multo festina.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You utter citus multo festina.", player.HubGuid);
 
 
                     foreach (var character in room.players)
@@ -109,7 +109,7 @@ namespace MIMWebClient.Core.Player.Skills
                             var hisOrHer = Helpers.ReturnHisOrHers(player, character);
                             var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} utters citus multo festina.";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
@@ -129,7 +129,7 @@ namespace MIMWebClient.Core.Player.Skills
             attacker.Status = Player.PlayerStatus.Busy;
 
 
-            var hasteAff = new Affect
+            var hasteAff = new Effect
             {
                 Name = "Haste",
                 Duration = attacker.Level + 5,
@@ -147,7 +147,7 @@ namespace MIMWebClient.Core.Player.Skills
                 {
                     var castingTextAttacker = "You begin to move much faster.";
 
-                    HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
+                    HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
 
                     foreach (var character in room.players.ToList())
                     {
@@ -156,19 +156,19 @@ namespace MIMWebClient.Core.Player.Skills
                             var roomMessage =
                                 $"{Helpers.ReturnName(attacker, character, string.Empty)} starts to blur as they move faster.";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
 
-                    if (attacker.Affects == null)
+                    if (attacker.Effects == null)
                     {
-                        attacker.Affects = new List<Affect> {hasteAff};
+                        attacker.Effects = new List<Effect> {hasteAff};
 
                     }
                     else
                     {
-                        attacker.Affects.Add(hasteAff);
+                        attacker.Effects.Add(hasteAff);
                     }
 
                     Score.ReturnScoreUI(attacker);
@@ -184,8 +184,8 @@ namespace MIMWebClient.Core.Player.Skills
 
                     var castingTextDefender = "You begin to move much faster.";
 
-                    HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-                    HubContext.SendToClient(castingTextDefender, _target.HubGuid);
+                    HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
+                    HubContext.Instance.SendToClient(castingTextDefender, _target.HubGuid);
 
                     foreach (var character in room.players.ToList())
                     {
@@ -194,18 +194,18 @@ namespace MIMWebClient.Core.Player.Skills
                             var roomMessage =
                                 $"{Helpers.ReturnName(_target, character, string.Empty)} starts to blur as they move faster.";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
-                    if (_target.Affects == null)
+                    if (_target.Effects == null)
                     {
-                        _target.Affects = new List<Affect> {hasteAff};
+                        _target.Effects = new List<Effect> {hasteAff};
 
                     }
                     else
                     {
-                        _target.Affects.Add(hasteAff);
+                        _target.Effects.Add(hasteAff);
                     }
                     Score.UpdateUiAffects(_target);
                     Score.ReturnScoreUI(_target);

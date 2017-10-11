@@ -37,7 +37,7 @@ namespace MIMWebClient.Core.Player
                 .Append(">");
                
              
-            HubContext.SendToClient(prompt.ToString(), player.HubGuid);
+            HubContext.Instance.SendToClient(prompt.ToString(), player.HubGuid);
         }
     }
 }

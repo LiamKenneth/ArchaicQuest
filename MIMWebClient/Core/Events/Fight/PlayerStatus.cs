@@ -12,12 +12,12 @@ namespace MIMWebClient.Core.Events.Fight
         {
             if (player.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
             {
-                HubContext.SendToClient("You can't do that while asleep.", player.HubGuid);
+                HubContext.Instance.SendToClient("You can't do that while asleep.", player.HubGuid);
             }
 
             if (player.Status == PlayerSetup.Player.PlayerStatus.Dead)
             {
-                HubContext.SendToClient("You can't do that as a Ghost.", player.HubGuid);
+                HubContext.Instance.SendToClient("You can't do that as a Ghost.", player.HubGuid);
             }
 
            

@@ -168,10 +168,10 @@ namespace MIMWebClient.Core
                 {"sleep", () => Status.SleepPlayer(playerData, room)},
                 {"greet", () => Greet.GreetMob(playerData, room, commandOptions)},
                 {"who", () => Who.Connected(playerData)},
-                {"affects", () => Affect.Show(playerData)},
+                {"affects", () => Effect.Show(playerData)},
                 {"follow", () => Follow.FollowThing(playerData, room, commandOptions) },
                  {"nofollow", () => Follow.FollowThing(playerData, room, "noFollow") },
-                  {"quit", () => HubContext.Quit(playerData.HubGuid, room)},
+                  {"quit", () => HubContext.Instance.Quit(playerData.HubGuid, room)},
                 //admin
                 {"/debug", () => PlayerSetup.Player.DebugPlayer(playerData) }
             };
@@ -192,7 +192,7 @@ namespace MIMWebClient.Core
 
             if (string.IsNullOrEmpty(input.Trim()))
             {
-                HubContext.SendToClient("You need to enter a command, type help if you need it.", playerData.HubGuid);
+                HubContext.Instance.SendToClient("You need to enter a command, type help if you need it.", playerData.HubGuid);
                 return;
             }
 
@@ -255,7 +255,7 @@ namespace MIMWebClient.Core
 
                 Save.LogError(log);
 
-                HubContext.SendToClient("Sorry you can't do that.", playerData.HubGuid);
+                HubContext.Instance.SendToClient("Sorry you can't do that.", playerData.HubGuid);
             }
 
             playerData.LastCommandTime = DateTime.Now;

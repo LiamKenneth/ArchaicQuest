@@ -24,7 +24,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (hasSpell == false)
             {
-                HubContext.SendToClient("You don't know that spell.", player.HubGuid);
+                HubContext.Instance.SendToClient("You don't know that spell.", player.HubGuid);
                 return;
             }
 
@@ -51,7 +51,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (player.ManaPoints < FlyAb().ManaCost)
                 {
-                    HubContext.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
 
                     return;
                 }
@@ -62,7 +62,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 Score.UpdateUiPrompt(player);
 
-                HubContext.SendToClient("You utter volito autem.", player.HubGuid);
+                HubContext.Instance.SendToClient("You utter volito autem.", player.HubGuid);
  
 
                 foreach (var character in room.players)
@@ -72,7 +72,7 @@ namespace MIMWebClient.Core.Player.Skills
  
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} utters volito autem.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -86,7 +86,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 Score.UpdateUiPrompt(player);
 
-                HubContext.SendToClient("You utter volito autem.", player.HubGuid);
+                HubContext.Instance.SendToClient("You utter volito autem.", player.HubGuid);
 
  
 
@@ -97,7 +97,7 @@ namespace MIMWebClient.Core.Player.Skills
  
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} utters volito autem.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -115,7 +115,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             await Task.Delay(500);
 
-            var flyAff = new Affect
+            var flyAff = new Effect
             {
                 Name = "Fly",
                 Duration = attacker.Level + 5,
@@ -129,7 +129,7 @@ namespace MIMWebClient.Core.Player.Skills
             {
                 var castingTextAttacker = "Your feet levitate off the ground.";
 
-                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
+                HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
  
 
                 foreach (var character in room.players)
@@ -146,20 +146,20 @@ namespace MIMWebClient.Core.Player.Skills
                         var roomMessage =
                             $"{Helpers.ReturnName(attacker, character, string.Empty)}'s feet rise off the ground.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
 
-                if (attacker.Affects == null)
+                if (attacker.Effects == null)
                 {
-                    attacker.Affects = new List<Affect>();
-                    attacker.Affects.Add(flyAff);
+                    attacker.Effects = new List<Effect>();
+                    attacker.Effects.Add(flyAff);
 
                 }
                 else
                 {
-                    attacker.Affects.Add(flyAff);
+                    attacker.Effects.Add(flyAff);
                 }
 
                 Score.UpdateUiAffects(attacker);
@@ -171,8 +171,8 @@ namespace MIMWebClient.Core.Player.Skills
 
                 var castingTextDefender = "Your feet levitate off the ground.";
 
-                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-                HubContext.SendToClient(castingTextDefender, _target.HubGuid);
+                HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
+                HubContext.Instance.SendToClient(castingTextDefender, _target.HubGuid);
 
                 foreach (var character in room.players)
                 {
@@ -187,19 +187,19 @@ namespace MIMWebClient.Core.Player.Skills
                         var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
                         var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)}'s feet rise off the ground.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
-                if (_target.Affects == null)
+                if (_target.Effects == null)
                 {
-                    _target.Affects = new List<Affect>();
-                    _target.Affects.Add(flyAff);
+                    _target.Effects = new List<Effect>();
+                    _target.Effects.Add(flyAff);
 
                 }
                 else
                 {
-                    _target.Affects.Add(flyAff);
+                    _target.Effects.Add(flyAff);
                 }
 
                 Score.ReturnScoreUI(_target);

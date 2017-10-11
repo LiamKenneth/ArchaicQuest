@@ -19,24 +19,69 @@ namespace MIMWebClient.Core
     using MIMWebClient.Hubs;
     using Room;
 
-    public static class HubContext
+    interface IHubContext
     {
-        private static IHubContext _getHubContext;
+        void SendToClient(string message, string playerId, string recipientId = null, bool sendToAll = false, bool excludeCaller = false, bool excludeRecipient = false);
+
+        void SendToAllExcept(string message, List<string> excludeThesePlayers, List<PlayerSetup.Player> players);
+
+        void Quit(string playerId, Room.Room room);
+
+        void Quit(string playerId);
+
+        void UpdateStat(string playerGuid, int stat, int maxStat, string statType);
+
+        void AddNewMessageToPage(string playerGuid, string message);
+
+        void AddNewMessageToPage(string message);
+
+        void UpdateUiDescription(string playerGuid, string description);
+
+        void UpdateInventory(string playerGuid, IEnumerable<string> items);
+
+        void BroadcastToRoom(string message, List<PlayerSetup.Player> players, string playerId, bool excludeCaller = false);
+
+        void UpdateExits(string playerGuid, List<string> exits);
+
+        void UpdateScore(PlayerSetup.Player player);
+
+        void UpdateEquipment(string playerGuid, string equipment);
+
+        void UpdateQuestLog(string playerGuid, string log);
+
+        void UpdateEffects(string playerGuid, string message);
+
+        void UpdateUIRoom(string playerGuid, string room);
+
+        void CharacterPasswordError(string hubguid, string message);
+
+        void CharacterNameLoginError(string hubguid, string message);
+
+        void UpdateUiChannels(string playerGuid, string text, string className);
+
+        void UpdateUiMap(string playerGuid, int roomId, string area, string region, int zindex);
+
+        void GetMap(string playerGuid, SigmaMapJSON json);
+    }
+
+
+    public class HubContext: IHubContext
+    {
+        private Microsoft.AspNet.SignalR.IHubContext _hubContext;
+
+        static HubContext() {}
+
+        private HubContext() {
+            _hubContext = GlobalHost.ConnectionManager.GetHubContext<MIMHub>();
+        }
+
+        private static readonly HubContext instance = new HubContext();
+
         /// <summary>
         /// gets the SignalR Hub connection
         /// </summary>
-        public static IHubContext getHubContext
-        {
-            get
-            {
-                if (_getHubContext == null)
-                {
-                    _getHubContext = GlobalHost.ConnectionManager.GetHubContext<MIMHub>();
-                }
+        public static HubContext Instance { get { return instance; } }
 
-                return _getHubContext;
-            }
-        }
 
         /// <summary>
         /// Send a message to connected clients
@@ -45,7 +90,7 @@ namespace MIMWebClient.Core
         /// <param name="player">The active player</param>
         /// <param name="sendToAll">toggle to send to all or to caller</param>
         /// <param name="excludeCaller">toggle to send to all but exclude caller</param>
-        public static void SendToClient(string message, string playerId, string recipientId = null, bool sendToAll = false, bool excludeCaller = false, bool excludeRecipient = false)
+        public void SendToClient(string message, string playerId, string recipientId = null, bool sendToAll = false, bool excludeCaller = false, bool excludeRecipient = false)
         {
             if (message != null)
             {
@@ -53,7 +98,7 @@ namespace MIMWebClient.Core
                 //Send a message to all users
                 if (sendToAll && excludeCaller == false)
                 {
-                    HubContext.getHubContext.Clients.All.addNewMessageToPage(message);
+                    _hubContext.Clients.All.addNewMessageToPage(message);
                 }
 
                 if (playerId != null)
@@ -62,19 +107,19 @@ namespace MIMWebClient.Core
                     // x hits you - Fight message is being sent to all instead of person who's being hit
                     if (excludeCaller && sendToAll == false && excludeRecipient == false)
                     {
-                        HubContext.getHubContext.Clients.AllExcept(playerId).addNewMessageToPage(message);
+                        _hubContext.Clients.AllExcept(playerId).addNewMessageToPage(message);
                     }
 
                     //send a message to all but recipient
                     if (excludeRecipient && recipientId != null)
                     {
-                        HubContext.getHubContext.Clients.Client(recipientId).addNewMessageToPage(message);
+                        _hubContext.Clients.Client(recipientId).addNewMessageToPage(message);
                     }
 
                     //send only to caller
                     if (sendToAll == false && excludeCaller == false)
                     {
-                        HubContext.getHubContext.Clients.Client(playerId).addNewMessageToPage(message);
+                        _hubContext.Clients.Client(playerId).addNewMessageToPage(message);
                     }
 
 
@@ -90,7 +135,7 @@ namespace MIMWebClient.Core
         /// <param name="excludeThesePlayers">list of HubGuid's to exclude</param>
         /// <param name="players">players to send message to</param>
         [System.Obsolete("SendToAllExcept is deprecated, please use SendToClient in a forEach instead and exclude the players there.")]
-        public static void SendToAllExcept(string message, List<string> excludeThesePlayers, List<PlayerSetup.Player> players)
+        public void SendToAllExcept(string message, List<string> excludeThesePlayers, List<PlayerSetup.Player> players)
         {
             if (message == null)
             {
@@ -102,14 +147,14 @@ namespace MIMWebClient.Core
 
                 if (player != null && player.HubGuid != excludeThesePlayers?.FirstOrDefault(x => x.Equals(player.HubGuid)))
                 {
-                    HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(message);
+                    _hubContext.Clients.Client(player.HubGuid).addNewMessageToPage(message);
                 }
 
             }
 
         }
         [System.Obsolete("broadcastToRoom is deprecated, please use SendToClient in a forEach instead and exclude the player there.")]
-        public static void broadcastToRoom(string message, List<PlayerSetup.Player> players, string playerId, bool excludeCaller = false)
+        public void BroadcastToRoom(string message, List<PlayerSetup.Player> players, string playerId, bool excludeCaller = false)
         {
             int playerCount = players.Count;
 
@@ -119,7 +164,7 @@ namespace MIMWebClient.Core
                 {
                     if (playerId != players[i].HubGuid)
                     {
-                        HubContext.getHubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(message);
+                        _hubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(message);
                     }
                 }
             }
@@ -127,17 +172,20 @@ namespace MIMWebClient.Core
             {
                 for (int i = 0; i < playerCount; i++)
                 {
-                    HubContext.getHubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(message);
+                    _hubContext.Clients.Client(players[i].HubGuid).addNewMessageToPage(message);
                 }
             }
 
 
         }
 
-        public static void Quit(string playerId, Room.Room room)
+        public void Quit(string playerId)
         {
+            _hubContext.Clients.Client(playerId).quit();
+        }
 
-
+        public void Quit(string playerId, Room.Room room)
+        {
             //remove player from room and player cache
 
             try
@@ -178,13 +226,11 @@ namespace MIMWebClient.Core
 
                     SendToClient("Gods take note of your progress", playerId);
                     SendToClient("See you soon!", playerId);
-                    broadcastToRoom(Player.Name + " has left the realm", room.players, playerId, true);
+                    BroadcastToRoom(Player.Name + " has left the realm", room.players, playerId, true);
 
                     try
                     {
-
-
-                        HubContext.getHubContext.Clients.Client(playerId).quit();
+                        _hubContext.Clients.Client(playerId).quit();
                     }
                     catch (Exception ex)
                     {
@@ -212,11 +258,87 @@ namespace MIMWebClient.Core
 
                 Save.LogError(log);
             }
+        }
 
+        public void UpdateStat(string playerGuid, int stat, int maxStat, string statType)
+        {
+            _hubContext.Clients.Client(playerGuid)
+                .updateStat(stat, maxStat, "hp");
+        }
 
+        public void AddNewMessageToPage(string message)
+        {
+            _hubContext.Clients.All.addNewMessageToPage(message);
+        }
 
+        public void AddNewMessageToPage(string playerGuid, string message)
+        {
+            _hubContext.Clients.Client(playerGuid).addNewMessageToPage(message);
+        }
 
+        public void UpdateUiDescription(string playerGuid, string description)
+        {
+            _hubContext.Clients.Client(playerGuid).UpdateUiDescription(description);
+        }
 
+        public void UpdateInventory(string playerGuid, IEnumerable<string> items)
+        {
+            _hubContext.Clients.Client(playerGuid).updateInventory(items);
+        }
+
+        public void UpdateExits(string playerGuid, List<string> exits)
+        {
+            _hubContext.Clients.Client(playerGuid).updateExits(exits);
+        }
+
+        public void UpdateScore(PlayerSetup.Player player)
+        {
+            _hubContext.Clients.Client(player.HubGuid).updateScore(player);
+        }
+
+        public void UpdateEquipment(string playerGuid, string equipment)
+        {
+            _hubContext.Clients.Client(playerGuid).updateEquipment(equipment);
+        }
+
+        public void UpdateQuestLog(string playerGuid, string log)
+        {
+            _hubContext.Clients.Client(playerGuid).updateQuestLog(log);
+        }
+
+        public void UpdateEffects(string playerGuid, string message)
+        {
+            _hubContext.Clients.Client(playerGuid).updateAffects(message);
+        }
+
+        public void UpdateUIRoom(string playerGuid, string room)
+        {
+            _hubContext.Clients.Client(playerGuid).UpdateUiRoom(room);
+        }
+
+        public void CharacterPasswordError(string hubguid, string message)
+        {
+            _hubContext.Clients.Client(hubguid).characterPasswordError(message);
+        }
+
+        public void CharacterNameLoginError(string hubguid, string message)
+        {
+            _hubContext.Clients.Client(hubguid).characterNameLoginError(message);
+        }
+
+        public void UpdateUiChannels(string playerGuid, string text, string className)
+        {
+            _hubContext.Clients.Client(playerGuid).UpdateUiChannels(text, className);
+        }
+
+        public void UpdateUiMap(string playerGuid, int roomId, string area, string region, int zindex)
+        {
+            _hubContext.Clients.Client(playerGuid).UpdateUiMap(roomId, area, region, zindex);
+        }
+
+        public void GetMap(string playerGuid, SigmaMapJSON json)
+        {
+            _hubContext.Clients.Client(playerGuid).getMap(json);
         }
     }
 }

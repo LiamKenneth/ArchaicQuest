@@ -14,7 +14,7 @@ namespace MIMWebClient.Core.Player
             {
                 player.Status = PlayerSetup.Player.PlayerStatus.Standing;
 
-                HubContext.SendToClient("You wake and stand up", player.HubGuid);
+                HubContext.Instance.SendToClient("You wake and stand up", player.HubGuid);
 
                 foreach (var character in room.players)
                 {
@@ -23,7 +23,7 @@ namespace MIMWebClient.Core.Player
 
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} wakes and stands up.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -50,7 +50,7 @@ namespace MIMWebClient.Core.Player
 
             else
             {
-                HubContext.SendToClient("You are already awake", player.HubGuid);
+                HubContext.Instance.SendToClient("You are already awake", player.HubGuid);
             }
         }
 
@@ -60,7 +60,7 @@ namespace MIMWebClient.Core.Player
             {
                 player.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
 
-                HubContext.SendToClient("You laydown and go to sleep", player.HubGuid);
+                HubContext.Instance.SendToClient("You laydown and go to sleep", player.HubGuid);
 
                 foreach (var character in room.players)
                 {
@@ -69,7 +69,7 @@ namespace MIMWebClient.Core.Player
 
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} lays down and goes to sleep.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -92,7 +92,7 @@ namespace MIMWebClient.Core.Player
 
             else
             {
-                HubContext.SendToClient("You are already asleep", player.HubGuid);
+                HubContext.Instance.SendToClient("You are already asleep", player.HubGuid);
             }
         }
     }

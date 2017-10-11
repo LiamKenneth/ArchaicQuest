@@ -24,8 +24,8 @@ namespace MIMWebClient.Core.Player.Skills
             if (!_taskRunnning && attacker.Target != null)
             {
                 // find target if not in fight
-                HubContext.SendToClient("You pull your leg back", attacker.HubGuid);
-                HubContext.SendToClient(Helpers.ReturnName(attacker, null, null) + " pulls " + Helpers.ReturnHisOrHers(attacker, null) + " leg back ready to kick at you.", attacker.HubGuid,
+                HubContext.Instance.SendToClient("You pull your leg back", attacker.HubGuid);
+                HubContext.Instance.SendToClient(Helpers.ReturnName(attacker, null, null) + " pulls " + Helpers.ReturnHisOrHers(attacker, null) + " leg back ready to kick at you.", attacker.HubGuid,
                     attacker.Target.HubGuid, false, true);
 
 
@@ -36,7 +36,7 @@ namespace MIMWebClient.Core.Player.Skills
                         var hisOrHer = Helpers.ReturnHisOrHers(attacker, player);
                         var roomMessage = $"{ Helpers.ReturnName(attacker, player, string.Empty)} pulls {hisOrHer} leg back ready to kick at {Helpers.ReturnName(attacker.Target, attacker, null)}";
 
-                        HubContext.SendToClient(roomMessage, player.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, player.HubGuid);
                     }
                 }
 
@@ -48,11 +48,11 @@ namespace MIMWebClient.Core.Player.Skills
             {
                 if (attacker.Target == null)
                 {
-                    HubContext.SendToClient("You stop your kick", attacker.HubGuid);
+                    HubContext.Instance.SendToClient("You stop your kick", attacker.HubGuid);
                     return;
                 }
 
-                HubContext.SendToClient("You are already trying to kick", attacker.HubGuid);
+                HubContext.Instance.SendToClient("You are already trying to kick", attacker.HubGuid);
 
             }
 

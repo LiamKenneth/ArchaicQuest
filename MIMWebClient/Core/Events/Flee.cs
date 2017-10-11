@@ -24,13 +24,13 @@ namespace MIMWebClient.Core.Events
                 if (Helpers.Rand(1, 100) >= 50)
                 {
 
-                    HubContext.SendToClient("You Flee", player.HubGuid);
+                    HubContext.Instance.SendToClient("You Flee", player.HubGuid);
 
                     var exit = Helpers.diceRoll.Next(room.exits.Count);
 
                     player.Status = PlayerSetup.Player.PlayerStatus.Standing;
 
-                    HubContext.SendToClient(player.Name + " Flee's from combat", player.Target.HubGuid);
+                    HubContext.Instance.SendToClient(player.Name + " Flee's from combat", player.Target.HubGuid);
 
                     player.Target = null;
                     player.ActiveFighting = false;
@@ -40,12 +40,12 @@ namespace MIMWebClient.Core.Events
                 }
                 else
                 {
-                    HubContext.SendToClient("You fail to flee", player.HubGuid);
+                    HubContext.Instance.SendToClient("You fail to flee", player.HubGuid);
                 }
             }
             else
             {
-                HubContext.SendToClient("Flee from whom, you're not fighting anyone", player.HubGuid);
+                HubContext.Instance.SendToClient("Flee from whom, you're not fighting anyone", player.HubGuid);
             }
         }
     }

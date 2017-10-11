@@ -24,7 +24,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (hasSpell == false)
             {
-                HubContext.SendToClient("You don't know that spell.", player.HubGuid);
+                HubContext.Instance.SendToClient("You don't know that spell.", player.HubGuid);
                 return;
             }
             var canDoSkill = Skill.CanDoSkill(player);
@@ -47,12 +47,12 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (player.Equipment.Wielded == "Chill Touch")
                 {
-                    HubContext.SendToClient("You already have chill touch active.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You already have chill touch active.", player.HubGuid);
 
                     return;
                 }
 
-                HubContext.SendToClient("You can only cast chill touch if you are not wielding a weapon.", player.HubGuid);
+                HubContext.Instance.SendToClient("You can only cast chill touch if you are not wielding a weapon.", player.HubGuid);
 
                 return;
 
@@ -62,7 +62,7 @@ namespace MIMWebClient.Core.Player.Skills
             if (!_taskRunnning && _target != null)
             {
 
-                HubContext.SendToClient("You can only cast chill touch on your self", player.HubGuid);
+                HubContext.Instance.SendToClient("You can only cast chill touch on your self", player.HubGuid);
 
 
             }
@@ -73,7 +73,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                     if (player.ManaPoints < ChillTouchAb().ManaCost)
                     {
-                        HubContext.SendToClient("You fail to concerntrate due to lack of mana.", player.HubGuid);
+                        HubContext.Instance.SendToClient("You fail to concerntrate due to lack of mana.", player.HubGuid);
 
                         return;
                     }
@@ -84,7 +84,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                     Score.UpdateUiPrompt(player);
 
-                    HubContext.SendToClient("You utter tactus glacies.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You utter tactus glacies.", player.HubGuid);
 
                     var playersInRoom = new List<Player>(room.players);
 
@@ -95,7 +95,7 @@ namespace MIMWebClient.Core.Player.Skills
                             var hisOrHer = Helpers.ReturnHisOrHers(player, character);
                             var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} utters tactus glacies.";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
@@ -105,7 +105,7 @@ namespace MIMWebClient.Core.Player.Skills
                 }
                 else
                 {
-                    HubContext.SendToClient("You can only cast chill touch on your self", player.HubGuid);
+                    HubContext.Instance.SendToClient("You can only cast chill touch on your self", player.HubGuid);
 
                 }
 
@@ -126,7 +126,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             var castingTextAttacker = "Your hands turn translucent as they turn to ice, your finger tips now resemble icicles.";
 
-            HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
+            HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
 
             foreach (var character in room.players)
             {
@@ -136,7 +136,7 @@ namespace MIMWebClient.Core.Player.Skills
                     var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
                     var roomMessage = $"{Helpers.ReturnName(_target, character, string.Empty)}'s hands turn translucent as they turn to ice, their finger tips now resemble icicles.";
 
-                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                    HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                 }
 
             }
@@ -172,7 +172,7 @@ namespace MIMWebClient.Core.Player.Skills
             attacker.Equipment.Wielded = "Chill Touch";
            
 
-            var chillTouchAff = new Affect
+            var chillTouchAff = new Effect
             {
                 Name = "Chill Touch",
                 Duration = attacker.Level + 3,
@@ -181,15 +181,15 @@ namespace MIMWebClient.Core.Player.Skills
             };
 
 
-            if (attacker.Affects == null)
+            if (attacker.Effects == null)
             {
-                attacker.Affects = new List<Affect>();
-                attacker.Affects.Add(chillTouchAff);
+                attacker.Effects = new List<Effect>();
+                attacker.Effects.Add(chillTouchAff);
 
             }
             else
             {
-                attacker.Affects.Add(chillTouchAff);
+                attacker.Effects.Add(chillTouchAff);
             }
 
             Score.UpdateUiAffects(_target);

@@ -31,7 +31,7 @@ namespace MIMWebClient.Core.Room
                     string movement = "walks in "; // runs, hovers, crawls. Steps out of a portal, appears?
 
 
-                    if (player.Affects?.FirstOrDefault(
+                    if (player.Effects?.FirstOrDefault(
                             x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) != null)
                     {
                         movement = "floats in ";
@@ -45,15 +45,14 @@ namespace MIMWebClient.Core.Room
 
                         if (player.Name != room.players[i].Name)
                         {
-                            HubContext.getHubContext.Clients.Client(room.players[i].HubGuid)
-                                .addNewMessageToPage(enterText);
+                            HubContext.Instance.AddNewMessageToPage(room.players[i].HubGuid, enterText);
                         }
                         else
                         {
                             if (player.Status == Player.PlayerStatus.Standing)
                             {
 
-                                if (player.Affects?.FirstOrDefault(
+                                if (player.Effects?.FirstOrDefault(
                                         x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) != null)
                                 {
                                     enterText = "You float in " + direction;
@@ -63,8 +62,7 @@ namespace MIMWebClient.Core.Room
                                     enterText = "You walk in " + direction;
                                 }
 
-                                HubContext.getHubContext.Clients.Client(room.players[i].HubGuid)
-                                    .addNewMessageToPage(enterText);
+                                HubContext.Instance.AddNewMessageToPage(room.players[i].HubGuid, enterText);
                             }
 
                         }
@@ -78,7 +76,7 @@ namespace MIMWebClient.Core.Room
                     {
                         if (room.players[i].HubGuid != null)
                         {
-                            HubContext.SendToClient(enterText, room.players[i].HubGuid);
+                            HubContext.Instance.SendToClient(enterText, room.players[i].HubGuid);
                         }
 
                     }
@@ -91,7 +89,7 @@ namespace MIMWebClient.Core.Room
 
         public static void ExitRoom(Player player, Room room, string direction, bool teleported = false)
         {
-            var hasFly = player.Affects?.FirstOrDefault(
+            var hasFly = player.Effects?.FirstOrDefault(
                              x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) != null;
 
 
@@ -113,7 +111,7 @@ namespace MIMWebClient.Core.Room
 
                     if (player.Name != room.players[i].Name)
                     {
-                        HubContext.getHubContext.Clients.Client(room.players[i].HubGuid).addNewMessageToPage(exitText);
+                        HubContext.Instance.AddNewMessageToPage(room.players[i].HubGuid, exitText);
 
                     }
                     else
@@ -125,7 +123,7 @@ namespace MIMWebClient.Core.Room
                             exitText = "You float " + direction;
                         }
 
-                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(exitText);
+                        HubContext.Instance.AddNewMessageToPage(player.HubGuid, exitText);
                     }
 
                 }
@@ -148,10 +146,10 @@ namespace MIMWebClient.Core.Room
                         if (follower.AreaId == player.AreaId && follower.Area == player.Area && follower.Region == player.Region)
                         {
 
-                            HubContext.SendToClient(
+                            HubContext.Instance.SendToClient(
                                 Helpers.ReturnName(follower, player, string.Empty) + " follows you " + direction,
                                 player.HubGuid);
-                            HubContext.SendToClient(
+                            HubContext.Instance.SendToClient(
                                 "You follow " + Helpers.ReturnName(player, follower, string.Empty) + " " + direction,
                                 follower.HubGuid);
 
@@ -307,7 +305,7 @@ namespace MIMWebClient.Core.Room
 
                     if (player.Status != Player.PlayerStatus.Sleeping)
                     {
-                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(roomDescription);
+                        HubContext.Instance.AddNewMessageToPage(player.HubGuid, roomDescription);
 
                     }
 
@@ -329,8 +327,7 @@ namespace MIMWebClient.Core.Room
                         {
                             var speak = mob.DialogueTree[0];
 
-                            HubContext.getHubContext.Clients.Client(player.HubGuid)
-                                .addNewMessageToPage("<span class='sayColor'>" + mob.Name + " says to you \"" + speak.Message + "\"</span>");
+                            HubContext.Instance.AddNewMessageToPage(player.HubGuid, "<span class='sayColor'>" + mob.Name + " says to you \"" + speak.Message + "\"</span>");
                             var i = 1;
                             foreach (var respond in speak.PossibleResponse)
                             {
@@ -338,7 +335,7 @@ namespace MIMWebClient.Core.Room
                                     "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
                                     respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " + respond.Response +
                                     "</a>";
-                                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(textChoice);
+                                HubContext.Instance.AddNewMessageToPage(player.HubGuid, textChoice);
                                 i++;
 
                             }
@@ -367,29 +364,29 @@ namespace MIMWebClient.Core.Room
         {
             if (player.Status == Player.PlayerStatus.Fighting)
             {
-                HubContext.SendToClient("You are fighting! Try fleeing.", player.HubGuid);
+                HubContext.Instance.SendToClient("You are fighting! Try fleeing.", player.HubGuid);
                 return;
             }
 
             if (player.Status == Player.PlayerStatus.Resting || player.Status == Player.PlayerStatus.Sleeping)
             {
-                HubContext.SendToClient("You need to get up before you move.", player.HubGuid);
+                HubContext.Instance.SendToClient("You need to get up before you move.", player.HubGuid);
                 return;
             }
 
 
-            var isBlind = player.Affects?.FirstOrDefault(
+            var isBlind = player.Effects?.FirstOrDefault(
                           x => x.Name.Equals("Blindness", StringComparison.CurrentCultureIgnoreCase)) != null;
 
             if (player.MovePoints <= 0)
             {
-                HubContext.SendToClient("You are exhausted an unable to move", player.HubGuid);
+                HubContext.Instance.SendToClient("You are exhausted an unable to move", player.HubGuid);
 
                 foreach (var character in room.players)
                 {
                     if (character != player)
                     {
-                        HubContext.SendToClient(
+                        HubContext.Instance.SendToClient(
                             $"{Helpers.ReturnName(player, character, string.Empty)} tries to move but is too exhausted.",
                             player.HubGuid);
                     }
@@ -416,8 +413,7 @@ namespace MIMWebClient.Core.Room
                 {
                     if (exit.open == false)
                     {
-                        HubContext.getHubContext.Clients.Client(player.HubGuid)
-                            .addNewMessageToPage("The " + exit.doorName + " is close");
+                        HubContext.Instance.AddNewMessageToPage(player.HubGuid, "The " + exit.doorName + " is close");
                         return;
                     }
 
@@ -451,12 +447,11 @@ namespace MIMWebClient.Core.Room
 
                             if (!isBlind)
                             {
-                                HubContext.getHubContext.Clients.Client(player.HubGuid)
-                                    .addNewMessageToPage(roomDescription);
+                                HubContext.Instance.AddNewMessageToPage(player.HubGuid, roomDescription);
                             }
                             else
                             {
-                                HubContext.SendToClient("You can't see a thing.", player.HubGuid);
+                                HubContext.Instance.SendToClient("You can't see a thing.", player.HubGuid);
                             }
 
                             //Show exits UI
@@ -480,8 +475,7 @@ namespace MIMWebClient.Core.Room
                                 {
                                     var speak = mob.DialogueTree[0];
 
-                                    HubContext.getHubContext.Clients.Client(player.HubGuid)
-                                        .addNewMessageToPage("<span class='sayColor'>" + mob.Name + " says to you \"" + speak.Message + "\"</span>");
+                                    HubContext.Instance.AddNewMessageToPage(player.HubGuid, "<span class='sayColor'>" + mob.Name + " says to you \"" + speak.Message + "\"</span>");
                                     var i = 1;
                                     foreach (var respond in speak.PossibleResponse)
                                     {
@@ -489,8 +483,7 @@ namespace MIMWebClient.Core.Room
                                             "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
                                             respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " +
                                             respond.Response + "</a>";
-                                        HubContext.getHubContext.Clients.Client(player.HubGuid)
-                                            .addNewMessageToPage(textChoice);
+                                        HubContext.Instance.AddNewMessageToPage(player.HubGuid, textChoice);
                                         i++;
 
                                     }
@@ -507,7 +500,7 @@ namespace MIMWebClient.Core.Room
                                 {
                                     if (quest.QuestHint != null && mob.Name == quest.QuestFindMob)
                                     {
-                                        HubContext.SendToClient(quest.QuestHint, player.HubGuid);
+                                        HubContext.Instance.SendToClient(quest.QuestHint, player.HubGuid);
                                     }
                                 }
 
@@ -515,7 +508,7 @@ namespace MIMWebClient.Core.Room
 
                             foreach (var mob in getNewRoom.mobs.Where(x => x.Aggro).ToList())
                             {
-                                HubContext.SendToClient($"{mob.Name} screams and attacks you", player.HubGuid);
+                                HubContext.Instance.SendToClient($"{mob.Name} screams and attacks you", player.HubGuid);
                                 Player.MobAttack(player, mob, getNewRoom);
                             }
 
@@ -537,7 +530,7 @@ namespace MIMWebClient.Core.Room
                 }
                 else
                 {
-                    HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("There is no exit here");
+                    HubContext.Instance.AddNewMessageToPage(player.HubGuid, "There is no exit here");
 
                 }
             }
@@ -580,7 +573,7 @@ namespace MIMWebClient.Core.Room
                     {
                         foreach (var player in roomData.players)
                         {
-                            HubContext.SendToClient(mob.Name + " leaves " + exit.name, player.HubGuid);
+                            HubContext.Instance.SendToClient(mob.Name + " leaves " + exit.name, player.HubGuid);
                         }
                     }
 
@@ -673,9 +666,7 @@ namespace MIMWebClient.Core.Room
                 exits.Add(exit.name);
             }
 
-            var context = HubContext.getHubContext;
-            context.Clients.Client(id).updateExits(exits);
-
+            HubContext.Instance.UpdateExits(id, exits);
         }
 
     }

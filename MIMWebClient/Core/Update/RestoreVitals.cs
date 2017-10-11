@@ -19,7 +19,7 @@ namespace MIMWebClient.Core.Update
 
         public static void UpdatePlayers()
         {
-            var context = HubContext.getHubContext;
+            var context = HubContext.Instance;
             var players = Cache.ReturnPlayers();
 
             if (players.Count == 0)
@@ -67,7 +67,7 @@ namespace MIMWebClient.Core.Update
 
         public static void UpdateRooms()
         {
-            var context = HubContext.getHubContext;
+            var context = HubContext.Instance;
             var rooms = Cache.ReturnRooms();
 
             if (rooms.Count == 0)
@@ -190,7 +190,7 @@ namespace MIMWebClient.Core.Update
                     {
                         foreach (var player in room.players)
                         {
-                            HubContext.SendToClient(room.updateMessage, player.HubGuid);
+                            HubContext.Instance.SendToClient(room.updateMessage, player.HubGuid);
                         }
                     }
                 }
@@ -216,7 +216,7 @@ namespace MIMWebClient.Core.Update
 
 
 
-        public static void UpdateHp(PlayerSetup.Player player, IHubContext context)
+        public static void UpdateHp(PlayerSetup.Player player, HubContext context)
         {
             try
             {
@@ -263,7 +263,7 @@ namespace MIMWebClient.Core.Update
                             return;
                         }
 
-                        context.Clients.Client(player.HubGuid).updateStat(player.HitPoints, player.MaxHitPoints, "hp");
+                        context.UpdateStat(player.HubGuid, player.HitPoints, player.MaxHitPoints, "hp");
                     }
 
                 }
@@ -285,7 +285,7 @@ namespace MIMWebClient.Core.Update
 
         }
 
-        public static void UpdateMana(PlayerSetup.Player player, IHubContext context)
+        public static void UpdateMana(PlayerSetup.Player player, HubContext context)
         {
 
             try
@@ -334,8 +334,7 @@ namespace MIMWebClient.Core.Update
                             return;
                         }
 
-                        context.Clients.Client(player.HubGuid)
-                            .updateStat(player.ManaPoints, player.MaxManaPoints, "mana");
+                        context.UpdateStat(player.HubGuid, player.ManaPoints, player.MaxManaPoints, "mana");
 
                     }
                 }
@@ -355,16 +354,16 @@ namespace MIMWebClient.Core.Update
 
         }
 
-        public static void UpdateAffects(PlayerSetup.Player player, IHubContext context)
+        public static void UpdateAffects(PlayerSetup.Player player, HubContext context)
         {
             try
             {
-                if (player?.Affects == null)
+                if (player?.Effects == null)
                 {
                     return;
                 }
 
-                foreach (var af in player.Affects.ToList())
+                foreach (var af in player.Effects.ToList())
                 {
 
                     if (af.Duration == 0 || af.Duration <= 0)
@@ -386,7 +385,7 @@ namespace MIMWebClient.Core.Update
 
                         if (af.AffectLossMessageRoom != null)
                         {
-                            HubContext.SendToClient(af.AffectLossMessagePlayer, player.HubGuid);
+                            HubContext.Instance.SendToClient(af.AffectLossMessagePlayer, player.HubGuid);
                         }
 
                         if (af.AffectLossMessageRoom != null)
@@ -397,7 +396,7 @@ namespace MIMWebClient.Core.Update
                             {
                                 if (player != character && character.HubGuid != null)
                                 {
-                                    HubContext.SendToClient(
+                                    HubContext.Instance.SendToClient(
                                         Helpers.ReturnName(player, character, string.Empty) + " " +
                                         af.AffectLossMessageRoom, character.HubGuid);
 
@@ -406,7 +405,7 @@ namespace MIMWebClient.Core.Update
 
                         }
 
-                        player.Affects.Remove(af);
+                        player.Effects.Remove(af);
                     }
                     else
                     {
@@ -422,14 +421,14 @@ namespace MIMWebClient.Core.Update
                 {
                     Date = DateTime.Now,
                     ErrorMessage = ex.InnerException.ToString(),
-                    MethodName = "Update Affects"
+                    MethodName = "Update Effects"
                 };
 
                 Save.LogError(log);
             }
         }
 
-        public static void UpdateEndurance(PlayerSetup.Player player, IHubContext context)
+        public static void UpdateEndurance(PlayerSetup.Player player, HubContext context)
         {
 
             try
@@ -476,8 +475,7 @@ namespace MIMWebClient.Core.Update
                             return;
                         }
 
-                        context.Clients.Client(player.HubGuid)
-                            .updateStat(player.MovePoints, player.MaxMovePoints, "endurance");
+                        context.UpdateStat(player.HubGuid, player.MovePoints, player.MaxMovePoints, "endurance");
                     }
 
                     Score.ReturnScoreUI(player);

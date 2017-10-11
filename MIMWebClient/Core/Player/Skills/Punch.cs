@@ -24,8 +24,8 @@ namespace MIMWebClient.Core.Player.Skills
             if (!_taskRunnning)
             {
 // find target if not in fight
-                HubContext.SendToClient("You clench your fist and pull your arm back", attacker.HubGuid);
-                HubContext.SendToClient(attacker.Name + " Pulls his arm back aiming a punch at you.", attacker.HubGuid,
+                HubContext.Instance.SendToClient("You clench your fist and pull your arm back", attacker.HubGuid);
+                HubContext.Instance.SendToClient(attacker.Name + " Pulls his arm back aiming a punch at you.", attacker.HubGuid,
                     attacker.Target.HubGuid, false, true);
                  
 
@@ -36,7 +36,7 @@ namespace MIMWebClient.Core.Player.Skills
                         var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
                         var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)} clenches his fist and pulls his arm back aiming for {Helpers.ReturnName(attacker.Target, attacker, string.Empty)}";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -46,7 +46,7 @@ namespace MIMWebClient.Core.Player.Skills
             }
             else
             {
-                HubContext.SendToClient("You are already trying to punch", attacker.HubGuid);
+                HubContext.Instance.SendToClient("You are already trying to punch", attacker.HubGuid);
  
             }
 
@@ -76,8 +76,8 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (attacker.Target != null && attacker.Target.HitPoints > 0)
                 {
-                    HubContext.SendToClient("Your punch hits", attacker.HubGuid);
-                    HubContext.SendToClient(attacker.Name + " punch hits you", attacker.HubGuid, attacker.Target.HubGuid, false, true);
+                    HubContext.Instance.SendToClient("Your punch hits", attacker.HubGuid);
+                    HubContext.Instance.SendToClient(attacker.Name + " punch hits you", attacker.HubGuid, attacker.Target.HubGuid, false, true);
                    
 
                     foreach (var character in room.players)
@@ -87,7 +87,7 @@ namespace MIMWebClient.Core.Player.Skills
                             var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
                             var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)} punches {Helpers.ReturnName(attacker.Target, attacker, string.Empty)}";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
@@ -103,8 +103,8 @@ namespace MIMWebClient.Core.Player.Skills
             }
             else
             {
-                HubContext.SendToClient("You swing a punch at " + attacker.Target.Name + " but miss", attacker.HubGuid);
-                HubContext.SendToClient(attacker.Name + " swings a punch at you but misses", attacker.HubGuid, attacker.Target.HubGuid, false, true);
+                HubContext.Instance.SendToClient("You swing a punch at " + attacker.Target.Name + " but miss", attacker.HubGuid);
+                HubContext.Instance.SendToClient(attacker.Name + " swings a punch at you but misses", attacker.HubGuid, attacker.Target.HubGuid, false, true);
                 
 
                 foreach (var character in room.players)
@@ -114,7 +114,7 @@ namespace MIMWebClient.Core.Player.Skills
                         var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
                         var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)} swings at  {Helpers.ReturnName(attacker.Target, attacker, string.Empty)} but misses";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 

@@ -94,7 +94,7 @@ namespace MIMWebClient.Core.Events
                                          " here and you are not carrying " + AvsAnLib.AvsAn.Query(itemToFind).Article +
                                          " " + itemToFind;
 
-                    HubContext.SendToClient(msgToPlayer, player.HubGuid);
+                    HubContext.Instance.SendToClient(msgToPlayer, player.HubGuid);
 
                     foreach (var character in room.players)
                     {
@@ -104,7 +104,7 @@ namespace MIMWebClient.Core.Events
                             var roomMessage =
                                 $"{Helpers.ReturnName(player, character, string.Empty)} rummages around for an item but finds nothing.";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
@@ -136,7 +136,7 @@ namespace MIMWebClient.Core.Events
                     else
                     {
 
-                        HubContext.SendToClient("You don't see that inside the container", player.HubGuid);
+                        HubContext.Instance.SendToClient("You don't see that inside the container", player.HubGuid);
 
                         foreach (var character in room.players)
                         {
@@ -146,7 +146,7 @@ namespace MIMWebClient.Core.Events
                                 var roomMessage =
                                     $"{Helpers.ReturnName(player, character, string.Empty)} searches around inside the container but finds nothing";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
                     }
@@ -159,12 +159,12 @@ namespace MIMWebClient.Core.Events
             }
             else if (itemToFind == "all" && roomItems.Count == 0 && command == "get")
             {
-                HubContext.SendToClient("There is nothing here to get", player.HubGuid);
+                HubContext.Instance.SendToClient("There is nothing here to get", player.HubGuid);
             }
             else if (itemToFind == "all" && playerInv.Count == 0 && command == "drop" ||
                      itemToFind == "all" && playerInv.Count == 0 && command == "put")
             {
-                HubContext.SendToClient("You have nothing to drop", player.HubGuid);
+                HubContext.Instance.SendToClient("You have nothing to drop", player.HubGuid);
             }
 
             #endregion
@@ -187,7 +187,7 @@ namespace MIMWebClient.Core.Events
                     else
                     {
 
-                        HubContext.SendToClient("you are not carrying such an item", player.HubGuid);
+                        HubContext.Instance.SendToClient("you are not carrying such an item", player.HubGuid);
 
                         foreach (var character in room.players)
                         {
@@ -197,7 +197,7 @@ namespace MIMWebClient.Core.Events
                                 var roomMessage =
                                     $"{Helpers.ReturnName(player, character, string.Empty)} tries to get an item but can't find it.";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
 
@@ -223,7 +223,7 @@ namespace MIMWebClient.Core.Events
                     else
                     {
 
-                        HubContext.SendToClient("you are not carrying such an item", player.HubGuid);
+                        HubContext.Instance.SendToClient("you are not carrying such an item", player.HubGuid);
 
                         foreach (var character in room.players)
                         {
@@ -233,7 +233,7 @@ namespace MIMWebClient.Core.Events
                                 var roomMessage =
                                     $"{Helpers.ReturnName(player, character, string.Empty)} tries to get an item but can't find it.";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
 
@@ -247,7 +247,7 @@ namespace MIMWebClient.Core.Events
                     else
                     {
 
-                        HubContext.SendToClient($"You don't see that item.", player.HubGuid);
+                        HubContext.Instance.SendToClient($"You don't see that item.", player.HubGuid);
 
                         //foreach (var character in room.players)
                         //{
@@ -256,7 +256,7 @@ namespace MIMWebClient.Core.Events
 
                         //        var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} tries to get somthing from a {foundContainer.name} but can't find it.";
 
-                        //        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        //        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         //    }
                         //}
 
@@ -290,7 +290,7 @@ namespace MIMWebClient.Core.Events
                     var result = AvsAnLib.AvsAn.Query(itemToFind);
                     string article = result.Article;
 
-                    HubContext.SendToClient($"You don't see {article} {itemToFind} here.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"You don't see {article} {itemToFind} here.", player.HubGuid);
 
 
                 }
@@ -330,7 +330,7 @@ namespace MIMWebClient.Core.Events
                             {
                                 //TODO: Get all should not come here??
                                 //dafuq? 
-                                HubContext.SendToClient($"The {foundContainer.name} is empty.", player.HubGuid);
+                                HubContext.Instance.SendToClient($"The {foundContainer.name} is empty.", player.HubGuid);
 
                                 foreach (var character in room.players)
                                 {
@@ -340,7 +340,7 @@ namespace MIMWebClient.Core.Events
                                         var roomMessage =
                                             $"{Helpers.ReturnName(player, character, string.Empty)} looks in a {foundContainer.name} but finds nothing.";
 
-                                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                                     }
                                 }
 
@@ -389,7 +389,7 @@ namespace MIMWebClient.Core.Events
                                 string containerArticle = containerResult.Article;
 
 
-                                HubContext.SendToClient(
+                                HubContext.Instance.SendToClient(
                                     $"You pick up {article} {containerItem.name} from {containerArticle} {foundContainer.name}.",
                                     player.HubGuid);
 
@@ -401,7 +401,7 @@ namespace MIMWebClient.Core.Events
                                         var roomMessage =
                                             $"{Helpers.ReturnName(player, character, string.Empty)} picks up {article} {containerItem.name} from {containerArticle} {foundContainer.name}.";
 
-                                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                                     }
                                 }
 
@@ -412,7 +412,7 @@ namespace MIMWebClient.Core.Events
                         else
                         {
 
-                            HubContext.SendToClient($"{foundContainer.name} doesn't contain that. ", player.HubGuid);
+                            HubContext.Instance.SendToClient($"{foundContainer.name} doesn't contain that. ", player.HubGuid);
 
                             foreach (var character in room.players)
                             {
@@ -422,7 +422,7 @@ namespace MIMWebClient.Core.Events
                                     var roomMessage =
                                         $"{Helpers.ReturnName(player, character, string.Empty)} searches around the {foundContainer.name} but finds nothing.";
 
-                                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                                    HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                                 }
                             }
 
@@ -486,7 +486,7 @@ namespace MIMWebClient.Core.Events
                             string article = result.Article;
 
 
-                            HubContext.SendToClient($"You pick up {article} {roomItems[i].name}", player.HubGuid);
+                            HubContext.Instance.SendToClient($"You pick up {article} {roomItems[i].name}", player.HubGuid);
 
                             foreach (var character in room.players)
                             {
@@ -496,7 +496,7 @@ namespace MIMWebClient.Core.Events
                                     var roomMessage =
                                         $"{Helpers.ReturnName(player, character, string.Empty)} picks up {article} {roomItems[i].name}.";
 
-                                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                                    HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                                 }
                             }
 
@@ -512,7 +512,7 @@ namespace MIMWebClient.Core.Events
 
                             var result = AvsAnLib.AvsAn.Query(roomItems[i].name);
                             string article = result.Article;
-                            HubContext.SendToClient($"You pick up {roomItems[i].count} {roomItems[i].name}",
+                            HubContext.Instance.SendToClient($"You pick up {roomItems[i].count} {roomItems[i].name}",
                                 player.HubGuid);
 
                             foreach (var character in room.players)
@@ -523,7 +523,7 @@ namespace MIMWebClient.Core.Events
                                     var roomMessage =
                                         $"{Helpers.ReturnName(player, character, string.Empty)} picks up {roomItems[i].count} {roomItems[i].name}.";
 
-                                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                                    HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                                 }
                             }
 
@@ -532,7 +532,7 @@ namespace MIMWebClient.Core.Events
                     }
                     else
                     {
-                        HubContext.SendToClient("You can't take that", player.HubGuid);
+                        HubContext.Instance.SendToClient("You can't take that", player.HubGuid);
                     }
                 }
 
@@ -544,7 +544,7 @@ namespace MIMWebClient.Core.Events
                 if (container.locked == true)
                 {
 
-                    HubContext.SendToClient($"{container.name} is locked.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"{container.name} is locked.", player.HubGuid);
 
                     foreach (var character in room.players)
                     {
@@ -554,7 +554,7 @@ namespace MIMWebClient.Core.Events
                             var roomMessage =
                                 $"{Helpers.ReturnName(player, character, string.Empty)} tries to open the locked {container.name}.";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
@@ -575,7 +575,7 @@ namespace MIMWebClient.Core.Events
                         var result = AvsAnLib.AvsAn.Query(containerItems[i].name);
                         string article = result.Article;
 
-                        HubContext.SendToClient(
+                        HubContext.Instance.SendToClient(
                             $"You get {article} {containerItems[i].name} from the {container.name}.", player.HubGuid);
 
                         foreach (var character in room.players)
@@ -586,7 +586,7 @@ namespace MIMWebClient.Core.Events
                                 var roomMessage =
                                     $"{Helpers.ReturnName(player, character, string.Empty)} gets {article} {containerItems[i].name} from the {container.name}.";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
 
@@ -602,7 +602,7 @@ namespace MIMWebClient.Core.Events
                         var result = AvsAnLib.AvsAn.Query(container.name);
                         string article = result.Article;
 
-                        HubContext.SendToClient(
+                        HubContext.Instance.SendToClient(
                             $"You pick up {item.count} {item.name} from {article} {container.name}.", player.HubGuid);
 
                         foreach (var character in room.players)
@@ -613,7 +613,7 @@ namespace MIMWebClient.Core.Events
                                 var roomMessage =
                                     $"{Helpers.ReturnName(player, character, string.Empty)} picks up {item.count} {item.name} from {article} {container.name}.";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
 
@@ -646,7 +646,7 @@ namespace MIMWebClient.Core.Events
                             var result = AvsAnLib.AvsAn.Query(item.name);
                             string article = result.Article;
 
-                            HubContext.SendToClient($"You pick up {article} {item.name}.", player.HubGuid);
+                            HubContext.Instance.SendToClient($"You pick up {article} {item.name}.", player.HubGuid);
 
                             foreach (var character in room.players)
                             {
@@ -656,7 +656,7 @@ namespace MIMWebClient.Core.Events
                                     var roomMessage =
                                         $"{Helpers.ReturnName(player, character, string.Empty)} picks up {article} {item.name}.";
 
-                                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                                    HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                                 }
                             }
 
@@ -670,7 +670,7 @@ namespace MIMWebClient.Core.Events
                             var result = AvsAnLib.AvsAn.Query(container.name);
                             string article = result.Article;
 
-                            HubContext.SendToClient($"You pick up {item.count} {item.name}.", player.HubGuid);
+                            HubContext.Instance.SendToClient($"You pick up {item.count} {item.name}.", player.HubGuid);
 
                             foreach (var character in room.players)
                             {
@@ -680,7 +680,7 @@ namespace MIMWebClient.Core.Events
                                     var roomMessage =
                                         $"{Helpers.ReturnName(player, character, string.Empty)} picks up {item.count} {item.name} from {article} {container.name}.";
 
-                                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                                    HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                                 }
                             }
 
@@ -688,7 +688,7 @@ namespace MIMWebClient.Core.Events
                     }
                     else
                     {
-                        HubContext.SendToClient("You can't take that", player.HubGuid);
+                        HubContext.Instance.SendToClient("You can't take that", player.HubGuid);
                     }
 
                 }
@@ -696,7 +696,7 @@ namespace MIMWebClient.Core.Events
                 {
                     if (container.locked == true)
                     {
-                        HubContext.SendToClient($"{container.name} is locked.", player.HubGuid);
+                        HubContext.Instance.SendToClient($"{container.name} is locked.", player.HubGuid);
 
                         foreach (var character in room.players)
                         {
@@ -706,7 +706,7 @@ namespace MIMWebClient.Core.Events
                                 var roomMessage =
                                     $"{Helpers.ReturnName(player, character, string.Empty)} tries to open the locked {container.name}.";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
 
@@ -727,7 +727,7 @@ namespace MIMWebClient.Core.Events
                         var result = AvsAnLib.AvsAn.Query(item.name);
                         string article = result.Article;
 
-                        HubContext.SendToClient($"You get {article} {item.name} from the {container.name}.",
+                        HubContext.Instance.SendToClient($"You get {article} {item.name} from the {container.name}.",
                             player.HubGuid);
 
                         foreach (var character in room.players)
@@ -738,7 +738,7 @@ namespace MIMWebClient.Core.Events
                                 var roomMessage =
                                     $"{Helpers.ReturnName(player, character, string.Empty)} gets {article} {item.name} from the {container.name}.";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
 
@@ -753,7 +753,7 @@ namespace MIMWebClient.Core.Events
                         var result = AvsAnLib.AvsAn.Query(container.name);
                         string article = result.Article;
 
-                        HubContext.SendToClient($"You get {item.count} {item.name} from {article} {container.name}.",
+                        HubContext.Instance.SendToClient($"You get {item.count} {item.name} from {article} {container.name}.",
                             player.HubGuid);
 
                         foreach (var character in room.players)
@@ -764,7 +764,7 @@ namespace MIMWebClient.Core.Events
                                 var roomMessage =
                                     $"{Helpers.ReturnName(player, character, string.Empty)} gets {item.count} {item.name} from {article} {container.name}.";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
                     }
@@ -780,7 +780,7 @@ namespace MIMWebClient.Core.Events
             else
             {
 
-                HubContext.SendToClient("There is nothing here to pick up.", player.HubGuid);
+                HubContext.Instance.SendToClient("There is nothing here to pick up.", player.HubGuid);
 
                 return;
             }
@@ -830,7 +830,7 @@ namespace MIMWebClient.Core.Events
                         var result = AvsAnLib.AvsAn.Query(playerInv[i].name);
                         string article = result.Article;
 
-                        HubContext.SendToClient($"You drop {article} {playerInv[i].name}.", player.HubGuid);
+                        HubContext.Instance.SendToClient($"You drop {article} {playerInv[i].name}.", player.HubGuid);
 
                         foreach (var character in room.players)
                         {
@@ -840,7 +840,7 @@ namespace MIMWebClient.Core.Events
                                 var roomMessage =
                                     $"{Helpers.ReturnName(player, character, string.Empty)} drops {article} {playerInv[i].name}.";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
 
@@ -852,7 +852,7 @@ namespace MIMWebClient.Core.Events
                         if (container.locked == true)
                         {
 
-                            HubContext.SendToClient($"{container.name} is locked.", player.HubGuid);
+                            HubContext.Instance.SendToClient($"{container.name} is locked.", player.HubGuid);
 
                             foreach (var character in room.players)
                             {
@@ -862,7 +862,7 @@ namespace MIMWebClient.Core.Events
                                     var roomMessage =
                                         $"{Helpers.ReturnName(player, character, string.Empty)} tries to open the locked {container.name}.";
 
-                                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                                    HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                                 }
                             }
 
@@ -871,7 +871,7 @@ namespace MIMWebClient.Core.Events
 
                         if (container.open == false)
                         {
-                            HubContext.SendToClient(
+                            HubContext.Instance.SendToClient(
                                 "You have to open the " + container.name + " before you can put something inside",
                                 player.HubGuid);
                             return;
@@ -886,7 +886,7 @@ namespace MIMWebClient.Core.Events
                         var containerResult = AvsAnLib.AvsAn.Query(container.name);
                         string containerArticle = containerResult.Article;
 
-                        HubContext.SendToClient(
+                        HubContext.Instance.SendToClient(
                             $"You drop {article} {playerInv[i].name} into {containerArticle} {container.name}.",
                             player.HubGuid);
 
@@ -898,7 +898,7 @@ namespace MIMWebClient.Core.Events
                                 var roomMessage =
                                     $"{Helpers.ReturnName(player, character, string.Empty)} drops {article} {playerInv[i].name} into {containerArticle} {container.name}.";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
 
@@ -930,7 +930,7 @@ namespace MIMWebClient.Core.Events
                     var result = AvsAnLib.AvsAn.Query(item.name);
                     string article = result.Article;
 
-                    HubContext.SendToClient($"You drop {article} {item.name}.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"You drop {article} {item.name}.", player.HubGuid);
 
                     foreach (var character in room.players)
                     {
@@ -940,7 +940,7 @@ namespace MIMWebClient.Core.Events
                             var roomMessage =
                                 $"{Helpers.ReturnName(player, character, string.Empty)} drops {article} {item.name}.";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
@@ -950,7 +950,7 @@ namespace MIMWebClient.Core.Events
 
                     if (container.locked == true)
                     {
-                        HubContext.SendToClient($"{container.name} is locked.", player.HubGuid);
+                        HubContext.Instance.SendToClient($"{container.name} is locked.", player.HubGuid);
 
                         foreach (var character in room.players)
                         {
@@ -960,7 +960,7 @@ namespace MIMWebClient.Core.Events
                                 var roomMessage =
                                     $"{Helpers.ReturnName(player, character, string.Empty)} tries to open the locked {container.name}.";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
 
@@ -969,7 +969,7 @@ namespace MIMWebClient.Core.Events
 
                     if (container.open == false)
                     {
-                        HubContext.SendToClient(
+                        HubContext.Instance.SendToClient(
                             "You have to open the " + container.name + " before you can put something inside",
                             player.HubGuid);
                         return;
@@ -985,7 +985,7 @@ namespace MIMWebClient.Core.Events
                     var containerResult = AvsAnLib.AvsAn.Query(container.name);
                     string containerArticle = containerResult.Article;
 
-                    HubContext.SendToClient($"You put {article} {item.name} into the {container.name}.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"You put {article} {item.name} into the {container.name}.", player.HubGuid);
 
                     foreach (var character in room.players)
                     {
@@ -995,7 +995,7 @@ namespace MIMWebClient.Core.Events
                             var roomMessage =
                                 $"{Helpers.ReturnName(player, character, string.Empty)} puts {article} {item.name} into the {container.name}.";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
@@ -1061,10 +1061,10 @@ namespace MIMWebClient.Core.Events
                         }
 
 
-                        HubContext.SendToClient(
+                        HubContext.Instance.SendToClient(
                             $"You give {article} {playerInv[i].name} to {article2} {foundThing.Name}.", player.HubGuid);
 
-                        HubContext.SendToClient(
+                        HubContext.Instance.SendToClient(
                             $"{Helpers.ReturnName(player, foundThing, string.Empty)} gives {article} {playerInv[i].name} to you.",
                             foundThing.HubGuid);
 
@@ -1076,7 +1076,7 @@ namespace MIMWebClient.Core.Events
                                 var roomMessage =
                                     $"{Helpers.ReturnName(player, character, string.Empty)} gives {article} {playerInv[i].name} to {article2} {Helpers.ReturnName(foundThing, character, string.Empty)}.";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
 
@@ -1092,7 +1092,7 @@ namespace MIMWebClient.Core.Events
                     var foundThingResult = AvsAnLib.AvsAn.Query(thing);
                     string foundThingArticle = foundThingResult.Article;
 
-                    HubContext.SendToClient($"You don't see {foundThingArticle} {thing} here.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"You don't see {foundThingArticle} {thing} here.", player.HubGuid);
                     return;
                 }
 
@@ -1101,7 +1101,7 @@ namespace MIMWebClient.Core.Events
                     var foundItemResult = AvsAnLib.AvsAn.Query(item);
                     string foundItemResultArticle = foundItemResult.Article;
 
-                    HubContext.SendToClient($"You are not carrying {foundItemResultArticle} {item}", player.HubGuid);
+                    HubContext.Instance.SendToClient($"You are not carrying {foundItemResultArticle} {item}", player.HubGuid);
                     return;
                 }
 
@@ -1120,10 +1120,10 @@ namespace MIMWebClient.Core.Events
                     article2 = String.Empty;
                 }
 
-                HubContext.SendToClient($"You give {article} {foundItem.name} to {article2} {foundThing.Name}.",
+                HubContext.Instance.SendToClient($"You give {article} {foundItem.name} to {article2} {foundThing.Name}.",
                     player.HubGuid);
 
-                HubContext.SendToClient(
+                HubContext.Instance.SendToClient(
                     $"{Helpers.ReturnName(player, foundThing, string.Empty)} gives {article} {foundItem.name} to you.",
                     foundThing.HubGuid);
 
@@ -1135,7 +1135,7 @@ namespace MIMWebClient.Core.Events
                         var roomMessage =
                             $"{Helpers.ReturnName(player, character, string.Empty)} gives {article} {foundItem.name} to {article2} {Helpers.ReturnName(foundThing, character, string.Empty)}.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -1153,7 +1153,7 @@ namespace MIMWebClient.Core.Events
 
                             var mobQuest = foundThing.Quest.FirstOrDefault(x => x.Id.Equals(quest.Id));
                             if (mobQuest != null)
-                                HubContext.SendToClient("<span class='sayColor'>" +
+                                HubContext.Instance.SendToClient("<span class='sayColor'>" +
                                     foundThing.Name + " says to you \"" +
                                     mobQuest.RewardDialog.Message.Replace("$playerName", player.Name) + "\"</span>",
                                     player.HubGuid,
@@ -1208,7 +1208,7 @@ namespace MIMWebClient.Core.Events
                 if (foundExit?.canLock == false)
                 {
 
-                    HubContext.SendToClient("You can't unlock that", player.HubGuid);
+                    HubContext.Instance.SendToClient("You can't unlock that", player.HubGuid);
 
                     return;
                 }
@@ -1219,7 +1219,7 @@ namespace MIMWebClient.Core.Events
 
                 if (foundItem.canLock == false)
                 {
-                    HubContext.SendToClient("You can't unlock that", player.HubGuid);
+                    HubContext.Instance.SendToClient("You can't unlock that", player.HubGuid);
 
                     return;
                 }
@@ -1240,7 +1240,7 @@ namespace MIMWebClient.Core.Events
 
                 if (hasKey == false)
                 {
-                    HubContext.SendToClient("You don't the right key for that", player.HubGuid);
+                    HubContext.Instance.SendToClient("You don't the right key for that", player.HubGuid);
 
                     return;
                 }
@@ -1250,7 +1250,7 @@ namespace MIMWebClient.Core.Events
                 {
                     if (foundItem.locked != true)
                     {
-                        HubContext.SendToClient("It's already locked.", player.HubGuid);
+                        HubContext.Instance.SendToClient("It's already locked.", player.HubGuid);
                         return;
                     }
                     else
@@ -1259,7 +1259,7 @@ namespace MIMWebClient.Core.Events
                         var result = AvsAnLib.AvsAn.Query(foundItem.name);
                         string article = result.Article;
 
-                        HubContext.SendToClient($"*CLICK* You unlock {article} {foundItem.name}.", player.HubGuid);
+                        HubContext.Instance.SendToClient($"*CLICK* You unlock {article} {foundItem.name}.", player.HubGuid);
 
                         foreach (var character in room.players)
                         {
@@ -1269,7 +1269,7 @@ namespace MIMWebClient.Core.Events
                                 var roomMessage =
                                     $"*CLICK* {Helpers.ReturnName(player, character, string.Empty)} unlocks {article} {foundItem.name}.";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
 
@@ -1301,7 +1301,7 @@ namespace MIMWebClient.Core.Events
                 if (hasKey == false)
                 {
 
-                    HubContext.SendToClient($"You don't have a key for that.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"You don't have a key for that.", player.HubGuid);
 
                     return;
                 }
@@ -1311,7 +1311,7 @@ namespace MIMWebClient.Core.Events
                 {
                     if (foundExit.locked != true)
                     {
-                        HubContext.SendToClient($"It is already unlocked.", player.HubGuid);
+                        HubContext.Instance.SendToClient($"It is already unlocked.", player.HubGuid);
 
                         return;
                     }
@@ -1320,7 +1320,7 @@ namespace MIMWebClient.Core.Events
                         var result = AvsAnLib.AvsAn.Query(foundExit.name);
                         string article = result.Article;
 
-                        HubContext.SendToClient($"*CLICK* You unlock {article} {foundExit.name}.", player.HubGuid);
+                        HubContext.Instance.SendToClient($"*CLICK* You unlock {article} {foundExit.name}.", player.HubGuid);
 
                         foreach (var character in room.players)
                         {
@@ -1330,7 +1330,7 @@ namespace MIMWebClient.Core.Events
                                 var roomMessage =
                                     $"*CLICK* {Helpers.ReturnName(player, character, string.Empty)} unlocks {article} {foundExit.name}.";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
 
@@ -1378,7 +1378,7 @@ namespace MIMWebClient.Core.Events
 
                 if (foundExit.canLock == false)
                 {
-                    HubContext.SendToClient("You can't lock that.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You can't lock that.", player.HubGuid);
                     return;
                 }
             }
@@ -1389,7 +1389,7 @@ namespace MIMWebClient.Core.Events
                 if (foundItem.canLock == false)
                 {
 
-                    HubContext.SendToClient("You can't lock that.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You can't lock that.", player.HubGuid);
                     return;
                 }
 
@@ -1409,7 +1409,7 @@ namespace MIMWebClient.Core.Events
 
                 if (hasKey == false)
                 {
-                    HubContext.SendToClient("You don't have a key for that.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You don't have a key for that.", player.HubGuid);
                     return;
                 }
 
@@ -1419,7 +1419,7 @@ namespace MIMWebClient.Core.Events
                     var result = AvsAnLib.AvsAn.Query(foundItem.name);
                     string article = result.Article;
 
-                    HubContext.SendToClient($"*CLICK* You lock {article} {foundItem.name}.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"*CLICK* You lock {article} {foundItem.name}.", player.HubGuid);
 
                     foreach (var character in room.players)
                     {
@@ -1429,7 +1429,7 @@ namespace MIMWebClient.Core.Events
                             var roomMessage =
                                 $"*CLICK* {Helpers.ReturnName(player, character, string.Empty)} locks the {foundItem.name}.";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
                     foundItem.locked = true;
@@ -1441,7 +1441,7 @@ namespace MIMWebClient.Core.Events
                     var result = AvsAnLib.AvsAn.Query(foundItem.name);
                     string article = result.Article;
 
-                    HubContext.SendToClient($"The {article} {foundItem.name} is already locked.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"The {article} {foundItem.name} is already locked.", player.HubGuid);
 
 
                     return;
@@ -1462,7 +1462,7 @@ namespace MIMWebClient.Core.Events
                 if (hasKey == false)
                 {
 
-                    HubContext.SendToClient($"You don't have a key for that.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"You don't have a key for that.", player.HubGuid);
 
 
                     return;
@@ -1474,7 +1474,7 @@ namespace MIMWebClient.Core.Events
                     var result = AvsAnLib.AvsAn.Query(foundExit.name);
                     string article = result.Article;
 
-                    HubContext.SendToClient($"*CLICK* You lock {article} {foundExit.name}.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"*CLICK* You lock {article} {foundExit.name}.", player.HubGuid);
 
                     foreach (var character in room.players)
                     {
@@ -1484,7 +1484,7 @@ namespace MIMWebClient.Core.Events
                             var roomMessage =
                                 $"*CLICK* {Helpers.ReturnName(player, character, string.Empty)} locks the {foundExit.name}.";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
@@ -1498,7 +1498,7 @@ namespace MIMWebClient.Core.Events
                     var result = AvsAnLib.AvsAn.Query(foundItem.name);
                     string article = result.Article;
 
-                    HubContext.SendToClient($"The {article} {foundExit.name} is already locked.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"The {article} {foundExit.name} is already locked.", player.HubGuid);
 
                     return;
                 }
@@ -1539,7 +1539,7 @@ namespace MIMWebClient.Core.Events
                 if (foundExit?.canOpen == false)
                 {
 
-                    HubContext.SendToClient("You can't open that.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You can't open that.", player.HubGuid);
 
                     return;
                 }
@@ -1550,14 +1550,14 @@ namespace MIMWebClient.Core.Events
 
                 if (foundItem.canOpen == false)
                 {
-                    HubContext.SendToClient("You can't open that.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You can't open that.", player.HubGuid);
 
                     return;
                 }
 
                 if (foundItem.open)
                 {
-                    HubContext.SendToClient("It's already open.", player.HubGuid);
+                    HubContext.Instance.SendToClient("It's already open.", player.HubGuid);
 
                     return;
                 }
@@ -1565,7 +1565,7 @@ namespace MIMWebClient.Core.Events
                 if (foundItem.locked)
                 {
 
-                    HubContext.SendToClient("You need to unlock that before you can open it.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You need to unlock that before you can open it.", player.HubGuid);
 
                     //Guard check for thiefs..
 
@@ -1580,7 +1580,7 @@ namespace MIMWebClient.Core.Events
                     var result = AvsAnLib.AvsAn.Query(foundItem.name);
                     string article = result.Article;
 
-                    HubContext.SendToClient($"You open {article} {foundItem.name}.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"You open {article} {foundItem.name}.", player.HubGuid);
 
                     foreach (var character in room.players)
                     {
@@ -1590,7 +1590,7 @@ namespace MIMWebClient.Core.Events
                             var roomMessage =
                                 $"{Helpers.ReturnName(player, character, string.Empty)} opens {article} {foundItem.name}.";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
@@ -1600,7 +1600,7 @@ namespace MIMWebClient.Core.Events
                 else
                 {
 
-                    HubContext.SendToClient($"The {foundItem.name} is already open.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"The {foundItem.name} is already open.", player.HubGuid);
 
 
                     return;
@@ -1617,7 +1617,7 @@ namespace MIMWebClient.Core.Events
                     {
 
 
-                        HubContext.SendToClient("You need to unlock that before you can open it", player.HubGuid);
+                        HubContext.Instance.SendToClient("You need to unlock that before you can open it", player.HubGuid);
 
 
                         return;
@@ -1628,7 +1628,7 @@ namespace MIMWebClient.Core.Events
                     var result = AvsAnLib.AvsAn.Query(foundExit.name);
                     string article = result.Article;
 
-                    HubContext.SendToClient($"You open {article} {foundExit.name}.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"You open {article} {foundExit.name}.", player.HubGuid);
 
                     foreach (var character in room.players)
                     {
@@ -1638,7 +1638,7 @@ namespace MIMWebClient.Core.Events
                             var roomMessage =
                                 $"{Helpers.ReturnName(player, character, string.Empty)} opens {article} {foundExit.name}.";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
@@ -1650,7 +1650,7 @@ namespace MIMWebClient.Core.Events
                 {
 
 
-                    HubContext.SendToClient($"The {foundExit.name} is already open.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"The {foundExit.name} is already open.", player.HubGuid);
 
 
                     return;
@@ -1689,7 +1689,7 @@ namespace MIMWebClient.Core.Events
                 if (foundExit != null && foundExit.canOpen == false)
                 {
 
-                    HubContext.SendToClient("You can't close that.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You can't close that.", player.HubGuid);
 
                     return;
                 }
@@ -1701,7 +1701,7 @@ namespace MIMWebClient.Core.Events
                 if (foundItem.canOpen == false)
                 {
 
-                    HubContext.SendToClient("You can't close that.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You can't close that.", player.HubGuid);
 
                     return;
                 }
@@ -1709,7 +1709,7 @@ namespace MIMWebClient.Core.Events
                 if (foundItem.open == false)
                 {
 
-                    HubContext.SendToClient("It's already closed.", player.HubGuid);
+                    HubContext.Instance.SendToClient("It's already closed.", player.HubGuid);
 
                     return;
                 }
@@ -1717,7 +1717,7 @@ namespace MIMWebClient.Core.Events
                 if (foundItem.locked)
                 {
 
-                    HubContext.SendToClient("You need to unlock that before you can close it.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You need to unlock that before you can close it.", player.HubGuid);
 
                     return;
                 }
@@ -1729,7 +1729,7 @@ namespace MIMWebClient.Core.Events
                     var result = AvsAnLib.AvsAn.Query(foundItem.name);
                     string article = result.Article;
 
-                    HubContext.SendToClient($"You close {article} {foundItem.name}.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"You close {article} {foundItem.name}.", player.HubGuid);
 
                     foreach (var character in room.players)
                     {
@@ -1739,7 +1739,7 @@ namespace MIMWebClient.Core.Events
                             var roomMessage =
                                 $"{Helpers.ReturnName(player, character, string.Empty)} closes {article} {foundExit.name}.";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
@@ -1751,7 +1751,7 @@ namespace MIMWebClient.Core.Events
                 else
                 {
 
-                    HubContext.SendToClient("It's already closed.", player.HubGuid);
+                    HubContext.Instance.SendToClient("It's already closed.", player.HubGuid);
 
                     return;
                 }
@@ -1766,7 +1766,7 @@ namespace MIMWebClient.Core.Events
                         //dafuq?
                         //TODO: should not be allowed to lock anything that's open without closing it 1st.
 
-                        HubContext.SendToClient("You need to unlock that before you can close it", player.HubGuid);
+                        HubContext.Instance.SendToClient("You need to unlock that before you can close it", player.HubGuid);
 
                         return;
                     }
@@ -1776,7 +1776,7 @@ namespace MIMWebClient.Core.Events
                     var result = AvsAnLib.AvsAn.Query(foundExit.name);
                     string article = result.Article;
 
-                    HubContext.SendToClient($"You close {article} {foundExit.name}.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"You close {article} {foundExit.name}.", player.HubGuid);
 
                     foreach (var character in room.players)
                     {
@@ -1786,7 +1786,7 @@ namespace MIMWebClient.Core.Events
                             var roomMessage =
                                 $"{Helpers.ReturnName(player, character, string.Empty)} closes {article} {foundExit.name}.";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
@@ -1798,7 +1798,7 @@ namespace MIMWebClient.Core.Events
                 {
 
 
-                    HubContext.SendToClient($"{foundExit.name} is already closed.", player.HubGuid);
+                    HubContext.Instance.SendToClient($"{foundExit.name} is already closed.", player.HubGuid);
 
                     return;
                 }
@@ -1829,13 +1829,13 @@ namespace MIMWebClient.Core.Events
 
             if (foundItem == null)
             {
-                HubContext.SendToClient("You can't find that to drink.", player.HubGuid);
+                HubContext.Instance.SendToClient("You can't find that to drink.", player.HubGuid);
                 return;
             }
 
             if (foundItem.waterContainer == false)
             {
-                HubContext.SendToClient("You can't drink that.", player.HubGuid);
+                HubContext.Instance.SendToClient("You can't drink that.", player.HubGuid);
                 return;
             }
 
@@ -1844,7 +1844,7 @@ namespace MIMWebClient.Core.Events
                 var result = AvsAnLib.AvsAn.Query(foundItem.name);
                 string article = result.Article;
 
-                HubContext.SendToClient(
+                HubContext.Instance.SendToClient(
                     $"You take a gulp of {foundItem.waterContainerLiquid} from {article} {foundItem.name}.",
                     player.HubGuid);
 
@@ -1852,7 +1852,7 @@ namespace MIMWebClient.Core.Events
             }
             else
             {
-                HubContext.SendToClient($"{foundItem.name} is empty.", player.HubGuid);
+                HubContext.Instance.SendToClient($"{foundItem.name} is empty.", player.HubGuid);
                 return;
             }
 

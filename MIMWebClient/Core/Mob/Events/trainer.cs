@@ -19,7 +19,7 @@ namespace MIMWebClient.Core.Mob.Events
 
             if (foundTrainer == null)
             {
-                HubContext.SendToClient("There is no one here that can train you.", player.HubGuid);
+                HubContext.Instance.SendToClient("There is no one here that can train you.", player.HubGuid);
                 return;
             }
 
@@ -49,7 +49,7 @@ namespace MIMWebClient.Core.Mob.Events
 
             if (findSkill == null)
             {
-                HubContext.SendToClient(trainer.Name + " says " + "\"you cannot learn that skill.\"", player.HubGuid);
+                HubContext.Instance.SendToClient(trainer.Name + " says " + "\"you cannot learn that skill.\"", player.HubGuid);
                 return;
             }
 
@@ -57,20 +57,20 @@ namespace MIMWebClient.Core.Mob.Events
 
             if (findPlayerSkill == null)
             {
-                HubContext.SendToClient("You don't know that skill", player.HubGuid);
+                HubContext.Instance.SendToClient("You don't know that skill", player.HubGuid);
                 return;
             }
 
             if (findPlayerSkill.Proficiency == 0.75)
             {
-                HubContext.SendToClient(trainer.Name + " says " + "\"You are already skilled in " + findSkill.Name + "\"", player.HubGuid);
+                HubContext.Instance.SendToClient(trainer.Name + " says " + "\"You are already skilled in " + findSkill.Name + "\"", player.HubGuid);
                 return;
             }
 
             //take away a practice session
             if (player.Practices == 0)
             {
-                HubContext.SendToClient(trainer.Name + " says " + "\"You don't have any practices left.\"", player.HubGuid);
+                HubContext.Instance.SendToClient(trainer.Name + " says " + "\"You don't have any practices left.\"", player.HubGuid);
                 return;
             }
 
@@ -91,8 +91,8 @@ namespace MIMWebClient.Core.Mob.Events
 
             findPlayerSkill.Proficiency = skill.Proficiency;
 
-            HubContext.SendToClient(trainer.Name + " teaches you " + findSkill.Name, player.HubGuid);
-            HubContext.SendToClient("Your " + findSkill.Name + " Skill has increased to " + findPlayerSkill.Proficiency +"%", player.HubGuid);
+            HubContext.Instance.SendToClient(trainer.Name + " teaches you " + findSkill.Name, player.HubGuid);
+            HubContext.Instance.SendToClient("Your " + findSkill.Name + " Skill has increased to " + findPlayerSkill.Proficiency +"%", player.HubGuid);
 
             if (findPlayerSkill.Proficiency >= skill.MaxProficiency)
             {
@@ -101,7 +101,7 @@ namespace MIMWebClient.Core.Mob.Events
 
             if (findPlayerSkill.Proficiency == 75)
             {
-                HubContext.SendToClient(trainer.Name + " says " + "\"You are now skilled in " + findSkill.Name + "\"", player.HubGuid);
+                HubContext.Instance.SendToClient(trainer.Name + " says " + "\"You are now skilled in " + findSkill.Name + "\"", player.HubGuid);
               
             }
 
@@ -127,7 +127,7 @@ namespace MIMWebClient.Core.Mob.Events
 
             if (foundTrainer == null)
             {
-                HubContext.SendToClient("There is no one here that can train you.", player.HubGuid);
+                HubContext.Instance.SendToClient("There is no one here that can train you.", player.HubGuid);
                 return;
             }
 
@@ -144,7 +144,7 @@ namespace MIMWebClient.Core.Mob.Events
         public static void ShowTrain(Player player, Player trainer)
         {
 
-            HubContext.SendToClient(trainer.Name + " says " + "\"You can train these attributes:\"", player.HubGuid);
+            HubContext.Instance.SendToClient(trainer.Name + " says " + "\"You can train these attributes:\"", player.HubGuid);
 
             //show stats that are not maxed
         }

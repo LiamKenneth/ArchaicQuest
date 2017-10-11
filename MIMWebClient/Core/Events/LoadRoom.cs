@@ -251,12 +251,12 @@ namespace MIMWebClient.Core.Events
 
         public static void ReturnRoom(Player player, Room room, string commandOptions = "", string keyword = "")
         {
-            var isBlind = player.Affects?.FirstOrDefault(
+            var isBlind = player.Effects?.FirstOrDefault(
                        x => x.Name.Equals("Blindness", StringComparison.CurrentCultureIgnoreCase)) != null;
 
             if (isBlind)
             {
-                HubContext.SendToClient("You can't see a thing.", player.HubGuid);
+                HubContext.Instance.SendToClient("You can't see a thing.", player.HubGuid);
                 return;
             }
 
@@ -267,7 +267,7 @@ namespace MIMWebClient.Core.Events
             if (string.IsNullOrEmpty(commandOptions) && keyword == "look")
             {
                 var roomInfo = DisplayRoom(roomData, player.Name);
-                HubContext.SendToClient(roomInfo, player.HubGuid);
+                HubContext.Instance.SendToClient(roomInfo, player.HubGuid);
 
             }
             else
@@ -375,20 +375,20 @@ namespace MIMWebClient.Core.Events
 
                     if (!string.IsNullOrEmpty(descriptionText))
                     {
-                        HubContext.SendToClient(descriptionText, player.HubGuid);
+                        HubContext.Instance.SendToClient(descriptionText, player.HubGuid);
 
                         foreach (var players in room.players)
                         {
                             if (player.Name != players.Name)
                             {
-                                HubContext.SendToClient(player.Name + broadcastAction, players.HubGuid);
+                                HubContext.Instance.SendToClient(player.Name + broadcastAction, players.HubGuid);
                             }
                         }
                     }
                     else
                     {
       
-                        HubContext.SendToClient("You see nothing special about the " + roomDescription.name + ".", player.HubGuid);
+                        HubContext.Instance.SendToClient("You see nothing special about the " + roomDescription.name + ".", player.HubGuid);
                     }
 
                 }
@@ -402,7 +402,7 @@ namespace MIMWebClient.Core.Events
 
                         if (itemDescription.open == false)
                         {
-                            HubContext.SendToClient("You need to open the " + itemDescription.name + " before you can look inside", player.HubGuid);
+                            HubContext.Instance.SendToClient("You need to open the " + itemDescription.name + " before you can look inside", player.HubGuid);
                             return;
                         }
 
@@ -410,17 +410,17 @@ namespace MIMWebClient.Core.Events
                         {
                             if (itemDescription.containerItems.Count > 0)
                             {
-                                HubContext.SendToClient("You look into the " + itemDescription.name + " and see:", player.HubGuid);
+                                HubContext.Instance.SendToClient("You look into the " + itemDescription.name + " and see:", player.HubGuid);
 
 
                                 foreach (var containerItem in itemDescription.containerItems.List(true))
                                 {
-                                    HubContext.SendToClient(containerItem, player.HubGuid);
+                                    HubContext.Instance.SendToClient(containerItem, player.HubGuid);
                                 }
                             }
                             else
                             {
-                                HubContext.SendToClient("You look into the " + itemDescription.name + " but it is empty", player.HubGuid);
+                                HubContext.Instance.SendToClient("You look into the " + itemDescription.name + " but it is empty", player.HubGuid);
                             }
 
                             
@@ -431,13 +431,13 @@ namespace MIMWebClient.Core.Events
                                     
                                     var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} looks in a {itemDescription.name}";
 
-                                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                                    HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                                 }
                             }
                         }
                         else
                         {
-                            HubContext.SendToClient(itemDescription.name + " is not a container", player.HubGuid);
+                            HubContext.Instance.SendToClient(itemDescription.name + " is not a container", player.HubGuid);
                         }
                     }
                     else if (keyword.StartsWith("look"))
@@ -456,13 +456,13 @@ namespace MIMWebClient.Core.Events
 
                         if (!string.IsNullOrEmpty(descriptionText))
                         {
-                            HubContext.SendToClient(descriptionText, player.HubGuid);
+                            HubContext.Instance.SendToClient(descriptionText, player.HubGuid);
 
                             foreach (var players in room.players)
                             {
                                 if (player.Name != players.Name)
                                 {
-                                    HubContext.SendToClient(player.Name + broadcastAction,
+                                    HubContext.Instance.SendToClient(player.Name + broadcastAction,
                                         players.HubGuid);
                                 }
                             }
@@ -472,7 +472,7 @@ namespace MIMWebClient.Core.Events
                             var result = AvsAnLib.AvsAn.Query(itemDescription.name);
                             string article = result.Article;
 
-                            HubContext.SendToClient("You see nothing special about " + article + " " + itemDescription.name, player.HubGuid);
+                            HubContext.Instance.SendToClient("You see nothing special about " + article + " " + itemDescription.name, player.HubGuid);
                         }
                     }
                 }
@@ -488,7 +488,7 @@ namespace MIMWebClient.Core.Events
 
                     if (!string.IsNullOrEmpty(descriptionText))
                     {
-                        HubContext.SendToClient(descriptionText, player.HubGuid);
+                        HubContext.Instance.SendToClient(descriptionText, player.HubGuid);
                      
                         Equipment.ShowEquipmentLook(mobDescription, player);
                   
@@ -500,13 +500,13 @@ namespace MIMWebClient.Core.Events
 
                                 var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} looks at { Helpers.ReturnName(mobDescription, character, string.Empty)}";
 
-                                HubContext.SendToClient(roomMessage, character.HubGuid);
+                                HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                             }
                         }
                     }
                     else
                     {
-                        HubContext.SendToClient("You can't do that to a " + mobDescription.Name, player.HubGuid);
+                        HubContext.Instance.SendToClient("You can't do that to a " + mobDescription.Name, player.HubGuid);
                     }
                 }
                 else if (playerDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
@@ -522,13 +522,13 @@ namespace MIMWebClient.Core.Events
 
                     if (!string.IsNullOrEmpty(descriptionText))
                     {
-                        HubContext.SendToClient(descriptionText, player.HubGuid);
+                        HubContext.Instance.SendToClient(descriptionText, player.HubGuid);
                         Equipment.ShowEquipmentLook(playerDescription, player);
-                        HubContext.SendToClient(player.Name + " looks at you", playerDescription.HubGuid);
+                        HubContext.Instance.SendToClient(player.Name + " looks at you", playerDescription.HubGuid);
                     }
                     else
                     {
-                        HubContext.SendToClient("You can't do that to a " + playerDescription.Name, player.HubGuid);
+                        HubContext.Instance.SendToClient("You can't do that to a " + playerDescription.Name, player.HubGuid);
                     }
                 }
                 else if (playerItemDescription != null && !string.IsNullOrWhiteSpace(commandOptions))
@@ -541,7 +541,7 @@ namespace MIMWebClient.Core.Events
 
                         if (playerItemDescription.open == false)
                         {
-                            HubContext.SendToClient("You need to open the " + playerItemDescription.name + " before you can look inside", player.HubGuid);
+                            HubContext.Instance.SendToClient("You need to open the " + playerItemDescription.name + " before you can look inside", player.HubGuid);
                             return;
                         }
 
@@ -549,16 +549,16 @@ namespace MIMWebClient.Core.Events
                         {
                             if (playerItemDescription.containerItems.Count > 0)
                             {
-                                HubContext.SendToClient("You look into the " + playerItemDescription.name + " and see:", player.HubGuid);
+                                HubContext.Instance.SendToClient("You look into the " + playerItemDescription.name + " and see:", player.HubGuid);
 
                                 foreach (var containerItem in playerItemDescription.containerItems.List(true))
                                 {
-                                    HubContext.SendToClient(containerItem, player.HubGuid);
+                                    HubContext.Instance.SendToClient(containerItem, player.HubGuid);
                                 }
                             }
                             else
                             {
-                                HubContext.SendToClient("You look into the " + playerItemDescription.name + " but it is empty", player.HubGuid);
+                                HubContext.Instance.SendToClient("You look into the " + playerItemDescription.name + " but it is empty", player.HubGuid);
                             }
 
 
@@ -569,13 +569,13 @@ namespace MIMWebClient.Core.Events
 
                                     var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} looks in a {playerItemDescription.name}";
 
-                                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                                    HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                                 }
                             }
                         }
                         else
                         {
-                            HubContext.SendToClient(playerItemDescription.name + " is not a container", player.HubGuid);
+                            HubContext.Instance.SendToClient(playerItemDescription.name + " is not a container", player.HubGuid);
                         }
                     }
                     else if (keyword.StartsWith("look"))
@@ -594,13 +594,13 @@ namespace MIMWebClient.Core.Events
 
                         if (!string.IsNullOrEmpty(descriptionText))
                         {
-                            HubContext.SendToClient(descriptionText, player.HubGuid);
+                            HubContext.Instance.SendToClient(descriptionText, player.HubGuid);
 
                             foreach (var players in room.players)
                             {
                                 if (player.Name != players.Name)
                                 {
-                                    HubContext.SendToClient(player.Name + broadcastAction,
+                                    HubContext.Instance.SendToClient(player.Name + broadcastAction,
                                         players.HubGuid);
                                 }
                             }
@@ -610,13 +610,13 @@ namespace MIMWebClient.Core.Events
                             var result = AvsAnLib.AvsAn.Query(playerItemDescription.name);
                             string article = result.Article;
 
-                            HubContext.SendToClient("You see nothing special about " + article + " " + playerItemDescription.name, player.HubGuid);
+                            HubContext.Instance.SendToClient("You see nothing special about " + article + " " + playerItemDescription.name, player.HubGuid);
                         }
                     }
                 }
                 else if (roomExitDescription != null)
                 {
-                    HubContext.SendToClient("You look " + roomExitDescription.name, player.HubGuid);
+                    HubContext.Instance.SendToClient("You look " + roomExitDescription.name, player.HubGuid);
 
                     var currentAreaId = player.AreaId;
                     player.AreaId = roomExitDescription.areaId;
@@ -641,7 +641,7 @@ namespace MIMWebClient.Core.Events
 
 
 
-                     HubContext.SendToClient(showNextRoom, player.HubGuid);
+                     HubContext.Instance.SendToClient(showNextRoom, player.HubGuid);
 
                     player.AreaId = currentAreaId;
 
@@ -649,13 +649,13 @@ namespace MIMWebClient.Core.Events
                     {
                         if (player.Name != players.Name)
                         {
-                            HubContext.SendToClient(player.Name + " looks " + roomExitDescription.name, players.HubGuid);
+                            HubContext.Instance.SendToClient(player.Name + " looks " + roomExitDescription.name, players.HubGuid);
                         }
                     }
                 }
                 else
                 {
-                    HubContext.SendToClient("You don't see that here.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You don't see that here.", player.HubGuid);
                 }
 
             }
@@ -665,17 +665,17 @@ namespace MIMWebClient.Core.Events
         {
             var name = player.Type == Player.PlayerTypes.Player ? player.Name : player.NPCLongName;
 
-            if (player.Affects?.FirstOrDefault(x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) != null)
+            if (player.Effects?.FirstOrDefault(x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) != null)
             {
                 name += " (Floating)";
             }
 
-            if (player.Affects?.FirstOrDefault(x => x.Name.Equals("Hidden", StringComparison.CurrentCultureIgnoreCase)) != null)
+            if (player.Effects?.FirstOrDefault(x => x.Name.Equals("Hidden", StringComparison.CurrentCultureIgnoreCase)) != null)
             {
                 name += " (Hidden)";
             }
 
-            if (player.Affects?.FirstOrDefault(x => x.Name.Equals("Invis", StringComparison.CurrentCultureIgnoreCase)) != null)
+            if (player.Effects?.FirstOrDefault(x => x.Name.Equals("Invis", StringComparison.CurrentCultureIgnoreCase)) != null)
             {
                 name += " (Invis)";
             }
@@ -687,12 +687,12 @@ namespace MIMWebClient.Core.Events
         //{
         //    var name = item.name;
 
-        //    if (item.Affects?.FirstOrDefault(x => x.Name.Equals("Hidden", StringComparison.CurrentCultureIgnoreCase)) != null)
+        //    if (item.Effects?.FirstOrDefault(x => x.Name.Equals("Hidden", StringComparison.CurrentCultureIgnoreCase)) != null)
         //    {
         //        name += " (Hidden)";
         //    }
 
-        //    if (item.Affects?.FirstOrDefault(x => x.Name.Equals("Invis", StringComparison.CurrentCultureIgnoreCase)) != null)
+        //    if (item.Effects?.FirstOrDefault(x => x.Name.Equals("Invis", StringComparison.CurrentCultureIgnoreCase)) != null)
         //    {
         //        name += " (Invis)";
         //    }

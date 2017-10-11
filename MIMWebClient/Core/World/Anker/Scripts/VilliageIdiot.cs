@@ -13,13 +13,13 @@ namespace MIMWebClient.Core.World.Anker.Scripts
         public static async Task Annoy(PlayerSetup.Player player, PlayerSetup.Player mob, Room.Room room)
         {
             var phrase = RandomResponses();
-            HubContext.SendToClient($"<span class='sayColor'>{mob.Name} says to you \"{phrase}\"</span>", player.HubGuid);
+            HubContext.Instance.SendToClient($"<span class='sayColor'>{mob.Name} says to you \"{phrase}\"</span>", player.HubGuid);
 
             foreach (var character in room.players)
             {
                 if (character != player)
                 {
-                    HubContext.SendToClient($"<span class='sayColor'>{mob.Name} says to {Helpers.ReturnName(player, character, String.Empty)} \"{phrase}\"</span>", character.HubGuid);
+                    HubContext.Instance.SendToClient($"<span class='sayColor'>{mob.Name} says to {Helpers.ReturnName(player, character, String.Empty)} \"{phrase}\"</span>", character.HubGuid);
                 }
             }
 

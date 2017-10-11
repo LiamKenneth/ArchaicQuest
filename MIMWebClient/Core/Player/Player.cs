@@ -143,7 +143,7 @@ namespace MIMWebClient.Core.PlayerSetup
 
 
         [BsonElement("af")]
-        public List<Affect> Affects { get; set; } = new List<Affect>();
+        public List<Effect> Effects { get; set; } = new List<Effect>();
 
         [BsonIgnore]
         public List<Player> Followers = new List<Player>();
@@ -533,18 +533,18 @@ namespace MIMWebClient.Core.PlayerSetup
 
         public static void DebugPlayer(Player player)
         {
-            HubContext.SendToClient("Debug:", player.HubGuid);
-            HubContext.SendToClient("Player Target: " + player.Target?.Name, player.HubGuid);
-            HubContext.SendToClient("Player is Fighting: " + player.ActiveFighting, player.HubGuid);
-            HubContext.SendToClient("Player Has active skill: " + player.ActiveSkill?.Name, player.HubGuid);
-            HubContext.SendToClient("Player status: " + player.Status, player.HubGuid);
-            HubContext.SendToClient("Player items: ", player.HubGuid);
+            HubContext.Instance.SendToClient("Debug:", player.HubGuid);
+            HubContext.Instance.SendToClient("Player Target: " + player.Target?.Name, player.HubGuid);
+            HubContext.Instance.SendToClient("Player is Fighting: " + player.ActiveFighting, player.HubGuid);
+            HubContext.Instance.SendToClient("Player Has active skill: " + player.ActiveSkill?.Name, player.HubGuid);
+            HubContext.Instance.SendToClient("Player status: " + player.Status, player.HubGuid);
+            HubContext.Instance.SendToClient("Player items: ", player.HubGuid);
 
             if (player.Inventory != null)
             {
                 foreach (var item in player.Inventory)
                 {
-                    HubContext.SendToClient(item.name + " " + item.location + " " + item.type, player.HubGuid);
+                    HubContext.Instance.SendToClient(item.name + " " + item.location + " " + item.type, player.HubGuid);
                 }
             }
 

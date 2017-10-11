@@ -26,7 +26,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (hasSpell == false)
             {
-                HubContext.SendToClient("You don't know that spell.", player.HubGuid);
+                HubContext.Instance.SendToClient("You don't know that spell.", player.HubGuid);
                 return;
             }
 
@@ -44,7 +44,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (player.ManaPoints < TeleporAb().ManaCost)
                 {
-                    HubContext.SendToClient("You attempt to draw energy but fail", player.HubGuid);
+                    HubContext.Instance.SendToClient("You attempt to draw energy but fail", player.HubGuid);
 
                     return;
                 }
@@ -54,7 +54,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 Score.UpdateUiPrompt(player);
 
-                HubContext.SendToClient("You utter iter multo ieiunium.", player.HubGuid);
+                HubContext.Instance.SendToClient("You utter iter multo ieiunium.", player.HubGuid);
 
             
                 foreach (var character in room.players)
@@ -64,7 +64,7 @@ namespace MIMWebClient.Core.Player.Skills
                       
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} utters iter multo ieiunium.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -87,7 +87,7 @@ namespace MIMWebClient.Core.Player.Skills
           
                 var castingTextAttacker = "You close your eyes and open them to find yourself somewhere else.";
 
-                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
+                HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
              
                var goToRoom = Areas.ListOfRoomsCanTeleport()[Helpers.diceRoll.Next(Areas.ListOfRooms().Count)];
 
@@ -106,7 +106,7 @@ namespace MIMWebClient.Core.Player.Skills
                     var roomMessage =
                         $"{Helpers.ReturnName(attacker, character, string.Empty)} closes {hisHer} eyes and then vanishes, only wisps of smoke are left behind.";
 
-                    HubContext.SendToClient(roomMessage, character.HubGuid);
+                    HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                 }
 
             }

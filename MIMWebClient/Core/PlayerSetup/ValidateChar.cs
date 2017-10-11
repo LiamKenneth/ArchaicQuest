@@ -29,10 +29,9 @@ namespace MIMWebClient.Core.PlayerSetup
 
         public bool CheckPassword(string hubguid, string characterName, string password)
         {
-            var context = HubContext.getHubContext;
             if (password == null)
             {
-                context.Clients.Client(hubguid).characterPasswordError("Yeah you need a password");
+                HubContext.Instance.CharacterPasswordError(hubguid, "Yeah you need a password");
                 return false;
             }
 
@@ -46,11 +45,11 @@ namespace MIMWebClient.Core.PlayerSetup
 
         public bool CharacterisValid(string hubguid, string characterName, string password)
         {
-            var context = HubContext.getHubContext;
+            var context = HubContext.Instance;
 
             if (characterName == null)
             {
-                context.Clients.Client(hubguid).characterNameLoginError("Your character name must be atleast 3 characters long");
+                context.CharacterNameLoginError(hubguid, "Your character name must be atleast 3 characters long");
 
                 return false;
             }
@@ -58,7 +57,7 @@ namespace MIMWebClient.Core.PlayerSetup
            
             if (characterName.Length <= 0)
             {
-                context.Clients.Client(hubguid).characterNameLoginError("Your character name must be atleast 3 characters long");
+                context.CharacterNameLoginError(hubguid, "Your character name must be atleast 3 characters long");
 
                 return false;
 
@@ -69,25 +68,23 @@ namespace MIMWebClient.Core.PlayerSetup
 
             if (foundChar == false)
             {
-                context.Clients.Client(hubguid).characterNameLoginError("No Character exists by the name of " + characterName);
+                context.CharacterNameLoginError(hubguid, "No Character exists by the name of " + characterName);
                 return false;
             }
 
-            context.Clients.Client(hubguid).characterNameLoginError("");
+            context.CharacterNameLoginError(hubguid, "");
 
             var passMatch = CheckPassword(hubguid, characterName, password);
 
             if (passMatch == false)
             {
-                context.Clients.Client(hubguid).characterPasswordError("Password incorrect");
+                context.CharacterPasswordError(hubguid, "Password incorrect");
 
                 return false;
 
             }
            
-         
-                context.Clients.Client(hubguid).characterPasswordError("");
-             
+            context.CharacterPasswordError(hubguid, "");
 
             return true;
 

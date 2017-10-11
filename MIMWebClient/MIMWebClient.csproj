@@ -293,7 +293,7 @@
     <Compile Include="Core\PlayerSetup\PlayerRace.cs" />
     <Compile Include="Core\PlayerSetup\PlayerStats.cs" />
     <Compile Include="Core\PlayerSetup\ValidateChar.cs" />
-    <Compile Include="Core\Player\Affect.cs" />
+    <Compile Include="Core\Player\Effect.cs" />
     <Compile Include="Core\Player\Classes\Thief.cs" />
     <Compile Include="Core\Player\Classes\Cleric.cs" />
     <Compile Include="Core\Player\Classes\Mage.cs" />

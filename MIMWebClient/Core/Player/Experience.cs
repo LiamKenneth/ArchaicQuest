@@ -102,7 +102,7 @@ namespace MIMWebClient.Core.Player
 
                 //tell user how much HP / mana / mvs / practices / trains they have gained
 
-                HubContext.SendToClient("Congratulations, you are now level " + player.Level + ". You have gained. HP: " + hpGain + " Mana: " + manaGain + " End: " + enduranceGain, player.HubGuid);
+                HubContext.Instance.SendToClient("Congratulations, you are now level " + player.Level + ". You have gained. HP: " + hpGain + " Mana: " + manaGain + " End: " + enduranceGain, player.HubGuid);
 
                 Save.SavePlayer(player);             
                 //save player

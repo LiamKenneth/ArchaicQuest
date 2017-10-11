@@ -11,7 +11,7 @@ namespace MIMWebClient.Core.Item.Actions
         {
             var item = room.items.Find(x => x.name.Equals(obj));
 
-            HubContext.SendToClient("You rotate the lever and the bucket plunges in to the pool", player.HubGuid);
+            HubContext.Instance.SendToClient("You rotate the lever and the bucket plunges in to the pool", player.HubGuid);
         }
     }
 }

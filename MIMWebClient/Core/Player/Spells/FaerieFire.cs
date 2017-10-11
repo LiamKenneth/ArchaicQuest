@@ -24,7 +24,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (hasSpell == false)
             {
-                HubContext.SendToClient("You don't know that spell.", player.HubGuid);
+                HubContext.Instance.SendToClient("You don't know that spell.", player.HubGuid);
                 return;
             }
 
@@ -50,7 +50,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (player.ManaPoints < FaerieFireAB().ManaCost)
                 {
-                    HubContext.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
 
                     return;
                 }
@@ -61,7 +61,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 Score.UpdateUiPrompt(player);
 
-                HubContext.SendToClient("You utter mediocris ignis.", player.HubGuid);
+                HubContext.Instance.SendToClient("You utter mediocris ignis.", player.HubGuid);
 
                 foreach (var character in room.players)
                 {
@@ -70,7 +70,7 @@ namespace MIMWebClient.Core.Player.Skills
                         var hisOrHer = Helpers.ReturnHisOrHers(player, character);
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} utters mediocris ignis.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -80,7 +80,7 @@ namespace MIMWebClient.Core.Player.Skills
             else
             {
 
-                HubContext.SendToClient("You can't cast this on yourself", player.HubGuid);
+                HubContext.Instance.SendToClient("You can't cast this on yourself", player.HubGuid);
 
             }
 
@@ -94,7 +94,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             await Task.Delay(500);
 
-            var faerieFireAff = new Affect
+            var faerieFireAff = new Effect
             {
                 Name = "Faerie Fire",
                 Duration = attacker.Level + 5,
@@ -106,7 +106,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (_target == null)
             {
-               HubContext.SendToClient("You can't cast this on yourself", attacker.HubGuid);
+               HubContext.Instance.SendToClient("You can't cast this on yourself", attacker.HubGuid);
               
             }
             else
@@ -116,8 +116,8 @@ namespace MIMWebClient.Core.Player.Skills
 
                 var castingTextDefender = "You are surrounded by pink glowing faerie fire.";
 
-                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-                HubContext.SendToClient(castingTextDefender, _target.HubGuid);
+                HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
+                HubContext.Instance.SendToClient(castingTextDefender, _target.HubGuid);
 
                 foreach (var character in room.players)
                 {
@@ -132,19 +132,19 @@ namespace MIMWebClient.Core.Player.Skills
                         var hisOrHer = Helpers.ReturnHisOrHers(attacker, character);
                         var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)} is surrounded by pink glowing Faerie Fire.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
-                if (_target.Affects == null)
+                if (_target.Effects == null)
                 {
-                    _target.Affects = new List<Affect>();
-                    _target.Affects.Add(faerieFireAff);
+                    _target.Effects = new List<Effect>();
+                    _target.Effects.Add(faerieFireAff);
 
                 }
                 else
                 {
-                    _target.Affects.Add(faerieFireAff);
+                    _target.Effects.Add(faerieFireAff);
                 }
                 Score.UpdateUiAffects(_target);
                 Score.ReturnScoreUI(_target);

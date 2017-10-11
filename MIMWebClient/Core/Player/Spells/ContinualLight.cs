@@ -27,7 +27,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (hasSpell == false)
             {
-                HubContext.SendToClient("You don't know that spell.", player.HubGuid);
+                HubContext.Instance.SendToClient("You don't know that spell.", player.HubGuid);
                 return;
             }
 
@@ -87,7 +87,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (ReturnColor(_color) == null)
             {
-                HubContext.SendToClient($"{_color} is not valid, you can choose from: Blue, Red, Green, Yellow, Purple, Orange and White", player.HubGuid);
+                HubContext.Instance.SendToClient($"{_color} is not valid, you can choose from: Blue, Red, Green, Yellow, Purple, Orange and White", player.HubGuid);
 
                 return;
             }
@@ -97,7 +97,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (player.ManaPoints < ContinualLightAb().ManaCost)
                 {
-                    HubContext.SendToClient("You clasp your hands together attempting to draw energy between your hands but fail", player.HubGuid);
+                    HubContext.Instance.SendToClient("You clasp your hands together attempting to draw energy between your hands but fail", player.HubGuid);
 
                     return;
                 }
@@ -115,7 +115,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (_target.itemFlags.Contains(Item.Item.ItemFlags.glow))
                 {
-                    HubContext.SendToClient("This item is already illuminated", player.HubGuid);
+                    HubContext.Instance.SendToClient("This item is already illuminated", player.HubGuid);
                     return;
                 }
 
@@ -124,7 +124,7 @@ namespace MIMWebClient.Core.Player.Skills
                 string article = result.Article;
 
 
-                HubContext.SendToClient($"You grasp {article} {_target.name} between your hands which starts to shimmer a slight {_color} colour", player.HubGuid);
+                HubContext.Instance.SendToClient($"You grasp {article} {_target.name} between your hands which starts to shimmer a slight {_color} colour", player.HubGuid);
 
  
 
@@ -135,7 +135,7 @@ namespace MIMWebClient.Core.Player.Skills
                         var hisOrHer = Helpers.ReturnHisOrHers(player, character);
                         var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} grasps {article} {_target.name} between {hisOrHer} hands which starts to shimmer a slight {_color} colour";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -151,7 +151,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                     if (player.ManaPoints < ContinualLightAb().ManaCost)
                     {
-                        HubContext.SendToClient("You attempt to draw energy but fail", player.HubGuid);
+                        HubContext.Instance.SendToClient("You attempt to draw energy but fail", player.HubGuid);
 
                         return;
                     }
@@ -161,7 +161,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                     Score.UpdateUiPrompt(player);
 
-                    HubContext.SendToClient($"You clasp your hands together forming a bright {_color} ball between them", player.HubGuid);
+                    HubContext.Instance.SendToClient($"You clasp your hands together forming a bright {_color} ball between them", player.HubGuid);
 
                     foreach (var character in room.players)
                     {
@@ -170,7 +170,7 @@ namespace MIMWebClient.Core.Player.Skills
  
                             var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} 's hands start to glow as they begin chanting the Continual light spell";
 
-                            HubContext.SendToClient(roomMessage, character.HubGuid);
+                            HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                         }
                     }
 
@@ -196,7 +196,7 @@ namespace MIMWebClient.Core.Player.Skills
             {
                 var castingTextAttacker = $"A bright {_color} ball of light is released by your hands and hovers in the air.";
 
-                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
+                HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
 
                 foreach (var character in room.players)
                 {
@@ -205,7 +205,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                         var roomMessage = $"{ Helpers.ReturnName(attacker, character, string.Empty)} releases a {_color} bright ball of light which hovers in the air.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -229,8 +229,8 @@ namespace MIMWebClient.Core.Player.Skills
 
                 var castingTextRoom = $"The {_target.name} glows a bright {_color} colour.";
 
-                HubContext.SendToClient(castingTextAttacker, attacker.HubGuid);
-                HubContext.broadcastToRoom(castingTextRoom, room.players, attacker.HubGuid, true);
+                HubContext.Instance.SendToClient(castingTextAttacker, attacker.HubGuid);
+                HubContext.Instance.BroadcastToRoom(castingTextRoom, room.players, attacker.HubGuid, true);
 
                 _target.itemFlags.Add(Item.Item.ItemFlags.glow);
 

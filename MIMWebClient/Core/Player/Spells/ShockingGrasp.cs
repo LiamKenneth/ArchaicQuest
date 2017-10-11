@@ -23,7 +23,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (hasSpell == false)
             {
-                HubContext.SendToClient("You don't know that spell.", player.HubGuid);
+                HubContext.Instance.SendToClient("You don't know that spell.", player.HubGuid);
                 return;
             }
 
@@ -50,7 +50,7 @@ namespace MIMWebClient.Core.Player.Skills
             if (player.ActiveSkill != null)
             {
 
-                HubContext.SendToClient("wait till you have finished " + player.ActiveSkill.Name, player.HubGuid);
+                HubContext.Instance.SendToClient("wait till you have finished " + player.ActiveSkill.Name, player.HubGuid);
                 return;
 
             }
@@ -70,7 +70,7 @@ namespace MIMWebClient.Core.Player.Skills
                 {
 
 
-                    HubContext.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You fail to concentrate due to lack of mana.", player.HubGuid);
                     player.ActiveSkill = null;
 
                     return;
@@ -82,7 +82,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 Score.UpdateUiPrompt(player);
 
-                HubContext.SendToClient("You utter fulgur iaculis.", player.HubGuid);
+                HubContext.Instance.SendToClient("You utter fulgur iaculis.", player.HubGuid);
 
              
                 foreach (var character in room.players)
@@ -93,7 +93,7 @@ namespace MIMWebClient.Core.Player.Skills
                         var roomMessage =
                             $"{Helpers.ReturnName(player, character, string.Empty)} utters fulgur iaculis.";
 
-                        HubContext.SendToClient(roomMessage, character.HubGuid);
+                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                     }
                 }
 
@@ -102,7 +102,7 @@ namespace MIMWebClient.Core.Player.Skills
             }
             else if (_target == null)
             {
-                HubContext.SendToClient("You can't cast this on yourself", player.HubGuid);
+                HubContext.Instance.SendToClient("You can't cast this on yourself", player.HubGuid);
             }
 
 
@@ -117,7 +117,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (attacker.ManaPoints < ShockingGraspAb().ManaCost)
             {
-                HubContext.SendToClient("You attempt to draw energy but fail", attacker.HubGuid);
+                HubContext.Instance.SendToClient("You attempt to draw energy but fail", attacker.HubGuid);
                 attacker.ActiveSkill = null;
                 Player.SetState(attacker);
                 return;

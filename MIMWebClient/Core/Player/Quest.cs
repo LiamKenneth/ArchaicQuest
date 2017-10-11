@@ -79,20 +79,20 @@ namespace MIMWebClient.Core.Player
         {
             if (player.QuestLog.Count > 0)
             {
-                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("Your current quests");
+                HubContext.Instance.AddNewMessageToPage(player.HubGuid, "Your current quests");
 
                 foreach (var quest in player.QuestLog)
                 {
                     if (!quest.Completed)
                     {
-                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(quest.Name);
-                        HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage(quest.Description);
+                        HubContext.Instance.AddNewMessageToPage(player.HubGuid, quest.Name);
+                        HubContext.Instance.AddNewMessageToPage(player.HubGuid, quest.Description);
                     }
                 }
             }
             else
             {
-                HubContext.getHubContext.Clients.Client(player.HubGuid).addNewMessageToPage("You have no quests.");
+                HubContext.Instance.AddNewMessageToPage(player.HubGuid, "You have no quests.");
             }
 
         }
@@ -122,9 +122,9 @@ namespace MIMWebClient.Core.Player
                 {
                     findQuest.Completed = true;
 
-                    HubContext.SendToClient(findQuest.RewardDialog.Message, player.HubGuid);
-                    HubContext.SendToClient("You gain " + findQuest.RewardXp + " Experience Points", player.HubGuid);
-                    HubContext.SendToClient("You gain " + findQuest.RewardGold + " gold pieces", player.HubGuid);
+                    HubContext.Instance.SendToClient(findQuest.RewardDialog.Message, player.HubGuid);
+                    HubContext.Instance.SendToClient("You gain " + findQuest.RewardXp + " Experience Points", player.HubGuid);
+                    HubContext.Instance.SendToClient("You gain " + findQuest.RewardGold + " gold pieces", player.HubGuid);
 
                     var rewardItem = findQuest?.RewardItem;
 
