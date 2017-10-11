@@ -19,7 +19,8 @@ namespace MIMWebClient.Core
     using MIMWebClient.Hubs;
     using Room;
 
-    interface IHubContext
+    // This could perhaps be broken down to smaller interfaces
+    public interface IHubContext
     {
         void SendToClient(string message, string playerId, string recipientId = null, bool sendToAll = false, bool excludeCaller = false, bool excludeRecipient = false);
 

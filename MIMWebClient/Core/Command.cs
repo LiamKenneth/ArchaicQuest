@@ -23,6 +23,7 @@ namespace MIMWebClient.Core
         /// <returns>Returns Dictionary of commands</returns>
         public static Dictionary<string, Action> Commands(string commandOptions, string commandKey, PlayerSetup.Player playerData, Room.Room room)
         {
+            var context = HubContext.Instance;
 
             var commandList = new Dictionary<String, Action>
             {
@@ -165,10 +166,10 @@ namespace MIMWebClient.Core
                 {"sell", () => Shop.sellItems(playerData, room, commandOptions)},
                 {"quest log", () => Quest.QuestLog(playerData)},
                 {"qlog", () => Quest.QuestLog(playerData)},
-                {"wake", () => Status.WakePlayer(playerData, room)},
-                {"sleep", () => Status.SleepPlayer(playerData, room)},
-                {"rest", () => Status.RestPlayer(playerData, room)},
-                {"stand", () => Status.StandPlayer(playerData, room)},
+                {"wake", () => Status.WakePlayer(context, playerData, room)},
+                {"sleep", () => Status.SleepPlayer(context, playerData, room)},
+                {"rest", () => Status.RestPlayer(context, playerData, room)},
+                {"stand", () => Status.StandPlayer(context, playerData, room)},
                 {"greet", () => Greet.GreetMob(playerData, room, commandOptions)},
                 {"who", () => Who.Connected(playerData)},
                 {"affects", () => Effect.Show(playerData)},
