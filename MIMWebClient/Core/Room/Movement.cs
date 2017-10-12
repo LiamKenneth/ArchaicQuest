@@ -628,6 +628,11 @@ namespace MIMWebClient.Core.Room
 
         public static async Task MobWalk(Player mob)
         {
+            if (mob.Status == Player.PlayerStatus.Fighting || mob.Status == Player.PlayerStatus.Dead || mob.HitPoints <= 0)
+            {
+                return;
+            }
+
             if (mob.PathList == null)
             {
                 return;

@@ -105,7 +105,7 @@ namespace MIMWebClient.Core.Update
 
         public static async Task UpdateRoom()
         {
-            await Task.Delay(45000);
+            await Task.Delay(3000);
 
             try
             {
@@ -219,7 +219,7 @@ namespace MIMWebClient.Core.Update
                                     else
                                     {
                                         mob.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
-                                        mob.Pose = mob.Name + " is here, sleeping on the bed";
+                                        mob.Pose = mob.Name + " is here, sleeping.";
                                     }
                                 }
                             }

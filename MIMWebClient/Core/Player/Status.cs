@@ -16,7 +16,7 @@ namespace MIMWebClient.Core.Player
 
                 context.SendToClient("You wake and stand up", player.HubGuid);
 
-                foreach (var character in room.players)
+                foreach (var character in room?.players)
                 {
                     if (player != character)
                     {
@@ -62,7 +62,7 @@ namespace MIMWebClient.Core.Player
 
                 context.SendToClient("You laydown and go to sleep", player.HubGuid);
 
-                foreach (var character in room.players)
+                foreach (var character in room?.players)
                 {
                     if (player != character)
                     {
@@ -140,7 +140,7 @@ namespace MIMWebClient.Core.Player
                 context.SendToClient("You wake and stand up.", player.HubGuid);
                 player.Status = PlayerSetup.Player.PlayerStatus.Standing;
 
-                foreach (var character in room.players)
+                foreach (var character in room?.players)
                 {
                     if (player != character)
                     {
@@ -158,7 +158,7 @@ namespace MIMWebClient.Core.Player
 
                 player.Status = PlayerSetup.Player.PlayerStatus.Standing;
 
-                foreach (var character in room.players)
+                foreach (var character in room?.players)
                 {
                     if (player != character)
                     {

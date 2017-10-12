@@ -866,6 +866,9 @@ namespace MIMWebClient.Core.Events
             if (defender.HitPoints <= 0)
             {
 
+                var oldDef = defender;
+                defender.Status = defender.Type == Player.PlayerTypes.Player ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;
+
                 if (!string.IsNullOrEmpty(defender.EventDeath))
                 {
                     CheckEvent.FindEvent(CheckEvent.EventType.Death, attacker, "death");
@@ -906,8 +909,7 @@ namespace MIMWebClient.Core.Events
 
                 defender.Target = null;
                 defender.ActiveFighting = false;
-                defender.Status = Player.PlayerStatus.Ghost;
-
+     
 
                 //Turn corpse into room item
                 var defenderCorpse = new Item
@@ -944,8 +946,6 @@ namespace MIMWebClient.Core.Events
                 }
 
 
-
-                defender.Status = defender.Type == Player.PlayerTypes.Player ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;
 
                 Cache.updateRoom(room, oldRoom);
 
@@ -1076,7 +1076,7 @@ namespace MIMWebClient.Core.Events
 
             //(Weapon Skill + (Agility / 5) + (Luck / 10)) * (0.75 + 0.5 * Current Fatigue / Maximum Fatigue);
 
-            double off = weaponSkill + (strength / 5) * (0.75 + 0.5 * player.MovePoints / player.MaxMovePoints);
+            double off = weaponSkill + (strength / 5) * (0.75 + 0.5 * 1);
 
             //Based on skill and a random number, an Offensive Force / Factor(OF) is generated.
             //This number is bonused by the user's Agility as modified by the weapon's balance.

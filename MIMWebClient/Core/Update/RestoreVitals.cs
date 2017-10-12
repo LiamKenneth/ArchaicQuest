@@ -82,10 +82,13 @@ namespace MIMWebClient.Core.Update
                 {
                     foreach (var mob in room.mobs.ToList())
                     {
-                        UpdateHp(mob, context);
-                        UpdateMana(mob, context);
-                        UpdateEndurance(mob, context);
-                        UpdateAffects(mob, context);
+                        if (mob.Status != Player.PlayerStatus.Dead)
+                        { 
+                            UpdateHp(mob, context);
+                            UpdateMana(mob, context);
+                            UpdateEndurance(mob, context);
+                            UpdateAffects(mob, context);
+                        }
                     }
                  
                     
@@ -130,7 +133,11 @@ namespace MIMWebClient.Core.Update
                                     room.items.Remove(room.items.Find(x => x.name.Contains(originalMob.Name)));
                                     room.corpses.Remove(room.corpses.Find(x => x.Name.Equals(originalMob.Name)));
 
-                                    room.mobs.Add(originalMob);
+                                    if (room.mobs.FirstOrDefault(x => x.Name.Contains(originalMob.Name)) == null)
+                                    {
+                                        room.mobs.Add(originalMob);
+                                    }
+                                  
                                 }
                               
                                 }

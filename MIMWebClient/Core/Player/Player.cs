@@ -548,6 +548,14 @@ namespace MIMWebClient.Core.PlayerSetup
                 }
             }
 
+            if (player.Target != null)
+            {
+                HubContext.Instance.SendToClient("target HP:  " + player.Target.HitPoints, player.HubGuid);
+                HubContext.Instance.SendToClient("target status:  " + player.Target.Status, player.HubGuid);
+                 HubContext.Instance.SendToClient("target active fighting:  " + player.Target.ActiveFighting, player.HubGuid);
+
+            }
+
 
 
         }
