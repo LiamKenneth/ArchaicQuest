@@ -264,7 +264,7 @@ namespace MIMWebClient.Core
         public void UpdateStat(string playerGuid, int stat, int maxStat, string statType)
         {
             _hubContext.Clients.Client(playerGuid)
-                .updateStat(stat, maxStat, "hp");
+                .updateStat(stat, maxStat, statType);
         }
 
         public void AddNewMessageToPage(string message)

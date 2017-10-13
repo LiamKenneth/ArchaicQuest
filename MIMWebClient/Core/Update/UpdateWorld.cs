@@ -219,7 +219,7 @@ namespace MIMWebClient.Core.Update
                                     else
                                     {
                                         mob.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
-                                        mob.Pose = mob.Name + " is here, sleeping on the bed";
+                                        mob.Pose = mob.Name + " is here, sleeping.";
                                     }
                                 }
                             }

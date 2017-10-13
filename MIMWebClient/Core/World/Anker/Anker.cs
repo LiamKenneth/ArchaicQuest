@@ -19,6 +19,7 @@ namespace MIMWebClient.Core.World.Anker
     using MIMWebClient.Core.Player;
     using MIMWebClient.Core.PlayerSetup;
     using MIMWebClient.Core.Room;
+    using MIMWebClient.Core.World.Items.Weapons.Sword.Long;
 
     public static class Anker
     {
@@ -464,7 +465,28 @@ namespace MIMWebClient.Core.World.Anker
             var greeves = FullPlateGreaves.SteelGreevesOfTyr();
             room.items.Add(greeves);
 
+            var sword = LongSwordBasic.BastardSword();
+            sword.description = new Description()
+            {
+                room = "Curved obsidian blade",
+                look = "M has been inscribed on the death black blade.",
 
+
+            };
+            sword.damageType = new List<Item.Item.DamageType>()
+            {
+               Item.Item.DamageType.Flaming
+            };
+            sword.name = "Sword of Creation";
+            sword.stats = new Stats
+            {
+                damMin = 50,
+                damMax = 100,
+                damRoll = 10,
+                worth = 90000000
+            };
+
+            room.items.Add(sword);
 
             return room;
         }
@@ -2349,7 +2371,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A male villager",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 28,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -2439,7 +2467,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A male villager",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 29,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -2459,7 +2493,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A female villager",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 29,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -2625,7 +2665,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A male villager",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 26,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -2645,7 +2691,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A female villager",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 26,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -2665,7 +2717,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A little boy",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 26,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -2736,7 +2794,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A male villager",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 27,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -2756,7 +2820,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A female villager",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 27,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -2776,7 +2846,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A little girl",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 27,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -2931,7 +3007,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A male villager",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 38,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -2951,7 +3033,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A female villager",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 38,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -2971,7 +3059,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A little boy",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 38,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -3042,7 +3136,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A male villager",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 39,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -3062,7 +3162,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A female villager",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 39,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -3082,7 +3188,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A little girl",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 39,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -3816,7 +3928,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A male villager",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 35,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -3836,7 +3954,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A female villager",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 35,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -3909,7 +4033,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A male villager",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 36,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 
@@ -3929,7 +4059,13 @@ namespace MIMWebClient.Core.World.Anker
                 MovePoints = 200,
                 MaxMovePoints = 200,
                 Description = "A female villager",
-                Type = Player.PlayerTypes.Mob
+                Type = Player.PlayerTypes.Mob,
+                Recall = new Recall()
+                {
+                    AreaId = 36,
+                    Area = "Anker",
+                    Region = "Anker"
+                }
 
             };
 

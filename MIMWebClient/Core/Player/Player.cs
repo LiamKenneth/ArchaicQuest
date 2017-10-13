@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Mob;
 
 namespace MIMWebClient.Core.PlayerSetup
@@ -434,8 +435,8 @@ namespace MIMWebClient.Core.PlayerSetup
             this.TotalExperience = 0;
             this.Experience = 0;
             this.ExperienceToNextLevel = 1000; // create class to work out
-            this.HitPoints = 100; // class to workout
-            this.MaxHitPoints = 100;
+            this.HitPoints = 32; // class to workout
+            this.MaxHitPoints = 32;
             this.ManaPoints = 50;
             this.MaxManaPoints = 50;
             this.MovePoints = 60;
@@ -531,9 +532,39 @@ namespace MIMWebClient.Core.PlayerSetup
          
         }
 
+        public static void SetGold(Player player, string amount)
+        {
+            if (string.IsNullOrEmpty(amount))
+            {
+                HubContext.Instance.SendToClient("You need to add an amount of gold", player.HubGuid);
+                return;
+            }
+
+            HubContext.Instance.SendToClient("You gain: " + amount + " gold", player.HubGuid);
+            player.Gold += Int32.Parse(amount);
+
+            Score.ReturnScoreUI(player);
+        }
+
+        public static void SetAC(Player player, string amount)
+        {
+            if (string.IsNullOrEmpty(amount))
+            {
+                HubContext.Instance.SendToClient("You need to add an amount", player.HubGuid);
+                return;
+            }
+
+            HubContext.Instance.SendToClient("You gain: " + amount + " Armour Class", player.HubGuid);
+            player.ArmorRating = Int32.Parse(amount);
+
+            Score.ReturnScoreUI(player);
+        }
+
         public static void DebugPlayer(Player player)
         {
             HubContext.Instance.SendToClient("Debug:", player.HubGuid);
+            HubContext.Instance.SendToClient("Room Id: " + player.AreaId, player.HubGuid);
+          
             HubContext.Instance.SendToClient("Player Target: " + player.Target?.Name, player.HubGuid);
             HubContext.Instance.SendToClient("Player is Fighting: " + player.ActiveFighting, player.HubGuid);
             HubContext.Instance.SendToClient("Player Has active skill: " + player.ActiveSkill?.Name, player.HubGuid);
@@ -546,6 +577,14 @@ namespace MIMWebClient.Core.PlayerSetup
                 {
                     HubContext.Instance.SendToClient(item.name + " " + item.location + " " + item.type, player.HubGuid);
                 }
+            }
+
+            if (player.Target != null)
+            {
+                HubContext.Instance.SendToClient("target HP:  " + player.Target.HitPoints, player.HubGuid);
+                HubContext.Instance.SendToClient("target status:  " + player.Target.Status, player.HubGuid);
+                 HubContext.Instance.SendToClient("target active fighting:  " + player.Target.ActiveFighting, player.HubGuid);
+
             }
 
 

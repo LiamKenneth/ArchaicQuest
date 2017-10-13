@@ -32,17 +32,20 @@ namespace MIMWebClient.Core.World.Anker.Mobs.Easy
                 KnownByName = true,
                 Type = PlayerSetup.Player.PlayerTypes.Mob,
                 Description = "A weak goblin",
-                Strength = 9,
-                Dexterity = 8,
-                Constitution = 12,
-                Intelligence = 4,
-                Wisdom = 5,
-                Charisma = 2,
-                MaxHitPoints = 50,
-                HitPoints = 50,
+                Strength = 50,
+                Dexterity = 30,
+                Constitution = 30,
+                Intelligence = 30,
+                Wisdom = 30,
+                Charisma = 30,
+                MaxHitPoints = 10,
+                HitPoints = 10,
                 Level = 1,
                 Status = PlayerSetup.Player.PlayerStatus.Standing,
-                Skills = new List<Skill>(),
+                Skills = new List<Skill>()
+                {
+                    ShortBlades.ShortBladesAb()
+                },
                 Inventory = new ItemContainer()
                 {
                     leatherVest,

@@ -493,6 +493,7 @@
             return;
         }
 
+        console.log(stat, maxStat, statType)
         var statPercentage = (stat / maxStat) * 100;
  
 

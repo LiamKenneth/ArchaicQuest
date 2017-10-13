@@ -82,15 +82,23 @@ namespace MIMWebClient.Core.Update
                 {
                     foreach (var mob in room.mobs.ToList())
                     {
-                        UpdateHp(mob, context);
-                        UpdateMana(mob, context);
-                        UpdateEndurance(mob, context);
-                        UpdateAffects(mob, context);
+                        if (mob.Status != Player.PlayerStatus.Dead || mob.HitPoints > 0)
+                        { 
+                            UpdateHp(mob, context);
+                            UpdateMana(mob, context);
+                            UpdateEndurance(mob, context);
+                            UpdateAffects(mob, context);
+                        }
                     }
-                 
-                    
+
+
                     #region add Mobs back
 
+                    if (room.players.Count >= 1)
+                    {
+                        continue; //don't remove corpse incase player is in room so they have chance to loot it.
+                                // maybe decay corpse and eventually remove
+                    }
                  
                         if (room.corpses.Count > 0)
                         {
@@ -130,7 +138,13 @@ namespace MIMWebClient.Core.Update
                                     room.items.Remove(room.items.Find(x => x.name.Contains(originalMob.Name)));
                                     room.corpses.Remove(room.corpses.Find(x => x.Name.Equals(originalMob.Name)));
 
-                                    room.mobs.Add(originalMob);
+                                    if (room.mobs.FirstOrDefault(x => x.Name.Contains(originalMob.Name)) == null)
+                                    {
+
+                                        var mobHomeRoom = rooms.FirstOrDefault(x => x.areaId == originalMob.AreaId && x.area == originalMob.Area && x.region == originalMob.Region);
+                                        mobHomeRoom.mobs.Add(originalMob);
+                                    }
+                                  
                                 }
                               
                                 }

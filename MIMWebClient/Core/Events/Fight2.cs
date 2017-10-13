@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using LiteDB;
+using Microsoft.Ajax.Utilities;
 using MIMWebClient.Core.Loging;
 
 
@@ -202,8 +203,7 @@ namespace MIMWebClient.Core.Events
 
         public static Player FindValidTarget(Room room, string defender, Player attacker)
         {
-
-
+  
             var findObject = Events.FindNth.Findnth(defender);
             int nth = findObject.Key;
             string itemToFind = findObject.Value;
@@ -284,7 +284,10 @@ namespace MIMWebClient.Core.Events
             try
             {
 
-
+                if (attacker.Target == null)
+                {
+                    return;
+                }
 
                 while (attacker.HitPoints > 0 && defender.HitPoints > 0)
                 {
@@ -305,11 +308,20 @@ namespace MIMWebClient.Core.Events
                         bool alive = IsAlive(attacker, defender);
 
 
+                        if (attacker.Target == null)
+                        {
+                            return;
+                        }
 
                         if (alive && attacker.Status != Player.PlayerStatus.Busy)
                         {
 
                             await Task.Delay(delay);
+
+                            if (attacker.Target == null)
+                            {
+                                return;
+                            }
 
                             double offense = Offense(attacker);
                             double evasion = Evasion(defender);
@@ -341,7 +353,7 @@ namespace MIMWebClient.Core.Events
                             ShowAttack(attacker, defender, room, toHit, chance, null);
 
 
-                            attacker.MovePoints = attacker.MovePoints - Helpers.Rand(1, 5);
+                       
 
                             if (attacker.Type == Player.PlayerTypes.Player)
                             {
@@ -484,7 +496,7 @@ namespace MIMWebClient.Core.Events
                 return null;
             }
 
-            var weapon = attacker.Inventory.FirstOrDefault(x => x.name.Equals(wielded) && x.location.Equals(Item.ItemLocation.Worn));
+            var weapon = attacker.Inventory.FirstOrDefault(x => x.name.Equals(wielded) && x.location.Equals(Item.ItemLocation.Wield));
 
             return weapon;
         }
@@ -494,7 +506,13 @@ namespace MIMWebClient.Core.Events
             var die = new PlayerStats();
             var handToHandDam = die.dice(1, 6);
 
+
             double handToHandSkill = attacker.Skills.Find(x => x.Name.Equals("HandToHand"))?.Proficiency ?? 0;
+
+            if (attacker.Type == Player.PlayerTypes.Mob)
+            {
+                handToHandSkill = 1;
+            }
 
             var damage = CalculateSkillBonus(handToHandSkill, handToHandDam);
 
@@ -540,8 +558,18 @@ namespace MIMWebClient.Core.Events
 
             var armourReduction = CalculateDamageReduction(attacker, defender, damage);
 
+            var strengthMod = 0.5 + attacker.Strength / (double)100;
+            var levelDif = attacker.Level - defender.Level <= 0 ? 1 : attacker.Level - defender.Level;
+            var levelMod = levelDif / 2 <= 0 ? 1 : levelDif / 2;
+            var enduranceMod = attacker.MovePoints / (double)attacker.MaxMovePoints;
+      
+            
+            int totalDamage = (int)(damage * strengthMod * enduranceMod * criticalHit / armourReduction) * levelMod;
 
-            int totalDamage = (damage / armourReduction) * criticalHit;
+            if (totalDamage <= 0)
+            {
+                totalDamage = 1;
+            }
 
             return totalDamage;
         }
@@ -595,7 +623,7 @@ namespace MIMWebClient.Core.Events
 
             if (toHit >= chance)
             {
-                return 2;
+                return 1;
             }
             return 1;
         }
@@ -623,15 +651,20 @@ namespace MIMWebClient.Core.Events
 
                 if (secondAttack != null)
                 {
-                    if (Helpers.SkillSuccess(secondAttack.Proficiency))
+                    var secondAttackProficiency = attacker.Type == Player.PlayerTypes.Mob ? 1 : secondAttack.Proficiency;
+
+                    if (Helpers.SkillSuccess(secondAttackProficiency))
                     {
                         numberOfAttacks += 1;
                     }
 
                     if (thirdAttack != null)
                     {
+
+                        var thirdAttackProficiency = attacker.Type == Player.PlayerTypes.Mob ? 1 : thirdAttack.Proficiency;
+
                         //higher chance of fail if second attack is not fully trained
-                        if (Helpers.SkillSuccess(thirdAttack.Proficiency - (95 - secondAttack.Proficiency)))
+                        if (Helpers.SkillSuccess(thirdAttackProficiency - (95 - secondAttackProficiency)))
                         {
                             numberOfAttacks += 1;
                         }
@@ -823,7 +856,7 @@ namespace MIMWebClient.Core.Events
                 case 26:
                 case 27:
                 case 28:
-                    return new KeyValuePair<string, string>("<span style='color:yellow'>decimate</span>", "<span style='color:yellow'decimates</span>");
+                    return new KeyValuePair<string, string>("<span style='color:yellow'>decimate</span>", "<span style='color:yellow'>decimates</span>");
                 case 29:
                 case 30:
                 case 31:
@@ -866,6 +899,9 @@ namespace MIMWebClient.Core.Events
             if (defender.HitPoints <= 0)
             {
 
+                var oldDef = defender;
+                defender.Status = defender.Type == Player.PlayerTypes.Player ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;
+
                 if (!string.IsNullOrEmpty(defender.EventDeath))
                 {
                     CheckEvent.FindEvent(CheckEvent.EventType.Death, attacker, "death");
@@ -883,6 +919,8 @@ namespace MIMWebClient.Core.Events
                     }
                 }
 
+             //   HubContext.Instance.SendToClient("accessing DB", attacker.HubGuid);
+
                 using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
                 {
                     var col = db.GetCollection<Deaths>("Deaths");
@@ -893,7 +931,7 @@ namespace MIMWebClient.Core.Events
                         Area = room.area,
                         AreaId = room.areaId,
                         Date = DateTime.UtcNow,
-                        KilledBy = defender.Target.Name,
+                        KilledBy = defender.Target != null ? defender.Target.Name : "someone",
                         Id = Guid.NewGuid(),
                         Type = defender.Type == Player.PlayerTypes.Mob ? Player.PlayerTypes.Mob.ToString() : Player.PlayerTypes.Player.ToString()
                     };
@@ -902,12 +940,11 @@ namespace MIMWebClient.Core.Events
                     col.Insert(Guid.NewGuid(), mobDeath);
                 }
 
-
+              //  HubContext.Instance.SendToClient("accessing DB done", attacker.HubGuid);
 
                 defender.Target = null;
                 defender.ActiveFighting = false;
-                defender.Status = Player.PlayerStatus.Ghost;
-
+     
 
                 //Turn corpse into room item
                 var defenderCorpse = new Item
@@ -916,6 +953,7 @@ namespace MIMWebClient.Core.Events
                     equipable = false,
                     name = "The corpse of " + defender.Name,
                     container = true,
+                    location = Item.ItemLocation.Room,
                     containerItems = new ItemContainer(),
                     description = new Description { look = "The slain corpse of " + defender.Name + " is here.", room = "The slain corpse of " + defender.Name }
                 };
@@ -944,8 +982,6 @@ namespace MIMWebClient.Core.Events
                 }
 
 
-
-                defender.Status = defender.Type == Player.PlayerTypes.Player ? PlayerSetup.Player.PlayerStatus.Ghost : PlayerSetup.Player.PlayerStatus.Dead;
 
                 Cache.updateRoom(room, oldRoom);
 
@@ -1054,7 +1090,7 @@ namespace MIMWebClient.Core.Events
 
             var weapon = player.Inventory.Find(x => x.location == Item.ItemLocation.Wield);
             Item.WeaponType weaponType;
-            double weaponSkill = 0;
+            double weaponSkill = player.Type == Player.PlayerTypes.Mob ? 1 : 0;
 
             if (weapon != null)
             {
@@ -1069,6 +1105,7 @@ namespace MIMWebClient.Core.Events
                 weaponSkill = player.Skills.Find(x => x.Name == "Hand to Hand")?.Proficiency ?? 0;
             }
 
+           
 
             int dexterity = player.Dexterity;
             int strength = player.Strength;
@@ -1076,7 +1113,7 @@ namespace MIMWebClient.Core.Events
 
             //(Weapon Skill + (Agility / 5) + (Luck / 10)) * (0.75 + 0.5 * Current Fatigue / Maximum Fatigue);
 
-            double off = weaponSkill + (strength / 5) * (0.75 + 0.5 * player.MovePoints / player.MaxMovePoints);
+            double off = weaponSkill + (strength / (double)5) * (0.75 + 0.5 * player.MovePoints / (double)player.MaxMovePoints);
 
             //Based on skill and a random number, an Offensive Force / Factor(OF) is generated.
             //This number is bonused by the user's Agility as modified by the weapon's balance.
@@ -1093,7 +1130,17 @@ namespace MIMWebClient.Core.Events
 
             double blockSkill = string.IsNullOrEmpty(player.Equipment.Shield) ? 0 : block?.Proficiency / 95 ?? 0;
             double parrySkill = parry?.Proficiency / 95 ?? 0;
-            double dodgeSkill = dodge?.Proficiency / 95 ?? 0;  
+            double dodgeSkill = dodge?.Proficiency / 95 ?? 0;
+
+            if (player.Type == Player.PlayerTypes.Mob)
+            {
+                blockSkill = 1;
+                parrySkill = 1;
+                dodgeSkill = 1;
+            }
+
+
+
             int dexterity = player.Dexterity;
 
 
@@ -1107,7 +1154,7 @@ namespace MIMWebClient.Core.Events
 
             //((Agility / 5) + (Luck / 10)) * (0.75 + 0.5 * Current Fatigue / Maximum Fatigue)
 
-            double evade =  blockSkill + parrySkill + dodgeSkill + (dexterity / 5) * (0.75 + 0.5 * player.MovePoints / player.MaxMovePoints);
+            double evade =  blockSkill + parrySkill + dodgeSkill + (dexterity /(double) 5) * (0.75 + 0.5 * (player.MovePoints / (double)player.MaxMovePoints));
 
             return evade;
         }

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Razor.Parser.SyntaxTree;
 using MIMWebClient.Core.Item;
 using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.Player;
+using MIMWebClient.Core.Player.Skills;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Feet;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Padded.Arms;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Padded.Body;
@@ -40,17 +42,25 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 KnownByName = true,
                 Type = PlayerSetup.Player.PlayerTypes.Mob,
                 Description = "Dark chain mail armour covers the guard head to toe. A long sword is sheathed at her waist",
-                Strength = 17,
-                Dexterity = 16,
-                Constitution = 16,
-                Intelligence = 12,
-                Wisdom = 16,
-                Charisma = 16,
-                MaxHitPoints = 522,
-                HitPoints = 522,
-                Level = 18,
+                Strength = 70,
+                Dexterity = 72,
+                Constitution = 60,
+                Intelligence = 60,
+                Wisdom = 60,
+                Charisma = 60,
+                MaxHitPoints = 722,
+                HitPoints = 722,
+                Level = 23,
                 Status = PlayerSetup.Player.PlayerStatus.Standing,
-                Skills = new List<Skill>(),
+                Skills = new List<Skill>()
+                {
+                    Dodge.DodgeAb(),
+                    ShieldBlock.ShieldBlockAb(),
+                    Parry.ParryAb(),
+                    SecondAttack.SecondAttackAb(),
+                   LongBlades.LongBladesAb(),
+
+                },
                 Inventory = new ItemContainer(),
                 Trainer = false,
                 Greet = true,
@@ -63,6 +73,8 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 Area = "Anker",
                 AreaId = 37,
                 Gender = "Female",
+                SelectedClass = "Fighter",
+                ArmorRating = 280,
                 Recall = new Recall()
                 {
                     Region = "Anker",
@@ -70,6 +82,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                     AreaId = 37
                 },
                 Guard = true,
+
                 PathList = new List<string>()
                 {
                     "e",
@@ -94,11 +107,14 @@ namespace MIMWebClient.Core.World.Anker.Mobs
             };
 
             var sword = LongSwordBasic.LongIronSword();
-            sword.location = Item.Item.ItemLocation.Inventory;
+            sword.stats = new Stats()
+            {
+                damMin = 1,
+                damMax = 20
+            };
+            Guard.Equipment.Wielded = sword.name;
+            sword.location = Item.Item.ItemLocation.Wield;
             Guard.Inventory.Add(sword);
-
-
-
 
 
             return Guard;
@@ -126,7 +142,14 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 HitPoints = 522,
                 Level = 18,
                 Status = PlayerSetup.Player.PlayerStatus.Standing,
-                Skills = new List<Skill>(),
+                Skills = new List<Skill>()
+                {
+                    Dodge.DodgeAb(),
+                    ShieldBlock.ShieldBlockAb(),
+                    Parry.ParryAb(),
+                    SecondAttack.SecondAttackAb(),
+                    LongBlades.LongBladesAb(),
+                },
                 Inventory = new ItemContainer(),
                 Trainer = false,
                 Greet = true,
@@ -139,6 +162,8 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 Area = "Anker",
                 AreaId = 19,
                 Guard = true,
+                SelectedClass = "Fighter",
+                ArmorRating = 280,
                 Recall = new Recall()
                 {
                     Region = "Anker",
@@ -154,14 +179,14 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                     "w",
                     "s",
                     "s",
-                    "e", 
+                    "e",
                     "e",
                     "s",
                     "n",
                     "n",
-                    "w", 
-                    "n", 
-                    "e", 
+                    "w",
+                    "n",
+                    "e",
                     "s",
                     "w",
                     "s",
@@ -179,7 +204,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                     "s",
                     "s",
                     "n",
-                    "w",                
+                    "w",
                     "s",
                     "e",
                     "e",
@@ -191,13 +216,15 @@ namespace MIMWebClient.Core.World.Anker.Mobs
             };
 
             var sword = LongSwordBasic.LongIronSword();
-            sword.location = Item.Item.ItemLocation.Inventory;
+            sword.stats = new Stats()
+            {
+                damMin = 1,
+                damMax = 20
+            };
+            Guard.Equipment.Wielded = sword.name;
+            sword.location = Item.Item.ItemLocation.Wield;
             Guard.Inventory.Add(sword);
-
-
-
-
-
+ 
             return Guard;
         }
     }
