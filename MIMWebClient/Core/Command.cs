@@ -77,6 +77,7 @@ namespace MIMWebClient.Core
                 {"doff", () => Equipment.RemoveItem(playerData, commandOptions)},
                 {"wield", () => Equipment.WearItem(playerData, commandOptions, true)},
                 {"unwield", () => Equipment.RemoveItem(playerData, commandOptions, false, true)},
+                {"hit", () => Fight2.PerpareToFight(playerData, room, commandOptions)},
                 {"kill", () => Fight2.PerpareToFight(playerData, room, commandOptions)},
                 {"attack", () => Fight2.PerpareToFight(playerData, room, commandOptions)},
                 {"flee", () => Flee.fleeCombat(playerData, room)},
