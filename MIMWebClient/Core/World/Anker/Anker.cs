@@ -323,8 +323,8 @@ namespace MIMWebClient.Core.World.Anker
                 AreaId = 0,
                 Area = "Anker",
                 Region = "Anker",
-                Strength = 12,
-                Dexterity = 12,
+                Strength = 30,
+                Dexterity = 50,
                 Constitution = 12,
                 Intelligence = 1,
                 Wisdom = 1,
@@ -359,8 +359,8 @@ namespace MIMWebClient.Core.World.Anker
                 NPCLongName = "Black and White cat",
                 Type = Player.PlayerTypes.Mob,
                 Description = "This black cat's fur looks in pristine condition despite being a stray.",
-                Strength = 12,
-                Dexterity = 12,
+                Strength = 30,
+                Dexterity = 50,
                 Constitution = 12,
                 Intelligence = 1,
                 Wisdom = 1,
@@ -444,49 +444,6 @@ namespace MIMWebClient.Core.World.Anker
 
             room.mobs.Add(cat);
             room.mobs.Add(cat2);
-
-
-            //test EQ
-            var plate = FullPlateBody.BreastPlateOfTyr();
-            room.items.Add(plate);
-
-            var helm = FullPlateHelm.HelmOfTyr();
-            room.items.Add(helm);
-
-            var sleeves = FullPlateSleeves.SteelSleevesOfTyr();
-            room.items.Add(sleeves);
-
-            var boots = FullPlateBoots.BootsOfTyr();
-            room.items.Add(boots);
-
-            var guantlets = FullPlateGauntlet.GuantletOfTyr();
-            room.items.Add(guantlets);
-
-            var greeves = FullPlateGreaves.SteelGreevesOfTyr();
-            room.items.Add(greeves);
-
-            var sword = LongSwordBasic.BastardSword();
-            sword.description = new Description()
-            {
-                room = "Curved obsidian blade",
-                look = "M has been inscribed on the death black blade.",
-
-
-            };
-            sword.damageType = new List<Item.Item.DamageType>()
-            {
-               Item.Item.DamageType.Flaming
-            };
-            sword.name = "Sword of Creation";
-            sword.stats = new Stats
-            {
-                damMin = 50,
-                damMax = 100,
-                damRoll = 10,
-                worth = 90000000
-            };
-
-            room.items.Add(sword);
 
             return room;
         }

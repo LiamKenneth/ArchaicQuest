@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using MIMWebClient.Core.Events;
 
@@ -20,11 +21,13 @@ namespace MIMWebClient.Core.Mob.Events
                 if (mob.itemsToSell.Count > 0)
                 {
 
+                    Regex rgx = new Regex(@"\s[a-z][0-9]*$");
+                    
 
-
-                    foreach (var item in mob.itemsToSell)
+                    foreach (var item in ItemContainer.List(mob.itemsToSell))
                     {
-                        itemsForSell +=  "<tr><td>" + item.name + "</td> <td>" + item.Gold + " GP</td></tr>";
+                        var cleanItemName = rgx.Replace(item, string.Empty);
+                        itemsForSell +=  "<tr><td>" + item + "</td> <td>" + mob.itemsToSell.FirstOrDefault(x => x.name.Equals(cleanItemName)).Gold + " GP</td></tr>";
                     }
 
                     itemsForSell += "</tbody></table>";
@@ -152,6 +155,9 @@ namespace MIMWebClient.Core.Mob.Events
 
 
                             itemToSell.location = Item.Item.ItemLocation.Inventory;
+
+                            itemToSell.Gold = itemToSell.Gold > 0 ? itemToSell.Gold + (int) (itemToSell.Gold * 0.15) : 100;
+
                             mob.itemsToSell.Add(itemToSell);
                           
 
