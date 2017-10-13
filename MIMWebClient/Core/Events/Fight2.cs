@@ -229,8 +229,9 @@ namespace MIMWebClient.Core.Events
             if (nth == -1)
             {
                 defendingPlayer =
-                  room.players.ToList().FirstOrDefault(x => x.HitPoints > 0 && x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
-                  ?? room.mobs.ToList().FirstOrDefault(x => x.HitPoints > 0 && x.Name.ToLower().Contains(defender.ToLower()));
+                  room.players.Where(x => x.HitPoints > 0).ToList().FirstOrDefault(
+                      x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
+                  ?? room.mobs.Where(x => x.HitPoints > 0).ToList().FirstOrDefault(x => x.Name.ToLower().Contains(defender.ToLower()));
             }
             else
             {
