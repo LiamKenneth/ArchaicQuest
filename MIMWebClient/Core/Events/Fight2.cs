@@ -231,7 +231,7 @@ namespace MIMWebClient.Core.Events
                 defendingPlayer =
                   room.players.Where(x => x.HitPoints > 0).ToList().FirstOrDefault(
                       x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
-                  ?? room.mobs.Where(x => x.HitPoints > 0).ToList().First(x => x.Name.ToLower().Contains(defender.ToLower()));
+                  ?? room.mobs.Where(x => x.HitPoints > 0).ToList().FirstOrDefault(x => x.Name.ToLower().Contains(defender.ToLower()));
             }
             else
             {
