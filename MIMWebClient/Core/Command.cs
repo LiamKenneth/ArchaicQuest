@@ -177,7 +177,10 @@ namespace MIMWebClient.Core
                 {"nofollow", () => Follow.FollowThing(playerData, room, "noFollow") },
                 {"quit", () => HubContext.Instance.Quit(playerData.HubGuid, room)},
                 //admin
-                {"/debug", () => PlayerSetup.Player.DebugPlayer(playerData) }
+                {"/debug", () => PlayerSetup.Player.DebugPlayer(playerData) },
+                {"/setGold", () => PlayerSetup.Player.SetGold(playerData, commandOptions) },
+                {"/setAc", () => PlayerSetup.Player.SetAC(playerData, commandOptions) }
+
             };
 
 

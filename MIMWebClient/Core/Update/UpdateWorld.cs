@@ -105,7 +105,7 @@ namespace MIMWebClient.Core.Update
 
         public static async Task UpdateRoom()
         {
-            await Task.Delay(3000);
+            await Task.Delay(45000);
 
             try
             {

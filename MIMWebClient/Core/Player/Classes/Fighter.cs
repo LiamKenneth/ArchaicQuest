@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using MIMWebClient.Core.Player.Classes.Reclasses;
+using MIMWebClient.Core.World.Items.Weapons.DaggerBasic;
 
 namespace MIMWebClient.Core.Player.Classes
 {
@@ -93,13 +94,13 @@ namespace MIMWebClient.Core.Player.Classes
             #endregion
 
 
-            #region  Give fighter secondAttack skill
+            //#region  Give fighter secondAttack skill
 
-            var secondAttack = SecondAttack.SecondAttackAb();
-            secondAttack.Proficiency = 95;
-            fighter.Skills.Add(secondAttack);
+            var shortBlades = ShortBlades.ShortBladesAb();
+            shortBlades.Proficiency = 50;
+            fighter.Skills.Add(shortBlades);
 
-            #endregion
+            //#endregion
 
 
             #region  Give fighter Mount skill

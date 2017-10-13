@@ -67,7 +67,7 @@ namespace MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Head
                     touch = ""
                 },
                 location = Item.Item.ItemLocation.Room,
-                slot = Item.Item.EqSlot.Arms,
+                slot = Item.Item.EqSlot.Head,
                 type = Item.Item.ItemType.Armour,
                 name = "Bronze platemail Helm",
                 stats = new Stats()
