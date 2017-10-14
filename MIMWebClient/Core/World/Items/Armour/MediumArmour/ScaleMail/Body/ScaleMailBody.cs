@@ -16,8 +16,8 @@ namespace MIMWebClient.Core.World.Items.Armour.MediumArmour.ScaleMail.Body
                 Weight = 7,
                 count = 10,
                 equipable = true,
-                eqSlot = Item.Item.EqSlot.Body,
-                slot = Item.Item.EqSlot.Body,
+                eqSlot = Item.Item.EqSlot.Torso,
+                slot = Item.Item.EqSlot.Torso,
                 type = Item.Item.ItemType.Armour,
                 location = Item.Item.ItemLocation.Inventory,
 
