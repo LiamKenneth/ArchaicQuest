@@ -965,7 +965,36 @@ namespace MIMWebClient.Core.Events
 
                 }
 
+                //reset defender
+                defender.Inventory = new ItemContainer();
 
+                defender.Equipment.Arms = "Nothing";
+                defender.Equipment.Torso = "Nothing";
+                defender.Equipment.Body = "Nothing";
+                defender.Equipment.Face = "Nothing";
+                defender.Equipment.Feet = "Nothing";
+                defender.Equipment.Finger = "Nothing";
+                defender.Equipment.Finger2 = "Nothing";
+                defender.Equipment.Floating = "Nothing";
+                defender.Equipment.Hands = "Nothing";
+                defender.Equipment.Head = "Nothing";
+                defender.Equipment.Held = "Nothing";
+                defender.Equipment.Face = "Nothing";
+                defender.Equipment.Legs = "Nothing";
+                defender.Equipment.Feet = "Nothing";
+                defender.Equipment.Light = "Nothing";
+                defender.Equipment.Neck = "Nothing";
+                defender.Equipment.Neck2 = "Nothing";
+                defender.Equipment.Shield = "Nothing";
+                defender.Equipment.Wielded = "Nothing";
+                defender.Equipment.Waist = "Nothing";
+                defender.Equipment.Wrist = "Nothing";
+                defender.Equipment.Wrist2 = "Nothing";
+
+                defender.ArmorRating = 0;
+
+                defender.Experience = (int)(defender.Experience > 0 ? defender.Experience / 1.5 : 0);
+ 
 
                 var oldRoom = room;
                 room.items.Add(defenderCorpse);
@@ -977,8 +1006,11 @@ namespace MIMWebClient.Core.Events
                 }
                 else
                 {
-                    //room.players.Remove(defender);
+                    room.players.Remove(defender);
+                    var recall = Cache.ReturnRooms().FirstOrDefault(x => x.title == "Temple of Tyr");
+                    Movement.Teleport(defender, recall);
                     //Add slain player to recall
+                    Score.ReturnScoreUI(defender);
                 }
 
 

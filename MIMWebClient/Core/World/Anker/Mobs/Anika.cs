@@ -76,21 +76,26 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 Gold = 25
             };
 
-            Anika.itemsToSell.Add(ShortSwordBasic.ShortIronSword());
-            Anika.itemsToSell.Add(DaggerBasic.IronDagger());
-            Anika.itemsToSell.Add(LongSwordBasic.LongIronSword());
-            Anika.itemsToSell.Add(StaffBasic.WoodenQuarterstaff());
-            Anika.itemsToSell.Add(AxeBasic.IronHatchet());
-            Anika.itemsToSell.Add(MaceBasic.IronMace());
-            Anika.itemsToSell.Add(PaddedBodyBasic.PaddedBreastPlate());
-            Anika.itemsToSell.Add(PaddedSleeves.PaddedSleeve());
-            Anika.itemsToSell.Add(PaddedHandsBasic.PaddedGloves());
-            Anika.itemsToSell.Add(PaddedLegsBasic.PaddedGreaves());
-            Anika.itemsToSell.Add(LeatherBootBasic.WornLeatherBoots());
-            Anika.itemsToSell.Add(Light.WoodenTorch());
-            Anika.itemsToSell.Add(drink.WaterSkin());
-            Anika.itemsToSell.Add(Food.Cheese());
-            Anika.itemsToSell.Add(backpack);
+            for (int i = 0; i < 21; i++)
+            {
+                Anika.itemsToSell.Add(ShortSwordBasic.ShortIronSword());
+                Anika.itemsToSell.Add(DaggerBasic.IronDagger());
+                Anika.itemsToSell.Add(LongSwordBasic.LongIronSword());
+                Anika.itemsToSell.Add(StaffBasic.WoodenQuarterstaff());
+                Anika.itemsToSell.Add(AxeBasic.IronHatchet());
+                Anika.itemsToSell.Add(MaceBasic.IronMace());
+                Anika.itemsToSell.Add(PaddedBodyBasic.PaddedBreastPlate());
+                Anika.itemsToSell.Add(PaddedSleeves.PaddedSleeve());
+                Anika.itemsToSell.Add(PaddedHandsBasic.PaddedGloves());
+                Anika.itemsToSell.Add(PaddedLegsBasic.PaddedGreaves());
+                Anika.itemsToSell.Add(LeatherBootBasic.WornLeatherBoots());
+                Anika.itemsToSell.Add(Light.WoodenTorch());
+                Anika.itemsToSell.Add(drink.WaterSkin());
+                Anika.itemsToSell.Add(Food.Cheese());
+                Anika.itemsToSell.Add(backpack);
+            }
+
+          
             #endregion
 
 

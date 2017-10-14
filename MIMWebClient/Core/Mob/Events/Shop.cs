@@ -83,6 +83,8 @@ namespace MIMWebClient.Core.Mob.Events
 
                             itemToBuy.location = Item.Item.ItemLocation.Inventory;
                             player.Inventory.Add(itemToBuy);
+
+                  
                             HubContext.Instance.SendToClient(
                                 "You buy " + article + " " + itemToBuy.name + " from " + mob.Name + " for " + itemToBuy.Gold + " gold.",
                                 player.HubGuid);
@@ -98,10 +100,15 @@ namespace MIMWebClient.Core.Mob.Events
                                 }
                             }
 
+                            itemToBuy.Gold = itemToBuy.Gold > 0 ? itemToBuy.Gold + (int)(itemToBuy.Gold * 0.10) : 100;
+                            mob.itemsToSell.Remove(itemToBuy);
+
                             Score.UpdateUiInventory(player);
                             //deduct gold
 
-                            player.Gold -= itemToBuy.Gold;
+                            var value = itemToBuy.Gold > 0 ? itemToBuy.Gold : 1;
+
+                            player.Gold -= value;
                         }
                         else
                         {
@@ -156,7 +163,7 @@ namespace MIMWebClient.Core.Mob.Events
 
                             itemToSell.location = Item.Item.ItemLocation.Inventory;
 
-                            itemToSell.Gold = itemToSell.Gold > 0 ? itemToSell.Gold + (int) (itemToSell.Gold * 0.15) : 100;
+                            itemToSell.Gold = itemToSell.Gold > 0 ? itemToSell.Gold - (int) (itemToSell.Gold * 0.10) : 100;
 
                             mob.itemsToSell.Add(itemToSell);
                           

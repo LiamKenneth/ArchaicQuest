@@ -259,7 +259,7 @@ namespace MIMWebClient.Core.Room
 
         //Create transport method
 
-        public static void Teleport(Player player, Room room, Exit exit)
+        public static void Teleport(Player player, Room room, Exit exit = null)
         {
 
             Room roomData = room;
@@ -268,9 +268,12 @@ namespace MIMWebClient.Core.Room
             //remove player from old room
            PlayerManager.RemovePlayerFromRoom(roomData, player);
 
-            //exit message
-            ExitRoom(player, roomData, null, true);
-
+            if (exit != null)
+            {
+                //exit message
+                ExitRoom(player, roomData, null, true);
+            }
+           
             //change player Location
             if (exit != null)
             {

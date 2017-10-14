@@ -67,31 +67,36 @@ namespace MIMWebClient.Core.World.Anker.Mobs
  
             #endregion
 
-            ferron.itemsToSell.Add(ShortSwordBasic.Saber());
-            ferron.itemsToSell.Add(LongSwordBasic.BastardSword());
-            ferron.itemsToSell.Add(SpearBasic.BoarSpear());
-            ferron.itemsToSell.Add(AxeBasic.DoubleAxe());
-            ferron.itemsToSell.Add(HammerBasic.GreatHammer());
-            ferron.itemsToSell.Add(LongSwordBasic.Katana());
-            ferron.itemsToSell.Add(DaggerBasic.HuntingKnife());
-            ferron.itemsToSell.Add(DaggerBasic.HiddenBlade());
+            for (int i = 0; i < 21; i++)
+            {
 
-            //armor scale mail
+                ferron.itemsToSell.Add(ShortSwordBasic.Saber());
+                ferron.itemsToSell.Add(LongSwordBasic.BastardSword());
+                ferron.itemsToSell.Add(SpearBasic.BoarSpear());
+                ferron.itemsToSell.Add(AxeBasic.DoubleAxe());
+                ferron.itemsToSell.Add(HammerBasic.GreatHammer());
+                ferron.itemsToSell.Add(LongSwordBasic.Katana());
+                ferron.itemsToSell.Add(DaggerBasic.HuntingKnife());
+                ferron.itemsToSell.Add(DaggerBasic.HiddenBlade());
 
-            ferron.itemsToSell.Add(ScalemailHead.ScalemailHelm());
-            ferron.itemsToSell.Add(ScalemailBody.ScalemailBreastPlate());
-            ferron.itemsToSell.Add(ScalemailArms.ScalemailSleeves());
-            ferron.itemsToSell.Add(ScalemailLegs.ScalemailGreaves());
-            ferron.itemsToSell.Add(ScalemailHands.ScalemailGauntlets());
-            ferron.itemsToSell.Add(ScalemailFeet.ScalemailBoots());
+                //armor scale mail
 
-            //armour bronze - bronze has crappy stats, make better?
-            ferron.itemsToSell.Add(FullPlateHelm.BronzeHelm());
-            ferron.itemsToSell.Add(FullPlateBody.BronzeBreastPlate());
-            ferron.itemsToSell.Add(FullPlateSleeves.BronzeSleeves());
-            ferron.itemsToSell.Add(FullPlateGreaves.BronzeGreaves());
-            ferron.itemsToSell.Add(FullPlateGauntlet.BronzeGauntlets());
-            ferron.itemsToSell.Add(FullPlateBoots.BronzeBoots());
+                ferron.itemsToSell.Add(ScalemailHead.ScalemailHelm());
+                ferron.itemsToSell.Add(ScalemailBody.ScalemailBreastPlate());
+                ferron.itemsToSell.Add(ScalemailArms.ScalemailSleeves());
+                ferron.itemsToSell.Add(ScalemailLegs.ScalemailGreaves());
+                ferron.itemsToSell.Add(ScalemailHands.ScalemailGauntlets());
+                ferron.itemsToSell.Add(ScalemailFeet.ScalemailBoots());
+
+                //armour bronze - bronze has crappy stats, make better?
+                ferron.itemsToSell.Add(FullPlateHelm.BronzeHelm());
+                ferron.itemsToSell.Add(FullPlateBody.BronzeBreastPlate());
+                ferron.itemsToSell.Add(FullPlateSleeves.BronzeSleeves());
+                ferron.itemsToSell.Add(FullPlateGreaves.BronzeGreaves());
+                ferron.itemsToSell.Add(FullPlateGauntlet.BronzeGauntlets());
+                ferron.itemsToSell.Add(FullPlateBoots.BronzeBoots());
+            }
+
 
             return ferron;
         }
