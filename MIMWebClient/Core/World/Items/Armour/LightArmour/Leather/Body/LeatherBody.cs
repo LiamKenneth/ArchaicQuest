@@ -20,7 +20,7 @@ namespace MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Body
 
                 },
                 location = Item.Item.ItemLocation.Room,
-                slot = Item.Item.EqSlot.Body,
+                slot = Item.Item.EqSlot.Torso,
                 type = Item.Item.ItemType.Armour,
                 name = "Simple leather vest",
                 ArmorRating = new ArmourRating()

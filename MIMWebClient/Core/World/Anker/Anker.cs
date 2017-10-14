@@ -149,36 +149,36 @@ namespace MIMWebClient.Core.World.Anker
              */
 
             //add some gold to bucket
-            var woodenChestObj = new Item.Item
-            {
+            //var woodenChestObj = new Item.Item
+            //{
 
-                name = "Wooden Chest",
-                containerItems = new ItemContainer(),
-                canLock = true,
-                containerSize = 10,
-                container = true,
-                location = Item.Item.ItemLocation.Room,
-                description = new Item.Description { look = "Small Chest by the well" },
-                open = false,
-                canOpen = true,
-                locked = true,
-                keyId = Guid.NewGuid().ToString(),
-                stuck = true
-            };
+            //    name = "Wooden Chest",
+            //    containerItems = new ItemContainer(),
+            //    canLock = true,
+            //    containerSize = 10,
+            //    container = true,
+            //    location = Item.Item.ItemLocation.Room,
+            //    description = new Item.Description { look = "Small Chest by the well" },
+            //    open = false,
+            //    canOpen = true,
+            //    locked = true,
+            //    keyId = Guid.NewGuid().ToString(),
+            //    stuck = true
+            //};
 
-            woodenChestObj.keyValue = woodenChestObj.keyId;
-            room.items.Add(woodenChestObj);
+            //woodenChestObj.keyValue = woodenChestObj.keyId;
+            //room.items.Add(woodenChestObj);
 
 
-            var oddKey = new Item.Item
-            {
+            //var oddKey = new Item.Item
+            //{
 
-                name = "Odd looking key",
-                location = Item.Item.ItemLocation.Room,
-                description = new Item.Description { look = "Odd looking Key" },
-                keyValue = woodenChestObj.keyId
-            };
-            room.items.Add(oddKey);
+            //    name = "Odd looking key",
+            //    location = Item.Item.ItemLocation.Room,
+            //    description = new Item.Description { look = "Odd looking Key" },
+            //    keyValue = woodenChestObj.keyId
+            //};
+            //room.items.Add(oddKey);
 
 
             var bucketObj = new Item.Item();
@@ -196,8 +196,8 @@ namespace MIMWebClient.Core.World.Anker
             bucketObj.name = "bucket";
             bucketObj.location = Item.Item.ItemLocation.Room;
 
-
-            bucketGold.count = 75;
+            bucketGold.location = Item.Item.ItemLocation.Room;
+            bucketGold.Gold = 75;
             bucketGold.type = Item.Item.ItemType.Gold;
             bucketGold.name = "Gold Coins";
 

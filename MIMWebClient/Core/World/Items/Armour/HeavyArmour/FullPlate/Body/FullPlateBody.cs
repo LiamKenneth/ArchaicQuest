@@ -15,7 +15,7 @@ namespace MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Body
             var BreastPlateOfTyr = new Item.Item
             {
                 armourType = Item.Item.ArmourType.PlateMail,
-                eqSlot = Item.Item.EqSlot.Body,
+                eqSlot = Item.Item.EqSlot.Torso,
                 description = new Description()
                 {
                     look =
@@ -28,7 +28,7 @@ namespace MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Body
                     touch = "It feels cold to touch"
                 },
                 location = Item.Item.ItemLocation.Room,
-                slot = Item.Item.EqSlot.Body,
+                slot = Item.Item.EqSlot.Torso,
                 type = Item.Item.ItemType.Armour,
                 name = "Breast plate of Tyr",
                 ArmorRating = new ArmourRating()
@@ -56,7 +56,7 @@ namespace MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Body
             var BronzeBreastPlate = new Item.Item
             {
                 armourType = Item.Item.ArmourType.PlateMail,
-                eqSlot = Item.Item.EqSlot.Body,
+                eqSlot = Item.Item.EqSlot.Torso,
                 description = new Description()
                 {
                     look = "Bronze platemail Breastplate",
@@ -67,7 +67,7 @@ namespace MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Body
                     touch = ""
                 },
                 location = Item.Item.ItemLocation.Room,
-                slot = Item.Item.EqSlot.Body,
+                slot = Item.Item.EqSlot.Torso,
                 type = Item.Item.ItemType.Armour,
                 name = "Bronze platemail Breastplate",
                 stats = new Stats()

@@ -84,7 +84,7 @@ namespace MIMWebClient.Core.Mob.Events
                             itemToBuy.location = Item.Item.ItemLocation.Inventory;
                             player.Inventory.Add(itemToBuy);
                             HubContext.Instance.SendToClient(
-                                "You buy " + article + itemToBuy.name + " from " + mob.Name,
+                                "You buy " + article + " " + itemToBuy.name + " from " + mob.Name + " for " + itemToBuy.Gold + " gold.",
                                 player.HubGuid);
                            
                             foreach (var character in room.players)
