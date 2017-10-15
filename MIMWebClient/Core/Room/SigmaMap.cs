@@ -118,6 +118,17 @@ namespace MIMWebClient.Core.Room
                 nodes = nodes
             };
 
+            var fucked = new List<string>();
+
+            foreach (var e in edges)
+            {
+                if (nodes.FirstOrDefault(x => x.id == e.target) == null)
+                {
+                    fucked.Add(e.id);
+                }
+              
+            }
+
             using (StreamWriter file = File.CreateText(@"C:\path.txt"))
             {
                 JsonSerializer serializer = new JsonSerializer();

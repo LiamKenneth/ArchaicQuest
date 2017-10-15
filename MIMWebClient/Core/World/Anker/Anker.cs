@@ -329,9 +329,9 @@ namespace MIMWebClient.Core.World.Anker
                 Intelligence = 1,
                 Wisdom = 1,
                 Charisma = 1,
-                MaxHitPoints = 50,
-                HitPoints = 50,
-                Level = 2,
+                MaxHitPoints = 10,
+                HitPoints = 10,
+                Level = 1,
                 Status = Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
                 Inventory = new ItemContainer(),
@@ -365,9 +365,9 @@ namespace MIMWebClient.Core.World.Anker
                 Intelligence = 1,
                 Wisdom = 1,
                 Charisma = 1,
-                MaxHitPoints = 50,
-                HitPoints = 50,
-                Level = 2,
+                MaxHitPoints = 10,
+                HitPoints = 10,
+                Level = 1,
                 Status = Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
                 Inventory = new ItemContainer()
@@ -1854,7 +1854,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "East",
                 area = "Anker",
                 region = "Anker",
-                areaId = 16,
+                areaId = 42,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -1926,6 +1926,64 @@ namespace MIMWebClient.Core.World.Anker
             return room;
         }
 
+        public static Room TempleRoad4()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 43,
+                title = "Temple Walk",
+                description = "<p>The muddy path slopes down cut into the hill snaking round steeply. To the north is the temple of Tyr. To the west the path even outs and leads through to Anker.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+            #region exits
+
+
+            // Create Exits
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 16,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 17,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+            #endregion
+            room.exits.Add(north);
+            room.exits.Add(west);
+
+            return room;
+        }
+
         public static Room TempleRoad2()
         {
             var room = new Room
@@ -1934,7 +1992,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 areaId = 16,
                 title = "Temple Walk",
-                description = "<p>The muddy path slopes down cut into the hill snaking round steeply. To the north is the temple of Tyr. To the west the path even outs and leads through to Anker.</p>",
+                description = "<p>The path here continues east, the incline getting steeper the higher you go towards the temple of Tyr. To the west is the path sloping down towards the village.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -1965,12 +2023,12 @@ namespace MIMWebClient.Core.World.Anker
                 locked = false
             };
 
-            var north = new Exit
+            var east = new Exit
             {
-                name = "North",
+                name = "East",
                 area = "Anker",
                 region = "Anker",
-                areaId = 17,
+                areaId = 43,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -1978,8 +2036,9 @@ namespace MIMWebClient.Core.World.Anker
 
 
             #endregion
+            room.exits.Add(east);
             room.exits.Add(west);
-            room.exits.Add(north);
+         
 
             return room;
         }
@@ -2017,7 +2076,41 @@ namespace MIMWebClient.Core.World.Anker
                 name = "South",
                 area = "Anker",
                 region = "Anker",
-                areaId = 16,
+                areaId = 43,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            // Create Exits
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 65,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 47,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 44,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -2025,10 +2118,632 @@ namespace MIMWebClient.Core.World.Anker
 
 
 
+            #endregion
+            room.exits.Add(north);
+            room.exits.Add(east);
+            room.exits.Add(south);
+            room.exits.Add(west);
+
+
+            return room;
+        }
+
+        public static Room TempleGraveyard()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 47,
+                title = "Temple Graveyard",
+                description = "<p>Gravestones new and old stand facing the dirt path on either side. The older headstones are covered in mould, some are cracked or crumbling. Alot of the engravings are hard to read. To the west is the entrance to the Temple of Tyr, to the north the path continues through the graveyard.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>()
+                {
+                    new RoomObject()
+                    {
+                        name = "Gravestone"
+                    }
+                },
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true,
+                Emotes = new List<string>()
+                {
+                    "You feel someone is watching you.",
+                    "You feel a hand touch your shoulder.",
+                    "You hear children giggling."
+                }
+
+            };
+
+
+            #region exits
+
+
+        
+            // Create Exits
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 46,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 17,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+          
+           
 
             #endregion
+            room.exits.Add(north);
+            room.exits.Add(west);
+   
+
+            return room;
+        }
+
+        public static Room TempleGraveyard1()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 46,
+                title = "Temple Graveyard",
+                description = "<p>Gravestones new and old stand facing the dirt path on either side. The older headstones are covered in mould, some are cracked or crumbling. Alot of the engravings are hard to read. To the north and south the path continues through the graveyard.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>()
+                {
+                    new RoomObject()
+                    {
+                        name = "Gravestone"
+                    }
+                },
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true,
+                Emotes = new List<string>()
+                {
+                    "You feel someone is watching you.",
+                    "You feel a hand touch your shoulder.",
+                    "You hear children giggling."
+                }
+
+            };
+
+
+            #region exits
+
+
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 47,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            // Create Exits
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 64,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+ 
+
+
+            #endregion
+            room.exits.Add(north);
+           
+            room.exits.Add(south);
+       
+
+
+            return room;
+        }
+
+        public static Room TempleGraveyard2()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 64,
+                title = "Temple Graveyard",
+                description = "<p>Gravestones new and old stand facing the dirt path on either side. The older headstones are covered in mould, some are cracked or crumbling. Alot of the engravings are hard to read. To the west and south the path continues through the graveyard.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>()
+                {
+                    new RoomObject()
+                    {
+                        name = "Gravestone"
+                    }
+                },
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true,
+                Emotes = new List<string>()
+                {
+                    "You feel someone is watching you.",
+                    "You feel a hand touch your shoulder.",
+                    "You hear children giggling."
+                }
+
+            };
+
+
+            #region exits
+
+
+            // Create Exits
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 63,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 46,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            #endregion
+            room.exits.Add(west);
+
             room.exits.Add(south);
 
+
+
+            return room;
+        }
+
+
+        public static Room TempleGraveyard3()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 63,
+                title = "Temple Graveyard",
+                description = "<p>Gravestones new and old stand facing the dirt path on either side. The older headstones are covered in mould, some are cracked or crumbling. Alot of the engravings are hard to read. To the east and west the path continues through the graveyard.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>()
+                {
+                    new RoomObject()
+                    {
+                        name = "Gravestone"
+                    }
+                },
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true,
+                Emotes = new List<string>()
+                {
+                    "You feel someone is watching you.",
+                    "You feel a hand touch your shoulder.",
+                    "You hear children giggling."
+                }
+
+            };
+
+
+            #region exits
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 64,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            // Create Exits
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 62,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            #endregion
+            room.exits.Add(east);
+
+            room.exits.Add(west);
+
+
+            
+            return room;
+        }
+
+        public static Room TempleGraveyard4()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 62,
+                title = "Temple Graveyard",
+                description = "<p>Gravestones new and old stand facing the dirt path on either side. The older headstones are covered in mould, some are cracked or crumbling. Alot of the engravings are hard to read. To the east and south the path continues through the graveyard.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>()
+                {
+                    new RoomObject()
+                    {
+                        name = "Gravestone"
+                    }
+                },
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true,
+                Emotes = new List<string>()
+                {
+                    "You feel someone is watching you.",
+                    "You feel a hand touch your shoulder.",
+                    "You hear children giggling."
+                }
+
+            };
+
+
+            #region exits
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 63,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 45,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            #endregion
+            room.exits.Add(east);
+
+            room.exits.Add(south);
+
+
+
+            return room;
+        }
+
+        public static Room TempleGraveyard5()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 45,
+                title = "Temple Graveyard",
+                description = "<p>Gravestones new and old stand facing the dirt path on either side. The older headstones are covered in mould, some are cracked or crumbling. Alot of the engravings are hard to read. To the north and south the path continues through the graveyard.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>()
+                {
+                    new RoomObject()
+                    {
+                        name = "Gravestone"
+                    }
+                },
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true,
+                Emotes = new List<string>()
+                {
+                    "You feel someone is watching you.",
+                    "You feel a hand touch your shoulder.",
+                    "You hear children giggling."
+                }
+
+            };
+
+
+            #region exits
+
+
+            // Create Exits
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 62,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            // Create Exits
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 44,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            #endregion
+            room.exits.Add(north);
+
+            room.exits.Add(south);
+
+
+
+            return room;
+        }
+
+        public static Room TempleGraveyard6()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 44,
+                title = "Temple Graveyard",
+                description = "<p>Gravestones new and old stand facing the dirt path on either side. The older headstones are covered in mould, some are cracked or crumbling. Alot of the engravings are hard to read. To the north and east the path continues through the graveyard.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>()
+                {
+                    new RoomObject()
+                    {
+                        name = "Gravestone"
+                    }
+                },
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true,
+                Emotes = new List<string>()
+                {
+                    "You feel someone is watching you.",
+                    "You feel a hand touch your shoulder.",
+                    "You hear children giggling."
+                }
+
+            };
+
+
+            #region exits
+
+
+            // Create Exits
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker",
+                region = "Anker",
+                areaId = 45,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 17,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            #endregion
+            room.exits.Add(north);
+
+            room.exits.Add(east);
+
+
+
+            return room;
+        }
+
+
+
+        public static Room TempleOfTyr()
+        {
+
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 65,
+                title = "Temple of Tyr",
+                description = "<p>A circular blue mosaic covers the centre of the temple with a gold fist and star underneath in the centre. Above is a dome roof with yellow tinted glass giving the area a golden glow. An Alter to Tyr is at the back with a large blue banner hanging from the wall with the same golden fist above the star. To the south the entrance to the Temple</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<PlayerSetup.Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<PlayerSetup.Player>(),
+                players = new List<PlayerSetup.Player>(),
+                fighting = new List<string>(),
+                clean = true,
+
+            };
+
+            var mortem = new PlayerSetup.Player
+            {
+                NPCId = Guid.NewGuid(),
+                Name = "Mortem",
+                NPCLongName = "Mortem",
+                KnownByName = true,
+                Type = PlayerSetup.Player.PlayerTypes.Mob,
+                Description = "A blue cape of Tyr hangs down Mortems back who is covered in full plate mail except for his heads and hands. A golden mace hangs upside down from his belt.",
+                Strength = 72,
+                Dexterity = 60,
+                Constitution = 60,
+                Intelligence = 70,
+                Wisdom = 70,
+                Charisma = 60,
+                MaxHitPoints = 2890,
+                HitPoints = 2890,
+                Level = 51,
+                Gold = 8050,
+                Status = PlayerSetup.Player.PlayerStatus.Standing,
+                Skills = new List<Skill>(),
+                Inventory = new ItemContainer(),
+                DialogueTree = new List<DialogTree>(),
+                Greet = false,
+                Emotes = new List<string>(),
+                EventOnComunicate = new Dictionary<string, string>(),
+                EventWake = "awakening awake",
+                EventWear = "awakening awake",
+                Recall = new Recall()
+                {
+                    Area = room.area,
+                    AreaId = room.areaId,
+                    Region = room.region
+                }
+
+            };
+
+           
+            var breastPlateTyr = FullPlateBody.BreastPlateOfTyr();
+            breastPlateTyr.location = Item.Item.ItemLocation.Worn;
+
+ 
+            mortem.Inventory.Add(breastPlateTyr);
+
+            mortem.Equipment.Body = breastPlateTyr.name;
+ 
+
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker",
+                region = "Anker",
+                areaId = 17,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            room.exits.Add(south);
+
+
+            // create item for platemail / cape / mace / set to worn
+            //top and trousers for player
+
+
+            room.mobs.Add(mortem);
 
             return room;
         }
@@ -4052,68 +4767,7 @@ namespace MIMWebClient.Core.World.Anker
             return room;
         }
 
-        public static Room HomeRoad()
-        {
-            var room = new Room
-            {
-                region = "Anker",
-                area = "Anker",
-                areaId = 41,
-                title = "Hope Road, towards Anker",
-                description = "<p>This part of hope road leads east with rows of houses either side, it's the main street through the village of Anker." +
-                "Hope road cuts through fresh green grass continuing north towards Ester and south towards x, wild flowers and trees dot the area." +
-                " To the north east you can see a barracks over looking the village and protecting the road." +
-                "</p>",
-
-                //Defaults
-                exits = new List<Exit>(),
-                items = new List<Item.Item>(),
-                mobs = new List<Player>(),
-                terrain = Room.Terrain.Field,
-                keywords = new List<RoomObject>(),
-                corpses = new List<Player>(),
-                players = new List<Player>(),
-                fighting = new List<string>(),
-                clean = true
-
-            };
-
-            room.mobs.Add(AnkerGuard.AnkerGuardNpc());
-
-            
-
-
-            #region exits
-
-
-            // Create Exits
-            var east = new Exit
-            {
-                name = "East",
-                area = "Anker",
-                region = "Anker",
-                areaId = 31,
-                keywords = new List<string>(),
-                hidden = false,
-                locked = false
-            };
-
- 
-
-
-
-            #endregion
-            
-            room.exits.Add(east);
-
-       
-
-
-            // room.exits.Add(south);
-
-
-            return room;
-        }
+     
 
     }
 }

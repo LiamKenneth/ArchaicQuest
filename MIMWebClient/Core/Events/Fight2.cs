@@ -529,6 +529,7 @@ namespace MIMWebClient.Core.Events
         {
             var skillModifier = (skillProficiency / damage) * 100;
 
+
             return (int)((skillModifier + damage) * 1);
         }
 
@@ -542,18 +543,18 @@ namespace MIMWebClient.Core.Events
             // (Weapon Damage * Strength Modifier * Condition Modifier * Critical Hit Modifier) / Armor Reduction.
 
             int damage;
-
+            var helper = new Helpers();
             var weapon = GetAttackerWepon(attacker);
 
             if (weapon != null)
             {
-                var helper = new Helpers();
+             
                 damage = helper.dice(1, weapon.stats.damMin, weapon.stats.damMax);
             }
             else
             {
                 //Unarmed so use hand to hand
-                damage = HandToHandDamage(attacker);
+                damage = helper.dice(1, 1, 6);
             }
 
             var armourReduction = CalculateDamageReduction(attacker, defender, damage);
@@ -961,11 +962,42 @@ namespace MIMWebClient.Core.Events
                 foreach (var invItem in defender.Inventory)
                 {
                     invItem.location = Item.ItemLocation.Room;
+
                     defenderCorpse.containerItems.Add(invItem);
 
                 }
+ 
 
+                //reset defender
+                defender.Inventory = new ItemContainer();
 
+                defender.Equipment.Arms = "Nothing";
+                defender.Equipment.Torso = "Nothing";
+                defender.Equipment.Body = "Nothing";
+                defender.Equipment.Face = "Nothing";
+                defender.Equipment.Feet = "Nothing";
+                defender.Equipment.Finger = "Nothing";
+                defender.Equipment.Finger2 = "Nothing";
+                defender.Equipment.Floating = "Nothing";
+                defender.Equipment.Hands = "Nothing";
+                defender.Equipment.Head = "Nothing";
+                defender.Equipment.Held = "Nothing";
+                defender.Equipment.Face = "Nothing";
+                defender.Equipment.Legs = "Nothing";
+                defender.Equipment.Feet = "Nothing";
+                defender.Equipment.Light = "Nothing";
+                defender.Equipment.Neck = "Nothing";
+                defender.Equipment.Neck2 = "Nothing";
+                defender.Equipment.Shield = "Nothing";
+                defender.Equipment.Wielded = "Nothing";
+                defender.Equipment.Waist = "Nothing";
+                defender.Equipment.Wrist = "Nothing";
+                defender.Equipment.Wrist2 = "Nothing";
+
+                defender.ArmorRating = 0;
+
+                defender.Experience = (int)(defender.Experience > 0 ? defender.Experience / 1.5 : 0);
+ 
 
                 var oldRoom = room;
                 room.items.Add(defenderCorpse);
@@ -977,8 +1009,11 @@ namespace MIMWebClient.Core.Events
                 }
                 else
                 {
-                    //room.players.Remove(defender);
+                    room.players.Remove(defender);
+                    var recall = Cache.ReturnRooms().FirstOrDefault(x => x.title == "Temple of Tyr");
+                    Movement.Teleport(defender, recall);
                     //Add slain player to recall
+                    Score.ReturnScoreUI(defender);
                 }
 
 
@@ -1105,15 +1140,14 @@ namespace MIMWebClient.Core.Events
                 weaponSkill = player.Skills.Find(x => x.Name == "Hand to Hand")?.Proficiency ?? 0;
             }
 
-           
-
+            double off = 0;
             int dexterity = player.Dexterity;
             int strength = player.Strength;
 
 
-            //(Weapon Skill + (Agility / 5) + (Luck / 10)) * (0.75 + 0.5 * Current Fatigue / Maximum Fatigue);
-
-            double off = weaponSkill + (strength / (double)5) * (0.75 + 0.5 * player.MovePoints / (double)player.MaxMovePoints);
+  
+                 off = weaponSkill + (strength / (double)5) * (0.75 + 0.5 * player.MovePoints / (double)player.MaxMovePoints);
+        
 
             //Based on skill and a random number, an Offensive Force / Factor(OF) is generated.
             //This number is bonused by the user's Agility as modified by the weapon's balance.
