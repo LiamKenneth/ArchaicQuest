@@ -180,8 +180,8 @@ namespace MIMWebClient.Core
                 //admin
                 {"/debug", () => PlayerSetup.Player.DebugPlayer(playerData) },
                 {"/setGold", () => PlayerSetup.Player.SetGold(playerData, commandOptions) },
-                {"/setAc", () => PlayerSetup.Player.SetAC(playerData, commandOptions) }
-
+                {"/setAc", () => PlayerSetup.Player.SetAC(playerData, commandOptions) },
+                {"/map", () => SigmaMap.DrawMap(playerData.HubGuid) }
             };
 
 

@@ -29,7 +29,7 @@ namespace MIMWebClient.Core
             {
                 Name = group.Key,
                 Count = group.Count()
-            }).Select(x =>
+            }).OrderBy(x => x.Name).Select(x =>
             {
                 var itemString = x.Name + ((x.Count > 1) ? " x" + x.Count : "");
                 if (article)

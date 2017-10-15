@@ -27,7 +27,8 @@ namespace MIMWebClient.Core.Mob.Events
                     foreach (var item in ItemContainer.List(mob.itemsToSell))
                     {
                         var cleanItemName = rgx.Replace(item, string.Empty);
-                        itemsForSell +=  "<tr><td>" + item + "</td> <td>" + mob.itemsToSell.FirstOrDefault(x => x.name.Equals(cleanItemName)).Gold + " GP</td></tr>";
+                        var goldAmount = mob.itemsToSell.FirstOrDefault(x => x.name.Equals(cleanItemName)).Gold;
+                        itemsForSell +=  "<tr><td>" + item + "</td> <td>" + (int)(goldAmount + (goldAmount * 0.15)) + " GP</td></tr>";
                     }
 
                     itemsForSell += "</tbody></table>";
@@ -77,8 +78,9 @@ namespace MIMWebClient.Core.Mob.Events
                         string article = result.Article;
 
                         //Can afford
+                        var cost = itemToBuy.Gold + itemToBuy.Gold * 0.15;
 
-                        if (player.Gold >= itemToBuy.Gold)
+                        if (player.Gold >= cost)
                         {
 
                             itemToBuy.location = Item.Item.ItemLocation.Inventory;
@@ -86,7 +88,7 @@ namespace MIMWebClient.Core.Mob.Events
 
                   
                             HubContext.Instance.SendToClient(
-                                "You buy " + article + " " + itemToBuy.name + " from " + mob.Name + " for " + itemToBuy.Gold + " gold.",
+                                "You buy " + article + " " + itemToBuy.name + " from " + mob.Name + " for " + cost + " gold.",
                                 player.HubGuid);
                            
                             foreach (var character in room.players)
@@ -100,8 +102,13 @@ namespace MIMWebClient.Core.Mob.Events
                                 }
                             }
 
-                            itemToBuy.Gold = itemToBuy.Gold > 0 ? itemToBuy.Gold + (int)(itemToBuy.Gold * 0.10) : 100;
+                         
                             mob.itemsToSell.Remove(itemToBuy);
+
+                            foreach (var item in mob.itemsToSell.Where(x => x.name.Equals(itemToBuy.name)))
+                            {
+                                item.Gold = itemToBuy.Gold > 0 ? itemToBuy.Gold : 100;
+                            }
 
                             Score.UpdateUiInventory(player);
                             //deduct gold
@@ -161,14 +168,23 @@ namespace MIMWebClient.Core.Mob.Events
                         //Can afford
 
 
-                            itemToSell.location = Item.Item.ItemLocation.Inventory;
+                       itemToSell.location = Item.Item.ItemLocation.Inventory;
 
-                            itemToSell.Gold = itemToSell.Gold > 0 ? itemToSell.Gold - (int) (itemToSell.Gold * 0.10) : 100;
+                        mob.itemsToSell.Add(itemToSell);
 
-                            mob.itemsToSell.Add(itemToSell);
-                          
 
-                            foreach (var character in room.players)
+                        //foreach (var item in mob.itemsToSell.Where(x => x.name.Equals(itemToSell.name)))
+                        //{
+                        //    item.Gold = itemToSell.Gold > 0 ? itemToSell.Gold - (int)(itemToSell.Gold * 0.10) : 100;
+                        //}
+
+
+                        var value = itemToSell.Gold > 0 ? itemToSell.Gold : 1;
+
+                        player.Gold += value;
+
+
+                        foreach (var character in room.players)
                             {
                                 if (player != character)
                                 {
@@ -180,9 +196,7 @@ namespace MIMWebClient.Core.Mob.Events
                             }
 
 
-                        var value = itemToSell.Gold > 0 ? itemToSell.Gold : 1;
-
-                        player.Gold += value;
+                   
 
                         HubContext.Instance.SendToClient(
                               "You sell " + article + " " + itemToSell.name + " to " + mob.Name + " for " + value + " gold.",
