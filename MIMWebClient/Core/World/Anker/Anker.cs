@@ -4831,7 +4831,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "East",
                 area = "Anker",
                 region = "Anker",
-                areaId = 42,
+                areaId = 41,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -4867,7 +4867,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 region = "Anker",
                 area = "Anker",
-                areaId = 42,
+                areaId = 41,
                 title = "Arched gate of Anker",
                 description = "<p>The dirt road leads through the grey stoned archway which towers over the road. The archway signals the start of Anker as there is no gate to stop intruders from entering. Some engravings and carved into the stone. The Anker farm is to the east, further in the distance you can make out a forest of some kind. The western path through the archway leads to Anker.</p>",
 
@@ -4903,9 +4903,9 @@ namespace MIMWebClient.Core.World.Anker
             var east = new Exit
             {
                 name = "East",
-                area = "Anker",
+                area = "Anker Farm",
                 region = "Anker",
-                areaId = 48,
+                areaId = 422,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -4935,5 +4935,6 @@ namespace MIMWebClient.Core.World.Anker
             return room;
         }
 
+ 
     }
 }

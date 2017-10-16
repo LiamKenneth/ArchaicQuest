@@ -73,6 +73,23 @@ namespace MIMWebClient.Core.World
                 Anker.Anker.AnkerHome34(),
                 Anker.Anker.AnkerHome35(),
                 Anker.Anker.AnkerHome36(),
+                Anker.Anker.AnkerLaneEast40(),
+                Anker.Anker.AnkerLaneGate(),
+                Anker.AnkerFarm.AnkerRoad(),
+                Anker.AnkerFarm.RoadThroughFarm(),
+                Anker.AnkerFarm.Farm(),
+                Anker.AnkerFarm.Windmill(),
+                Anker.AnkerFarm.CropFields(),
+                Anker.AnkerFarm.CropFields1(),
+                Anker.AnkerFarm.CropFields2(),
+                Anker.AnkerFarm.CropFields3(),
+                Anker.AnkerFarm.AnkerRoad1(),
+                Anker.AnkerFarm.AnkerRoad2(),
+                Anker.AnkerFarm.AnkerRoad3(),
+                Anker.AnkerFarm.RiverBank(),
+                Anker.AnkerFarm.SawMill(),
+                Anker.AnkerFarm.Pasture(),
+                Anker.AnkerFarm.TheBridge(),
             };
 
             return areas;
