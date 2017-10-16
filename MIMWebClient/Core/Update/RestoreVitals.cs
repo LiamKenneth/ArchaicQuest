@@ -141,7 +141,7 @@ namespace MIMWebClient.Core.Update
                                     if (room.mobs.FirstOrDefault(x => x.Name.Contains(originalMob.Name)) == null)
                                     {
 
-                                        var mobHomeRoom = rooms.FirstOrDefault(x => x.areaId == originalMob.AreaId && x.area == originalMob.Area && x.region == originalMob.Region);
+                                        var mobHomeRoom = rooms.FirstOrDefault(x => x.areaId == originalMob.Recall.AreaId && x.area == originalMob.Recall.Area && x.region == originalMob.Recall.Region);
                                         mobHomeRoom.mobs.Add(originalMob);
                                     }
                                   
