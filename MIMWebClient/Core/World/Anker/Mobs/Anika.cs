@@ -37,14 +37,14 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 KnownByName = true,
                 Type = PlayerSetup.Player.PlayerTypes.Mob,
                 Description = "The shop keeper",
-                Strength = 15,
-                Dexterity = 16,
-                Constitution = 16,
-                Intelligence = 12,
-                Wisdom = 16,
-                Charisma = 18,
-                MaxHitPoints = 350,
-                HitPoints = 350,
+                Strength = 60,
+                Dexterity = 60,
+                Constitution = 60,
+                Intelligence = 60,
+                Wisdom = 60,
+                Charisma = 60,
+                MaxHitPoints = 550,
+                HitPoints = 550,
                 Level = 20,
                 Status = PlayerSetup.Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
@@ -57,8 +57,8 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 GreetMessage = "Hello there!",
                 DialogueTree = new List<DialogTree>(),
                 Dialogue = new List<Responses>(),
-                Quest = new List<Quest>()
-
+                Quest = new List<Quest>(),
+         
 
             };
 
@@ -76,7 +76,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 Gold = 25
             };
 
-            for (int i = 0; i < 21; i++)
+            for (int i = 0; i < 20; i++)
             {
                 Anika.itemsToSell.Add(ShortSwordBasic.ShortIronSword());
                 Anika.itemsToSell.Add(DaggerBasic.IronDagger());

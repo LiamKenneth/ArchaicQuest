@@ -49,27 +49,24 @@ namespace MIMWebClient.Core.Player
             return difficulty;
         }
 
-
+        /// <summary>
+        /// figures out XP gained = (Mob HP x Mob Level) / (Player HP x Player Level) x 50
+        /// </summary>
+        /// <param name="player">Player obj</param>
+        /// <param name="victim">Viction obj</param>
+        /// <returns>Xp gained</returns>
         public int GainXp(PlayerSetup.Player player, PlayerSetup.Player victim)
         {
             const int maxXpGain = 10000;
 
-            var exp = Math.Min(maxXpGain, VictimDifficulty(player, victim));
+            var exp = (victim.MaxHitPoints * victim.Level) / (player.MaxHitPoints * player.Level) * 50;
 
-            if (victim.Type == PlayerSetup.Player.PlayerTypes.Mob)
+            if (exp > maxXpGain)
             {
-                exp += Math.Max(0, exp*Math.Min(4, victim.Level - player.Level))/8;
-            }
-            else
-            {
-                exp += Math.Max(0, exp*Math.Min(8, victim.Level - player.Level))/8;
+                exp = maxXpGain;
             }
 
-            exp = Math.Max(exp, 1);
 
-            //XP gain should happen here
-            // add to totalxp here
-            //what about quest xp?/ explore xp / other types of xp success
             return exp;
         }
  
@@ -103,6 +100,8 @@ namespace MIMWebClient.Core.Player
                 //tell user how much HP / mana / mvs / practices / trains they have gained
 
                 HubContext.Instance.SendToClient("Congratulations, you are now level " + player.Level + ". You have gained. HP: " + hpGain + " Mana: " + manaGain + " End: " + enduranceGain, player.HubGuid);
+
+                Score.ReturnScoreUI(player);
 
                 Save.SavePlayer(player);             
                 //save player

@@ -46,11 +46,20 @@ namespace MIMWebClient.Core.Room
 
         }
 
+        public enum RoomType
+        {
+            Standard,
+            Shop,
+            Guild 
+
+        }
+
         [BsonRepresentation(BsonType.ObjectId)]
         public Guid _id { get; set; }
         public string region { get; set; }
         public string area { get; set; }
         public int areaId { get; set; }
+        public RoomType type { get; set; } = RoomType.Standard;
         [BsonIgnore]
         public bool visited { get; set; }
         public Coordinates coords { get; set; } = new Coordinates();

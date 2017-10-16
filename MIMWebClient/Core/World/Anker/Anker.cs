@@ -470,7 +470,8 @@ namespace MIMWebClient.Core.World.Anker
                 corpses = new List<Player>(),
                 players = new List<Player>(),
                 fighting = new List<string>(),
-                clean = true
+                clean = true,
+                type = Room.RoomType.Guild
 
             };
 
@@ -541,7 +542,16 @@ namespace MIMWebClient.Core.World.Anker
             room.exits.Add(south);
             room.exits.Add(west);
 
-            room.mobs.Add(Lance.VillageElderLance());
+            var lance = Lance.VillageElderLance();
+
+            lance.Recall = new Recall()
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+            room.mobs.Add(lance);
 
 
 
@@ -1192,7 +1202,9 @@ namespace MIMWebClient.Core.World.Anker
                 corpses = new List<Player>(),
                 players = new List<Player>(),
                 fighting = new List<string>(),
-                clean = true
+                clean = true,
+                type = Room.RoomType.Shop
+                
 
             };
 
@@ -1261,7 +1273,8 @@ namespace MIMWebClient.Core.World.Anker
                 corpses = new List<Player>(),
                 players = new List<Player>(),
                 fighting = new List<string>(),
-                clean = true
+                clean = true,
+                type = Room.RoomType.Shop
 
             };
 
@@ -1291,7 +1304,16 @@ namespace MIMWebClient.Core.World.Anker
 
             room.exits.Add(west);
 
-            room.mobs.Add(Ferron.MetalMedleyBlacksmith());
+            var ferron = Ferron.MetalMedleyBlacksmith();
+
+            ferron.Recall = new Recall()
+            {
+                Area = room.area,
+                Region = room.region,
+                AreaId = room.areaId
+            };
+
+            room.mobs.Add(ferron);
 
 
 
@@ -1332,15 +1354,15 @@ namespace MIMWebClient.Core.World.Anker
                 KnownByName = true,
                 Type = Player.PlayerTypes.Mob,
                 Description = "The owner of The Red Lion is a tall and intimidating appearance. This long-bearded man immediately makes you feel uncomfortable. He does not seem to notice you.",
-                Strength = 15,
-                Dexterity = 16,
-                Constitution = 16,
-                Intelligence = 9,
-                Wisdom = 11,
-                Charisma = 8,
-                MaxHitPoints = 100,
-                HitPoints = 100,
-                Level = 10,
+                Strength = 60,
+                Dexterity = 60,
+                Constitution = 60,
+                Intelligence = 60,
+                Wisdom = 60,
+                Charisma = 60,
+                MaxHitPoints = 2000,
+                HitPoints = 2000,
+                Level = 50,
                 Status = Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
                 Inventory = new ItemContainer(),
@@ -1348,10 +1370,16 @@ namespace MIMWebClient.Core.World.Anker
                 Emotes = new List<string>(),
                 Shop = true,
                 itemsToSell = new List<Item.Item>(),
-                sellerMessage = "Why of course, here is what I can sell you."
+                sellerMessage = "Why of course, here is what I can sell you.",
+                Recall = new Recall()
+                {
+                    Area = room.area,
+                    Region = room.region,
+                    AreaId = room.areaId
+                }
 
 
-            };
+        };
 
             var beer = new Item.Item
             {
@@ -1410,15 +1438,15 @@ namespace MIMWebClient.Core.World.Anker
                 KnownByName = true,
                 Type = Player.PlayerTypes.Mob,
                 Description = "This weathered old man probably never leaves this place. His cloudy eyes seem to seek something at the bottom of his glass.",
-                Strength = 1,
-                Dexterity = 2,
-                Constitution = 2,
-                Intelligence = 2,
-                Wisdom = 5,
-                Charisma = 1,
-                MaxHitPoints = 100,
-                HitPoints = 100,
-                Level = 1,
+                Strength = 60,
+                Dexterity = 60,
+                Constitution = 60,
+                Intelligence = 60,
+                Wisdom = 60,
+                Charisma = 60,
+                MaxHitPoints = 1000,
+                HitPoints = 1000,
+                Level = 30,
                 Status = Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
                 Inventory = new ItemContainer(),
@@ -1531,14 +1559,14 @@ namespace MIMWebClient.Core.World.Anker
                 Name = "Stable boy",
                 Type = Player.PlayerTypes.Mob,
                 Description = "A rough dirty looking stable boy",
-                Strength = 11,
-                Dexterity = 16,
-                Constitution = 16,
-                Intelligence = 9,
-                Wisdom = 11,
-                Charisma = 8,
-                MaxHitPoints = 100,
-                HitPoints = 100,
+                Strength = 60,
+                Dexterity = 80,
+                Constitution = 60,
+                Intelligence = 60,
+                Wisdom = 60,
+                Charisma = 60,
+                MaxHitPoints = 700,
+                HitPoints = 700,
                 Level = 5,
                 Status = Player.PlayerStatus.Standing,
                 Skills = new List<Skill>(),
@@ -1551,14 +1579,14 @@ namespace MIMWebClient.Core.World.Anker
                 Name = "Sleek Black Horse",
                 Type = Player.PlayerTypes.Mob,
                 Description = "A sleek strong looking black horse",
-                Strength = 12,
-                Dexterity = 12,
-                Constitution = 12,
-                Intelligence = 12,
-                Wisdom = 15,
-                Charisma = 18,
-                MaxHitPoints = 500,
-                HitPoints = 500,
+                Strength = 72,
+                Dexterity = 60,
+                Constitution = 60,
+                Intelligence = 60,
+                Wisdom = 60,
+                Charisma = 60,
+                MaxHitPoints = 750,
+                HitPoints = 750,
                 Level = 15,
                 Status = Player.PlayerStatus.Busy,
                 Skills = new List<Skill>(),
@@ -4546,7 +4574,7 @@ namespace MIMWebClient.Core.World.Anker
 
 
             #endregion
-            //room.exits.Add(east);
+            room.exits.Add(east);
             room.exits.Add(north);
             room.exits.Add(South);
             room.exits.Add(west);
@@ -4767,7 +4795,145 @@ namespace MIMWebClient.Core.World.Anker
             return room;
         }
 
-     
+
+        public static Room AnkerLaneEast40()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 40,
+                title = "Anker Lane west of the gate",
+                description = "<p>The wide path here dotted by wild flowers and trees leads east towards the arched gate of anker. To the west the path leads through the homes of Anker. In the far distance you see the path turn north.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true
+
+            };
+
+
+
+
+            #region exits
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 42,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            // Create Exits
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 24,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+ 
+
+
+            #endregion
+            room.exits.Add(east);
+            room.exits.Add(west);
+
+
+
+            return room;
+        }
+
+        public static Room AnkerLaneGate()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker",
+                areaId = 42,
+                title = "Arched gate of Anker",
+                description = "<p>The dirt road leads through the grey stoned archway which towers over the road. The archway signals the start of Anker as there is no gate to stop intruders from entering. Some engravings and carved into the stone. The Anker farm is to the east, further in the distance you can make out a forest of some kind. The western path through the archway leads to Anker.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>()
+                {
+                    new RoomObject()
+                    {
+                        name = "engravings",
+                        look = "The engraving reads: \"Welcome to Anker\"",
+                        examine = "Looking closely at the engraving you see: \"Welcome to Anker\" underneath in small writing it reads: \"Malleus and Gamia was here XVI-X-MMXVII\"."
+                    }
+                },
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true,
+                
+
+            };
+
+
+
+
+            #region exits
+
+
+            // Create Exits
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker",
+                region = "Anker",
+                areaId = 48,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            // Create Exits
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker",
+                region = "Anker",
+                areaId = 40,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+
+            #endregion
+            room.exits.Add(east);
+            room.exits.Add(west);
+
+
+
+            return room;
+        }
 
     }
 }

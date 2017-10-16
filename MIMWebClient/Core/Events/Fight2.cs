@@ -1025,7 +1025,7 @@ namespace MIMWebClient.Core.Events
                 int xpGain = xp.GainXp(attacker, defender);
                 attacker.Experience += xpGain;
                 attacker.TotalExperience += xpGain;
-                HubContext.Instance.SendToClient(xpGain + "XP", attacker.HubGuid);
+                HubContext.Instance.SendToClient("You gain " + xpGain + " experience points.", attacker.HubGuid);
 
                 xp.GainLevel(attacker);
                 //calc xp

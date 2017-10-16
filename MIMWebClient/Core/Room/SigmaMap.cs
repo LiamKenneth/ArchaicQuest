@@ -6,6 +6,7 @@ using System.Text;
 using System.Web;
 using MIMWebClient.Core.AI;
 using MIMWebClient.Core.Events;
+using MIMWebClient.Core.World;
 using Newtonsoft.Json;
 
 namespace MIMWebClient.Core.Room
@@ -19,6 +20,7 @@ namespace MIMWebClient.Core.Room
         public string y { get; set; }
         public int size { get; set; } = 2;
         public int defaultLabelSize { get; set; } = 12;
+        public string color { get; set; } = "#ccc";
     }
  
     public class SigmaMapEdge
@@ -93,7 +95,19 @@ namespace MIMWebClient.Core.Room
                     label = node.title,
                     x = node.coords.X.ToString(),
                     y = y,
+                     
                 };
+
+                var room = Areas.ListOfRooms().FirstOrDefault(z => z.areaId == node.areaId);
+
+                if (room.type == Room.RoomType.Shop)
+                {
+                    mapNode.color = "#446CB3";
+                }
+                else if (room.type == Room.RoomType.Guild)
+                {
+                    mapNode.color = "#fed967";
+                }
 
                 nodes.Add(mapNode);
 
@@ -104,7 +118,8 @@ namespace MIMWebClient.Core.Room
                     {
                         id = "edge" + node.areaId + exit.areaId,
                         source = "node" + node.areaId,
-                        target = "node" + exit.areaId
+                        target = "node" + exit.areaId,
+                      
                     };
 
                    edges.Add(mapEdge);
@@ -118,13 +133,13 @@ namespace MIMWebClient.Core.Room
                 nodes = nodes
             };
 
-            var fucked = new List<string>();
+            var brokenEdges = new List<string>();
 
             foreach (var e in edges)
             {
                 if (nodes.FirstOrDefault(x => x.id == e.target) == null)
                 {
-                    fucked.Add(e.id);
+                    brokenEdges.Add(e.id);
                 }
               
             }
