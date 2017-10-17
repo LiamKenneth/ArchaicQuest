@@ -590,6 +590,11 @@ namespace MIMWebClient.Core.Events
             if (skillUsed == null)
             {
 
+                if (attacker.Type == Player.PlayerTypes.Mob && attacker.MobAttackType != Player.MobAttackTypes.Punch)
+                {
+                    return new KeyValuePair<string, string>(attacker.MobAttackType.ToString().ToLower(), attacker.MobAttackType.ToString().ToLower());
+                }
+
                 var wielded = attacker.Equipment.Wielded;
                 Item weapon = null;
                 if (wielded == "Nothing")
@@ -607,10 +612,10 @@ namespace MIMWebClient.Core.Events
                 }
             
                     return new KeyValuePair<string, string>("hit", "hit");
-                
-              
 
             }
+
+         
 
             //TODO mob attack name
 
@@ -763,7 +768,7 @@ namespace MIMWebClient.Core.Events
 
                                 defenderMessage = "You <span style='color:olive'>dodge</span> " + Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key;
 
-                                observerMessage = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>dodges</span>" + Helpers.ReturnName(defender, attacker, null) + "'s" + WeaponAttackName(attacker, skillUsed).Key;
+                                observerMessage = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>dodges</span> " + Helpers.ReturnName(attacker, defender, null) + "'s" + WeaponAttackName(attacker, skillUsed).Key;
                             }
                             else
                             {
@@ -772,7 +777,7 @@ namespace MIMWebClient.Core.Events
 
                                 defenderMessage = "You <span style='color:olive'>parry</span> " + Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key;
 
-                                observerMessage = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>parries</span>" + Helpers.ReturnName(defender, attacker, null) + "'s" + WeaponAttackName(attacker, skillUsed).Key;
+                                observerMessage = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>parries</span> " + Helpers.ReturnName(attacker, defender, null) + "'s" + WeaponAttackName(attacker, skillUsed).Key;
                             }
 
                             HubContext.Instance.SendToClient(attackerMessage, attacker.HubGuid);

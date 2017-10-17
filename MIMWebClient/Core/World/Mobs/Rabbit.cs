@@ -15,7 +15,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
     public class Rabit
     {
 
-        public static PlayerSetup.Player SmallRabit()
+        public static PlayerSetup.Player SmallRabbit()
         {
 
            
@@ -23,11 +23,11 @@ namespace MIMWebClient.Core.World.Anker.Mobs
             var smallRabit = new PlayerSetup.Player
             {
                 NPCId = Guid.NewGuid(),
-                Name = "White rabit",
-                NPCLongName = "A small rabbit is nibbling the grass here.",
-                KnownByName = true,
+                Name = "White rabbit",
+                NPCLongName = "small rabbit is nibbling the grass here.",
+                KnownByName = false,
                 Type = PlayerSetup.Player.PlayerTypes.Mob,
-                Description = "A small rabbit is nibbling the grass here.",
+                Description = "The calico rabbit occasionally stops hopping to look up and nervously scans the area. Nose and ears twitching as it does so before resuming it's hoping.",
                 Strength = 30,
                 Dexterity = 30,
                 Constitution = 30,
@@ -65,7 +65,13 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 Trainer = false,
                 DialogueTree = new List<DialogTree>(),
                 Dialogue = new List<Responses>(),
-                Quest = new List<Quest>()
+                Quest = new List<Quest>(),
+                MobAttackType = PlayerSetup.Player.MobAttackTypes.Bite,
+                MobAttackStats = new Stats()
+                {
+                    damMin = 2,
+                    damMax = 6
+                }
 
 
             };

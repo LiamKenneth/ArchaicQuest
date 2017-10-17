@@ -87,8 +87,7 @@ namespace MIMWebClient.Core.Events
                 {
                     Thread.Sleep(120); // hack, sometimes the responses calls before the questions??
  
-                    HubContext.Instance.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"" + response.Replace("$playerName", player.Name) + "\"<span>", playerId,
-                       null, true);
+                    HubContext.Instance.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"" + response.Replace("$playerName", player.Name) + "\"<span>", playerId);
 
                     Score.UpdateUIChannels(player, "<span class='sayColor'>" + mob.Name + " says to you \"" + response.Replace("$playerName", player.Name) + "\"<span>", "roomChannelF");
 
@@ -98,8 +97,7 @@ namespace MIMWebClient.Core.Events
                     if (speak?.PossibleResponse.Count > 0)
                     {
                         HubContext.Instance.SendToClient("<span class='sayColor'>" +
-                            mob.Name + " says to you \"anything else?\"</span>", playerId,
-                            null, true);
+                            mob.Name + " says to you \"anything else?\"</span>", playerId);
                     }
 
 

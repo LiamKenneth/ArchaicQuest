@@ -24,19 +24,19 @@ namespace MIMWebClient.Core.World.Anker.Mobs
             {
                 NPCId = Guid.NewGuid(),
                 Name = "pink pig",
-                NPCLongName = "A large pig is laying in the mud.",
-                KnownByName = true,
+                NPCLongName = "large pig is laying in the mud",
+                KnownByName = false,
                 Type = PlayerSetup.Player.PlayerTypes.Mob,
-                Description = "A large pig is laying in the mud.",
-                Strength = 40,
+                Description = "A large pig is laying in the mud",
+                Strength = 45,
                 Dexterity = 30,
                 Constitution = 30,
                 Intelligence = 30,
                 Wisdom = 30,
                 Charisma = 30,
-                MaxHitPoints = 50,
-                HitPoints = 50,
-                Level = 1,
+                MaxHitPoints = 75,
+                HitPoints = 75,
+                Level = 5,
                 Status = PlayerSetup.Player.PlayerStatus.Standing,
                 Trainer = false,
                 DialogueTree = new List<DialogTree>(),
@@ -45,8 +45,8 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 MobAttackType = PlayerSetup.Player.MobAttackTypes.Charge,
                 MobAttackStats = new Stats
                 {
-                    damMin = 1,
-                    damMax = 8
+                    damMin = 3,
+                    damMax = 6
                 }
  
             };

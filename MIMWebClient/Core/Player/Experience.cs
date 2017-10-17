@@ -59,7 +59,7 @@ namespace MIMWebClient.Core.Player
         {
             const int maxXpGain = 10000;
 
-            var exp = (victim.MaxHitPoints * victim.Level) / (player.MaxHitPoints * player.Level) * 50;
+            var exp = (int)((victim.MaxHitPoints * victim.Level) / (double)(player.MaxHitPoints * player.Level) * 500);
 
             if (exp > maxXpGain)
             {

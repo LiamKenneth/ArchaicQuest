@@ -148,7 +148,7 @@ namespace MIMWebClient.Core
                 {
                     var result = AvsAnLib.AvsAn.Query(player.Name).Article;
 
-                    name = result + " " + player.Name;
+                    name = Helpers.FirstLetterToUpper(result)  + " " + player.Name;
                 }
 
 

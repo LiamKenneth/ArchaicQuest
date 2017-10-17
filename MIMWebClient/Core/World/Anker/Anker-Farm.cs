@@ -249,6 +249,26 @@ namespace MIMWebClient.Core.World.Anker
 
             };
 
+            var rabit = Rabit.SmallRabbit();
+            var rabit2 = Rabit.SmallRabbit();
+
+            rabit.Recall = new Recall()
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+            rabit2.Recall = new Recall()
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+            room.mobs.Add(rabit);
+            room.mobs.Add(rabit2);
+
             #region exits
 
             var south = new Exit
@@ -323,6 +343,51 @@ namespace MIMWebClient.Core.World.Anker
 
             };
 
+            var rabit = Rabit.SmallRabbit();
+            var rabit2 = Rabit.SmallRabbit();
+
+            rabit.Recall = new Recall()
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+            rabit2.Recall = new Recall()
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+            room.mobs.Add(rabit);
+            room.mobs.Add(rabit2);
+
+
+            var pig = Pig.SmallPig();
+
+            pig.Recall = new Recall()
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+
+            var pig2 = Pig.SmallPig();
+
+            pig2.Recall = new Recall()
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+
+            room.mobs.Add(pig);
+            room.mobs.Add(pig2);
+
+
             #region exits
 
             var south = new Exit
@@ -384,6 +449,44 @@ namespace MIMWebClient.Core.World.Anker
 
 
             };
+
+            var rabit = Rabit.SmallRabbit();
+            var rabit2 = Rabit.SmallRabbit();
+            var rabit3 = Rabit.SmallRabbit();
+            var rabit4 = Rabit.SmallRabbit();
+
+            rabit.Recall = new Recall()
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+            rabit2.Recall = new Recall()
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+            rabit3.Recall = new Recall()
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+            rabit4.Recall = new Recall()
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+            room.mobs.Add(rabit);
+            room.mobs.Add(rabit2);
+            room.mobs.Add(rabit3);
+            room.mobs.Add(rabit4);
 
             #region exits
 
@@ -880,6 +983,52 @@ namespace MIMWebClient.Core.World.Anker
 
 
             #endregion
+
+            var pig = Pig.SmallPig();
+
+            pig.Recall = new Recall()
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+
+            var pig2 = Pig.SmallPig();
+
+            pig2.Recall = new Recall()
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+
+            var pig3 = Pig.SmallPig();
+
+            pig3.Recall = new Recall()
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+
+            var pig4 = Pig.SmallPig();
+
+            pig4.Recall = new Recall()
+            {
+                Area = room.area,
+                AreaId = room.areaId,
+                Region = room.region
+            };
+
+
+
+            room.mobs.Add(pig);
+            room.mobs.Add(pig2);
+            room.mobs.Add(pig3);
+            room.mobs.Add(pig4);
 
 
             room.exits.Add(north);

@@ -214,7 +214,7 @@ namespace MIMWebClient.Core.Events
 
                     if (item.Status == Player.PlayerStatus.Standing)
                     {
-                        mobList += "<p class='roomMob'>" + article + " " + npcName + ".<p>";
+                        mobList += "<p class='roomMob'>" + Helpers.FirstLetterToUpper(article) + " " + npcName + ".<p>";
                     }
                     else if (item.Status == Player.PlayerStatus.Fighting)
                     {
