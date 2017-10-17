@@ -73,7 +73,9 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 equipable = false,
                 location = Item.Item.ItemLocation.Inventory,
                 canOpen = true,
-                Gold = 25
+                Gold = 25,
+                eqSlot = Item.Item.EqSlot.Body
+                
             };
 
             for (int i = 0; i < 20; i++)

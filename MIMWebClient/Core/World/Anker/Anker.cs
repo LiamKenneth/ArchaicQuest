@@ -4905,7 +4905,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "East",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 422,
+                areaId = 0,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false

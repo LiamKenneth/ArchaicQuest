@@ -112,9 +112,9 @@ namespace MIMWebClient.Core.Room
                 nodes.Add(mapNode);
 
                 foreach (var exit in node.exits)
-                { 
-
-                    var mapEdge = new SigmaMapEdge()
+                {
+                
+                        var mapEdge = new SigmaMapEdge()
                     {
                         id = "edge" + node.areaId + exit.areaId,
                         source = "node" + node.areaId,

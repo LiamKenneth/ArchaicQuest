@@ -30,9 +30,9 @@ namespace MIMWebClient.Core.World.Anker
             {
                 region = "Anker",
                 area = "Anker Farm",
-                areaId = 422,
+                areaId = 0,
                 title = "Anker road, east of the Anker gate",
-                description = "<p>Description to come</p>",
+                description = "<p> The road extends from the gates of Anker in the west and the farms to the east, the road is marked by the wagons that traverse it regularly, causing small dips in the road that collect water and turn into mud. The smell of the farms drifts in from the east filling the air with the scent of wheat and pigs.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -59,7 +59,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "East",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 48,
+                areaId = 1,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -69,7 +69,7 @@ namespace MIMWebClient.Core.World.Anker
             var west = new Exit
             {
                 name = "West",
-                area = "Anker Farm",
+                area = "Anker",
                 region = "Anker",
                 areaId = 41,
                 keywords = new List<string>(),
@@ -91,9 +91,9 @@ namespace MIMWebClient.Core.World.Anker
             {
                 region = "Anker",
                 area = "Anker Farm",
-                areaId = 48,
+                areaId = 1,
                 title = "Road through farm",
-                description = "<p>Description to come</p>",
+                description = "<p> A house is to the north of here with a plume of smoke coming from the chimney and the smell of the crops being grown floats on the breeze from the south. The road is a little more kept here as if someone tries to keep this section maintained for the farms.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -120,7 +120,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "North",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 49,
+                areaId = 2,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -131,7 +131,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "South",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 50,
+                areaId = 3,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -143,7 +143,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "East",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 54,
+                areaId = 7,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -156,7 +156,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "West",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 422,
+                areaId = 0,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -178,9 +178,9 @@ namespace MIMWebClient.Core.World.Anker
             {
                 region = "Anker",
                 area = "Anker Farm",
-                areaId = 49,
+                areaId = 2,
                 title = "Farmer O'Neil's House",
-                description = "<p>Description to come</p>",
+                description = "<p> The small house seems to be built for a life of hard work, the bed is tiny with only a few pelts laid across it for some padding. There are several jars of jerky filling the shelves, with a few bags of produce piled into a corner. The sound of the windmill spinning to the east makes the area more noisier than the rest of the farm.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -206,7 +206,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "South",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 48,
+                areaId = 1,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -228,9 +228,9 @@ namespace MIMWebClient.Core.World.Anker
             {
                 region = "Anker",
                 area = "Anker Farm",
-                areaId = 50,
+                areaId = 3,
                 title = "Crop Fields",
-                description = "<p>Description to come</p>",
+                description = "<p>Mounds of dirt decorate the field with the sprouting of carrots erupting from each. They are almost ready to be harvested, but it appears some vermin have decided not to wait as signs of the crops being torn out are evident.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -256,7 +256,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "South",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 53,
+                areaId = 4,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -267,7 +267,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "North",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 48,
+                areaId = 1,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -278,7 +278,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "West",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 51,
+                areaId = 6,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -302,9 +302,9 @@ namespace MIMWebClient.Core.World.Anker
             {
                 region = "Anker",
                 area = "Anker Farm",
-                areaId = 51,
+                areaId = 6,
                 title = "Crop Fields",
-                description = "<p>Description to come</p>",
+                description = "<p>A sea of wheat fills this field, no doubt ground into flour by the large windmill to the north east. A few farm hands are working harvesting the wheat with large scythes and pilling them into a wagon pulled by a donkey behind them.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -330,7 +330,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "South",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 52,
+                areaId = 5,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -341,7 +341,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "East",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 50,
+                areaId = 3,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -364,9 +364,9 @@ namespace MIMWebClient.Core.World.Anker
             {
                 region = "Anker",
                 area = "Anker Farm",
-                areaId = 52,
+                areaId = 4,
                 title = "Crop Fields",
-                description = "<p>Description to come</p>",
+                description = "<p>This field Is full of potatoes, their large leaves covering the ground with little flowers sprouting off the tops. Mostly a sea of green with white and yellow spots, they continue to grow, soon the farm hands will come and begin to harvest this field.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -392,69 +392,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "North",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 51,
-                keywords = new List<string>(),
-                hidden = false,
-                locked = false
-            };
-
-            var east = new Exit
-            {
-                name = "East",
-                area = "Anker Farm",
-                region = "Anker",
-                areaId = 53,
-                keywords = new List<string>(),
-                hidden = false,
-                locked = false
-            };
-
-
-
-            #endregion
-
-            room.exits.Add(north);
-            room.exits.Add(east);
-
-
-            return room;
-        }
-
-        public static Room CropFields3()
-        {
-            var room = new Room
-            {
-                region = "Anker",
-                area = "Anker Farm",
-                areaId = 53,
-                title = "Crop Fields",
-                description = "<p>Description to come</p>",
-
-                //Defaults
-                exits = new List<Exit>(),
-                items = new List<Item.Item>(),
-                mobs = new List<Player>(),
-                terrain = Room.Terrain.Field,
-                keywords = new List<RoomObject>()
-                {
-
-                },
-                corpses = new List<Player>(),
-                players = new List<Player>(),
-                fighting = new List<string>(),
-                clean = true,
-
-
-            };
-
-            #region exits
-
-            var north = new Exit
-            {
-                name = "North",
-                area = "Anker Farm",
-                region = "Anker",
-                areaId = 50,
+                areaId = 3,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -465,7 +403,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "West",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 52,
+                areaId = 5,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -482,13 +420,75 @@ namespace MIMWebClient.Core.World.Anker
             return room;
         }
 
+        public static Room CropFields3()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker Farm",
+                areaId = 5,
+                title = "Crop Fields",
+                description = "<p>arge spots of red cover this field of tomatoes, the fruit so loved by many. Several of the plants have wasp zipping around them possibly using the shadows cast by the nightshade. To the north in the distance is a house with a chimney with smoke pouring out.</p>",
+
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                terrain = Room.Terrain.Field,
+                keywords = new List<RoomObject>()
+                {
+
+                },
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true,
+
+
+            };
+
+            #region exits
+
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker Farm",
+                region = "Anker",
+                areaId = 6,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker Farm",
+                region = "Anker",
+                areaId = 4,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            #endregion
+
+            room.exits.Add(north);
+            room.exits.Add(east);
+
+
+            return room;
+        }
+
         public static Room AnkerRoad1()
         {
             var room = new Room
             {
                 region = "Anker",
                 area = "Anker Farm",
-                areaId = 54,
+                areaId = 7,
                 title = "Anker Road",
                 description = "<p>Description to come</p>",
 
@@ -516,7 +516,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "North",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 55,
+                areaId = 8,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -527,7 +527,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "West",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 48,
+                areaId = 1,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -538,7 +538,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "East",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 58,
+                areaId = 10,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -549,7 +549,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "South",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 56,
+                areaId = 9,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -574,7 +574,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 region = "Anker",
                 area = "Anker Farm",
-                areaId = 55,
+                areaId = 8,
                 title = "The windmill",
                 description = "<p>Description to come</p>",
 
@@ -603,7 +603,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "South",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 54,
+                areaId = 7,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -627,7 +627,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 region = "Anker",
                 area = "Anker Farm",
-                areaId = 56,
+                areaId = 9,
                 title = "The riverbank",
                 description = "<p>Description to come</p>",
 
@@ -656,7 +656,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "North",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 54,
+                areaId = 7,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -680,7 +680,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 region = "Anker",
                 area = "Anker Farm",
-                areaId = 58,
+                areaId = 10,
                 title = "Anker Road",
                 description = "<p>Description to come</p>",
 
@@ -708,7 +708,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "North",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 57,
+                areaId = 11,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -719,7 +719,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "West",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 54,
+                areaId = 7,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -730,7 +730,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "East",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 60,
+                areaId = 13,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -741,7 +741,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "South",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 59,
+                areaId = 12,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -766,7 +766,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 region = "Anker",
                 area = "Anker Farm",
-                areaId = 59,
+                areaId = 12,
                 title = "Saw mill",
                 description = "<p>Description to come</p>",
 
@@ -783,7 +783,7 @@ namespace MIMWebClient.Core.World.Anker
                 players = new List<Player>(),
                 fighting = new List<string>(),
                 clean = true,
-
+                type = Room.RoomType.Standard
 
             };
 
@@ -795,7 +795,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "North",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 58,
+                areaId = 10,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -819,7 +819,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 region = "Anker",
                 area = "Anker Farm",
-                areaId = 57,
+                areaId = 11,
                 title = "Pasture",
                 description = "<p>Description to come</p>",
 
@@ -848,7 +848,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "South",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 58,
+                areaId = 10,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -872,9 +872,10 @@ namespace MIMWebClient.Core.World.Anker
             {
                 region = "Anker",
                 area = "Anker Farm",
-                areaId = 60,
+                areaId = 13,
                 title = "Anker Road",
                 description = "<p>Description to come</p>",
+                type = Room.RoomType.Standard,
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -901,7 +902,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "West",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 58,
+                areaId = 10,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -913,7 +914,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "East",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 61,
+                areaId = 14,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
@@ -938,7 +939,7 @@ namespace MIMWebClient.Core.World.Anker
             {
                 region = "Anker",
                 area = "Anker Farm",
-                areaId = 61,
+                areaId = 14,
                 title = "The bridge leading into the goblin forest",
                 description = "<p>Description to come</p>",
 
@@ -967,7 +968,7 @@ namespace MIMWebClient.Core.World.Anker
                 name = "West",
                 area = "Anker Farm",
                 region = "Anker",
-                areaId = 60,
+                areaId = 13,
                 keywords = new List<string>(),
                 hidden = false,
                 locked = false
