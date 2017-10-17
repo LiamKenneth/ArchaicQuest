@@ -21,6 +21,8 @@ namespace MIMWebClient.Core.PlayerSetup
     using Core.Player.Skills;
     using MongoDB.Driver;
 
+
+
     public class Player
     {
 
@@ -37,6 +39,17 @@ namespace MIMWebClient.Core.PlayerSetup
             Floating = 9,
             Mounted = 10,
 
+        }
+
+
+        public enum MobAttackTypes
+        {
+            Punch,
+            Pound,
+            Bite,
+            Charge,
+            Peck,
+            Headbut,
         }
 
         public enum PlayerTypes
@@ -422,6 +435,11 @@ namespace MIMWebClient.Core.PlayerSetup
 
         [BsonElement("och")]
         public bool OocChannel { get; set; } = true;
+
+        public MobAttackTypes MobAttackType { get; set; }  = MobAttackTypes.Punch;
+
+        public Stats MobAttackStats { get; set; }
+
 
 
 

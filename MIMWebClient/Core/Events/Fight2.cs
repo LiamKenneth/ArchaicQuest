@@ -557,6 +557,11 @@ namespace MIMWebClient.Core.Events
                 damage = helper.dice(1, 1, 6);
             }
 
+            if (attacker.Type == Player.PlayerTypes.Mob && attacker.MobAttackType != Player.MobAttackTypes.Punch)
+            {
+                damage = helper.dice(1, attacker.MobAttackStats.damMin, attacker.MobAttackStats.damMax);
+            }
+
             var armourReduction = CalculateDamageReduction(attacker, defender, damage);
 
             var strengthMod = 0.5 + attacker.Strength / (double)100;
@@ -603,14 +608,13 @@ namespace MIMWebClient.Core.Events
             
                     return new KeyValuePair<string, string>("hit", "hit");
                 
-                /// weapon.attackType = Item.AttackTypes.Slash;
-                //add attack string to weapons
+              
 
             }
 
-            //  var checkPlural = new EnglishPluralizationService();
+            //TODO mob attack name
 
-
+          
             //Skill / spell name here
             return new KeyValuePair<string, string>(skillUsed.Name, skillUsed.Name);
 
@@ -1144,9 +1148,9 @@ namespace MIMWebClient.Core.Events
             int dexterity = player.Dexterity;
             int strength = player.Strength;
 
+            weaponSkill = player.Type == Player.PlayerTypes.Mob ? 1 : 0;
 
-  
-                 off = weaponSkill + (strength / (double)5) * (0.75 + 0.5 * player.MovePoints / (double)player.MaxMovePoints);
+            off = weaponSkill + (strength / (double)5) * (0.75 + 0.5 * player.MovePoints / (double)player.MaxMovePoints);
         
 
             //Based on skill and a random number, an Offensive Force / Factor(OF) is generated.

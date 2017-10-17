@@ -415,10 +415,13 @@
     <Compile Include="Core\World\Items\Weapons\Blunt\HammerBasic.cs" />
     <Compile Include="Core\World\Items\Weapons\Blunt\MaceBasic.cs" />
     <Compile Include="Core\World\Items\Weapons\Dagger\DaggerBasic.cs" />
+    <Compile Include="Core\World\Items\Weapons\Mob\mobWeapons.cs" />
     <Compile Include="Core\World\Items\Weapons\Spear\SpearBasic.cs" />
     <Compile Include="Core\World\Items\Weapons\Staff\StaffBasic.cs" />
     <Compile Include="Core\World\Items\Weapons\Sword\Long\LongSwordBasic.cs" />
     <Compile Include="Core\World\Items\Weapons\Sword\Short\ShortSwordBasic.cs" />
+    <Compile Include="Core\World\Mobs\Pig.cs" />
+    <Compile Include="Core\World\Mobs\Rabit.cs" />
     <Compile Include="Core\World\Mobs\Easy\Goblin.cs" />
     <Compile Include="Core\World\Tutorial\Ambush.cs" />
     <Compile Include="Core\World\Tutorial\Awakening.cs" />

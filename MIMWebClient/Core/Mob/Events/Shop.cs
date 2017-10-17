@@ -28,6 +28,12 @@ namespace MIMWebClient.Core.Mob.Events
                     {
                         var cleanItemName = rgx.Replace(item, string.Empty);
                         var goldAmount = mob.itemsToSell.FirstOrDefault(x => x.name.Equals(cleanItemName)).Gold;
+
+                        if (goldAmount <= 0)
+                        {
+                            goldAmount = 10;
+                        }
+
                         itemsForSell +=  "<tr><td>" + item + "</td> <td>" + (int)(goldAmount + (goldAmount * 0.15)) + " GP</td></tr>";
                     }
 
@@ -107,13 +113,13 @@ namespace MIMWebClient.Core.Mob.Events
 
                             foreach (var item in mob.itemsToSell.Where(x => x.name.Equals(itemToBuy.name)))
                             {
-                                item.Gold = itemToBuy.Gold > 0 ? itemToBuy.Gold : 100;
+                                item.Gold = itemToBuy.Gold > 0 ? itemToBuy.Gold : 10;
                             }
 
                             Score.UpdateUiInventory(player);
                             //deduct gold
 
-                            var value = itemToBuy.Gold > 0 ? itemToBuy.Gold : 1;
+                            var value = itemToBuy.Gold > 0 ? itemToBuy.Gold : 10;
 
                             player.Gold -= value;
                         }
@@ -171,13 +177,7 @@ namespace MIMWebClient.Core.Mob.Events
                        itemToSell.location = Item.Item.ItemLocation.Inventory;
 
                         mob.itemsToSell.Add(itemToSell);
-
-
-                        //foreach (var item in mob.itemsToSell.Where(x => x.name.Equals(itemToSell.name)))
-                        //{
-                        //    item.Gold = itemToSell.Gold > 0 ? itemToSell.Gold - (int)(itemToSell.Gold * 0.10) : 100;
-                        //}
-
+ 
 
                         var value = itemToSell.Gold > 0 ? itemToSell.Gold : 1;
 

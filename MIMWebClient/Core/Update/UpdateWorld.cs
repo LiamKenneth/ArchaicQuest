@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using LiteDB;
 using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Room;
 using MIMWebClient.Hubs;
@@ -18,6 +20,7 @@ namespace MIMWebClient.Core.Update
         public static void Init()
         {
             Task.Run(UpdateTime);
+            //Task.Run(SaveTheWorld);
         }
 
         public static void CleanRoom()
@@ -96,6 +99,7 @@ namespace MIMWebClient.Core.Update
                 EmoteMob();
                 EmoteRoom();
                 KickIdlePlayers();
+
 
             }
 
@@ -231,5 +235,70 @@ namespace MIMWebClient.Core.Update
             {
             }
         }
+
+        //public static async Task SaveTheWorld()
+        //{
+
+        //     await Task.Delay(3000);
+ 
+
+        //    try
+        //    {
+
+        //        var players = new List<PlayerSetup.Player>(Cache.ReturnPlayers());  
+        //        var rooms = new List<Room.Room>(Cache.ReturnRooms());
+ 
+
+        //        if (players.Count <= 0 && rooms.Count <= 0)
+        //        {
+        //            return;
+        //        }
+ 
+   
+        //        using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
+        //        {
+        //            var col = db.GetCollection<PlayerSetup.Player>("Player");
+        //            var colRoom = db.GetCollection<Room.Room>("Room");
+
+
+        //            foreach (var player in players)
+        //            {
+        //                var duration = DateTime.Now.Subtract(player.LastLoginTime);
+
+        //                player.Target = null;
+
+        //                player.PlayTime = (long)duration.TotalMinutes;
+
+        //                player.TotalPlayTime += (long)duration.TotalMinutes;
+
+        //                col.Upsert(player);
+
+        //                HubContext.Instance.SendToClient("Gods take note of your progress", player.HubGuid);
+        //            }
+
+ 
+
+        //            foreach (var room in rooms)
+        //            {
+
+        //                room.fighting = null;
+        //                room.mobs = null;
+        //                room.players = null;
+
+        //                colRoom.Upsert(room);  
+
+        //            }
+ 
+
+        //        }
+
+        //        await SaveTheWorld();
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //    }
+        //}
     }
 }
