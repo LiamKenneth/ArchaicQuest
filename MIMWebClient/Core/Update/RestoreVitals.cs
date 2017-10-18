@@ -155,7 +155,7 @@ namespace MIMWebClient.Core.Update
 
                     #endregion
 
-                    foreach (var item in room.items.FindAll(x => x.Duration > -1))
+                    foreach (var item in room.items.FindAll(x => x.Duration >= 0).ToList())
                     {
 
                         if (item.Duration == 0)

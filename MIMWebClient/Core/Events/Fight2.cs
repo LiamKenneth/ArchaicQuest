@@ -353,7 +353,9 @@ namespace MIMWebClient.Core.Events
                             ShowAttack(attacker, defender, room, toHit, chance, null);
 
 
-                       
+
+                        
+
 
                             if (attacker.Type == Player.PlayerTypes.Player)
                             {
@@ -638,7 +640,45 @@ namespace MIMWebClient.Core.Events
             return 1;
         }
 
-
+        public static string ShowMobHeath(Player defender )
+        {
+            var percent = defender.HitPoints / (double)defender.MaxHitPoints * 100;
+ 
+            switch ((int)percent)
+            {
+                case 100:
+                    return "is in excellent condition.";
+                default:
+                    if (percent >= 90)
+                    {
+                        return "has a few scratches.";
+                    }
+                    else if (percent >= 75)
+                    {
+                        return "has some small wounds and bruises.";
+                    }
+                    else if (percent >= 50)
+                    {
+                        return "has quite a few wounds.";
+                    }
+                    else if (percent >= 30)
+                    {
+                        return "has some big nasty wounds and scratches.";
+                    }
+                    else if (percent >= 15)
+                    {
+                        return "looks pretty hurt.";
+                    }
+                    else if (percent >= 0)
+                    {
+                        return "is in awful condition.";
+                    }
+                    else
+                    {
+                        return "is bleeding awfully from big wounds.";
+                    }
+            }
+        }
 
         /// <summary>
         /// Shows attack and damage to player
@@ -703,7 +743,11 @@ namespace MIMWebClient.Core.Events
 
                             HubContext.Instance.SendToClient(
                                 "Your " + WeaponAttackName(attacker, skillUsed).Key + " " + damageText.Value.ToLower() +
-                                " " + Helpers.ReturnName(defender, attacker, null) + " [" + dam + "]", attacker.HubGuid);
+                                " " + Helpers.ReturnName(defender, attacker, null).ToLower() + " [" + dam + "]", attacker.HubGuid);
+
+                            HubContext.Instance.SendToClient(
+                                Helpers.ReturnName(defender, attacker, null) +  " " + ShowMobHeath(defender) + "<br><br>", attacker.HubGuid);
+
 
                             HubContext.Instance.SendToClient(
                                 Helpers.ReturnName(attacker, defender, null) + "'s " +
@@ -719,8 +763,11 @@ namespace MIMWebClient.Core.Events
                                         WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value.ToLower() +
                                         " " + Helpers.ReturnName(defender, attacker, null), player.HubGuid);
                                 }
+
+                               
                             }
 
+ 
 
                             defender.HitPoints -= dam;
 
@@ -780,8 +827,8 @@ namespace MIMWebClient.Core.Events
                                 observerMessage = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>parries</span> " + Helpers.ReturnName(attacker, defender, null) + "'s" + WeaponAttackName(attacker, skillUsed).Key;
                             }
 
-                            HubContext.Instance.SendToClient(attackerMessage, attacker.HubGuid);
-                            HubContext.Instance.SendToClient(defenderMessage, defender.HubGuid);
+                            HubContext.Instance.SendToClient(attackerMessage +  " <br><br> ", attacker.HubGuid);
+                            HubContext.Instance.SendToClient(defenderMessage + " <br><br> ", defender.HubGuid);
 
                             foreach (var player in room.players)
                             {
@@ -789,11 +836,14 @@ namespace MIMWebClient.Core.Events
                                 {
                                     HubContext.Instance.SendToClient(
                                       observerMessage, player.HubGuid);
-                                }
+                                }                  
                             }
 
                         }
                     }
+
+
+
                 }
             }
 
@@ -1091,6 +1141,31 @@ namespace MIMWebClient.Core.Events
 
                 }
 
+
+                HubContext.Instance.SendToClient("You hear " + Helpers.ReturnName(defender,attacker, null).ToLower()+ "'s death cry.", attacker.HubGuid);
+
+                foreach (var player in room.players)
+                {
+                    if (player.Name != attacker.Name)
+                    {
+                        HubContext.Instance.SendToClient("You hear " + Helpers.ReturnName(defender, attacker, null).ToLower() + "'s death cry.", player.HubGuid);                     
+                    }
+
+                }
+
+                foreach (var exit in room.exits)
+                {
+                    var newRoom = Cache.ReturnRooms()
+                        .FirstOrDefault(x => x.areaId == exit.areaId && x.area == exit.area && x.region == exit.region);
+
+                    if (newRoom != null)
+                    {
+                        foreach (var player in newRoom.players)
+                        {
+                            HubContext.Instance.SendToClient("You hear someone's death cry.", player.HubGuid);
+                        }
+                    }
+                }
 
 
                 attacker.Target = null;

@@ -170,6 +170,7 @@ namespace MIMWebClient.Core
                 {"wake", () => Status.WakePlayer(context, playerData, room)},
                 {"sleep", () => Status.SleepPlayer(context, playerData, room)},
                 {"rest", () => Status.RestPlayer(context, playerData, room)},
+                {"sit", () => Status.RestPlayer(context, playerData, room)},
                 {"stand", () => Status.StandPlayer(context, playerData, room)},
                 {"greet", () => Greet.GreetMob(playerData, room, commandOptions)},
                 {"who", () => Who.Connected(playerData)},

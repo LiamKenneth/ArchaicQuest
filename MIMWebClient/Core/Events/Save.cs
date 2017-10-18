@@ -24,6 +24,11 @@ namespace MIMWebClient.Core.Events
         public static void SavePlayer(Player player)
         {
 
+            if (player.Type == Player.PlayerTypes.Mob)
+            {
+                return;
+            }
+
             try
             {
                 using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))

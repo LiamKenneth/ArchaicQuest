@@ -118,7 +118,7 @@ namespace MIMWebClient.Core.Player
            // var selectedRace = PlayerClass.ClassList().FirstOrDefault(x => x.Value.Name.ToLower().StartsWith(player.SelectedClass, StringComparison.CurrentCultureIgnoreCase));
            //create the other classes
             var selectedClass = PlayerClass.ClassList().FirstOrDefault(x => x.Value.Name.ToLower().StartsWith(player.SelectedClass, StringComparison.CurrentCultureIgnoreCase));
-            var tnl = player.Level * player.Level * player.Level * 2 * selectedClass.Value.ExperienceModifier;
+            var tnl = player.Level * player.Level * 1 * selectedClass.Value.ExperienceModifier;
 
             return tnl;
         }

@@ -48,7 +48,7 @@ namespace MIMWebClient.Core.Events
 
         public static void CraftItem(PlayerSetup.Player player, Room.Room room, string craftItem)
         {
-            CanCraft(player, room, craftItem);
+            CanCraftAsync(player, room, craftItem);
         }
 
         public static void CraftList(PlayerSetup.Player player)
@@ -70,7 +70,7 @@ namespace MIMWebClient.Core.Events
                 {
                     foreach (var materials in canCraft.Materials)
                     {
-                        required += materials + " ";
+                        required += materials.Name + " ";
                     }        
 
                     HubContext.Instance.SendToClient("<p>" + canCraft.Name + ", Required: " + required+"</p>", player.HubGuid);
@@ -82,7 +82,7 @@ namespace MIMWebClient.Core.Events
         {
             foreach (var material in materialList)
             {
-                if (player.Inventory.Count(x => x.name.Equals(material.Name)) != material.Count)
+                if (player.Inventory.Count(x => x.name.Equals(material.Name)) >= material.Count)
                 {
                     HubContext.Instance.SendToClient("You don't have all the materials required to craft " + Helpers.ReturnName(null, null, material.Name) + ".", player.HubGuid);
                     return false;
@@ -93,7 +93,7 @@ namespace MIMWebClient.Core.Events
         }
 
 
-        public static void CanCraft(PlayerSetup.Player player, Room.Room room, string craftItem)
+        public static async Task CanCraftAsync(PlayerSetup.Player player, Room.Room room, string craftItem)
         {
             if (string.IsNullOrEmpty(craftItem))
             {
@@ -118,21 +118,24 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
-          CraftItem(player, room, findCraft);
+           
+
+            await CraftItem(player, room, findCraft);
         }
 
-        public static void CraftItem(PlayerSetup.Player player, Room.Room room, Craft craftItem)
+        public static async Task CraftItem(PlayerSetup.Player player, Room.Room room, Craft craftItem)
         {
+            var oldRoom = room;
             HubContext.Instance.SendToClient(craftItem.StartMessage, player.HubGuid);
 
-            Task.Delay(1500);
+           await Task.Delay(1500);
 
             foreach (var emote in craftItem.CraftingEmotes)
             {
                 HubContext.Instance.SendToClient(emote, player.HubGuid);
 
 
-                Task.Delay(1000);
+             await Task.Delay(1500);
             }
 
             HubContext.Instance.SendToClient(craftItem.SuccessMessage, player.HubGuid);
@@ -141,7 +144,7 @@ namespace MIMWebClient.Core.Events
             foreach (var materials in craftItem.Materials)
             {
 
-                for (int i = 0; i < materials.Count; i++)
+                for (var i = 0; i < materials.Count; i++)
                 {
                     var item = player.Inventory.FirstOrDefault(x => x.name.Equals(materials.Name));
 
@@ -153,6 +156,9 @@ namespace MIMWebClient.Core.Events
             {
                 room.items.Add(craftItem.CreatesItem);
             }
+
+
+            Cache.updateRoom(room, oldRoom);
 
         }
     }

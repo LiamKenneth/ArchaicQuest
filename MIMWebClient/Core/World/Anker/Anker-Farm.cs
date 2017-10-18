@@ -203,55 +203,36 @@ namespace MIMWebClient.Core.World.Anker
             {
                 new Item.Item()
                 {
-                    name = "Logs",
+                    name = "Log",
                     location = Item.Item.ItemLocation.Room,
                     Gold = 2
                 },
 
                 new Item.Item()
                 {
-                    name = "Logs",
+                    name = "Log",
                     location = Item.Item.ItemLocation.Room,
                     Gold = 2
                 },
 
                 new Item.Item()
                 {
-                    name = "Logs",
+                    name = "Log",
                     location = Item.Item.ItemLocation.Room,
                     Gold = 2
                 },
 
                 new Item.Item()
                 {
-                    name = "Logs",
+                    name = "Log",
                     location = Item.Item.ItemLocation.Room,
                     Gold = 2
                 },
-                                new Item.Item()
-                {
-                    name = "Logs",
-                    location = Item.Item.ItemLocation.Room,
-                    Gold = 2
-                },
+              
 
                 new Item.Item()
                 {
-                    name = "Logs",
-                    location = Item.Item.ItemLocation.Room,
-                    Gold = 2
-                },
-
-                new Item.Item()
-                {
-                    name = "Logs",
-                    location = Item.Item.ItemLocation.Room,
-                    Gold = 2
-                },
-
-                new Item.Item()
-                {
-                    name = "Logs",
+                    name = "Log",
                     location = Item.Item.ItemLocation.Room,
                     Gold = 2
                 }
