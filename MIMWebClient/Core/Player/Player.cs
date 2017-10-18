@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Mob;
+using MIMWebClient.Core.World.Crafting;
 
 namespace MIMWebClient.Core.PlayerSetup
 {
@@ -146,6 +147,8 @@ namespace MIMWebClient.Core.PlayerSetup
 
         [BsonElement("sk")]
         public List<Skill> Skills { get; set; }
+ 
+        public List<string> CraftingRecipes { get; set; } = new List<string>();
 
         [BsonElement("ask")]
         [BsonIgnoreIfNull]
@@ -522,6 +525,8 @@ namespace MIMWebClient.Core.PlayerSetup
 
 
             this.Recall = recall;
+
+            this.CraftingRecipes.Add(Crafting.CampFire().Name);
 
 
         }

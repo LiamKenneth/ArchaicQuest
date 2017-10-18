@@ -199,6 +199,64 @@ namespace MIMWebClient.Core.World.Anker
 
             };
 
+            room.items = new List<Item.Item>()
+            {
+                new Item.Item()
+                {
+                    name = "Logs",
+                    location = Item.Item.ItemLocation.Room,
+                    Gold = 2
+                },
+
+                new Item.Item()
+                {
+                    name = "Logs",
+                    location = Item.Item.ItemLocation.Room,
+                    Gold = 2
+                },
+
+                new Item.Item()
+                {
+                    name = "Logs",
+                    location = Item.Item.ItemLocation.Room,
+                    Gold = 2
+                },
+
+                new Item.Item()
+                {
+                    name = "Logs",
+                    location = Item.Item.ItemLocation.Room,
+                    Gold = 2
+                },
+                                new Item.Item()
+                {
+                    name = "Logs",
+                    location = Item.Item.ItemLocation.Room,
+                    Gold = 2
+                },
+
+                new Item.Item()
+                {
+                    name = "Logs",
+                    location = Item.Item.ItemLocation.Room,
+                    Gold = 2
+                },
+
+                new Item.Item()
+                {
+                    name = "Logs",
+                    location = Item.Item.ItemLocation.Room,
+                    Gold = 2
+                },
+
+                new Item.Item()
+                {
+                    name = "Logs",
+                    location = Item.Item.ItemLocation.Room,
+                    Gold = 2
+                }
+            };
+
             #region exits
 
             var south = new Exit

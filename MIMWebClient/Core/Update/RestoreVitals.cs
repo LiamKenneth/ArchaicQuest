@@ -155,6 +155,19 @@ namespace MIMWebClient.Core.Update
 
                     #endregion
 
+                    foreach (var item in room.items.FindAll(x => x.Duration > -1))
+                    {
+
+                        if (item.Duration == 0)
+                        {
+                            room.items.Remove(item);
+                            continue;
+                         
+                        }
+
+                        item.Duration--;
+                    }
+
                     #region add Items back
 
                     for (int j = World.Areas.ListOfRooms().Count - 1; j >= 0; j--)

@@ -11,6 +11,7 @@ using MIMWebClient.Core.Player;
 using MIMWebClient.Core;
 using MIMWebClient;
 using MIMWebClient.Core.AI;
+using MIMWebClient.Core.World.Crafting;
 using MIMWebClient.Core.World.Tutorial;
 
 namespace MIMWebClient.Hubs
@@ -382,6 +383,8 @@ namespace MIMWebClient.Hubs
                     if (alreadyLogged.Value.Name == name)
                     {
 
+                        Save.SavePlayer(PlayerData);
+
                         var oldPlayer = alreadyLogged.Value;
                         _PlayerCache.TryRemove(alreadyLogged.Value.HubGuid, out oldPlayer);
 
@@ -425,6 +428,8 @@ namespace MIMWebClient.Hubs
                 Score.UpdateUiQlog(player);
                 Score.UpdateDescription(player, player.Description);
 
+
+                player.CraftingRecipes.Add(Crafting.CampFire().Name);
 
             }
             else

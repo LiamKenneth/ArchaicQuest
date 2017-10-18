@@ -1097,7 +1097,8 @@ namespace MIMWebClient.Core.Events
                 attacker.Status = PlayerSetup.Player.PlayerStatus.Standing;
                 attacker.ActiveFighting = false;
 
-               
+
+                Save.SavePlayer(defender);
 
             }
 

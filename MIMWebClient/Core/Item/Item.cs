@@ -178,6 +178,7 @@ namespace MIMWebClient.Core.Item
         public int weaponSpeed { get; set; }
         public bool isHiddenInRoom { get; set; }
         public int count { get; set; }
+        public int Duration { get; set; } = -1;
         public int Gold { get; set; }
         public bool QuestItem { get; set; }
         public ArmourRating ArmorRating { get; set; }   
