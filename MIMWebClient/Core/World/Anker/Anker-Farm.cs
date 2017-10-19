@@ -13,6 +13,7 @@ using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Feet;
 using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Head;
 using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Legs;
 using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Hands;
+using MIMWebClient.Core.World.Items.Weapons.Axe;
 
 namespace MIMWebClient.Core.World.Anker
 {
@@ -205,28 +206,33 @@ namespace MIMWebClient.Core.World.Anker
                 {
                     name = "Log",
                     location = Item.Item.ItemLocation.Room,
-                    Gold = 2
+                    Gold = 2,
+                    type = Item.Item.ItemType.Misc,
+                    slot = Item.Item.EqSlot.Held
                 },
 
                 new Item.Item()
                 {
                     name = "Log",
                     location = Item.Item.ItemLocation.Room,
-                    Gold = 2
+                    Gold = 2,
+                    type = Item.Item.ItemType.Misc
                 },
 
                 new Item.Item()
                 {
                     name = "Log",
                     location = Item.Item.ItemLocation.Room,
-                    Gold = 2
+                    Gold = 2,
+                    type = Item.Item.ItemType.Misc
                 },
 
                 new Item.Item()
                 {
                     name = "Log",
                     location = Item.Item.ItemLocation.Room,
-                    Gold = 2
+                    Gold = 2,
+                    type = Item.Item.ItemType.Misc
                 },
               
 
@@ -234,7 +240,8 @@ namespace MIMWebClient.Core.World.Anker
                 {
                     name = "Log",
                     location = Item.Item.ItemLocation.Room,
-                    Gold = 2
+                    Gold = 2,
+                    type = Item.Item.ItemType.Misc
                 }
             };
 
@@ -570,7 +577,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker Farm",
                 areaId = 5,
                 title = "Crop Fields",
-                description = "<p>arge spots of red cover this field of tomatoes, the fruit so loved by many. Several of the plants have wasp zipping around them possibly using the shadows cast by the nightshade. To the north in the distance is a house with a chimney with smoke pouring out.</p>",
+                description = "<p>Large spots of red cover this field of tomatoes, the fruit so loved by many. Several of the plants have wasp zipping around them possibly using the shadows cast by the nightshade. To the north in the distance is a house with a chimney with smoke pouring out.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -794,7 +801,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker Farm",
                 areaId = 9,
                 title = "The riverbank",
-                description = "<p>Description to come</p>",
+                description = "<p>Several thick reeds are growing in the shallow part of the river, with ripples dotting around indicating a plethora of life is here. A couple of stumps are a few feet in providing obstacles to what would otherwise be an ideal fishing spot, although no problem for an experienced fisherman.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -937,7 +944,23 @@ namespace MIMWebClient.Core.World.Anker
 
                 //Defaults
                 exits = new List<Exit>(),
-                items = new List<Item.Item>(),
+                items = new List<Item.Item>()
+                {
+                    new Item.Item()
+                    {
+                        name = "Chopping block",
+                        location = Item.Item.ItemLocation.Room,
+                        description = new Description()
+                        {
+                            look = "This chopping block can be used to chop wood that can be used for crafting."
+                        },
+                        stuck = true,
+                        
+                    },
+                    
+                    
+                    
+                },
                 mobs = new List<Player>(),
                 terrain = Room.Terrain.Field,
                 keywords = new List<RoomObject>()
@@ -950,7 +973,13 @@ namespace MIMWebClient.Core.World.Anker
                 clean = true,
                 type = Room.RoomType.Standard
 
+
             };
+
+
+            var axe = AxeBasic.IronHatchet();
+            axe.location = Item.Item.ItemLocation.Room;
+            room.items.Add(axe);
 
             #region exits
 

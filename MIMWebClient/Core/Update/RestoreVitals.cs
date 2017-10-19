@@ -165,7 +165,7 @@ namespace MIMWebClient.Core.Update
                          
                         }
 
-                        item.Duration--;
+                        item.Duration -= 1;
                     }
 
                     #region add Items back
@@ -187,7 +187,12 @@ namespace MIMWebClient.Core.Update
                                     room.items.Add(World.Areas.ListOfRooms()[j].items[k]);
                                 }
 
-                                if (itemAlreadyThere?.container == true)
+                                if (room.items.Count(x => x.name.Equals(World.Areas.ListOfRooms()[j].items[k].name)) < World.Areas.ListOfRooms()[j].items.Count(x => x.name.Equals(World.Areas.ListOfRooms()[j].items[k].name)))
+                                {
+                                    room.items.Add(World.Areas.ListOfRooms()[j].items[k]);
+                                }
+
+                                    if (itemAlreadyThere?.container == true)
                                 {
 
 

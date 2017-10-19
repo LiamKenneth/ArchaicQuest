@@ -1846,7 +1846,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 areaId = 15,
                 title = "Temple Walk",
-                description = "<p>The path here leads east at an incline through a hill, the path curving up towards the temple of Tyr. To the west is the entrance to the square.</p>",
+                description = "<p>The path here leads east at an incline through a hill, the path curving up towards the temple of Tyr. To the West is the entrance to the square where the hustle and bustle of the town erupts into a symphony of sound, as the townsfolk go about their daily routine.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -1904,7 +1904,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 areaId = 42,
                 title = "Temple Walk",
-                description = "<p>The path here continues east, the incline getting steeper the higher you go towards the temple of Tyr. To the west is the path leading towards the entrance to the square.</p>",
+                description = "<p>The path here continues east, the incline getting steeper the higher you go towards the temple of Tyr. To the west is the path leading towards the entrance to the square. High up on the pathway the top of the tree line shows itself, revealing distant landmarks, to the north in the distance appears to be some kind of large house and to the east are fires burning from a village in the forest.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -2020,7 +2020,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 areaId = 16,
                 title = "Temple Walk",
-                description = "<p>The path here continues east, the incline getting steeper the higher you go towards the temple of Tyr. To the west is the path sloping down towards the village.</p>",
+                description = "<p>The path here continues east, the incline getting steeper the higher you go towards the temple of Tyr. To the west is the path sloping down towards the village. A small puddle of water has collected here in a dip in the path as water slowly runs down from higher up the walkway.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),

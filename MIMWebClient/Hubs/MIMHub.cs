@@ -430,7 +430,7 @@ namespace MIMWebClient.Hubs
 
 
                 player.CraftingRecipes.Add(Crafting.CampFire().Name);
-
+                player.CraftingRecipes.Add(Crafting.PineLog().Name);
             }
             else
             {

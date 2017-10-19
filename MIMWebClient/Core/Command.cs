@@ -179,10 +179,11 @@ namespace MIMWebClient.Core
                 {"nofollow", () => Follow.FollowThing(playerData, room, "noFollow") },
                 {"quit", () => HubContext.Instance.Quit(playerData.HubGuid, room)},
                 {"craft", () => Craft.CraftItem(playerData, room, commandOptions)},
+                {"chop", () => Craft.CraftItem(playerData, room, commandOptions, "chop")},
                 {"make", () => Craft.CraftItem(playerData, room, commandOptions)},
                 {"build", () => Craft.CraftItem(playerData, room, commandOptions)},
                 {"show crafts", () => Craft.CraftList(playerData)},
-                {"craftlist", () => Craft.CraftList(playerData)},
+                {"craftlist", () => Craft.CraftList(playerData)}, 
 
                 //admin
                 {"/debug", () => PlayerSetup.Player.DebugPlayer(playerData) },

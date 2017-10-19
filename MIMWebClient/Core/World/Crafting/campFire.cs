@@ -13,13 +13,53 @@ namespace MIMWebClient.Core.World.Crafting
         {
             var listOfCrafts = new List<Craft>()
             {
-                CampFire()
+                CampFire(),
+                PineLog()
             };
 
             return listOfCrafts;
         }
 
+        public static Craft PineLog()
+        {
 
+            var pinelog = new Craft()
+            {
+                Name = "Pine log",
+                StartMessage = "You grip the shaft of your axe, ready to chop the felled tree into a smaller chunk.",
+                FaliureMessage = "...",
+                SuccessMessage = "You have chopped a pine log from a felled tree",
+                Description = "To make a log you need to be at a chopping block.",
+                Materials = new List<CraftMaterials>()
+                {
+
+                },
+                CraftAppearsInRoom = true,
+                CraftingEmotes = new List<string>()
+                {
+                    "You raise the axe above your head,",
+                    "You swing the axe down with all your might. *CRACK* a log lands heavy on the floor."
+                },
+                CreatesItem = new Item.Item()
+                {
+
+                    name = "Pine log",
+               
+                    description = new Description()
+                    {
+                        look = "A pine log"
+                    },
+                    location = Item.Item.ItemLocation.Room
+
+
+                },
+                MoveCost = 20
+
+            };
+
+            return pinelog;
+
+        }
 
         public static Craft CampFire()
         {
@@ -37,7 +77,7 @@ namespace MIMWebClient.Core.World.Crafting
                     new CraftMaterials()
                     {
                         Count = 4,
-                        Name = "Logs"
+                        Name = "Log"
                     }
                 },
                 CraftAppearsInRoom = true,
@@ -57,7 +97,8 @@ namespace MIMWebClient.Core.World.Crafting
 
 
                 },
-                
+                MoveCost = 10
+
             };
 
             return CampFire;

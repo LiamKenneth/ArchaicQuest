@@ -12,9 +12,12 @@ namespace MIMWebClient.Core.World.Items.Weapons.Axe
         {
             var IronHatchet = new Item.Item
             {
-                name = "Simple Iron Hatchet",
+                name = "Simple Iron Axe",
                 Weight = 5,
-                count = 10,
+                keywords = new List<string>()
+                {
+                    "Axe"
+                },
                 equipable = true,
                 eqSlot = Item.Item.EqSlot.Wielded,
                 slot = Item.Item.EqSlot.Wielded,

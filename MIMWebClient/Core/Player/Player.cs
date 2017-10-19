@@ -527,7 +527,7 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Recall = recall;
 
             this.CraftingRecipes.Add(Crafting.CampFire().Name);
-
+            this.CraftingRecipes.Add(Crafting.PineLog().Name);
 
         }
 
