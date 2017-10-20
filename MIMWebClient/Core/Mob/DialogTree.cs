@@ -23,6 +23,8 @@ namespace MIMWebClient.Core.Mob
         public bool ShowIfEvil { get; set; } = false;
         public bool ShowIfGood { get; set; } = false;
         public bool ShowIfNeutral { get; set; } = false;
+        public string DontShowIfOnQuest { get; set; } = String.Empty;
 
-    }
+        public Action CallScript { get; set; }
+}
 }

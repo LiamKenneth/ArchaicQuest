@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using MIMWebClient.Core.Player;
 
 namespace MIMWebClient.Core.Mob.Events
 {
@@ -21,76 +22,96 @@ namespace MIMWebClient.Core.Mob.Events
 
             //greet should enable dialoge between npc and char
 
-            if (npc.DialogueTree != null && npc.DialogueTree.Count > 0)
+
+            /* check quests */
+
+            foreach (var qlog in player.QuestLog)
             {
-                var dialogue = npc.DialogueTree.FirstOrDefault(x => x.Id.Equals(npc.Name + 1, StringComparison.CurrentCultureIgnoreCase));
-
-                /* check quests */
-
-                foreach (var qlog in player.QuestLog)
+                // QuestGiver in the case of lance he is not the quest giver 
+                // so maybe properties that set how a quest is completed
+                // QuestDo ?wtf
+                // QuestItem get item or somthing
+                // QuestKill mob
+                // add QuestFind mob?
+                if (qlog.Completed.Equals(false) && qlog.QuestGiver != null && qlog.QuestGiver == npc.Name)
                 {
-                    // QuestGiver in the case of lance he is not the quest giver 
-                    // so maybe properties that set how a quest is completed
-                    // QuestDo ?wtf
-                    // QuestItem get item or somthing
-                    // QuestKill mob
-                    // add QuestFind mob?
-                    if (qlog.Completed.Equals(false) && qlog.QuestGiver.Equals(npc.Name) || qlog.Completed.Equals(false) && qlog.QuestFindMob != null && qlog.QuestFindMob.Equals(npc.Name))
+
+
+                    //   HubContext.Instance.SendToClient(qlog.RewardDialog.Message, player.HubGuid);
+
+                    if (npc.DialogueTree != null && npc.DialogueTree.Count >= 1)
                     {
 
-                     
-                     //   HubContext.Instance.SendToClient(qlog.RewardDialog.Message, player.HubGuid);
 
-                        if (npc.DialogueTree != null && npc.DialogueTree.Count >= 1)
+                        var speak = npc.DialogueTree[0];
+
+                        foreach (var quest in player.QuestLog)
                         {
 
-                            
-                            var speak = npc.DialogueTree[0];
-          
-                            foreach (var quest in player.QuestLog)
+                            speak = npc.DialogueTree.FirstOrDefault(x => x.ShowIfOnQuest.Equals(quest.Name));
+
+                        }
+
+                        if (speak == null)
+                        {
+                            speak = npc.DialogueTree[0];
+                        }
+
+                        HubContext.Instance.AddNewMessageToPage(player.HubGuid,
+                            npc.Name + " says to you \"" + speak.Message + "\"");
+                        var i = 1;
+                        foreach (var respond in speak.PossibleResponse)
+                        {
+
+                            if (player.QuestLog.FirstOrDefault(x => x.Name.Equals(respond.DontShowIfOnQuest)) == null)
                             {
-
-                                speak = npc.DialogueTree.FirstOrDefault(x => x.ShowIfOnQuest.Equals(quest.Name));
-
-                            }
-
-                            if (speak == null)
-                            {
-                                speak = npc.DialogueTree[0];
-                            }
-
-                            HubContext.Instance.AddNewMessageToPage(player.HubGuid, npc.Name + " says to you \"" + speak.Message + "\"");
-                            var i = 1;
-                            foreach (var respond in speak.PossibleResponse)
-                            {
-                                var textChoice = "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " + respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " + respond.Response + "</a>";
+                                var textChoice =
+                                    "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
+                                    respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " + respond.Response +
+                                    "</a>";
                                 HubContext.Instance.AddNewMessageToPage(player.HubGuid, textChoice);
                                 i++;
 
                             }
+
+
                         }
-
-                        qlog.Completed = true;
-                        player.Experience += qlog.RewardXp;
-
-                        HubContext.Instance.SendToClient(qlog.Name + " Completed, you are rewarded " + qlog.RewardXp + " xp", player.HubGuid);
-
-                        return;
-
                     }
-                }
 
-                if (dialogue != null)
-                {
-                    HubContext.Instance.SendToClient(dialogue.Message, player.HubGuid);
-                }
-                else
-                {
-                    HubContext.Instance.SendToClient(npc.Name + " greets you back", player.HubGuid);
+                    qlog.Completed = true;
+                    player.Experience += qlog.RewardXp;
+
+                    HubContext.Instance.SendToClient(
+                        qlog.Name + " Completed, you are rewarded " + qlog.RewardXp + " xp", player.HubGuid);
+
+                    return;
+
                 }
             }
 
-        }
+            if (npc.DialogueTree != null && npc.DialogueTree.Count > 0)
+            {
+                var speak = npc.DialogueTree[0];
 
+                HubContext.Instance.AddNewMessageToPage(player.HubGuid,
+                    "<span class='sayColor'>" + npc.Name + " says to you \"" + speak.Message + "\"</span>");
+                var i = 1;
+                foreach (var respond in speak.PossibleResponse)
+                {
+                    var textChoice =
+                        "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
+                        respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " +
+                        respond.Response + "</a>";
+                    HubContext.Instance.AddNewMessageToPage(player.HubGuid, textChoice);
+                    i++;
+
+                }
+            }
+            else
+            {
+                HubContext.Instance.SendToClient(npc.Name + " greets you back", player.HubGuid);
+            }
+
+        }
     }
 }

@@ -94,11 +94,11 @@ namespace MIMWebClient.Core.Events
                     //check branch to show responses from
                     var speak = mob.DialogueTree.FirstOrDefault(x => x.Message.Equals(response));
 
-                    if (speak?.PossibleResponse.Count > 0)
-                    {
-                        HubContext.Instance.SendToClient("<span class='sayColor'>" +
-                            mob.Name + " says to you \"anything else?\"</span>", playerId);
-                    }
+                    //if (speak?.PossibleResponse.Count > 0)
+                    //{
+                    //    HubContext.Instance.SendToClient("<span class='sayColor'>" +
+                    //        mob.Name + " says to you \"anything else?\"</span>", playerId);
+                    //}
 
 
 

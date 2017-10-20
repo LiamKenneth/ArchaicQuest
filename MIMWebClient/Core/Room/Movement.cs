@@ -326,7 +326,7 @@ namespace MIMWebClient.Core.Room
                             //mob might be aggro
                         }
 
-                        if (mob.DialogueTree != null && mob.DialogueTree.Count >= 1)
+                        if (mob.MobTalkOnEnter && mob.DialogueTree != null && mob.DialogueTree.Count >= 1)
                         {
                             var speak = mob.DialogueTree[0];
 
@@ -474,7 +474,7 @@ namespace MIMWebClient.Core.Room
                                 }
                               
 
-                                if (mob.DialogueTree != null && mob.DialogueTree.Count > 0)
+                                if (mob.MobTalkOnEnter && mob.DialogueTree != null && mob.DialogueTree.Count > 0)
                                 {
                                     var speak = mob.DialogueTree[0];
 

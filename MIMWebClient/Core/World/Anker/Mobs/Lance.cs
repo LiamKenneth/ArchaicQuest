@@ -43,7 +43,8 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 GreetMessage = "Hello there!",
                 DialogueTree = new List<DialogTree>(),
                 Dialogue = new List<Responses>(),
-                Quest = new List<Quest>()
+                Quest = new List<Quest>(),
+                MobTalkOnEnter = true
 
 
             };

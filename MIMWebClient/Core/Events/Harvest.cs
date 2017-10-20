@@ -59,15 +59,13 @@ namespace MIMWebClient.Core.Events
             switch (rand)
             {
                 case 1:
-                    return  "eyeball";
+                    return "eyeball";
                 case 2:
                     return "ear";
                 case 3:
                     return "tooth";
                 case 4:
                     return "rib bone";
- 
-
             }
             return "nothing";
 

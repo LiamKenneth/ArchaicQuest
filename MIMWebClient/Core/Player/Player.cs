@@ -443,6 +443,8 @@ namespace MIMWebClient.Core.PlayerSetup
 
         public Stats MobAttackStats { get; set; }
 
+        public bool MobTalkOnEnter { get; set; } = false;
+
 
 
 

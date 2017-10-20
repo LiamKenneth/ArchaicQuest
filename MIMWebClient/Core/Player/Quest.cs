@@ -150,5 +150,50 @@ namespace MIMWebClient.Core.Player
             }
  
         }
+
+        public static void CheckIfKillQuestsComplete(PlayerSetup.Player player, Quest originalQuest)
+        {
+            var findQuest = player.QuestLog.FirstOrDefault(x => x.Name == originalQuest.Name && x.Completed == false);
+
+             
+  
+                bool compelete = findQuest.QuestCount == originalQuest.QuestCount;
+
+                if (compelete)
+                {
+                    findQuest.Completed = true;
+
+                    HubContext.Instance.SendToClient(findQuest.RewardDialog.Message, player.HubGuid);
+                    HubContext.Instance.SendToClient("You gain " + findQuest.RewardXp + " Experience Points", player.HubGuid);
+                    HubContext.Instance.SendToClient("You gain " + findQuest.RewardGold + " gold pieces", player.HubGuid);
+
+                    var rewardItem = findQuest?.RewardItem;
+
+                    if (rewardItem != null)
+                    {
+                        rewardItem.location = Item.Item.ItemLocation.Inventory;
+
+                        player.Inventory.Add(rewardItem);
+                    }
+
+                    player.Experience += findQuest.RewardXp;
+                    player.Gold = findQuest.RewardGold;
+
+                    //check if player level
+                    var xp = new Experience();
+                    xp.GainLevel(player);
+                    //update ui
+                    Score.UpdateUiQlog(player);
+                    Score.ReturnScoreUI(player);
+
+                }
+                else
+                {
+                HubContext.Instance.SendToClient("You haven't compleated the quest yet. Kill " + findQuest.QuestCount + " more " + findQuest.QuestKill, player.HubGuid);
+            }
+
+            
+
+        }
     }
 }

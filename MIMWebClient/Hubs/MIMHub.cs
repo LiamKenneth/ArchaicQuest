@@ -383,7 +383,7 @@ namespace MIMWebClient.Hubs
                     if (alreadyLogged.Value.Name == name)
                     {
 
-                        Save.SavePlayer(PlayerData);
+                        Save.SavePlayer(alreadyLogged.Value);
 
                         var oldPlayer = alreadyLogged.Value;
                         _PlayerCache.TryRemove(alreadyLogged.Value.HubGuid, out oldPlayer);

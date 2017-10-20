@@ -293,6 +293,7 @@
     <Compile Include="Core\PlayerSetup\PlayerRace.cs" />
     <Compile Include="Core\PlayerSetup\PlayerStats.cs" />
     <Compile Include="Core\PlayerSetup\ValidateChar.cs" />
+    <Compile Include="Core\World\Anker\Mobs\FarmerOneil.cs" />
     <Compile Include="Core\World\Crafting\campFire.cs" />
     <Compile Include="Core\Player\Effect.cs" />
     <Compile Include="Core\Player\Classes\Thief.cs" />

@@ -245,6 +245,15 @@ namespace MIMWebClient.Core.World.Anker
                 }
             };
 
+            var farmer = FarmerOneil.Farmer();
+            farmer.Recall = new Recall()
+            {
+                Region = room.region,
+                AreaId = room.areaId,
+                Area = room.area
+            };
+            room.mobs.Add(farmer);
+
             #region exits
 
             var south = new Exit

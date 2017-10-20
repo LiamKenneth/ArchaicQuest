@@ -1045,7 +1045,19 @@
     });
 
 
- 
+    var _player = document.getElementById("player");
+
+     function playAudio() {
+
+         _player.src = "";
+
+            _player.play();
+
+         
+     };
+
+v
+
 
     function maps(area, region, zindex) {
  

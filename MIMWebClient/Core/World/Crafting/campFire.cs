@@ -90,7 +90,8 @@ namespace MIMWebClient.Core.World.Crafting
                     {
                         look = "A fire!"
                     },
-                    location = Item.Item.ItemLocation.Room
+                    location = Item.Item.ItemLocation.Room,
+                    Duration = 6
 
 
                 },
