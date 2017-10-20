@@ -81,6 +81,8 @@ namespace MIMWebClient.Core
                 {"kill", () => Fight2.PerpareToFight(playerData, room, commandOptions)},
                 {"attack", () => Fight2.PerpareToFight(playerData, room, commandOptions)},
                 {"flee", () => Flee.fleeCombat(playerData, room)},
+                {"sacrifice", () => Harvest.Body(playerData, room, commandOptions)},
+                {"harvest", () => Harvest.Body(playerData, room, commandOptions)},
 
                 //spells
                 {"c magic missile", () =>  MagicMissile.StartMagicMissile(playerData, room, commandOptions)},

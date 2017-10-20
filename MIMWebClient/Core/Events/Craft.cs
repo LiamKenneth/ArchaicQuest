@@ -7,6 +7,13 @@ using MIMWebClient.Core.World.Crafting;
 
 namespace MIMWebClient.Core.Events
 {
+
+    public enum CraftType
+    {
+        Craft,
+        Chop
+
+    }
     public class CraftMaterials
     {
         public string Name { get; set; }
@@ -25,6 +32,9 @@ namespace MIMWebClient.Core.Events
 
         public List<string> CraftingEmotes { get; set; }
 
+        public CraftType CraftCommand { get; set; } = CraftType.Craft;
+
+
         public string StartMessage { get; set; }
 
         public string Description { get; set; }
@@ -34,7 +44,6 @@ namespace MIMWebClient.Core.Events
         public string FaliureMessage { get; set; }
 
         public Item.Item CreatesItem { get; set; }
-
         /// <summary>
         /// otherwise player inv
         /// </summary>
@@ -80,13 +89,13 @@ namespace MIMWebClient.Core.Events
             }
         }
 
-        public static Boolean HasAllMaterials(PlayerSetup.Player player, List<CraftMaterials> materialList)
+        public static Boolean HasAllMaterials(PlayerSetup.Player player, List<CraftMaterials> materialList, string craftItem)
         {
             foreach (var material in materialList)
             {
-                if (player.Inventory.Count(x => x.name.Contains(material.Name)) <= material.Count || player.Inventory.Count(x => x.name.Contains(material.Name)) == 0)
+                if (player.Inventory.Count(x => x.name.ToLower().Contains(material.Name.ToLower())) < material.Count || player.Inventory.Count(x => x.name.ToLower().Contains(material.Name.ToLower())) == 0)
                 {
-                    HubContext.Instance.SendToClient("You don't have all the materials required to craft " + Helpers.ReturnName(null, null, material.Name) + ".", player.HubGuid);
+                    HubContext.Instance.SendToClient("You don't have all the materials required to craft " + Helpers.ReturnName(null, null, craftItem).ToLower() + ".", player.HubGuid);
                     return false;
                 }
             }
@@ -104,7 +113,8 @@ namespace MIMWebClient.Core.Events
                 HubContext.Instance.SendToClient("What do you want to craft?", player.HubGuid);
                 return;
             }
-            else if ((string.IsNullOrEmpty(craftItem) && craftType == "chop"))
+
+            if ((string.IsNullOrEmpty(craftItem) && craftType == "chop"))
             {
                 HubContext.Instance.SendToClient("What do you want to chop?", player.HubGuid);
                 return;
@@ -114,34 +124,56 @@ namespace MIMWebClient.Core.Events
 
             var hasCraft = player.CraftingRecipes.FirstOrDefault(x => x.ToLower().Contains(craftItem.ToLower()));
 
-            if (hasCraft == null && craftType == null)
+            if (hasCraft == null && findCraft == null && craftType == null)
             {
                 HubContext.Instance.SendToClient("You don't know how to craft that.", player.HubGuid);
                 return;
             }
-            else if ((string.IsNullOrEmpty(hasCraft) && craftType == "chop"))
+
+            if ((string.IsNullOrEmpty(hasCraft) && craftType == "chop"))
             {
                 HubContext.Instance.SendToClient("You don't know how to do that.", player.HubGuid);
                 return;
             }
 
-            bool hasMaterials = false;
-            if (craftType == null)
+            if (findCraft.CraftCommand == CraftType.Chop && craftType == null || findCraft == null && craftType == null)
             {
-                hasMaterials = findCraft != null && HasAllMaterials(player, findCraft.Materials);
+                HubContext.Instance.SendToClient("You can't craft that.", player.HubGuid);
+                return;
             }
-            else if (craftType == "chop")
+
+            if (findCraft.CraftCommand == CraftType.Craft && craftType == "chop")
+            {
+                HubContext.Instance.SendToClient("You can't chop that.", player.HubGuid);
+                return;
+            }
+
+            bool hasMaterials = false;
+            if (craftType == null && findCraft.CraftCommand == CraftType.Craft)
+            {
+                hasMaterials = findCraft != null && HasAllMaterials(player, findCraft.Materials, hasCraft);
+
+ 
+
+            }
+            else if (craftType == "chop" && findCraft.CraftCommand == CraftType.Chop)
             {
                 hasMaterials = findCraft != null &&
                                room.items.FirstOrDefault(
                                    x => x.name.Equals("Chopping block", StringComparison.CurrentCultureIgnoreCase)) !=
                                null &&
                                player.Inventory.FirstOrDefault(x => x.weaponType == Item.Item.WeaponType.Axe) != null;
+
+                if (!hasMaterials)
+                {
+                    HubContext.Instance.SendToClient("You don't have all the required materials.", player.HubGuid);
+                    return;
+                }
             }
 
             if (!hasMaterials)
             {
-                HubContext.Instance.SendToClient("You don't have everything you need to make that.", player.HubGuid);
+               // HubContext.Instance.SendToClient("You don't have all the required materials.", player.HubGuid);
                 return;
             }
 
@@ -154,6 +186,12 @@ namespace MIMWebClient.Core.Events
 
             if (player.MovePoints < craftItem.MoveCost)
             {
+                if (craftItem.CraftCommand == CraftType.Chop)
+                {
+                    HubContext.Instance.SendToClient("You are too tired to make " + Helpers.ReturnName(null, null, craftItem.CreatesItem.name).ToLower() + ".", player.HubGuid);
+                    return;
+                }
+
                 HubContext.Instance.SendToClient("You are too tired to make " + Helpers.ReturnName(null, null, craftItem.Name).ToLower() + ".", player.HubGuid);
                 return;
             }
@@ -176,14 +214,18 @@ namespace MIMWebClient.Core.Events
             HubContext.Instance.SendToClient(craftItem.SuccessMessage, player.HubGuid);
 
 
-            foreach (var materials in craftItem.Materials)
+            if (craftItem.Materials != null)
             {
 
-                for (var i = 0; i < materials.Count; i++)
+                foreach (var materials in craftItem.Materials)
                 {
-                    var item = player.Inventory.FirstOrDefault(x => x.name.Equals(materials.Name));
 
-                    player.Inventory.Remove(item);
+                    for (var i = 0; i < materials.Count; i++)
+                    {
+                        var item = player.Inventory.FirstOrDefault(x => x.name.ToLower().Contains(materials.Name.ToLower()));
+
+                        player.Inventory.Remove(item);
+                    }
                 }
             }
 
@@ -192,6 +234,7 @@ namespace MIMWebClient.Core.Events
                 room.items.Add(craftItem.CreatesItem);
             }
 
+            Score.UpdateUiInventory(player);
 
             Cache.updateRoom(room, oldRoom);
 

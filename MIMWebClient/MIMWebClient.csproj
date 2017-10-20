@@ -246,6 +246,7 @@
     <Compile Include="Core\AI\Pathfinding.cs" />
     <Compile Include="Core\Command.cs" />
     <Compile Include="Core\Events\Craft.cs" />
+    <Compile Include="Core\Events\Harvest.cs" />
     <Compile Include="Core\ItemContainer.cs" />
     <Compile Include="Core\Data.cs" />
     <Compile Include="Core\Events\Cache.cs" />

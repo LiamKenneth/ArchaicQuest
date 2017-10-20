@@ -20,7 +20,7 @@ namespace MIMWebClient.Core.Player.Classes
             {
                 Name = "Fighter",
                 IsBaseClass = true,
-                ExperienceModifier = 1500,
+                ExperienceModifier = 500,
                 HelpText = new Help(),
                 Skills = new List<Skill>(),
                 ReclassOptions = new List<PlayerClass>(),

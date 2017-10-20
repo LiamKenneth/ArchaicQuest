@@ -952,9 +952,10 @@ namespace MIMWebClient.Core.World.Anker
                         location = Item.Item.ItemLocation.Room,
                         description = new Description()
                         {
-                            look = "This chopping block can be used to chop wood that can be used for crafting."
+                            look = "A pile of felled pine wood is stacked next to the chopping block. You can be use the chopping block to chop wood that can be used for crafting."
                         },
                         stuck = true,
+                        ChoppingBlock = Item.Item.ChoppingBlockType.Pine
                         
                     },
                     

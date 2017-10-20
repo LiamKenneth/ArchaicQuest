@@ -44,6 +44,12 @@ namespace MIMWebClient.Core.Item
             Copper       
         }
 
+        public enum ChoppingBlockType
+        {
+            none,
+            Pine
+        }
+
         public enum ItemFlags
         {
             antievil, //zap if align -350 & lower
@@ -183,7 +189,9 @@ namespace MIMWebClient.Core.Item
         public bool QuestItem { get; set; }
         public ArmourRating ArmorRating { get; set; }   
         public double Weight { get; set; }
- 
+
+        public ChoppingBlockType ChoppingBlock { get; set; }
+
         /// <summary>
         /// how many ticks till item decays
         /// </summary>
