@@ -140,7 +140,40 @@ namespace MIMWebClient.Core
                         shockingGRasp.StartShockingGrasp(playerData, room, commandOptions);
                     }},
 
-                //skills
+                //skills angle, line, trawl, lure, bob
+                {"fish", () =>
+                {
+                    var fishing = new Fishing();
+
+                    fishing.StartFishing(playerData, room);
+                }},
+                {"angle", () =>
+                {
+                    var fishing = new Fishing();
+
+                    fishing.StartFishing(playerData, room);
+                }},
+                {"line", () =>
+                {
+                    var fishing = new Fishing();
+
+                    fishing.StartFishing(playerData, room);
+                }},
+                {"trawl", () =>
+                {
+                    var fishing = new Fishing();
+
+                    fishing.StartFishing(playerData, room);
+                }},
+                {"lure", () =>
+                {
+                    var fishing = new Fishing();
+
+                    fishing.StartFishing(playerData, room);
+                }},
+                {"reel", () =>Fishing.GetFish(playerData, room)},
+
+
                 {"punch", () => Punch.StartPunch(playerData, room)},
                 {"kick", () => Kick.StartKick(playerData, room)},
                 {"ride", () => Mount.StartMount(playerData, room, commandOptions)},

@@ -1174,6 +1174,28 @@ namespace MIMWebClient.Core.Events
 
 
                 Save.SavePlayer(defender);
+                foreach (var quest in attacker.QuestLog)
+                {
+                    if (quest.Type == Quest.QuestType.Kill)
+                    {
+                        if (defender.Name == quest.QuestKill.Name)
+                        {
+                            quest.TotalQuestKills += 1;
+                        }
+
+                        if (quest.TotalQuestKills >= quest.QuestKills )
+                        {
+                            quest.Completed = true;
+
+                            HubContext.Instance.SendToClient(quest.Name + " Quest Complete!", attacker.HubGuid);
+                            if (quest.QuestGiver != null)
+                            {
+                                HubContext.Instance.SendToClient("Go back to " + quest.QuestGiver + " for your reward.",
+                                    attacker.HubGuid);
+                            }
+                        }
+                    }
+                }
 
             }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using MIMWebClient.Core.Item;
 using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.Player;
 using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Arms;
@@ -61,14 +62,14 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 {
                     new DialogTree()
                     {
-
+                        
                         Id = "Farmer O'neil1",
                         Message = "Those pesky rabbits are eating all my carrots, I have no gold but will give you an old fishing rod if you help me?",
                         PossibleResponse =  new List<Responses>()
                         {
                             new Responses()
                             {
-                                QuestionId = "Farmer O'neil1",
+                                QuestionId = "Farmer O'neil1a",
                                 AnswerId = "Farmer O'neil1a",
                                 Response = "Ok sure, I&#x27;ll help you but I want gold too old man, everything you got.",
                                 DontShowIfOnQuest = "Help Farmer O'neil with with his rabbit problem"
@@ -77,7 +78,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                             },
                             new Responses()
                             {
-                                QuestionId = "Farmer O'neil1",
+                                QuestionId = "Farmer O'neil1b",
                                 AnswerId = "Farmer O'neil1b",
                                 Response = "I&#x27;ll help you out no worries.",
                                 DontShowIfOnQuest =   "Help Farmer O'neil with with his rabbit problem"
@@ -86,13 +87,11 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                             },
                             new Responses()
                             {
-                                QuestionId = "Farmer O'neil1",
+                                QuestionId = "Farmer O'neil1c",
                                 AnswerId = "Farmer O'neil1c",
                                 Response = "I have killed them all now.",
-                                ShowIfOnQuest = new List<string>()
-                                {
-                                    "Help Farmer O'neil with with his rabbit problem"
-                                }
+                                ShowIfOnQuest = "Help Farmer O'neil with with his rabbit problem"
+                                
 
                             }
 
@@ -109,15 +108,15 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                         {
                             new Responses()
                             {
-                                QuestionId = "Farmer O'neil2",
+                                QuestionId = "Farmer O'neil2a",
                                 AnswerId =  "Farmer O'neil2a",
-                                Response = "Thanks, I'll just kill you now then and take your gold, fishing rod and eat your carrorts.",
+                                Response = "Thanks, I&#x27;ll just kill you now then and take your gold, fishing rod and eat your carrorts.",
 
                             },
                             new Responses()
                             {
-                                QuestionId = "Farmer O'neil2",
-                                AnswerId =  "Farmer O'neil3a",
+                                QuestionId = "Farmer O'neil2b",
+                                AnswerId =  "Farmer O'neil2b",
                                 Response = "Consider it done.",
 
                             },
@@ -126,7 +125,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                     },
                     new DialogTree()
                     {
-                        Id = "Farmer O'neil1b",
+                        Id = "Farmer O'neil2b",
                         Message = "Thank you very much, you will find my farm south of here. Can&#x27;t miss it",
                         MatchPhrase = "I'll help you out no worries.",
                         QuestId =  1,
@@ -138,6 +137,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                     {
                         Id = "Farmer O'neil2a",
                         Message = "Please don't I just want those rabbits gone!",
+                        MatchPhrase = "Thanks, I'll just kill you now then and take your gold, fishing rod and eat your carrots.",
                         QuestId =  1,
                         GiveQuest = true,
                         PossibleResponse = new List<Responses>()
@@ -165,17 +165,30 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                         Description = "Kill all 4 of the rabbits eating the crops.",
                         Id = 1,
                         Name = "Help Farmer O'neil with with his rabbit problem",
-                        QuestCount = 4,
+                        QuestKills = 4,
                         QuestGiver =  "Farmer O'neil",
                         QuestKill = Rabit.SmallRabbit(),
                         Type = Quest.QuestType.Kill,
                         RewardGold = 100,
-                        RewardXp = 500,
+                        RewardXp = 1500,
                         RewardDialog = new DialogTree()
                         {
-                            Message = "Thank you so much $playerName."
+                            Message = "Thank you so much $playerName. Here is your fishing rod"
                         },
-                        Completed = false
+                        Completed = false,
+                        RewardItem = new  Item.Item()
+                        {
+                            name = "basic old fishing rod",
+                            location = Item.Item.ItemLocation.Inventory,
+                            slot = Item.Item.EqSlot.Held,
+                            eqSlot = Item.Item.EqSlot.Held,
+                            description = new Description()
+                            {
+                                look = "This is an old long wooden fishing rod, looks to be well used. There have been other methods for catching fish, though the use of a rod like this one is the tried and tested, and most successful, method.",
+                                
+                            }
+                            
+                        }
                     }
                 }
 

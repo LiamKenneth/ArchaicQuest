@@ -44,6 +44,8 @@ namespace MIMWebClient.Core.Player
         public QuestType Type { get; set; }
         public string QuestGiver { get; set; }
         public int QuestCount { get; set; } = 1;
+        public int QuestKills { get; set; } = 0;
+        public int TotalQuestKills { get; set; } = 0;
         /// <summary>
         /// Quest complete when player gains item
         /// </summary>
@@ -74,6 +76,7 @@ namespace MIMWebClient.Core.Player
         public string QuestHint { get; set; }
         public string QuestTrigger { get; set; }
         public bool Completed { get; set; } = false;
+        public bool RewardCollected { get; set; } = false;
 
         public static void QuestLog(PlayerSetup.Player player)
         {

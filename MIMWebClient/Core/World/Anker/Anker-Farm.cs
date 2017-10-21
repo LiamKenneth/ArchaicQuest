@@ -757,7 +757,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker Farm",
                 areaId = 8,
                 title = "The windmill",
-                description = "<p>Description to come</p>",
+                description = "<p> A large windmill is slowly turning as the breeze floats through the air, the sounds of the millstone crushing the wheat grinding it into flour resound about. It is built from the local pine forest with solid copper braces reinforcing it in certain places.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -810,13 +810,31 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker Farm",
                 areaId = 9,
                 title = "The riverbank",
+                terrain = Room.Terrain.Water,
                 description = "<p>Several thick reeds are growing in the shallow part of the river, with ripples dotting around indicating a plethora of life is here. A couple of stumps are a few feet in providing obstacles to what would otherwise be an ideal fishing spot, although no problem for an experienced fisherman.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
-                items = new List<Item.Item>(),
+                items = new List<Item.Item>()
+                {
+                    new  Item.Item()
+                    {
+                        name = "basic old fishing rod",
+                        
+                        location = Item.Item.ItemLocation.Room,
+                        slot = Item.Item.EqSlot.Held,
+                        eqSlot = Item.Item.EqSlot.Held,
+                        description = new Description()
+                        {
+                            look = "This is an old long wooden fishing rod, looks to be well used. There have been other methods for catching fish, though the use of a rod like this one is the tried and tested, and most successful, method.",
+                            room = "A rod is resting here, it's line has been casted out into the water."
+
+                        }
+
+                    }
+                },
                 mobs = new List<Player>(),
-                terrain = Room.Terrain.Field,
+ 
                 keywords = new List<RoomObject>()
                 {
 

@@ -196,5 +196,15 @@ namespace MIMWebClient.Core.Item
         /// how many ticks till item decays
         /// </summary>
         public int decayTimer { get; set; } = 0;
+
+        /// <summary>
+        /// used for fishing only
+        /// </summary>
+        public bool HasFish { get; set; } = false;
+
+        /// <summary>
+        /// used for fishing only
+        /// </summary>
+        public bool HasBeenCast { get; set; } = false;
     }
 }

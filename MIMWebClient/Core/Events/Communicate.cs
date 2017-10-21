@@ -27,7 +27,7 @@ namespace MIMWebClient.Core.Events
             {
                 if (player != character)
                 {
-                  
+
                     var roomMessage = $"<span class='sayColor'>{ Helpers.ReturnName(player, character, string.Empty)} says \"{message}\"</span>";
 
                     Score.UpdateUIChannels(character, $"<span class='sayColor'>{ Helpers.ReturnName(player, character, string.Empty)} says \"{message}\"</span>", "roomChannelF");
@@ -86,7 +86,7 @@ namespace MIMWebClient.Core.Events
                 if (response != String.Empty)
                 {
                     Thread.Sleep(120); // hack, sometimes the responses calls before the questions??
- 
+
                     HubContext.Instance.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"" + response.Replace("$playerName", player.Name) + "\"<span>", playerId);
 
                     Score.UpdateUIChannels(player, "<span class='sayColor'>" + mob.Name + " says to you \"" + response.Replace("$playerName", player.Name) + "\"<span>", "roomChannelF");
@@ -102,34 +102,19 @@ namespace MIMWebClient.Core.Events
 
 
 
-                  
+
                     foreach (var respond in speak.PossibleResponse)
                     {
-                        if (player.QuestLog != null && respond.QuestId > 0)
-                        {
-                            var doneQuest =
-                                player.QuestLog.FirstOrDefault(
-                                    x => x.Id.Equals(respond.QuestId) && x.QuestGiver.Equals(mob.Name) && x.Completed.Equals(true));
 
-                            if (doneQuest == null)
-                            {
-                                var textChoice =
-                                    "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
-                                    respond.Response + "\",\"" + player.HubGuid + "\")'> * [say, " + respond.Response +
-                                    "]</a>";
-                                HubContext.Instance.AddNewMessageToPage(player.HubGuid, textChoice);
-                            
-                            }
-                            else
-                            {
-                                var textChoice =
-                                    "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
-                                    respond.Response + "\",\"" + player.HubGuid + "\")'>. * [say, " + respond.Response +
-                                    "]</a>";
-                                HubContext.Instance.AddNewMessageToPage(player.HubGuid, textChoice);
-                        
-                            }
-                        }
+                        var textChoice =
+                               "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
+                               respond.Response + "\",\"" + player.HubGuid + "\")'>[say, " + respond.Response +
+                               "]</a>";
+                        HubContext.Instance.AddNewMessageToPage(player.HubGuid, textChoice);
+
+
+
+
                     }
 
 
@@ -146,13 +131,13 @@ namespace MIMWebClient.Core.Events
                             player.QuestLog.Add(quest);
                             Score.UpdateUiQlog(player);
 
-                            HubContext.Instance.SendToClient("<span class='questColor'>Quest Added:<br />"+  quest.Name + " </span> ", playerId);
+                            HubContext.Instance.SendToClient("<span class='questColor'>Quest Added:<br />" + quest.Name + " </span> ", playerId);
 
                             if (GivePrerequisiteItem)
                             {
                                 //  Command.ParseCommand("Give 5 gold " + player.Name, mob, room);
                                 player.Gold += 5;
-                           
+
                                 foreach (var character in room.players)
                                 {
                                     if (player != character)
@@ -246,7 +231,7 @@ namespace MIMWebClient.Core.Events
                         var roomMessage = $"<span class='yellColor'>{ Helpers.ReturnName(player, i, string.Empty)} yells \"{message}\"</span>";
                         HubContext.Instance.SendToClient(roomMessage, i.HubGuid);
                     }
-                   
+
                 }
             }
 
@@ -264,7 +249,7 @@ namespace MIMWebClient.Core.Events
                 Score.UpdateUIChannels(pc, "<span class='newbieChannel' style='color:red'>[Newbie] " + player.Name + ":</span> " + message, "newbieChannelF");
             }
 
-          
+
 
         }
 
@@ -278,7 +263,7 @@ namespace MIMWebClient.Core.Events
                 Score.UpdateUIChannels(pc, "<span class='gossipChannel' style='color:#7CEECE'>[Gossip] " + player.Name + ":</span> " + message, "gossipChannelF");
             }
 
-            
+
 
 
         }
@@ -293,7 +278,7 @@ namespace MIMWebClient.Core.Events
                 Score.UpdateUIChannels(pc, "<span class='oocChannel' style='color:#00AFF0'>[OOC] " + player.Name + ":</span> " + message, "oocChannelF");
             }
 
-           
+
 
         }
 
