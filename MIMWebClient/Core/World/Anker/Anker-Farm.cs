@@ -195,54 +195,13 @@ namespace MIMWebClient.Core.World.Anker
                 corpses = new List<Player>(),
                 players = new List<Player>(),
                 fighting = new List<string>(),
-                clean = true,
-
+                clean = true
 
             };
 
             room.items = new List<Item.Item>()
             {
-                new Item.Item()
-                {
-                    name = "Log",
-                    location = Item.Item.ItemLocation.Room,
-                    Gold = 2,
-                    type = Item.Item.ItemType.Misc,
-                    slot = Item.Item.EqSlot.Held
-                },
-
-                new Item.Item()
-                {
-                    name = "Log",
-                    location = Item.Item.ItemLocation.Room,
-                    Gold = 2,
-                    type = Item.Item.ItemType.Misc
-                },
-
-                new Item.Item()
-                {
-                    name = "Log",
-                    location = Item.Item.ItemLocation.Room,
-                    Gold = 2,
-                    type = Item.Item.ItemType.Misc
-                },
-
-                new Item.Item()
-                {
-                    name = "Log",
-                    location = Item.Item.ItemLocation.Room,
-                    Gold = 2,
-                    type = Item.Item.ItemType.Misc
-                },
-              
-
-                new Item.Item()
-                {
-                    name = "Log",
-                    location = Item.Item.ItemLocation.Room,
-                    Gold = 2,
-                    type = Item.Item.ItemType.Misc
-                }
+   
             };
 
             var farmer = FarmerOneil.Farmer();
@@ -300,6 +259,13 @@ namespace MIMWebClient.Core.World.Anker
                 players = new List<Player>(),
                 fighting = new List<string>(),
                 clean = true,
+                Emotes = new List<string>()
+                {
+                    "Rabbits hop around, eating the carrots.",
+                    "You hear a small squeak.",
+                    "ZZZZzzzZZ, A wasp buzzes around your head.",
+                    "You hear a pig snorting.",
+                }
 
 
             };
@@ -394,6 +360,13 @@ namespace MIMWebClient.Core.World.Anker
                 players = new List<Player>(),
                 fighting = new List<string>(),
                 clean = true,
+                Emotes = new List<string>()
+                {
+                    "Rabbits hop around, eating the carrots.",
+                    "You hear a small squeak.",
+                    "ZZZZzzzZZ, A wasp buzzes around your head.",
+                    "You hear a pig snorting.",
+                }
 
 
             };
@@ -501,6 +474,11 @@ namespace MIMWebClient.Core.World.Anker
                 players = new List<Player>(),
                 fighting = new List<string>(),
                 clean = true,
+                Emotes = new List<string>()
+                {
+                    "Rabbits hop around, eating the carrots.",
+                    "You hear a small squeak.",
+                }
 
 
             };
@@ -593,6 +571,11 @@ namespace MIMWebClient.Core.World.Anker
                 items = new List<Item.Item>(),
                 mobs = new List<Player>(),
                 terrain = Room.Terrain.Field,
+                Emotes = new List<string>()
+                {
+                    "ZZZZzzzZZ, A wasp buzzes around your head.",
+                    "You hear a pig snorting.",
+                },
                 keywords = new List<RoomObject>()
                 {
 
@@ -812,7 +795,13 @@ namespace MIMWebClient.Core.World.Anker
                 title = "The riverbank",
                 terrain = Room.Terrain.Water,
                 description = "<p>Several thick reeds are growing in the shallow part of the river, with ripples dotting around indicating a plethora of life is here. A couple of stumps are a few feet in providing obstacles to what would otherwise be an ideal fishing spot, although no problem for an experienced fisherman.</p>",
-
+                Emotes = new List<string>()
+                {
+                    "Plop! You hear something fall into the water.",
+                    "A dragon fly skims over the river then flies off.",
+                    "A fish surfaces quickly to eat something sitting ontop of the water.",
+                    "You hear a frog croak."
+                },
                 //Defaults
                 exits = new List<Exit>(),
                 items = new List<Item.Item>()

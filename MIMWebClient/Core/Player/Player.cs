@@ -476,7 +476,10 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Inventory = this.Inventory ?? (this.Inventory = new ItemContainer());
 
 
-            this.Skills = new List<Skill>();
+            this.Skills = new List<Skill>()
+            {
+                Fish.FishingAb()
+            };
 
 
             //kills

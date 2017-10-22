@@ -58,6 +58,53 @@ namespace MIMWebClient.Core.World.Crafting
 
         }
 
+        public static Craft FishingRod()
+        {
+
+            var fishingRod = new Craft()
+            {
+                Name = "wood",
+                StartMessage = "You take the log and begin carving",
+                FaliureMessage = "...",
+                SuccessMessage = "You have crafted a fishing rod!",
+                Description = "To make a fishing rod you need to be at a work bench.",
+                CraftCommand = CraftType.Chop,
+                CraftAppearsInRoom = true,
+                Materials = new List<CraftMaterials>()
+                {
+                    new CraftMaterials()
+                    {
+                        Count = 6,
+                        Name = "Log"
+                    }
+                },
+                CraftingEmotes = new List<string>()
+                {
+                    "You carve the log into a long wooden pole.",
+                    "You rub the pole, so it's smooth to touch all over",
+
+                },
+                CreatesItem = new Item.Item()
+                {
+                    name = "basic fishing rod",
+                    location = Item.Item.ItemLocation.Inventory,
+                    slot = Item.Item.EqSlot.Held,
+                    eqSlot = Item.Item.EqSlot.Held,
+                    description = new Description()
+                    {
+                        look = "This is an old long wooden fishing rod, looks to be well used. There have been other methods for catching fish, though the use of a rod like this one is the tried and tested, and most successful, method.",
+
+                    }
+
+                },
+                MoveCost = 20
+
+            };
+
+            return fishingRod;
+
+        }
+
         public static Craft CampFire()
         {
 

@@ -33,12 +33,12 @@ namespace MIMWebClient.Core.Player.Skills
                     LevelObtained = 1,
                     Proficiency = 1,
                     MaxProficiency = 95,
-                    Passive = true,
+                    Passive = false,
                     UsableFromStatus = "Standing",
-                    Syntax = "Passive command",
+                    Syntax = "Fish to cast the line, reel to catch the fish.",
                     HelpText = new Help()
                     {
-                        HelpText = "Fishing help text",
+                        HelpText = "ish to cast the line, reel to catch the fish.",
                         DateUpdated = new DateTime().ToShortDateString()
                     }
                 };

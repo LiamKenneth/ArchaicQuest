@@ -428,7 +428,7 @@ namespace MIMWebClient.Hubs
                 Score.UpdateUiQlog(player);
                 Score.UpdateDescription(player, player.Description);
 
-
+                player.CraftingRecipes.Add(Crafting.FishingRod().Name);
                 player.CraftingRecipes.Add(Crafting.CampFire().Name);
                 player.CraftingRecipes.Add(Crafting.PineLog().Name);
             }
