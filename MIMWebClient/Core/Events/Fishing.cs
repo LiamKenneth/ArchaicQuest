@@ -235,6 +235,7 @@ namespace MIMWebClient.Core.Player.Skills
             {
 
                 HubContext.Instance.SendToClient("You reel your rod in but nothing is on the hook.", player.HubGuid);
+                rod.HasBeenCast = false;
             }
             
 
@@ -274,7 +275,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             var rod = player.Inventory.FirstOrDefault(x => x.name.Contains("rod") &&
                                                            x.location == Item.Item.ItemLocation.Worn);
-            if (rod != null) rod.HasFish = true;
+            if (rod != null && rod.HasBeenCast) rod.HasFish = true;
 
             await Task.Delay(Helpers.Rand(800, 3000));
 
