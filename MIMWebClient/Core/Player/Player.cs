@@ -445,6 +445,8 @@ namespace MIMWebClient.Core.PlayerSetup
 
         public bool MobTalkOnEnter { get; set; } = false;
 
+        public bool PlayerIsForaging { get; set; } = false;
+
 
 
 
@@ -478,7 +480,8 @@ namespace MIMWebClient.Core.PlayerSetup
 
             this.Skills = new List<Skill>()
             {
-                Fish.FishingAb()
+                Fish.FishingAb(),
+                Harvest.HarvestAb()
             };
 
 

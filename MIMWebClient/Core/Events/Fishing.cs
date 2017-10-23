@@ -113,14 +113,14 @@ namespace MIMWebClient.Core.Player.Skills
                 switch (Helpers.Rand(1, 4))
                 {
                     case 1:
-                        failMessage = "you hooked yourself Ouch!";
+                        failMessage = "You hooked yourself Ouch!";
                         break;
                     case 2:
                     case 3:
-                        failMessage = "you fail to cast correctly.";
+                        failMessage = "You fail to cast correctly.";
                         break;
                     default:
-                        failMessage = "you fail to cast correctly.";
+                        failMessage = "You fail to cast correctly.";
                         break;
                 }
 
@@ -164,7 +164,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (rod.HasBeenCast == false)
             {
-                HubContext.Instance.SendToClient("You have to angle your rod before trying to reel in.", player.HubGuid);
+                HubContext.Instance.SendToClient("You have to be fishing before you try reeling in.", player.HubGuid);
 
                 return;
             }
@@ -195,7 +195,7 @@ namespace MIMWebClient.Core.Player.Skills
                     switch (Helpers.Rand(1, 16))
                     {
                         case 1:
-                            caughtFish = "bream";
+                            caughtFish = "Bream";
                             break;
                         case 2:
                         case 3:
