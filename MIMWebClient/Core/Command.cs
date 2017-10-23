@@ -147,12 +147,7 @@ namespace MIMWebClient.Core
 
                     foraging.StartForaging(playerData, room);
                 }},
-                {"harvest", () =>
-                {
-                    var foraging = new Foraging();
-
-                    foraging.StartForaging(playerData, room);
-                }},
+        
                 {"fish", () =>
                 {
                     var fishing = new Fishing();

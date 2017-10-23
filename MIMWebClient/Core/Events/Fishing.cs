@@ -169,6 +169,12 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
+            if (room.terrain != Room.Terrain.Water)
+            {
+                HubContext.Instance.SendToClient("You must be by water to fish.", player.HubGuid);
+                return;
+            }
+
             var getSkill = player.Skills.FirstOrDefault(x => x.Name.Equals("Fishing"));
             double getSkillProf = 0;
             if (getSkill != null)
@@ -401,7 +407,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             rod.HasFish = false;
             rod.HasBeenCast = false;
-
+            player.ActiveSkill = null;
         }
 
 

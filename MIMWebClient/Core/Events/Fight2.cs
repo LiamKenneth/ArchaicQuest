@@ -474,7 +474,7 @@ namespace MIMWebClient.Core.Events
         public static int CalculateDamageReduction(Player attacker, Player defender, int damage)
         {
             int ArRating = ArmourRating(defender);
-            int armourReduction = ArRating / damage;
+            var armourReduction = ArRating / damage;
 
             if (armourReduction > 4)
             {
@@ -485,7 +485,7 @@ namespace MIMWebClient.Core.Events
                 armourReduction = 1;
             }
 
-            return armourReduction;
+            return (int)armourReduction;
         }
 
         public static Item GetAttackerWepon(Player attacker)
@@ -1174,7 +1174,7 @@ namespace MIMWebClient.Core.Events
 
 
                 Save.SavePlayer(defender);
-                foreach (var quest in attacker.QuestLog)
+                foreach (var quest in attacker.QuestLog.Where(x => x.Completed.Equals(false)))
                 {
                     if (quest.Type == Quest.QuestType.Kill)
                     {

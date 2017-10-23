@@ -33,16 +33,7 @@ namespace MIMWebClient.Core.Player.Classes
                 StatBonusCon = 1
 
             };
-
-            #region  Give fighter punch skill
-
-            var punch = Punch.PunchAb();
-            punch.LevelObtained = 2;
-            punch.Proficiency = 1;
-            punch.MaxProficiency = 95;
-            thief.Skills.Add(punch);
-
-            #endregion
+ 
 
             thief.ReclassOptions.Add(Ranger.RangerClass());
 

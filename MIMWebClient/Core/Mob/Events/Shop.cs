@@ -122,6 +122,8 @@ namespace MIMWebClient.Core.Mob.Events
                             var value = itemToBuy.Gold > 0 ? itemToBuy.Gold : 10;
 
                             player.Gold -= value;
+
+                            Score.ReturnScoreUI(player);
                         }
                         else
                         {

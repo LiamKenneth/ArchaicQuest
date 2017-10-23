@@ -12,16 +12,16 @@ namespace MIMWebClient.Core.Player.Skills
     using MIMWebClient.Core.PlayerSetup;
     using MIMWebClient.Core.Room;
 
-    public class Harvest: Skill
+    public class Forage: Skill
     {
 
-        public static Skill HarvestSkill { get; set; }
-        public static Skill HarvestAb()
+        public static Skill ForageSkill { get; set; }
+        public static Skill ForageAb()
         {
                   
-            if (HarvestSkill != null)
+            if (ForageSkill != null)
             {
-               return HarvestSkill;
+               return ForageSkill;
             }
             else
             {
@@ -44,10 +44,10 @@ namespace MIMWebClient.Core.Player.Skills
                 };
 
 
-                HarvestSkill = skill;
+                ForageSkill = skill;
             }
 
-            return HarvestSkill;
+            return ForageSkill;
             
         }
 

@@ -481,7 +481,7 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Skills = new List<Skill>()
             {
                 Fish.FishingAb(),
-                Harvest.HarvestAb()
+                Forage.ForageAb()
             };
 
 

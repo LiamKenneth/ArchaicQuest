@@ -56,34 +56,7 @@ namespace MIMWebClient.Core.Player.Classes
              *  berserk
              *  dual wield (eek)
              * */
-
-            #region  Give fighter punch skill
-
-            var bash = Punch.PunchAb();
-            bash.Name = "Bash";
-            bash.LevelObtained = 10;
-            bash.Proficiency = 1;
-            bash.MaxProficiency = 95;
-            fighter.Skills.Add(bash);
-
-            var punch = Punch.PunchAb();
-            punch.LevelObtained = 1;
-            punch.Proficiency = 1;
-            punch.MaxProficiency = 95;
-            fighter.Skills.Add(punch);
-
-            #endregion
-
-            #region  Give fighter kick skill
-
-            var kick = Kick.KickAb();
-
-            kick.LevelObtained = 1;
-            kick.Proficiency = 50;
-            kick.MaxProficiency = 95;
-            fighter.Skills.Add(kick);
-
-            #endregion
+ 
 
             #region  Give fighter longblade skill
 

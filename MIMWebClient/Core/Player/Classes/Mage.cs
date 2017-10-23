@@ -34,16 +34,7 @@ namespace MIMWebClient.Core.Player.Classes
 
             };
 
-            #region  Give fighter punch skill
-
-            var punch = Punch.PunchAb();
-            punch.LevelObtained = 2;
-            punch.Proficiency = 1;
-            punch.MaxProficiency = 95;
-            mage.Skills.Add(punch);
-
-            #endregion
-
+ 
             #region  Give mage magic missile skill
 
             var magicMissile = MagicMissile.MagicMissileAb();
