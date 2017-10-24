@@ -245,6 +245,7 @@
     <Compile Include="Core\AI\Node.cs" />
     <Compile Include="Core\AI\Pathfinding.cs" />
     <Compile Include="Core\Command.cs" />
+    <Compile Include="Core\Events\Camp.cs" />
     <Compile Include="Core\Events\Craft.cs" />
     <Compile Include="Core\Events\Foraging.cs" />
     <Compile Include="Core\Events\Harvest.cs" />
@@ -540,7 +541,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

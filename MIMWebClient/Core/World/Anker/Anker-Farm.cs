@@ -202,7 +202,24 @@ namespace MIMWebClient.Core.World.Anker
 
             room.items = new List<Item.Item>()
             {
-   
+                    new Item.Item()
+                    {
+                        name = "Cooking pot",
+                        location = Item.Item.ItemLocation.Room,
+                        waterContainer = true,
+                        waterContainerAmount = 5,
+                        container = true,
+                        containerSize = 5,
+                        description = new Description()
+                    },
+                                        new Item.Item()
+                    {
+                        name = "Bed",
+                        location = Item.Item.ItemLocation.Room,
+                        container = true,
+                        containerSize = 5,
+                        description = new Description()
+                    }
             };
 
             var farmer = FarmerOneil.Farmer();

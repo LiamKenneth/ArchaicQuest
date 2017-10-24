@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MIMWebClient.Core.Item;
 
 namespace MIMWebClient.Core.Room
 {
@@ -76,8 +77,9 @@ namespace MIMWebClient.Core.Room
         public List<string> fighting { get; set; }
         public List<PlayerSetup.Player> mobs { get; set; }
         public List<Item.Item> items { get; set; }
-        public List<Item.Item> ForageItems { get; set; } = new List<Item.Item>(); 
+        public List<Item.Item> ForageItems { get; set; } = new List<Item.Item>();
         public List<PlayerSetup.Player> corpses { get; set; }
+        public bool containsCamp { get; set; }
         public List<string> Emotes { get; set; } = new List<string>();
         [BsonElement("eoe")]
         public string EventOnEnter { get; set; }
