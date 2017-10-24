@@ -397,6 +397,12 @@ namespace MIMWebClient.Core.Room
                 return;
             }
 
+            if (player.ActiveSkill != null)
+            {
+                HubContext.Instance.SendToClient("You are too busy to move.", player.HubGuid);
+                return;
+            }
+
 
             Room roomData = room;
 

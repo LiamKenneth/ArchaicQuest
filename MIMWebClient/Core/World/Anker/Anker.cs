@@ -910,14 +910,28 @@ namespace MIMWebClient.Core.World.Anker
                 Area = "Anker",
                 AreaId = 7,
                 Type = Player.PlayerTypes.Mob,
+                HitPoints = 120,
+                MaxHitPoints = 120,
+                Level = 3,
+                Strength = 30,
+                Dexterity = 30,
+                Constitution = 30,
+                Wisdom = 30,
+                Intelligence = 30,
+                Charisma = 30,
+                MaxStrength = 30,
+                MaxDexterity = 30,
+                MaxConstitution = 30,
+                MaxWisdom = 30,
+                MaxIntelligence = 30,
+                MaxCharisma = 30,
                 Recall = new Recall
                 {
                     Region = "Anker",
                     Area = "Anker",
                     AreaId = 7
                 },
-                Gold = 10,
-                EventOnEnter = "AnkerIdiot" // might be more :P
+                Gold = 10, 
 
             };
 

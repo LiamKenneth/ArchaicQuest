@@ -49,7 +49,7 @@ namespace MIMWebClient.Core
                 }
             });
             eventList.Add("wearEQ", () => Tutorial.setUpRescue(player, room, option, calledBy));
-            eventList.Add("AnkerIdiot", async () => await VilliageIdiot.Annoy(player, mob, room));
+            
 
             return eventList;
         }

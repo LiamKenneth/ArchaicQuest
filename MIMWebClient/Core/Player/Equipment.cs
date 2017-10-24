@@ -321,6 +321,12 @@ namespace MIMWebClient.Core.Player
         /// <param name="itemToRemove">Item to Remove</param>
         public static void RemoveItem(Player player, string itemToRemove, bool replaceWithOtherEQ = false, bool unwield = false)
         {
+            if (string.IsNullOrEmpty(itemToRemove))
+            {
+                HubContext.Instance.SendToClient("Remove what?", player.HubGuid);
+                return;
+            }
+
             var room = Cache.getRoom(player);
 
             if (!itemToRemove.Equals("all", StringComparison.CurrentCultureIgnoreCase))

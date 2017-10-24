@@ -207,5 +207,11 @@ namespace MIMWebClient.Core.Item
         /// used for fishing only
         /// </summary>
         public bool HasBeenCast { get; set; } = false;
+        /// <summary>
+        /// used for foraging, is rank is equal or less than player level
+        /// player can find item
+        /// </summary>
+        public int ForageRank { get; set; } = 1;
     }
 }
+

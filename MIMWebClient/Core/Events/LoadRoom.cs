@@ -251,6 +251,9 @@ namespace MIMWebClient.Core.Events
 
         public static void ReturnRoom(Player player, Room room, string commandOptions = "", string keyword = "")
         {
+
+
+
             var isBlind = player.Effects?.FirstOrDefault(
                        x => x.Name.Equals("Blindness", StringComparison.CurrentCultureIgnoreCase)) != null;
 
@@ -259,6 +262,34 @@ namespace MIMWebClient.Core.Events
                 HubContext.Instance.SendToClient("You can't see a thing.", player.HubGuid);
                 return;
             }
+
+
+            if (string.IsNullOrEmpty(commandOptions) && keyword.StartsWith("examine"))
+            {
+                HubContext.Instance.SendToClient("Examine what?", player.HubGuid);
+                return;
+            }
+
+
+            if (string.IsNullOrEmpty(commandOptions) && keyword.StartsWith("touch"))
+            {
+                HubContext.Instance.SendToClient("Touch what?", player.HubGuid);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(commandOptions) && keyword.StartsWith("smell"))
+            {
+                HubContext.Instance.SendToClient("Smell what?", player.HubGuid);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(commandOptions) && keyword.StartsWith("taste"))
+            {
+                HubContext.Instance.SendToClient("Taste what?", player.HubGuid);
+                return;
+            }
+
+ 
 
             CheckEvent.FindEvent(CheckEvent.EventType.Look, player, "look");
 

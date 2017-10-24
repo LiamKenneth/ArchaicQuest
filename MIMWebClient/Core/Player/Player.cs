@@ -447,6 +447,8 @@ namespace MIMWebClient.Core.PlayerSetup
 
         public bool PlayerIsForaging { get; set; } = false;
 
+        public int ForageRank { get; set; } = 1;
+
 
 
 

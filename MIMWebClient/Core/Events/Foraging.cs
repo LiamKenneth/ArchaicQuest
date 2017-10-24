@@ -18,7 +18,7 @@ namespace MIMWebClient.Core.Player.Skills
 
         public void StartForaging(Player player, Room room)
         {
- 
+
             if (player.PlayerIsForaging)
             {
                 HubContext.Instance.SendToClient("You are already foraging.", player.HubGuid);
@@ -49,7 +49,7 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
- 
+
 
             player.MovePoints -= 10;
 
@@ -59,28 +59,28 @@ namespace MIMWebClient.Core.Player.Skills
             }
 
             Score.UpdateUiPrompt(player);
- 
-
-                HubContext.Instance.SendToClient("You begin foraging.",
-                    player.HubGuid);
 
 
-                player.PlayerIsForaging = true;
-                foreach (var character in room.players)
+            HubContext.Instance.SendToClient("You begin foraging.",
+                player.HubGuid);
+
+
+            player.PlayerIsForaging = true;
+            foreach (var character in room.players)
+            {
+                if (character != player)
                 {
-                    if (character != player)
-                    {
 
-                        var roomMessage =
-                            $"{Helpers.ReturnName(player, character, string.Empty)} begins foraging.";
+                    var roomMessage =
+                        $"{Helpers.ReturnName(player, character, string.Empty)} begins foraging.";
 
-                        HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
-                    }
+                    HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                 }
+            }
 
-                Task.Run(() => DoForaging(player, room));
+            Task.Run(() => DoForaging(player, room));
 
-      
+
 
 
         }
@@ -110,15 +110,15 @@ namespace MIMWebClient.Core.Player.Skills
             }
 
             await Task.Delay(500);
-
+ 
             var foragingAB = player.Skills.FirstOrDefault(x => x.Name.Equals("Foraging"));
             double getSkillProf = 0;
             if (foragingAB != null)
             {
-                getSkillProf = foragingAB.Proficiency / (double) 95 * 100;
+                getSkillProf = foragingAB.Proficiency / (double)95 * 100;
             }
 
-            var getItems = room.ForageItems;
+            var getItems = room.ForageItems.Where(x => x.ForageRank <= player.ForageRank).ToList();
 
             var successChance = Helpers.Rand(1, 100);
 
@@ -126,7 +126,7 @@ namespace MIMWebClient.Core.Player.Skills
             {
 
                 var YouFound = "You found " +
-                               Helpers.ReturnName(null, null, getItems[Helpers.Rand(0, getItems.Count)].name) + ".";
+                               Helpers.ReturnName(null, null, getItems[Helpers.Rand(0, getItems.Count)].name).ToLower() + ".";
 
 
                 var item = getItems[Helpers.Rand(0, getItems.Count)];
@@ -134,7 +134,7 @@ namespace MIMWebClient.Core.Player.Skills
                 item.location = Item.Item.ItemLocation.Inventory;
                 item.type = Item.Item.ItemType.Food;
                 item.hidden = false;
-               
+
 
                 player.Inventory.Add(item);
 
@@ -178,17 +178,19 @@ namespace MIMWebClient.Core.Player.Skills
 
                     foragingAB.Proficiency += Helpers.Rand(1, 5);
 
-                  
+
 
                 }
 
                 Score.ReturnScoreUI(player);
-                player.ActiveSkill = null;
-                player.PlayerIsForaging = false;
+
             }
+
+            player.ActiveSkill = null;
+            player.PlayerIsForaging = false;
         }
 
-     
+
 
     }
 }

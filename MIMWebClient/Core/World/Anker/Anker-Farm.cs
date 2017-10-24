@@ -13,6 +13,7 @@ using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Feet;
 using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Head;
 using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Legs;
 using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Hands;
+using MIMWebClient.Core.World.Items.Consumables.Food;
 using MIMWebClient.Core.World.Items.Weapons.Axe;
 
 namespace MIMWebClient.Core.World.Anker
@@ -248,7 +249,10 @@ namespace MIMWebClient.Core.World.Anker
 
                 //Defaults
                 exits = new List<Exit>(),
-                items = new List<Item.Item>(),
+                items = new List<Item.Item>()
+                {
+                    
+                },
                 mobs = new List<Player>(),
                 terrain = Room.Terrain.Field,
                 keywords = new List<RoomObject>()
@@ -289,6 +293,21 @@ namespace MIMWebClient.Core.World.Anker
 
             room.mobs.Add(rabit);
             room.mobs.Add(rabit2);
+
+            var carrot = Food.Carrots();
+            var carrot2 = Food.Carrots();
+            var carrot3 = Food.Carrots();
+            var carrot4 = Food.Carrots();
+            var carrot5 = Food.Carrots();
+            var carrot6 = Food.Carrots();
+
+            room.ForageItems.Add(carrot);
+            room.ForageItems.Add(carrot2);
+            room.ForageItems.Add(carrot3);
+            room.ForageItems.Add(carrot4);
+            room.ForageItems.Add(carrot5);
+            room.ForageItems.Add(carrot6);
+
 
             #region exits
 
@@ -416,6 +435,30 @@ namespace MIMWebClient.Core.World.Anker
             room.mobs.Add(pig2);
 
 
+            var wheat = Food.wheat();
+            var wheat2 = Food.wheat();
+            var wheat3 = Food.wheat();
+            var wheat4 = Food.wheat();
+            var wheat5 = Food.wheat();
+            var wheat6 = Food.wheat();
+            var wheat7 = Food.wheat();
+            var wheat8 = Food.wheat();
+            var wheat9 = Food.wheat();
+            var wheat10 = Food.wheat();
+            var wheat11 = Food.wheat();
+
+            room.ForageItems.Add(wheat);
+            room.ForageItems.Add(wheat2);
+            room.ForageItems.Add(wheat3);
+            room.ForageItems.Add(wheat4);
+            room.ForageItems.Add(wheat5);
+            room.ForageItems.Add(wheat6);
+            room.ForageItems.Add(wheat7);
+            room.ForageItems.Add(wheat8);
+            room.ForageItems.Add(wheat9);
+            room.ForageItems.Add(wheat10);
+            room.ForageItems.Add(wheat11);
+
             #region exits
 
             var south = new Exit
@@ -521,6 +564,21 @@ namespace MIMWebClient.Core.World.Anker
             room.mobs.Add(rabit3);
             room.mobs.Add(rabit4);
 
+
+            var potato = Food.Potato();
+            var potato2 = Food.Potato();
+            var potato3 = Food.Potato();
+            var potato4 = Food.Potato();
+            var potato5 = Food.Potato();
+            var potato6 = Food.Potato();
+
+            room.ForageItems.Add(potato);
+            room.ForageItems.Add(potato2);
+            room.ForageItems.Add(potato3);
+            room.ForageItems.Add(potato4);
+            room.ForageItems.Add(potato5);
+            room.ForageItems.Add(potato6);
+            
             #region exits
 
             var north = new Exit
@@ -587,6 +645,20 @@ namespace MIMWebClient.Core.World.Anker
 
 
             };
+
+            var tomato = Food.Tomato();
+            var tomato2 = Food.Tomato();
+            var tomato3 = Food.Tomato();
+            var tomato4 = Food.Tomato();
+            var tomato5 = Food.Tomato();
+            var tomato6 = Food.Tomato();
+
+            room.ForageItems.Add(tomato);
+            room.ForageItems.Add(tomato2);
+            room.ForageItems.Add(tomato3);
+            room.ForageItems.Add(tomato4);
+            room.ForageItems.Add(tomato5);
+            room.ForageItems.Add(tomato6);
 
             #region exits
 
