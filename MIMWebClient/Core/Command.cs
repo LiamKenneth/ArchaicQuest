@@ -222,6 +222,7 @@ namespace MIMWebClient.Core
                 {"quit", () => HubContext.Instance.Quit(playerData.HubGuid, room)},
                 {"craft", () => Craft.CraftItem(playerData, room, commandOptions)},
                 {"chop", () => Craft.CraftItem(playerData, room, commandOptions, "chop")},
+                {"cook", () => Craft.CraftItem(playerData, room, commandOptions, "cook")},
                 {"make", () => Craft.CraftItem(playerData, room, commandOptions)},
                 {"build", () => Craft.CraftItem(playerData, room, commandOptions)},
                 {"show crafts", () => Craft.CraftList(playerData)},

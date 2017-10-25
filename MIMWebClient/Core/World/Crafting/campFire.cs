@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Item;
+using MIMWebClient.Core.World.Cooking;
 
 namespace MIMWebClient.Core.World.Crafting
 {
@@ -14,7 +15,8 @@ namespace MIMWebClient.Core.World.Crafting
             var listOfCrafts = new List<Craft>()
             {
                 CampFire(),
-                PineLog()
+                PineLog(),
+                Recipes.SmokedChub()
             };
 
             return listOfCrafts;

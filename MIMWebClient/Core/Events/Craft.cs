@@ -11,7 +11,8 @@ namespace MIMWebClient.Core.Events
     public enum CraftType
     {
         Craft,
-        Chop
+        Chop,
+        Cook
 
     }
     public class CraftMaterials
@@ -120,6 +121,13 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
+
+            if ((string.IsNullOrEmpty(craftItem) && craftType == "cook"))
+            {
+                HubContext.Instance.SendToClient("What do you want to cook?", player.HubGuid);
+                return;
+            }
+
             var findCraft = Crafting.CraftList().FirstOrDefault(x => x.Name.ToLower().Contains(craftItem.ToLower()));
 
             var hasCraft = player.CraftingRecipes.FirstOrDefault(x => x.ToLower().Contains(craftItem.ToLower()));
@@ -136,6 +144,12 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
+            if ((string.IsNullOrEmpty(hasCraft) && craftType == "cook"))
+            {
+                HubContext.Instance.SendToClient("You don't know how to do that.", player.HubGuid);
+                return;
+            }
+
             if (findCraft.CraftCommand == CraftType.Chop && craftType == null || findCraft == null && craftType == null)
             {
                 HubContext.Instance.SendToClient("You can't craft that.", player.HubGuid);
@@ -147,6 +161,13 @@ namespace MIMWebClient.Core.Events
                 HubContext.Instance.SendToClient("You can't chop that.", player.HubGuid);
                 return;
             }
+
+            if (findCraft.CraftCommand == CraftType.Craft && craftType == "cook")
+            {
+                HubContext.Instance.SendToClient("You can't cook that.", player.HubGuid);
+                return;
+            }
+
 
             bool hasMaterials = false;
             if (craftType == null && findCraft.CraftCommand == CraftType.Craft)
@@ -170,6 +191,30 @@ namespace MIMWebClient.Core.Events
                     return;
                 }
             }
+            else if (craftType == "cook" && findCraft.CraftCommand == CraftType.Cook)
+            {
+                var hasIngredients = false;
+                foreach (var item in room.items)
+                {
+                    if (findCraft != null && item.description.room.Contains("fire"))
+                    {
+                       hasIngredients = true;
+                        hasMaterials = true;
+                    }
+                    
+                }
+                
+
+                if (!hasIngredients)
+                {
+                    HubContext.Instance.SendToClient("You don't have all the required ingredients.", player.HubGuid);
+                    return;
+                }
+            
+
+               
+            }
+
 
             if (!hasMaterials)
             {

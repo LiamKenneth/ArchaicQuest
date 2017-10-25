@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Mob;
+using MIMWebClient.Core.World.Cooking;
 using MIMWebClient.Core.World.Crafting;
 
 namespace MIMWebClient.Core.PlayerSetup
@@ -538,6 +539,7 @@ namespace MIMWebClient.Core.PlayerSetup
 
             this.CraftingRecipes.Add(Crafting.CampFire().Name);
             this.CraftingRecipes.Add(Crafting.PineLog().Name);
+            this.CraftingRecipes.Add(Recipes.SmokedChub().Name);
 
         }
 

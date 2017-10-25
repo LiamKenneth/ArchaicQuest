@@ -210,17 +210,26 @@ namespace MIMWebClient.Core.World.Anker
                         waterContainerAmount = 5,
                         container = true,
                         containerSize = 5,
-                        description = new Description()
+                        description = new Description(),
+                         containerItems = new ItemContainer()
                     },
                                         new Item.Item()
                     {
-                        name = "Bed",
+                        name = "Bed roll",
                         location = Item.Item.ItemLocation.Room,
                         container = true,
                         containerSize = 5,
-                        description = new Description()
-                    }
-            };
+                        description = new Description(),
+                        containerItems = new ItemContainer()
+                    },
+
+                new Item.Item()
+                {
+                name = "Chub",
+                location = Item.Item.ItemLocation.Room
+            }
+
+        };
 
             var farmer = FarmerOneil.Farmer();
             farmer.Recall = new Recall()

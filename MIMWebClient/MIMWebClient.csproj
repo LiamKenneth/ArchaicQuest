@@ -246,6 +246,7 @@
     <Compile Include="Core\AI\Pathfinding.cs" />
     <Compile Include="Core\Command.cs" />
     <Compile Include="Core\Events\Camp.cs" />
+    <Compile Include="Core\Events\Cooking.cs" />
     <Compile Include="Core\Events\Craft.cs" />
     <Compile Include="Core\Events\Foraging.cs" />
     <Compile Include="Core\Events\Harvest.cs" />
@@ -299,6 +300,7 @@
     <Compile Include="Core\Player\Skills\Forage.cs" />
     <Compile Include="Core\Player\Skills\Fish.cs" />
     <Compile Include="Core\World\Anker\Mobs\FarmerOneil.cs" />
+    <Compile Include="Core\World\Cooking\Recipes.cs" />
     <Compile Include="Core\World\Crafting\campFire.cs" />
     <Compile Include="Core\Player\Effect.cs" />
     <Compile Include="Core\Player\Classes\Thief.cs" />

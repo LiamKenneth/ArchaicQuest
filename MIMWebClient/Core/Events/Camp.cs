@@ -49,12 +49,12 @@ namespace MIMWebClient.Core.Events
          
 
 
-            if (player.Inventory.FirstOrDefault(x => x.name.Contains("pot")) != null)
+            if (player.Inventory.FirstOrDefault(x => x.name.ToLower().Contains("pot")) != null)
             {
                 HubContext.Instance.SendToClient("You place the cooking pot upon the fire.", player.HubGuid);
 
                 room.items.FirstOrDefault(x => x.name.ToLower().Equals("camp fire")).description.room =
-                    "A cooking pot is suspended over the camp fire.";
+                    "A cooking pot is suspended over a camp fire.";
 
                 player.Inventory.Remove(player.Inventory.FirstOrDefault(x => x.name.Contains("pot")));
      
@@ -72,14 +72,19 @@ namespace MIMWebClient.Core.Events
                 }
             }
 
-            if (player.Inventory.FirstOrDefault(x => x.name.Contains("bed")) != null)
+            if (player.Inventory.FirstOrDefault(x => x.name.ToLower().Contains("bed")) != null)
             {
                 HubContext.Instance.SendToClient("You place the bed roll by the fire.", player.HubGuid);
 
-                room.items.FirstOrDefault(x => x.name.ToLower().Equals("bed")).description.room =
+                var bed = player.Inventory.FirstOrDefault(x => x.name.ToLower().Contains("bed"));
+         
+               bed.description.room =
                     "A bed roll is layed out by the fire.";
 
-                player.Inventory.Remove(player.Inventory.FirstOrDefault(x => x.name.Contains("pot")));
+                room.items.Add(bed);
+
+
+                player.Inventory.Remove(player.Inventory.FirstOrDefault(x => x.name.ToLower().Contains("bed")));
 
 
                 foreach (var character in room.players)
