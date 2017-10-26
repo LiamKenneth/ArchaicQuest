@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MIMWebClient.Controllers;
 using MIMWebClient.Core.Player.Classes;
 
 namespace MIMWebClient.Core.Player
@@ -108,6 +109,11 @@ namespace MIMWebClient.Core.Player
 
                 //check player hasn't leveled again
                 GainLevel(player);
+
+                var discordToSay = player.Name + " is now level " + player.Level;
+
+                var discordBot = new HomeController();
+                discordBot.PostToDiscord(discordToSay);
             }
         }
 

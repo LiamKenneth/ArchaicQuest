@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using MIMWebClient.Core.Events;
@@ -37,6 +40,21 @@ namespace MIMWebClient.Controllers
             var playerName = PlayerName.GetHumanName();
            
             return Json(playerName, JsonRequestBehavior.AllowGet);
+
+        }
+
+        [HttpPost]
+        public void PostToDiscord(string botToSay)
+        {
+            HttpClient client = new HttpClient();
+            var content = new FormUrlEncodedContent(new[]
+                {
+            new KeyValuePair<string, string>("content", botToSay)
+        });
+
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+
+             client.PostAsync("https://discordapp.com/api/webhooks/373045444462247938/POT0JYpx6FHbr4OYNlMnbD13DtZR6QHSCq5FQlLmxZ346Oov3-_AvgvA76NiaJF4koFJ", content);
 
         }
 

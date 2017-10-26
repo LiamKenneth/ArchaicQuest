@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using MIMWebClient.Controllers;
 using MIMWebClient.Core.World;
 
 namespace MIMWebClient.Core.Events
@@ -250,6 +251,11 @@ namespace MIMWebClient.Core.Events
             }
 
 
+            var discordToSay =   "[Newbie] " + player.Name + " " + message;
+
+            var discordBot = new HomeController();
+            discordBot.PostToDiscord(discordToSay);
+
 
         }
 
@@ -279,6 +285,10 @@ namespace MIMWebClient.Core.Events
             }
 
 
+            var discordToSay = "[OOC] " + player.Name + " " + message;
+
+            var discordBot = new HomeController();
+            discordBot.PostToDiscord(discordToSay);
 
         }
 

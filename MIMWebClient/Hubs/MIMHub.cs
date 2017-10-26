@@ -10,6 +10,7 @@ using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Player;
 using MIMWebClient.Core;
 using MIMWebClient;
+using MIMWebClient.Controllers;
 using MIMWebClient.Core.AI;
 using MIMWebClient.Core.World.Crafting;
 using MIMWebClient.Core.World.Tutorial;
@@ -362,6 +363,11 @@ namespace MIMWebClient.Hubs
             Score.UpdateUiAffects(PlayerData);
             Score.UpdateUiQlog(PlayerData);
 
+            var discordToSay = "A new character called, " + PlayerData.Name + " has entered the realm.";
+
+            var discordBot = new HomeController();
+             discordBot.PostToDiscord(discordToSay);
+
         }
 
         public void Login(string id, string name, string password)
@@ -371,6 +377,9 @@ namespace MIMWebClient.Hubs
 
             if (player != null)
             {
+
+
+
                 //update hubID
                 player.HubGuid = id;
 
@@ -413,6 +422,7 @@ namespace MIMWebClient.Hubs
 
                 _AreaCache.TryGetValue(getPlayerRoom, out roomData);
 
+
                 PlayerManager.AddPlayerToRoom(roomData, player);
                 Movement.EnterRoom(player, roomData);
 
@@ -431,6 +441,14 @@ namespace MIMWebClient.Hubs
                 player.CraftingRecipes.Add(Crafting.FishingRod().Name);
                 player.CraftingRecipes.Add(Crafting.CampFire().Name);
                 player.CraftingRecipes.Add(Crafting.PineLog().Name);
+
+                var discordToSay = player.Name + " has entered the realm.";
+
+                var discordBot = new HomeController();
+                discordBot.PostToDiscord(discordToSay);
+
+
+
             }
             else
             {
