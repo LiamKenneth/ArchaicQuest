@@ -196,7 +196,7 @@ namespace MIMWebClient.Core.Events
                 var hasIngredients = false;
                 foreach (var item in room.items)
                 {
-                    if (findCraft != null && item.description.room.Contains("fire"))
+                    if (findCraft != null && item.description.room.Contains("fire") || findCraft != null && item.description.room.Contains("stove"))
                     {
                        hasIngredients = true;
                         hasMaterials = true;
@@ -278,6 +278,12 @@ namespace MIMWebClient.Core.Events
             {
                 room.items.Add(craftItem.CreatesItem);
             }
+
+            if (!craftItem.CraftAppearsInRoom)
+            {
+                player.Inventory.Add(craftItem.CreatesItem);
+            }
+
 
             Score.UpdateUiInventory(player);
 

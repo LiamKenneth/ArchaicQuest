@@ -16,7 +16,17 @@ namespace MIMWebClient.Core.World.Crafting
             {
                 CampFire(),
                 PineLog(),
-                Recipes.SmokedChub()
+                Recipes.SmokedChub(),
+                Recipes.BoiledCarp(),
+                Recipes.Bread(),
+                Recipes.FishStew(),
+                Recipes.FriedEel(),
+                Recipes.FriedTrout(),
+                Recipes.FrogLegs(),
+                Recipes.PeasantStew(),
+                Recipes.SeasonedBream(),
+                Recipes.SmokedChub(),
+                Recipes.TurtleSoup()
             };
 
             return listOfCrafts;
@@ -43,7 +53,7 @@ namespace MIMWebClient.Core.World.Crafting
                 {
 
                     name = "Pine log",
-               
+
                     description = new Description()
                     {
                         look = "A pine log"

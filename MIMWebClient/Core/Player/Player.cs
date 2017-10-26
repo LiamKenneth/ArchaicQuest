@@ -541,6 +541,20 @@ namespace MIMWebClient.Core.PlayerSetup
             this.CraftingRecipes.Add(Crafting.PineLog().Name);
             this.CraftingRecipes.Add(Recipes.SmokedChub().Name);
 
+            this.CraftingRecipes.Add(Recipes.BoiledCarp().Name);
+            this.CraftingRecipes.Add(Recipes.PeasantStew().Name);
+            this.CraftingRecipes.Add(Recipes.SeasonedBream().Name);
+
+
+            this.CraftingRecipes.Add(Recipes.BoiledCarp().Name);
+            this.CraftingRecipes.Add(Recipes.FishStew().Name);
+            this.CraftingRecipes.Add(Recipes.Bread().Name);
+
+            this.CraftingRecipes.Add(Recipes.FriedTrout().Name);
+            this.CraftingRecipes.Add(Recipes.TurtleSoup().Name);
+            this.CraftingRecipes.Add(Recipes.FriedEel().Name);
+            this.CraftingRecipes.Add(Recipes.FrogLegs().Name);
+
         }
 
         /// <summary>
