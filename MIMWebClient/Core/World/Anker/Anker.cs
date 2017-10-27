@@ -4041,14 +4041,35 @@ namespace MIMWebClient.Core.World.Anker
                 region = "Anker",
                 area = "Anker",
                 areaId = 31,
-                title = "A small cosy home",
-                description = "<p>A large rug covers the wooden floor of the room, to the left is a couple of chairs in front of a small fireplace warming the room. To the right is a small bed.</p>",
+                title = "An Alchemists home",
+                description = "<p>A large ornate rug covers the wooden floor of the room, In the centre a cauldron boils and bubbles away. Tall shelving units line almost every wall, All filled with vials of all shapes, sizes and colours. The older trinkets on the shelves are covered in dusty cobwebs. A few thick leather books also sit upon the shelves. To the left is what looks like the alchemists work station by the mortor and pestle and empty vials. Else where in the room you notice a couple of purple cusions that are used for sitting but no sign of any bed.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
-                items = new List<Item.Item>(),
+                items = new List<Item.Item>()
+                {
+                    new Item.Item()
+                    {
+                      name =  "Alchemists work bench",
+                      hidden = true,
+                      container = true,
+                      containerSize = 11,
+                      description = new Description()
+                      {
+                          look = "Various glass tubes and flasks sit upon the desk, several candles heat a suspended vial causing the liquid to evaporate up the tube and decant into a flask further along the desk. " +
+                                 "A mortar and pestle used for grinding fresh ingridents sits beside an open alchemy book.",
+
+                          exam = "Various glass tubes and flasks sit upon the desk, several candles heat a suspended vial causing the liquid to evaporate up the tube and decant into a flask further along the desk. " +
+                                 "A mortar and pestle used for grinding fresh ingridents sits beside an open alchemy book."
+                      },
+                      location = Item.Item.ItemLocation.Room,
+                      stuck = true,
+                      
+
+                    }
+                },
                 mobs = new List<Player>(),
-                terrain = Room.Terrain.Field,
+                terrain = Room.Terrain.Inside,
                 keywords = new List<RoomObject>(),
                 corpses = new List<Player>(),
                 players = new List<Player>(),
@@ -4056,53 +4077,42 @@ namespace MIMWebClient.Core.World.Anker
                 clean = true,
                 Emotes = new List<string>()
                 {
-                    "The wood in the burning fireplace crackles and pops."
+                    "The cauldron bubbles away",
+                    "Squeak..."
+
                 }
 
             };
 
             var villager = new Player()
             {
-                Name = "Male villager",
+                Name = "Ramon Llull",
+                KnownByName = true,
+                NPCLongName = "Ramon Llull the Alchemist is here, staring at vials of different shapes and colours.",
                 Gender = "Male",
-                Strength = 12,
-                Dexterity = 12,
-                Constitution = 12,
-                Wisdom = 12,
-                Intelligence = 12,
-                Charisma = 12,
-                Level = 7,
-                HitPoints = 156,
-                MaxHitPoints = 156,
+                Strength = 60,
+                Dexterity = 60,
+                Constitution = 60,
+                Wisdom = 60,
+                Intelligence = 60,
+                Charisma = 60,
+                Level = 14,
+                HitPoints = 356,
+                MaxHitPoints = 356,
                 MovePoints = 200,
                 MaxMovePoints = 200,
-                Description = "A male villager",
-                Type = Player.PlayerTypes.Mob
+                Description = "An tall bald man with a large white beard is here. A simple light red robe covers his body.",
+                Type = Player.PlayerTypes.Mob,
+                Emotes = new List<string>()
+                {
+                    "Hmm, where did I put my glasses?"
+                }
 
             };
-
-            var villager2 = new Player()
-            {
-                Name = "Female villager",
-                Gender = "Female",
-                Strength = 12,
-                Dexterity = 12,
-                Constitution = 12,
-                Wisdom = 12,
-                Intelligence = 12,
-                Charisma = 12,
-                Level = 10,
-                HitPoints = 210,
-                MaxHitPoints = 210,
-                MovePoints = 200,
-                MaxMovePoints = 200,
-                Description = "A female villager",
-                Type = Player.PlayerTypes.Mob
-
-            };
+ 
 
             room.mobs.Add(villager);
-            room.mobs.Add(villager2);
+ 
 
             #region exits
 
