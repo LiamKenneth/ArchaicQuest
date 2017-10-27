@@ -358,10 +358,11 @@
 
     <div class="row">
         <div class="col-xs-12" style="position: relative;">
-            <form onSubmit="return false;">
-                <input type="text" id="message" class="form-control" placeholder="Type here..." autofocus style="background: #101010; color: #f1f1f1; margin-bottom: 15px;" autocomplete="off"/>
-                <button type="submit" id="sendmessage" style="position: absolute; right: 25px; top: 5px; background: #fed967; border: 1px solid #ff8c00">send</button>
+            <form onSubmit="return false;" style="margin-right: 42px;">
+                <input type="text" id="message" class="form-control" placeholder="Enter commands here, type help if unsure on commands." autofocus style="background: #101010; color: #f1f1f1; margin-bottom: 15px; padding-right:60px;" autocomplete="off"/>
+                <button type="submit" id="sendmessage" style="position: absolute; right: 62px; top: 5px; background: #fed967; border: 1px solid #ff8c00">send</button>
             </form>
+            <div id="music" style='background-size: cover; position: absolute; top: 2px; width: 30px; height: 30px; right: 15px; background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMjAwJyBoZWlnaHQ9JzIwMCcgZmlsbD0iI2ZlZDk2NyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDI1IDI1IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyNSAyNSIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PGc+PGc+PHBhdGggZD0iTTE1LjQ3Nyw5LjMxOGMtMC4xOTUsMC4xOTUtMC4xOTUsMC41MTIsMCwwLjcwN2MwLjY2MSwwLjY2MSwxLjAyNSwxLjU0LDEuMDI1LDIuNDc1cy0wLjM2NCwxLjgxMy0xLjAyNSwyLjQ3NSAgICBjLTAuMTk1LDAuMTk1LTAuMTk1LDAuNTEyLDAsMC43MDdjMC4wOTgsMC4wOTgsMC4yMjYsMC4xNDYsMC4zNTQsMC4xNDZzMC4yNTYtMC4wNDksMC4zNTQtMC4xNDYgICAgYzAuODUtMC44NSwxLjMxOC0xLjk3OSwxLjMxOC0zLjE4MnMtMC40NjgtMi4zMzItMS4zMTgtMy4xODJDMTUuOTg5LDkuMTIzLDE1LjY3Miw5LjEyMywxNS40NzcsOS4zMTh6Ii8+PHBhdGggZD0iTTE5LjAxMiw2LjQ4OWMtMC4xOTUtMC4xOTUtMC41MTItMC4xOTUtMC43MDcsMHMtMC4xOTUsMC41MTIsMCwwLjcwN2MyLjkyNCwyLjkyNSwyLjkyNCw3LjY4NCwwLDEwLjYwNyAgICBjLTAuMTk1LDAuMTk1LTAuMTk1LDAuNTEyLDAsMC43MDdjMC4wOTgsMC4wOTgsMC4yMjYsMC4xNDYsMC4zNTQsMC4xNDZzMC4yNTYtMC4wNDksMC4zNTQtMC4xNDYgICAgQzIyLjMyNiwxNS4xOTYsMjIuMzI2LDkuODA0LDE5LjAxMiw2LjQ4OXoiLz48cGF0aCBkPSJNMTMuMjIyLDYuMDUxYy0wLjE3MS0wLjA4NC0wLjM3NS0wLjA2Mi0wLjUyNywwLjA1NUw4LjMzMSw5LjVINC4wMDJjLTAuMjc2LDAtMC41LDAuMjI0LTAuNSwwLjV2NSAgICBjMCwwLjI3NiwwLjIyNCwwLjUsMC41LDAuNWg0LjMyOWw0LjM2NCwzLjM5NUMxMi43ODUsMTguOTY0LDEyLjg5MywxOSwxMy4wMDIsMTljMC4wNzUsMCwwLjE1LTAuMDE3LDAuMjItMC4wNTEgICAgYzAuMTcxLTAuMDg0LDAuMjgtMC4yNTgsMC4yOC0wLjQ0OXYtMTJDMTMuNTAyLDYuMzA5LDEzLjM5Myw2LjEzNSwxMy4yMjIsNi4wNTF6Ii8+PC9nPjwvZz48L3N2Zz4=");' title="Music by BrunuhVille,  https://www.youtube.com/user/BrunuhVille"></div>
             <audio id="player"></audio>
 
         </div>

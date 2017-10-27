@@ -3,7 +3,7 @@
     //================================================================================
     // Setup the auto-generated proxy for the hub.
     //================================================================================
-    $.connection.hub.url = "/signalr";
+    $.connection.hub.url = "/dev/signalr";
 
     var chat = $.connection.mIMHub;
     var client = chat.client;
@@ -1049,14 +1049,77 @@
 
      function playAudio() {
 
-         _player.src = "";
+         _player.src = "https://t4.bcbits.com/stream/4c0348d5007801f13639b0b521017188/mp3-128/2360130612?p=0&ts=1509145882&t=a1dbd6a390427c9216c0d3a506db2454dda4cd8d&token=1509145882_f8a6264d146bd22e61efd9b44577c0fe91da9e30";
 
+         _player.volume = 0.2;
             _player.play();
 
          
-     };
+    };
 
-v
+    if ($(window).width() > 768) {
+        playAudio();
+    }
+
+ 
+
+    var isPlaying = false;
+    var music = $("#music");
+
+    function togglePlay() {
+        if (isPlaying) {
+
+            if (_player.volume == 0.2) {
+                _player.volume = 0.02;
+                music.css("opacity", "0.5");
+            } else {
+                _player.pause();
+            }
+          
+        } else {
+            _player.volume = 0.2;
+
+            _player.play();
+        }
+    };
+    _player.onplaying = function () {
+        isPlaying = true;
+       music.css("opacity", "1");
+    };
+    _player.onpause = function () {
+        isPlaying = false;
+        music.css("opacity", "0.2");
+    };
+
+    var i = 0;
+    var playlist = [
+
+        "https://t4.bcbits.com/stream/c69445e10427e06b5147b38135377ba7/mp3-128/292646295?p=0&ts=1509146281&t=ef67230a54182e308196fd076b93212e6989532c&token=1509146281_b6011744182063e055f23c1165b3d6f5f51753dc",
+
+        "https://t4.bcbits.com/stream/979024ecf6069cdaa0eea36bc5dce0bf/mp3-128/1314921283?p=0&ts=1509146170&t=466893c1361dcf3d44755871189bd7c10b9f611e&token=1509146170_ac0781e61b7e2195b134c553868ae7ac2d7e359c",
+
+        "https://t4.bcbits.com/stream/a4974bc23a6612474cb8571d283b3435/mp3-128/2667258246?p=0&ts=1509146086&t=7441ce1b6afa217719e17576a7a224f76f2b86bf&token=1509146086_d49e2b5c40146ffcf9565d8e38cd83656beaf524",
+
+        'https://t4.bcbits.com/stream/bebf264abf69f8ef271ffcad17f819a6/mp3-128/2142516999?p=0&ts=1509146000&t=7a1b065b6d04da80a46323bac5bc317ff0360867&token=1509146000_3e58321b1c65a42a3b66c63f7e288c1f1b382d0a',
+
+        'https://t4.bcbits.com/stream/d69b144982422622205741c4b5db656b/mp3-128/3105472715?p=0&ts=1509145759&t=1875dbf265efe883fd9cea08eb2a4dae6311e3b2&token=1509145759_533f848a6476216b94a849f5438c96556923a5a7',
+
+        "https://t4.bcbits.com/stream/1659b135351aa4b1dd359e7ca6d98be4/mp3-128/1805184470?p=0&ts=1509145759&t=ab13c07d6ac48ed68fcf68ccc8808ef881c075f6&token=1509145759_abd72c2f8a0ab6ede62e6484a95f073ab4ba03f2"];
+
+
+    _player.addEventListener('ended', function () {
+        i = ++i < playlist.length ? i : 0;
+        
+        _player.src = playlist[i];
+        _player.play();
+    }, true);
+
+    music.on("click",
+        function (event) {
+
+            console.log("click")
+            togglePlay(this);
+        });
 
 
     function maps(area, region, zindex) {
