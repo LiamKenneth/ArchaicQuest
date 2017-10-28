@@ -255,7 +255,7 @@ namespace MIMWebClient.Core.Events
 
             var discordBot = new HomeController();
             discordBot.PostToDiscord(discordToSay);
-
+            discordBot.Dispose();
 
         }
 
@@ -289,7 +289,7 @@ namespace MIMWebClient.Core.Events
 
             var discordBot = new HomeController();
             discordBot.PostToDiscord(discordToSay);
-
+            discordBot.Dispose();
         }
 
     }
