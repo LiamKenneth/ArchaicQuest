@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Mob;
+using MIMWebClient.Core.World.Alchemy;
 using MIMWebClient.Core.World.Cooking;
 using MIMWebClient.Core.World.Crafting;
 
@@ -554,6 +555,9 @@ namespace MIMWebClient.Core.PlayerSetup
             this.CraftingRecipes.Add(Recipes.TurtleSoup().Name);
             this.CraftingRecipes.Add(Recipes.FriedEel().Name);
             this.CraftingRecipes.Add(Recipes.FrogLegs().Name);
+
+
+            this.CraftingRecipes.Add(Alchemy.BurnCream().Name);
 
         }
 

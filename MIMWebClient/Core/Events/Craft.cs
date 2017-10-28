@@ -12,7 +12,9 @@ namespace MIMWebClient.Core.Events
     {
         Craft,
         Chop,
-        Cook
+        Cook,
+        Brew,
+        Smith
 
     }
     public class CraftMaterials
@@ -128,6 +130,13 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
+
+            if ((string.IsNullOrEmpty(craftItem) && craftType == "brew"))
+            {
+                HubContext.Instance.SendToClient("What do you want to brew?", player.HubGuid);
+                return;
+            }
+
             var findCraft = Crafting.CraftList().FirstOrDefault(x => x.Name.ToLower().Contains(craftItem.ToLower()));
 
             var hasCraft = player.CraftingRecipes.FirstOrDefault(x => x.ToLower().Contains(craftItem.ToLower()));
@@ -145,6 +154,12 @@ namespace MIMWebClient.Core.Events
             }
 
             if ((string.IsNullOrEmpty(hasCraft) && craftType == "cook"))
+            {
+                HubContext.Instance.SendToClient("You don't know how to do that.", player.HubGuid);
+                return;
+            }
+
+            if ((string.IsNullOrEmpty(hasCraft) && craftType == "brew"))
             {
                 HubContext.Instance.SendToClient("You don't know how to do that.", player.HubGuid);
                 return;
@@ -168,6 +183,12 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
+
+            if (findCraft.CraftCommand == CraftType.Craft && craftType == "brew")
+            {
+                HubContext.Instance.SendToClient("You can't brew that.", player.HubGuid);
+                return;
+            }
 
             bool hasMaterials = false;
             if (craftType == null && findCraft.CraftCommand == CraftType.Craft)
@@ -214,6 +235,29 @@ namespace MIMWebClient.Core.Events
 
                
             }
+            else if (craftType == "brew" && findCraft.CraftCommand == CraftType.Brew)
+            {
+                var hasIngredients = false;
+                foreach (var item in room.items)
+                {
+                    if (findCraft != null && item.name.Contains("Alchemists work bench"))
+                    {
+                        hasIngredients = true;
+                        hasMaterials = true;
+                    }
+
+                }
+
+
+                if (!hasIngredients)
+                {
+                    HubContext.Instance.SendToClient("You don't have all the required components.", player.HubGuid);
+                    return;
+                }
+
+
+
+            }
 
 
             if (!hasMaterials)
@@ -231,11 +275,13 @@ namespace MIMWebClient.Core.Events
 
             if (player.MovePoints < craftItem.MoveCost)
             {
-                if (craftItem.CraftCommand == CraftType.Chop)
+                if (craftItem.CraftCommand == CraftType.Chop || craftItem.CraftCommand == CraftType.Brew)
                 {
                     HubContext.Instance.SendToClient("You are too tired to make " + Helpers.ReturnName(null, null, craftItem.CreatesItem.name).ToLower() + ".", player.HubGuid);
                     return;
                 }
+ 
+
 
                 HubContext.Instance.SendToClient("You are too tired to make " + Helpers.ReturnName(null, null, craftItem.Name).ToLower() + ".", player.HubGuid);
                 return;
@@ -253,7 +299,7 @@ namespace MIMWebClient.Core.Events
                 HubContext.Instance.SendToClient(emote, player.HubGuid);
 
 
-                await Task.Delay(1500);
+                await Task.Delay(2000);
             }
 
             HubContext.Instance.SendToClient(craftItem.SuccessMessage, player.HubGuid);

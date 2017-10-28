@@ -3953,7 +3953,7 @@ namespace MIMWebClient.Core.World.Anker
                               "Small cottages line the road on both sides and continue" +
                               "to do so both east and west. Wild flowers line most of the" +
                               " path with a few small trees here and there. " +
-                              "The occasional chimney puffs smoke up in the air.</p>",
+                              "The house to the north seems to be puffing purple smoke from it's chimney unlike the others.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -4064,6 +4064,30 @@ namespace MIMWebClient.Core.World.Anker
                       },
                       location = Item.Item.ItemLocation.Room,
                       stuck = true,
+                      containerItems = new ItemContainer()
+                      {
+                          new Item.Item()
+                          {
+                              name =  "Aloe Vera",
+                              description = new Description()
+                              {
+                                  look = "A thick green spikey branch of aloe vera, a clear liquid oozes from where it's been cut at the base.",
+                              },
+                              location = Item.Item.ItemLocation.Room,
+                            
+                          },
+                          new Item.Item()
+                          {
+                              name =  "Scabious",
+                              description = new Description()
+                              {
+                                  look = "A beautiful purple flower with a long green stem.",
+                                  smell = "You sniff strongly at the flower, it's smell is pleasant."
+                              },
+                              location = Item.Item.ItemLocation.Room,
+
+                          }
+                      }
                       
 
                     }
@@ -4105,7 +4129,7 @@ namespace MIMWebClient.Core.World.Anker
                 Type = Player.PlayerTypes.Mob,
                 Emotes = new List<string>()
                 {
-                    "Hmm, where did I put my glasses?"
+                    "Says, Hmm, where did I put my glasses?"
                 }
 
             };

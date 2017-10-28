@@ -299,6 +299,7 @@
     <Compile Include="Core\PlayerSetup\ValidateChar.cs" />
     <Compile Include="Core\Player\Skills\Forage.cs" />
     <Compile Include="Core\Player\Skills\Fish.cs" />
+    <Compile Include="Core\World\Alchemy\Alchemy.cs" />
     <Compile Include="Core\World\Anker\Mobs\FarmerOneil.cs" />
     <Compile Include="Core\World\Cooking\Recipes.cs" />
     <Compile Include="Core\World\Crafting\campFire.cs" />

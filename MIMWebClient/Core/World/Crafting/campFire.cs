@@ -26,7 +26,8 @@ namespace MIMWebClient.Core.World.Crafting
                 Recipes.PeasantStew(),
                 Recipes.SeasonedBream(),
                 Recipes.SmokedChub(),
-                Recipes.TurtleSoup()
+                Recipes.TurtleSoup(),
+                Alchemy.Alchemy.BurnCream()
             };
 
             return listOfCrafts;
