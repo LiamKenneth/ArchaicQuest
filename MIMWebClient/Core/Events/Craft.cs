@@ -148,7 +148,7 @@ namespace MIMWebClient.Core.Events
             }
  
 
-            if (findCraft.CraftCommand == CraftType.Chop && craftType == null || findCraft == null && craftType == null)
+            if ((findCraft == null || findCraft.CraftCommand == CraftType.Chop) && craftType == null)
             {
                 HubContext.Instance.SendToClient("You can't craft that.", player.HubGuid);
                 return;
