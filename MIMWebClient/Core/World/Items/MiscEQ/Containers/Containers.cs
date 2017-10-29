@@ -25,5 +25,22 @@ namespace MIMWebClient.Core.World.Items.MiscEQ.Containers
             return backpack;
         }
 
+        public static Item.Item WoodenChest()
+        {
+            return new Item.Item
+            {
+                name = "Wooden Chest",
+                container = true,
+                containerSize = 15,
+                Weight = 1,
+                count = 10,
+                equipable = false,
+                location = Item.Item.ItemLocation.Inventory,
+                canOpen = true,
+                Gold = 25
+            };
+ 
+        }
+
     }
 }

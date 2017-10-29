@@ -8,6 +8,42 @@ namespace MIMWebClient.Core.World.Items.Weapons.Spear
 {
     public class SpearBasic
     {
+        public static Item.Item CopperSpear()
+        {
+            var copperSpear = new Item.Item
+            {
+                name = "Copper spear",
+                Weight = 5,
+                equipable = true,
+                eqSlot = Item.Item.EqSlot.Wielded,
+                slot = Item.Item.EqSlot.Wielded,
+                location = Item.Item.ItemLocation.Inventory,
+                weaponSpeed = 4,
+                weaponType = Item.Item.WeaponType.Spear,
+                attackType = Item.Item.AttackType.Pierce,
+                stats = new Stats()
+                {
+                    damMax = 8,
+                    damMin = 1,
+                    damRoll = 0,
+                    minUsageLevel = 5,
+                    worth = 10
+                },
+                description = new Description()
+                {
+                    look = "A simple copper spear.",
+                    smell = "",
+                    taste = "",
+                    touch = "",
+                },
+                Gold = 25
+
+            };
+
+            return copperSpear;
+        }
+
+
         public static Item.Item BoarSpear()
         {
             var BoarSpear = new Item.Item

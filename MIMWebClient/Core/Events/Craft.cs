@@ -148,11 +148,33 @@ namespace MIMWebClient.Core.Events
             }
  
 
-            if (findCraft.CraftCommand == CraftType.Chop && craftType == null || findCraft == null && craftType == null)
+            if (findCraft.CraftCommand == CraftType.Chop && craftType == null)
             {
                 HubContext.Instance.SendToClient("You can't craft that.", player.HubGuid);
                 return;
             }
+
+
+            if (findCraft.CraftCommand == CraftType.Carve && craftType == null)
+            {
+                HubContext.Instance.SendToClient("You can't craft that.", player.HubGuid);
+                return;
+            }
+
+
+            if (findCraft.CraftCommand == CraftType.Cook && craftType == null)
+            {
+                HubContext.Instance.SendToClient("You can't craft that.", player.HubGuid);
+                return;
+            }
+
+            if (findCraft.CraftCommand == CraftType.Forge && craftType == null)
+            {
+                HubContext.Instance.SendToClient("You can't craft that.", player.HubGuid);
+                return;
+            }
+
+
 
             if (findCraft.CraftCommand == CraftType.Craft)
             {
@@ -243,20 +265,19 @@ namespace MIMWebClient.Core.Events
             }
             else if (craftType == "carve" && findCraft.CraftCommand == CraftType.Carve)
             {
-                hasMaterials = findCraft != null &&
-                               room.items.FirstOrDefault(
-                                   x => x.name.Equals("Carpentry work bench", StringComparison.CurrentCultureIgnoreCase)) != null;
+                hasMaterials = findCraft != null && HasAllMaterials(player, findCraft.Materials, hasCraft); ;
 
-                if (!hasMaterials)
+
+                if (room.items.Count == 0 || room.items.FirstOrDefault(
+                        x => x.name.Equals("Carpentry work bench", StringComparison.CurrentCultureIgnoreCase)) == null)
                 {
-                    HubContext.Instance.SendToClient("You don't have all the required materials.", player.HubGuid);
+                    HubContext.Instance.SendToClient("You need to be at a Carpentry work bench.", player.HubGuid);
                     return;
                 }
             }
 
             if (!hasMaterials)
             {
-               // HubContext.Instance.SendToClient("You don't have all the required materials.", player.HubGuid);
                 return;
             }
 

@@ -8,6 +8,41 @@ namespace MIMWebClient.Core.World.Items.Weapons.DaggerBasic
 {
     public class DaggerBasic
     {
+        public static Item.Item CopperDagger()
+        {
+            var CopperDagger = new Item.Item
+            {
+                name = "Copper Dagger",
+                Weight = 5,
+                equipable = true,
+                eqSlot = Item.Item.EqSlot.Wielded,
+                slot = Item.Item.EqSlot.Wielded,
+                location = Item.Item.ItemLocation.Inventory,
+                weaponSpeed = 4,
+                weaponType = Item.Item.WeaponType.ShortBlades,
+                attackType = Item.Item.AttackType.Slice,
+                stats = new Stats()
+                {
+                    damMax = 8,
+                    damMin = 1,
+                    damRoll = 0,
+                    minUsageLevel = 5,
+                    worth = 10
+                },
+                description = new Description()
+                {
+                    look = "A simple copper dagger.",
+                    smell = "",
+                    taste = "",
+                    touch = "",
+                },
+                Gold = 25
+
+            };
+
+            return CopperDagger;
+        }
+
 
         public static Item.Item IronDagger()
         {

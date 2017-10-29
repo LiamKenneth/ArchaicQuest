@@ -8,6 +8,42 @@ namespace MIMWebClient.Core.World.Items.Weapons.Blunt
 {
     public class MaceBasic
     {
+
+        public static Item.Item CopperMace()
+        {
+            var CopperMace = new Item.Item
+            {
+                name = "Copper Mace",
+                Weight = 5,
+                equipable = true,
+                eqSlot = Item.Item.EqSlot.Wielded,
+                slot = Item.Item.EqSlot.Wielded,
+                location = Item.Item.ItemLocation.Inventory,
+                weaponSpeed = 4,
+                weaponType = Item.Item.WeaponType.Blunt,
+                attackType = Item.Item.AttackType.Crush,
+                stats = new Stats()
+                {
+                    damMax = 5,
+                    damMin = 1,
+                    damRoll = 0,
+                    minUsageLevel = 5,
+                    worth = 10
+                },
+                description = new Description()
+                {
+                    look = "A simple copper Mace.",
+                    smell = "",
+                    taste = "",
+                    touch = "",
+                },
+                Gold = 25
+
+            };
+
+            return CopperMace;
+        }
+
         public static Item.Item IronMace()
         {
             var ironMace = new Item.Item

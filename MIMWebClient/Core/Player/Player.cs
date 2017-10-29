@@ -567,8 +567,16 @@ namespace MIMWebClient.Core.PlayerSetup
 
             this.CraftingRecipes.Add(Smithing.Lantern().Name);
             this.CraftingRecipes.Add(Smithing.CopperSword().Name);
+            this.CraftingRecipes.Add(Smithing.CopperMace().Name);
+            this.CraftingRecipes.Add(Smithing.CopperAxe().Name);
+            this.CraftingRecipes.Add(Smithing.CopperDagger().Name);
+            this.CraftingRecipes.Add(Smithing.CopperFlail().Name);
+
             this.CraftingRecipes.Add(Carve.WoodenRaft().Name);
             this.CraftingRecipes.Add(Carve.WoodenTorch().Name);
+            this.CraftingRecipes.Add(Carve.WoodenChest().Name);
+
+
         }
 
         /// <summary>

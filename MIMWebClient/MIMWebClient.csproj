@@ -431,6 +431,7 @@
     <Compile Include="Core\World\Items\Weapons\Blunt\HammerBasic.cs" />
     <Compile Include="Core\World\Items\Weapons\Blunt\MaceBasic.cs" />
     <Compile Include="Core\World\Items\Weapons\Dagger\DaggerBasic.cs" />
+    <Compile Include="Core\World\Items\Weapons\Flail\FlailBasic.cs" />
     <Compile Include="Core\World\Items\Weapons\Mob\mobWeapons.cs" />
     <Compile Include="Core\World\Items\Weapons\Spear\SpearBasic.cs" />
     <Compile Include="Core\World\Items\Weapons\Staff\StaffBasic.cs" />
@@ -678,7 +679,6 @@
     <Folder Include="Core\World\Items\MiscEQ\Rings\" />
     <Folder Include="Core\World\Items\MiscEQ\Staves\" />
     <Folder Include="Core\World\Items\MiscEQ\Wands\" />
-    <Folder Include="Core\World\Items\Weapons\Flail\" />
     <Folder Include="Core\World\Items\Weapons\Polearm\" />
     <Folder Include="Core\World\Items\Weapons\Whip\" />
     <Folder Include="UI\Css\Lib\bootstrap\" />

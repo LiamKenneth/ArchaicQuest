@@ -3120,20 +3120,21 @@ namespace MIMWebClient.Core.World.Anker
 
             var villager = new Player()
             {
-                Name = "Male villager",
-                Gender = "Male",
-                Strength = 12,
-                Dexterity = 12,
-                Constitution = 12,
-                Wisdom = 12,
-                Intelligence = 12,
-                Charisma = 12,
-                Level = 7,
-                HitPoints = 156,
-                MaxHitPoints = 156,
+                Name = "Niamh",
+                KnownByName = true,
+                Gender = "Female",
+                Strength = 60,
+                Dexterity = 60,
+                Constitution = 60,
+                Wisdom = 60,
+                Intelligence = 60,
+                Charisma = 60,
+                Level = 15,
+                HitPoints = 356,
+                MaxHitPoints = 356,
                 MovePoints = 200,
                 MaxMovePoints = 200,
-                Description = "A male villager",
+                Description = "The village seamstress",
                 Type = Player.PlayerTypes.Mob,
                 Recall = new Recall()
                 {

@@ -8,6 +8,42 @@ namespace MIMWebClient.Core.World.Items.Weapons.Axe
 {
     public class AxeBasic
     {
+
+        public static Item.Item CopperAxe()
+        {
+            var CopperAxe = new Item.Item
+            {
+                name = "Copper Axe",
+                Weight = 5,
+                equipable = true,
+                eqSlot = Item.Item.EqSlot.Wielded,
+                slot = Item.Item.EqSlot.Wielded,
+                location = Item.Item.ItemLocation.Inventory,
+                weaponSpeed = 4,
+                weaponType = Item.Item.WeaponType.Axe,
+                attackType = Item.Item.AttackType.Chop,
+                stats = new Stats()
+                {
+                    damMax = 8,
+                    damMin = 1,
+                    damRoll = 0,
+                    minUsageLevel = 5,
+                    worth = 10
+                },
+                description = new Description()
+                {
+                    look = "A simple copper half bladed axe.",
+                    smell = "",
+                    taste = "",
+                    touch = "",
+                },
+                Gold = 25
+
+            };
+
+            return CopperAxe;
+        }
+
         public static Item.Item IronHatchet()
         {
             var IronHatchet = new Item.Item
@@ -37,7 +73,7 @@ namespace MIMWebClient.Core.World.Items.Weapons.Axe
                 {
                     exam = "A small iron hatchet, with a crudely sharpened metal head and a sturdy wooden handle. ",
                     look = "A small iron hatchet, with a crudely sharpened metal head and a sturdy wooden handle. ",
-                    room = "A simple Iron Hatchet",
+                    room = "A simple Iron Axe",
                     smell = "",
                     taste = "",
                     touch = "",

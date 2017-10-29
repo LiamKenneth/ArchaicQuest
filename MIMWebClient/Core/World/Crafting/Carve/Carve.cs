@@ -5,6 +5,7 @@ using System.Web;
 using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Item;
 using MIMWebClient.Core.Player.Skills;
+using MIMWebClient.Core.World.Items.MiscEQ.Containers;
 using MIMWebClient.Core.World.Items.MiscEQ.Light;
 using MIMWebClient.Core.World.Items.Weapons.Sword.Long;
 
@@ -18,7 +19,7 @@ namespace MIMWebClient.Core.World.Crafting.Carve
         public static Craft WoodenRaft()
         {
 
-            var lantern = new Craft()
+            var WoodenRaft = new Craft()
             {
                 Name = "Wooden Raft",
                 StartMessage = "You gather your logs and begin to make the raft",
@@ -58,7 +59,7 @@ namespace MIMWebClient.Core.World.Crafting.Carve
 
             };
 
-            return lantern;
+            return WoodenRaft;
 
         }
 
@@ -72,7 +73,7 @@ namespace MIMWebClient.Core.World.Crafting.Carve
                 FaliureMessage = "...",
                 SuccessMessage = "You have crafted a wooden torch.",
                 Description = "To craft a wooden torch you need Carpentry work bench",
-                CraftCommand = CraftType.Forge,
+                CraftCommand = CraftType.Carve,
                 CraftAppearsInRoom = false,
                 CraftingEmotes = new List<string>()
                 {
@@ -100,6 +101,47 @@ namespace MIMWebClient.Core.World.Crafting.Carve
             };
 
             return WoodenTorch;
+
+        }
+
+        public static Craft WoodenChest()
+        {
+
+            var WoodenChest = new Craft()
+            {
+                Name = "Wooden Chest",
+                StartMessage = "You gather your logs and begin to make the chest",
+                FaliureMessage = "...",
+                SuccessMessage = "You have crafted a wooden chest.",
+                Description = "To craft a wooden chest you need Carpentry work bench",
+                CraftCommand = CraftType.Carve,
+                CraftAppearsInRoom = false,
+                CraftingEmotes = new List<string>()
+                {
+                    "You sand the logs down making them smooth to touch",
+                    "You carve the logs into strips",
+                    "You slot the wooden pieces together forming a chest.",
+                },
+                Materials = new List<CraftMaterials>()
+                {
+                    new CraftMaterials()
+                    {
+                        Name = "log",
+                        Count = 5
+                    },
+                    new CraftMaterials()
+                    {
+                        Name = "scrap metal",
+                        Count = 1
+                    }
+                },
+                CreatesItem = Containers.WoodenChest(),
+
+                MoveCost = 20
+
+            };
+
+            return WoodenChest;
 
         }
 

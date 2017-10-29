@@ -84,6 +84,41 @@ namespace MIMWebClient.Core.World.Items.Weapons.Sword.Short
             return Saber;
         }
 
+        public static Item.Item CopperSword()
+        {
+            var CopperSword = new Item.Item
+            {
+                name = "Copper short sword",
+                Weight = 5,
+                equipable = true,
+                eqSlot = Item.Item.EqSlot.Wielded,
+                slot = Item.Item.EqSlot.Wielded,
+                location = Item.Item.ItemLocation.Inventory,
+                weaponSpeed = 4,
+                weaponType = Item.Item.WeaponType.ShortBlades,
+                attackType = Item.Item.AttackType.Slash,
+                stats = new Stats()
+                {
+                    damMax = 5,
+                    damMin = 1,
+                    damRoll = 0,
+                    minUsageLevel = 5,
+                    worth = 10
+                },
+                description = new Description()
+                {
+                    look = "A simple copper sword with a short blade",
+                    smell = "",
+                    taste = "",
+                    touch = "",
+                },
+                Gold = 25
+
+            };
+
+            return CopperSword;
+        }
+
         public static Item.Item RustedShortSword()
         {
             var RustedShortSword = new Item.Item
@@ -99,7 +134,7 @@ namespace MIMWebClient.Core.World.Items.Weapons.Sword.Short
                 attackType = Item.Item.AttackType.Slash,
                 stats = new Stats()
                 {
-                    damMax = 6,
+                    damMax = 8,
                     damMin = 1,
                     damRoll = 0,
                     minUsageLevel = 1,
