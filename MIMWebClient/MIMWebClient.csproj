@@ -422,6 +422,7 @@
     <Compile Include="Core\World\Items\Consumables\Drinks\drink.cs" />
     <Compile Include="Core\World\Items\Consumables\Food\Food.cs" />
     <Compile Include="Core\World\Items\MiscEQ\Containers\Containers.cs" />
+    <Compile Include="Core\World\Items\MiscEQ\Held\Held.cs" />
     <Compile Include="Core\World\Items\MiscEQ\Light\Light.cs" />
     <Compile Include="Core\World\Items\Weapons\Axe\AxeBasic.cs" />
     <Compile Include="Core\World\Items\Weapons\Blunt\HammerBasic.cs" />
@@ -670,7 +671,6 @@
     <Folder Include="Core\World\Items\MiscEQ\Ears\" />
     <Folder Include="Core\World\Items\MiscEQ\Eyes\" />
     <Folder Include="Core\World\Items\MiscEQ\Floating\" />
-    <Folder Include="Core\World\Items\MiscEQ\Held\" />
     <Folder Include="Core\World\Items\MiscEQ\Neck\" />
     <Folder Include="Core\World\Items\MiscEQ\Rings\" />
     <Folder Include="Core\World\Items\MiscEQ\Staves\" />

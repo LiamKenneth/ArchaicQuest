@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using MIMWebClient.Core.Item;
+using MIMWebClient.Core.World.Items.MiscEQ.Held;
 
 namespace MIMWebClient.Core.Player.Skills
 {
@@ -110,7 +111,7 @@ namespace MIMWebClient.Core.Player.Skills
             }
 
             await Task.Delay(500);
- 
+
             var foragingAB = player.Skills.FirstOrDefault(x => x.Name.Equals("Foraging"));
             double getSkillProf = 0;
             if (foragingAB != null)
@@ -120,9 +121,30 @@ namespace MIMWebClient.Core.Player.Skills
 
             var getItems = room.ForageItems.Where(x => x.ForageRank <= player.ForageRank).ToList();
 
+            if (getItems.Count == 0 && room.terrain == Room.Terrain.City)
+            {
+                getItems = new ItemContainer();
+
+                if (Helpers.Rand(1, 100) <= 50)
+                {
+                    getItems.Add(Held.TatteredRag());
+              
+                    getItems.Add(Held.ScrapMetal());
+                }
+            }
+            else if (room.terrain == Room.Terrain.City)
+            {
+                if (Helpers.Rand(1, 100) <= 50)
+                {
+                    getItems.Add(Held.TatteredRag());
+               
+                    getItems.Add(Held.ScrapMetal());
+                }
+            }
+
             var successChance = Helpers.Rand(1, 100);
 
-            if (getSkillProf >= successChance)
+            if (getSkillProf >= successChance && getItems.Count > 0)
             {
 
                 var YouFound = "You found " +
@@ -147,19 +169,32 @@ namespace MIMWebClient.Core.Player.Skills
             {
 
                 var failMessage = "";
-                switch (Helpers.Rand(1, 4))
+
+                if (room.terrain == Room.Terrain.City)
                 {
-                    case 1:
-                        failMessage = "A bee has stung you on the hand, Ouch!";
-                        break;
-                    case 2:
-                    case 3:
-                        failMessage = "You fail to find anything worth taking.";
-                        break;
-                    default:
-                        failMessage = "You don't recognise any of the flora here.";
-                        break;
+
+                    failMessage = "You fail to find anything.";
+
+
                 }
+                else
+                {
+                    switch (Helpers.Rand(1, 4))
+                    {
+                        case 1:
+                            failMessage = "A bee has stung you on the hand, Ouch!";
+                            break;
+                        case 2:
+                        case 3:
+                            failMessage = "You fail to find anything worth taking.";
+                            break;
+                        default:
+                            failMessage = "You don't recognise any of the flora here.";
+                            break;
+                    }
+                }
+
+
 
 
                 HubContext.Instance.SendToClient(failMessage, player.HubGuid);

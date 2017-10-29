@@ -51,8 +51,8 @@ namespace MIMWebClient.Core.Room
         {
             Standard,
             Shop,
-            Guild 
-
+            Guild,
+            Town
         }
 
         [BsonRepresentation(BsonType.ObjectId)]
