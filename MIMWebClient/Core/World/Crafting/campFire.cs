@@ -32,6 +32,7 @@ namespace MIMWebClient.Core.World.Crafting
                 Alchemy.Alchemy.Antiseptic(),
                 Alchemy.Alchemy.Antivenom(),
                 Alchemy.Alchemy.LavenderPerfume(),
+                Smithing.Smithing.Lantern(),
             };
 
             return listOfCrafts;

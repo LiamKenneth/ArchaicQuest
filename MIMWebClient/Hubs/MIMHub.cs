@@ -13,6 +13,7 @@ using MIMWebClient;
 using MIMWebClient.Controllers;
 using MIMWebClient.Core.AI;
 using MIMWebClient.Core.World.Crafting;
+using MIMWebClient.Core.World.Crafting.Smithing;
 using MIMWebClient.Core.World.Tutorial;
 
 namespace MIMWebClient.Hubs
@@ -441,6 +442,7 @@ namespace MIMWebClient.Hubs
                 player.CraftingRecipes.Add(Crafting.FishingRod().Name);
                 player.CraftingRecipes.Add(Crafting.CampFire().Name);
                 player.CraftingRecipes.Add(Crafting.PineLog().Name);
+                player.CraftingRecipes.Add(Smithing.Lantern().Name);
 
                 var discordToSay = player.Name + " has entered the realm.";
 

@@ -1286,7 +1286,22 @@ namespace MIMWebClient.Core.World.Anker
 
                 //Defaults
                 exits = new List<Exit>(),
-                items = new List<Item.Item>(),
+                items = new List<Item.Item>()
+                {
+                    new Item.Item()
+                    {
+                        name =  "Furnace",
+                        hidden = true, 
+                        isHiddenInRoom = true,
+                        description = new Description()
+                        {
+                            look = "A large roaring forge of hot yellow flames."
+                        },
+                        location = Item.Item.ItemLocation.Room,
+                        stuck = true,
+ 
+                    }
+                },
                 mobs = new List<Player>(),
                 terrain = Room.Terrain.City,
                 keywords = new List<RoomObject>(),
@@ -1299,6 +1314,11 @@ namespace MIMWebClient.Core.World.Anker
             };
 
 
+            //var sm = Held.ScrapMetal();
+            //    sm.location = Item.Item.ItemLocation.Room;
+
+            //MetalMedley().items.Add(sm);
+   
 
             #region exits
 
@@ -4057,7 +4077,7 @@ namespace MIMWebClient.Core.World.Anker
                     new Item.Item()
                     {
                       name =  "Alchemists work bench",
-                      hidden = true,
+                      isHiddenInRoom = true,
                       container = true,
                       containerSize = 11,
                       description = new Description()

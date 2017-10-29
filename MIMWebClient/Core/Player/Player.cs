@@ -10,6 +10,7 @@ using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.World.Alchemy;
 using MIMWebClient.Core.World.Cooking;
 using MIMWebClient.Core.World.Crafting;
+using MIMWebClient.Core.World.Crafting.Smithing;
 
 namespace MIMWebClient.Core.PlayerSetup
 {
@@ -562,6 +563,8 @@ namespace MIMWebClient.Core.PlayerSetup
             this.CraftingRecipes.Add(Alchemy.LavenderPerfume().Name);
             this.CraftingRecipes.Add(Alchemy.Antibiotic().Name);
             this.CraftingRecipes.Add(Alchemy.Antiseptic().Name);
+
+            this.CraftingRecipes.Add(Smithing.Lantern().Name);
 
         }
 

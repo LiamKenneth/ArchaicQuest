@@ -14,8 +14,8 @@ namespace MIMWebClient.Core.Events
         Chop,
         Cook,
         Brew,
-        Smith
-
+        Smith,
+        Forge
     }
     public class CraftMaterials
     {
@@ -117,26 +117,14 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
-            if ((string.IsNullOrEmpty(craftItem) && craftType == "chop"))
+            if (string.IsNullOrEmpty(craftItem))
             {
-                HubContext.Instance.SendToClient("What do you want to chop?", player.HubGuid);
+                HubContext.Instance.SendToClient("What do you want to " + craftType + "?", player.HubGuid);
                 return;
             }
 
 
-            if ((string.IsNullOrEmpty(craftItem) && craftType == "cook"))
-            {
-                HubContext.Instance.SendToClient("What do you want to cook?", player.HubGuid);
-                return;
-            }
-
-
-            if ((string.IsNullOrEmpty(craftItem) && craftType == "brew"))
-            {
-                HubContext.Instance.SendToClient("What do you want to brew?", player.HubGuid);
-                return;
-            }
-
+         
             var findCraft = Crafting.CraftList().FirstOrDefault(x => x.Name.ToLower().Contains(craftItem.ToLower()));
 
             var hasCraft = player.CraftingRecipes.FirstOrDefault(x => x.ToLower().Contains(craftItem.ToLower()));
@@ -147,23 +135,12 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
-            if ((string.IsNullOrEmpty(hasCraft) && craftType == "chop"))
+            if (string.IsNullOrEmpty(hasCraft))
             {
                 HubContext.Instance.SendToClient("You don't know how to do that.", player.HubGuid);
                 return;
             }
-
-            if ((string.IsNullOrEmpty(hasCraft) && craftType == "cook"))
-            {
-                HubContext.Instance.SendToClient("You don't know how to do that.", player.HubGuid);
-                return;
-            }
-
-            if ((string.IsNullOrEmpty(hasCraft) && craftType == "brew"))
-            {
-                HubContext.Instance.SendToClient("You don't know how to do that.", player.HubGuid);
-                return;
-            }
+ 
 
             if (findCraft.CraftCommand == CraftType.Chop && craftType == null || findCraft == null && craftType == null)
             {
@@ -171,24 +148,12 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
-            if (findCraft.CraftCommand == CraftType.Craft && craftType == "chop")
+            if (findCraft.CraftCommand == CraftType.Craft)
             {
-                HubContext.Instance.SendToClient("You can't chop that.", player.HubGuid);
+                HubContext.Instance.SendToClient("You can't " + craftType + " that.", player.HubGuid);
                 return;
             }
-
-            if (findCraft.CraftCommand == CraftType.Craft && craftType == "cook")
-            {
-                HubContext.Instance.SendToClient("You can't cook that.", player.HubGuid);
-                return;
-            }
-
-
-            if (findCraft.CraftCommand == CraftType.Craft && craftType == "brew")
-            {
-                HubContext.Instance.SendToClient("You can't brew that.", player.HubGuid);
-                return;
-            }
+ 
 
             bool hasMaterials = false;
             if (craftType == null && findCraft.CraftCommand == CraftType.Craft)
@@ -257,6 +222,18 @@ namespace MIMWebClient.Core.Events
 
 
 
+            }
+            else if (craftType == "forge" && findCraft.CraftCommand == CraftType.Forge)
+            {
+                hasMaterials = findCraft != null &&
+                               room.items.FirstOrDefault(
+                                   x => x.name.Equals("Furnace", StringComparison.CurrentCultureIgnoreCase)) != null;
+
+                if (!hasMaterials)
+                {
+                    HubContext.Instance.SendToClient("You don't have all the required materials.", player.HubGuid);
+                    return;
+                }
             }
 
 

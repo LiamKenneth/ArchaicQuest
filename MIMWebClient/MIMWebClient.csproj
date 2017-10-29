@@ -299,9 +299,9 @@
     <Compile Include="Core\PlayerSetup\ValidateChar.cs" />
     <Compile Include="Core\Player\Skills\Forage.cs" />
     <Compile Include="Core\Player\Skills\Fish.cs" />
-    <Compile Include="Core\World\Alchemy\Alchemy.cs" />
+    <Compile Include="Core\World\Crafting\Alchemy\Alchemy.cs" />
     <Compile Include="Core\World\Anker\Mobs\FarmerOneil.cs" />
-    <Compile Include="Core\World\Cooking\Recipes.cs" />
+    <Compile Include="Core\World\Crafting\Cooking\Recipes.cs" />
     <Compile Include="Core\World\Crafting\campFire.cs" />
     <Compile Include="Core\Player\Effect.cs" />
     <Compile Include="Core\Player\Classes\Thief.cs" />
@@ -391,6 +391,7 @@
     <Compile Include="Core\World\Anker\Quests\AnkerQuests.cs" />
     <Compile Include="Core\World\Anker\Scripts\VilliageIdiot.cs" />
     <Compile Include="Core\World\Areas.cs" />
+    <Compile Include="Core\World\Crafting\Smithing\Smithing.cs" />
     <Compile Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Arms\FullPlateSleeves.cs" />
     <Compile Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Body\FullPlateBody.cs" />
     <Compile Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Hands\FullPlateGauntlet.cs" />
