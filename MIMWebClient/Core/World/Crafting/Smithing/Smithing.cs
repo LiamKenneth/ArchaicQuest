@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using MIMWebClient.Core.Events;
 using MIMWebClient.Core.Item;
+using MIMWebClient.Core.Player.Skills;
+using MIMWebClient.Core.World.Items.Weapons.Sword.Long;
 
 namespace MIMWebClient.Core.World.Crafting.Smithing
 
@@ -59,6 +61,44 @@ namespace MIMWebClient.Core.World.Crafting.Smithing
             };
 
             return lantern;
+
+        }
+
+        public static Craft CopperSword()
+        {
+
+            var CopperSword = new Craft()
+            {
+                Name = "Copper Sword",
+                StartMessage = "You put all your copper ore into the furnace",
+                FaliureMessage = "...",
+                SuccessMessage = "You have forged a coper long sword.",
+                Description = "To forge a copper long sword you need to be at a furnace",
+                CraftCommand = CraftType.Forge,
+                CraftAppearsInRoom = false,
+                CraftingEmotes = new List<string>()
+                {
+                    "The copper ore begins to melt down.",
+                    "You take out the melted metal and pour it into a cast.",
+                    "The casts begin to cool down.",
+                    "The metal in the casts go hard.",
+                    "You crack the cast open."
+                },
+                Materials = new List<CraftMaterials>()
+                {
+                    new CraftMaterials()
+                    {
+                        Name = "Copper Ore",
+                        Count = 2
+                    }
+                },
+                CreatesItem = LongSwordBasic.CopperSword(),
+               
+                MoveCost = 20
+
+            };
+
+            return CopperSword;
 
         }
 

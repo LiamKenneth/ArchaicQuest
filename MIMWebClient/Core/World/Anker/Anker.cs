@@ -1206,7 +1206,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 areaId = 12,
                 title = "Odds and sods shoppe",
-                description = "<p>Candle light fills the shop with a warm glow, flickering off the wooden walls adding a shine to the various items sitting on the shelfs around the shop. " +
+                description = "<p>Candle light fills the shop with a warm glow, flickering off the wooden walls adding a shine to the various items sitting on the shelfs around the shop. A carpentry work bench can be found to the west of the room." +
                               "A neat pile of mismatch garments sit folded on a table in the centre of the room.</p> " +
                               "<p>To the north you see a closed door behind a wooden counter and a few old looking weapons" +
                               " hanging overhead on the wall. On the counter is a sign and a large red leather book, " +
@@ -1215,7 +1215,30 @@ namespace MIMWebClient.Core.World.Anker
 
                 //Defaults
                 exits = new List<Exit>(),
-                items = new List<Item.Item>(),
+                items = new List<Item.Item>()
+                {
+                    new Item.Item()
+                    {
+                        name =  "Carpentry work bench",
+                        isHiddenInRoom = true,
+                        container = true,
+                        containerSize = 11,
+                        description = new Description()
+                        {
+                            look = "Various wood working tools such as saws, chisels and oil lay upon the desk ready for use.",
+
+                            exam =  "Various wood working tools such as saws, chisels and oil lay upon the desk ready for use.",
+                        },
+                        location = Item.Item.ItemLocation.Room,
+                        stuck = true,
+                        containerItems = new ItemContainer()
+                        {
+                          
+                        }
+
+
+                    }
+                },
                 mobs = new List<Player>(),
                 terrain = Room.Terrain.City,
                 keywords = new List<RoomObject>(),

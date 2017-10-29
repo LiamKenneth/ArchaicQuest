@@ -51,7 +51,6 @@ namespace MIMWebClient.Core.World.Items.MiscEQ.Light
             {
                 name = "Wooden Torch",
                 Weight = 1,
-                count = 10,
                 equipable = true,
                 eqSlot = Item.Item.EqSlot.Light,
                 slot = Item.Item.EqSlot.Light,

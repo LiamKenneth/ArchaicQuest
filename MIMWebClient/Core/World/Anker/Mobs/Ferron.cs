@@ -16,6 +16,7 @@ using MIMWebClient.Core.World.Items.Armour.MediumArmour.ScaleMail.Feet;
 using MIMWebClient.Core.World.Items.Armour.MediumArmour.ScaleMail.Hands;
 using MIMWebClient.Core.World.Items.Armour.MediumArmour.ScaleMail.Head;
 using MIMWebClient.Core.World.Items.Armour.MediumArmour.ScaleMail.Legs;
+using MIMWebClient.Core.World.Items.MiscEQ.Materials;
 using MIMWebClient.Core.World.Items.Weapons.Axe;
 using MIMWebClient.Core.World.Items.Weapons.Blunt;
 using MIMWebClient.Core.World.Items.Weapons.DaggerBasic;
@@ -95,6 +96,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 ferron.itemsToSell.Add(FullPlateGreaves.BronzeGreaves());
                 ferron.itemsToSell.Add(FullPlateGauntlet.BronzeGauntlets());
                 ferron.itemsToSell.Add(FullPlateBoots.BronzeBoots());
+                ferron.itemsToSell.Add(Materials.CopperOre());
             }
 
 

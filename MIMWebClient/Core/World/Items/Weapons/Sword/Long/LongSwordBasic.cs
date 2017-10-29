@@ -46,6 +46,41 @@ namespace MIMWebClient.Core.World.Items.Weapons.Sword.Long
             return LongIronSword;
         }
 
+        public static Item.Item CopperSword() 
+        {
+            var CopperSword = new Item.Item
+            {
+                name = "Copper sword",
+                Weight = 5,
+                equipable = true,
+                eqSlot = Item.Item.EqSlot.Wielded,
+                slot = Item.Item.EqSlot.Wielded,
+                location = Item.Item.ItemLocation.Inventory,
+                weaponSpeed = 4,
+                weaponType = Item.Item.WeaponType.LongBlades,
+                attackType = Item.Item.AttackType.Slash,
+                stats = new Stats()
+                {
+                    damMax = 5,
+                    damMin = 1,
+                    damRoll = 0,
+                    minUsageLevel = 5,
+                    worth = 10
+                },
+                description = new Description()
+                {
+                    look = "A simple copper sword with a long blade",
+                    smell = "",
+                    taste = "",
+                    touch = "",
+                },
+                Gold = 25
+
+            };
+
+            return CopperSword;
+        }
+
         public static Item.Item BastardSword()
         {
             var BastardSword = new Item.Item

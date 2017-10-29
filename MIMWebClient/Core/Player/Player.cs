@@ -10,6 +10,7 @@ using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.World.Alchemy;
 using MIMWebClient.Core.World.Cooking;
 using MIMWebClient.Core.World.Crafting;
+using MIMWebClient.Core.World.Crafting.Carve;
 using MIMWebClient.Core.World.Crafting.Smithing;
 
 namespace MIMWebClient.Core.PlayerSetup
@@ -565,7 +566,9 @@ namespace MIMWebClient.Core.PlayerSetup
             this.CraftingRecipes.Add(Alchemy.Antiseptic().Name);
 
             this.CraftingRecipes.Add(Smithing.Lantern().Name);
-
+            this.CraftingRecipes.Add(Smithing.CopperSword().Name);
+            this.CraftingRecipes.Add(Carve.WoodenRaft().Name);
+            this.CraftingRecipes.Add(Carve.WoodenTorch().Name);
         }
 
         /// <summary>

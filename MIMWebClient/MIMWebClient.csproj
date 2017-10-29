@@ -301,6 +301,7 @@
     <Compile Include="Core\Player\Skills\Fish.cs" />
     <Compile Include="Core\World\Crafting\Alchemy\Alchemy.cs" />
     <Compile Include="Core\World\Anker\Mobs\FarmerOneil.cs" />
+    <Compile Include="Core\World\Crafting\Carve\Carve.cs" />
     <Compile Include="Core\World\Crafting\Cooking\Recipes.cs" />
     <Compile Include="Core\World\Crafting\campFire.cs" />
     <Compile Include="Core\Player\Effect.cs" />
@@ -425,6 +426,7 @@
     <Compile Include="Core\World\Items\MiscEQ\Containers\Containers.cs" />
     <Compile Include="Core\World\Items\MiscEQ\Held\Held.cs" />
     <Compile Include="Core\World\Items\MiscEQ\Light\Light.cs" />
+    <Compile Include="Core\World\Items\MiscEQ\Materials\Materials.cs" />
     <Compile Include="Core\World\Items\Weapons\Axe\AxeBasic.cs" />
     <Compile Include="Core\World\Items\Weapons\Blunt\HammerBasic.cs" />
     <Compile Include="Core\World\Items\Weapons\Blunt\MaceBasic.cs" />

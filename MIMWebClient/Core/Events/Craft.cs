@@ -15,7 +15,8 @@ namespace MIMWebClient.Core.Events
         Cook,
         Brew,
         Smith,
-        Forge
+        Forge,
+        Carve
     }
     public class CraftMaterials
     {
@@ -73,6 +74,8 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
+            var craftlist = "<table><thead><tr><td>Craft Item</td><td>Required</td></tr></thead><tbody>";
+
             HubContext.Instance.SendToClient("<p>You can craft:</p>", player.HubGuid);
 
             foreach (var craft in player.CraftingRecipes)
@@ -84,12 +87,15 @@ namespace MIMWebClient.Core.Events
                 {
                     foreach (var materials in canCraft.Materials)
                     {
-                        required += materials.Name + " ";
+                        required += materials.Name + " x"+ materials.Count + ",";
                     }
 
-                    HubContext.Instance.SendToClient("<p>" + canCraft.Name + ", Required: " + required + "</p>", player.HubGuid);
+                    craftlist += "<tr><td>" + canCraft.Name + "</td><td>" + required + "</td></tr>";
                 }
             }
+            craftlist += "</tbody></table>";
+
+            HubContext.Instance.SendToClient(craftlist, player.HubGuid);
         }
 
         public static Boolean HasAllMaterials(PlayerSetup.Player player, List<CraftMaterials> materialList, string craftItem)
@@ -235,7 +241,18 @@ namespace MIMWebClient.Core.Events
                     return;
                 }
             }
+            else if (craftType == "carve" && findCraft.CraftCommand == CraftType.Carve)
+            {
+                hasMaterials = findCraft != null &&
+                               room.items.FirstOrDefault(
+                                   x => x.name.Equals("Carpentry work bench", StringComparison.CurrentCultureIgnoreCase)) != null;
 
+                if (!hasMaterials)
+                {
+                    HubContext.Instance.SendToClient("You don't have all the required materials.", player.HubGuid);
+                    return;
+                }
+            }
 
             if (!hasMaterials)
             {
