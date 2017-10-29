@@ -80,7 +80,7 @@ namespace MIMWebClient.Core.Events
                 var canCraft = Crafting.CraftList().FirstOrDefault(x => x.Name.Equals(craft));
                 var required = string.Empty;
 
-                if (canCraft != null)
+                if (canCraft?.Materials != null)
                 {
                     foreach (var materials in canCraft.Materials)
                     {

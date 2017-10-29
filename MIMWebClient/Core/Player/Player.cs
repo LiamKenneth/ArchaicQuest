@@ -558,6 +558,10 @@ namespace MIMWebClient.Core.PlayerSetup
 
 
             this.CraftingRecipes.Add(Alchemy.BurnCream().Name);
+            this.CraftingRecipes.Add(Alchemy.Antivenom().Name);
+            this.CraftingRecipes.Add(Alchemy.LavenderPerfume().Name);
+            this.CraftingRecipes.Add(Alchemy.Antibiotic().Name);
+            this.CraftingRecipes.Add(Alchemy.Antiseptic().Name);
 
         }
 

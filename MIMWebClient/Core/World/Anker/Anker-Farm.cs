@@ -300,25 +300,25 @@ namespace MIMWebClient.Core.World.Anker
 
             };
 
-            var rabit = Rabit.SmallRabbit();
-            var rabit2 = Rabit.SmallRabbit();
+            var rabbitmob = rabbit.SmallRabbit();
+            var rabbitmob2 = rabbit.SmallRabbit();
 
-            rabit.Recall = new Recall()
+            rabbitmob.Recall = new Recall()
             {
                 Area = room.area,
                 AreaId = room.areaId,
                 Region = room.region
             };
 
-            rabit2.Recall = new Recall()
+            rabbitmob2.Recall = new Recall()
             {
                 Area = room.area,
                 AreaId = room.areaId,
                 Region = room.region
             };
 
-            room.mobs.Add(rabit);
-            room.mobs.Add(rabit2);
+            room.mobs.Add(rabbitmob);
+            room.mobs.Add(rabbitmob2);
 
             var carrot = Food.Carrots();
             var carrot2 = Food.Carrots();
@@ -416,25 +416,25 @@ namespace MIMWebClient.Core.World.Anker
 
             };
 
-            var rabit = Rabit.SmallRabbit();
-            var rabit2 = Rabit.SmallRabbit();
+            var rabbitmob = rabbit.SmallRabbit();
+            var rabbitmob2 = rabbit.SmallRabbit();
 
-            rabit.Recall = new Recall()
+            rabbitmob.Recall = new Recall()
             {
                 Area = room.area,
                 AreaId = room.areaId,
                 Region = room.region
             };
 
-            rabit2.Recall = new Recall()
+            rabbitmob2.Recall = new Recall()
             {
                 Area = room.area,
                 AreaId = room.areaId,
                 Region = room.region
             };
 
-            room.mobs.Add(rabit);
-            room.mobs.Add(rabit2);
+            room.mobs.Add(rabbitmob);
+            room.mobs.Add(rabbitmob2);
 
 
             var pig = Pig.SmallPig();
@@ -552,43 +552,43 @@ namespace MIMWebClient.Core.World.Anker
 
             };
 
-            var rabit = Rabit.SmallRabbit();
-            var rabit2 = Rabit.SmallRabbit();
-            var rabit3 = Rabit.SmallRabbit();
-            var rabit4 = Rabit.SmallRabbit();
+            var rabbitmob = rabbit.SmallRabbit();
+            var rabbitmob2 = rabbit.SmallRabbit();
+            var rabbitmob3 = rabbit.SmallRabbit();
+            var rabbitmob4 = rabbit.SmallRabbit();
 
-            rabit.Recall = new Recall()
+            rabbitmob.Recall = new Recall()
             {
                 Area = room.area,
                 AreaId = room.areaId,
                 Region = room.region
             };
 
-            rabit2.Recall = new Recall()
+            rabbitmob2.Recall = new Recall()
             {
                 Area = room.area,
                 AreaId = room.areaId,
                 Region = room.region
             };
 
-            rabit3.Recall = new Recall()
+            rabbitmob3.Recall = new Recall()
             {
                 Area = room.area,
                 AreaId = room.areaId,
                 Region = room.region
             };
 
-            rabit4.Recall = new Recall()
+            rabbitmob4.Recall = new Recall()
             {
                 Area = room.area,
                 AreaId = room.areaId,
                 Region = room.region
             };
 
-            room.mobs.Add(rabit);
-            room.mobs.Add(rabit2);
-            room.mobs.Add(rabit3);
-            room.mobs.Add(rabit4);
+            room.mobs.Add(rabbitmob);
+            room.mobs.Add(rabbitmob2);
+            room.mobs.Add(rabbitmob3);
+            room.mobs.Add(rabbitmob4);
 
 
             var potato = Food.Potato();

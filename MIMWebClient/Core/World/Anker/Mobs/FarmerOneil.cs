@@ -161,13 +161,13 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 {
                     new Quest()
                     {
-                        AlreadyOnQuestMessage = "Have you killed all the rabits yet?",
+                        AlreadyOnQuestMessage = "Have you killed all the rabbits yet?",
                         Description = "Kill all 4 of the rabbits eating the crops.",
                         Id = 1,
                         Name = "Help Farmer O'neil with with his rabbit problem",
                         QuestKills = 4,
                         QuestGiver =  "Farmer O'neil",
-                        QuestKill = Rabit.SmallRabbit(),
+                        QuestKill = rabbit.SmallRabbit(),
                         Type = Quest.QuestType.Kill,
                         RewardGold = 100,
                         RewardXp = 1500,

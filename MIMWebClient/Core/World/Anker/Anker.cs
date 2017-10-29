@@ -13,6 +13,7 @@ using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Feet;
 using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Head;
 using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Legs;
 using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Hands;
+using MIMWebClient.Core.World.Items.Consumables.Drinks;
 
 namespace MIMWebClient.Core.World.Anker
 {
@@ -4087,6 +4088,8 @@ namespace MIMWebClient.Core.World.Anker
                               location = Item.Item.ItemLocation.Room,
 
                           }
+                          ,
+                           drink.Flask()
                       }
                       
 

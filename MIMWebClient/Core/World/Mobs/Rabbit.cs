@@ -12,7 +12,7 @@ using MIMWebClient.Core.World.Items.Weapons.Sword.Short;
 
 namespace MIMWebClient.Core.World.Anker.Mobs
 {
-    public class Rabit
+    public class rabbit
     {
 
         public static PlayerSetup.Player SmallRabbit()
@@ -20,7 +20,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
 
            
  
-            var smallRabit = new PlayerSetup.Player
+            var smallrabbit = new PlayerSetup.Player
             {
                 NPCId = Guid.NewGuid(),
                 Name = "White rabbit",
@@ -46,7 +46,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 {
                   new Item.Item()
                   {
-                      name = "Rabit fur",
+                      name = "rabbit fur",
                       Gold = 2,
                       Weight = 0.1,
                       description = new Description()
@@ -80,7 +80,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
 
          
 
-            return smallRabit;
+            return smallrabbit;
         }
 
  

@@ -8,6 +8,133 @@ namespace MIMWebClient.Core.World.Items.Consumables.Food
 {
     public class Food
     {
+
+        public static Item.Item WhiteSnakeroot()
+        {
+            var whitesnakeroot = new Item.Item
+            {
+                name = "White Snakeroot",
+                Weight = 1,
+                equipable = true,
+                eqSlot = Item.Item.EqSlot.Held,
+                slot = Item.Item.EqSlot.Held,
+                location = Item.Item.ItemLocation.Inventory,
+                stats = new Stats()
+                {
+                    minUsageLevel = 1,
+                    worth = 1
+                },
+                description = new Description()
+                {
+                    exam = "A multi headead white flower with spikey petals connected to a large green stem.",
+                    look = "A multi headead white flower with spikey petals connected to a large green stem.",
+                    room = "",
+                    smell = "",
+                    taste = "",
+                    touch = "",
+                },
+                Gold = 1
+
+            };
+
+            return whitesnakeroot;
+        }
+
+        public static Item.Item BayLaurel()
+        {
+            var BayLaurel = new Item.Item
+            {
+                name = "Bay Laurel",
+                Weight = 1,
+                equipable = true,
+                eqSlot = Item.Item.EqSlot.Held,
+                slot = Item.Item.EqSlot.Held,
+                location = Item.Item.ItemLocation.Inventory,
+                stats = new Stats()
+                {
+                    minUsageLevel = 1,
+                    worth = 1
+                },
+                description = new Description()
+                {
+                    exam = "A leafy thin branch with cream coloured flowers and flower buds that are yet to open.",
+                    look = "A leafy thin branch with cream coloured flowers and flower buds that are yet to open.",
+                    room = "",
+                    smell = "",
+                    taste = "",
+                    touch = "",
+                },
+                Gold = 1
+
+            };
+
+            return BayLaurel;
+        }
+
+        public static Item.Item Lavender()
+        {
+            var Lavender = new Item.Item
+            {
+                name = "Lavender",
+                Weight = 1,
+                equipable = true,
+                eqSlot = Item.Item.EqSlot.Held,
+                slot = Item.Item.EqSlot.Held,
+                location = Item.Item.ItemLocation.Inventory,
+                stats = new Stats()
+                {
+                    minUsageLevel = 1,
+                    worth = 1
+                },
+                description = new Description()
+                {
+                    exam = "The tip of the Lavender stem is covered in small purple petals.",
+                    look = "The tip of the Lavender stem is covered in small purple petals.",
+                    room = "",
+                    smell = "",
+                    taste = "",
+                    touch = "",
+                },
+                Gold = 1
+
+            };
+
+            return Lavender;
+        }
+
+        public static Item.Item Rosemary()
+        {
+            var Rosemary = new Item.Item
+            {
+                name = "Rosemary",
+                Weight = 1,
+                equipable = true,
+                eqSlot = Item.Item.EqSlot.Held,
+                slot = Item.Item.EqSlot.Held,
+                location = Item.Item.ItemLocation.Inventory,
+                stats = new Stats()
+                {
+                    minUsageLevel = 1,
+                    worth = 1
+                },
+                description = new Description()
+                {
+                    exam = "A geen needle like stem with small purple flowers.",
+                    look = "A geen needle like stem with small purple flowers.",
+                    room = "",
+                    smell = "",
+                    taste = "",
+                    touch = "",
+                },
+                Gold = 1
+
+            };
+
+            return Rosemary;
+        }
+
+
+
         public static Item.Item Cheese()
         {
             var Cheese = new Item.Item

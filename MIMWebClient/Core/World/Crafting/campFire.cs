@@ -27,7 +27,11 @@ namespace MIMWebClient.Core.World.Crafting
                 Recipes.SeasonedBream(),
                 Recipes.SmokedChub(),
                 Recipes.TurtleSoup(),
-                Alchemy.Alchemy.BurnCream()
+                Alchemy.Alchemy.BurnCream(),
+                Alchemy.Alchemy.Antibiotic(),
+                Alchemy.Alchemy.Antiseptic(),
+                Alchemy.Alchemy.Antivenom(),
+                Alchemy.Alchemy.LavenderPerfume(),
             };
 
             return listOfCrafts;

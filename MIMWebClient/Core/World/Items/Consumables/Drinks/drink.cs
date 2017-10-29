@@ -41,5 +41,36 @@ namespace MIMWebClient.Core.World.Items.Consumables.Drinks
 
             return waterSkin;
         }
+
+        public static Item.Item Flask()
+        {
+           return  new Item.Item
+            {
+                name = "Empty Flask",
+                Weight = 2,
+                equipable = true,
+                eqSlot = Item.Item.EqSlot.Held,
+                slot = Item.Item.EqSlot.Held,
+                location = Item.Item.ItemLocation.Inventory,
+                stats = new Stats()
+                {
+                    minUsageLevel = 1,
+                    worth = 3
+                },
+                waterContainer = true,
+                waterContainerAmount = 2,
+                description = new Description()
+                {
+                    exam = "This clear flask is empty and can be used to store any liquid.",
+                    look = "This clear flask is empty and can be used to store any liquid.",
+                    smell = "",
+                    taste = "",
+                    touch = "",
+                },
+                Gold = 10
+
+            };
+ 
+        }
     }
 }
