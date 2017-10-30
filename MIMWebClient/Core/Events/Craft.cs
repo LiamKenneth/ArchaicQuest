@@ -16,7 +16,8 @@ namespace MIMWebClient.Core.Events
         Brew,
         Smith,
         Forge,
-        Carve
+        Carve,
+        Knitting
     }
     public class CraftMaterials
     {

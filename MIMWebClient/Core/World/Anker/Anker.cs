@@ -1220,11 +1220,11 @@ namespace MIMWebClient.Core.World.Anker
                     new Item.Item()
                     {
                         name =  "Carpentry work bench",
-                        isHiddenInRoom = true,
                         container = true,
                         containerSize = 11,
                         description = new Description()
                         {
+                            room =   "Various wood working tools such as saws, chisels and oil lay carpentry work bench ready for use.",
                             look = "Various wood working tools such as saws, chisels and oil lay upon the desk ready for use.",
 
                             exam =  "Various wood working tools such as saws, chisels and oil lay upon the desk ready for use.",
@@ -3103,11 +3103,25 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker",
                 areaId = 28,
                 title = "A small cosy home",
-                description = "<p>A large rug covers the wooden floor of the room, to the left is a couple of chairs in front of a small fireplace warming the room. To the right is a small bed.</p>",
+                description = "<p>The back wall of this home is covered floor to ceiling with an assorted array of coloured yarns of different sizes and textures. An array of different sized needels and spools also fill the racks along side books which you assume are to do with knitting and cloth making. A rocking chair facing the fire has a pair of nitting needles that have been left on the seat threaded to a red ball of yarn. To the right is a simple bed.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
-                items = new List<Item.Item>(),
+                items = new List<Item.Item>()
+                {
+                    new Item.Item()
+                    {
+                        name = "Knitting desk",
+                        description = new Description()
+                        {
+                            room = "Knitting needles and cotton yarn and other materials are laid out neatly on the table ready to use.",
+                            look = "Knitting needles and cotton yarn and other materials are laid out neatly on the table ready to use."
+                        },
+                        container = true,
+                        containerSize = 11,
+                        stuck = true
+                    }
+                },
                 mobs = new List<Player>(),
                 terrain = Room.Terrain.City,
                 keywords = new List<RoomObject>(),
@@ -3134,7 +3148,7 @@ namespace MIMWebClient.Core.World.Anker
                 MaxHitPoints = 356,
                 MovePoints = 200,
                 MaxMovePoints = 200,
-                Description = "The village seamstress",
+                Description = "The wrinkled and grey haired village seamstress wears rather plain clothes despite her apparent skill in knitting.",
                 Type = Player.PlayerTypes.Mob,
                 Recall = new Recall()
                 {
@@ -4101,11 +4115,11 @@ namespace MIMWebClient.Core.World.Anker
                     new Item.Item()
                     {
                       name =  "Alchemists work bench",
-                      isHiddenInRoom = true,
                       container = true,
                       containerSize = 11,
                       description = new Description()
                       {
+                          room = "Various glass tubes and flasks sit upon the Alchemists desk.",
                           look = "Various glass tubes and flasks sit upon the desk, several candles heat a suspended vial causing the liquid to evaporate up the tube and decant into a flask further along the desk. " +
                                  "A mortar and pestle used for grinding fresh ingridents sits beside an open alchemy book.",
 
