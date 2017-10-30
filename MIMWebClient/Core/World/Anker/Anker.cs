@@ -3102,7 +3102,7 @@ namespace MIMWebClient.Core.World.Anker
                 region = "Anker",
                 area = "Anker",
                 areaId = 28,
-                title = "A small cosy home",
+                title = "Niamh's small cosy home",
                 description = "<p>The back wall of this home is covered floor to ceiling with an assorted array of coloured yarns of different sizes and textures. An array of different sized needels and spools also fill the racks along side books which you assume are to do with knitting and cloth making. A rocking chair facing the fire has a pair of nitting needles that have been left on the seat threaded to a red ball of yarn. To the right is a simple bed.</p>",
 
                 //Defaults
@@ -3119,7 +3119,50 @@ namespace MIMWebClient.Core.World.Anker
                         },
                         container = true,
                         containerSize = 11,
-                        stuck = true
+                        stuck = true,
+                        containerItems = new ItemContainer()
+                        {
+                            new Item.Item()
+                            {
+                                name = "wool"
+                            },
+                            new Item.Item()
+                            {
+                                name = "wool"
+                            },
+                            new Item.Item()
+                            {
+                                name = "wool"
+                            },
+                            new Item.Item()
+                            {
+                                name = "wool"
+                            },
+                            new Item.Item()
+                            {
+                                name = "wool"
+                            },
+                            new Item.Item()
+                            {
+                                name = "wool"
+                            },
+                            new Item.Item()
+                            {
+                                name = "wool"
+                            },
+                            new Item.Item()
+                            {
+                                name = "wool"
+                            },
+                            new Item.Item()
+                            {
+                                name = "wool"
+                            },
+                            new Item.Item()
+                            {
+                                name = "knitting needles"
+                            }
+                        }
                     }
                 },
                 mobs = new List<Player>(),

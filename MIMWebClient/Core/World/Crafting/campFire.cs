@@ -40,7 +40,13 @@ namespace MIMWebClient.Core.World.Crafting
                 Smithing.Smithing.CopperMace(),
                 Carve.Carve.WoodenRaft(),
                 Carve.Carve.WoodenTorch(),
-                Carve.Carve.WoodenChest()
+                Carve.Carve.WoodenChest(),
+                Knitting.Knitting.WoolenClothHelmet(),
+                Knitting.Knitting.WoolenClothBoots(),
+                Knitting.Knitting.WoolenClothGloves(),
+                Knitting.Knitting.WoolenClothLeggings(),
+                Knitting.Knitting.WoolenClothShirt(),
+                Knitting.Knitting.WoolenClothSleeves()
             };
 
             return listOfCrafts;

@@ -752,7 +752,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker Farm",
                 areaId = 7,
                 title = "Anker Road",
-                description = "<p>Description to come</p>",
+                description = "<p>Bundled branches hold onto the occasional tree, and a range of flowers, which cling to any space they can find, clash with each other creating a natural mixture of color. A melody of noises, most of which are insects, resonate through the air, yet their sounds are softened almost drowned out by the splashing of fish in the nearby river.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -968,7 +968,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker Farm",
                 areaId = 10,
                 title = "Anker Road",
-                description = "<p>Description to come</p>",
+                description = "<p>A disordered patch of grass is flanked by luscious hedges and flower bushes, the flower beds are fighting for their place on the sides of the road, providing a pleasant scent to the area that is accompanied by the soft sounds of the river nearby flowing.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),
@@ -1229,7 +1229,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker Farm",
                 areaId = 13,
                 title = "Anker Road",
-                description = "<p>Description to come</p>",
+                description = "<p>There are fields everywhere, their patterns only broken up by the occasional tree left to grow in peace. All around are cows and deer gently grazing in the sunlit pastures by the road, passing field after field runs a weed-ridden, dusty old road that connects the Goblin Forest to the town of Anker.</p>",
                 type = Room.RoomType.Standard,
 
                 //Defaults
@@ -1296,7 +1296,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker Farm",
                 areaId = 14,
                 title = "The bridge leading into the goblin forest",
-                description = "<p>Description to come</p>",
+                description = "<p>The canopy overhead covers most of the sky above casting shade onto the bridge entering the Goblin Forest, the river gushes beneath the bridge drowning out the sound of anything that may be near here. In the distance to the east smoke rises from the forest, and to the west is the lights of the town of Anker.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),

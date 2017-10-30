@@ -400,8 +400,12 @@
     <Compile Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Feet\FullPlateBoots.cs" />
     <Compile Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Head\FullPlateHelm.cs" />
     <Compile Include="Core\World\Items\Armour\HeavyArmour\FullPlate\Legs\FullPlateGreaves.cs" />
+    <Compile Include="Core\World\Items\Armour\LightArmour\Clothing\Arms\ClothingArms.cs" />
     <Compile Include="Core\World\Items\Armour\LightArmour\Clothing\Body\ClothingBody.cs" />
     <Compile Include="Core\World\Items\Armour\LightArmour\Clothing\Body\RobeBasic.cs" />
+    <Compile Include="Core\World\Items\Armour\LightArmour\Clothing\Feet\ClothingFeet.cs" />
+    <Compile Include="Core\World\Items\Armour\LightArmour\Clothing\Hands\ClothingHands.cs" />
+    <Compile Include="Core\World\Items\Armour\LightArmour\Clothing\Head\ClothingHead.cs" />
     <Compile Include="Core\World\Items\Armour\LightArmour\Clothing\Legs\ClothingLegs.cs" />
     <Compile Include="Core\World\Items\Armour\LightArmour\Leather\Arms\LeatherArms.cs" />
     <Compile Include="Core\World\Items\Armour\LightArmour\Leather\Body\LeatherBody.cs" />
@@ -621,12 +625,8 @@
     <Folder Include="Core\World\Items\Armour\LightArmour\ChainShirt\Legs\" />
     <Folder Include="Core\World\Items\Armour\LightArmour\ChainShirt\Waist\" />
     <Folder Include="Core\World\Items\Armour\LightArmour\Clothing\AboutBody\" />
-    <Folder Include="Core\World\Items\Armour\LightArmour\Clothing\Arms\" />
     <Folder Include="Core\World\Items\Armour\LightArmour\Clothing\Cloak\" />
     <Folder Include="Core\World\Items\Armour\LightArmour\Clothing\Face\" />
-    <Folder Include="Core\World\Items\Armour\LightArmour\Clothing\Feet\" />
-    <Folder Include="Core\World\Items\Armour\LightArmour\Clothing\Hands\" />
-    <Folder Include="Core\World\Items\Armour\LightArmour\Clothing\Head\" />
     <Folder Include="Core\World\Items\Armour\LightArmour\Clothing\Waist\" />
     <Folder Include="Core\World\Items\Armour\LightArmour\Leather\AboutBody\" />
     <Folder Include="Core\World\Items\Armour\LightArmour\Leather\Cloak\" />

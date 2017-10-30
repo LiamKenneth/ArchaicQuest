@@ -12,6 +12,7 @@ using MIMWebClient.Core.World.Cooking;
 using MIMWebClient.Core.World.Crafting;
 using MIMWebClient.Core.World.Crafting.Carve;
 using MIMWebClient.Core.World.Crafting.Smithing;
+using MIMWebClient.Core.World.Knitting;
 
 namespace MIMWebClient.Core.PlayerSetup
 {
@@ -576,6 +577,12 @@ namespace MIMWebClient.Core.PlayerSetup
             this.CraftingRecipes.Add(Carve.WoodenTorch().Name);
             this.CraftingRecipes.Add(Carve.WoodenChest().Name);
 
+            this.CraftingRecipes.Add(Knitting.WoolenClothBoots().Name);
+            this.CraftingRecipes.Add(Knitting.WoolenClothGloves().Name);
+            this.CraftingRecipes.Add(Knitting.WoolenClothHelmet().Name);
+            this.CraftingRecipes.Add(Knitting.WoolenClothLeggings().Name);
+            this.CraftingRecipes.Add(Knitting.WoolenClothShirt().Name);
+            this.CraftingRecipes.Add(Knitting.WoolenClothSleeves().Name);
 
         }
 

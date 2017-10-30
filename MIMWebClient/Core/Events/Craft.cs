@@ -175,6 +175,11 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
+            if (findCraft.CraftCommand == CraftType.Knitting && craftType == null)
+            {
+                HubContext.Instance.SendToClient("You can't craft that.", player.HubGuid);
+                return;
+            }
 
 
             if (findCraft.CraftCommand == CraftType.Craft)
@@ -273,6 +278,18 @@ namespace MIMWebClient.Core.Events
                         x => x.name.Equals("Carpentry work bench", StringComparison.CurrentCultureIgnoreCase)) == null)
                 {
                     HubContext.Instance.SendToClient("You need to be at a Carpentry work bench.", player.HubGuid);
+                    return;
+                }
+            }
+            else if (craftType == "knit" && findCraft.CraftCommand == CraftType.Knitting)
+            {
+                hasMaterials = findCraft != null && HasAllMaterials(player, findCraft.Materials, hasCraft); ;
+
+
+                if (room.items.Count == 0 || room.items.FirstOrDefault(
+                        x => x.name.Equals("Knitting desk", StringComparison.CurrentCultureIgnoreCase)) == null)
+                {
+                    HubContext.Instance.SendToClient("You need to be at a Knitting desk.", player.HubGuid);
                     return;
                 }
             }
