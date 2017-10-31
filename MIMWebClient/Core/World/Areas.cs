@@ -90,6 +90,12 @@ namespace MIMWebClient.Core.World
                 Anker.AnkerFarm.SawMill(),
                 Anker.AnkerFarm.Pasture(),
                 Anker.AnkerFarm.TheBridge(),
+                Anker.AnkerFarm.PalusRiver(),
+                Anker.AnkerFarm.PalusRiver0(),
+                Anker.AnkerFarm.PalusRiver1(),
+                Anker.AnkerFarm.PalusRiver2(),
+                Anker.AnkerFarm.PalusRiver3(),
+                Anker.AnkerFarm.HermitsHome(),
             };
 
             return areas;

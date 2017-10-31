@@ -949,11 +949,452 @@ namespace MIMWebClient.Core.World.Anker
             };
 
 
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker Farm",
+                region = "Anker",
+                areaId = 15,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
 
             #endregion
 
 
             room.exits.Add(north);
+            room.exits.Add(south);
+
+
+
+            return room;
+        }
+
+        public static Room PalusRiver()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker Farm",
+                areaId = 15,
+                title = "The palus river",
+                terrain = Room.Terrain.Water,
+                description = "<p>Description to come</p>",
+                Emotes = new List<string>()
+                {
+                    "Plop! You hear something fall into the water.",
+                    "A dragon fly skims over the river then flies off.",
+                    "A fish surfaces quickly to eat something sitting ontop of the water.",
+                    "You hear a frog croak."
+                },
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true,
+
+
+            };
+
+            #region exits
+
+
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker Farm",
+                region = "Anker",
+                areaId = 9,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker Farm",
+                region = "Anker",
+                areaId = 16,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            #endregion
+
+
+            room.exits.Add(north);
+            room.exits.Add(east);
+
+
+
+            return room;
+        }
+
+        public static Room PalusRiver0()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker Farm",
+                areaId = 16,
+                title = "The palus river",
+                terrain = Room.Terrain.Water,
+                description = "<p>Description to come</p>",
+                Emotes = new List<string>()
+                {
+                    "Plop! You hear something fall into the water.",
+                    "A dragon fly skims over the river then flies off.",
+                    "A fish surfaces quickly to eat something sitting ontop of the water.",
+                    "You hear a frog croak."
+                },
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true,
+
+
+            };
+
+            #region exits
+
+
+    
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker Farm",
+                region = "Anker",
+                areaId = 17,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker Farm",
+                region = "Anker",
+                areaId = 15,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            #endregion
+
+
+            room.exits.Add(east);
+            room.exits.Add(west);
+
+
+
+            return room;
+        }
+        public static Room PalusRiver1()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker Farm",
+                areaId = 17,
+                title = "The palus river",
+                terrain = Room.Terrain.Water,
+                description = "<p>Description to come</p>",
+                Emotes = new List<string>()
+                {
+                    "Plop! You hear something fall into the water.",
+                    "A dragon fly skims over the river then flies off.",
+                    "A fish surfaces quickly to eat something sitting ontop of the water.",
+                    "You hear a frog croak."
+                },
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true,
+
+
+            };
+
+            #region exits
+
+
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker Farm",
+                region = "Anker",
+                areaId = 19,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker Farm",
+                region = "Anker",
+                areaId = 18,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker Farm",
+                region = "Anker",
+                areaId = 16,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            #endregion
+
+
+            room.exits.Add(north);
+            room.exits.Add(east);
+            room.exits.Add(west);
+
+
+
+            return room;
+        }
+
+
+        public static Room PalusRiver2()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker Farm",
+                areaId = 18,
+                title = "The palus river",
+                terrain = Room.Terrain.Water,
+                description = "<p>Description to come</p>",
+                Emotes = new List<string>()
+                {
+                    "Plop! You hear something fall into the water.",
+                    "A dragon fly skims over the river then flies off.",
+                    "A fish surfaces quickly to eat something sitting ontop of the water.",
+                    "You hear a frog croak."
+                },
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true,
+
+
+            };
+
+            #region exits
+
+
+            var north = new Exit
+            {
+                name = "North",
+                area = "Anker Farm",
+                region = "Anker",
+                areaId = 20,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+ 
+
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker Farm",
+                region = "Anker",
+                areaId = 17,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            #endregion
+
+
+            room.exits.Add(north);
+            room.exits.Add(west);
+
+
+
+            return room;
+        }
+        public static Room PalusRiver3()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker Farm",
+                areaId = 20,
+                title = "The palus river",
+                terrain = Room.Terrain.Water,
+                description = "<p>Description to come</p>",
+                Emotes = new List<string>()
+                {
+                    "Plop! You hear something fall into the water.",
+                    "A dragon fly skims over the river then flies off.",
+                    "A fish surfaces quickly to eat something sitting ontop of the water.",
+                    "You hear a frog croak."
+                },
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true,
+
+
+            };
+
+            #region exits
+
+
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker Farm",
+                region = "Anker",
+                areaId = 18,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            var west = new Exit
+            {
+                name = "West",
+                area = "Anker Farm",
+                region = "Anker",
+                areaId = 19,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            #endregion
+
+
+            room.exits.Add(south);
+            room.exits.Add(west);
+
+
+
+            return room;
+        }
+
+        public static Room HermitsHome()
+        {
+            var room = new Room
+            {
+                region = "Anker",
+                area = "Anker Farm",
+                areaId = 19,
+                title = "The palus river",
+                terrain = Room.Terrain.Water,
+                description = "<p>Description to come</p>",
+                Emotes = new List<string>()
+                {
+                    "Plop! You hear something fall into the water.",
+                    "A dragon fly skims over the river then flies off.",
+                    "A fish surfaces quickly to eat something sitting ontop of the water.",
+                    "You hear a frog croak."
+                },
+                //Defaults
+                exits = new List<Exit>(),
+                items = new List<Item.Item>(),
+                mobs = new List<Player>(),
+                keywords = new List<RoomObject>(),
+                corpses = new List<Player>(),
+                players = new List<Player>(),
+                fighting = new List<string>(),
+                clean = true,
+
+
+            };
+
+            #region exits
+
+
+            var east = new Exit
+            {
+                name = "East",
+                area = "Anker Farm",
+                region = "Anker",
+                areaId = 20,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            var south = new Exit
+            {
+                name = "South",
+                area = "Anker Farm",
+                region = "Anker",
+                areaId = 17,
+                keywords = new List<string>(),
+                hidden = false,
+                locked = false
+            };
+
+
+
+            #endregion
+
+
+            room.exits.Add(east);
+            room.exits.Add(south);
 
 
 
