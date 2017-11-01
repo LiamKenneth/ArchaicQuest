@@ -322,6 +322,17 @@ namespace MIMWebClient.Core.Events
 
             player.MovePoints -= craftItem.MoveCost;
 
+
+            //add skill check here
+            //var getSkill = player.Skills.FirstOrDefault(x => x.Name.Equals(craftItem.CraftCommand));
+            //double getSkillProf = 0;
+            //if (getSkill != null)
+            //{
+            //    getSkillProf = getSkill.Proficiency / (double)95 * 100;
+            //}
+
+
+
             var oldRoom = room;
             HubContext.Instance.SendToClient(craftItem.StartMessage, player.HubGuid);
 
