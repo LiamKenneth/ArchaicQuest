@@ -25,7 +25,19 @@ namespace MIMWebClient.Core.World.Crafting.Smithing
             {
                 Name = "Lantern",
                 StartMessage = "You put all your scrap metal into the furnace",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "You accidently drop the scrap metal inside the furnace.",
+                        BreakMaterial = true
+                    },
+                      new CraftFailMessage()
+                    {
+                        Message =  "You miss the cast and pour molten hot metal on the floor.",
+                    }
+                },
+
                 SuccessMessage = "You have forged a lantern.",
                 Description = "To forge a latern you need to be at a furnace",
                 CraftCommand = CraftType.Forge,
@@ -75,7 +87,18 @@ namespace MIMWebClient.Core.World.Crafting.Smithing
             {
                 Name = "Copper Sword",
                 StartMessage = "You put all your copper ore into the furnace",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "You accidently drop the copper ore inside the furnace.",
+                        BreakMaterial = true
+                    },
+                      new CraftFailMessage()
+                    {
+                        Message =  "You miss the cast and pour molten hot metal on the floor.",
+                    }
+                },
                 SuccessMessage = "You have forged a copper long sword.",
                 Description = "To forge a copper long sword you need to be at a furnace",
                 CraftCommand = CraftType.Forge,
@@ -113,7 +136,18 @@ namespace MIMWebClient.Core.World.Crafting.Smithing
             {
                 Name = "Copper Axe",
                 StartMessage = "You put all your copper ore into the furnace",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "You accidently drop the copper ore inside the furnace.",
+                        BreakMaterial = true
+                    },
+                      new CraftFailMessage()
+                    {
+                        Message =  "You miss the cast and pour molten hot metal on the floor.",
+                    }
+                },
                 SuccessMessage = "You have forged a copper axe.",
                 Description = "To forge a copper axe you need to be at a furnace",
                 CraftCommand = CraftType.Forge,
@@ -151,7 +185,18 @@ namespace MIMWebClient.Core.World.Crafting.Smithing
             {
                 Name = "Copper Mace",
                 StartMessage = "You put all your copper ore into the furnace",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "You accidently drop the copper ore inside the furnace.",
+                        BreakMaterial = true
+                    },
+                      new CraftFailMessage()
+                    {
+                        Message =  "You miss the cast and pour molten hot metal on the floor.",
+                    }
+                },
                 SuccessMessage = "You have forged a copper mace.",
                 Description = "To forge a copper mace you need to be at a furnace",
                 CraftCommand = CraftType.Forge,
@@ -189,7 +234,18 @@ namespace MIMWebClient.Core.World.Crafting.Smithing
             {
                 Name = "Copper Dagger",
                 StartMessage = "You put all your copper ore into the furnace",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "You accidently drop the copper ore inside the furnace.",
+                        BreakMaterial = true
+                    },
+                      new CraftFailMessage()
+                    {
+                        Message =  "You miss the cast and pour molten hot metal on the floor.",
+                    }
+                },
                 SuccessMessage = "You have forged a copper dagger.",
                 Description = "To forge a copper dagger you need to be at a furnace",
                 CraftCommand = CraftType.Forge,
@@ -227,7 +283,18 @@ namespace MIMWebClient.Core.World.Crafting.Smithing
             {
                 Name = "Copper Flail",
                 StartMessage = "You put all your copper ore into the furnace",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "You accidently drop the copper ore inside the furnace.",
+                        BreakMaterial = true
+                    },
+                      new CraftFailMessage()
+                    {
+                        Message =  "You miss the cast and pour molten hot metal on the floor.",
+                    }
+                },
                 SuccessMessage = "You have forged a copper flail.",
                 Description = "To forge a copper flail you need to be at a furnace",
                 CraftCommand = CraftType.Forge,

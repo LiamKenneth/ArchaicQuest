@@ -27,7 +27,17 @@ namespace MIMWebClient.Core.World.Knitting
             {
                 Name = "Woolen Cloth Helmet",
                 StartMessage = "You take the wool and cast on the needle.",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "You miss a stich and need to start again.",
+                    },
+                      new CraftFailMessage()
+                    {
+                        Message =  "Your needle snaps in two.",
+                    }
+                },
                 SuccessMessage = "You have knitted a woolen cloth helmet.",
                 Description = "To knit a woolen cloth helmet you need a pair of needles and wool yarn.",
                 CraftCommand = CraftType.Knitting,
@@ -65,7 +75,17 @@ namespace MIMWebClient.Core.World.Knitting
             {
                 Name = "Woolen cloth leggings",
                 StartMessage = "You take the wool and cast on the needle.",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "You miss a stich and need to start again.",
+                    },
+                      new CraftFailMessage()
+                    {
+                        Message =  "Your needle snaps in two.",
+                    }
+                },
                 SuccessMessage = "You have knitted some woolen cloth leggings.",
                 Description = "To knit some woolen cloth leggings you need a pair of needles and wool yarn.",
                 CraftCommand = CraftType.Knitting,
@@ -99,7 +119,18 @@ namespace MIMWebClient.Core.World.Knitting
             {
                 Name = "Woolen cloth sleeves",
                 StartMessage = "You take the wool and cast on the needle.",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "You miss a stich and need to start again.",
+                    },
+                      new CraftFailMessage()
+                    {
+                        Message =  "Your needle snaps in two.",
+                    }
+                },
+          
                 SuccessMessage = "You have knitted some woolen cloth sleeves.",
                 Description = "To knit some woolen cloth sleeves you need a pair of needles and wool yarn.",
                 CraftCommand = CraftType.Knitting,
@@ -133,7 +164,17 @@ namespace MIMWebClient.Core.World.Knitting
             {
                 Name = "Woolen cloth gloves",
                 StartMessage = "You take the wool and cast on the needle.",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "You miss a stich and need to start again.",
+                    },
+                      new CraftFailMessage()
+                    {
+                        Message =  "Your needle snaps in two.",
+                    }
+                },
                 SuccessMessage = "You have knitted some woolen cloth gloves.",
                 Description = "To knit some woolen cloth gloves you need a pair of needles and wool yarn.",
                 CraftCommand = CraftType.Knitting,
@@ -167,7 +208,17 @@ namespace MIMWebClient.Core.World.Knitting
             {
                 Name = "Woolen cloth boots",
                 StartMessage = "You take the wool and cast on the needle.",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "You miss a stich and need to start again.",
+                    },
+                      new CraftFailMessage()
+                    {
+                        Message =  "Your needle snaps in two.",
+                    }
+                },
                 SuccessMessage = "You have knitted some woolen cloth boots.",
                 Description = "To knit some woolen cloth boots you need a pair of needles and wool yarn.",
                 CraftCommand = CraftType.Knitting,
@@ -201,7 +252,17 @@ namespace MIMWebClient.Core.World.Knitting
             {
                 Name = "Woolen cloth shirt",
                 StartMessage = "You take the wool and cast on the needle.",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "You miss a stich and need to start again.",
+                    },
+                      new CraftFailMessage()
+                    {
+                        Message =  "Your needle snaps in two.",
+                    }
+                },
                 SuccessMessage = "You have knitted some woolen cloth shirt.",
                 Description = "To knit some woolen cloth shirt you need a pair of needles and wool yarn.",
                 CraftCommand = CraftType.Knitting,

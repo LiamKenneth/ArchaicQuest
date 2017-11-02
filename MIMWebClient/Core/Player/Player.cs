@@ -541,8 +541,8 @@ namespace MIMWebClient.Core.PlayerSetup
 
             this.Recall = recall;
 
-            this.CraftingRecipes.Add(Crafting.CampFire().Name);
-            this.CraftingRecipes.Add(Crafting.PineLog().Name);
+            this.CraftingRecipes.Add(MIMWebClient.Core.World.Crafting.Crafting.CampFire().Name);
+            this.CraftingRecipes.Add(MIMWebClient.Core.World.Crafting.Crafting.PineLog().Name);
             this.CraftingRecipes.Add(Recipes.SmokedChub().Name);
 
             this.CraftingRecipes.Add(Recipes.BoiledCarp().Name);
@@ -577,12 +577,12 @@ namespace MIMWebClient.Core.PlayerSetup
             this.CraftingRecipes.Add(Carve.WoodenTorch().Name);
             this.CraftingRecipes.Add(Carve.WoodenChest().Name);
 
-            this.CraftingRecipes.Add(Knitting.WoolenClothBoots().Name);
-            this.CraftingRecipes.Add(Knitting.WoolenClothGloves().Name);
-            this.CraftingRecipes.Add(Knitting.WoolenClothHelmet().Name);
-            this.CraftingRecipes.Add(Knitting.WoolenClothLeggings().Name);
-            this.CraftingRecipes.Add(Knitting.WoolenClothShirt().Name);
-            this.CraftingRecipes.Add(Knitting.WoolenClothSleeves().Name);
+            this.CraftingRecipes.Add(MIMWebClient.Core.World.Knitting.Knitting.WoolenClothBoots().Name);
+            this.CraftingRecipes.Add(MIMWebClient.Core.World.Knitting.Knitting.WoolenClothGloves().Name);
+            this.CraftingRecipes.Add(MIMWebClient.Core.World.Knitting.Knitting.WoolenClothHelmet().Name);
+            this.CraftingRecipes.Add(MIMWebClient.Core.World.Knitting.Knitting.WoolenClothLeggings().Name);
+            this.CraftingRecipes.Add(MIMWebClient.Core.World.Knitting.Knitting.WoolenClothShirt().Name);
+            this.CraftingRecipes.Add(MIMWebClient.Core.World.Knitting.Knitting.WoolenClothSleeves().Name);
 
         }
 

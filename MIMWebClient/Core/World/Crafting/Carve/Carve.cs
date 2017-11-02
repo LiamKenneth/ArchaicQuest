@@ -23,7 +23,14 @@ namespace MIMWebClient.Core.World.Crafting.Carve
             {
                 Name = "Wooden Raft",
                 StartMessage = "You gather your logs and begin to make the raft",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+
+                },
                 SuccessMessage = "You have crafted a wooden raft",
                 Description = "To craft a raft you need to be at a Carpentry work bench",
                 CraftCommand = CraftType.Carve,
@@ -70,7 +77,14 @@ namespace MIMWebClient.Core.World.Crafting.Carve
             {
                 Name = "Wooden torch",
                 StartMessage = "You gather your logs and begin to make the torch",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+
+                },
                 SuccessMessage = "You have crafted a wooden torch.",
                 Description = "To craft a wooden torch you need Carpentry work bench",
                 CraftCommand = CraftType.Carve,
@@ -111,7 +125,14 @@ namespace MIMWebClient.Core.World.Crafting.Carve
             {
                 Name = "Wooden Chest",
                 StartMessage = "You gather your logs and begin to make the chest",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+             
+                },
                 SuccessMessage = "You have crafted a wooden chest.",
                 Description = "To craft a wooden chest you need Carpentry work bench",
                 CraftCommand = CraftType.Carve,

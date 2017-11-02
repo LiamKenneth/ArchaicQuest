@@ -19,7 +19,14 @@ namespace MIMWebClient.Core.World.Alchemy
             {
                 Name = "Burn Cream",
                 StartMessage = "You put all your incredients on to the table and grab an empty glass",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+
+                },
                 SuccessMessage = "You have brewed burn cream.",
                 Description = "To brew burn cream you need to be at an Alchemy bench",
                 CraftCommand = CraftType.Brew,
@@ -78,7 +85,14 @@ namespace MIMWebClient.Core.World.Alchemy
             {
                 Name = "Anti Venom",
                 StartMessage = "You put all your incredients on to the table and grab an empty glass",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+
+                },
                 SuccessMessage = "You have brewed an anti venom potion.",
                 Description = "To brew anti venom you need to be at an Alchemy bench",
                 CraftCommand = CraftType.Brew,
@@ -137,7 +151,14 @@ namespace MIMWebClient.Core.World.Alchemy
             {
                 Name = "Lavender Perfume",
                 StartMessage = "You put all your incredients on to the table and grab an empty glass",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+
+                },
                 SuccessMessage = "You have brewed Lavender perfume.",
                 Description = "To brew Lavender perfume you need to be at an Alchemy bench",
                 CraftCommand = CraftType.Brew,
@@ -190,7 +211,14 @@ namespace MIMWebClient.Core.World.Alchemy
             {
                 Name = "Antibiotic",
                 StartMessage = "You put all your incredients on to the table and grab an empty glass",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+
+                },
                 SuccessMessage = "You have brewed an Antibiotic potion",
                 Description = "To brew an Antibiotic potion you need to be at an Alchemy bench",
                 CraftCommand = CraftType.Brew,
@@ -249,7 +277,14 @@ namespace MIMWebClient.Core.World.Alchemy
             {
                 Name = "Antiseptic",
                 StartMessage = "You put all your incredients on to the table and grab an empty glass",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+
+                },
                 SuccessMessage = "You have brewed an Antiseptic potion",
                 Description = "To brew an Antiseptic potion you need to be at an Alchemy bench",
                 CraftCommand = CraftType.Brew,

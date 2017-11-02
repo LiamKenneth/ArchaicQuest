@@ -18,7 +18,14 @@ namespace MIMWebClient.Core.World.Cooking
             {
                 Name = "Smoked Chub ",
                 StartMessage = "You take out a dagger and begin cutting the fish.",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+
+                },
                 SuccessMessage = "You have cooked smoked chub.",
                 Description = "To cook a smoked chub you need a pot over the fire and a chub.",
                 CraftCommand = CraftType.Cook,
@@ -66,7 +73,14 @@ namespace MIMWebClient.Core.World.Cooking
             {
                 Name = "Boiled Carp",
                 StartMessage = "You take out a dagger and begin cutting the fish.",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+
+                },
                 SuccessMessage = "You have boild carp and potatoes.",
                 Description = "You have boild carp and potatoes",
                 CraftCommand = CraftType.Cook,
@@ -119,7 +133,14 @@ namespace MIMWebClient.Core.World.Cooking
             {
                 Name = "Peasant Stew",
                 StartMessage = "start message",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+
+                },
                 SuccessMessage = "success message",
                 Description = "To cook a Peasant Stew you need a pot over the fire and a chub.",
                 CraftCommand = CraftType.Cook,
@@ -182,7 +203,14 @@ namespace MIMWebClient.Core.World.Cooking
             {
                 Name = "Seasoned Bream",
                 StartMessage = "start message",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+
+                },
                 SuccessMessage = "success message",
                 Description = "To cook a Peasant Stew you need a pot over the fire and a chub.",
                 CraftCommand = CraftType.Cook,
@@ -234,7 +262,14 @@ namespace MIMWebClient.Core.World.Cooking
             {
                 Name = "Fish Stew",
                 StartMessage = "start message",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+
+                },
                 SuccessMessage = "success message",
                 Description = "To cook a Fish Stew you need a pot over the fire and a chub.",
                 CraftCommand = CraftType.Cook,
@@ -286,7 +321,14 @@ namespace MIMWebClient.Core.World.Cooking
             {
                 Name = "Bread",
                 StartMessage = "start message",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+
+                },
                 SuccessMessage = "success message",
                 Description = "To cook bread you need a pot over the fire and a chub.",
                 CraftCommand = CraftType.Cook,
@@ -333,7 +375,14 @@ namespace MIMWebClient.Core.World.Cooking
             {
                 Name = "Fried Trout",
                 StartMessage = "start message",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+
+                },
                 SuccessMessage = "success message",
                 Description = "To cook Fried Trout you need a pot over the fire and a chub.",
                 CraftCommand = CraftType.Cook,
@@ -385,7 +434,14 @@ namespace MIMWebClient.Core.World.Cooking
             {
                 Name = "Turtle Soup",
                 StartMessage = "start message",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+
+                },
                 SuccessMessage = "success message",
                 Description = "To cook Turtle Soup you need a pot over the fire and a chub.",
                 CraftCommand = CraftType.Cook,
@@ -437,7 +493,14 @@ namespace MIMWebClient.Core.World.Cooking
             {
                 Name = "Fried Eel",
                 StartMessage = "start message",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+
+                },
                 SuccessMessage = "success message",
                 Description = "To cook Fried Eel you need a pot over the fire and a chub.",
                 CraftCommand = CraftType.Cook,
@@ -489,7 +552,14 @@ namespace MIMWebClient.Core.World.Cooking
             {
                 Name = "Frog Legs",
                 StartMessage = "start message",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "",
+                    },
+
+                },
                 SuccessMessage = "success message",
                 Description = "To cook Fried Eel you need a pot over the fire and a chub.",
                 CraftCommand = CraftType.Cook,

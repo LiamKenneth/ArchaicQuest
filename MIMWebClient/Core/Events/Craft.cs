@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using MIMWebClient.Core.Player;
 using MIMWebClient.Core.World.Crafting;
 
 namespace MIMWebClient.Core.Events
@@ -23,6 +24,13 @@ namespace MIMWebClient.Core.Events
     {
         public string Name { get; set; }
         public int Count { get; set; }
+    }
+
+    public class CraftFailMessage
+    {
+        public string Message { get; set; }
+        public bool BreakMaterial { get; set; }
+        public bool DamageMaterial { get; set; }
     }
 
 
@@ -46,7 +54,7 @@ namespace MIMWebClient.Core.Events
 
         public string SuccessMessage { get; set; }
 
-        public string FaliureMessage { get; set; }
+        public List<CraftFailMessage> FailureMessages { get; set; }
 
         public Item.Item CreatesItem { get; set; }
         /// <summary>
@@ -324,60 +332,117 @@ namespace MIMWebClient.Core.Events
 
 
             //add skill check here
-            //var getSkill = player.Skills.FirstOrDefault(x => x.Name.Equals(craftItem.CraftCommand));
-            //double getSkillProf = 0;
-            //if (getSkill != null)
-            //{
-            //    getSkillProf = getSkill.Proficiency / (double)95 * 100;
-            //}
-
-
-
-            var oldRoom = room;
-            HubContext.Instance.SendToClient(craftItem.StartMessage, player.HubGuid);
-
-            await Task.Delay(1500);
-
-            foreach (var emote in craftItem.CraftingEmotes)
+            var getSkill = player.Skills.FirstOrDefault(x => x.Name.Equals(craftItem.CraftCommand));
+            double getSkillProf = 0;
+            if (getSkill != null)
             {
-                HubContext.Instance.SendToClient(emote, player.HubGuid);
-
-
-                await Task.Delay(2000);
+                getSkillProf = getSkill.Proficiency / (double)95 * 100;
             }
 
-            HubContext.Instance.SendToClient(craftItem.SuccessMessage, player.HubGuid);
+            var successChance = Helpers.Rand(1, 100);
 
-
-            if (craftItem.Materials != null)
+            if (getSkillProf >= successChance)
             {
+                //success
+                if (player.ActiveSkill != null)
+                {
+                    HubContext.Instance.SendToClient("wait till you have finished " + player.ActiveSkill.Name, player.HubGuid);
+                    return;
+                }
 
-                foreach (var materials in craftItem.Materials)
+                player.ActiveSkill = getSkill;
+
+                var oldRoom = room;
+                HubContext.Instance.SendToClient(craftItem.StartMessage, player.HubGuid);
+
+                await Task.Delay(1500);
+
+                foreach (var emote in craftItem.CraftingEmotes)
+                {
+                    HubContext.Instance.SendToClient(emote, player.HubGuid);
+
+
+                    await Task.Delay(2000);
+                }
+
+                HubContext.Instance.SendToClient(craftItem.SuccessMessage, player.HubGuid);
+
+
+                if (craftItem.Materials != null)
                 {
 
-                    for (var i = 0; i < materials.Count; i++)
+                    foreach (var materials in craftItem.Materials)
                     {
-                        var item = player.Inventory.FirstOrDefault(x => x.name.ToLower().Contains(materials.Name.ToLower()));
 
-                        player.Inventory.Remove(item);
+                        for (var i = 0; i < materials.Count; i++)
+                        {
+                            var item = player.Inventory.FirstOrDefault(x => x.name.ToLower().Contains(materials.Name.ToLower()));
+
+                            player.Inventory.Remove(item);
+                        }
                     }
                 }
-            }
 
-            if (craftItem.CraftAppearsInRoom)
+                if (craftItem.CraftAppearsInRoom)
+                {
+                    room.items.Add(craftItem.CreatesItem);
+                }
+
+                if (!craftItem.CraftAppearsInRoom)
+                {
+                    player.Inventory.Add(craftItem.CreatesItem);
+                }
+
+
+                Score.UpdateUiInventory(player);
+
+                Cache.updateRoom(room, oldRoom);
+
+                player.ActiveSkill = null;
+
+            }
+            else
             {
-                room.items.Add(craftItem.CreatesItem);
+                //faliure
+
+                var failMessage = "";
+                switch (Helpers.Rand(1, 4))
+                {
+                    case 1:
+                        failMessage = " ";
+                        break;
+                    case 2:
+                    case 3:
+                        failMessage = " .";
+                        break;
+                    default:
+                        failMessage = " .";
+                        break;
+                }
+
+                HubContext.Instance.SendToClient(failMessage,
+                    player.HubGuid);
+
+                if (getSkillProf < 95)
+                {
+
+                    HubContext.Instance.SendToClient("You learn from your mistakes and gain 100 experience points",
+                        player.HubGuid);
+
+                    var xp = new Experience();
+                    player.Experience += 100;
+
+                    xp.GainLevel(player);
+
+                    getSkill.Proficiency += Helpers.Rand(1, 5);
+
+                }
+
+                Score.ReturnScoreUI(player);
+
+               
             }
 
-            if (!craftItem.CraftAppearsInRoom)
-            {
-                player.Inventory.Add(craftItem.CreatesItem);
-            }
-
-
-            Score.UpdateUiInventory(player);
-
-            Cache.updateRoom(room, oldRoom);
 
         }
     }

@@ -59,7 +59,17 @@ namespace MIMWebClient.Core.World.Crafting
             {
                 Name = "wood",
                 StartMessage = "You grip the shaft of your axe, ready to chop the felled tree into a smaller chunk.",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "You swing the axe down with all your might but miss the wood."
+                    },
+                      new CraftFailMessage()
+                    {
+                        Message =  "You miss hit the wood casuing it to split.",
+                    }
+                },
                 SuccessMessage = "You have chopped a pine log from a felled tree",
                 Description = "To make a log you need to be at a chopping block.",
                 CraftCommand = CraftType.Chop,
@@ -95,9 +105,25 @@ namespace MIMWebClient.Core.World.Crafting
 
             var fishingRod = new Craft()
             {
-                Name = "wood",
+                Name = "Fishing Rod",
                 StartMessage = "You take the log and begin carving",
-                FaliureMessage = "...",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "The wood splits and cracks as you attempt to shape it into a pole.",
+                        BreakMaterial = true
+                    },
+                      new CraftFailMessage()
+                    {
+                        Message =  "You apply too much force an the wood snaps in two",
+                        BreakMaterial = true
+                    },
+                      new CraftFailMessage()
+                    {
+                        Message =  "You discard your attempt at a fishing pole in the corner of the room.",
+                    }
+                },
                 SuccessMessage = "You have crafted a fishing rod!",
                 Description = "To make a fishing rod you need to be at a work bench.",
                 CraftCommand = CraftType.Chop,
@@ -145,7 +171,18 @@ namespace MIMWebClient.Core.World.Crafting
                 Name = "Camp Fire",
                 Duration = 6,
                 StartMessage = "You begin to place the logs in position.",
-                FaliureMessage = "As soon as the flame appears, a gust of wind blows it out.",
+                FailureMessages = new List<CraftFailMessage>()
+                {
+                    new CraftFailMessage()
+                    {
+                        Message =  "As soon as the flame appears, a gust of wind blows it out.",
+                    },
+                      new CraftFailMessage()
+                    {
+                        Message =  "You fail to get a spark.",
+                    } 
+                },
+            
                 SuccessMessage = "The camp fire bursts to life.",
                 Description = "To build a camp fire you require 4 logs.",
                 Materials = new List<CraftMaterials>()
