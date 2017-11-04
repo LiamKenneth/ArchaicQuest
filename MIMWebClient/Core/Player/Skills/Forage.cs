@@ -30,6 +30,8 @@ namespace MIMWebClient.Core.Player.Skills
                     Name = "Foraging",
                     CoolDown = 0,
                     Delay = 0,
+                    SkillType = Type.Crafting,
+                    Points = 340,
                     LevelObtained = 1,
                     Proficiency = 1,
                     MaxProficiency = 95,

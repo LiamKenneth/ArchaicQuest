@@ -17,7 +17,8 @@ namespace MIMWebClient.Core.Player
         public enum Type
         {
             Skill,
-            Spell
+            Spell,
+            Crafting
         };
 
         /// <summary>
@@ -62,6 +63,16 @@ namespace MIMWebClient.Core.Player
         public string Name { get; set; }
 
         public int Proficiency { get; set; }
+
+        /// <summary>
+        /// used for crafting
+        /// </summary>
+        public int Points { get; set; }
+
+        /// <summary>
+        /// maybe used in the future for skills to change the speed in which skills are mastered
+        /// </summary>
+        public int MaxPoints { get; set; }
 
         public Type SkillType { get; set; } = Type.Skill;
 

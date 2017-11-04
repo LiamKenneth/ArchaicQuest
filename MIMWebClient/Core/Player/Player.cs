@@ -488,7 +488,13 @@ namespace MIMWebClient.Core.PlayerSetup
             this.Skills = new List<Skill>()
             {
                 Fish.FishingAb(),
-                Forage.ForageAb()
+                Forage.ForageAb(),
+                Chopping.ChoppingAb(),
+                Carving.CarvingAb(),
+                Crafting.CraftingAb(),
+                Brewing.BrewingAb(),
+                Cook.CookAb(),
+                Knitting.KnittingAb()
             };
 
 

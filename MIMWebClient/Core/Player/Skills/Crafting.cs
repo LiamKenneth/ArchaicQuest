@@ -28,8 +28,10 @@ namespace MIMWebClient.Core.Player.Skills
                 var skill = new Skill
                 {
                     Name = "Crafting",
+                    Points = 0,
                     CoolDown = 0,
                     Delay = 0,
+                    SkillType = Type.Crafting,
                     LevelObtained = 1,
                     Proficiency = 1,
                     MaxProficiency = 95,

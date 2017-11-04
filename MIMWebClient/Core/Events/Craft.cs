@@ -332,7 +332,7 @@ namespace MIMWebClient.Core.Events
 
 
             //add skill check here
-            var getSkill = player.Skills.FirstOrDefault(x => x.Name.Equals(craftItem.CraftCommand));
+            var getSkill = player.Skills.FirstOrDefault(x => x.Name.ToLower().Equals(craftItem.CraftCommand));
             double getSkillProf = 0;
             if (getSkill != null)
             {
@@ -405,23 +405,19 @@ namespace MIMWebClient.Core.Events
             {
                 //faliure
 
-                var failMessage = "";
-                switch (Helpers.Rand(1, 4))
-                {
-                    case 1:
-                        failMessage = " ";
-                        break;
-                    case 2:
-                    case 3:
-                        failMessage = " .";
-                        break;
-                    default:
-                        failMessage = " .";
-                        break;
-                }
+                var failMessage = craftItem.FailureMessages[Helpers.Rand(1, craftItem.FailureMessages.Count)];
 
-                HubContext.Instance.SendToClient(failMessage,
+                HubContext.Instance.SendToClient(failMessage.Message,
                     player.HubGuid);
+
+                if (failMessage.BreakMaterial)
+                {
+                            var item = player.Inventory.FirstOrDefault(x => x.name.ToLower().Contains(craftItem.Materials[Helpers.Rand(1, craftItem.Materials.Count)].Name.ToLower()));
+
+                            player.Inventory.Remove(item);
+                        
+                    }
+                }
 
                 if (getSkillProf < 95)
                 {
@@ -446,4 +442,3 @@ namespace MIMWebClient.Core.Events
 
         }
     }
-}
