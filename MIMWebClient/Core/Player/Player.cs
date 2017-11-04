@@ -454,7 +454,7 @@ namespace MIMWebClient.Core.PlayerSetup
 
         public int ForageRank { get; set; } = 1;
 
-
+        public string ChosenCraft { get; set; } = null;
 
 
         public Player()

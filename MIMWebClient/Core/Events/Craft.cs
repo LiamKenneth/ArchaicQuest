@@ -381,16 +381,45 @@ namespace MIMWebClient.Core.Events
 
                 }
 
-
-
-
-                HubContext.Instance.SendToClient("You learn from your mistakes and gain 100 experience points",
-                    player.HubGuid);
-
                 var xp = new Experience();
-                player.Experience += 100;
 
-                if (getSkill != null) getSkill.Points += Helpers.Rand(1, 10);
+
+
+                if (getSkill != null)
+                {
+                    if (player.ChosenCraft == craftItem.CraftCommand.ToString())
+                    {
+                        getSkill.Points += Helpers.Rand(1, 10);
+
+
+                        HubContext.Instance.SendToClient("You learn from your mistakes and gain 100 experience points",
+                            player.HubGuid);
+
+                        player.Experience += 100;
+
+                    }
+                    else
+                    {
+                        if (string.IsNullOrEmpty(player.ChosenCraft) && getSkill.Points <= 99)
+                        {
+
+                            HubContext.Instance.SendToClient("You learn from your mistakes and gain 100 experience points",
+                                player.HubGuid);
+
+                          player.Experience += 100;
+
+                            getSkill.Points += Helpers.Rand(1, 10);
+                        }
+                        else
+                        {
+
+                            HubContext.Instance.SendToClient(ShowSkills.checkRank(getSkill.Points, player),
+                                player.HubGuid);
+                        }
+
+                    }
+                 
+                }
 
                 Score.ReturnScoreUI(player);
 

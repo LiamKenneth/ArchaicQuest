@@ -141,6 +141,18 @@ namespace MIMWebClient.Core.Events
             return $"error no rank";
         }
 
+        public static string checkRank(int percentage, Player player)
+        {
+
+            if (string.IsNullOrEmpty(player.ChosenCraft) && percentage == 99)
+            {
+                return "To increase your craft rank you need to commit to a craft.";
+            }
+            
+
+            return String.Empty;
+        }
+
 
         public static List<Skill> GetSkills(Player player)
         {

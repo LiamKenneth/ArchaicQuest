@@ -237,7 +237,7 @@ namespace MIMWebClient.Core
                 {"/debug", () => PlayerSetup.Player.DebugPlayer(playerData) },
                 {"/setGold", () => PlayerSetup.Player.SetGold(playerData, commandOptions) },
                 {"/setAc", () => PlayerSetup.Player.SetAC(playerData, commandOptions) },
-                {"/setGodmode", () => SigmaMap.DrawMap(playerData.HubGuid) },
+                {"/godmode", () => SigmaMap.DrawMap(playerData.HubGuid) },
                 {"/map", () => SigmaMap.DrawMap(playerData.HubGuid) }
             };
 
