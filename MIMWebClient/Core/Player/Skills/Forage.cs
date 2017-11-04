@@ -28,6 +28,7 @@ namespace MIMWebClient.Core.Player.Skills
                 var skill = new Skill
                 {
                     Name = "Foraging",
+                    Alias = CraftType.Forage.ToString(),
                     CoolDown = 0,
                     Delay = 0,
                     SkillType = Type.Crafting,

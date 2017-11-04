@@ -616,6 +616,18 @@ namespace MIMWebClient.Core.PlayerSetup
          
         }
 
+        public static void SetGodmode(Player player)
+        {
+            player.MaxMovePoints += 3000;
+            player.MovePoints += 3000;
+            player.MaxHitPoints += 3000;
+            player.HitPoints += 3000;
+            player.MaxManaPoints += 3000;
+            player.ManaPoints += 3000;
+
+            Score.ReturnScoreUI(player);
+        }
+
         public static void SetGold(Player player, string amount)
         {
             if (string.IsNullOrEmpty(amount))

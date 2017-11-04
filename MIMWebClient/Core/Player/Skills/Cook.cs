@@ -28,6 +28,7 @@ namespace MIMWebClient.Core.Player.Skills
                 var skill = new Skill
                 {
                     Name = "Cook",
+                    Alias = CraftType.Cook.ToString(),
                     CoolDown = 0,
                     Delay = 0,
                     Points = 0,

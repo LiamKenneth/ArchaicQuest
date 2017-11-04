@@ -28,6 +28,7 @@ namespace MIMWebClient.Core.Player.Skills
                 var skill = new Skill
                 {
                     Name = "Chopping",
+                    Alias = CraftType.Chop.ToString(),
                     CoolDown = 0,
                     Delay = 0,
                     Points = 0,

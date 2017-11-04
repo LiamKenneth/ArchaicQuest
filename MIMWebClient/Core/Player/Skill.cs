@@ -62,6 +62,11 @@ namespace MIMWebClient.Core.Player
 
         public string Name { get; set; }
 
+        /// <summary>
+        /// used for crafting
+        /// </summary>
+        public string Alias { get; set; } = string.Empty;
+
         public int Proficiency { get; set; }
 
         /// <summary>

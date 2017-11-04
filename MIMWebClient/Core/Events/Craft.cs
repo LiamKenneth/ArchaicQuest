@@ -18,7 +18,8 @@ namespace MIMWebClient.Core.Events
         Smith,
         Forge,
         Carve,
-        Knitting
+        Knitting,
+        Forage
     }
     public class CraftMaterials
     {
@@ -70,7 +71,7 @@ namespace MIMWebClient.Core.Events
         public int MoveCost { get; set; }
 
 
-        public static void CraftItem(PlayerSetup.Player player, Room.Room room, string craftItem, string craftType = null)
+        public static void CraftItem(PlayerSetup.Player player, Room.Room room, string craftItem, CraftType craftType)
         {
             CanCraftAsync(player, room, craftItem, craftType);
         }
@@ -122,21 +123,21 @@ namespace MIMWebClient.Core.Events
         }
 
 
-        public static async Task CanCraftAsync(PlayerSetup.Player player, Room.Room room, string craftItem, string craftType)
+        public static async Task CanCraftAsync(PlayerSetup.Player player, Room.Room room, string craftItem, CraftType craftType)
         {
 
 
-            if (string.IsNullOrEmpty(craftItem) && craftType == null)
+            if (string.IsNullOrEmpty(craftItem) && craftType == CraftType.Craft)
             {
                 HubContext.Instance.SendToClient("What do you want to craft?", player.HubGuid);
                 return;
             }
 
-            if (string.IsNullOrEmpty(craftItem))
-            {
-                HubContext.Instance.SendToClient("What do you want to " + craftType + "?", player.HubGuid);
-                return;
-            }
+            //if (string.IsNullOrEmpty(craftItem))
+            //{
+            //    HubContext.Instance.SendToClient("What do you want to " + craftType + "?", player.HubGuid);
+            //    return;
+            //}
 
 
          
@@ -144,7 +145,7 @@ namespace MIMWebClient.Core.Events
 
             var hasCraft = player.CraftingRecipes.FirstOrDefault(x => x.ToLower().Contains(craftItem.ToLower()));
 
-            if (hasCraft == null && findCraft == null && craftType == null)
+            if (hasCraft == null && findCraft == null)
             {
                 HubContext.Instance.SendToClient("You don't know how to craft that.", player.HubGuid);
                 return;
@@ -155,57 +156,18 @@ namespace MIMWebClient.Core.Events
                 HubContext.Instance.SendToClient("You don't know how to do that.", player.HubGuid);
                 return;
             }
- 
-
-            if (findCraft.CraftCommand == CraftType.Chop && craftType == null)
-            {
-                HubContext.Instance.SendToClient("You can't craft that.", player.HubGuid);
-                return;
-            }
 
 
-            if (findCraft.CraftCommand == CraftType.Carve && craftType == null)
-            {
-                HubContext.Instance.SendToClient("You can't craft that.", player.HubGuid);
-                return;
-            }
-
-
-            if (findCraft.CraftCommand == CraftType.Cook && craftType == null)
-            {
-                HubContext.Instance.SendToClient("You can't craft that.", player.HubGuid);
-                return;
-            }
-
-            if (findCraft.CraftCommand == CraftType.Forge && craftType == null)
-            {
-                HubContext.Instance.SendToClient("You can't craft that.", player.HubGuid);
-                return;
-            }
-
-            if (findCraft.CraftCommand == CraftType.Knitting && craftType == null)
-            {
-                HubContext.Instance.SendToClient("You can't craft that.", player.HubGuid);
-                return;
-            }
-
-
-            if (findCraft.CraftCommand == CraftType.Craft)
-            {
-                HubContext.Instance.SendToClient("You can't " + craftType + " that.", player.HubGuid);
-                return;
-            }
- 
 
             bool hasMaterials = false;
-            if (craftType == null && findCraft.CraftCommand == CraftType.Craft)
+            if (craftType ==  CraftType.Craft && findCraft.CraftCommand == CraftType.Craft)
             {
                 hasMaterials = findCraft != null && HasAllMaterials(player, findCraft.Materials, hasCraft);
 
  
 
             }
-            else if (craftType == "chop" && findCraft.CraftCommand == CraftType.Chop)
+            else if (craftType == CraftType.Chop && findCraft.CraftCommand == CraftType.Chop)
             {
                 hasMaterials = findCraft != null &&
                                room.items.FirstOrDefault(
@@ -219,7 +181,7 @@ namespace MIMWebClient.Core.Events
                     return;
                 }
             }
-            else if (craftType == "cook" && findCraft.CraftCommand == CraftType.Cook)
+            else if (craftType == CraftType.Cook && findCraft.CraftCommand == CraftType.Cook)
             {
                 var hasIngredients = false;
                 foreach (var item in room.items)
@@ -242,7 +204,7 @@ namespace MIMWebClient.Core.Events
 
                
             }
-            else if (craftType == "brew" && findCraft.CraftCommand == CraftType.Brew)
+            else if (craftType == CraftType.Brew && findCraft.CraftCommand == CraftType.Brew)
             {
                 var hasIngredients = false;
                 foreach (var item in room.items)
@@ -265,7 +227,7 @@ namespace MIMWebClient.Core.Events
 
 
             }
-            else if (craftType == "forge" && findCraft.CraftCommand == CraftType.Forge)
+            else if (craftType == CraftType.Forge && findCraft.CraftCommand == CraftType.Forge)
             {
                 hasMaterials = findCraft != null &&
                                room.items.FirstOrDefault(
@@ -277,7 +239,7 @@ namespace MIMWebClient.Core.Events
                     return;
                 }
             }
-            else if (craftType == "carve" && findCraft.CraftCommand == CraftType.Carve)
+            else if (craftType == CraftType.Carve && findCraft.CraftCommand == CraftType.Carve)
             {
                 hasMaterials = findCraft != null && HasAllMaterials(player, findCraft.Materials, hasCraft); ;
 
@@ -289,7 +251,7 @@ namespace MIMWebClient.Core.Events
                     return;
                 }
             }
-            else if (craftType == "knit" && findCraft.CraftCommand == CraftType.Knitting)
+            else if (craftType == CraftType.Knitting && findCraft.CraftCommand == CraftType.Knitting)
             {
                 hasMaterials = findCraft != null && HasAllMaterials(player, findCraft.Materials, hasCraft); ;
 
@@ -304,7 +266,11 @@ namespace MIMWebClient.Core.Events
 
             if (!hasMaterials)
             {
-                return;
+                if (findCraft.CraftCommand != craftType)
+                {
+                    HubContext.Instance.SendToClient("You can't do that. try " + findCraft.CraftCommand, player.HubGuid);
+                    return;
+                }
             }
 
             await CraftItem(player, room, findCraft);
@@ -332,21 +298,17 @@ namespace MIMWebClient.Core.Events
 
 
             //add skill check here
-            var getSkill = player.Skills.FirstOrDefault(x => x.Name.ToLower().Equals(craftItem.CraftCommand));
-            double getSkillProf = 0;
-            if (getSkill != null)
-            {
-                getSkillProf = getSkill.Proficiency / (double)95 * 100;
-            }
+            var getSkill = player.Skills.FirstOrDefault(x => x.Alias.Equals(craftItem.CraftCommand.ToString()));
 
             var successChance = Helpers.Rand(1, 100);
 
-            if (getSkillProf >= successChance)
+            if (player.Wisdom >= successChance)
             {
                 //success
                 if (player.ActiveSkill != null)
                 {
-                    HubContext.Instance.SendToClient("wait till you have finished " + player.ActiveSkill.Name, player.HubGuid);
+                    HubContext.Instance.SendToClient("wait till you have finished " + player.ActiveSkill.Name,
+                        player.HubGuid);
                     return;
                 }
 
@@ -376,7 +338,8 @@ namespace MIMWebClient.Core.Events
 
                         for (var i = 0; i < materials.Count; i++)
                         {
-                            var item = player.Inventory.FirstOrDefault(x => x.name.ToLower().Contains(materials.Name.ToLower()));
+                            var item = player.Inventory.FirstOrDefault(x => x.name.ToLower()
+                                .Contains(materials.Name.ToLower()));
 
                             player.Inventory.Remove(item);
                         }
@@ -403,8 +366,7 @@ namespace MIMWebClient.Core.Events
             }
             else
             {
-                //faliure
-
+ 
                 var failMessage = craftItem.FailureMessages[Helpers.Rand(1, craftItem.FailureMessages.Count)];
 
                 HubContext.Instance.SendToClient(failMessage.Message,
@@ -412,32 +374,32 @@ namespace MIMWebClient.Core.Events
 
                 if (failMessage.BreakMaterial)
                 {
-                            var item = player.Inventory.FirstOrDefault(x => x.name.ToLower().Contains(craftItem.Materials[Helpers.Rand(1, craftItem.Materials.Count)].Name.ToLower()));
+                    var item = player.Inventory.FirstOrDefault(x => x.name.ToLower().Contains(craftItem
+                        .Materials[Helpers.Rand(1, craftItem.Materials.Count)].Name.ToLower()));
 
-                            player.Inventory.Remove(item);
-                        
-                    }
-                }
-
-                if (getSkillProf < 95)
-                {
-
-                    HubContext.Instance.SendToClient("You learn from your mistakes and gain 100 experience points",
-                        player.HubGuid);
-
-                    var xp = new Experience();
-                    player.Experience += 100;
-
-                    xp.GainLevel(player);
-
-                    getSkill.Proficiency += Helpers.Rand(1, 5);
+                    player.Inventory.Remove(item);
 
                 }
+
+
+
+
+                HubContext.Instance.SendToClient("You learn from your mistakes and gain 100 experience points",
+                    player.HubGuid);
+
+                var xp = new Experience();
+                player.Experience += 100;
+
+                if (getSkill != null) getSkill.Points += Helpers.Rand(1, 10);
 
                 Score.ReturnScoreUI(player);
 
-               
+
+                xp.GainLevel(player);
+
+
             }
+        }
 
 
         }
