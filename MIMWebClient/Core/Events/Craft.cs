@@ -392,7 +392,7 @@ namespace MIMWebClient.Core.Events
                         getSkill.Points += Helpers.Rand(1, 10);
 
 
-                        HubContext.Instance.SendToClient("<p class='roomTitle'>You learn from your mistakes and gain 100 experience points.</p>",
+                        HubContext.Instance.SendToClient("<p class='roomExit'>You learn from your mistakes and gain 100 experience points.</p>",
                             player.HubGuid);
 
                         player.Experience += 100;
@@ -403,7 +403,7 @@ namespace MIMWebClient.Core.Events
                         if (string.IsNullOrEmpty(player.ChosenCraft) && getSkill.Points <= 99)
                         {
 
-                            HubContext.Instance.SendToClient("<p class='roomTitle'>You learn from your mistakes and gain 100 experience points.</p>",
+                            HubContext.Instance.SendToClient("<p class='roomExit'>You learn from your mistakes and gain 100 experience points.</p>",
                                 player.HubGuid);
 
                           player.Experience += 100;
@@ -423,7 +423,7 @@ namespace MIMWebClient.Core.Events
                         }
                         else if (getSkill.Points <= 99)
                         {
-                            HubContext.Instance.SendToClient("<p class='roomTitle'>You learn from your mistakes and gain 100 experience points.</p>",
+                            HubContext.Instance.SendToClient("<p class='roomExit'>You learn from your mistakes and gain 100 experience points.</p>",
                                 player.HubGuid);
 
                             player.Experience += 100;
