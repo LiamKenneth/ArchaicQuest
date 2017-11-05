@@ -212,6 +212,7 @@ namespace MIMWebClient.Core.Item
         /// player can find item
         /// </summary>
         public int ForageRank { get; set; } = 1;
+        public bool infinite { get; internal set; }
     }
 }
 

@@ -1447,6 +1447,7 @@ namespace MIMWebClient.Core.World.Anker
             var beer = new Item.Item
             {
                 name = "Light Beer",
+                infinite = true,
                 type = Item.Item.ItemType.Drink,
                 Gold = 3,
                 description = new Description
