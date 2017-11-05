@@ -5,6 +5,7 @@ using System.Web;
 using MIMWebClient.Core.Item;
 using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.Player;
+using MIMWebClient.Core.Player.Skills;
 using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Arms;
 using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Body;
 using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Feet;
@@ -162,10 +163,10 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                     new Quest()
                     {
                         AlreadyOnQuestMessage = "Have you killed all the rabbits yet?",
-                        Description = "Kill all 4 of the rabbits eating the crops.",
+                        Description = "Kill 6 of the rabbits eating the crops.",
                         Id = 1,
                         Name = "Help Farmer O'neil with with his rabbit problem",
-                        QuestKills = 4,
+                        QuestKills = 6,
                         QuestGiver =  "Farmer O'neil",
                         QuestKill = rabbit.SmallRabbit(),
                         Type = Quest.QuestType.Kill,
@@ -173,7 +174,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                         RewardXp = 1500,
                         RewardDialog = new DialogTree()
                         {
-                            Message = "Thank you so much $playerName. Here is your fishing rod"
+                            Message = "Thank you so much $playerName. Here is your fishing rod. To fish go near water and fish, when you see the bait go under the water reel the fish in. Good luck!"
                         },
                         Completed = false,
                         RewardItem = new  Item.Item()
@@ -188,7 +189,8 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                                 
                             }
                             
-                        }
+                        },
+                        RewardSkill = Fish.FishingAb()
                     }
                 }
 

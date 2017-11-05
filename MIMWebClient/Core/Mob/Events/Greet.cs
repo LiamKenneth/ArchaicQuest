@@ -95,11 +95,19 @@ namespace MIMWebClient.Core.Mob.Events
 
                     HubContext.Instance.SendToClient("<span class='sayColor'>" + npc.Name + " says to you \"" +
                                                      qlog.RewardDialog.Message.Replace("$playerName", player.Name) +
-                                                     "\"</span>"
-                        , player.HubGuid);
+                                                     "\"</span>", player.HubGuid);
 
                     player.Inventory.Add(qlog.RewardItem);
 
+                    if (qlog.RewardSkill != null)
+                    {
+                        player.Skills.Add(qlog.RewardSkill);
+
+                        HubContext.Instance.SendToClient(
+                            $"<p class='roomExits'>You have learnt {qlog.RewardSkill.Name}!</p>", player.HubGuid);
+
+
+                    }
 
                     player.Experience += qlog.RewardXp;
 

@@ -108,8 +108,12 @@ namespace MIMWebClient.Core.Mob.Events
                                 }
                             }
 
+                            if (!itemToBuy.infinite)
+                            {
+                                mob.itemsToSell.Remove(itemToBuy);
+                            }
                          
-                            mob.itemsToSell.Remove(itemToBuy);
+                         
 
                             foreach (var item in mob.itemsToSell.Where(x => x.name.Equals(itemToBuy.name)))
                             {

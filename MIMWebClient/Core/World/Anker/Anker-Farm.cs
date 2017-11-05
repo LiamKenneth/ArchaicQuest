@@ -1343,7 +1343,7 @@ namespace MIMWebClient.Core.World.Anker
                 region = "Anker",
                 area = "Anker Farm",
                 areaId = 19,
-                title = "The palus river",
+                title = "The Hermit's home",
                 terrain = Room.Terrain.Water,
                 description = "<p>Description to come</p>",
                 Emotes = new List<string>()

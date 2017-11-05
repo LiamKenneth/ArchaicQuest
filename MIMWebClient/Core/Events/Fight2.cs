@@ -498,7 +498,7 @@ namespace MIMWebClient.Core.Events
                 return null;
             }
 
-            var weapon = attacker.Inventory.FirstOrDefault(x => x.name.Equals(wielded) && x.location.Equals(Item.ItemLocation.Wield));
+            var weapon = attacker.Inventory.FirstOrDefault(x => x.name.ToLower().Equals(wielded.ToLower()) && x.eqSlot.Equals(Item.EqSlot.Wielded));
 
             return weapon;
         }

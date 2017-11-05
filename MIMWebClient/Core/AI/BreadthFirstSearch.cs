@@ -29,11 +29,11 @@ namespace MIMWebClient.Core.AI
 
             if (string.IsNullOrEmpty(area) || string.IsNullOrEmpty(region))
             {
-                  startingLoc = AreaList.FirstOrDefault(x => x.areaId == 0);
+                  startingLoc = Areas.ListOfRooms().FirstOrDefault(x => x.areaId == 0);
             }
             else
             {
-                AreaList = AreaList.Where(x => x.area == area && x.region == region).ToList();
+                AreaList = Areas.ListOfRooms().Where(x => x.area == area && x.region == region).ToList();
                 startingLoc = AreaList.FirstOrDefault(x => x.areaId == 0);
 
                

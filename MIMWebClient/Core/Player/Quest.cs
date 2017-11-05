@@ -71,7 +71,8 @@ namespace MIMWebClient.Core.Player
         public int RewardGold { get; set; }
         public int RewardXp { get; set; }
         public Item.Item RewardItem { get; set; }
-        public DialogTree RewardDialog { get; set; }
+        public Skill RewardSkill { get; set; } = null;
+        public DialogTree RewardDialog { get; set; } 
         public string AlreadyOnQuestMessage { get; set; }
         public string QuestHint { get; set; }
         public string QuestTrigger { get; set; }

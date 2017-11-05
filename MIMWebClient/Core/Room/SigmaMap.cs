@@ -98,9 +98,9 @@ namespace MIMWebClient.Core.Room
                      
                 };
 
-                var room = Areas.ListOfRooms().FirstOrDefault(z => z.areaId == node.areaId);
+                var room = list.FirstOrDefault(z => z.areaId == node.areaId);
 
-                if (room.type == Room.RoomType.Shop)
+                if (room.needsBoat)
                 {
                     mapNode.color = "#446CB3";
                 }
@@ -122,7 +122,12 @@ namespace MIMWebClient.Core.Room
                       
                     };
 
-                   edges.Add(mapEdge);
+                    if (!edges.Contains(mapEdge))
+                    {
+                        edges.Add(mapEdge);
+                    }
+
+                 
                 }
             }
 
@@ -135,11 +140,12 @@ namespace MIMWebClient.Core.Room
 
             var brokenEdges = new List<string>();
 
-            foreach (var e in edges)
+            foreach (var e in edges.ToList())
             {
                 if (nodes.FirstOrDefault(x => x.id == e.target) == null)
                 {
                     brokenEdges.Add(e.id);
+                    edges.Remove(e);
                 }
               
             }
