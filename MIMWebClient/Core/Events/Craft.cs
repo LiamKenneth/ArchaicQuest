@@ -300,9 +300,9 @@ namespace MIMWebClient.Core.Events
             //add skill check here
             var getSkill = player.Skills.FirstOrDefault(x => x.Alias.Equals(craftItem.CraftCommand.ToString()));
 
-            var successChance = Helpers.Rand(1, 100);
+            var successChance = ShowSkills.CraftSuccess(getSkill.Points);
 
-            if (player.Wisdom >= successChance)
+            if (getSkill.Points >= successChance)
             {
                 //success
                 if (player.ActiveSkill != null)
@@ -392,7 +392,7 @@ namespace MIMWebClient.Core.Events
                         getSkill.Points += Helpers.Rand(1, 10);
 
 
-                        HubContext.Instance.SendToClient("You learn from your mistakes and gain 100 experience points",
+                        HubContext.Instance.SendToClient("<p class='roomTitle'>You learn from your mistakes and gain 100 experience points.</p>",
                             player.HubGuid);
 
                         player.Experience += 100;
@@ -403,18 +403,39 @@ namespace MIMWebClient.Core.Events
                         if (string.IsNullOrEmpty(player.ChosenCraft) && getSkill.Points <= 99)
                         {
 
-                            HubContext.Instance.SendToClient("You learn from your mistakes and gain 100 experience points",
+                            HubContext.Instance.SendToClient("<p class='roomTitle'>You learn from your mistakes and gain 100 experience points.</p>",
                                 player.HubGuid);
 
                           player.Experience += 100;
 
-                            getSkill.Points += Helpers.Rand(1, 10);
-                        }
-                        else
-                        {
 
-                            HubContext.Instance.SendToClient(ShowSkills.checkRank(getSkill.Points, player),
+                            getSkill.Points +=  Helpers.Rand(1, 10);
+
+                            if (getSkill.Points > 99)
+                            {
+                                var rankWarning = ShowSkills.checkRank(getSkill.Points, player);
+                                HubContext.Instance.SendToClient(rankWarning,
+                                    player.HubGuid);
+
+                                getSkill.Points = 99;
+                            }
+
+                        }
+                        else if (getSkill.Points <= 99)
+                        {
+                            HubContext.Instance.SendToClient("<p class='roomTitle'>You learn from your mistakes and gain 100 experience points.</p>",
                                 player.HubGuid);
+
+                            player.Experience += 100;
+
+
+                            getSkill.Points += Helpers.Rand(1, 10);
+
+                            if (getSkill.Points > 99)
+                            {
+                              
+                                getSkill.Points = 99;
+                            }
                         }
 
                     }

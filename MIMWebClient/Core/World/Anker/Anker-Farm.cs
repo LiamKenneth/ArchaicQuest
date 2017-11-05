@@ -1495,7 +1495,7 @@ namespace MIMWebClient.Core.World.Anker
                 area = "Anker Farm",
                 areaId = 12,
                 title = "Saw mill",
-                description = "<p> A large water wheel is on the side of an open building, with a set of gears inside moving around powering a long saw blade that slowly moves up and down. The river rushes by to the south pushing the wheel, it creeking as it turns and dumping the water from its paddles back into the river in a steady stream.</p>",
+                description = "<p> A large water wheel is on the side of an open building, with a set of gears inside moving around powering a long saw blade that slowly moves up and down. The river rushes by to the south pushing the wheel, it creeking as it turns and dumping the water from its paddles back into the river in a steady stream. On the inside of the open building is a chopping block with a pile of wood stacked up.</p>",
 
                 //Defaults
                 exits = new List<Exit>(),

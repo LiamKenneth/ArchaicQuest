@@ -141,10 +141,58 @@ namespace MIMWebClient.Core.Events
             return $"error no rank";
         }
 
+        public static int CraftSuccess(int percentage)
+        {
+
+            if (percentage == 0 || percentage <= 99)
+            {
+                return Helpers.Rand(1, 110);
+            }
+            else if (percentage == 100 || percentage <= 199)
+            {
+                return Helpers.Rand(100, 210);
+            }
+            else if (percentage == 200 || percentage <= 299)
+            {
+                return Helpers.Rand(200, 310);
+            }
+            else if (percentage == 300 || percentage <= 399)
+            {
+                return Helpers.Rand(300, 410);
+            }
+            else if (percentage == 400 || percentage <= 499)
+            {
+                return Helpers.Rand(400, 510);
+            }
+            else if (percentage == 500 || percentage <= 599)
+            {
+                return Helpers.Rand(500, 610);
+            }
+            else if (percentage == 600 || percentage <= 699)
+            {
+                return Helpers.Rand(600, 710);
+            }
+            else if (percentage == 700 || percentage <= 799)
+            {
+                return Helpers.Rand(700, 810);
+            }
+            else if (percentage == 800 || percentage <= 899)
+            {
+                return Helpers.Rand(800, 910);
+            }
+            else if (percentage == 900 || percentage <= 999)
+            {
+                return Helpers.Rand(900, 1005);
+            }
+       
+                return 1; //grandmaster 100% success
+         
+        }
+
         public static string checkRank(int percentage, Player player)
         {
 
-            if (string.IsNullOrEmpty(player.ChosenCraft) && percentage == 99)
+            if (string.IsNullOrEmpty(player.ChosenCraft) && percentage >= 99)
             {
                 return "To increase your craft rank you need to commit to a craft.";
             }

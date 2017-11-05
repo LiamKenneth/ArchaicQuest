@@ -439,11 +439,6 @@ namespace MIMWebClient.Hubs
                 Score.UpdateUiQlog(player);
                 Score.UpdateDescription(player, player.Description);
 
-                player.CraftingRecipes.Add(Crafting.FishingRod().Name);
-                player.CraftingRecipes.Add(Crafting.CampFire().Name);
-                player.CraftingRecipes.Add(Crafting.PineLog().Name);
-                player.CraftingRecipes.Add(Smithing.Lantern().Name);
-
                 var discordToSay = player.Name + " has entered the realm.";
 
                 var discordBot = new HomeController();
