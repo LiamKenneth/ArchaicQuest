@@ -302,10 +302,12 @@
     <Compile Include="Core\Player\Skills\Cook.cs" />
     <Compile Include="Core\Player\Skills\Brewing.cs" />
     <Compile Include="Core\Player\Skills\Forge.cs" />
+    <Compile Include="Core\Player\Skills\Swim.cs" />
     <Compile Include="Core\Player\Skills\Knitting.cs" />
     <Compile Include="Core\Player\Skills\Chopping.cs" />
     <Compile Include="Core\Player\Skills\Forage.cs" />
     <Compile Include="Core\Player\Skills\Fish.cs" />
+    <Compile Include="Core\World\Anker\Mobs\Horik.cs" />
     <Compile Include="Core\World\Crafting\Alchemy\Alchemy.cs" />
     <Compile Include="Core\World\Anker\Mobs\FarmerOneil.cs" />
     <Compile Include="Core\World\Crafting\Carve\Carve.cs" />

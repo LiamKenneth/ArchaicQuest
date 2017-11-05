@@ -32,7 +32,7 @@ namespace MIMWebClient.Core.Player.Skills
                     CoolDown = 0,
                     Delay = 0,
                     SkillType = Type.Crafting,
-                    Points = 999,
+                    Points = 0,
                     LevelObtained = 1,
                     Proficiency = 1,
                     MaxProficiency = 95,

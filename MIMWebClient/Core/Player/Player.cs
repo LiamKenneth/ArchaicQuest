@@ -494,7 +494,8 @@ namespace MIMWebClient.Core.PlayerSetup
                 Crafting.CraftingAb(),
                 Brewing.BrewingAb(),
                 Cook.CookAb(),
-                Knitting.KnittingAb()
+                Knitting.KnittingAb(),
+                Swim.SwimAb()
             };
 
 
@@ -608,6 +609,62 @@ namespace MIMWebClient.Core.PlayerSetup
                 player.Status = Player.PlayerStatus.Standing;
             }
         }
+
+        public static void UpdateMoves(Player player, int points, bool increment = true)
+        {
+            if (increment)
+            {
+                player.MovePoints += points;
+
+
+                if (player.MovePoints >= player.MaxMovePoints)
+                {
+                    player.MovePoints = player.MaxMovePoints;
+                }
+            }
+            else
+            {
+                player.MovePoints -= points;
+
+
+                if (player.MovePoints <= 0)
+                {
+                    player.MovePoints = 0;
+                }
+            }
+           
+
+            Score.ReturnScoreUI(player);
+        }
+
+        public static void UpdateHitPoints(Player player, int points, bool increment = true)
+        {
+            if (increment)
+            {
+                player.HitPoints += points;
+
+
+                if (player.HitPoints >= player.MaxHitPoints)
+                {
+                    player.HitPoints = player.MaxHitPoints;
+                }
+            }
+            else
+            {
+                player.HitPoints -= points;
+
+
+                if (player.HitPoints <= 0)
+                {
+                    player.HitPoints = 0;
+                    
+                }
+            }
+
+
+            Score.ReturnScoreUI(player);
+        }
+
 
 
         public static void MobAttack(Player player, Player mob, Room.Room room)

@@ -999,6 +999,7 @@ namespace MIMWebClient.Core.World.Anker
                 players = new List<Player>(),
                 fighting = new List<string>(),
                 clean = true,
+                needsBoat = true,
 
 
             };
@@ -1068,6 +1069,7 @@ namespace MIMWebClient.Core.World.Anker
                 players = new List<Player>(),
                 fighting = new List<string>(),
                 clean = true,
+                needsBoat = true,
 
 
             };
@@ -1136,6 +1138,7 @@ namespace MIMWebClient.Core.World.Anker
                 players = new List<Player>(),
                 fighting = new List<string>(),
                 clean = true,
+                needsBoat = true,
 
 
             };
@@ -1218,6 +1221,7 @@ namespace MIMWebClient.Core.World.Anker
                 players = new List<Player>(),
                 fighting = new List<string>(),
                 clean = true,
+                needsBoat = true,
 
 
             };
@@ -1287,6 +1291,7 @@ namespace MIMWebClient.Core.World.Anker
                 players = new List<Player>(),
                 fighting = new List<string>(),
                 clean = true,
+                needsBoat = true,
 
 
             };

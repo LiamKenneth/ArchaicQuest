@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MIMWebClient.Core.Player.Skills;
 using MIMWebClient.Core.World.Tutorial;
 using MIMWebClient.Hubs;
 
@@ -37,6 +38,12 @@ namespace MIMWebClient.Core.Room
                         movement = "floats in ";
                     }
 
+                    if ((player.Effects?.FirstOrDefault(
+                             x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) == null && room.needsBoat))
+                    {
+                        movement = "swims in";
+                    }
+
                     direction = oppositeDirection(direction, false);
                     string enterText = name + " " + movement + direction;
 
@@ -56,6 +63,15 @@ namespace MIMWebClient.Core.Room
                                         x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) != null)
                                 {
                                     enterText = "You float in " + direction;
+                                }
+                                else if ((player.Effects?.FirstOrDefault(
+                                              x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) ==
+                                          null && room.needsBoat))
+                                {
+                                    enterText = "You swim in " + direction;
+
+                                    Swim.SwimSuccess(player,
+                                        player.Skills.FirstOrDefault(x => x.Name.Equals("Swim")).Proficiency);
                                 }
                                 else
                                 {
@@ -445,6 +461,7 @@ namespace MIMWebClient.Core.Room
 
                         if (getNewRoom != null)
                         {
+
                             //add player to new room
                             PlayerManager.AddPlayerToRoom(getNewRoom, player);
 
