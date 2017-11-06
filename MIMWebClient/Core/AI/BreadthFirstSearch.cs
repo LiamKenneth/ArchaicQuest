@@ -29,12 +29,12 @@ namespace MIMWebClient.Core.AI
 
             if (string.IsNullOrEmpty(area) || string.IsNullOrEmpty(region))
             {
-                  startingLoc = Areas.ListOfRooms().FirstOrDefault(x => x.areaId == 0);
+                  startingLoc = Areas.ListOfRooms().FirstOrDefault(x => x.areaId == 0 && x.area == area);
             }
             else
             {
                 AreaList = Areas.ListOfRooms().Where(x => x.area == area && x.region == region).ToList();
-                startingLoc = AreaList.FirstOrDefault(x => x.areaId == 0);
+                startingLoc = AreaList.FirstOrDefault(x => x.areaId == 0 && x.area == area);
 
                
             }
@@ -65,7 +65,7 @@ namespace MIMWebClient.Core.AI
                 {
                     var getExitToNeighbour = GetNeighbourExit(getRoom, getNeighbour);
 
-                    if (getExitToNeighbour != null)
+                    if (getExitToNeighbour != null && getExitToNeighbour.area == getRoom.area)
                     {
                         SetCoords(getRoom, GetNewCoord(getNeighbour.coords, getExitToNeighbour.name, true));
                     }
@@ -97,7 +97,7 @@ namespace MIMWebClient.Core.AI
         {
             foreach (var connectingNode in getRoom.exits)
             {
-                var connectedRoom = CompletedRooms.FirstOrDefault(x => x.areaId.Equals(connectingNode.areaId));
+                var connectedRoom = CompletedRooms.FirstOrDefault(x => x.areaId.Equals(connectingNode.areaId) && x.area.Equals(connectingNode.area));
                 if (connectedRoom != null)
                 {
                     return connectedRoom;
@@ -116,7 +116,7 @@ namespace MIMWebClient.Core.AI
         /// <returns>Returns the Exit from getRoom that connects it to it's neighbour</returns>
         public Exit GetNeighbourExit(Room.Room getRoom, Room.Room neighbour)
         {
-            return getRoom.exits.FirstOrDefault(x => x.areaId == neighbour.areaId);
+            return getRoom.exits.FirstOrDefault(x => x.areaId == neighbour.areaId && x.area == neighbour.area);
 
         }
         /// <summary>

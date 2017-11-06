@@ -1522,7 +1522,10 @@ namespace MIMWebClient.Core.World.Anker
                     
                     
                 },
-                mobs = new List<Player>(),
+                mobs = new List<Player>()
+                {
+                    Horik.HorikNpc()
+                },
                 terrain = Room.Terrain.Field,
                 keywords = new List<RoomObject>()
                 {

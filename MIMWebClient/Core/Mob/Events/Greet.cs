@@ -120,7 +120,7 @@ namespace MIMWebClient.Core.Mob.Events
 
                   
                     qlog.RewardCollected = true;
-
+                    Score.UpdateUiQlog(player);
                     Save.SavePlayer(player);
                 }
             }

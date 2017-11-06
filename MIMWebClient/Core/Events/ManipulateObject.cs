@@ -1143,7 +1143,7 @@ namespace MIMWebClient.Core.Events
 
                 foreach (var quest in player.QuestLog)
                 {
-                    if (!quest.Completed && quest.Type == Quest.QuestType.FindMob)
+                    if (!quest.Completed && quest.Type == Quest.QuestType.FindItem)
                     {
                         //Find quest requires player to give item to the mob.
 
@@ -1158,6 +1158,42 @@ namespace MIMWebClient.Core.Events
                                     mobQuest.RewardDialog.Message.Replace("$playerName", player.Name) + "\"</span>",
                                     player.HubGuid,
                                     null, true);
+
+
+                            var rewardItem = quest?.RewardItem;
+
+                            if (rewardItem != null)
+                            {
+                                rewardItem.location = Item.ItemLocation.Inventory;
+
+                                player.Inventory.Add(rewardItem);
+                            }
+
+
+
+                            if (quest.RewardSkill != null)
+                            {
+                                player.Skills.Add(quest.RewardSkill);
+
+                                HubContext.Instance.SendToClient(
+                                    $"<p class='roomExits'>You have learnt {quest.RewardSkill.Name}!</p>", player.HubGuid);
+
+
+                            }
+
+
+                            HubContext.Instance.SendToClient("You gain " + quest.RewardXp + " experience Points", player.HubGuid);
+                            HubContext.Instance.SendToClient("You gain " + quest.RewardGold + " gold pieces", player.HubGuid);
+
+                            player.Experience += quest.RewardXp;
+                            player.Gold = quest.RewardGold;
+
+                            //check if player level
+                            var xp = new Experience();
+                            xp.GainLevel(player);
+                            //update ui
+                            Score.UpdateUiQlog(player);
+                            Score.ReturnScoreUI(player);
 
                             //award player
                         }

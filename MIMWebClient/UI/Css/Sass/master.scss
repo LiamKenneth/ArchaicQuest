@@ -364,7 +364,7 @@ pre {
     color: magenta;
 }
 
-li.Active:before, li.Shop:before, li.Guild:before, li.Room:before, li.Stairs:before {
+li.Active:before, li.Shop:before, li.River:before, li.Guild:before, li.Room:before, li.Stairs:before {
     display: inline-block;
     background: #2ECC71;
     width: 10px;
@@ -374,8 +374,12 @@ li.Active:before, li.Shop:before, li.Guild:before, li.Room:before, li.Stairs:bef
     margin-right: 10px;
 }
 
-li.Shop:before {
+li.River:before {
     background: #446CB3;
+}
+
+li.Shop:before {
+    background: #fed967;
 }
 
 li.Guild:before {

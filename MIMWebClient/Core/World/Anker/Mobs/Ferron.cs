@@ -65,9 +65,10 @@ namespace MIMWebClient.Core.World.Anker.Mobs
 
 
             };
- 
+
             #endregion
 
+            #region 4sale
             for (int i = 0; i < 20; i++)
             {
 
@@ -98,6 +99,16 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 ferron.itemsToSell.Add(FullPlateBoots.BronzeBoots());
                 ferron.itemsToSell.Add(Materials.CopperOre());
             }
+
+            #endregion
+
+
+            #region Dialogue
+
+            
+
+            #endregion
+
 
 
             return ferron;

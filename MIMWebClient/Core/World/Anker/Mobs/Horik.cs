@@ -5,6 +5,7 @@ using System.Web;
 using MIMWebClient.Core.Item;
 using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.Player;
+using MIMWebClient.Core.Player.Skills;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Feet;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Padded.Arms;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Padded.Body;
@@ -35,7 +36,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
         {
 
 
-           return new PlayerSetup.Player
+            var horik = new PlayerSetup.Player
             {
                 NPCId = Guid.NewGuid(),
                 Name = "Horik",
@@ -59,9 +60,110 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 Greet = true,
                 Shop = false,
                 GreetMessage = "Hello there!",
-                DialogueTree = new List<DialogTree>(),
+                DialogueTree = new List<DialogTree>()
+                {
+                    new DialogTree()
+                    {
+
+                        Id = "Horik1",
+                        Message = "Hi there, do you mind helping me get my Axe repaired?",
+                        DontShowIfOnQuest = "Repair Horik's Axe",
+                        PossibleResponse =  new List<Responses>()
+                        {
+                            new Responses()
+                            {
+                                QuestionId = "Horik1a",
+                                AnswerId = "Horik1a",
+                                Response = "Yes, I can help you."
+
+
+                            },
+                            new Responses()
+                            {
+                                QuestionId = "Horik1b",
+                                AnswerId = "Horik1b",
+                                Response = "Sorry not right now."
+                            }
+
+
+                        },
+
+                    },
+                    new DialogTree()
+                    {
+
+                        Id = "Horik1a",
+                        Message = "Thanks, take this broken axe and speak to Ferron he will know what to do. When you come back I can show you how to chop wood as a reward.",
+                        MatchPhrase = "Yes, I can help you.",
+                        PossibleResponse =  new List<Responses>(),
+                        GivePrerequisiteItem = true,
+                        GiveQuest = true,
+                        QuestId =  1,
+                        
+
+
+                    },
+                     new DialogTree()
+                    {
+
+                        Id = "Horik1b",
+                        Message = "No worries, come back when you have time.",
+                          MatchPhrase = "Sorry not right now.",
+                        PossibleResponse =  new List<Responses>()
+
+
+                    },
+                    new DialogTree()
+                    {
+                    Id = "Horik1c",
+                    Message = "Have you repaired my axe yet?",
+                   ShowIfOnQuest = "Repair Horik's Axe",
+                    PossibleResponse = new List<Responses>(),
+
+}
+
+                },
                 Dialogue = new List<Responses>(),
-                Quest = new List<Quest>(),
+                Quest = new List<Quest>()
+                {
+                                 new Quest()
+                    {
+                        AlreadyOnQuestMessage = "Do you have the axe just give it to me please.",
+                        Description = "Repair Horik's Axe",
+                        Id = 1,
+                        Name = "Repair Horik's Axe",
+                        QuestGiver =  "Horik",
+                        Type = Quest.QuestType.FindItem,
+                        QuestItem = new List<Item.Item>() { AxeBasic.IronHatchet() },
+                        RewardGold = 100,
+                        RewardXp = 1500,
+                        RewardDialog = new DialogTree()
+                        {
+                            Message = "Thank you so much $playerName. To chop wood, just wield an axe and chop the wood. Here you can actually keep the axe, I found my lucky axe while you were out. Good luck!"
+                        },
+                        PrerequisiteItem = new List<Item.Item>()
+                        {
+                            new Item.Item()
+                            {
+                                name = "Broken Axe",
+                                location = Item.Item.ItemLocation.Inventory,
+                                QuestItem = true,
+                                eqSlot = Item.Item.EqSlot.Held,
+                                slot = Item.Item.EqSlot.Held,
+                                description = new Description()
+                                {
+                                    look =  "The shaft of this axe has broken in half and the blade has many chips along it's once sharp edge."
+                                },
+                                equipable = true,
+                                weaponType = Item.Item.WeaponType.Axe
+                                
+                            }
+                        },
+                        Completed = false,
+                        RewardItem =  AxeBasic.IronHatchet(),
+                        RewardSkill = Chopping.ChoppingAb()
+                    }
+                },
                 Region = "Anker",
                 Area = "Anker",
                 AreaId = 28,
@@ -72,7 +174,17 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                     Area = "Anker Farm",
                     AreaId = 12
                 }
-           };
+            };
+
+
+
+            #region Dialogue
+
+
+
+            #endregion
+
+            return horik;
 
         }
     }

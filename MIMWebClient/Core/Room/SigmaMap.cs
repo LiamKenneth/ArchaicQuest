@@ -55,26 +55,13 @@ namespace MIMWebClient.Core.Room
 
             var roomSetUp = new BreadthFirstSearch();
 
-        var list = roomSetUp.AssignCoords("Anker Farm", "Anker");
+        var list = roomSetUp.AssignCoords("Anker", "Anker");
 
             foreach (var node in list)
             {
 
-                var x = "";
                 var y = "";
 
-                if (node.coords.X == 0)
-                {
-                    x = "0";
-                }
-                else if (node.coords.X > 0)
-                {
-                    x = (node.coords.X * -1).ToString();
-                }
-                else if(node.coords.X < 0)
-                {
-                    x = Math.Abs(node.coords.X).ToString();
-                }
 
                 if (node.coords.Y == 0)
                 {
@@ -98,13 +85,13 @@ namespace MIMWebClient.Core.Room
                      
                 };
 
-                var room = list.FirstOrDefault(z => z.areaId == node.areaId);
+                var room = list.Distinct().FirstOrDefault(z => z.areaId == node.areaId);
 
                 if (room.needsBoat)
                 {
                     mapNode.color = "#446CB3";
                 }
-                else if (room.type == Room.RoomType.Guild)
+                else if (room.type == Room.RoomType.Shop)
                 {
                     mapNode.color = "#fed967";
                 }
@@ -113,6 +100,7 @@ namespace MIMWebClient.Core.Room
 
                 foreach (var exit in node.exits)
                 {
+ 
                 
                         var mapEdge = new SigmaMapEdge()
                     {
