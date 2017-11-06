@@ -95,15 +95,7 @@ namespace MIMWebClient.Core.Events
                     //check branch to show responses from
                     var speak = mob.DialogueTree.FirstOrDefault(x => x.Message.Equals(response));
 
-                    //if (speak?.PossibleResponse.Count > 0)
-                    //{
-                    //    HubContext.Instance.SendToClient("<span class='sayColor'>" +
-                    //        mob.Name + " says to you \"anything else?\"</span>", playerId);
-                    //}
-
-
-
-
+   
                     foreach (var respond in speak.PossibleResponse)
                     {
 
@@ -136,8 +128,16 @@ namespace MIMWebClient.Core.Events
 
                             if (GivePrerequisiteItem)
                             {
-                                //  Command.ParseCommand("Give 5 gold " + player.Name, mob, room);
-                                player.Gold += 5;
+                                HubContext.Instance.SendToClient(quest.PrerequisiteItemEmote, playerId);
+
+                                foreach (var qitem in quest.PrerequisiteItem)
+                                {
+                                    HubContext.Instance.SendToClient(mob.Name + " gives you " + Helpers.ReturnName(null, null, qitem.name), playerId);
+
+                                    player.Inventory.Add(qitem);
+                                }
+
+                                Score.UpdateUiInventory(player);
 
                                 foreach (var character in room.players)
                                 {
@@ -150,8 +150,6 @@ namespace MIMWebClient.Core.Events
                                     }
                                 }
 
-
-                                HubContext.Instance.SendToClient("You get 5 gold from " + mob.Name, playerId);
                             }
                         }
 
