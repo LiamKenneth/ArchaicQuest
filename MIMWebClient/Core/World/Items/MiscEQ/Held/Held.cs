@@ -10,12 +10,13 @@ namespace MIMWebClient.Core.World.Items.MiscEQ.Held
     {
         public static Item.Item TatteredRag()
         {
-            var TatteredRag = new Item.Item
+            return new Item.Item
             {
                 name = "Tattered rag",
                 Weight = 1,
                 equipable = false,
                 eqSlot = Item.Item.EqSlot.Held,
+                slot = Item.Item.EqSlot.Held,
                 location = Item.Item.ItemLocation.Inventory,
                 description = new Description()
                 {
@@ -24,25 +25,46 @@ namespace MIMWebClient.Core.World.Items.MiscEQ.Held
                 }
             };
 
-            return TatteredRag;
         }
 
-        public static Item.Item ScrapMetal()
+        public static Item.Item RepairHammer()
         {
-            var ScrapMetal = new Item.Item
+
+            return new Item.Item
+            {
+                name = "Repair Hammer",
+                Weight = 1,
+                type = Item.Item.ItemType.Repair,
+                equipable = true,
+                eqSlot = Item.Item.EqSlot.Held,
+                slot = Item.Item.EqSlot.Held,
+                location = Item.Item.ItemLocation.Inventory,
+                description = new Description()
+                {
+                    look = "this large square hammer is used to repair wepons or armour that have been damage"
+                },
+                Uses = 5
+                
+                
+
+            };
+        }
+
+    public static Item.Item ScrapMetal()
+        {
+            return new Item.Item
             {
                 name = "Scrap Metal",
                 Weight = 1,
                 equipable = false,
                 eqSlot = Item.Item.EqSlot.Held,
+                slot = Item.Item.EqSlot.Held,
                 location = Item.Item.ItemLocation.Inventory,
                 description = new Description()
                 {
                     look = "A piece of scrap metal."
                 }
             };
-
-            return ScrapMetal;
         }
     }
 }

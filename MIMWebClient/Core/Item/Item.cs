@@ -42,7 +42,8 @@ namespace MIMWebClient.Core.Item
             Gold,
             Silver,
             Copper,
-            Forage       
+            Forage,
+            Repair
         }
 
         public enum ChoppingBlockType
@@ -214,6 +215,10 @@ namespace MIMWebClient.Core.Item
         /// player can find item
         /// </summary>
         public int ForageRank { get; set; } = 1;
+        /// <summary>
+        /// Used for wands, starves and repai hammers to determine how many uses they have left
+        /// </summary>
+        public int Uses { get; set; }
         public bool infinite { get; internal set; }
     }
 }

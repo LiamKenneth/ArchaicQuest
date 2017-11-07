@@ -612,7 +612,7 @@ namespace MIMWebClient.Core.Events
                     else
                     {
                         item.name = "broken " + item.name;
-                        item.Condition = 0;
+                        item.Condition = 70;
                         item.location = Item.ItemLocation.Inventory;
                         Attacker.Equipment.Wielded = "Nothing";
 

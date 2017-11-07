@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.Player;
+using MIMWebClient.Core.Player.Skills;
 using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Arms;
 using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Body;
 using MIMWebClient.Core.World.Items.Armour.HeavyArmour.FullPlate.Feet;
@@ -59,9 +60,45 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                 itemsToSell = new List<Item.Item>(),
                 sellerMessage = "Why of course, here is what I can sell you.",
                 GreetMessage = "Hello there!",
-                DialogueTree = new List<DialogTree>(),
+                DialogueTree = new List<DialogTree>()
+                {
+                    new DialogTree()
+                    {
+
+                        Id = "Ferron1",
+                        Message = "Horik Broke his axe again! What has he done this time?",
+                        ShowIfOnQuest = "Repair Horik's Axe",
+                        PossibleResponse =  new List<Responses>()
+                        {
+                            new Responses()
+                            {
+                                QuestionId = "Ferron1a",
+                                AnswerId = "Ferron1a",
+                                Response = "Yes, this is the axe. Is it fixable?",
+                                DoEmote = "You show Ferron the broken axe."                              
+
+                            }
+
+                        },
+
+                    },
+                    new DialogTree()
+                    {
+
+                        Id = "Ferron1a",
+                        Message = "Ah, this is an easy fix.",
+                        MatchPhrase = "Yes, this is the axe. Is it fixable?",
+                        PossibleResponse =  new List<Responses>(),
+                        GiveItem = Items.MiscEQ.Held.Held.RepairHammer(),
+                        GiveItemEmote = "Ferron hands you a hammer. This is a repair hammer, hit the axe here, here and here says ferron jabbing his finger at the axe. <p> Now i've helped you, you can help me. I'm having issues with some of my raw material shipments. I suspect bandits. You should check back again soon incase one goes missing as I will need someone to try and track down these Bandit theieves.</p>" +
+                                        "<p>Hint: use repair axe to fix the broken axe. Then head back to Horick",
+                        GiveSkill = Repair.RepairAb()
+
+                    },
+
+                },
                 Dialogue = new List<Responses>(),
-                Quest = new List<Quest>()
+                
 
 
             };

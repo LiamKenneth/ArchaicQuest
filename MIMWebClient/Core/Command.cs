@@ -231,7 +231,8 @@ namespace MIMWebClient.Core
                 {"build", () => Craft.CraftItem(playerData, room, commandOptions, CraftType.Craft)},
                 {"show crafts", () => Craft.CraftList(playerData)},
                 {"craftlist", () => Craft.CraftList(playerData)},
-                {"set up camp", () => Camp.SetUpCamp(playerData, room)}, 
+                {"set up camp", () => Camp.SetUpCamp(playerData, room)},
+                {"repair", () => Events.Repair.RepairItem(playerData, room, commandOptions)}, 
 
                 //admin
                 {"/debug", () => PlayerSetup.Player.DebugPlayer(playerData) },

@@ -24,6 +24,7 @@ namespace MIMWebClient.Core.Mob
         public bool ShowIfGood { get; set; } = false;
         public bool ShowIfNeutral { get; set; } = false;
         public string DontShowIfOnQuest { get; set; }
+        public string DoEmote { get; set; }
 
     }
 }

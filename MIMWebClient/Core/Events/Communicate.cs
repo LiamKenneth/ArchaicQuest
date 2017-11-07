@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MIMWebClient.Controllers;
+using MIMWebClient.Core.Player;
 using MIMWebClient.Core.World;
 
 namespace MIMWebClient.Core.Events
@@ -42,6 +43,10 @@ namespace MIMWebClient.Core.Events
             foreach (var mob in room.mobs)
             {
                 var response = string.Empty;
+                var responseEmote = string.Empty;
+                var responseGiveItemEmote = string.Empty;
+                Item.Item responseGiveItem = null;
+                Skill responseGiveSkill= null;
                 var hasQuest = false;
                 var questId = 0;
                 var GivePrerequisiteItem = false;
@@ -55,7 +60,8 @@ namespace MIMWebClient.Core.Events
                             if (message.Contains(keyword))
                             {
                                 response = dialogue.Response;
-
+                                responseEmote = dialogue.DoEmote;
+                                
                             }
                         }
 
@@ -72,7 +78,10 @@ namespace MIMWebClient.Core.Events
                         {
                             if (message.Equals(tree.MatchPhrase))
                             {
+                                responseGiveItem = tree.GiveItem;
+                                responseGiveItemEmote = tree.GiveItemEmote;
                                 response = tree.Message;
+                                responseGiveSkill = tree.GiveSkill;
                                 if (tree.GiveQuest != null) hasQuest = (bool)tree.GiveQuest;
                                 if (tree.GivePrerequisiteItem != null)
                                     GivePrerequisiteItem = (bool)tree.GivePrerequisiteItem;
@@ -86,11 +95,41 @@ namespace MIMWebClient.Core.Events
 
                 if (response != String.Empty)
                 {
+
+
+
                     Thread.Sleep(120); // hack, sometimes the responses calls before the questions??
 
                     HubContext.Instance.SendToClient("<span class='sayColor'>" + mob.Name + " says to you \"" + response.Replace("$playerName", player.Name) + "\"<span>", playerId);
 
                     Score.UpdateUIChannels(player, "<span class='sayColor'>" + mob.Name + " says to you \"" + response.Replace("$playerName", player.Name) + "\"<span>", "roomChannelF");
+
+
+
+                    if (!string.IsNullOrEmpty(responseEmote))
+                    {
+                        HubContext.Instance.SendToClient(player.Name + " " + responseEmote, playerId);
+                    }
+
+                    if (!string.IsNullOrEmpty(responseGiveItemEmote))
+                    {
+                        HubContext.Instance.SendToClient(responseGiveItemEmote, playerId);
+                    }
+
+                    if (responseGiveItem != null)
+                    {
+                        player.Inventory.Add(responseGiveItem);
+                        Score.UpdateUiInventory(player);
+                    }
+
+                    if (responseGiveSkill != null)
+                    {
+                        player.Skills.Add(responseGiveSkill);
+                        HubContext.Instance.SendToClient("You have learned " + responseGiveSkill.Name, playerId);
+
+                    }
+
+
 
                     //check branch to show responses from
                     var speak = mob.DialogueTree.FirstOrDefault(x => x.Message.Equals(response));
@@ -104,9 +143,6 @@ namespace MIMWebClient.Core.Events
                                respond.Response + "\",\"" + player.HubGuid + "\")'>[say, " + respond.Response +
                                "]</a>";
                         HubContext.Instance.AddNewMessageToPage(player.HubGuid, textChoice);
-
-
-
 
                     }
 

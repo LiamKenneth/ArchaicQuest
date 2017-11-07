@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using MIMWebClient.Core.Player;
 
 namespace MIMWebClient.Core.Mob
 {
@@ -16,6 +17,9 @@ namespace MIMWebClient.Core.Mob
         public string MatchPhrase { get; set; }
         public bool? GiveQuest { get; set; } = false;
         public bool? GivePrerequisiteItem { get; set; } = false;
+        public Item.Item GiveItem { get; set; }
+        public string GiveItemEmote { get; set; }
+        public Skill GiveSkill { get; set; }
         public List<Responses> PossibleResponse { get; set; }
         public bool? DoAction { get; set; } = false;
         public string ShowIfOnQuest { get; set; } = String.Empty;

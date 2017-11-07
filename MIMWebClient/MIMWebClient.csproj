@@ -249,6 +249,7 @@
     <Compile Include="Core\Events\Cooking.cs" />
     <Compile Include="Core\Events\Craft.cs" />
     <Compile Include="Core\Events\Foraging.cs" />
+    <Compile Include="Core\Events\Repair.cs" />
     <Compile Include="Core\Events\Harvest.cs" />
     <Compile Include="Core\Events\Fishing.cs" />
     <Compile Include="Core\ItemContainer.cs" />
@@ -302,6 +303,7 @@
     <Compile Include="Core\Player\Skills\Cook.cs" />
     <Compile Include="Core\Player\Skills\Brewing.cs" />
     <Compile Include="Core\Player\Skills\Forge.cs" />
+    <Compile Include="Core\Player\Skills\Repair.cs" />
     <Compile Include="Core\Player\Skills\Swim.cs" />
     <Compile Include="Core\Player\Skills\Knitting.cs" />
     <Compile Include="Core\Player\Skills\Chopping.cs" />
