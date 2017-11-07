@@ -27,13 +27,15 @@ namespace MIMWebClient.Core.Player.Skills
             {
                 var skill = new Skill
                 {
+                    
                     Name = "Short Blades",
                     CoolDown = 0,
                     Delay = 0,
                     LevelObtained = 1,
                     Passive = true,
                     UsableFromStatus = "Fighting",
-                    Syntax = "Passive command"
+                    Syntax = "Passive command",
+                    WeaponType = Item.Item.WeaponType.ShortBlades
                 };
 
 

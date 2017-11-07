@@ -151,6 +151,7 @@ namespace MIMWebClient.Core.Item
             Spear,
             Staff,
             LongBlades,
+            [Display(Name = "Short Blades")]
             ShortBlades,
             Whip,
             Bows,
@@ -190,6 +191,7 @@ namespace MIMWebClient.Core.Item
         public bool QuestItem { get; set; }
         public ArmourRating ArmorRating { get; set; }   
         public double Weight { get; set; }
+        public int Condition { get; set; } = Helpers.Rand(75, 100);
 
         public ChoppingBlockType ChoppingBlock { get; set; }
 

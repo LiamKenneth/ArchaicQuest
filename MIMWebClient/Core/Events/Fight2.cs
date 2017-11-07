@@ -474,7 +474,7 @@ namespace MIMWebClient.Core.Events
         public static int CalculateDamageReduction(Player attacker, Player defender, int damage)
         {
             int ArRating = ArmourRating(defender);
-            var armourReduction = ArRating / damage;
+            var armourReduction = ArRating / (double)damage;
 
             if (armourReduction > 4)
             {
@@ -585,6 +585,48 @@ namespace MIMWebClient.Core.Events
         public static int ArmourRating(Player defender)
         {
             return 1 + defender.ArmorRating;
+        }
+
+        public static void CheckWeaponCondition(Item item, Player Attacker)
+        {
+            var skillProf = Attacker.Skills.FirstOrDefault(x => x.WeaponType.Equals(item.weaponType));
+
+                if (skillProf != null)
+            {
+                var chanceOfdamage = Helpers.Rand(1, 105);
+
+                if (skillProf.Proficiency >= chanceOfdamage)
+                {
+                    item.Condition -= Helpers.Rand(1, 5);
+
+                    if (item.Condition > 0)
+                    {
+                        HubContext.Instance.SendToClient("Your weapon takes some damage.", Attacker.HubGuid);
+
+                        //add mesage aout skill going up and xp gained
+
+ 
+                        skillProf.Proficiency += 1;
+
+                    }
+                    else
+                    {
+                        item.name = "broken " + item.name;
+                        item.Condition = 0;
+                        item.location = Item.ItemLocation.Inventory;
+                        Attacker.Equipment.Wielded = "Nothing";
+
+                        HubContext.Instance.SendToClient("Your weapon breaks.", Attacker.HubGuid);
+
+                        Score.UpdateUiInventory(Attacker);
+                    }
+
+                
+
+                }
+            }
+
+
         }
 
         public static KeyValuePair<string, string> WeaponAttackName(Player attacker, Skill skillUsed)
@@ -748,6 +790,13 @@ namespace MIMWebClient.Core.Events
                             HubContext.Instance.SendToClient(
                                 Helpers.ReturnName(defender, attacker, null) +  " " + ShowMobHeath(defender) + "<br><br>", attacker.HubGuid);
 
+                            if (attacker.Equipment.Wielded != "nothing")
+                                {
+
+                                CheckWeaponCondition(
+                                    attacker.Inventory.FirstOrDefault(x => x.name.ToLower().Contains(attacker.Equipment.Wielded.ToLower())), attacker);
+
+                            }
 
                             HubContext.Instance.SendToClient(
                                 Helpers.ReturnName(attacker, defender, null) + "'s " +

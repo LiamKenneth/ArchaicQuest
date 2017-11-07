@@ -145,7 +145,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                         {
                             new Item.Item()
                             {
-                                name = "Broken Axe",
+                                name = "Horik's Broken Axe",
                                 location = Item.Item.ItemLocation.Inventory,
                                 QuestItem = true,
                                 eqSlot = Item.Item.EqSlot.Held,

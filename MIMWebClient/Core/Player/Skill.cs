@@ -115,6 +115,9 @@ namespace MIMWebClient.Core.Player
         [BsonIgnore]
         public string Syntax { get; set; }
 
+        public Item.Item.WeaponType WeaponType { get; set; }
+
+
 
         public static int ReturnActionSpeed(PlayerSetup.Player player, int speed)
         {
