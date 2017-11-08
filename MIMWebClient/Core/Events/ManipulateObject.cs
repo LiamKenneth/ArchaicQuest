@@ -1145,9 +1145,9 @@ namespace MIMWebClient.Core.Events
                 {
                     if (!quest.Completed && quest.Type == Quest.QuestType.FindItem)
                     {
-                        //Find quest requires player to give item to the mob.
+                        //Find quest requires player to give item to the mob."Horik's Axe "Horik's  Axe"
 
-                        if (quest.QuestGiver == foundThing.Name && quest.QuestItem?.FirstOrDefault(x => x.name == foundItem.name) != null)
+                        if (quest.QuestGiver == foundThing.Name && quest.QuestItem?.FirstOrDefault(x => x.name.Trim().Equals(foundItem.name.Trim(), StringComparison.CurrentCultureIgnoreCase)) != null)
                         {
                             // player completed quest
 

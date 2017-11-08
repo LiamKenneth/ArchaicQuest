@@ -603,10 +603,7 @@ namespace MIMWebClient.Core.Events
                     {
                         HubContext.Instance.SendToClient("Your weapon takes some damage.", Attacker.HubGuid);
 
-                        //add mesage aout skill going up and xp gained
-
- 
-                        skillProf.Proficiency += 1;
+                        Player.LearnFromMistake(Attacker, skillProf, 100);                      
 
                     }
                     else

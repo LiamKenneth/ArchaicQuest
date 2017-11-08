@@ -49,27 +49,21 @@ namespace MIMWebClient.Core.Events
 
                     if (foundItem.Condition >= 75)
                     {
-                        foundItem.name.Replace("broken", String.Empty);
+                        foundItem.name = foundItem.name.Replace("Broken ", String.Empty).Trim();
                         foundItem.Condition = 75;
                         HubContext.Instance.SendToClient(Helpers.ReturnName(null, null, item.Value) + " has been fully repaired.", player.HubGuid);
                         return;
                     }
+
+                    repairHammer.Uses -= 1;
                 }
                 else
                 {
                     HubContext.Instance.SendToClient("You fail to improve the condition of " + Helpers.ReturnName(null, null, item.Value), player.HubGuid);
-
-                    HubContext.Instance.SendToClient("You learn from your mistakes and gain 100 experience poitns", player.HubGuid);
-
-                    hasSkill.Proficiency += Helpers.Rand(1, 5);
-                    player.Experience += 100;
-
-                    var xp = new Experience();
-
-                    xp.GainLevel(player);
+                    PlayerSetup.Player.LearnFromMistake(player, hasSkill, 100);
                 }
 
-                repairHammer.Uses -= 1;
+            
 
                 if (repairHammer.Uses <= 0)
                 {

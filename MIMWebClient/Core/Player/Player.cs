@@ -664,6 +664,25 @@ namespace MIMWebClient.Core.PlayerSetup
             Score.ReturnScoreUI(player);
         }
 
+        public static void LearnFromMistake(Player player, Skill skill, int xpGain)
+        {
+
+            if (skill.Proficiency < 95)
+            {
+
+                HubContext.Instance.SendToClient($"You learn from your mistakes and gain {xpGain} experience points",
+                    player.HubGuid);
+
+                var xp = new Experience();
+                player.Experience += xpGain;
+
+                xp.GainLevel(player);
+
+                skill.Proficiency += Helpers.Rand(1, 5);
+
+            }
+
+        }
 
 
         public static void MobAttack(Player player, Player mob, Room.Room room)

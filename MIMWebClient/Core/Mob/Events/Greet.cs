@@ -29,8 +29,18 @@ namespace MIMWebClient.Core.Mob.Events
 
             /* check quests */
 
+            if (!string.IsNullOrEmpty(npc.DialogueTree[0].ShowIfOnQuest))
+            {
+                if (player.QuestLog.FirstOrDefault(x => x.Name.Equals(npc.DialogueTree[0].ShowIfOnQuest)) == null)
+                {
+                    return;
+                }
+            }
+
+
             foreach (var qlog in player.QuestLog.Where(x => x.QuestGiver == npc.Name))
             {
+            
                 foreach (var respond in npc.DialogueTree[0].PossibleResponse)
                 {
 
@@ -62,6 +72,8 @@ namespace MIMWebClient.Core.Mob.Events
 
 
                         var speak = npc.DialogueTree[0];
+
+                
 
                         foreach (var quest in player.QuestLog)
                         {

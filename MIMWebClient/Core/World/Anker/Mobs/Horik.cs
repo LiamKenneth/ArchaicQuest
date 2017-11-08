@@ -134,7 +134,22 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                         Name = "Repair Horik's Axe",
                         QuestGiver =  "Horik",
                         Type = Quest.QuestType.FindItem,
-                        QuestItem = new List<Item.Item>() { AxeBasic.IronHatchet() },
+                        QuestItem = new List<Item.Item>() {
+                            new Item.Item()
+                        {
+                            name = "Horik's Axe",
+                            location = Item.Item.ItemLocation.Inventory,
+                            QuestItem = true,
+                            eqSlot = Item.Item.EqSlot.Held,
+                            slot = Item.Item.EqSlot.Held,
+                            description = new Description()
+                            {
+                                look =  "The shaft of this axe has broken in half and the blade has many chips along it's once sharp edge."
+                            },
+                            equipable = true,
+                            weaponType = Item.Item.WeaponType.Axe
+
+                        }},
                         RewardGold = 100,
                         RewardXp = 1500,
                         RewardDialog = new DialogTree()
