@@ -3172,7 +3172,7 @@ namespace MIMWebClient.Core.World.Anker
                 corpses = new List<Player>(),
                 players = new List<Player>(),
                 fighting = new List<string>(),
-                clean = true
+                clean = true,
 
             };
 
@@ -3199,7 +3199,46 @@ namespace MIMWebClient.Core.World.Anker
                     AreaId = 28,
                     Area = "Anker",
                     Region = "Anker"
-                }
+                },
+                DialogueTree = new List<DialogTree>()
+                {
+
+                    new DialogTree()
+                    {
+
+                        Id = "1",
+                        Message = "Greetings $playname want to learn how to knit some basic cloth garmets?",
+                        DontShowIfOnQuest = "Repair Horik's Axe",
+                        PossibleResponse =  new List<Responses>()
+                        {
+                            new Responses()
+                            {
+                                QuestionId = "1a",
+                                AnswerId = "1a",
+                                Response = "Yes, please"
+
+
+                            },
+                            new Responses()
+                            {
+                                QuestionId = "1b",
+                                AnswerId = "1b",
+                                Response = "Sorry not right now."
+                            }
+
+
+                        },
+
+                    },
+
+                    new DialogTree()
+                    {
+
+                        Id = "2",
+                        Message = "Ok let me just get my Needles, oh where did I put them? Can you help me search for them please?",
+
+                    }
+                }         
 
             };
 
