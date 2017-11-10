@@ -79,6 +79,11 @@ namespace MIMWebClient.Core.Player
 
         public void GainLevel(PlayerSetup.Player player)
         {
+            if (player.Type == PlayerSetup.Player.PlayerTypes.Mob)
+            {
+                return;
+            }
+
             if (HasGainedLevel(player))
             {
                 player.Level += 1;

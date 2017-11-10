@@ -787,7 +787,7 @@ namespace MIMWebClient.Core.Events
                             HubContext.Instance.SendToClient(
                                 Helpers.ReturnName(defender, attacker, null) +  " " + ShowMobHeath(defender) + "<br><br>", attacker.HubGuid);
 
-                            if (attacker.Equipment.Wielded != "nothing")
+                            if (attacker.Equipment.Wielded != "Nothing")
                                 {
 
                                 CheckWeaponCondition(
@@ -1061,7 +1061,8 @@ namespace MIMWebClient.Core.Events
                     container = true,
                     location = Item.ItemLocation.Room,
                     containerItems = new ItemContainer(),
-                    description = new Description { look = "The slain corpse of " + defender.Name + " is here.", room = "The slain corpse of " + defender.Name }
+                    description = new Description { look = "The slain corpse of " + defender.Name + " is here.", room = "The slain corpse of " + defender.Name },
+                    Duration = 10
                 };
 
                 foreach (var invItem in defender.Inventory)
@@ -1115,6 +1116,9 @@ namespace MIMWebClient.Core.Events
                 else
                 {
                     room.players.Remove(defender);
+                    attacker.ActiveFighting = false;
+                    attacker.Status = Player.PlayerStatus.Standing;
+                    
                     var recall = Cache.ReturnRooms().FirstOrDefault(x => x.title == "Temple of Tyr");
                     Movement.Teleport(defender, recall);
                     //Add slain player to recall

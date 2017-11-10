@@ -157,15 +157,44 @@ namespace MIMWebClient.Core.Update
 
                     foreach (var item in room.items.Where(x => x.Duration > -1).ToList())
                     {
- 
+
+                        if (item.name.Contains("corpse"))
+                        {
+                            if (item.Duration <= 5 && !item.name.Contains("rotting") || !item.name.Contains("decayed"))
+                            {
+                                var newCorpseName = item.name.Replace("corpse", "rotting corpse");
+                                item.name = newCorpseName;
+                            }
+
+                            if (item.Duration <= 3 && !item.name.Contains("rotting") || !item.name.Contains("decayed"))
+                            {
+                                var newCorpseName = item.name.Replace("corpse", "decayed corpse");
+                                item.name = newCorpseName;
+                            }
+
+                            if (item.Duration == 0)
+                            {
+                                foreach (var loot in item.containerItems)
+                                {
+                                    room.items.Add(loot);
+                                }
+
+                                room.items.Remove(item);
+                                continue;
+
+                            }
+                        }
+                        else
+                        {
                             if (item.Duration == 0)
                             {
                                 room.items.Remove(item);
                                 continue;
 
                             }
+                        }
 
-                            item.Duration -= 1;
+                        item.Duration -= 1;
                   
                     }
 
@@ -226,6 +255,8 @@ namespace MIMWebClient.Core.Update
                             HubContext.Instance.SendToClient(room.updateMessage, player.HubGuid);
                         }
                     }
+
+               
                 }
 
 
