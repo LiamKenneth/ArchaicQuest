@@ -34,8 +34,13 @@ namespace MIMWebClient.Core
                 var itemString = x.Name + ((x.Count > 1) ? " x" + x.Count : "");
                 if (article)
                 {
-                    var result = AvsAnLib.AvsAn.Query(x.Name);
-                    itemString = Helpers.FirstLetterToUpper(result.Article) + " " + itemString;
+                    var i = items.FirstOrDefault(n => n.name.Equals(x.Name));
+                    if (!i.KnownByName)
+                    {
+                        var result = AvsAnLib.AvsAn.Query(x.Name);
+                        itemString = Helpers.FirstLetterToUpper(result.Article) + " " + itemString;
+                    }
+                   
                 }
 
                 return itemString;

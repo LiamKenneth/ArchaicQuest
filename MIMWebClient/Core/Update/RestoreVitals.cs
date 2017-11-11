@@ -160,15 +160,15 @@ namespace MIMWebClient.Core.Update
 
                         if (item.name.Contains("corpse"))
                         {
-                            if (item.Duration <= 5 && !item.name.Contains("rotting") || !item.name.Contains("decayed"))
+                            if (item.Duration > 3 && item.Duration <= 5 && !item.name.Contains("rotting"))
                             {
                                 var newCorpseName = item.name.Replace("corpse", "rotting corpse");
                                 item.name = newCorpseName;
                             }
 
-                            if (item.Duration <= 3 && !item.name.Contains("rotting") || !item.name.Contains("decayed"))
+                            if (item.Duration <= 3 && !item.name.Contains("decayed"))
                             {
-                                var newCorpseName = item.name.Replace("corpse", "decayed corpse");
+                                var newCorpseName = item.name.Replace("rotting corpse", "decayed corpse");
                                 item.name = newCorpseName;
                             }
 

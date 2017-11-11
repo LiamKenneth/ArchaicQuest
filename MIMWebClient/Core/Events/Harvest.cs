@@ -16,14 +16,30 @@ namespace MIMWebClient.Core.Events
             }
 
             var foundCorpse = room.items.FirstOrDefault(x => x.name.ToLower().Contains(commandOptions.ToLower()));
-            var foundCorpseMob = room.mobs.FirstOrDefault(x => x.Name.ToLower().Contains(foundCorpse.name.ToLower().Replace("the corpse of ", "")));
-
             if (foundCorpse == null)
             {
                 HubContext.Instance.SendToClient("No corpse found.", player.HubGuid);
                 return;
             }
-            var carveMessage = "You carve " +  foundCorpse.name.ToLower() + " retrieving ";
+
+            var corpseName = foundCorpse.name.ToLower();
+            var corpse = string.Empty;
+
+            if (corpseName.Contains("decayed"))
+            {
+                corpse = corpseName.Replace("the decayed corpse of ", "");
+            }
+            else if (corpseName.Contains("rotting"))
+            {
+                corpse = corpseName.Replace("the rotting corpse of ", "");
+            }
+            else
+            {
+                corpse = corpseName.Replace("the corpse of ", "");
+            }
+          
+
+            var carveMessage = "You carve " + corpse + " retrieving ";
             var bodyPart = GetBodyPart();
 
             HubContext.Instance.SendToClient(carveMessage + Helpers.ReturnName(null, null, bodyPart).ToLower() + ".", player.HubGuid);
@@ -33,15 +49,27 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
-            player.Inventory.Add(new Item.Item()
+            if (foundCorpse.KnownByName)
             {
-                name = foundCorpseMob.Name + " " + bodyPart,
+                
+            }
+
+            var bodybit = new Item.Item()
+            {
+                name = corpse + " " + bodyPart,
                 location = Item.Item.ItemLocation.Inventory,
                 slot = Item.Item.EqSlot.Held,
                 eqSlot = Item.Item.EqSlot.Held,
                 equipable = true,
 
-            });
+            };
+
+            if (foundCorpse.KnownByName)
+            {
+                bodybit.KnownByName = true;
+            }
+
+            player.Inventory.Add(bodybit);
 
             Score.UpdateUiInventory(player);
 

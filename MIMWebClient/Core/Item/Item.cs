@@ -177,6 +177,7 @@ namespace MIMWebClient.Core.Item
         }
 
         public ItemContainer containerItems;
+        public bool KnownByName { get; set; }
         public List<DamageType> damageType { get; set; }
         public ArmourType armourType { get; set; }
         public List<ItemFlags> itemFlags { get; set; }
