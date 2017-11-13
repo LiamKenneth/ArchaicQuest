@@ -17,7 +17,7 @@
                 <li><a class="infoPlayerFilter" href="javascript:void(0);" title="Add / edit and view your description">Description</a></li>
             </ul>
 
-            <div class="js-score" style="overflow-y: scroll; max-height: 40vh;">
+            <div class="js-score" style="overflow-y: scroll; max-height: 36vh;">
                 <h3 id="player-name" class="text-center"></h3>
 
                 <p class="text-center"><span id="player-gender"></span> <span id="player-race"></span> <span id="player-class"></span> Level <span id="player-level"></span>
@@ -196,13 +196,14 @@
 <div id="main-panel" class="col-xs-12 col-md-6 full-height">
 
     <div id="discussion" class="full-height window" style="overflow-y: scroll; padding: 15px;"></div>
+
 </div>
-<div id="right-panel" class="col-xs-12 col-md-3 hidden-xs hidden-sm full-height" style="">
+<div id="right-panel" class="col-xs-12 col-md-3 hidden-xs hidden-sm full-height"">
 
-    <div id="info-room" class="full-height" style="display: table; width: 100%; height: 50%;">
+    <div id="info-room" class="full-height" style="display: table; width: 100%; height: 50%; overflow: hidden">
 
 
-        <div style=" width: 100%; height: 47vh;" class="window">
+        <div style=" width: 100%; height: 46vh;" class="window">
 
             <div class="js-room" style=" ">
                 <h3>Map Key:</h3>
@@ -213,7 +214,7 @@
                     <li class="Shop">Shop</li>                    
                     <li class="Stairs">Stairs</li>
                 </ul>
-                <div id="roomTitleInfo" style="top: 0; height:35vh; width:100%"></div>
+                <div id="roomTitleInfo" style="top: 0; height:33vh; width: 100%;"></div>
             </div>
         </div>
 
@@ -283,7 +284,7 @@
 
 
 
-<div class="container-fluid" style="position: absolute; bottom: 0; width: 100%">
+<div class="container-fluid" style="position: absolute; bottom: 0; width: 100%;">
  
     
     
@@ -359,7 +360,7 @@
     <div class="row">
         <div class="col-xs-12" style="position: relative;">
             <form onSubmit="return false;" style="margin-right: 42px;">
-                <input type="text" id="message" class="form-control" placeholder="Enter commands here, type help if unsure on commands." autofocus style="background: #101010; color: #f1f1f1; margin-bottom: 15px; padding-right:60px;" autocomplete="off"/>
+                <input type="text" id="message" class="form-control" placeholder="Enter commands here, type help if unsure on commands." autofocus style="background: #101010; color: #f1f1f1; margin-bottom: 15px; padding-right:60px;" autocomplete="off" />
                 <button type="submit" id="sendmessage" style="position: absolute; right: 62px; top: 5px; background: #fed967; border: 1px solid #ff8c00">send</button>
             </form>
             <div id="music" style='background-size: cover; position: absolute; top: 2px; width: 30px; height: 30px; right: 15px; background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMjAwJyBoZWlnaHQ9JzIwMCcgZmlsbD0iI2ZlZDk2NyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDI1IDI1IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyNSAyNSIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PGc+PGc+PHBhdGggZD0iTTE1LjQ3Nyw5LjMxOGMtMC4xOTUsMC4xOTUtMC4xOTUsMC41MTIsMCwwLjcwN2MwLjY2MSwwLjY2MSwxLjAyNSwxLjU0LDEuMDI1LDIuNDc1cy0wLjM2NCwxLjgxMy0xLjAyNSwyLjQ3NSAgICBjLTAuMTk1LDAuMTk1LTAuMTk1LDAuNTEyLDAsMC43MDdjMC4wOTgsMC4wOTgsMC4yMjYsMC4xNDYsMC4zNTQsMC4xNDZzMC4yNTYtMC4wNDksMC4zNTQtMC4xNDYgICAgYzAuODUtMC44NSwxLjMxOC0xLjk3OSwxLjMxOC0zLjE4MnMtMC40NjgtMi4zMzItMS4zMTgtMy4xODJDMTUuOTg5LDkuMTIzLDE1LjY3Miw5LjEyMywxNS40NzcsOS4zMTh6Ii8+PHBhdGggZD0iTTE5LjAxMiw2LjQ4OWMtMC4xOTUtMC4xOTUtMC41MTItMC4xOTUtMC43MDcsMHMtMC4xOTUsMC41MTIsMCwwLjcwN2MyLjkyNCwyLjkyNSwyLjkyNCw3LjY4NCwwLDEwLjYwNyAgICBjLTAuMTk1LDAuMTk1LTAuMTk1LDAuNTEyLDAsMC43MDdjMC4wOTgsMC4wOTgsMC4yMjYsMC4xNDYsMC4zNTQsMC4xNDZzMC4yNTYtMC4wNDksMC4zNTQtMC4xNDYgICAgQzIyLjMyNiwxNS4xOTYsMjIuMzI2LDkuODA0LDE5LjAxMiw2LjQ4OXoiLz48cGF0aCBkPSJNMTMuMjIyLDYuMDUxYy0wLjE3MS0wLjA4NC0wLjM3NS0wLjA2Mi0wLjUyNywwLjA1NUw4LjMzMSw5LjVINC4wMDJjLTAuMjc2LDAtMC41LDAuMjI0LTAuNSwwLjV2NSAgICBjMCwwLjI3NiwwLjIyNCwwLjUsMC41LDAuNWg0LjMyOWw0LjM2NCwzLjM5NUMxMi43ODUsMTguOTY0LDEyLjg5MywxOSwxMy4wMDIsMTljMC4wNzUsMCwwLjE1LTAuMDE3LDAuMjItMC4wNTEgICAgYzAuMTcxLTAuMDg0LDAuMjgtMC4yNTgsMC4yOC0wLjQ0OXYtMTJDMTMuNTAyLDYuMzA5LDEzLjM5Myw2LjEzNSwxMy4yMjIsNi4wNTF6Ii8+PC9nPjwvZz48L3N2Zz4=");' title="Music by BrunuhVille,  https://www.youtube.com/user/BrunuhVille"></div>
@@ -367,7 +368,9 @@
 
         </div>
 
-
+        <div id="settings"  data-toggle="modal" data-target="#ModalSettings" class="ra ra-cog ra-fw" style='width: 30px; height: 30px; position: absolute; right: 5px;' title="Change client settings"></div>
+ 
+ 
     </div>
 </div>
 
@@ -381,6 +384,72 @@
             </div>
             <div class="modal-body">
                 <textarea class="form-control" rows="11" id="descriptionText"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="SaveDescription">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalSettings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header description-header" style="">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Settings</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Font size</label>
+                                <select id="exampleInputEmail1">
+                                    <option>10</option>
+                                    <option>12</option>
+                                    <option>14</option>
+                                    <option>16</option>
+                                    <option>18</option>
+                                    <option>20</option>
+                                    <option>22</option>
+                                    <option>24</option>
+                                    <option>26</option>
+                                    <option>28</option>
+                                    <option>30</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Text spacing</label>
+                                <select id="exampleInputEmail1">
+                                    <option>10</option>
+                                    <option>12</option>
+                                    <option>14</option>
+                                    <option>16</option>
+                                    <option>18</option>
+                                    <option>20</option>
+                                    <option>22</option>
+                                    <option>24</option>
+                                    <option>26</option>
+                                    <option>28</option>
+                                    <option>30</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Volume</label>
+                               .......
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
