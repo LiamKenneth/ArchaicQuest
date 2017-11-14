@@ -388,7 +388,21 @@
                 centerMode: false,
                 variableWidth: true,
 
+            });
+
+
+            $("#fontSize").on("change",
+                function (event) {
+ 
+                    $('head').append('<style>#discussion { font-size: ' + $(this).val() + 'px;');
                 });
+
+            $("#textSpacing").on("change",
+                function (event) {
+
+                    $('head').append('<style>#discussion p { margin-bottom: ' + $(this).val() + 'px;');
+                });
+
            
         }
     }
@@ -470,7 +484,7 @@
 
  
         $('#player-armorDef').html(score.ArmorRating);
-        $('#player-magicDef').html("N/A");
+        $('#player-magicDef').html(score.SpellResistance);
 
 
         $('#player-weight').html(score.Weight);
@@ -1121,13 +1135,6 @@
             togglePlay(this);
         });
 
-
-    $("#fontSize").on("change",
-        function (event) {
-
-            console.log($(this).val())
-            $('head').append('<style>#discussion { font-size: ' + $(this).val() + 'px;');
-        });
 
 
     function maps(area, region, zindex) {

@@ -8144,3 +8144,11 @@ li.Stairs:before {
   #settings:hover {
     cursor: pointer; }
 
+#score .score-stats {
+  border-top: 2px solid #555;
+  padding-top: 20px; }
+
+#score td, #score th {
+  font-family: monospace;
+  text-align: center; }
+

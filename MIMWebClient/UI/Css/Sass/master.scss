@@ -474,3 +474,16 @@ li.Stairs:before {
         cursor:pointer;
     }
 }
+
+
+#score {
+    .score-stats {
+        border-top: 2px solid #555;
+        padding-top:20px;
+    }
+
+    td, th {
+        font-family: monospace;
+        text-align: center;
+    }
+}

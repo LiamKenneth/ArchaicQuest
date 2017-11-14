@@ -20,12 +20,14 @@
             <div class="js-score" style="overflow-y: scroll; max-height: 36vh;">
                 <h3 id="player-name" class="text-center"></h3>
 
-                <p class="text-center"><span id="player-gender"></span> <span id="player-race"></span> <span id="player-class"></span> Level <span id="player-level"></span>
+                <p class="text-center">Level <span id="player-level"></span> <span id="player-gender"></span> <span id="player-race"></span> <span id="player-class"></span> 
                 </p>
+                
+                
+                <p  class="text-center">True Neutral</p>
 
-                <div class="scoreContainer">
-                    <h3 class="text-center">Attributes</h3>
-
+                <div class="scoreContainer score-stats">
+ 
                     <table width="100%">
                         <tr>
                             <td><i class="ra ra-muscle-up ra-fw"></i> Str <span id="player-str"></span> </td>
@@ -37,7 +39,7 @@
                         </tr>
                         <tr>
                             <td><i class="ra ra-player-king ra-fw"></i> Wis <span id="player-wis"></span> </td>
-                            <td><i class="ra  ra-player ra-fw"></i> Char <span id="player-cha"></span> </td>
+                            <td><i class="ra  ra-player ra-fw"></i> Cha <span id="player-cha"></span> </td>
                         </tr>
            
                         @*<tr>
@@ -60,19 +62,23 @@
                 </div>
 
                 <div class="scoreContainer">
-                    <h3 class="text-center">Armour</h3>
+                    <h3 class="text-center"></h3>
 
                     <table width="100%">
                         <tr>
-                            <td><i class="ra ra-shield ra-fw"></i> Armour <span id="player-armorDef"></span></td>
+                            <td title="Armour Rating"><i class="ra ra-shield ra-fw"></i> AR <span id="player-armorDef"></span></td>
              
-                            <td><i class="ra ra-level-three ra-fw"></i> Magic <span id="player-magicDef"></span></td>
+                            <td title="Damage Rating"><i class="ra ra-sword ra-fw"></i> DR <span id="player-damroll"></span></td>
                         </tr>
-
+                        <tr>
+                            <td title="Spell Resistance"><i class="ra  ra-level-three ra-fw"></i> SR <span id="player-magicDef"></span></td>
+             
+                            <td>&nbsp;</td>
+                        </tr>
                     </table>
                 </div>
 
-                <div class="scoreContainer">
+                @*<div class="scoreContainer">
                     <h3 class="text-center">Offence</h3>
 
                     <table width="100%">
@@ -90,9 +96,9 @@
                         </tr>
 
                     </table>
-                </div>
+                </div>*@
 
-                <div class="scoreContainer">
+                @*<div class="scoreContainer">
                     <h3 class="text-center">Misc</h3>
 
                     <table width="100%">
@@ -117,48 +123,21 @@
 
 
                     </table>
-                </div>
+                </div>*@
 
                 <div class="scoreContainer">
-                    <h3 class="text-center">Stats</h3>
+                    <h3 class="text-center"></h3>
 
                     <table width="100%">
                         <tr>
-                            <td>Hours</td>
-                            <td> <span class="pull-right"> <span id="player-hours"></span> </span> </td>
+                            <td title="Gold Pieces"><i class="ra ra-gold-bar ra-fw"></i> GP <span id="player-gold"></span></td>
+                            <td title="Total Hours"><i class="ra ra-clockwork ra-fw"></i> HR <span id="player-hours"></span></td>     
                         </tr>
-                        <tr>
-                            <td>Quest Points</td>
-                            <td> <span class="pull-right">N/A</span></td>
-                        </tr>
-
-
+ 
                     </table>
                 </div>
 
-                <div class="scoreContainer">
-                    <h3 class="text-center">Money</h3>
-
-                    <table width="100%">
-                        <tr>
-                            <td>Copper</td>
-                            <td><span class="pull-right"><span id="player-copper"></span></span></td>
-                        </tr>
-
-                        <tr>
-                            <td>Silver</td>
-                            <td><span class="pull-right"><span id="player-silver"></span></span></td>
-                        </tr>
-
-
-                        <tr>
-                            <td>Gold</td>
-                            <td><span class="pull-right"><span id="player-gold"></span></span></td>
-                        </tr>
-
-
-                    </table>
-                </div>
+ 
 
             </div>
                     
@@ -311,7 +290,7 @@
     </div>
     <div class="row" style="position: relative; top: -6px;">
         <div class="col-xs-3">
-            <div class="progress">
+            <div class="progress" title="Hit points">
                 <div id="HP-bar" class="progress-bar progress-bar-danger" role="progressbar" style="width: 0%">
                     <div class="statInfo">
                         <span id="stat-HP"></span>/<span id="stat-max-HP"></span>
@@ -321,7 +300,7 @@
 
         </div>
         <div class="col-xs-3">
-            <div class="progress">
+            <div class="progress" title="Mana">
                 <div id="mana-bar" class="progress-bar progress-bar-info" role="progressbar" style="width: 0%">
                     <div class="statInfo">
                         <span id="stat-mana"></span>/<span id="stat-max-mana"></span>
@@ -332,7 +311,7 @@
 
         </div>
         <div class="col-xs-3">
-            <div class="progress">
+            <div class="progress" title="Moves">
                 <div class="statInfo">
                     <span id="stat-endurance"></span>/<span id="stat-max-endurance"></span>
                 </div>
@@ -344,7 +323,7 @@
         </div>
 
         <div class="col-xs-3">
-            <div class="progress">
+            <div class="progress" title="To Next Level">
                 <div class="statInfo">
                     <span id="stat-tnl"></span> tnl
                 </div>
@@ -437,7 +416,7 @@
                             <div class="form-group">
                                 <label for="textSpacing">Text spacing</label>
                                 <select id="textSpacing" class="form-control">
-                                    <option>10</option>
+                                    <option selected="">10</option>
                                     <option>11</option>
                                     <option>12</option>
                                     <option>13</option>

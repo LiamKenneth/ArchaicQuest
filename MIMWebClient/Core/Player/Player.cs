@@ -208,6 +208,8 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("arr")]
         public int ArmorRating { get; set; }
 
+        public int SpellResistance { get; set; } = 0;
+
         [BsonElement("s")]
         public int Saves { get; set; }
 
