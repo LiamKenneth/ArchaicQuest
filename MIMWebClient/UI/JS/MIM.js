@@ -1122,6 +1122,14 @@
         });
 
 
+    $("#fontSize").on("change",
+        function (event) {
+
+            console.log($(this).val())
+            $('head').append('<style>#discussion { font-size: ' + $(this).val() + 'px;');
+        });
+
+
     function maps(area, region, zindex) {
  
 

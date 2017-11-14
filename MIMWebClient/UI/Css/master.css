@@ -8125,3 +8125,8 @@ li.Stairs:before {
 #music:hover {
   cursor: pointer; }
 
+.settings_player input[type=checkbox] {
+  margin-right: 5px;
+  position: relative;
+  top: 2px; }
+

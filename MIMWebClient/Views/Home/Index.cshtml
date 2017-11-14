@@ -363,13 +363,13 @@
                 <input type="text" id="message" class="form-control" placeholder="Enter commands here, type help if unsure on commands." autofocus style="background: #101010; color: #f1f1f1; margin-bottom: 15px; padding-right:60px;" autocomplete="off" />
                 <button type="submit" id="sendmessage" style="position: absolute; right: 62px; top: 5px; background: #fed967; border: 1px solid #ff8c00">send</button>
             </form>
-            <div id="music" style='background-size: cover; position: absolute; top: 2px; width: 30px; height: 30px; right: 15px; background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMjAwJyBoZWlnaHQ9JzIwMCcgZmlsbD0iI2ZlZDk2NyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDI1IDI1IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyNSAyNSIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PGc+PGc+PHBhdGggZD0iTTE1LjQ3Nyw5LjMxOGMtMC4xOTUsMC4xOTUtMC4xOTUsMC41MTIsMCwwLjcwN2MwLjY2MSwwLjY2MSwxLjAyNSwxLjU0LDEuMDI1LDIuNDc1cy0wLjM2NCwxLjgxMy0xLjAyNSwyLjQ3NSAgICBjLTAuMTk1LDAuMTk1LTAuMTk1LDAuNTEyLDAsMC43MDdjMC4wOTgsMC4wOTgsMC4yMjYsMC4xNDYsMC4zNTQsMC4xNDZzMC4yNTYtMC4wNDksMC4zNTQtMC4xNDYgICAgYzAuODUtMC44NSwxLjMxOC0xLjk3OSwxLjMxOC0zLjE4MnMtMC40NjgtMi4zMzItMS4zMTgtMy4xODJDMTUuOTg5LDkuMTIzLDE1LjY3Miw5LjEyMywxNS40NzcsOS4zMTh6Ii8+PHBhdGggZD0iTTE5LjAxMiw2LjQ4OWMtMC4xOTUtMC4xOTUtMC41MTItMC4xOTUtMC43MDcsMHMtMC4xOTUsMC41MTIsMCwwLjcwN2MyLjkyNCwyLjkyNSwyLjkyNCw3LjY4NCwwLDEwLjYwNyAgICBjLTAuMTk1LDAuMTk1LTAuMTk1LDAuNTEyLDAsMC43MDdjMC4wOTgsMC4wOTgsMC4yMjYsMC4xNDYsMC4zNTQsMC4xNDZzMC4yNTYtMC4wNDksMC4zNTQtMC4xNDYgICAgQzIyLjMyNiwxNS4xOTYsMjIuMzI2LDkuODA0LDE5LjAxMiw2LjQ4OXoiLz48cGF0aCBkPSJNMTMuMjIyLDYuMDUxYy0wLjE3MS0wLjA4NC0wLjM3NS0wLjA2Mi0wLjUyNywwLjA1NUw4LjMzMSw5LjVINC4wMDJjLTAuMjc2LDAtMC41LDAuMjI0LTAuNSwwLjV2NSAgICBjMCwwLjI3NiwwLjIyNCwwLjUsMC41LDAuNWg0LjMyOWw0LjM2NCwzLjM5NUMxMi43ODUsMTguOTY0LDEyLjg5MywxOSwxMy4wMDIsMTljMC4wNzUsMCwwLjE1LTAuMDE3LDAuMjItMC4wNTEgICAgYzAuMTcxLTAuMDg0LDAuMjgtMC4yNTgsMC4yOC0wLjQ0OXYtMTJDMTMuNTAyLDYuMzA5LDEzLjM5Myw2LjEzNSwxMy4yMjIsNi4wNTF6Ii8+PC9nPjwvZz48L3N2Zz4=");' title="Music by BrunuhVille,  https://www.youtube.com/user/BrunuhVille"></div>
-            <audio id="player"></audio>
-
+            @*<div id="music" style='background-size: cover; position: absolute; top: 2px; width: 30px; height: 30px; right: 15px; background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMjAwJyBoZWlnaHQ9JzIwMCcgZmlsbD0iI2ZlZDk2NyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDI1IDI1IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyNSAyNSIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PGc+PGc+PHBhdGggZD0iTTE1LjQ3Nyw5LjMxOGMtMC4xOTUsMC4xOTUtMC4xOTUsMC41MTIsMCwwLjcwN2MwLjY2MSwwLjY2MSwxLjAyNSwxLjU0LDEuMDI1LDIuNDc1cy0wLjM2NCwxLjgxMy0xLjAyNSwyLjQ3NSAgICBjLTAuMTk1LDAuMTk1LTAuMTk1LDAuNTEyLDAsMC43MDdjMC4wOTgsMC4wOTgsMC4yMjYsMC4xNDYsMC4zNTQsMC4xNDZzMC4yNTYtMC4wNDksMC4zNTQtMC4xNDYgICAgYzAuODUtMC44NSwxLjMxOC0xLjk3OSwxLjMxOC0zLjE4MnMtMC40NjgtMi4zMzItMS4zMTgtMy4xODJDMTUuOTg5LDkuMTIzLDE1LjY3Miw5LjEyMywxNS40NzcsOS4zMTh6Ii8+PHBhdGggZD0iTTE5LjAxMiw2LjQ4OWMtMC4xOTUtMC4xOTUtMC41MTItMC4xOTUtMC43MDcsMHMtMC4xOTUsMC41MTIsMCwwLjcwN2MyLjkyNCwyLjkyNSwyLjkyNCw3LjY4NCwwLDEwLjYwNyAgICBjLTAuMTk1LDAuMTk1LTAuMTk1LDAuNTEyLDAsMC43MDdjMC4wOTgsMC4wOTgsMC4yMjYsMC4xNDYsMC4zNTQsMC4xNDZzMC4yNTYtMC4wNDksMC4zNTQtMC4xNDYgICAgQzIyLjMyNiwxNS4xOTYsMjIuMzI2LDkuODA0LDE5LjAxMiw2LjQ4OXoiLz48cGF0aCBkPSJNMTMuMjIyLDYuMDUxYy0wLjE3MS0wLjA4NC0wLjM3NS0wLjA2Mi0wLjUyNywwLjA1NUw4LjMzMSw5LjVINC4wMDJjLTAuMjc2LDAtMC41LDAuMjI0LTAuNSwwLjV2NSAgICBjMCwwLjI3NiwwLjIyNCwwLjUsMC41LDAuNWg0LjMyOWw0LjM2NCwzLjM5NUMxMi43ODUsMTguOTY0LDEyLjg5MywxOSwxMy4wMDIsMTljMC4wNzUsMCwwLjE1LTAuMDE3LDAuMjItMC4wNTEgICAgYzAuMTcxLTAuMDg0LDAuMjgtMC4yNTgsMC4yOC0wLjQ0OXYtMTJDMTMuNTAyLDYuMzA5LDEzLjM5Myw2LjEzNSwxMy4yMjIsNi4wNTF6Ii8+PC9nPjwvZz48L3N2Zz4=");' title="Music by BrunuhVille,  https://www.youtube.com/user/BrunuhVille"></div>
+            <audio id="player"></audio>*@
+            
+            <div id="settings"  data-toggle="modal" data-target="#ModalSettings" class="ra ra-cog ra-fw" style='color: #fed967; width: 30px; height: 30px; position: absolute; right: 5px;' title="Change client settings"></div>
+ 
         </div>
 
-        <div id="settings"  data-toggle="modal" data-target="#ModalSettings" class="ra ra-cog ra-fw" style='width: 30px; height: 30px; position: absolute; right: 5px;' title="Change client settings"></div>
- 
  
     </div>
 </div>
@@ -401,53 +401,108 @@
                 <h4 class="modal-title" id="myModalLabel">Settings</h4>
             </div>
             <div class="modal-body">
-                <div class="container">
+                <div style="border-bottom: 1px solid #ccc;padding-bottom: 15px; margin-bottom: 24px;">
+ 
                     <div class="row">
                         <div class="col-xs-6">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Font size</label>
-                                <select id="exampleInputEmail1">
+                                <label for="fontSize">Font size</label>
+                                <select id="fontSize" class="form-control">
                                     <option>10</option>
+                                    <option>11</option>
                                     <option>12</option>
+                                    <option>13</option>
                                     <option>14</option>
+                                    <option>15</option>
                                     <option>16</option>
+                                    <option>17</option>
                                     <option>18</option>
+                                    <option>19</option>
                                     <option>20</option>
+                                    <option>21</option>
                                     <option>22</option>
+                                    <option>23</option>
                                     <option>24</option>
+                                    <option>25</option>
                                     <option>26</option>
+                                    <option>27</option>
                                     <option>28</option>
+                                    <option>29</option>
                                     <option>30</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-xs-6">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Text spacing</label>
-                                <select id="exampleInputEmail1">
+                                <label for="textSpacing">Text spacing</label>
+                                <select id="textSpacing" class="form-control">
                                     <option>10</option>
+                                    <option>11</option>
                                     <option>12</option>
+                                    <option>13</option>
                                     <option>14</option>
+                                    <option>15</option>
                                     <option>16</option>
+                                    <option>17</option>
                                     <option>18</option>
+                                    <option>19</option>
                                     <option>20</option>
+                                    <option>21</option>
                                     <option>22</option>
+                                    <option>23</option>
                                     <option>24</option>
+                                    <option>25</option>
                                     <option>26</option>
+                                    <option>27</option>
                                     <option>28</option>
+                                    <option>29</option>
                                     <option>30</option>
                                 </select>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="settings_player">
                     <div class="row">
-                        <div class="col-xs-6">
+
+                        <div class="col-xs-6 col-sm-4">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Volume</label>
-                               .......
+             
+                                <label><input type="checkbox" value="" disabled>Auto Assist</label>
                             </div>
                         </div>
-    
+                        <div class="col-xs-6 col-sm-4">
+                            <div class="form-group">
+             
+                                <label><input type="checkbox" value="" disabled>AutoLoot</label>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4">
+                            <div class="form-group">
+             
+                                <label><input type="checkbox" value="" disabled>Auto Sac</label>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4">
+                            <div class="form-group">
+             
+                                <label><input type="checkbox" value="" disabled>No Follow</label>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4">
+                            <div class="form-group">
+             
+                                <label><input type="checkbox" value="" disabled>No Cancel</label>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4">
+                            <div class="form-group">
+             
+                                <label><input type="checkbox" value="" disabled>Ticks</label>
+                            </div>
+                        </div>
+                   
+
                     </div>
                 </div>
             </div>

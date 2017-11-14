@@ -982,7 +982,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 15,
                 title = "The palus river",
                 terrain = Room.Terrain.Water,
-                description = "<p>Description to come</p>",
+                description = "<p>A slope slowly rises up out of the river to the north back onto the river bank. All around are small ripples in the water as insects and fish dart around the river. Far in the distance to the west on top of a hill is a small castle overlooking the town of Anker, the river is flowing to the east further into a swampy area.</p>",
                 Emotes = new List<string>()
                 {
                     "Plop! You hear something fall into the water.",
@@ -1052,7 +1052,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 16,
                 title = "The palus river",
                 terrain = Room.Terrain.Water,
-                description = "<p>Description to come</p>",
+                description = "<p>The river is becoming more swamp like, as vines hang down from the trees looming over the waters, and the sounds of frogs echo. Snakes swim across the calm waters disappearing into the overgrowth that floats on top. Hiding beneath the overgrowth is no doubt all sorts of dangerous creatures, no telling what someone may find if they were to search around.</p>",
                 Emotes = new List<string>()
                 {
                     "Plop! You hear something fall into the water.",
@@ -1121,7 +1121,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 17,
                 title = "The palus river",
                 terrain = Room.Terrain.Water,
-                description = "<p>Description to come</p>",
+                description = "<p>This area of the swamp is unnaturally dark, the water itself is pitch black, not reflecting any light shown upon it. Once in awhile a bubble erupts from beneath the river producing a pungent smell. To the north is a hovel with smoke rising from the chimney and the smell of meat roasting over an open flame.</p>",
                 Emotes = new List<string>()
                 {
                     "Plop! You hear something fall into the water.",
@@ -1204,7 +1204,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 18,
                 title = "The palus river",
                 terrain = Room.Terrain.Water,
-                description = "<p>Description to come</p>",
+                description = "<p>The river is becoming more swamp like, as vines hang down from the trees looming over the waters, and the sounds of frogs echo. Snakes swim across the calm waters disappearing into the overgrowth that floats on top. Hiding beneath the overgrowth is no doubt all sorts of dangerous creatures, no telling what someone may find if they were to search around.</p>",
                 Emotes = new List<string>()
                 {
                     "Plop! You hear something fall into the water.",
@@ -1274,7 +1274,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 20,
                 title = "The palus river",
                 terrain = Room.Terrain.Water,
-                description = "<p>Description to come</p>",
+                description = "<p>A large mountain rises from the middle of the swamp with noxious fumes bubbling from the waters. What kind of curse lays over this area is unknown, but surely some kind must be here as the area is almost dead silent except for the bubbles bursting. The water close to the mountain is warm and the rocks themselves even warmer, perhaps there is something within the mountain giving off all this heat.</p>",
                 Emotes = new List<string>()
                 {
                     "Plop! You hear something fall into the water.",
@@ -1345,7 +1345,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 19,
                 title = "The Hermit's home",
                 terrain = Room.Terrain.Water,
-                description = "<p>Description to come</p>",
+                description = "<p>This part of the swamp sits between a hovel to the west and a mountain to the south and a bridge crossing over the river to the north. Chilling laughter drifts on the wind from the east, from deep within the Goblin Forest, and the croaking of a large beast bellows from the overgrowth on the river.</p>",
                 Emotes = new List<string>()
                 {
                     "Plop! You hear something fall into the water.",
