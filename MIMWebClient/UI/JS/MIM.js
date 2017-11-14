@@ -1057,9 +1057,9 @@
          
     };
 
-    if ($(window).width() > 768) {
-        playAudio();
-    }
+    //if ($(window).width() > 768) {
+    //    playAudio();
+    //}
 
  
 

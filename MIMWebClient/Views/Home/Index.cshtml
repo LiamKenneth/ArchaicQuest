@@ -7,7 +7,7 @@
 <a id="open-left-panel" href="javascript:void(0);" class="full-height visible-xs  visible-sm" style="position: absolute; top: -120px; left: 0; width: 22%; z-index: 900"></a>
 
 <div class="row full-height"  style=" overflow: hidden;">
-<div id="left-panel" class="col-xs-12 col-md-3 hidden-xs hidden-sm   full-height " style="display: table; overflow: hidden;">
+<div id="left-panel" class="col-xs-12 col-md-3 hidden-xs hidden-sm   full-height " style="display: table; overflow: hidden; padding-right: 0;">
 
     <div id="info-char" class="full-height" style="display: table; width: 100%; height: 50%;">
         <div id="score" style="display: table-cell; width: 100%;" class="window">
@@ -28,29 +28,34 @@
 
                     <table width="100%">
                         <tr>
-                            <td>Strength</td>
-                            <td> <span class="pull-right"> <span id="player-str"></span> / <span id="player-max-str"></span> </span> </td>
+                            <td><i class="ra ra-muscle-up ra-fw"></i> Str <span id="player-str"></span> </td>
+                            <td><i class="ra ra-player-dodge ra-fw"></i> Dex <span id="player-dex"></span> </td>
                         </tr>
                         <tr>
-                            <td>Dexterity</td>
-                            <td> <span class="pull-right"><span id="player-dex"></span> / <span id="player-max-dex"></span></span></td>
+                            <td><i class="ra ra-double-team ra-fw"></i> Con <span id="player-con"></span> </td>
+                            <td><i class="ra ra-aura ra-fw"></i> Int <span id="player-int"></span> </td>
                         </tr>
                         <tr>
-                            <td>Constitution</td>
+                            <td><i class="ra ra-player-king ra-fw"></i> Wis <span id="player-wis"></span> </td>
+                            <td><i class="ra  ra-player ra-fw"></i> Char <span id="player-cha"></span> </td>
+                        </tr>
+           
+                        @*<tr>
+                            <td><i class="ra ra-muscle-up"></i> Con</td>
                             <td> <span class="pull-right"> <span id="player-con"></span> / <span id="player-max-con"></span></span></td>
                         </tr>
                         <tr>
-                            <td>Intelligence</td>
+                            <td><i class="ra ra-muscle-up"></i> Int</td>
                             <td> <span class="pull-right"><span id="player-int"></span> / <span id="player-max-int"></span></span></td>
                         </tr>
                         <tr>
-                            <td>Wisdom</td>
+                            <td><i class="ra ra-muscle-up"></i> Wis</td>
                             <td><span class="pull-right"><span id="player-wis"></span> / <span id="player-max-wis"></span></span></td>
                         </tr>
                         <tr>
-                            <td>Charisma</td>
+                            <td><i class="ra ra-muscle-up"></i> Char</td>
                             <td> <span class="pull-right"><span id="player-cha"></span> / <span id="player-max-cha"></span></span></td>
-                        </tr>
+                        </tr>*@ 
                     </table>
                 </div>
 
@@ -59,13 +64,9 @@
 
                     <table width="100%">
                         <tr>
-                            <td>Armour</td>
-                            <td><span class="pull-right"><span id="player-armorDef"></span></span></td>
-                        </tr>
-
-                        <tr>
-                            <td>Magic</td>
-                            <td><span class="pull-right"><span id="player-magicDef"></span></span></td>
+                            <td><i class="ra ra-shield ra-fw"></i> Armour <span id="player-armorDef"></span></td>
+             
+                            <td><i class="ra ra-level-three ra-fw"></i> Magic <span id="player-magicDef"></span></td>
                         </tr>
 
                     </table>
@@ -179,13 +180,13 @@
                 <li><a class="infoFilter" href="javascript:void(0);" title="Quest Log">Qlog</a></li>
             </ul>
                     
-            <div id="" class="js-info" style="position: relative; overflow-y: scroll;  max-height: 33vh;">
+            <div id="" class="js-info" style="position: relative; overflow-y: scroll;  max-height: 26vh;">
 
-                <ul id="invList"></ul>
+                <ul id="invList" class="list-unstyled"></ul>
 
                 <div id="eqList" style="display: none;"></div>
 
-                <ul id="afList" style="display: none;"></ul>
+                <ul id="afList" class="list-unstyled" style="display: none;"></ul>
 
                 <div id="qlList" style="display: none;"></div>
             </div>
@@ -198,7 +199,7 @@
     <div id="discussion" class="full-height window" style="overflow-y: scroll; padding: 15px;"></div>
 
 </div>
-<div id="right-panel" class="col-xs-12 col-md-3 hidden-xs hidden-sm full-height"">
+<div id="right-panel" class="col-xs-12 col-md-3 hidden-xs hidden-sm full-height" style="padding-left: 0;">
 
     <div id="info-room" class="full-height" style="display: table; width: 100%; height: 50%; overflow: hidden">
 
@@ -366,7 +367,7 @@
             @*<div id="music" style='background-size: cover; position: absolute; top: 2px; width: 30px; height: 30px; right: 15px; background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMjAwJyBoZWlnaHQ9JzIwMCcgZmlsbD0iI2ZlZDk2NyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDI1IDI1IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyNSAyNSIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PGc+PGc+PHBhdGggZD0iTTE1LjQ3Nyw5LjMxOGMtMC4xOTUsMC4xOTUtMC4xOTUsMC41MTIsMCwwLjcwN2MwLjY2MSwwLjY2MSwxLjAyNSwxLjU0LDEuMDI1LDIuNDc1cy0wLjM2NCwxLjgxMy0xLjAyNSwyLjQ3NSAgICBjLTAuMTk1LDAuMTk1LTAuMTk1LDAuNTEyLDAsMC43MDdjMC4wOTgsMC4wOTgsMC4yMjYsMC4xNDYsMC4zNTQsMC4xNDZzMC4yNTYtMC4wNDksMC4zNTQtMC4xNDYgICAgYzAuODUtMC44NSwxLjMxOC0xLjk3OSwxLjMxOC0zLjE4MnMtMC40NjgtMi4zMzItMS4zMTgtMy4xODJDMTUuOTg5LDkuMTIzLDE1LjY3Miw5LjEyMywxNS40NzcsOS4zMTh6Ii8+PHBhdGggZD0iTTE5LjAxMiw2LjQ4OWMtMC4xOTUtMC4xOTUtMC41MTItMC4xOTUtMC43MDcsMHMtMC4xOTUsMC41MTIsMCwwLjcwN2MyLjkyNCwyLjkyNSwyLjkyNCw3LjY4NCwwLDEwLjYwNyAgICBjLTAuMTk1LDAuMTk1LTAuMTk1LDAuNTEyLDAsMC43MDdjMC4wOTgsMC4wOTgsMC4yMjYsMC4xNDYsMC4zNTQsMC4xNDZzMC4yNTYtMC4wNDksMC4zNTQtMC4xNDYgICAgQzIyLjMyNiwxNS4xOTYsMjIuMzI2LDkuODA0LDE5LjAxMiw2LjQ4OXoiLz48cGF0aCBkPSJNMTMuMjIyLDYuMDUxYy0wLjE3MS0wLjA4NC0wLjM3NS0wLjA2Mi0wLjUyNywwLjA1NUw4LjMzMSw5LjVINC4wMDJjLTAuMjc2LDAtMC41LDAuMjI0LTAuNSwwLjV2NSAgICBjMCwwLjI3NiwwLjIyNCwwLjUsMC41LDAuNWg0LjMyOWw0LjM2NCwzLjM5NUMxMi43ODUsMTguOTY0LDEyLjg5MywxOSwxMy4wMDIsMTljMC4wNzUsMCwwLjE1LTAuMDE3LDAuMjItMC4wNTEgICAgYzAuMTcxLTAuMDg0LDAuMjgtMC4yNTgsMC4yOC0wLjQ0OXYtMTJDMTMuNTAyLDYuMzA5LDEzLjM5Myw2LjEzNSwxMy4yMjIsNi4wNTF6Ii8+PC9nPjwvZz48L3N2Zz4=");' title="Music by BrunuhVille,  https://www.youtube.com/user/BrunuhVille"></div>
             <audio id="player"></audio>*@
             
-            <div id="settings"  data-toggle="modal" data-target="#ModalSettings" class="ra ra-cog ra-fw" style='color: #fed967; width: 30px; height: 30px; position: absolute; right: 5px;' title="Change client settings"></div>
+            <div id="settings"  data-toggle="modal" data-target="#ModalSettings" class="ra ra-cog ra-fw" data-container="body" data-placement="top" title="Change client settings"></div>
  
         </div>
 

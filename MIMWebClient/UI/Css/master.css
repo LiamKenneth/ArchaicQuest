@@ -7665,6 +7665,9 @@ button.close {
 .slick-arrow.slick-hidden {
   display: none; }
 
+body {
+  overflow: hidden; }
+
 .notVisible {
   display: none; }
 
@@ -8129,4 +8132,15 @@ li.Stairs:before {
   margin-right: 5px;
   position: relative;
   top: 2px; }
+
+#settings {
+  color: #fed967;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 16px;
+  top: 4px;
+  font-size: 30px; }
+  #settings:hover {
+    cursor: pointer; }
 
