@@ -7666,7 +7666,13 @@ button.close {
   display: none; }
 
 body {
-  overflow: hidden; }
+  overflow: hidden;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column; }
+
+.MIM-Command {
+  flex: 1; }
 
 .notVisible {
   display: none; }

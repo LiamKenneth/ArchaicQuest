@@ -3,9 +3,16 @@
 @import "slick-theme.scss";
 @import "slick.scss";
 
- body {
-     overflow:hidden;
- }
+body {
+    overflow: hidden;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.MIM-Command {
+ flex:1;
+}
 
 .notVisible {
     display: none;
