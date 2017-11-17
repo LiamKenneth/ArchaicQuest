@@ -5823,8 +5823,8 @@ button.close {
  * -------------------------- */
 @font-face {
   font-family: 'RPGAwesome';
-  src: url("/UI/Css/Lib/RPGAWESOME/fonts/rpgawesome-webfont.eot?v=0.1.0");
-  src: url("/UI/Css/Lib/RPGAWESOME/fonts/rpgawesome-webfont.eot?#iefix&v=0.1.0") format("embedded-opentype"), url("/UI/Css/Lib/RPGAWESOME/fonts/rpgawesome-webfont.woff?v=0.1.0") format("woff"), url("/UI/Css/Lib/RPGAWESOME/fonts/rpgawesome-webfont.ttf?v=0.1.0") format("truetype"), url("/UI/Css/Lib/RPGAWESOME/fonts/rpgawesome-webfont.svg?v=0.1.0#rpg-awesome") format("svg");
+  src: url("/dev/UI/Css/Lib/RPGAWESOME/fonts/rpgawesome-webfont.eot?v=0.1.0");
+  src: url("/dev/UI/Css/Lib/RPGAWESOME/fonts/rpgawesome-webfont.eot?#iefix&v=0.1.0") format("embedded-opentype"), url("/dev/UI/Css/Lib/RPGAWESOME/fonts/rpgawesome-webfont.woff?v=0.1.0") format("woff"), url("/dev/UI/Css/Lib/RPGAWESOME/fonts/rpgawesome-webfont.ttf?v=0.1.0") format("truetype"), url("/dev/UI/Css/Lib/RPGAWESOME/fonts/rpgawesome-webfont.svg?v=0.1.0#rpg-awesome") format("svg");
   font-weight: normal;
   font-style: normal; }
 

@@ -37,7 +37,7 @@ namespace MIMWebClient.Core.PlayerSetup
 
             string darkElfImgURL = "/UI/img/darkElf.jpg";
 
-            string dwarfHelp = "Dwarves are a short muscular humanoids who prefer the mountains and the underdark where they enjoy digging for gold. A lot of dwarves do venture out of the caves and can be found in human settlements in the local tavern with a mug of Ale. They are powerful Warriors and Clerics\r\n";
+            string dwarfHelp = "<p>Dwarves are a short muscular humanoids who prefer the mountains and the underdark where they enjoy digging for gold. A lot of dwarves do venture out of the caves and can be found in human settlements in the local tavern with a mug of Ale. They are powerful Warriors and Clerics</p> <p>Stats:<br/>STR: 62, INT: 52, WIS: 79, DEX: 50, CON: 64 </p> ";
 
             string DwarfImgURL = "/UI/img/dwarf.jpg";
 
@@ -81,6 +81,19 @@ namespace MIMWebClient.Core.PlayerSetup
                 con = 42,
                 cha = 55,
                 help = darkElfHelp,
+                imgUrl = darkElfImgURL
+            });
+
+            listOfRace.Add(new PlayerRace()
+            {
+                name = "Dwarf",
+                str = 62,
+                inte = 52,
+                wis = 79,
+                dex = 50,
+                con = 64,
+                cha = 55,
+                help = dwarfHelp,
                 imgUrl = darkElfImgURL
             });
 

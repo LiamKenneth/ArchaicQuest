@@ -223,11 +223,8 @@ namespace MIMWebClient.Core.World.Anker
                         containerItems = new ItemContainer()
                     },
 
-                new Item.Item()
-                {
-                name = "Chub",
-                location = Item.Item.ItemLocation.Room
-            }
+ 
+ 
 
         };
 
@@ -904,21 +901,21 @@ namespace MIMWebClient.Core.World.Anker
                 exits = new List<Exit>(),
                 items = new List<Item.Item>()
                 {
-                    new  Item.Item()
-                    {
-                        name = "basic old fishing rod",
+                    //new  Item.Item()
+                    //{
+                    //    name = "basic old fishing rod",
                         
-                        location = Item.Item.ItemLocation.Room,
-                        slot = Item.Item.EqSlot.Held,
-                        eqSlot = Item.Item.EqSlot.Held,
-                        description = new Description()
-                        {
-                            look = "This is an old long wooden fishing rod, looks to be well used. There have been other methods for catching fish, though the use of a rod like this one is the tried and tested, and most successful, method.",
-                            room = "A rod is resting here, it's line has been casted out into the water."
+                    //    location = Item.Item.ItemLocation.Room,
+                    //    slot = Item.Item.EqSlot.Held,
+                    //    eqSlot = Item.Item.EqSlot.Held,
+                    //    description = new Description()
+                    //    {
+                    //        look = "This is an old long wooden fishing rod, looks to be well used. There have been other methods for catching fish, though the use of a rod like this one is the tried and tested, and most successful, method.",
+                    //        room = "A rod is resting here, it's line has been casted out into the water."
 
-                        }
+                    //    }
 
-                    }
+                    //}
                 },
                 mobs = new List<Player>(),
  

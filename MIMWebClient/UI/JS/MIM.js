@@ -3,7 +3,7 @@
     //================================================================================
     // Setup the auto-generated proxy for the hub.
     //================================================================================
-    $.connection.hub.url = "/signalr";
+    $.connection.hub.url = "/dev/signalr";
 
     var chat = $.connection.mIMHub;
     var client = chat.client;
@@ -252,10 +252,10 @@
         UI: {
             setWindowHeight: function () {
                 console.log($("#info-char").height())
-                var viewPort = $(window).height() - 145;
-                $("#discussion").css({ "height": viewPort, "max-height": viewPort });
-                $("#info-inv").css({ "height": viewPort - $("#info-char").height(), "max-height": viewPort / 2 - 51 });   
-                $("#info-quest").css({ "height": viewPort / 2 - 51, "max-height": viewPort / 2 - 51 });   
+                var viewPort = $(window).height() - 150;
+                $("#discussion").css({ "height": viewPort + 7, "max-height": viewPort + 7 });
+                $("#info-inv").css({ "height": viewPort - $("#info-char").height(), "max-height": viewPort - $("#info-char").height()});   
+                $("#info-quest").css({ "height": viewPort - $("#info-char").height(), "max-height": viewPort - $("#info-char").height()});   
             },
             openPanels: function () {
 
@@ -640,6 +640,10 @@
     client.updateInventory = function (inventory) {
         var inventoryCount = inventory.length;
 
+
+        $(".js-info").animate({ scrollTop: 0 }, "fast");
+
+
         if (inventory == 0) {
             $("#invList").html("You are not carrying anything");
             return;
@@ -653,34 +657,33 @@
 
     client.updateEquipment= function (eq) {
 
-       
+     
         $("#eqList").empty();
         
          $("#eqList").append(eq);
         
-
+    
 
     };
 
     client.updateQuestLog = function (qlog) {
-
+    
 
         $("#qlList").empty();
 
         $("#qlList").append(qlog);
 
-
-
+      
     };
 
     client.updateAffects= function (affects) {
-
+     
 
         $("#afList").empty();
 
         $("#afList").append(affects);
 
-
+       
 
     };
 
@@ -859,6 +862,7 @@
             var val = $(this).html();
             $(".infoFilter").removeClass("activeUiLink");
             $(this).addClass("activeUiLink");
+            $(".js-info").animate({ scrollTop: 0 }, "fast"); 
             if (val === "Inv") {
                 
                 $("#invList").show();
