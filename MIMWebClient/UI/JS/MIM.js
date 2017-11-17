@@ -251,9 +251,10 @@
         },
         UI: {
             setWindowHeight: function () {
+                console.log($("#info-char").height())
                 var viewPort = $(window).height() - 145;
                 $("#discussion").css({ "height": viewPort, "max-height": viewPort });
-                $("#info-inv").css({ "height": viewPort / 2 - 47, "max-height": viewPort / 2 - 47 });   
+                $("#info-inv").css({ "height": viewPort - $("#info-char").height(), "max-height": viewPort / 2 - 51 });   
                 $("#info-quest").css({ "height": viewPort / 2 - 51, "max-height": viewPort / 2 - 51 });   
             },
             openPanels: function () {
@@ -815,6 +816,7 @@
 
         //// Start scripts
         MIM.init();
+
 
         $(".channelFilter").click(function () {
 

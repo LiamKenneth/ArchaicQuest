@@ -7674,6 +7674,27 @@ body {
 .MIM-Command {
   flex: 1; }
 
+.js-info {
+  height: 40vh; }
+  @media only screen and (min-width: 992px) {
+    .js-info {
+      height: 26vh;
+      max-height: 26vh; } }
+  @media only screen and (min-width: 1200px) {
+    .js-info {
+      height: 40vh;
+      max-height: 40vh; } }
+
+#info-inv, #info-quest {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin-top: 10px; }
+  #info-inv .window, #info-quest .window {
+    width: 100%;
+    overflow: hidden; }
+
 .notVisible {
   display: none; }
 
