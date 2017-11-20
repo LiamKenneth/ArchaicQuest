@@ -595,7 +595,7 @@ namespace MIMWebClient.Core.Events
             {
                 var chanceOfdamage = Helpers.Rand(1, 105);
 
-                if (skillProf.Proficiency >= chanceOfdamage)
+                if (skillProf.Proficiency <= chanceOfdamage)
                 {
                     item.Condition -= Helpers.Rand(1, 5);
 

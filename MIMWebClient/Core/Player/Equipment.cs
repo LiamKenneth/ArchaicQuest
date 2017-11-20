@@ -150,6 +150,11 @@ namespace MIMWebClient.Core.Player
                     return;
                 }
 
+                if (foundItem.Condition == 0)
+                {
+                    HubContext.Instance.SendToClient("You can't equip " + Helpers.ReturnName(null, null, foundItem.name) + " as it's broken.", player.HubGuid);
+                    return;
+                }
 
 
                 foundItem.location = Item.ItemLocation.Worn;

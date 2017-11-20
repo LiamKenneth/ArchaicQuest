@@ -37,6 +37,12 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
+            if (foundItem.Condition >= 75)
+            {
+                HubContext.Instance.SendToClient("You can't improve " + Helpers.ReturnName(null, null, foundItem.name) + " any further.", player.HubGuid);
+                return;
+            }
+
             if (repairHammer != null && repairHammer.type == Item.Item.ItemType.Repair)
             {
                 var chance = Helpers.Rand(1, 100);
@@ -49,9 +55,12 @@ namespace MIMWebClient.Core.Events
 
                     if (foundItem.Condition >= 75)
                     {
-                        foundItem.name = foundItem.name.Replace("Broken ", String.Empty).Trim();
+                        var removeBrokenFromName = foundItem.name.ToLower().Replace("broken ", String.Empty).Trim();
+                        foundItem.name = Helpers.FirstLetterToUpper(removeBrokenFromName);
                         foundItem.Condition = 75;
                         HubContext.Instance.SendToClient(Helpers.ReturnName(null, null, item.Value) + " has been fully repaired.", player.HubGuid);
+
+                        Score.UpdateUiInventory(player);
                         return;
                     }
 
