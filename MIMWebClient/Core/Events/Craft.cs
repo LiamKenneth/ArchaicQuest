@@ -231,7 +231,7 @@ namespace MIMWebClient.Core.Events
             {
                 hasMaterials = findCraft != null &&
                                room.items.FirstOrDefault(
-                                   x => x.name.Equals("Furnace", StringComparison.CurrentCultureIgnoreCase)) != null;
+                                   x => x.name.Equals("Furnace", StringComparison.CurrentCultureIgnoreCase)) != null && HasAllMaterials(player, findCraft.Materials, hasCraft); ;
 
                 if (!hasMaterials)
                 {
@@ -241,7 +241,7 @@ namespace MIMWebClient.Core.Events
             }
             else if (craftType == CraftType.Carve && findCraft.CraftCommand == CraftType.Carve)
             {
-                hasMaterials = findCraft != null && HasAllMaterials(player, findCraft.Materials, hasCraft); ;
+                hasMaterials = findCraft != null && HasAllMaterials(player, findCraft.Materials, hasCraft);
 
 
                 if (room.items.Count == 0 || room.items.FirstOrDefault(
@@ -271,6 +271,8 @@ namespace MIMWebClient.Core.Events
                     HubContext.Instance.SendToClient("You can't do that. try " + findCraft.CraftCommand, player.HubGuid);
                     return;
                 }
+
+                return;
             }
 
             await CraftItem(player, room, findCraft);
@@ -279,6 +281,16 @@ namespace MIMWebClient.Core.Events
 
         public static async Task CraftItem(PlayerSetup.Player player, Room.Room room, Craft craftItem)
         {
+
+            //add skill check here
+            var getSkill = player.Skills.FirstOrDefault(x => x.Alias.Equals(craftItem.CraftCommand.ToString()));
+
+            if (getSkill == null)
+            {
+                HubContext.Instance.SendToClient("You don't know how to do that", player.HubGuid);
+                return;
+            }
+
 
             if (player.MovePoints < craftItem.MoveCost)
             {
@@ -297,9 +309,7 @@ namespace MIMWebClient.Core.Events
             player.MovePoints -= craftItem.MoveCost;
 
 
-            //add skill check here
-            var getSkill = player.Skills.FirstOrDefault(x => x.Alias.Equals(craftItem.CraftCommand.ToString()));
-
+         
             var successChance = ShowSkills.CraftSuccess(getSkill.Points);
 
             if (getSkill.Points >= successChance)

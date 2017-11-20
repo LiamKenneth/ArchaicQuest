@@ -1201,7 +1201,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 18,
                 title = "The palus river",
                 terrain = Room.Terrain.Water,
-                description = "<p>The river is becoming more swamp like, as vines hang down from the trees looming over the waters, and the sounds of frogs echo. Snakes swim across the calm waters disappearing into the overgrowth that floats on top. Hiding beneath the overgrowth is no doubt all sorts of dangerous creatures, no telling what someone may find if they were to search around.</p>",
+                description = "<p>A large mountain rises from the middle of the swamp with noxious fumes bubbling from the waters. What kind of curse lays over this area is unknown, but surely some kind must be here as the area is almost dead silent except for the bubbles bursting. The water close to the mountain is warm and the rocks themselves even warmer, perhaps there is something within the mountain giving off all this heat.</p>",
                 Emotes = new List<string>()
                 {
                     "Plop! You hear something fall into the water.",
@@ -1271,7 +1271,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 20,
                 title = "The palus river",
                 terrain = Room.Terrain.Water,
-                description = "<p>A large mountain rises from the middle of the swamp with noxious fumes bubbling from the waters. What kind of curse lays over this area is unknown, but surely some kind must be here as the area is almost dead silent except for the bubbles bursting. The water close to the mountain is warm and the rocks themselves even warmer, perhaps there is something within the mountain giving off all this heat.</p>",
+                description = "<p>This part of the swamp sits between a hovel to the west and a mountain to the south and a bridge crossing over the river to the north. Chilling laughter drifts on the wind from the east, from deep within the Goblin Forest, and the croaking of a large beast bellows from the overgrowth on the river.</p>",
                 Emotes = new List<string>()
                 {
                     "Plop! You hear something fall into the water.",
@@ -1342,7 +1342,7 @@ namespace MIMWebClient.Core.World.Anker
                 areaId = 19,
                 title = "The Hermit's home",
                 terrain = Room.Terrain.Water,
-                description = "<p>This part of the swamp sits between a hovel to the west and a mountain to the south and a bridge crossing over the river to the north. Chilling laughter drifts on the wind from the east, from deep within the Goblin Forest, and the croaking of a large beast bellows from the overgrowth on the river.</p>",
+                description = "<p>The Hermit's hovel is quaint with a minimalist touch. A few animal hides drape the walls and a slab of meat roast over the fireplace. On the outside of the hovel are several large tanning racks which the hermit no doubts uses to make his clothing. Around the doorframe of the hovel is paint made from some unknown components although a feeling of calm washes over when near it.</p>",
                 Emotes = new List<string>()
                 {
                     "Plop! You hear something fall into the water.",
