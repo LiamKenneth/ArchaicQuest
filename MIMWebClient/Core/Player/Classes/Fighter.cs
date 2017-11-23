@@ -58,22 +58,55 @@ namespace MIMWebClient.Core.Player.Classes
              * */
  
 
-            #region  Give fighter longblade skill
+            #region  Lvl 1 skills
 
-            var longblade = LongBlades.LongBladesAb();
-          
-            fighter.Skills.Add(longblade);
+            var longBlades = LongBlades.LongBladesAb();
+            longBlades.Learned = true;
+            fighter.Skills.Add(longBlades);
+
+            var shortBlades = ShortBlades.ShortBladesAb();
+            shortBlades.Learned = true;
+            fighter.Skills.Add(shortBlades);
+
+            var axe = Axe.AxeAb();
+            axe.Learned = true;
+            fighter.Skills.Add(axe);
+
+            var blunt = BluntWeapons.BluntWeaponsAb();
+            blunt.Learned = true;
+            fighter.Skills.Add(blunt);
+
+            var polearm = Polearms.PolearmsAb();
+            polearm.Learned = true;
+            fighter.Skills.Add(polearm);
+
+            var exotic = Exotic.ExoticAb();
+            exotic.Learned = true;
+            fighter.Skills.Add(exotic);
+
+            var staff = Staff.StaffAb();
+            staff.Learned = true;
+            fighter.Skills.Add(staff);
+
+            var handToHand = HandToHand.HandToHandAb();
+            handToHand.Learned = true;
+            fighter.Skills.Add(handToHand);
+
+            var lightArmour = LightArmour.LightArmourAb();
+            lightArmour.Learned = true;
+            fighter.Skills.Add(lightArmour);
 
             #endregion
 
+            #region  Lvl 2 skills
+            fighter.Skills.Add(HeavyArmour.HeavyArmourAb());
+            fighter.Skills.Add(MediumArmour.MediumArmourAb());
+           
 
-            //#region  Give fighter secondAttack skill
+            #endregion
+ 
 
-            var shortBlades = ShortBlades.ShortBladesAb();
-            shortBlades.Proficiency = 50;
-            fighter.Skills.Add(shortBlades);
 
-            //#endregion
 
 
             #region  Give fighter Mount skill
