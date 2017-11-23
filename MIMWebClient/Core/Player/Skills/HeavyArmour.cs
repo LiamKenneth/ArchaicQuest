@@ -30,12 +30,12 @@ namespace MIMWebClient.Core.Player.Skills
                     Name = "Heavy Armour",
                     CoolDown = 0,
                     Delay = 0,
-                    LevelObtained = 1,
+                    LevelObtained = 2,
                     Proficiency = 1,
                     MaxProficiency = 95,
                     Passive = true,
                     UsableFromStatus = "Fighting",
-                    Syntax = "Passive command",
+                    Syntax = "Passive command",                  
                     HelpText = new Help()
                     {
                         HelpText = "Heavy Armour help text",

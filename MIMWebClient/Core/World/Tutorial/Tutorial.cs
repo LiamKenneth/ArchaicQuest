@@ -116,6 +116,7 @@ namespace MIMWebClient.Core.World.Tutorial
                         slot = Item.Item.EqSlot.Wielded,
                         location = Item.Item.ItemLocation.Inventory,
                         description = new Description(),
+                        Condition = 50
 
                     };
                     dagger.description.look = "This is just a blunt dagger";

@@ -88,6 +88,8 @@ namespace MIMWebClient.Core.Player
         [BsonIgnore]
         public bool Passive { get; set; }
 
+        public bool Learned { get; set; } = false;
+
         [BsonIgnore] 
         public int Delay { get; set; }
 

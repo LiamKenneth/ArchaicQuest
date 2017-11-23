@@ -30,7 +30,7 @@ namespace MIMWebClient.Core.Events
 
                 skillTable.Append("<table><tr><td>Skill Name</td><td>Skill Level</td></tr>");
 
-                foreach (var skill in player.Skills.OrderBy(x => x.LevelObtained))
+                foreach (var skill in player.Skills.Where(x => x.Learned).OrderBy(x => x.LevelObtained))
                 {
                     if (skill.SkillType == Type.Crafting)
                     {
