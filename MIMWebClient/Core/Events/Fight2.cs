@@ -595,7 +595,7 @@ namespace MIMWebClient.Core.Events
             {
                 var chanceOfdamage = Helpers.Rand(1, 105);
 
-                if (skillProf.Proficiency >= chanceOfdamage)
+                if (skillProf.Proficiency <= chanceOfdamage)
                 {
                     item.Condition -= Helpers.Rand(1, 5);
 
@@ -1065,14 +1065,38 @@ namespace MIMWebClient.Core.Events
                     Duration = 10
                 };
 
-                foreach (var invItem in defender.Inventory)
+
+                if (defender.Type == Player.PlayerTypes.Mob)
                 {
-                    invItem.location = Item.ItemLocation.Room;
 
-                    defenderCorpse.containerItems.Add(invItem);
+                    foreach (var invItem in defender.Inventory)
+                    {
+                        HubContext.Instance.SendToClient(
+                            "You loot " + Helpers.ReturnName(null, null, invItem.name).ToLower() +
+                            " from the corpse of " + Helpers.ReturnName(defender, attacker, string.Empty),
+                            attacker.HubGuid);
 
+                        invItem.location = Item.ItemLocation.Inventory;
+
+                        attacker.Inventory.Add(invItem);
+
+                    }
+
+                    Score.UpdateUiInventory(attacker);
                 }
- 
+                else
+                {
+
+                    foreach (var invItem in defender.Inventory)
+                    {
+
+                        invItem.location = Item.ItemLocation.Room;
+
+                        defenderCorpse.containerItems.Add(invItem);
+
+                    }
+                }
+
 
                 //reset defender
                 defender.Inventory = new ItemContainer();
@@ -1216,6 +1240,10 @@ namespace MIMWebClient.Core.Events
                         }
                     }
                 }
+
+
+             
+
 
 
                 attacker.Target = null;

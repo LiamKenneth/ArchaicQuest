@@ -208,6 +208,8 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("arr")]
         public int ArmorRating { get; set; }
 
+        public int SpellResistance { get; set; } = 0;
+
         [BsonElement("s")]
         public int Saves { get; set; }
 
@@ -487,13 +489,14 @@ namespace MIMWebClient.Core.PlayerSetup
 
             this.Skills = new List<Skill>()
             {
-                Forage.ForageAb(),
-                Chopping.ChoppingAb(),
-                Carving.CarvingAb(),
-                Crafting.CraftingAb(),
-                Brewing.BrewingAb(),
-                Cook.CookAb(),
-                Knitting.KnittingAb(),
+                //Forage.ForageAb(),
+                //Chopping.ChoppingAb(),
+                //Carving.CarvingAb(),
+                //Crafting.CraftingAb(),
+                //Brewing.BrewingAb(),
+                //Cook.CookAb(),
+                //Knitting.KnittingAb(),
+                //Carving.CarvingAb(),
                 Swim.SwimAb()
             };
 

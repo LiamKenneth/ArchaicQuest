@@ -251,10 +251,11 @@
         },
         UI: {
             setWindowHeight: function () {
-                var viewPort = $(window).height() - 145;
-                $("#discussion").css({ "height": viewPort, "max-height": viewPort });
-                $("#info-inv").css({ "height": viewPort / 2 - 47, "max-height": viewPort / 2 - 47 });   
-                $("#info-quest").css({ "height": viewPort / 2 - 51, "max-height": viewPort / 2 - 51 });   
+                console.log($("#info-char").height())
+                var viewPort = $(window).height() - 150;
+                $("#discussion").css({ "height": viewPort + 7, "max-height": viewPort + 7 });
+                $("#info-inv").css({ "height": viewPort - $("#info-char").height(), "max-height": viewPort - $("#info-char").height()});   
+                $("#info-quest").css({ "height": viewPort - $("#info-char").height(), "max-height": viewPort - $("#info-char").height()});   
             },
             openPanels: function () {
 
@@ -388,7 +389,21 @@
                 centerMode: false,
                 variableWidth: true,
 
+            });
+
+
+            $("#fontSize").on("change",
+                function (event) {
+ 
+                    $('head').append('<style>#discussion { font-size: ' + $(this).val() + 'px;');
                 });
+
+            $("#textSpacing").on("change",
+                function (event) {
+
+                    $('head').append('<style>#discussion p { margin-bottom: ' + $(this).val() + 'px;');
+                });
+
            
         }
     }
@@ -470,7 +485,7 @@
 
  
         $('#player-armorDef').html(score.ArmorRating);
-        $('#player-magicDef').html("N/A");
+        $('#player-magicDef').html(score.SpellResistance);
 
 
         $('#player-weight').html(score.Weight);
@@ -625,6 +640,10 @@
     client.updateInventory = function (inventory) {
         var inventoryCount = inventory.length;
 
+
+        $(".js-info").animate({ scrollTop: 0 }, "fast");
+
+
         if (inventory == 0) {
             $("#invList").html("You are not carrying anything");
             return;
@@ -638,34 +657,33 @@
 
     client.updateEquipment= function (eq) {
 
-       
+     
         $("#eqList").empty();
         
          $("#eqList").append(eq);
         
-
+    
 
     };
 
     client.updateQuestLog = function (qlog) {
-
+    
 
         $("#qlList").empty();
 
         $("#qlList").append(qlog);
 
-
-
+      
     };
 
     client.updateAffects= function (affects) {
-
+     
 
         $("#afList").empty();
 
         $("#afList").append(affects);
 
-
+       
 
     };
 
@@ -802,6 +820,7 @@
         //// Start scripts
         MIM.init();
 
+
         $(".channelFilter").click(function () {
 
             var val = $(this).html();
@@ -843,6 +862,7 @@
             var val = $(this).html();
             $(".infoFilter").removeClass("activeUiLink");
             $(this).addClass("activeUiLink");
+            $(".js-info").animate({ scrollTop: 0 }, "fast"); 
             if (val === "Inv") {
                 
                 $("#invList").show();
@@ -1057,9 +1077,9 @@
          
     };
 
-    if ($(window).width() > 768) {
-        playAudio();
-    }
+    //if ($(window).width() > 768) {
+    //    playAudio();
+    //}
 
  
 
@@ -1120,6 +1140,7 @@
             console.log("click")
             togglePlay(this);
         });
+
 
 
     function maps(area, region, zindex) {

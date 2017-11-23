@@ -152,7 +152,6 @@ namespace MIMWebClient.Core.Item
             Spear,
             Staff,
             LongBlades,
-            [Display(Name = "Short Blades")]
             ShortBlades,
             Whip,
             Bows,

@@ -56,48 +56,57 @@ namespace MIMWebClient.Core.Player
 
         public static void SleepPlayer(IHubContext context, PlayerSetup.Player player, Room.Room room)
         {
-            if (player.Status != PlayerSetup.Player.PlayerStatus.Sleeping)
+
+            if (player.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
             {
-                player.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
-
-                context.SendToClient("You laydown and go to sleep", player.HubGuid);
-
-                foreach (var character in room?.players)
-                {
-                    if (player != character)
-                    {
-
-                        var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} lays down and goes to sleep.";
-
-                        context.SendToClient(roomMessage, character.HubGuid);
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(room.EventWake))
-                {
-                    Event.ParseCommand(room.EventWake, player, null, room, "sleep");
-                }
-
-
-                foreach (var mob in room.mobs)
-                {
-
-                    if (!string.IsNullOrEmpty(mob.EventWake))
-                    {
-                        Event.ParseCommand(mob.EventWake, player, mob, room, "sleep");
-                    }
-
-                }
+                context.SendToClient("You are sleeping.", player.HubGuid);
+                return;
             }
-            else if (player.Status == PlayerSetup.Player.PlayerStatus.Fighting)
+
+            if (player.Status == PlayerSetup.Player.PlayerStatus.Fighting)
             {
                 context.SendToClient("You are in a middle of a fight!", player.HubGuid);
                 return;
             }
-            else
+
+            if (room.terrain == Room.Room.Terrain.Water)
             {
-                context.SendToClient("You are already asleep", player.HubGuid);
+                context.SendToClient("You can't sleep here.", player.HubGuid);
+                return;
             }
+
+            player.Status = PlayerSetup.Player.PlayerStatus.Sleeping;
+
+            context.SendToClient("You laydown and go to sleep", player.HubGuid);
+
+            foreach (var character in room?.players)
+            {
+                if (player != character)
+                {
+
+                    var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} lays down and goes to sleep.";
+
+                    context.SendToClient(roomMessage, character.HubGuid);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(room.EventWake))
+            {
+                Event.ParseCommand(room.EventWake, player, null, room, "sleep");
+            }
+
+
+            foreach (var mob in room.mobs)
+            {
+
+                if (!string.IsNullOrEmpty(mob.EventWake))
+                {
+                    Event.ParseCommand(mob.EventWake, player, mob, room, "sleep");
+                }
+
+            }
+
+
         }
 
         public static void RestPlayer(IHubContext context, PlayerSetup.Player player, Room.Room room)
@@ -118,7 +127,7 @@ namespace MIMWebClient.Core.Player
                 return;
             }
 
-                player.Status = PlayerSetup.Player.PlayerStatus.Resting;
+            player.Status = PlayerSetup.Player.PlayerStatus.Resting;
 
             context.SendToClient("You sit down and rest.", player.HubGuid);
 

@@ -154,7 +154,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                         RewardXp = 1500,
                         RewardDialog = new DialogTree()
                         {
-                            Message = "Thank you so much $playerName. To chop wood, just wield an axe and chop the wood. Here you can actually keep the axe, I found my lucky axe while you were out. Good luck!"
+                            Message = "Thank you so much $playerName. To chop wood, just wield an axe and chop the wood. Here you can actually keep the axe, I found my spare axe while you were out. Good luck!"
                         },
                         PrerequisiteItem = new List<Item.Item>()
                         {
@@ -170,7 +170,8 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                                     look =  "The shaft of this axe has broken in half and the blade has many chips along it's once sharp edge."
                                 },
                                 equipable = true,
-                                weaponType = Item.Item.WeaponType.Axe
+                                weaponType = Item.Item.WeaponType.Axe,
+                                Condition = 60
                                 
                             }
                         },

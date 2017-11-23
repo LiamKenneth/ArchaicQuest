@@ -36,6 +36,7 @@ namespace MIMWebClient.Core.Player.Skills
                     Passive = true,
                     UsableFromStatus = "Fighting",
                     Syntax = "Passive command",
+                    WeaponType = Item.Item.WeaponType.LongBlades,
                     HelpText = new Help()
                     {
                         HelpText = "long blade help text",

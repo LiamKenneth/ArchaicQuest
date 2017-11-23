@@ -84,28 +84,28 @@ namespace MIMWebClient.Core.Player
 
         public static string DisplayEq(Player player, Equipment eq)
         {
-            var displayEquipment = new StringBuilder();
+            var displayEquipment = new StringBuilder(); 
             displayEquipment.Append("<table>")
-               .Append("<tr><td style='width:175px;'>").Append("&lt;Used as light&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Light)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Worn on finger&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Finger)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Worn on finger&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Finger2)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Worn around neck&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Neck)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Worn around neck&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Neck2)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Worn on face&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Face)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Worn on head&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Head)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Worn on torso&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Torso)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Worn on legs&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Legs)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Worn on feet&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Feet)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Worn on hands&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Hands)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Worn on arms&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Arms)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Worn about body&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Body)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Worn about waist&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Waist)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Worn around wrist&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Wrist)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Worn around wrist&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Wrist2)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Wielded&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Wielded)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Shield&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Shield)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Held&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Held)).Append("</td></tr>")
-                .Append("<tr><td>").Append("&lt;Floating nearby&gt;").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Floating)).Append("</td></tr>").Append("</table");
+               .Append("<tr><td style='width:175px;' title='Worn as light'>").Append("<i class='ra ra-fw ra-torch'></i> Light").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Light)).Append("</td></tr>")
+                .Append("<tr><td title='Worn on finger'>").Append("<i class='ra-diamond ra ra-fw'></i> Finger").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Finger)).Append("</td></tr>")
+                .Append("<tr><td  title='Worn on finger'>").Append("<i class='ra-diamond ra ra-fw'></i> Finger").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Finger2)).Append("</td></tr>")
+                .Append("<tr><td  title='Worn around neck'>").Append("<i class='ra-gem-pendant ra ra-fw'></i> Neck").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Neck)).Append("</td></tr>")
+                .Append("<tr><td title='Worn around neck'>").Append("<i class='ra-gem-pendant ra ra-fw'></i> Neck").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Neck2)).Append("</td></tr>")
+                .Append("<tr><td  title='Worn on face'>").Append("<i class='ra-nuclear ra ra-fw'></i> Face").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Face)).Append("</td></tr>")
+                .Append("<tr><td  title='Worn on head'>").Append("<i class='ra-helmet ra ra-fw'></i> Head").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Head)).Append("</td></tr>")
+                .Append("<tr><td  title='Worn on torso'>").Append("<i class='ra-vest ra ra-fw'></i> Torso").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Torso)).Append("</td></tr>")
+                .Append("<tr><td  title='Worn on legs'>").Append("<i class='ra-vest ra ra-fw'></i> Legs").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Legs)).Append("</td></tr>")
+                .Append("<tr><td  title='Worn on feet'>").Append("<i class=' ra-boot-stomp ra ra-fw'></i> Feet").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Feet)).Append("</td></tr>")
+                .Append("<tr><td  title='Worn on hands'>").Append("<i class=' ra-hand ra ra-fw'></i> Hands").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Hands)).Append("</td></tr>")
+                .Append("<tr><td  title='Worn on arms'>").Append("<i class='ra-vest ra ra-fw'></i> Arms").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Arms)).Append("</td></tr>")
+                .Append("<tr><td  title='Worn about body'>").Append("<i class='ra-vest ra ra-fw'></i> Body").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Body)).Append("</td></tr>")
+                .Append("<tr><td  title='Worn on waist'>").Append("<i class='ra-vest ra ra-fw'></i> Waist").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Waist)).Append("</td></tr>")
+                .Append("<tr><td  title='Worn on wrist'>").Append("<i class='ra-vest ra ra-fw'></i> Wrist").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Wrist)).Append("</td></tr>")
+                .Append("<tr><td  title='Worn on wrist'>").Append("<i class='ra-vest ra ra-fw'></i> Wrist").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Wrist2)).Append("</td></tr>")
+                .Append("<tr><td  title='worn as weapon'>").Append("<i class='ra-sword ra ra-fw'></i> Wielded").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Wielded)).Append("</td></tr>")
+                .Append("<tr><td  title='Worn as shield'>").Append("<i class='ra-shield ra ra-fw'></i> Shield").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Shield)).Append("</td></tr>")
+                .Append("<tr><td  title='Held'>").Append("<i class=' ra-round-bottom-flask ra ra-fw'></i> Held").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Held)).Append("</td></tr>")
+                .Append("<tr><td  title='Floating Nearby'>").Append("<i class='ra-fluffy-swirl ra ra-fw'></i> Floating").Append("</td>").Append("<td>").Append(ReturnEqName(player, eq.Floating)).Append("</td></tr>").Append("</table");
 
             return displayEquipment.ToString();
         }
@@ -150,6 +150,11 @@ namespace MIMWebClient.Core.Player
                     return;
                 }
 
+                if (foundItem.Condition == 0)
+                {
+                    HubContext.Instance.SendToClient("You can't equip " + Helpers.ReturnName(null, null, foundItem.name) + " as it's broken.", player.HubGuid);
+                    return;
+                }
 
 
                 foundItem.location = Item.ItemLocation.Worn;

@@ -116,7 +116,7 @@ namespace MIMWebClient.Core.Player.Skills
             double getSkillProf = 0;
             if (foragingAB != null)
             {
-                getSkillProf = foragingAB.Proficiency / (double)95 * 100;
+                getSkillProf = foragingAB.Points;
             }
 
             var getItems = room.ForageItems.Where(x => x.ForageRank <= player.ForageRank).ToList();
@@ -200,7 +200,7 @@ namespace MIMWebClient.Core.Player.Skills
                 HubContext.Instance.SendToClient(failMessage, player.HubGuid);
 
 
-                if (getSkillProf < 95)
+                if (getSkillProf < 99)
                 {
 
                     HubContext.Instance.SendToClient("You learn from your mistakes and gain 100 experience points",
@@ -211,11 +211,26 @@ namespace MIMWebClient.Core.Player.Skills
 
                     xp.GainLevel(player);
 
-                    foragingAB.Proficiency += Helpers.Rand(1, 5);
+                    foragingAB.Points += Helpers.Rand(1, 5);
 
 
+                    if (foragingAB.Points > 99)
+                    {
+
+                        foragingAB.Points = 99;
+                    }
+
+                 
 
                 }
+
+                if (foragingAB.Points == 99)
+                {
+                    HubContext.Instance.SendToClient("You must commit to a craft to progress further",
+                        player.HubGuid);
+                }
+
+
 
                 Score.ReturnScoreUI(player);
 
