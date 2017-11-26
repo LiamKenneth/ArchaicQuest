@@ -595,7 +595,7 @@ namespace MIMWebClient.Core.Events
             {
                 var chanceOfdamage = Helpers.Rand(1, 105);
 
-                if (skillProf.Proficiency >= chanceOfdamage)
+                if (skillProf.Proficiency <= chanceOfdamage)
                 {
                     item.Condition -= Helpers.Rand(1, 5);
 
@@ -603,13 +603,19 @@ namespace MIMWebClient.Core.Events
                     {
                         HubContext.Instance.SendToClient("Your weapon takes some damage.", Attacker.HubGuid);
 
-                        Player.LearnFromMistake(Attacker, skillProf, 100);                      
+                        var chanceToLearn = Helpers.Rand(1, 4);
+
+                        if (chanceToLearn >= 4)
+                        {
+                            Player.LearnFromMistake(Attacker, skillProf, 100);
+
+                        }                    
 
                     }
                     else
                     {
                         item.name = "broken " + item.name;
-                        item.Condition = 70;
+                        item.Condition = 0;
                         item.location = Item.ItemLocation.Inventory;
                         Attacker.Equipment.Wielded = "Nothing";
 

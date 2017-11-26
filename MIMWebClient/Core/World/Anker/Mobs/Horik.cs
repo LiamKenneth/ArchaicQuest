@@ -170,7 +170,8 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                                     look =  "The shaft of this axe has broken in half and the blade has many chips along it's once sharp edge."
                                 },
                                 equipable = true,
-                                weaponType = Item.Item.WeaponType.Axe
+                                weaponType = Item.Item.WeaponType.Axe,
+                                Condition = 60
                                 
                             }
                         },

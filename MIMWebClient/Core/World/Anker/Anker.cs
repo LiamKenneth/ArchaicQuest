@@ -3098,6 +3098,11 @@ namespace MIMWebClient.Core.World.Anker
 
         public static Room AnkerHome()
         {
+
+            var sword = Items.Weapons.Sword.Long.LongSwordBasic.Katana();
+
+            sword.Condition = 1;
+
             var room = new Room
             {
                 region = "Anker",
@@ -3110,6 +3115,7 @@ namespace MIMWebClient.Core.World.Anker
                 exits = new List<Exit>(),
                 items = new List<Item.Item>()
                 {
+                    sword,
                     new Item.Item()
                     {
                         name = "Knitting desk",
