@@ -108,6 +108,7 @@ namespace MIMWebClient.Core.Player
         public int LevelObtained { get; set; }
         [BsonIgnore]
         public int ManaCost { get; set; }
+        public int MovesCost { get; set; }
         [BsonIgnore]
         public int MaxProficiency { get; set; }
         [BsonIgnore]

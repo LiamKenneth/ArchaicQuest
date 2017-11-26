@@ -47,9 +47,16 @@ namespace MIMWebClient.Core.Events
 
                     HubContext.Instance.SendToClient(Helpers.ReturnName(null, null, item.Value) + " looks to be in a better condition.", player.HubGuid);
 
+                    if (foundItem.Condition > 0)
+                    {
+                        var iname = Helpers.FirstLetterToUpper(foundItem.name.ToLower().Replace("broken", String.Empty)
+                            .Trim());
+                        foundItem.name = iname;
+
+                    }
+
                     if (foundItem.Condition >= 75)
                     {
-                        foundItem.name = foundItem.name.Replace("Broken ", String.Empty).Trim();
                         foundItem.Condition = 75;
                         HubContext.Instance.SendToClient(Helpers.ReturnName(null, null, item.Value) + " has been fully repaired.", player.HubGuid);
                         return;
