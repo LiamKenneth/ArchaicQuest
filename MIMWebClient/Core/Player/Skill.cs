@@ -202,7 +202,7 @@ namespace MIMWebClient.Core.Player
 
             }
 
-            return String.Empty;
+            return target;
         }
 
         public static PlayerSetup.Player FindTarget(string target, Room.Room room)

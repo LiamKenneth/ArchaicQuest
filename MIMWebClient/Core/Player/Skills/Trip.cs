@@ -49,14 +49,14 @@ namespace MIMWebClient.Core.Player.Skills
             
         }
 
-        public void StartTrip(PlayerSetup.Player player, Room.Room room, string target = "")
+        public void StartTrip(IHubContext context, PlayerSetup.Player player, Room.Room room, string target = "")
         {
             //Check if player has spell
             var hasSkill = Skill.CheckPlayerHasSkill(player, TripAb().Name);
 
             if (hasSkill == false)
             {
-                HubContext.Instance.SendToClient("You don't know that skill.", player.HubGuid);
+                context.SendToClient("You don't know that skill.", player.HubGuid);
                 return;
             }
 
@@ -83,7 +83,7 @@ namespace MIMWebClient.Core.Player.Skills
             if (player.ActiveSkill != null)
             {
 
-                HubContext.Instance.SendToClient("wait till you have finished " + player.ActiveSkill.Name, player.HubGuid);
+                context.SendToClient("wait till you have finished " + player.ActiveSkill.Name, player.HubGuid);
                 return;
 
             }
@@ -103,7 +103,7 @@ namespace MIMWebClient.Core.Player.Skills
                 {
 
 
-                    HubContext.Instance.SendToClient("You are too tired to use trip.", player.HubGuid);
+                    context.SendToClient("You are too tired to use trip.", player.HubGuid);
                     player.ActiveSkill = null;
 
                     return;
@@ -115,18 +115,18 @@ namespace MIMWebClient.Core.Player.Skills
 
                 Score.UpdateUiPrompt(player);
 
-                Task.Run(() => DoTrip(player, _target, room));
+                Task.Run(() => DoTrip(context, player, _target, room));
 
             }
             else if (_target == null)
             {
-                HubContext.Instance.SendToClient("You can't trip yourself", player.HubGuid);
+                context.SendToClient("You can't trip yourself", player.HubGuid);
             }
 
 
         }
 
-        private async Task DoTrip(PlayerSetup.Player attacker, PlayerSetup.Player target, Room.Room room)
+        private async Task DoTrip(IHubContext context,  PlayerSetup.Player attacker, PlayerSetup.Player target, Room.Room room)
         {
 
             attacker.Status = PlayerSetup.Player.PlayerStatus.Busy;
@@ -135,7 +135,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (attacker.ManaPoints < TripAb().MovesCost)
             {
-                HubContext.Instance.SendToClient("You are too tired to use trip.", attacker.HubGuid);
+                context.SendToClient("You are too tired to use trip.", attacker.HubGuid);
                 attacker.ActiveSkill = null;
                 PlayerSetup.Player.SetState(attacker);
                 return;
@@ -148,7 +148,117 @@ namespace MIMWebClient.Core.Player.Skills
             var toHit = Helpers.GetPercentage(attacker.Skills.Find(x => x.Name.Equals(TripAb().Name, StringComparison.CurrentCultureIgnoreCase)).Proficiency, 95); // always 5% chance to miss
             int chance = die.dice(1, 100);
 
-            Fight2.ShowAttack(attacker, target, room, toHit, chance, TripAb(), dam);
+
+            bool alive = Fight2.IsAlive(attacker, target);
+            int IsCritical = Fight2.CriticalHit(toHit, chance);
+
+            if (alive)
+            {
+                if (toHit > chance)
+                {
+
+                    var damage = dam > 0 ? dam : Fight2.Damage(attacker, target, IsCritical);
+
+                    var damageText = Fight2.DamageText(damage);
+
+                    if (Fight2.IsAlive(attacker, target))
+                    {
+
+                        HubContext.Instance.SendToClient(
+                            "Your trip " + damageText.Value.ToLower() +
+                            " " + Helpers.ReturnName(target, attacker, null).ToLower() + " [" + dam + "]", attacker.HubGuid);
+
+                        HubContext.Instance.SendToClient(
+                            Helpers.ReturnName(target, attacker, null) + " " + Fight2.ShowMobHeath(target) + "<br><br>", attacker.HubGuid);
+
+ 
+                        HubContext.Instance.SendToClient(
+                            Helpers.ReturnName(attacker, target, null) + "'s trip " + damageText.Value.ToLower() +
+                            " you [" + dam + "]", target.HubGuid);
+
+                        foreach (var player in room.players)
+                        {
+                            if (player != attacker && player != target)
+                            {
+                                HubContext.Instance.SendToClient(
+                                    Helpers.ReturnName(attacker, target, null) + "'s trip " + damageText.Value.ToLower() +
+                                    " " + Helpers.ReturnName(target, attacker, null), player.HubGuid);
+                            }
+
+
+                        }
+
+
+
+                        target.HitPoints -= damage;
+
+                        if (target.HitPoints < 0)
+                        {
+                            target.HitPoints = 0;
+                        }
+
+
+                        if (!Fight2.IsAlive(attacker, target))
+                        {
+                            Fight2.IsDead(attacker, target, room);
+                        }
+                    }
+
+                }
+                else
+                {
+                    if (Fight2.IsAlive(attacker, target))
+                    {
+
+                        //Randomly pick to output dodge, parry, miss
+                        var rand = Helpers.Rand(1, 4);
+                        string attackerMessage, targetMessage, observerMessage;
+
+                        if (rand <= 1)
+                        {
+                            attackerMessage = "Your trip <span style='color:olive'>misses</span> " +
+                                      Helpers.ReturnName(target, attacker, null);
+
+                            targetMessage = Helpers.ReturnName(attacker, target, null) + "'s trip <span style='color:olive'>misses</span> you ";
+
+                            observerMessage = Helpers.ReturnName(attacker, target, null) + "'s   <span style='color:olive'>misses</span> " +
+                                              Helpers.ReturnName(target, attacker, null);
+                        }
+                        else if (rand > 1 && rand <= 2)
+                        {
+                            attackerMessage = Helpers.ReturnName(target, attacker, null) + " <span style='color:olive'>dodges</span> your trip.";
+
+                            targetMessage = "You <span style='color:olive'>dodge</span> " + Helpers.ReturnName(attacker, target, null) + "'s trip";
+
+                            observerMessage = Helpers.ReturnName(target, attacker, null) + " <span style='color:olive'>dodges</span> " + Helpers.ReturnName(attacker, target, null) + "'s trip.";
+                        }
+                        else
+                        {
+                            attackerMessage = Helpers.ReturnName(target, attacker, null) + " <span style='color:olive'>parries</span> your trip";
+
+                            targetMessage = "You <span style='color:olive'>parry</span> " + Helpers.ReturnName(attacker, target, null) + "'s trip";
+
+                            observerMessage = Helpers.ReturnName(target, attacker, null) + " <span style='color:olive'>parries</span> " + Helpers.ReturnName(attacker, target, null) + "'s trip";
+                        }
+
+                        HubContext.Instance.SendToClient(attackerMessage + " <br><br> ", attacker.HubGuid);
+                        HubContext.Instance.SendToClient(targetMessage + " <br><br> ", target.HubGuid);
+
+                        foreach (var player in room.players)
+                        {
+                            if (player != attacker && player != target)
+                            {
+                                HubContext.Instance.SendToClient(
+                                  observerMessage, player.HubGuid);
+                            }
+                        }
+
+                    }
+                }
+
+
+
+            }
 
             //trip / stun player
 
