@@ -109,14 +109,39 @@ namespace MIMWebClient.Core.Player.Skills
                     return;
                 }
 
-                //TODO REfactor
-
                 player.MovePoints -= TripAb().MovesCost;
 
                 Score.UpdateUiPrompt(player);
 
-                Task.Run(() => DoTrip(context, player, _target, room));
+               
 
+                var chanceOfSuccess = Helpers.Rand(1, 100);
+                var skill = player.Skills.FirstOrDefault(x => x.Name.Equals("Trip"));
+                if (skill == null)
+                {
+                    player.ActiveSkill = null;
+                    return;
+                }
+
+                var skillProf = skill.Proficiency;
+
+                if (skillProf >= chanceOfSuccess)
+                {
+                    Task.Run(() => DoTrip(context, player, _target, room));
+                }
+                else
+                {
+                    player.ActiveSkill = null;
+                    PlayerSetup.Player.LearnFromMistake(player, TripAb(), 250);
+
+                    var gain = Helpers.Rand(1, 5);
+
+                    skill.Proficiency += gain;
+
+                    context.SendToClient("Your trip skill increases by " + gain + "%.", player.HubGuid);
+
+                    Score.ReturnScoreUI(player);
+                }
             }
             else if (_target == null)
             {
@@ -143,7 +168,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             var die = new PlayerStats();
 
-            var dam = die.dice(5, 6);
+            var dam = die.dice(1, 6);
 
             var toHit = Helpers.GetPercentage(attacker.Skills.Find(x => x.Name.Equals(TripAb().Name, StringComparison.CurrentCultureIgnoreCase)).Proficiency, 95); // always 5% chance to miss
             int chance = die.dice(1, 100);
@@ -163,6 +188,9 @@ namespace MIMWebClient.Core.Player.Skills
 
                     if (Fight2.IsAlive(attacker, target))
                     {
+                        HubContext.Instance.SendToClient(
+                            "Your trip " + Helpers.ReturnName(target, attacker, null).ToLower() + " to the ground, leaving them slightly dazed.",
+                            attacker.HubGuid);
 
                         HubContext.Instance.SendToClient(
                             "Your trip " + damageText.Value.ToLower() +
@@ -171,23 +199,40 @@ namespace MIMWebClient.Core.Player.Skills
                         HubContext.Instance.SendToClient(
                             Helpers.ReturnName(target, attacker, null) + " " + Fight2.ShowMobHeath(target) + "<br><br>", attacker.HubGuid);
 
- 
+                        HubContext.Instance.SendToClient(
+                            Helpers.ReturnName(attacker, target, null) + " sends you to the ground with a well timed trip, leaving you feeling dazed." , target.HubGuid);
+
+
                         HubContext.Instance.SendToClient(
                             Helpers.ReturnName(attacker, target, null) + "'s trip " + damageText.Value.ToLower() +
                             " you [" + dam + "]", target.HubGuid);
+
+
 
                         foreach (var player in room.players)
                         {
                             if (player != attacker && player != target)
                             {
+
+                                HubContext.Instance.SendToClient(
+                                    Helpers.ReturnName(attacker, target, null) + " sends " + Helpers.ReturnName(target, attacker, null) + " to the ground with a well timed trip, leaving them loo king dazed.", target.HubGuid);
+
+
+
+
                                 HubContext.Instance.SendToClient(
                                     Helpers.ReturnName(attacker, target, null) + "'s trip " + damageText.Value.ToLower() +
                                     " " + Helpers.ReturnName(target, attacker, null), player.HubGuid);
+
+
                             }
 
 
                         }
 
+
+                        target.StunDuration = 20;
+                        target.Status = PlayerSetup.Player.PlayerStatus.Stunned;
 
 
                         target.HitPoints -= damage;
@@ -255,8 +300,6 @@ namespace MIMWebClient.Core.Player.Skills
 
                     }
                 }
-
-
 
             }
 

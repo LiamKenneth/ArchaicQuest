@@ -110,7 +110,11 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
-            defender.Status = Player.PlayerStatus.Fighting;
+            if (defender.Status != Player.PlayerStatus.Stunned)
+            {
+                defender.Status = Player.PlayerStatus.Fighting;
+            }
+           
 
             AddFightersIdtoRoom(attacker, defender, room, false);
 
@@ -457,6 +461,17 @@ namespace MIMWebClient.Core.Events
                 canAttack = false;
             }
 
+            if (attacker.Status == PlayerSetup.Player.PlayerStatus.Stunned)
+            {
+                attacker.StunDuration -= 1;
+
+                if (attacker.StunDuration <= 0)
+                {
+                    attacker.Status = Player.PlayerStatus.Fighting;
+                }
+
+                canAttack = false;
+            }
             //using skill, casting. 
             // probably should set busy when picking up items(disarmed weapon)
             // wielding an item 

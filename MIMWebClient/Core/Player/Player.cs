@@ -44,6 +44,7 @@ namespace MIMWebClient.Core.PlayerSetup
             Busy = 8,
             Floating = 9,
             Mounted = 10,
+            Stunned = 11
 
         }
 
@@ -200,6 +201,8 @@ namespace MIMWebClient.Core.PlayerSetup
 
         [BsonElement("st")]
         public PlayerStatus Status { get; set; }
+
+        public int StunDuration { get; set; } = 0;
 
         [JsonIgnore]
         [BsonElement("ta")]
