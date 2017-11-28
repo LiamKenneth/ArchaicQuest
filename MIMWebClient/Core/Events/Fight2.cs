@@ -297,14 +297,12 @@ namespace MIMWebClient.Core.Events
                 {
                     if (attacker.Status == Player.PlayerStatus.Stunned)
                     {
-                        attacker.StunDuration -= 1;
-
-                        if (attacker.StunDuration <= 0)
-                        {
+                        
+                            await Task.Delay(attacker.StunDuration);
+                            attacker.StunDuration = 0;
                             attacker.Status = Player.PlayerStatus.Fighting;
-                        }
-
-                        return;
+                            continue;
+       
                     }
 
                     //check still here

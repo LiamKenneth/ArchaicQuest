@@ -231,7 +231,7 @@ namespace MIMWebClient.Core.Player.Skills
                         }
 
 
-                        target.StunDuration = 2;
+                        target.StunDuration = 4000;
                         target.Status = PlayerSetup.Player.PlayerStatus.Stunned;
 
 
