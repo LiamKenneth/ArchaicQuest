@@ -295,6 +295,18 @@ namespace MIMWebClient.Core.Events
 
                 while (attacker.HitPoints > 0 && defender.HitPoints > 0)
                 {
+                    if (attacker.Status == Player.PlayerStatus.Stunned)
+                    {
+                        attacker.StunDuration -= 1;
+
+                        if (attacker.StunDuration <= 0)
+                        {
+                            attacker.Status = Player.PlayerStatus.Fighting;
+                        }
+
+                        return;
+                    }
+
                     //check still here
                     Player target = FindValidTarget(room, defender.Name, attacker);
 
@@ -461,17 +473,7 @@ namespace MIMWebClient.Core.Events
                 canAttack = false;
             }
 
-            if (attacker.Status == PlayerSetup.Player.PlayerStatus.Stunned)
-            {
-                attacker.StunDuration -= 1;
-
-                if (attacker.StunDuration <= 0)
-                {
-                    attacker.Status = Player.PlayerStatus.Fighting;
-                }
-
-                canAttack = false;
-            }
+     
             //using skill, casting. 
             // probably should set busy when picking up items(disarmed weapon)
             // wielding an item 
