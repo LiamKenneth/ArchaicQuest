@@ -740,6 +740,17 @@ namespace MIMWebClient.Core.Events
             }
         }
 
+        public static string ShowStatus(Player player)
+        {
+            if (player.Status == Player.PlayerStatus.Stunned)
+            {
+                return "<span style='color:red'> [Stunned]</span>";
+            }
+
+            return string.Empty;
+
+        }
+
         /// <summary>
         /// Shows attack and damage to player
         /// </summary>
@@ -803,7 +814,7 @@ namespace MIMWebClient.Core.Events
 
                             HubContext.Instance.SendToClient(
                                 "Your " + WeaponAttackName(attacker, skillUsed).Key + " " + damageText.Value.ToLower() +
-                                " " + Helpers.ReturnName(defender, attacker, null).ToLower() + " [" + dam + "]", attacker.HubGuid);
+                                " " + Helpers.ReturnName(defender, attacker, null).ToLower() + "[" + dam + "]" + ShowStatus(defender), attacker.HubGuid);
 
                             HubContext.Instance.SendToClient(
                                 Helpers.ReturnName(defender, attacker, null) +  " " + ShowMobHeath(defender) + "<br><br>", attacker.HubGuid);
@@ -819,7 +830,7 @@ namespace MIMWebClient.Core.Events
                             HubContext.Instance.SendToClient(
                                 Helpers.ReturnName(attacker, defender, null) + "'s " +
                                 WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value.ToLower() +
-                                " you [" + dam + "]", defender.HubGuid);
+                                " you [" + dam + "]" + ShowStatus(defender), defender.HubGuid);
 
                             foreach (var player in room.players)
                             {
@@ -828,7 +839,7 @@ namespace MIMWebClient.Core.Events
                                     HubContext.Instance.SendToClient(
                                         Helpers.ReturnName(attacker, defender, null) + "'s " +
                                         WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value.ToLower() +
-                                        " " + Helpers.ReturnName(defender, attacker, null), player.HubGuid);
+                                        " " + Helpers.ReturnName(defender, attacker, null) + ShowStatus(defender), player.HubGuid);
                                 }
 
                                
