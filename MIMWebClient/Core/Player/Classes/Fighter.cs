@@ -113,6 +113,7 @@ namespace MIMWebClient.Core.Player.Classes
 
             #region Lvl 4
             fighter.Skills.Add(FastHealing.FastHealingAb());
+            fighter.Skills.Add(Toughness.ToughnessAb());
             #endregion
 
 

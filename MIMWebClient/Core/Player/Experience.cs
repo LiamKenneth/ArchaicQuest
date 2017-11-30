@@ -93,10 +93,24 @@ namespace MIMWebClient.Core.Player
 
                 var selectedClass = PlayerClass.ClassList().FirstOrDefault(x => x.Value.Name.ToLower().StartsWith(player.SelectedClass, StringComparison.CurrentCultureIgnoreCase));
                 var dice = new Helpers();
+                var maxHPGain = selectedClass.Value.MaxHpGain;
+                var maxEnduranceGain = selectedClass.Value.MaxEnduranceGain;
 
-                var hpGain = dice.dice(1, selectedClass.Value.MinHpGain, selectedClass.Value.MaxHpGain);
-                var manaGain = dice.dice(1, selectedClass.Value.MinHpGain, selectedClass.Value.MaxHpGain);
-                var enduranceGain = dice.dice(1, selectedClass.Value.MinHpGain, selectedClass.Value.MaxHpGain);
+                if (Skill.CheckPlayerHasSkill(player, "Toughness"))
+                {
+                    var chanceOfSuccess = Helpers.Rand(1, 100);
+
+                    var hasSkill = player.Skills.FirstOrDefault(x => x.Name.Equals("Toughness"));
+                    if (hasSkill != null && hasSkill.Proficiency >= chanceOfSuccess)
+                    {
+                        maxHPGain *= 3;
+                        maxEnduranceGain *= 3;
+                    }
+                }
+
+                var hpGain = dice.dice(1, selectedClass.Value.MinHpGain, maxHPGain);
+                var manaGain = dice.dice(1, selectedClass.Value.MinManaGain, selectedClass.Value.MaxManaGain);
+                var enduranceGain = dice.dice(1, selectedClass.Value.MinEnduranceGain, maxEnduranceGain);
                 //tell user they have gained a level
 
                 player.MaxHitPoints += hpGain;
@@ -105,7 +119,7 @@ namespace MIMWebClient.Core.Player
 
                 //tell user how much HP / mana / mvs / practices / trains they have gained
 
-                HubContext.Instance.SendToClient("Congratulations, you are now level " + player.Level + ". You have gained. HP: " + hpGain + " Mana: " + manaGain + " End: " + enduranceGain, player.HubGuid);
+                HubContext.Instance.SendToClient("<span style='color:yellow'>Congratulations, you are now level " + player.Level + ". You have gained. HP: " + hpGain + " Mana: " + manaGain + " End: " + enduranceGain + "</span>", player.HubGuid);
 
                 Score.ReturnScoreUI(player);
 

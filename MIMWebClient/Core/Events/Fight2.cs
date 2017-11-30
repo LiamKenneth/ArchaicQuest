@@ -1045,11 +1045,11 @@ namespace MIMWebClient.Core.Events
                 {
                     if (player != defender)
                     {
-                        HubContext.Instance.SendToClient(defender.Name + " dies ", player.HubGuid);
+                        HubContext.Instance.SendToClient("<span style='color:red'>" + defender.Name + " is DEAD!!</span> ", player.HubGuid);
                     }
                     else
                     {
-                        HubContext.Instance.SendToClient("You die", defender.HubGuid);
+                        HubContext.Instance.SendToClient("<span style='color:red'>You are DEAD!!</span>", defender.HubGuid);
                     }
                 }
 
