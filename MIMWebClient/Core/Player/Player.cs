@@ -682,7 +682,7 @@ namespace MIMWebClient.Core.PlayerSetup
 
             Score.ReturnScoreUI(player);
         }
-
+ 
         public static void LearnFromMistake(Player player, Skill skill, int xpGain)
         {
 

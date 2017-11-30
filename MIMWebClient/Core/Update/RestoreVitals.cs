@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using MIMWebClient.Core.Events;
+using MIMWebClient.Core.Player;
 using MongoDB.Bson;
 
 namespace MIMWebClient.Core.Update
@@ -32,7 +33,7 @@ namespace MIMWebClient.Core.Update
             // .toList should solve it if that's the issue
             foreach (var player in players.ToList())
             {
-               
+
 
                 try
                 {
@@ -47,7 +48,7 @@ namespace MIMWebClient.Core.Update
                     }
 
                     UpdateAffects(player, context);
- 
+
                 }
                 catch (Exception ex)
                 {
@@ -77,13 +78,13 @@ namespace MIMWebClient.Core.Update
 
             try
             {
-                
+
                 foreach (var room in rooms)
                 {
                     foreach (var mob in room.mobs.ToList())
                     {
                         if (mob.Status != Player.PlayerStatus.Dead || mob.HitPoints > 0)
-                        { 
+                        {
                             UpdateHp(mob, context);
                             UpdateMana(mob, context);
                             UpdateEndurance(mob, context);
@@ -97,41 +98,41 @@ namespace MIMWebClient.Core.Update
                     if (room.players.Count >= 1)
                     {
                         continue; //don't remove corpse incase player is in room so they have chance to loot it.
-                                // maybe decay corpse and eventually remove
+                                  // maybe decay corpse and eventually remove
                     }
-                 
-                        if (room.corpses.Count > 0)
+
+                    if (room.corpses.Count > 0)
+                    {
+                        // decay corpse
+
+                        foreach (var corpse in room.corpses.ToList())
                         {
-                            // decay corpse
 
-                            foreach (var corpse in room.corpses.ToList())
-                            {
 
-                          
 
                             if (corpse.Type.Equals(Player.PlayerTypes.Player))
-                                {
-                                    continue;
-                                }
+                            {
+                                continue;
+                            }
 
-                                var mobRoomOrigin =
-                                    rooms.Find(
-                                        x =>
-                                            x.areaId == corpse.Recall.AreaId && x.area == corpse.Recall.Area &&
-                                            x.region == corpse.Recall.Region);
-                                var originalArea = World.Areas.ListOfRooms().FirstOrDefault(x =>
-                                    x.area == mobRoomOrigin.area && x.areaId == mobRoomOrigin.areaId &&
-                                    x.region == mobRoomOrigin.region);
+                            var mobRoomOrigin =
+                                rooms.Find(
+                                    x =>
+                                        x.areaId == corpse.Recall.AreaId && x.area == corpse.Recall.Area &&
+                                        x.region == corpse.Recall.Region);
+                            var originalArea = World.Areas.ListOfRooms().FirstOrDefault(x =>
+                                x.area == mobRoomOrigin.area && x.areaId == mobRoomOrigin.areaId &&
+                                x.region == mobRoomOrigin.region);
 
-                                if (originalArea != null)
-                                {
+                            if (originalArea != null)
+                            {
 
                                 // potential bug with mobs that have the same name but only one carries an item
                                 // finding the origianl mob will probbaly match for one but not the other so the
                                 // mob with the other item never gets loaded.
                                 // potential way round it. random loot drops for mobs that don't have a name and are genric ie. rat
                                 // mobs like village idiot have set items
-                                    var originalMob = originalArea.mobs.Find(x => x.Name == corpse.Name);
+                                var originalMob = originalArea.mobs.Find(x => x.Name == corpse.Name);
 
                                 if (originalMob != null)
                                 {
@@ -144,14 +145,14 @@ namespace MIMWebClient.Core.Update
                                         var mobHomeRoom = rooms.FirstOrDefault(x => x.areaId == originalMob.Recall.AreaId && x.area == originalMob.Recall.Area && x.region == originalMob.Recall.Region);
                                         mobHomeRoom.mobs.Add(originalMob);
                                     }
-                                  
-                                }
-                              
-                                }
-                            }
 
+                                }
+
+                            }
                         }
-                    
+
+                    }
+
 
                     #endregion
 
@@ -195,7 +196,7 @@ namespace MIMWebClient.Core.Update
                         }
 
                         item.Duration -= 1;
-                  
+
                     }
 
                     #region add Items back
@@ -222,7 +223,7 @@ namespace MIMWebClient.Core.Update
                                     room.items.Add(World.Areas.ListOfRooms()[j].items[k]);
                                 }
 
-                                    if (itemAlreadyThere?.container == true)
+                                if (itemAlreadyThere?.container == true)
                                 {
 
 
@@ -256,7 +257,7 @@ namespace MIMWebClient.Core.Update
                         }
                     }
 
-               
+
                 }
 
 
@@ -291,9 +292,21 @@ namespace MIMWebClient.Core.Update
 
                 if (player.HitPoints <= player.MaxHitPoints)
                 {
-
+                    var divideBy = 4;
                     var die = new Helpers();
-                    var maxGain = player.Constitution / 4;
+
+                    if (Skill.CheckPlayerHasSkill(player, "Fast Healing"))
+                    {
+                        var chanceOfSuccess = Helpers.Rand(1, 100);
+
+                        var fastHealingSkill = player.Skills.FirstOrDefault(x => x.Name.Equals("Fast Healing"));
+                        if (fastHealingSkill != null && fastHealingSkill.Proficiency >= chanceOfSuccess)
+                        {
+                            divideBy = 2;
+                        }
+                    }
+
+                    var maxGain = player.Constitution / divideBy;
 
 
                     if (player.Status == Player.PlayerStatus.Fighting)
@@ -432,7 +445,7 @@ namespace MIMWebClient.Core.Update
 
                     if (af.Duration == 0 || af.Duration <= 0)
                     {
-                        
+
 
                         // put in method? or change way we handle invis
                         if (af.Name == "Invis")

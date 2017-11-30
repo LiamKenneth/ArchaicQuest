@@ -107,11 +107,14 @@ namespace MIMWebClient.Core.Player.Classes
 
             #endregion
 
-
             #region Lvl 3 skills
             fighter.Skills.Add(Trip.TripAb());
+            #endregion
 
-            #endregion  
+            #region Lvl 4
+            fighter.Skills.Add(FastHealing.FastHealingAb());
+            #endregion
+
 
 
 
