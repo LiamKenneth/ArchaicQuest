@@ -9,16 +9,16 @@ using MIMWebClient.Core.PlayerSetup;
 namespace MIMWebClient.Core.Player.Skills
 {
 
-    public class Trip: Skill
+    public class Trip : Skill
     {
 
         public static Skill TripSkill { get; set; }
         public static Skill TripAb()
         {
-                  
+
             if (TripSkill != null)
             {
-               return TripSkill;
+                return TripSkill;
             }
             else
             {
@@ -46,7 +46,7 @@ namespace MIMWebClient.Core.Player.Skills
             }
 
             return TripSkill;
-            
+
         }
 
         public void StartTrip(IHubContext context, PlayerSetup.Player player, Room.Room room, string target = "")
@@ -98,6 +98,19 @@ namespace MIMWebClient.Core.Player.Skills
             if (_target != null)
             {
 
+                if (_target.Status == PlayerSetup.Player.PlayerStatus.Floating)
+                {
+                    context.SendToClient("You can't trip someone floating.", player.HubGuid);
+                    return;
+
+                }
+
+                if (_target.HitPoints <= 0)
+                {
+                    context.SendToClient("You can't trip them as they are dead.", player.HubGuid);
+                    return;
+
+                }
 
                 if (player.MovePoints < TripAb().MovesCost)
                 {
@@ -113,7 +126,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 Score.UpdateUiPrompt(player);
 
-               
+
 
                 var chanceOfSuccess = Helpers.Rand(1, 100);
                 var skill = player.Skills.FirstOrDefault(x => x.Name.Equals("Trip"));
@@ -138,20 +151,33 @@ namespace MIMWebClient.Core.Player.Skills
 
                     skill.Proficiency += gain;
 
-                    context.SendToClient("Your trip skill increases by " + gain + "%.", player.HubGuid);
+                    context.SendToClient("<span style='color:yellow'>Your trip skill increases by " + gain + "%.</span>", player.HubGuid);
 
                     Score.ReturnScoreUI(player);
                 }
             }
             else if (_target == null)
             {
-                context.SendToClient("You can't trip yourself", player.HubGuid);
+                context.SendToClient($"You can't find anything known as '{target}' here.", player.HubGuid);
+                player.ActiveSkill = null;
             }
 
 
         }
 
-        private async Task DoTrip(IHubContext context,  PlayerSetup.Player attacker, PlayerSetup.Player target, Room.Room room)
+        private bool TripSuccess(PlayerSetup.Player attacker, PlayerSetup.Player target)
+        {
+            var targetSaveAgainstTrip = Math.Max(target.Strength, target.Dexterity);
+
+            if (attacker.Strength == targetSaveAgainstTrip)
+            {
+                return attacker.MovePoints > target.MovePoints;
+            }
+
+            return attacker.Strength > targetSaveAgainstTrip;
+        }
+
+        private async Task DoTrip(IHubContext context, PlayerSetup.Player attacker, PlayerSetup.Player target, Room.Room room)
         {
 
             attacker.Status = PlayerSetup.Player.PlayerStatus.Busy;
@@ -170,43 +196,42 @@ namespace MIMWebClient.Core.Player.Skills
 
             var dam = die.dice(1, 6);
 
-            var toHit = Helpers.GetPercentage(attacker.Skills.Find(x => x.Name.Equals(TripAb().Name, StringComparison.CurrentCultureIgnoreCase)).Proficiency, 95); // always 5% chance to miss
+            var ToTrip = Helpers.GetPercentage(attacker.Skills.Find(x => x.Name.Equals(TripAb().Name, StringComparison.CurrentCultureIgnoreCase)).Proficiency, 95);
+
             int chance = die.dice(1, 100);
 
-
             bool alive = Fight2.IsAlive(attacker, target);
-            int IsCritical = Fight2.CriticalHit(toHit, chance);
+
+            var tripSuccess = TripSuccess(attacker, target);
 
             if (alive)
             {
-                if (toHit > chance)
+                if (ToTrip > chance && tripSuccess)
                 {
-
-                    var damage = dam > 0 ? dam : Fight2.Damage(attacker, target, IsCritical);
+                    var damage = dam > 0 ? dam : Fight2.Damage(attacker, target, 1);
 
                     var damageText = Fight2.DamageText(damage);
 
                     if (Fight2.IsAlive(attacker, target))
                     {
                         HubContext.Instance.SendToClient(
-                            "Your trip " + Helpers.ReturnName(target, attacker, null).ToLower() + " to the ground, leaving them slightly dazed.",
+                            "<span style='color:cyan'>You trip " + Helpers.ReturnName(target, attacker, null).ToLower() + " to the ground, leaving them slightly dazed.</span>",
                             attacker.HubGuid);
 
                         HubContext.Instance.SendToClient(
-                            "Your trip " + damageText.Value.ToLower() +
-                            " " + Helpers.ReturnName(target, attacker, null).ToLower() + " [" + dam + "]", attacker.HubGuid);
+                            $"Your trip {damageText.Value.ToLower()} {Helpers.ReturnName(target, attacker, null).ToLower()} [{dam}]", attacker.HubGuid);
 
                         HubContext.Instance.SendToClient(
                             Helpers.ReturnName(target, attacker, null) + " " + Fight2.ShowMobHeath(target) + "<br><br>", attacker.HubGuid);
 
                         HubContext.Instance.SendToClient(
-                            Helpers.ReturnName(attacker, target, null) + " sends you to the ground with a well timed trip, leaving you feeling dazed." , target.HubGuid);
+                            $"<span style='color:cyan'>{Helpers.ReturnName(attacker, target, null)} sends you to the ground with a well timed trip, leaving you feeling dazed.</span>",
+                            target.HubGuid);
 
 
                         HubContext.Instance.SendToClient(
                             Helpers.ReturnName(attacker, target, null) + "'s trip " + damageText.Value.ToLower() +
                             " you [" + dam + "]", target.HubGuid);
-
 
 
                         foreach (var player in room.players)
@@ -215,7 +240,7 @@ namespace MIMWebClient.Core.Player.Skills
                             {
 
                                 HubContext.Instance.SendToClient(
-                                    Helpers.ReturnName(attacker, target, null) + " sends " + Helpers.ReturnName(target, attacker, null) + " to the ground with a well timed trip, leaving them loo king dazed.", target.HubGuid);
+                                    Helpers.ReturnName(attacker, target, null) + " sends " + Helpers.ReturnName(target, attacker, null) + " to the ground with a well timed trip, leaving them looking dazed.", target.HubGuid);
 
 
 
