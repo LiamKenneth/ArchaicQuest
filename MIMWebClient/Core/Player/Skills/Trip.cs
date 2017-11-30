@@ -27,7 +27,7 @@ namespace MIMWebClient.Core.Player.Skills
                     Name = "Trip",
                     CoolDown = 0,
                     Delay = 0,
-                    LevelObtained = 1,
+                    LevelObtained = 3,
                     Proficiency = 1,
                     MaxProficiency = 95,
                     Passive = true,

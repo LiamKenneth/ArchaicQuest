@@ -214,21 +214,7 @@ namespace MIMWebClient.Core.Events
 
             Player defendingPlayer = null;
 
-            if (room.mobs.Count <= 0)
-            {
-                HubContext.Instance.SendToClient("You don't see anything to kill that matches that name", attacker.HubGuid);
-                attacker.ActiveFighting = false;
-                attacker.Target = null;
-                attacker.Status = Player.PlayerStatus.Standing;
-            }
 
-            if (room.players.Count <= 0)
-            {
-                HubContext.Instance.SendToClient("You don't see anything to kill that matches that name", attacker.HubGuid);
-                attacker.ActiveFighting = false;
-                attacker.Target = null;
-                attacker.Status = Player.PlayerStatus.Standing;
-            }
 
             if (nth == -1)
             {
@@ -627,7 +613,7 @@ namespace MIMWebClient.Core.Events
 
                     if (item.Condition > 0)
                     {
-                        HubContext.Instance.SendToClient("Your weapon takes some damage.", Attacker.HubGuid);
+                        HubContext.Instance.SendToClient("<span style='color:goldenrod'>Your weapon takes some damage.</span>", Attacker.HubGuid);
 
                         var chanceToLearn = Helpers.Rand(1, 4);
 
@@ -645,7 +631,7 @@ namespace MIMWebClient.Core.Events
                         item.location = Item.ItemLocation.Inventory;
                         Attacker.Equipment.Wielded = "Nothing";
 
-                        HubContext.Instance.SendToClient("Your weapon breaks.", Attacker.HubGuid);
+                        HubContext.Instance.SendToClient("<span style='color:goldenrod'>Your weapon breaks.</span>", Attacker.HubGuid);
 
                         Score.UpdateUiInventory(Attacker);
                     }
@@ -825,10 +811,9 @@ namespace MIMWebClient.Core.Events
 
                             HubContext.Instance.SendToClient(
                                 "Your " + WeaponAttackName(attacker, skillUsed).Key + " " + damageText.Value.ToLower() +
-                                " " + Helpers.ReturnName(defender, attacker, null).ToLower() + "[" + dam + "]" + ShowStatus(defender), attacker.HubGuid);
+                                " " + Helpers.ReturnName(defender, attacker, null).ToLower() + " [" + dam + "]" + ShowStatus(defender), attacker.HubGuid);
 
-                            HubContext.Instance.SendToClient(
-                                Helpers.ReturnName(defender, attacker, null) +  " " + ShowMobHeath(defender) + "<br><br>", attacker.HubGuid);
+                            HubContext.Instance.SendToClient("<span style=color:cyan'>" + Helpers.ReturnName(defender, attacker, null) +  " "  + ShowMobHeath(defender) + "</span>", attacker.HubGuid);
 
                             if (attacker.Equipment.Wielded != "Nothing")
                                 {
@@ -916,8 +901,8 @@ namespace MIMWebClient.Core.Events
                                 observerMessage = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>parries</span> " + Helpers.ReturnName(attacker, defender, null) + "'s" + WeaponAttackName(attacker, skillUsed).Key;
                             }
 
-                            HubContext.Instance.SendToClient(attackerMessage +  " <br><br> ", attacker.HubGuid);
-                            HubContext.Instance.SendToClient(defenderMessage + " <br><br> ", defender.HubGuid);
+                            HubContext.Instance.SendToClient(attackerMessage, attacker.HubGuid);
+                            HubContext.Instance.SendToClient(defenderMessage, defender.HubGuid);
 
                             foreach (var player in room.players)
                             {

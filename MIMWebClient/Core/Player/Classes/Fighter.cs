@@ -96,19 +96,23 @@ namespace MIMWebClient.Core.Player.Classes
             lightArmour.Learned = true;
             fighter.Skills.Add(lightArmour);
 
-            var trip = Trip.TripAb();
-            trip.Learned = true;
-            fighter.Skills.Add(trip);
+
 
             #endregion
 
             #region  Lvl 2 skills
             fighter.Skills.Add(HeavyArmour.HeavyArmourAb());
             fighter.Skills.Add(MediumArmour.MediumArmourAb());
-           
+
 
             #endregion
- 
+
+
+            #region Lvl 3 skills
+            fighter.Skills.Add(Trip.TripAb());
+
+            #endregion  
+
 
 
 
