@@ -365,7 +365,7 @@ namespace MIMWebClient.Core.Update
                 {
 
                     var die = new Helpers();
-                    var maxGain = player.Intelligence;
+                    var maxGain = player.Intelligence / 4;
 
                     if (player.Status == Player.PlayerStatus.Fighting)
                     {
@@ -506,7 +506,7 @@ namespace MIMWebClient.Core.Update
                 {
 
                     var die = new Helpers();
-                    var maxGain = player.Dexterity;
+                    var maxGain = player.Dexterity / 4;
 
                     if (player.Status == Player.PlayerStatus.Fighting)
                     {
