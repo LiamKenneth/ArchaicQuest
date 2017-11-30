@@ -592,7 +592,7 @@ namespace MIMWebClient.Core.Events
             }
       
             
-            int totalDamage = (int)(damage * strengthMod * enduranceMod * criticalHit * levelMod);
+            int totalDamage = (int)(damage * strengthMod * criticalHit * levelMod);
 
             if (armourReduction > 0)
             {
