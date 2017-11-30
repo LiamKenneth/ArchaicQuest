@@ -293,7 +293,7 @@ namespace MIMWebClient.Core.Update
                 {
 
                     var die = new Helpers();
-                    var maxGain = player.Constitution;
+                    var maxGain = player.Constitution / 4;
 
 
                     if (player.Status == Player.PlayerStatus.Fighting)
