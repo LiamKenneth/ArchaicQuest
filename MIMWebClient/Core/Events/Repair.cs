@@ -53,6 +53,14 @@ namespace MIMWebClient.Core.Events
 
                     HubContext.Instance.SendToClient(Helpers.ReturnName(null, null, item.Value) + " looks to be in a better condition.", player.HubGuid);
 
+                    if (foundItem.Condition > 0)
+                    {
+                        var iname = Helpers.FirstLetterToUpper(foundItem.name.ToLower().Replace("broken", String.Empty)
+                            .Trim());
+                        foundItem.name = iname;
+
+                    }
+
                     if (foundItem.Condition >= 75)
                     {
                         var removeBrokenFromName = foundItem.name.ToLower().Replace("broken ", String.Empty).Trim();

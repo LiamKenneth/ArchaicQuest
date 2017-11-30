@@ -186,7 +186,7 @@ namespace MIMWebClient.Core
                 {"ride", () => Mount.StartMount(playerData, room, commandOptions)},
                 {"mount", () => Mount.StartMount(playerData, room, commandOptions)},
                 {"dismount", () => Mount.Dismount(playerData, room, commandOptions)},
-
+                { "trip", () => {new Trip().StartTrip(context, playerData, room, commandOptions); }},
 
                 //
                 {"unlock", () => ManipulateObject.UnlockItem(room, playerData, commandOptions, commandKey)},

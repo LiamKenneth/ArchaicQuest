@@ -90,6 +90,7 @@
     <Compile Include="Core\PlayerSetup\PlayerStatsTest.cs" />
     <Compile Include="Core\Player\PlayerTest.cs" />
     <Compile Include="Core\Player\SkillsTest.cs" />
+    <Compile Include="Core\Player\Skills\TripTest.cs" />
     <Compile Include="Core\Player\Spells\ArmourTest.cs" />
     <Compile Include="Core\Player\Spells\MagicMissileTest.cs" />
     <Compile Include="Core\Player\StatusTest.cs" />

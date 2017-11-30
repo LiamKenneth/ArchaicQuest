@@ -163,6 +163,13 @@ namespace MIMWebClient.Core.Events
                                               "</p>";
                             }
                         }
+                        else if (item.Status == Player.PlayerStatus.Stunned)
+                        {
+
+                          
+                                playerList += "<p>" + LoadRoom.ShowObjectEffects(item) + " is  stunned.</p>";
+                     
+                        }
                         else if (item.Status == PlayerSetup.Player.PlayerStatus.Resting)
                         {
                             playerList += "<p>" + LoadRoom.ShowObjectEffects(item) + " is resting here.</p>";
@@ -219,6 +226,12 @@ namespace MIMWebClient.Core.Events
                     else if (item.Status == Player.PlayerStatus.Fighting)
                     {
                         mobList += "<p class='roomMob'>" + article + " " + item.Name + " is fighting " + item.Target.Name + ".</p>";
+                    }
+                    else if (item.Status == Player.PlayerStatus.Stunned)
+                    {
+
+                        mobList += "<p class='roomMob'>" + article + " " + item.Name +  " is stunned.</p>";
+
                     }
                     else if (item.Status == PlayerSetup.Player.PlayerStatus.Resting)
                     {

@@ -44,6 +44,18 @@ namespace MIMWebClient.Core.PlayerSetup
             Busy = 8,
             Floating = 9,
             Mounted = 10,
+            Stunned = 11
+
+        }
+
+        public enum SizeCategories
+        {
+            Tiny = 1,
+            Small = 2,
+            Medium = 3,
+            Large = 4,
+            Huge = 5,
+
 
         }
 
@@ -201,6 +213,8 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("st")]
         public PlayerStatus Status { get; set; }
 
+        public int StunDuration { get; set; } = 0;
+
         [JsonIgnore]
         [BsonElement("ta")]
         public Player Target { get; set; }
@@ -209,6 +223,8 @@ namespace MIMWebClient.Core.PlayerSetup
         public int ArmorRating { get; set; }
 
         public int SpellResistance { get; set; } = 0;
+
+        public int SizeCategory { get; set; }
 
         [BsonElement("s")]
         public int Saves { get; set; }
@@ -673,7 +689,7 @@ namespace MIMWebClient.Core.PlayerSetup
             if (skill.Proficiency < 95)
             {
 
-                HubContext.Instance.SendToClient($"You learn from your mistakes and gain {xpGain} experience points",
+                HubContext.Instance.SendToClient($"<span style='color:yellow'>You learn from your mistakes and gain {xpGain} experience points</span>",
                     player.HubGuid);
 
                 var xp = new Experience();

@@ -110,6 +110,7 @@ namespace MIMWebClient.Core.Player
         public int LevelObtained { get; set; }
         [BsonIgnore]
         public int ManaCost { get; set; }
+        public int MovesCost { get; set; }
         [BsonIgnore]
         public int MaxProficiency { get; set; }
         [BsonIgnore]
@@ -201,7 +202,7 @@ namespace MIMWebClient.Core.Player
 
             }
 
-            return String.Empty;
+            return target;
         }
 
         public static PlayerSetup.Player FindTarget(string target, Room.Room room)

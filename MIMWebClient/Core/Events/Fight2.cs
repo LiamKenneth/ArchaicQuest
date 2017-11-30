@@ -110,7 +110,11 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
-            defender.Status = Player.PlayerStatus.Fighting;
+            if (defender.Status != Player.PlayerStatus.Stunned)
+            {
+                defender.Status = Player.PlayerStatus.Fighting;
+            }
+           
 
             AddFightersIdtoRoom(attacker, defender, room, false);
 
@@ -291,6 +295,16 @@ namespace MIMWebClient.Core.Events
 
                 while (attacker.HitPoints > 0 && defender.HitPoints > 0)
                 {
+                    if (attacker.Status == Player.PlayerStatus.Stunned)
+                    {
+                        
+                            await Task.Delay(attacker.StunDuration);
+                            attacker.StunDuration = 0;
+                            attacker.Status = Player.PlayerStatus.Fighting;
+                            continue;
+       
+                    }
+
                     //check still here
                     Player target = FindValidTarget(room, defender.Name, attacker);
 
@@ -421,7 +435,7 @@ namespace MIMWebClient.Core.Events
             Player target =
                 room.players.Where(x => x.HitPoints > 0).ToList().FirstOrDefault(
                     x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
-                ?? room.mobs.Where(x => x.HitPoints > 0).ToList().First(x => x.Name.ToLower().Contains(defender.ToLower()));
+                ?? room.mobs.Where(x => x.HitPoints > 0).ToList().FirstOrDefault(x => x.Name.ToLower().Contains(defender.ToLower()));
 
             return target;
         }
@@ -457,6 +471,7 @@ namespace MIMWebClient.Core.Events
                 canAttack = false;
             }
 
+     
             //using skill, casting. 
             // probably should set busy when picking up items(disarmed weapon)
             // wielding an item 
@@ -474,7 +489,7 @@ namespace MIMWebClient.Core.Events
         public static int CalculateDamageReduction(Player attacker, Player defender, int damage)
         {
             int ArRating = ArmourRating(defender);
-            var armourReduction = ArRating / (double)damage;
+            var armourReduction = ArRating / (double) damage;
 
             if (armourReduction > 4)
             {
@@ -570,14 +585,25 @@ namespace MIMWebClient.Core.Events
             var levelDif = attacker.Level - defender.Level <= 0 ? 1 : attacker.Level - defender.Level;
             var levelMod = levelDif / 2 <= 0 ? 1 : levelDif / 2;
             var enduranceMod = attacker.MovePoints / (double)attacker.MaxMovePoints;
+
+            if (defender.Status == Player.PlayerStatus.Sleeping || defender.Status == Player.PlayerStatus.Stunned || defender.Status == Player.PlayerStatus.Resting)
+            {
+                criticalHit = 2;
+            }
       
             
-            int totalDamage = (int)(damage * strengthMod * enduranceMod * criticalHit / armourReduction) * levelMod;
+            int totalDamage = (int)(damage * strengthMod * criticalHit * levelMod);
+
+            if (armourReduction > 0)
+            {
+                totalDamage = totalDamage / armourReduction;
+            }
 
             if (totalDamage <= 0)
             {
                 totalDamage = 1;
             }
+
 
             return totalDamage;
         }
@@ -725,6 +751,17 @@ namespace MIMWebClient.Core.Events
             }
         }
 
+        public static string ShowStatus(Player player)
+        {
+            if (player.Status == Player.PlayerStatus.Stunned)
+            {
+                return "<span style='color:red'> [Stunned]</span>";
+            }
+
+            return string.Empty;
+
+        }
+
         /// <summary>
         /// Shows attack and damage to player
         /// </summary>
@@ -779,7 +816,7 @@ namespace MIMWebClient.Core.Events
                     if (toHit > chance)
                     {
                         
-                        var dam = damage > 0 ? damage : Damage(attacker, defender, IsCritical);
+                        var dam = Damage(attacker, defender, IsCritical);
 
                         var damageText = DamageText(dam);
 
@@ -788,7 +825,7 @@ namespace MIMWebClient.Core.Events
 
                             HubContext.Instance.SendToClient(
                                 "Your " + WeaponAttackName(attacker, skillUsed).Key + " " + damageText.Value.ToLower() +
-                                " " + Helpers.ReturnName(defender, attacker, null).ToLower() + " [" + dam + "]", attacker.HubGuid);
+                                " " + Helpers.ReturnName(defender, attacker, null).ToLower() + "[" + dam + "]" + ShowStatus(defender), attacker.HubGuid);
 
                             HubContext.Instance.SendToClient(
                                 Helpers.ReturnName(defender, attacker, null) +  " " + ShowMobHeath(defender) + "<br><br>", attacker.HubGuid);
@@ -804,7 +841,7 @@ namespace MIMWebClient.Core.Events
                             HubContext.Instance.SendToClient(
                                 Helpers.ReturnName(attacker, defender, null) + "'s " +
                                 WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value.ToLower() +
-                                " you [" + dam + "]", defender.HubGuid);
+                                " you [" + dam + "]" + ShowStatus(defender), defender.HubGuid);
 
                             foreach (var player in room.players)
                             {
@@ -813,7 +850,7 @@ namespace MIMWebClient.Core.Events
                                     HubContext.Instance.SendToClient(
                                         Helpers.ReturnName(attacker, defender, null) + "'s " +
                                         WeaponAttackName(attacker, skillUsed).Value + " " + damageText.Value.ToLower() +
-                                        " " + Helpers.ReturnName(defender, attacker, null), player.HubGuid);
+                                        " " + Helpers.ReturnName(defender, attacker, null) + ShowStatus(defender), player.HubGuid);
                                 }
 
                                
@@ -938,32 +975,32 @@ namespace MIMWebClient.Core.Events
                 case 2:
                 case 3:
                 case 4:
-                    return new KeyValuePair<string, string>("<span style='color:green'>scratch</span>", "<span style='color:green'>scratches</span>");
+                    return new KeyValuePair<string, string>("<span style='color:#2ecc71'>scratch</span>", "<span style='color:#2ecc71'>scratches</span>");
                 case 5:
                 case 6:
                 case 7:
                 case 8:
-                    return new KeyValuePair<string, string>("<span style='color:green'>graze</span>", "<span style='color:green'>grazes</span>");
+                    return new KeyValuePair<string, string>("<span style='color:#2ecc71'>graze</span>", "<span style='color:#2ecc71'>grazes</span>");
                 case 9:
                 case 10:
                 case 11:
                 case 12:
-                    return new KeyValuePair<string, string>("<span style='color:green'>hit</span>", "<span style='color:green'>hits</span>");
+                    return new KeyValuePair<string, string>("<span style='color:#2ecc71'>hit</span>", "<span style='color:#2ecc71'>hits</span>");
                 case 13:
                 case 14:
                 case 15:
                 case 16:
-                    return new KeyValuePair<string, string>("<span style='color:green'>injure</span>", "<span style='color:green'>injures</span>");
+                    return new KeyValuePair<string, string>("<span style='color:#2ecc71'>injure</span>", "<span style='color:#2ecc71'>injures</span>");
                 case 17:
                 case 18:
                 case 19:
                 case 20:
-                    return new KeyValuePair<string, string>("<span style='color:green'>wound</span>", "<span style='color:green'>wounds</span>");
+                    return new KeyValuePair<string, string>("<span style='color:yellow'>wound</span>", "<span style='color:yellow'>wounds</span>");
                 case 21:
                 case 22:
                 case 23:
                 case 24:
-                    return new KeyValuePair<string, string>("<span style='color:green'>maul</span>", "<span style='color:green'>mauls</span>");
+                    return new KeyValuePair<string, string>("<span style='color:yellow'>maul</span>", "<span style='color:yellow'>mauls</span>");
                 case 25:
                 case 26:
                 case 27:
@@ -1164,7 +1201,7 @@ namespace MIMWebClient.Core.Events
                 int xpGain = xp.GainXp(attacker, defender);
                 attacker.Experience += xpGain;
                 attacker.TotalExperience += xpGain;
-                HubContext.Instance.SendToClient("You gain " + xpGain + " experience points.", attacker.HubGuid);
+                HubContext.Instance.SendToClient("<span style='color:yellow'>You gain " + xpGain + " experience points.</span>", attacker.HubGuid);
 
                 xp.GainLevel(attacker);
                 //calc xp
