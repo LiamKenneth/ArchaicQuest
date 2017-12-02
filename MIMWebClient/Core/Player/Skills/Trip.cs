@@ -147,11 +147,7 @@ namespace MIMWebClient.Core.Player.Skills
                     player.ActiveSkill = null;
                     PlayerSetup.Player.LearnFromMistake(player, TripAb(), 250);
 
-                    var gain = Helpers.Rand(1, 5);
-
-                    skill.Proficiency += gain;
-
-                    context.SendToClient("<span style='color:yellow'>Your trip skill increases by " + gain + "%.</span>", player.HubGuid);
+                  
 
                     Score.ReturnScoreUI(player);
                 }

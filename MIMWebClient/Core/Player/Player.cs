@@ -689,15 +689,21 @@ namespace MIMWebClient.Core.PlayerSetup
             if (skill.Proficiency < 95)
             {
 
-                HubContext.Instance.SendToClient($"<span style='color:yellow'>You learn from your mistakes and gain {xpGain} experience points</span>",
-                    player.HubGuid);
-
                 var xp = new Experience();
                 player.Experience += xpGain;
 
                 xp.GainLevel(player);
 
-                skill.Proficiency += Helpers.Rand(1, 5);
+                var gain = Helpers.Rand(1, 5);
+
+                skill.Proficiency += gain;
+
+                HubContext.Instance.SendToClient($"<span style='color:yellow'>Your {skill.Name} skill increases by {gain}%.</span>", player.HubGuid);
+
+
+                HubContext.Instance.SendToClient($"<span style='color:yellow'>You learn from your mistakes and gain {xpGain} experience points</span>",
+                    player.HubGuid);
+
 
             }
 

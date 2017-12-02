@@ -116,7 +116,17 @@ namespace MIMWebClient.Core.Player.Classes
             fighter.Skills.Add(Toughness.ToughnessAb());
             #endregion
 
+            #region Lvl 5
 
+            var parry = Parry.ParryAb();
+            parry.Learned = true;
+            fighter.Skills.Add(parry);
+
+            var dodge = Dodge.DodgeAb();
+            dodge.Learned = true;
+            fighter.Skills.Add(dodge);
+
+            #endregion
 
 
 

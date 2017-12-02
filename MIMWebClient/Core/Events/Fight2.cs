@@ -841,7 +841,36 @@ namespace MIMWebClient.Core.Events
                                
                             }
 
- 
+                            var rand = Helpers.Rand(1, 3);
+
+                            if (rand == 2)
+                            {
+
+                                if (Skill.CheckPlayerHasSkill(defender, "Parry"))
+                                {
+                                    var chanceOfSuccess = Helpers.Rand(1, 100);
+                                    var skill = defender.Skills.FirstOrDefault(x => x.Name.Equals("Parry"));
+                                    if (skill != null && skill.Proficiency <= chanceOfSuccess)
+                                    {
+                                        Player.LearnFromMistake(defender, skill, 100);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (Skill.CheckPlayerHasSkill(defender, "Dodge"))
+                                {
+                                    var chanceOfSuccess = Helpers.Rand(1, 100);
+                                    var skill = defender.Skills.FirstOrDefault(x => x.Name.Equals("Dodge"));
+                                    if (skill != null && skill.Proficiency <= chanceOfSuccess)
+                                    {
+                                        Player.LearnFromMistake(defender, skill, 100);
+                                    }
+                                }
+                            }
+
+
+
 
                             defender.HitPoints -= dam;
 
@@ -890,6 +919,8 @@ namespace MIMWebClient.Core.Events
                                 defenderMessage = "You <span style='color:olive'>dodge</span> " + Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key;
 
                                 observerMessage = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>dodges</span> " + Helpers.ReturnName(attacker, defender, null) + "'s" + WeaponAttackName(attacker, skillUsed).Key;
+
+
                             }
                             else
                             {
@@ -899,6 +930,7 @@ namespace MIMWebClient.Core.Events
                                 defenderMessage = "You <span style='color:olive'>parry</span> " + Helpers.ReturnName(attacker, defender, null) + "'s " + WeaponAttackName(attacker, skillUsed).Key;
 
                                 observerMessage = Helpers.ReturnName(defender, attacker, null) + " <span style='color:olive'>parries</span> " + Helpers.ReturnName(attacker, defender, null) + "'s" + WeaponAttackName(attacker, skillUsed).Key;
+
                             }
 
                             HubContext.Instance.SendToClient(attackerMessage, attacker.HubGuid);
@@ -1375,9 +1407,9 @@ namespace MIMWebClient.Core.Events
             var parry = player.Skills.FirstOrDefault(x => x.Name.Equals("Parry"));
             var block = player.Skills.FirstOrDefault(x => x.Name.Equals("Shield Block"));
 
-            double blockSkill = string.IsNullOrEmpty(player.Equipment.Shield) ? 0 : block?.Proficiency / 95 ?? 0;
-            double parrySkill = parry?.Proficiency / 95 ?? 0;
-            double dodgeSkill = dodge?.Proficiency / 95 ?? 0;
+            double blockSkill = string.IsNullOrEmpty(player.Equipment.Shield) ? 0 : block?.Proficiency / (double)95 ?? 0;
+            double parrySkill = parry?.Proficiency / (double)95 ?? 0;
+            double dodgeSkill = dodge?.Proficiency / (double)95 ?? 0;
 
             if (player.Type == Player.PlayerTypes.Mob)
             {
