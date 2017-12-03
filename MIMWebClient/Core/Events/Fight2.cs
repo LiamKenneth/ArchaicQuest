@@ -114,9 +114,6 @@ namespace MIMWebClient.Core.Events
             {
                 defender.Status = Player.PlayerStatus.Fighting;
             }
-           
-
-            AddFightersIdtoRoom(attacker, defender, room, false);
 
             if (IsAlive(defender, attacker))
             {
@@ -176,24 +173,34 @@ namespace MIMWebClient.Core.Events
             {
                 attacker.Target = defender;
 
-
-                if (attacker.Status == Player.PlayerStatus.Fighting)
+                if (!attacker.ActiveFighting)
                 {
+                    if (attacker.Status == Player.PlayerStatus.Fighting)
+                    {
 
+                        double offense = Offense(attacker);
+                        double evasion = Evasion(defender);
 
-                    double offense = Offense(attacker);
-                    double evasion = Evasion(defender);
+                        double toHit = (offense / evasion) * 100;
 
-                    double toHit = (offense / evasion) * 100;
-                    int chance = D100();
+                        if (Effect.HasEffect(defender, Effect.Blindness(defender).Name))
+                        {
+                            toHit += 25;
+                        }
+
+                        if (Effect.HasEffect(attacker, Effect.Blindness(defender).Name))
+                        {
+                            toHit -= 25;
+                        }
+
+                        int chance = D100();
 
 
                         ShowAttack(attacker, defender, room, toHit, chance, null);
 
-                }
+                    }
 
-                if (!attacker.ActiveFighting)
-                {
+
                     attacker.ActiveFighting = true;
                     Task.Run(() => HitTarget(attacker, defender, room, 2000));
                 }
@@ -207,7 +214,7 @@ namespace MIMWebClient.Core.Events
 
         public static Player FindValidTarget(Room room, string defender, Player attacker)
         {
-  
+
             var findObject = Events.FindNth.Findnth(defender);
             int nth = findObject.Key;
             string itemToFind = findObject.Value;
@@ -283,12 +290,12 @@ namespace MIMWebClient.Core.Events
                 {
                     if (attacker.Status == Player.PlayerStatus.Stunned)
                     {
-                        
-                            await Task.Delay(attacker.StunDuration);
-                            attacker.StunDuration = 0;
-                            attacker.Status = Player.PlayerStatus.Fighting;
-                            continue;
-       
+
+                        await Task.Delay(attacker.StunDuration);
+                        attacker.StunDuration = 0;
+                        attacker.Status = Player.PlayerStatus.Fighting;
+                        continue;
+
                     }
 
                     //check still here
@@ -354,7 +361,7 @@ namespace MIMWebClient.Core.Events
 
 
 
-                        
+
 
 
                             if (attacker.Type == Player.PlayerTypes.Player)
@@ -457,7 +464,7 @@ namespace MIMWebClient.Core.Events
                 canAttack = false;
             }
 
-     
+
             //using skill, casting. 
             // probably should set busy when picking up items(disarmed weapon)
             // wielding an item 
@@ -475,7 +482,7 @@ namespace MIMWebClient.Core.Events
         public static int CalculateDamageReduction(Player attacker, Player defender, int damage)
         {
             int ArRating = ArmourRating(defender);
-            var armourReduction = ArRating / (double) damage;
+            var armourReduction = ArRating / (double)damage;
 
             if (armourReduction > 4)
             {
@@ -551,7 +558,7 @@ namespace MIMWebClient.Core.Events
 
             if (weapon != null)
             {
-             
+
                 damage = helper.dice(1, weapon.stats.damMin, weapon.stats.damMax);
             }
             else
@@ -576,8 +583,8 @@ namespace MIMWebClient.Core.Events
             {
                 criticalHit = 2;
             }
-      
-            
+
+
             int totalDamage = (int)(damage * strengthMod * criticalHit * levelMod);
 
             if (armourReduction > 0)
@@ -603,7 +610,7 @@ namespace MIMWebClient.Core.Events
         {
             var skillProf = Attacker.Skills.FirstOrDefault(x => x.WeaponType.Equals(item.weaponType));
 
-                if (skillProf != null)
+            if (skillProf != null)
             {
                 var chanceOfdamage = Helpers.Rand(1, 105);
 
@@ -621,7 +628,7 @@ namespace MIMWebClient.Core.Events
                         {
                             Player.LearnFromMistake(Attacker, skillProf, 100);
 
-                        }                    
+                        }
 
                     }
                     else
@@ -636,7 +643,7 @@ namespace MIMWebClient.Core.Events
                         Score.UpdateUiInventory(Attacker);
                     }
 
-                
+
 
                 }
             }
@@ -669,16 +676,16 @@ namespace MIMWebClient.Core.Events
 
                     return new KeyValuePair<string, string>(weapon.name, weapon.name);
                 }
-            
-                    return new KeyValuePair<string, string>("hit", "hit");
+
+                return new KeyValuePair<string, string>("hit", "hit");
 
             }
 
-         
+
 
             //TODO mob attack name
 
-          
+
             //Skill / spell name here
             return new KeyValuePair<string, string>(skillUsed.Name, skillUsed.Name);
 
@@ -697,10 +704,10 @@ namespace MIMWebClient.Core.Events
             return 1;
         }
 
-        public static string ShowMobHeath(Player defender )
+        public static string ShowMobHeath(Player defender)
         {
             var percent = defender.HitPoints / (double)defender.MaxHitPoints * 100;
- 
+
             switch ((int)percent)
             {
                 case 100:
@@ -790,7 +797,7 @@ namespace MIMWebClient.Core.Events
                 }
             }
 
- 
+
             for (int i = 0; i < numberOfAttacks; i++)
             {
 
@@ -801,7 +808,7 @@ namespace MIMWebClient.Core.Events
                 {
                     if (toHit > chance)
                     {
-                        
+
                         var dam = Damage(attacker, defender, IsCritical);
 
                         var damageText = DamageText(dam);
@@ -813,10 +820,10 @@ namespace MIMWebClient.Core.Events
                                 "Your " + WeaponAttackName(attacker, skillUsed).Key + " " + damageText.Value.ToLower() +
                                 " " + Helpers.ReturnName(defender, attacker, null).ToLower() + " [" + dam + "]" + ShowStatus(defender), attacker.HubGuid);
 
-                            HubContext.Instance.SendToClient("<span style=color:cyan'>" + Helpers.ReturnName(defender, attacker, null) +  " "  + ShowMobHeath(defender) + "</span>", attacker.HubGuid);
+                            HubContext.Instance.SendToClient("<span style=color:cyan'>" + Helpers.ReturnName(defender, attacker, null) + " " + ShowMobHeath(defender) + "</span>", attacker.HubGuid);
 
                             if (attacker.Equipment.Wielded != "Nothing")
-                                {
+                            {
 
                                 CheckWeaponCondition(
                                     attacker.Inventory.FirstOrDefault(x => x.name.ToLower().Contains(attacker.Equipment.Wielded.ToLower())), attacker);
@@ -838,7 +845,7 @@ namespace MIMWebClient.Core.Events
                                         " " + Helpers.ReturnName(defender, attacker, null) + ShowStatus(defender), player.HubGuid);
                                 }
 
-                               
+
                             }
 
                             var rand = Helpers.Rand(1, 10);
@@ -942,7 +949,7 @@ namespace MIMWebClient.Core.Events
                                 {
                                     HubContext.Instance.SendToClient(
                                       observerMessage, player.HubGuid);
-                                }                  
+                                }
                             }
 
                         }
@@ -1085,7 +1092,7 @@ namespace MIMWebClient.Core.Events
                     }
                 }
 
-             //   HubContext.Instance.SendToClient("accessing DB", attacker.HubGuid);
+                //   HubContext.Instance.SendToClient("accessing DB", attacker.HubGuid);
 
                 using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
                 {
@@ -1106,11 +1113,11 @@ namespace MIMWebClient.Core.Events
                     col.Insert(Guid.NewGuid(), mobDeath);
                 }
 
-              //  HubContext.Instance.SendToClient("accessing DB done", attacker.HubGuid);
+                //  HubContext.Instance.SendToClient("accessing DB done", attacker.HubGuid);
 
                 defender.Target = null;
                 defender.ActiveFighting = false;
-     
+
 
                 //Turn corpse into room item
                 var defenderCorpse = new Item
@@ -1187,7 +1194,7 @@ namespace MIMWebClient.Core.Events
                 defender.ArmorRating = 0;
 
                 defender.Experience = (int)(defender.Experience > 0 ? defender.Experience / 1.5 : 0);
- 
+
 
                 var oldRoom = room;
                 room.items.Add(defenderCorpse);
@@ -1202,7 +1209,7 @@ namespace MIMWebClient.Core.Events
                     room.players.Remove(defender);
                     attacker.ActiveFighting = false;
                     attacker.Status = Player.PlayerStatus.Standing;
-                    
+
                     var recall = Cache.ReturnRooms().FirstOrDefault(x => x.title == "Temple of Tyr");
                     Movement.Teleport(defender, recall);
                     //Add slain player to recall
@@ -1276,13 +1283,13 @@ namespace MIMWebClient.Core.Events
                 }
 
 
-                HubContext.Instance.SendToClient("You hear " + Helpers.ReturnName(defender,attacker, null).ToLower()+ "'s death cry.", attacker.HubGuid);
+                HubContext.Instance.SendToClient("You hear " + Helpers.ReturnName(defender, attacker, null).ToLower() + "'s death cry.", attacker.HubGuid);
 
                 foreach (var player in room.players)
                 {
                     if (player.Name != attacker.Name)
                     {
-                        HubContext.Instance.SendToClient("You hear " + Helpers.ReturnName(defender, attacker, null).ToLower() + "'s death cry.", player.HubGuid);                     
+                        HubContext.Instance.SendToClient("You hear " + Helpers.ReturnName(defender, attacker, null).ToLower() + "'s death cry.", player.HubGuid);
                     }
 
                 }
@@ -1302,7 +1309,7 @@ namespace MIMWebClient.Core.Events
                 }
 
 
-             
+
 
 
 
@@ -1321,7 +1328,7 @@ namespace MIMWebClient.Core.Events
                             quest.TotalQuestKills += 1;
                         }
 
-                        if (quest.TotalQuestKills >= quest.QuestKills )
+                        if (quest.TotalQuestKills >= quest.QuestKills)
                         {
                             quest.Completed = true;
 
@@ -1392,7 +1399,7 @@ namespace MIMWebClient.Core.Events
             weaponSkill = player.Type == Player.PlayerTypes.Mob ? 1 : 0;
 
             off = weaponSkill + (strength / (double)5) * (0.75 + 0.5 * player.MovePoints / (double)player.MaxMovePoints);
-        
+
 
             //Based on skill and a random number, an Offensive Force / Factor(OF) is generated.
             //This number is bonused by the user's Agility as modified by the weapon's balance.
@@ -1407,7 +1414,7 @@ namespace MIMWebClient.Core.Events
             var parry = player.Skills.FirstOrDefault(x => x.Name.Equals("Parry"));
             var block = player.Skills.FirstOrDefault(x => x.Name.Equals("Shield Block"));
 
-            double blockSkill = string.IsNullOrEmpty(player.Equipment.Shield) ? 0 : block?.Proficiency / (double)95 * 10?? 0;
+            double blockSkill = string.IsNullOrEmpty(player.Equipment.Shield) ? 0 : block?.Proficiency / (double)95 * 10 ?? 0;
             double parrySkill = parry?.Proficiency / (double)95 * 10 ?? 0;
             double dodgeSkill = dodge?.Proficiency / (double)95 * 10 ?? 0;
 
@@ -1433,7 +1440,7 @@ namespace MIMWebClient.Core.Events
 
             //((Agility / 5) + (Luck / 10)) * (0.75 + 0.5 * Current Fatigue / Maximum Fatigue)
 
-            double evade =  blockSkill + parrySkill + dodgeSkill + (dexterity /(double) 5) * (0.75 + 0.5 * (player.MovePoints / (double)player.MaxMovePoints));
+            double evade = blockSkill + parrySkill + dodgeSkill + (dexterity / (double)5) * (0.75 + 0.5 * (player.MovePoints / (double)player.MaxMovePoints));
 
             return evade;
         }

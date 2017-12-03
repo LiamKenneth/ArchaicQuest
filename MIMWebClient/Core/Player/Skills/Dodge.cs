@@ -30,7 +30,7 @@ namespace MIMWebClient.Core.Player.Skills
                     Name = "Dodge",
                     CoolDown = 0,
                     Delay = 0,
-                    LevelObtained = 5,
+                    LevelObtained = 6,
                     Proficiency = 1,
                     MaxProficiency = 95,
                     Passive = true,

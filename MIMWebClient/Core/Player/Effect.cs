@@ -59,5 +59,23 @@ namespace MIMWebClient.Core.Player
             }
 
         }
+
+        public static bool HasEffect(PlayerSetup.Player player, string effectName)
+        {
+          return player.Effects?.FirstOrDefault(
+                x => x.Name.Equals(effectName, StringComparison.CurrentCultureIgnoreCase)) != null;
+        }
+
+        public static Effect Blindness(PlayerSetup.Player player, bool magical = false)
+        {
+          return new Effect
+            {
+                Name = "Blindness",
+                Duration = magical ? player.Level + 5 : Helpers.Rand(1, 5),
+                AffectLossMessagePlayer = magical ? "Your eyes regain the ability to see again." : "You rub the dirt from your eyes.",
+                AffectLossMessageRoom = magical ? "'s regain the ability to see again." : " rubs the dirt from their eyes."
+            };
+        }
+
     }
 }

@@ -121,11 +121,27 @@ namespace MIMWebClient.Core.Player.Classes
             var parry = Parry.ParryAb();
             fighter.Skills.Add(parry);
 
+         
+            #endregion
+
+
+            #region Lvl 6
+
+           
             var dodge = Dodge.DodgeAb();
             fighter.Skills.Add(dodge);
 
             #endregion
 
+
+            #region Lvl 7
+
+            var dirtKick = DirtKick.DirtKickAb();
+            fighter.Skills.Add(dirtKick);
+
+ 
+
+            #endregion
 
 
 

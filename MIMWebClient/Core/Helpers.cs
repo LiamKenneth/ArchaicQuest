@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MIMWebClient.Core.Events;
+using MIMWebClient.Core.Player;
 
 namespace MIMWebClient.Core
 {
@@ -132,7 +133,7 @@ namespace MIMWebClient.Core
 
                 //TODO: ah a bug, if you have detects it will always say someone
                 if (player.invis == true && target.DetectInvis == false ||
-                    player.hidden == true && target.DetectHidden == false)
+                    player.hidden == true && target.DetectHidden == false || Effect.HasEffect(player, Effect.Blindness(player).Name))
                 {
                     return "Someone";
                 }

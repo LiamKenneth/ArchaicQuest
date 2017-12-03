@@ -179,7 +179,12 @@ namespace MIMWebClient.Core
                     fishing.StartFishing(playerData, room);
                 }},
                 {"reel", () =>Fishing.GetFish(playerData, room)},
+                {"dirt kick", () =>
+                {
+                    var dirtKicking = new DirtKick();
 
+                    dirtKicking.StartDirtKick(context, playerData, room, commandOptions);
+                }},
 
                 {"punch", () => Punch.StartPunch(playerData, room)},
                 {"kick", () => Kick.StartKick(playerData, room)},
