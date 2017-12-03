@@ -841,9 +841,9 @@ namespace MIMWebClient.Core.Events
                                
                             }
 
-                            var rand = Helpers.Rand(1, 3);
+                            var rand = Helpers.Rand(1, 10);
 
-                            if (rand == 2)
+                            if (rand == 1)
                             {
 
                                 if (Skill.CheckPlayerHasSkill(defender, "Parry"))
@@ -856,7 +856,7 @@ namespace MIMWebClient.Core.Events
                                     }
                                 }
                             }
-                            else
+                            else if (rand == 2)
                             {
                                 if (Skill.CheckPlayerHasSkill(defender, "Dodge"))
                                 {
