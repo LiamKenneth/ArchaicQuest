@@ -1407,9 +1407,9 @@ namespace MIMWebClient.Core.Events
             var parry = player.Skills.FirstOrDefault(x => x.Name.Equals("Parry"));
             var block = player.Skills.FirstOrDefault(x => x.Name.Equals("Shield Block"));
 
-            double blockSkill = string.IsNullOrEmpty(player.Equipment.Shield) ? 0 : block?.Proficiency / (double)95 ?? 0;
-            double parrySkill = parry?.Proficiency / (double)95 ?? 0;
-            double dodgeSkill = dodge?.Proficiency / (double)95 ?? 0;
+            double blockSkill = string.IsNullOrEmpty(player.Equipment.Shield) ? 0 : block?.Proficiency / (double)95 * 10?? 0;
+            double parrySkill = parry?.Proficiency / (double)95 * 10 ?? 0;
+            double dodgeSkill = dodge?.Proficiency / (double)95 * 10 ?? 0;
 
             if (player.Type == Player.PlayerTypes.Mob)
             {

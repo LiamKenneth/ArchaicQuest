@@ -30,7 +30,7 @@ namespace MIMWebClient.Core.Player.Skills
                     Name = "Parry",
                     CoolDown = 0,
                     Delay = 0,
-                    LevelObtained = 1,
+                    LevelObtained = 6,
                     Proficiency = 1,
                     MaxProficiency = 95,
                     Passive = true,
