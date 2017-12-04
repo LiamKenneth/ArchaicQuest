@@ -133,7 +133,7 @@ namespace MIMWebClient.Core
 
                 //TODO: ah a bug, if you have detects it will always say someone
                 if (player.invis == true && target.DetectInvis == false ||
-                    player.hidden == true && target.DetectHidden == false || Effect.HasEffect(player, Effect.Blindness(player).Name))
+                    player.hidden == true && target.DetectHidden == false || Effect.HasEffect(target, Effect.Blindness(target).Name))
                 {
                     return "Someone";
                 }
