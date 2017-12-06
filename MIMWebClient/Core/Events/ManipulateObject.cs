@@ -482,6 +482,8 @@ namespace MIMWebClient.Core.Events
                             roomItems[i].location = Item.ItemLocation.Inventory;
                             player.Inventory.Add(roomItems[i]);
 
+                            player.Weight += roomItems[i].Weight;
+
                             var result = AvsAnLib.AvsAn.Query(roomItems[i].name);
                             string article = result.Article;
 

@@ -727,6 +727,31 @@ namespace MIMWebClient.Core.PlayerSetup
          
         }
 
+        public static void AddItem(Player player, Item item)
+        {
+            item.location = Item.ItemLocation.Inventory;
+            player.Inventory.Add(item);
+            player.Weight += item.Weight;
+
+           CheckEncumbrance(player);
+
+            Score.UpdateUiInventory(player);
+        }
+
+        public static bool CheckEncumbrance(Player player)
+        {
+
+            if (player.Weight > player.MaxWeight)
+            {
+                HubContext.Instance.SendToClient("You are encumbered an unable to move.", player.HubGuid);
+
+                return true;
+            }
+
+            return false;
+
+        }
+
         public static void SetGodmode(Player player)
         {
             player.MaxMovePoints += 3000;
@@ -766,6 +791,8 @@ namespace MIMWebClient.Core.PlayerSetup
 
             Score.ReturnScoreUI(player);
         }
+
+
 
         public static void DebugPlayer(Player player)
         {
