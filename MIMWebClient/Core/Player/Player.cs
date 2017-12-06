@@ -224,7 +224,7 @@ namespace MIMWebClient.Core.PlayerSetup
 
         public int SpellResistance { get; set; } = 0;
 
-        public int SizeCategory { get; set; }
+        public SizeCategories SizeCategory { get; set; }
 
         [BsonElement("s")]
         public int Saves { get; set; }
@@ -609,6 +609,17 @@ namespace MIMWebClient.Core.PlayerSetup
             this.CraftingRecipes.Add(MIMWebClient.Core.World.Knitting.Knitting.WoolenClothShirt().Name);
             this.CraftingRecipes.Add(MIMWebClient.Core.World.Knitting.Knitting.WoolenClothSleeves().Name);
 
+        }
+
+        public static SizeCategories ReturnCharSize(string race)
+        {
+                          
+            if (race == "Mau" || race == "Elf" || race == "Dark Elf")
+            {
+                return SizeCategories.Small;
+            }
+
+            return SizeCategories.Medium;
         }
 
         /// <summary>
