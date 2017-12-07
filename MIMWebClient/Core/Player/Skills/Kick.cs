@@ -15,72 +15,6 @@ namespace MIMWebClient.Core.Player.Skills
         private static bool _taskRunnning = false;
         public static Skill KickSkill { get; set; }
 
-        public static void StartKick(Player attacker, Room room)
-        {
-
-            //TODO: Fix His to be gender specific
-            //TODO: Fist? what if it's a paw?
-
-            if (!_taskRunnning && attacker.Target != null)
-            {
-                // find target if not in fight
-                HubContext.Instance.SendToClient("You pull your leg back", attacker.HubGuid);
-                HubContext.Instance.SendToClient(Helpers.ReturnName(attacker, null, null) + " pulls " + Helpers.ReturnHisOrHers(attacker, null) + " leg back ready to kick at you.", attacker.HubGuid,
-                    attacker.Target.HubGuid, false, true);
-
-
-                foreach (var player in room.players)
-                {
-                    if (player != attacker && player != attacker.Target)
-                    {
-                        var hisOrHer = Helpers.ReturnHisOrHers(attacker, player);
-                        var roomMessage = $"{ Helpers.ReturnName(attacker, player, string.Empty)} pulls {hisOrHer} leg back ready to kick at {Helpers.ReturnName(attacker.Target, attacker, null)}";
-
-                        HubContext.Instance.SendToClient(roomMessage, player.HubGuid);
-                    }
-                }
-
-
-                Task.Run(() => DoKick(attacker, room));
-
-            }
-            else
-            {
-                if (attacker.Target == null)
-                {
-                    HubContext.Instance.SendToClient("You stop your kick", attacker.HubGuid);
-                    return;
-                }
-
-                HubContext.Instance.SendToClient("You are already trying to kick", attacker.HubGuid);
-
-            }
-
-        }
-
-        private static async Task DoKick(Player attacker, Room room)
-        {
-            _taskRunnning = true;
-            attacker.Status = Player.PlayerStatus.Busy;
-
-
-            await Task.Delay(2000);
-
-
-            //get attacker strength
-            var die = new PlayerStats();
-            var dam = die.dice(1, attacker.Strength);
-            var toHit = Helpers.GetPercentage(attacker.Skills.Find(x => x.Name.Equals("Kick", StringComparison.CurrentCultureIgnoreCase)).Proficiency, 95); // always 5% chance to miss
-            int chance = die.dice(1, 100);
-
-            Fight2.ShowAttack(attacker, attacker.Target, room, toHit, chance, KickAb(), dam);
-
-
-            _taskRunnning = false;
-            attacker.Status = Player.PlayerStatus.Fighting;
-
-        }
-
         public static Skill KickAb()
         {
 
@@ -94,6 +28,7 @@ namespace MIMWebClient.Core.Player.Skills
                 Passive = false,
                 Proficiency = 1,
                 MaxProficiency = 95,
+                MovesCost = 10,
                 UsableFromStatus = "Standing",
                 Syntax = "Kick <Target>"
             };
@@ -116,5 +51,233 @@ namespace MIMWebClient.Core.Player.Skills
 
 
         }
+
+        public void StartKick(IHubContext context, PlayerSetup.Player player, Room room, string target = "")
+        {
+            //Check if player has spell
+            var hasSkill = Skill.CheckPlayerHasSkill(player, KickAb().Name);
+
+            if (hasSkill == false)
+            {
+                context.SendToClient("You don't know that skill.", player.HubGuid);
+                return;
+            }
+
+            var canDoSkill = Skill.CanDoSkill(player);
+
+            if (!canDoSkill)
+            {
+                return;
+            }
+
+            if (string.IsNullOrEmpty(target) && player.Target != null)
+            {
+                target = player.Target.Name;
+            }
+
+            var _target = Skill.FindTarget(target, room);
+
+            //Fix issue if target has similar name to user and they use abbrivations to target them
+            if (_target == player)
+            {
+                _target = null;
+            }
+
+            if (player.ActiveSkill != null)
+            {
+
+                context.SendToClient("wait till you have finished " + player.ActiveSkill.Name, player.HubGuid);
+                return;
+
+            }
+            else
+            {
+                player.ActiveSkill = KickAb();
+            }
+
+
+
+
+            if (_target != null)
+            {
+
+
+                if (_target.HitPoints <= 0)
+                {
+                    context.SendToClient("You can't kick them as they are dead.", player.HubGuid);
+                    return;
+
+                }
+
+                if (player.MovePoints < KickAb().MovesCost)
+                {
+
+
+                    context.SendToClient("You are too tired to use kick.", player.HubGuid);
+                    player.ActiveSkill = null;
+
+                    return;
+                }
+
+                player.MovePoints -= KickAb().MovesCost;
+
+                Score.UpdateUiPrompt(player);
+
+
+
+                var chanceOfSuccess = Helpers.Rand(1, 100);
+                var skill = player.Skills.FirstOrDefault(x => x.Name.Equals("Kick"));
+                if (skill == null)
+                {
+                    player.ActiveSkill = null;
+                    return;
+                }
+
+                var skillProf = skill.Proficiency;
+
+                if (skillProf >= chanceOfSuccess)
+                {
+                    Task.Run(() => DoSkill(context, player, _target, room));
+                }
+                else
+                {
+                    player.ActiveSkill = null;
+                    HubContext.Instance.SendToClient("You don't see an opportunity to kick.",
+                        player.HubGuid);
+                    PlayerSetup.Player.LearnFromMistake(player, KickAb(), 250);
+
+
+                    Score.ReturnScoreUI(player);
+                }
+            }
+            else if (_target == null)
+            {
+                context.SendToClient($"You can't find anything known as '{target}' here.", player.HubGuid);
+                player.ActiveSkill = null;
+            }
+
+
+        }
+
+        private int KickSuccess(PlayerSetup.Player attacker, PlayerSetup.Player target)
+        {
+            var success = 2 * attacker.Dexterity - target.Dexterity + (attacker.Level - target.Level) * 2;
+
+            if (attacker.Effects.FirstOrDefault(x => x.Name.Equals("Haste")) != null)
+            {
+                success += 10;
+            }
+
+            if (target.Effects.FirstOrDefault(x => x.Name.Equals("Haste")) != null)
+            {
+                success -= 25;
+            }
+
+            if (success <= 0)
+            {
+                success = 1;
+            }
+
+            return success;
+        }
+
+        private async Task DoSkill(IHubContext context, PlayerSetup.Player attacker, PlayerSetup.Player target, Room room)
+        {
+
+            attacker.Status = PlayerSetup.Player.PlayerStatus.Busy;
+
+            await Task.Delay(500);
+
+            if (attacker.ManaPoints < KickAb().MovesCost)
+            {
+                context.SendToClient("You are too tired to kick.", attacker.HubGuid);
+                attacker.ActiveSkill = null;
+                PlayerSetup.Player.SetState(attacker);
+                return;
+            }
+ 
+
+            var die = new PlayerStats();
+
+            bool alive = Fight2.IsAlive(attacker, target);
+
+            if (alive)
+            {
+
+                var skillSuccess = KickSuccess(attacker, target);
+                int chanceOfKick = die.dice(1, 100);
+
+                if (skillSuccess > chanceOfKick)
+                {
+                    HubContext.Instance.SendToClient(
+                        "<span style='color:cyan'>You kick " +
+                        Helpers.ReturnName(target, attacker, null).ToLower() + ".</span>",
+                        attacker.HubGuid);
+
+ //no dam
+
+                    HubContext.Instance.SendToClient(
+                        $"<span style='color:cyan'>{Helpers.ReturnName(attacker, target, null)} kicks you!</span>",
+                        target.HubGuid);
+ 
+
+                    foreach (var player in room.players)
+                    {
+                        if (player != attacker && player != target)
+                        {
+
+                            HubContext.Instance.SendToClient(
+                                Helpers.ReturnName(attacker, target, null) + " kicks " +
+                                Helpers.ReturnName(target, attacker, null) + ".", target.HubGuid);
+
+                        }
+
+
+                    }
+
+                }
+                else
+                {
+                    var attackerMessage = "Your kick <span style='color:olive'>misses</span> " +
+                                             Helpers.ReturnName(target, attacker, null);
+
+                    var targetMessage = Helpers.ReturnName(attacker, target, null) +
+                                           "'s kick <span style='color:olive'>misses</span> you ";
+
+                    var observerMessage = Helpers.ReturnName(attacker, target, null) +
+                                             "'s kick <span style='color:olive'>misses</span> " +
+                                             Helpers.ReturnName(target, attacker, null);
+
+
+                    HubContext.Instance.SendToClient(attackerMessage, attacker.HubGuid);
+                    HubContext.Instance.SendToClient(targetMessage, target.HubGuid);
+
+                    foreach (var player in room.players)
+                    {
+                        if (player != attacker && player != target)
+                        {
+                            HubContext.Instance.SendToClient(
+                                observerMessage, player.HubGuid);
+                        }
+                    }
+
+
+                }
+
+
+            }
+
+
+            Score.ReturnScoreUI(target);
+
+            PlayerSetup.Player.SetState(attacker);
+
+            Fight2.PerpareToFightBack(attacker, room, target.Name, true);
+
+
+            attacker.ActiveSkill = null;
+
+        }
     }
 }
+ 
