@@ -305,6 +305,7 @@ namespace MIMWebClient.Hubs
                 MaxIntelligence = raceStats.inte,
                 MaxCharisma = raceStats.cha,
                 intoxicationMaxLevel = raceStats.con,
+                SizeCategory = Player.ReturnCharSize(race),
                 Type = Player.PlayerTypes.Player,
                 JoinedDate = DateTime.UtcNow,
                 LastCommandTime = DateTime.UtcNow

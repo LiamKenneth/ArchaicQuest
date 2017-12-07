@@ -28,7 +28,7 @@ namespace MIMWebClient.Core.Player.Races
         /// <summary>
         /// Size of the race
         /// </summary>
-        public int Size { get; set; }
+        public PlayerSetup.Player.SizeCategories Size { get; set; }
         public List<string> SuggestedClass { get; set; }
         /// <summary>
         /// Humans and Half humans receive a bonus point to their class
