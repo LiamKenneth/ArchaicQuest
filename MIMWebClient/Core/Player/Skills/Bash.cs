@@ -157,16 +157,35 @@ namespace MIMWebClient.Core.Player.Skills
 
         }
 
-        private bool BashSuccess(PlayerSetup.Player attacker, PlayerSetup.Player target)
+        private int BashSuccess(PlayerSetup.Player attacker, PlayerSetup.Player target)
         {
-            var targetSaveAgainstBash = Math.Max(target.Strength, target.Dexterity);
+            var sizeMod = attacker.SizeCategory < target.SizeCategory ? 18 : 10;
+            var stunChance = ((int) attacker.SizeCategory - (int) target.SizeCategory) * sizeMod;
 
-            if (attacker.Strength == targetSaveAgainstBash)
+            stunChance += attacker.Weight / 250;
+            stunChance -= target.Weight / 200;
+            stunChance += attacker.Strength;
+            stunChance -= (target.Dexterity * 4) / 3;
+ 
+           var hasHaste = attacker.Effects?.FirstOrDefault(
+                                   x => x.Name.Equals("Haste", StringComparison.CurrentCultureIgnoreCase)) != null;
+
+            if(hasHaste)
             {
-                return attacker.MovePoints > target.MovePoints;
+                stunChance += 10;
             }
 
-            return attacker.Strength > targetSaveAgainstBash;
+            var targetHasHaste = target.Effects?.FirstOrDefault(
+                               x => x.Name.Equals("Haste", StringComparison.CurrentCultureIgnoreCase)) != null;
+
+            if (targetHasHaste)
+            {
+                stunChance -= 30;
+            }
+
+            stunChance += attacker.Level - target.Level;
+ 
+            return stunChance;
         }
 
         private async Task DoBash(IHubContext context, PlayerSetup.Player attacker, PlayerSetup.Player target, Room room)
@@ -194,30 +213,33 @@ namespace MIMWebClient.Core.Player.Skills
 
             bool alive = Fight2.IsAlive(attacker, target);
 
-            var isBashSuccess = BashSuccess(attacker, target);
+            var bashChance = BashSuccess(attacker, target);
+            var bashStunRand = Helpers.Rand(1, 100);
+            var isBashSuccess = bashChance >= bashStunRand ? true : false;
+
 
             if (alive)
             {
                 if (ToBash > chance && isBashSuccess)
                 {
-                    var damage = dam > 0 ? dam : Fight2.Damage(attacker, target, 1);
+                    var damage = Helpers.Rand(2, 4 * (int)attacker.SizeCategory + bashChance / 20);
 
                     var damageText = Fight2.DamageText(damage);
 
                     if (Fight2.IsAlive(attacker, target))
                     {
                         HubContext.Instance.SendToClient(
-                            "<span style='color:cyan'>You Bash " + Helpers.ReturnName(target, attacker, null).ToLower() + " to the ground, leaving them slightly dazed.</span>",
+                            "<span style='color:cyan'>You slam into " + Helpers.ReturnName(target, attacker, null).ToLower() + ", and send " + Helpers.ReturnName(target, attacker, null).ToLower() + " flying!</span>",
                             attacker.HubGuid);
 
                         HubContext.Instance.SendToClient(
                             $"Your Bash {damageText.Value.ToLower()} {Helpers.ReturnName(target, attacker, null).ToLower()} [{dam}]", attacker.HubGuid);
 
                         HubContext.Instance.SendToClient(
-                            Helpers.ReturnName(target, attacker, null) + " " + Fight2.ShowMobHeath(target) + "<br><br>", attacker.HubGuid);
+                            Helpers.ReturnName(target, attacker, null) + " " + Fight2.ShowMobHeath(target), attacker.HubGuid);
 
                         HubContext.Instance.SendToClient(
-                            $"<span style='color:cyan'>{Helpers.ReturnName(attacker, target, null)} sends you to the ground with a well timed Bash, leaving you feeling dazed.</span>",
+                            $"<span style='color:cyan'>{Helpers.ReturnName(attacker, target, null)} sends you sprawling with a powerful bash!</span>",
                             target.HubGuid);
 
 
@@ -232,7 +254,7 @@ namespace MIMWebClient.Core.Player.Skills
                             {
 
                                 HubContext.Instance.SendToClient(
-                                    Helpers.ReturnName(attacker, target, null) + " sends " + Helpers.ReturnName(target, attacker, null) + " to the ground with a well timed Bash, leaving them looking dazed.", target.HubGuid);
+                                    Helpers.ReturnName(attacker, target, null) + " sends " + Helpers.ReturnName(target, attacker, null) + " sprawling with a powerful bash.", target.HubGuid);
 
 
 

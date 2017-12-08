@@ -139,7 +139,18 @@ namespace MIMWebClient.Core.Player.Classes
             var dirtKick = DirtKick.DirtKickAb();
             fighter.Skills.Add(dirtKick);
 
- 
+
+
+            #endregion
+
+            #region Lvl 8
+
+            var bash = Bash.BashAb();
+            bash.Learned = true;
+            bash.Proficiency = 50;
+            fighter.Skills.Add(bash);
+
+
 
             #endregion
 
