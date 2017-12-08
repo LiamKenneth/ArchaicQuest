@@ -362,8 +362,8 @@ namespace MIMWebClient.Core.Events
                 }
 
                 if (!craftItem.CraftAppearsInRoom)
-                {
-                    player.Inventory.Add(craftItem.CreatesItem);
+                { 
+                    PlayerSetup.Player.AddItem(player, craftItem.CreatesItem);
                 }
 
 

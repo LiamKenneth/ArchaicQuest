@@ -290,7 +290,7 @@ namespace MIMWebClient.Core.Player.Skills
                             location = Item.Item.ItemLocation.Inventory
                         };
 
-                        player.Inventory.Add(fish);
+                        PlayerSetup.Player.AddItem(player, fish);
 
                         Score.UpdateUiInventory(player);
 

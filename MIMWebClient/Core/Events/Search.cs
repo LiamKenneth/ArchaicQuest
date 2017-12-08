@@ -139,7 +139,7 @@ namespace MIMWebClient.Core.Player.Skills
                 item.isHiddenInRoom = false;
 
 
-                player.Inventory.Add(item);
+                PlayerSetup.Player.AddItem(player, item);
 
 
                 HubContext.Instance.SendToClient(YouFound, player.HubGuid);

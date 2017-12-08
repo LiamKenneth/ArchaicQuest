@@ -1162,8 +1162,8 @@ namespace MIMWebClient.Core.Events
                             attacker.HubGuid);
 
                         invItem.location = Item.ItemLocation.Inventory;
-
-                        attacker.Inventory.Add(invItem);
+ 
+                        Player.AddItem(attacker, invItem);
 
                     }
 

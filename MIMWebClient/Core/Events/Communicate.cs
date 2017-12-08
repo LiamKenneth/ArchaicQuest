@@ -118,7 +118,7 @@ namespace MIMWebClient.Core.Events
 
                     if (responseGiveItem != null)
                     {
-                        player.Inventory.Add(responseGiveItem);
+                        Player.AddItem(player, responseGiveItem);
                         Score.UpdateUiInventory(player);
                     }
 
@@ -170,7 +170,7 @@ namespace MIMWebClient.Core.Events
                                 {
                                     HubContext.Instance.SendToClient(mob.Name + " gives you " + Helpers.ReturnName(null, null, qitem.name), playerId);
 
-                                    player.Inventory.Add(qitem);
+                                    Player.AddItem(player, qitem);
                                 }
 
                                 Score.UpdateUiInventory(player);

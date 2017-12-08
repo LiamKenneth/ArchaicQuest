@@ -360,7 +360,7 @@ namespace MIMWebClient.Core.Events
 
 
                                     containerItem.location = Item.ItemLocation.Inventory;
-                                    player.Inventory.Add(containerItem);
+ 
                                     Player.AddItem(player, containerItem);
                                 }
                                 else

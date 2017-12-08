@@ -135,8 +135,8 @@ namespace MIMWebClient.Core.Player
                     if (rewardItem != null)
                     {
                         rewardItem.location = Item.Item.ItemLocation.Inventory;
-
-                        player.Inventory.Add(rewardItem);
+                        PlayerSetup.Player.AddItem(player, rewardItem);
+                      
                     }
 
                     player.Experience += findQuest.RewardXp;
@@ -177,7 +177,7 @@ namespace MIMWebClient.Core.Player
                     {
                         rewardItem.location = Item.Item.ItemLocation.Inventory;
 
-                        player.Inventory.Add(rewardItem);
+                    PlayerSetup.Player.AddItem(player,rewardItem);
                     }
 
                     player.Experience += findQuest.RewardXp;

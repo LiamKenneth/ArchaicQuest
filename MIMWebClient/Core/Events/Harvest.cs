@@ -69,7 +69,7 @@ namespace MIMWebClient.Core.Events
                 bodybit.KnownByName = true;
             }
 
-            player.Inventory.Add(bodybit);
+            PlayerSetup.Player.AddItem(player, bodybit);
 
             Score.UpdateUiInventory(player);
 
