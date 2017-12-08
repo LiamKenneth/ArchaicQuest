@@ -51,8 +51,7 @@ namespace MIMWebClient.Core.Events
 
         public static void UpdateUiInventory(Player playerData)
         {
-
-            if (playerData.HubGuid != null)
+            if (playerData?.HubGuid != null)
             {
                 HubContext.Instance.UpdateInventory(playerData.HubGuid, ItemContainer.List(playerData.Inventory.Where(x => x.location == Item.Item.ItemLocation.Inventory && x.type != Item.Item.ItemType.Gold), true));
 

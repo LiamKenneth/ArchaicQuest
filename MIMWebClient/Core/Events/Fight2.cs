@@ -820,7 +820,7 @@ namespace MIMWebClient.Core.Events
                                 "Your " + WeaponAttackName(attacker, skillUsed).Key + " " + damageText.Value.ToLower() +
                                 " " + Helpers.ReturnName(defender, attacker, null).ToLower() + " [" + dam + "]" + ShowStatus(defender), attacker.HubGuid);
 
-                            HubContext.Instance.SendToClient("<span style=color:cyan'>" + Helpers.ReturnName(defender, attacker, null) + " " + ShowMobHeath(defender) + "</span>", attacker.HubGuid);
+                            HubContext.Instance.SendToClient("<span style=color:cyan>" + Helpers.ReturnName(defender, attacker, null) + " " + ShowMobHeath(defender) + "</span>", attacker.HubGuid);
 
                             if (attacker.Equipment.Wielded != "Nothing")
                             {
@@ -1084,16 +1084,34 @@ namespace MIMWebClient.Core.Events
                 {
                     if (player != defender)
                     {
+                        HubContext.Instance.SendToClient("<span style='color:red'>You hear " + Helpers.ReturnName(defender, attacker, null).ToLower() + "'s death cry.</span>", player.HubGuid);
                         HubContext.Instance.SendToClient("<span style='color:red'>" + defender.Name + " is DEAD!!</span> ", player.HubGuid);
+                      
                     }
                     else
                     {
+                        HubContext.Instance.SendToClient("<span style='color:red'>You hear " + Helpers.ReturnName(defender, attacker, null).ToLower() + "'s death cry.</span>", player.HubGuid);
                         HubContext.Instance.SendToClient("<span style='color:red'>You are DEAD!!</span>", defender.HubGuid);
                     }
                 }
 
-                //   HubContext.Instance.SendToClient("accessing DB", attacker.HubGuid);
+ 
 
+                foreach (var exit in room.exits)
+                {
+                    var newRoom = Cache.ReturnRooms()
+                        .FirstOrDefault(x => x.areaId == exit.areaId && x.area == exit.area && x.region == exit.region);
+
+                    if (newRoom != null)
+                    {
+                        foreach (var player in newRoom.players)
+                        {
+                            HubContext.Instance.SendToClient("<span style='color:brown'>You hear someone's death cry.</span>", player.HubGuid);
+                        }
+                    }
+                }
+
+ 
                 using (var db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["database"])))
                 {
                     var col = db.GetCollection<Deaths>("Deaths");
@@ -1139,8 +1157,8 @@ namespace MIMWebClient.Core.Events
                     foreach (var invItem in defender.Inventory)
                     {
                         HubContext.Instance.SendToClient(
-                            "You loot " + Helpers.ReturnName(null, null, invItem.name).ToLower() +
-                            " from the corpse of " + Helpers.ReturnName(defender, attacker, string.Empty),
+                            "<span style='color:yellow'>You loot " + Helpers.ReturnName(null, null, invItem.name).ToLower() +
+                            " from the corpse of " + Helpers.ReturnName(defender, attacker, string.Empty) + "</span>",
                             attacker.HubGuid);
 
                         invItem.location = Item.ItemLocation.Inventory;
@@ -1225,7 +1243,7 @@ namespace MIMWebClient.Core.Events
                 int xpGain = xp.GainXp(attacker, defender);
                 attacker.Experience += xpGain;
                 attacker.TotalExperience += xpGain;
-                HubContext.Instance.SendToClient("<span style='color:yellow'>You gain " + xpGain + " experience points.</span>", attacker.HubGuid);
+                HubContext.Instance.SendToClient("<span style='color:#2ecc71'>You gain " + xpGain + " experience points.</span>", attacker.HubGuid);
 
                 xp.GainLevel(attacker);
                 //calc xp
@@ -1283,30 +1301,6 @@ namespace MIMWebClient.Core.Events
                 }
 
 
-                HubContext.Instance.SendToClient("You hear " + Helpers.ReturnName(defender, attacker, null).ToLower() + "'s death cry.", attacker.HubGuid);
-
-                foreach (var player in room.players)
-                {
-                    if (player.Name != attacker.Name)
-                    {
-                        HubContext.Instance.SendToClient("You hear " + Helpers.ReturnName(defender, attacker, null).ToLower() + "'s death cry.", player.HubGuid);
-                    }
-
-                }
-
-                foreach (var exit in room.exits)
-                {
-                    var newRoom = Cache.ReturnRooms()
-                        .FirstOrDefault(x => x.areaId == exit.areaId && x.area == exit.area && x.region == exit.region);
-
-                    if (newRoom != null)
-                    {
-                        foreach (var player in newRoom.players)
-                        {
-                            HubContext.Instance.SendToClient("You hear someone's death cry.", player.HubGuid);
-                        }
-                    }
-                }
 
 
 

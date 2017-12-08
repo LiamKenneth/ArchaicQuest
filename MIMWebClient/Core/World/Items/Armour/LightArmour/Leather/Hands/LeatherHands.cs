@@ -36,7 +36,7 @@ namespace MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Hands
                 {
                     Item.Item.ItemFlags.equipable
                 },
-                Weight = 0.2,
+                Weight = 2,
                 equipable = true,
                 QuestItem = true,
                 keywords = new List<string>()

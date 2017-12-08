@@ -733,10 +733,24 @@ namespace MIMWebClient.Core.PlayerSetup
             player.Inventory.Add(item);
             player.Weight += item.Weight;
 
+
            CheckEncumbrance(player);
+ 
+            Score.UpdateUiInventory(player);
+        }
+
+        public static void RemoveItem(Player player, Item item, Item.ItemLocation location)
+        {
+            item.location = location;
+            player.Inventory.Remove(item);
+            item.isHiddenInRoom = false;
+            player.Weight -= item.Weight;
+
+            CheckEncumbrance(player);
 
             Score.UpdateUiInventory(player);
         }
+
 
         public static bool CheckEncumbrance(Player player)
         {

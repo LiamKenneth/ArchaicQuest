@@ -479,10 +479,8 @@ namespace MIMWebClient.Core.Events
                         //Get all Items from the room
                         if (roomItems[i].type != Item.ItemType.Gold)
                         {
-                            roomItems[i].location = Item.ItemLocation.Inventory;
-                            player.Inventory.Add(roomItems[i]);
-
-                            player.Weight += roomItems[i].Weight;
+                         
+                            Player.AddItem(player, roomItems[i]);
 
                             var result = AvsAnLib.AvsAn.Query(roomItems[i].name);
                             string article = result.Article;
@@ -571,8 +569,8 @@ namespace MIMWebClient.Core.Events
                     if (containerItems[i].type != Item.ItemType.Gold)
                     {
 
-                        containerItems[i].location = Item.ItemLocation.Inventory;
-                        player.Inventory.Add(containerItems[i]);
+                        Player.AddItem(player, containerItems[i]);
+
 
                         var result = AvsAnLib.AvsAn.Query(containerItems[i].name);
                         string article = result.Article;
@@ -642,9 +640,9 @@ namespace MIMWebClient.Core.Events
                         {
 
                             room.items.Remove(item);
-                            item.location = Item.ItemLocation.Inventory;
-                            player.Inventory.Add(item);
-            
+
+                            Player.AddItem(player, item);
+
                             var result = AvsAnLib.AvsAn.Query(item.name);
                             string article = result.Article;
 
@@ -722,9 +720,7 @@ namespace MIMWebClient.Core.Events
 
 
                         container.containerItems.Remove(item);
-                       item.location = Item.ItemLocation.Inventory;
-                        player.Inventory.Add(item);
-
+                        Player.AddItem(player, item);
 
                         var result = AvsAnLib.AvsAn.Query(item.name);
                         string article = result.Article;
@@ -820,17 +816,18 @@ namespace MIMWebClient.Core.Events
 
                 for (int i = playerInvCount - 1; i >= 0; i--)
                 {
-                    playerInv[i].location = Item.ItemLocation.Room;
-
+                    
+                   
 
                     if (container == null)
                     {
-                        playerInv[i].location = Item.ItemLocation.Room;
-                        playerInv[i].isHiddenInRoom = false;
+
+                        Player.RemoveItem(player, playerInv[i], Item.ItemLocation.Room);
                         room.items.Add(playerInv[i]);
 
                         var result = AvsAnLib.AvsAn.Query(playerInv[i].name);
                         string article = result.Article;
+
 
                         HubContext.Instance.SendToClient($"You drop {article} {playerInv[i].name}.", player.HubGuid);
 
@@ -846,7 +843,7 @@ namespace MIMWebClient.Core.Events
                             }
                         }
 
-                        player.Inventory.Remove(playerInv[i]);
+                        
                     }
                     else
                     {
@@ -881,7 +878,6 @@ namespace MIMWebClient.Core.Events
 
                         container.containerItems.Add(playerInv[i]);
 
-
                         var result = AvsAnLib.AvsAn.Query(playerInv[i].name);
                         string article = result.Article;
 
@@ -906,7 +902,7 @@ namespace MIMWebClient.Core.Events
 
 
 
-                        player.Inventory.Remove(playerInv[i]);
+                        Player.RemoveItem(player, playerInv[i], Item.ItemLocation.Room);
                     }
 
 
@@ -925,8 +921,7 @@ namespace MIMWebClient.Core.Events
                 {
 
 
-                    player.Inventory.Remove(item);
-                    item.location = Item.ItemLocation.Room;
+                    Player.RemoveItem(player, item, Item.ItemLocation.Room);
                     room.items.Add(item);
 
                     var result = AvsAnLib.AvsAn.Query(item.name);
@@ -977,8 +972,7 @@ namespace MIMWebClient.Core.Events
                         return;
                     }
 
-                    player.Inventory.Remove(item);
-                    item.location = Item.ItemLocation.Room;
+                    Player.RemoveItem(player, item, Item.ItemLocation.Room);
                     container.containerItems.Add(item);
 
                     var result = AvsAnLib.AvsAn.Query(item.name);
@@ -1037,7 +1031,7 @@ namespace MIMWebClient.Core.Events
                 room.players.FirstOrDefault(
                     x => thing != null && x.Name.StartsWith(thing, StringComparison.CurrentCultureIgnoreCase)) ??
                 room.mobs.FirstOrDefault(
-                    x => thing != null && x.Name.StartsWith(thing, StringComparison.CurrentCultureIgnoreCase));
+                    x => thing != null && x.Name.ToLower().Contains(thing.ToLower()));
 
             if (all[0].Equals("all", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -1048,7 +1042,8 @@ namespace MIMWebClient.Core.Events
                 {
                     if (foundThing != null)
                     {
-                        foundThing.Inventory.Add(playerInv[i]);
+                      
+                        Player.AddItem(foundThing, playerInv[i]);
 
 
                         var result = AvsAnLib.AvsAn.Query(playerInv[i].name);
@@ -1082,8 +1077,9 @@ namespace MIMWebClient.Core.Events
                             }
                         }
 
-                        player.Inventory.Remove(playerInv[i]);
-                      
+                        
+                        Player.RemoveItem(player, playerInv[i], Item.ItemLocation.Room);
+
                     }
                 }
             }
@@ -1107,8 +1103,8 @@ namespace MIMWebClient.Core.Events
                     return;
                 }
 
-                player.Inventory.Remove(foundItem);
-                foundThing.Inventory.Add(foundItem);
+                Player.RemoveItem(player, foundItem, Item.ItemLocation.Inventory);
+                Player.AddItem(foundThing, foundItem);
 
 
                 var result = AvsAnLib.AvsAn.Query(foundItem.name);
@@ -1165,10 +1161,8 @@ namespace MIMWebClient.Core.Events
                             var rewardItem = quest?.RewardItem;
 
                             if (rewardItem != null)
-                            {
-                                rewardItem.location = Item.ItemLocation.Inventory;
-
-                                player.Inventory.Add(rewardItem);
+                            {                              
+                                Player.AddItem(player, rewardItem);
                             }
 
 
