@@ -186,6 +186,8 @@ namespace MIMWebClient.Core.Player
                 {
                     HubContext.Instance.SendToClient("You wear " + foundItem.name, player.HubGuid);
 
+                    UpdateDamageRating(player, foundItem);
+
                     var result = AvsAnLib.AvsAn.Query(foundItem.name);
                     string article = result.Article;
 
@@ -210,6 +212,7 @@ namespace MIMWebClient.Core.Player
 
                     var result = AvsAnLib.AvsAn.Query(foundItem.name);
                     string article = result.Article;
+                    UpdateDamageRating(player, foundItem);
 
                     foreach (var character in room.players)
                     {
@@ -271,7 +274,7 @@ namespace MIMWebClient.Core.Player
                                 string article = result.Article;
 
                                 HubContext.Instance.SendToClient("You wear " + article + " " + item.name, player.HubGuid);
-                              
+                                UpdateDamageRating(player, item);
                                 foreach (var character in room.players)
                                 {
                                     if (player != character)
@@ -292,7 +295,7 @@ namespace MIMWebClient.Core.Player
                                 string article = result.Article; 
 
                                 HubContext.Instance.SendToClient("You wield " + article + item.name, player.HubGuid);
-
+                                UpdateDamageRating(player, item);
 
                                 foreach (var character in room.players)
                                 {
@@ -504,7 +507,22 @@ namespace MIMWebClient.Core.Player
         }
 
 
+        public static void UpdateDamageRating(Player player, Item weapon)
+        {
+            if (weapon.stats == null)
+            {
+                return;
+            }
 
+            if (weapon.slot == Item.EqSlot.Wielded)
+            {
+                player.DamageRating = $"({weapon.stats.damMin} - {weapon.stats.damMax})";
+            }
+            else
+            {
+                player.DamageRating = "(0)";
+            }
+        }
 
 
     }

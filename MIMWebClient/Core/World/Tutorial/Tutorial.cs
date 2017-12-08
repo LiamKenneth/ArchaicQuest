@@ -123,8 +123,9 @@ namespace MIMWebClient.Core.World.Tutorial
                     dagger.description.exam = "This blunt dagger is better suited to buttering bread than killing";
 
 
-                    player.Inventory.Add(dagger);
-                  
+                    PlayerSetup.Player.AddItem(player, dagger);
+                   
+                 
 
                     await Task.Delay(1500);
 

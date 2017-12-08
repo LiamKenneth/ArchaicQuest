@@ -361,7 +361,7 @@ namespace MIMWebClient.Core.Events
 
                                     containerItem.location = Item.ItemLocation.Inventory;
                                     player.Inventory.Add(containerItem);
-
+                                    Player.AddItem(player, containerItem);
                                 }
                                 else
                                 {
@@ -718,9 +718,9 @@ namespace MIMWebClient.Core.Events
                     if (item.type != Item.ItemType.Gold)
                     {
 
-
-                        container.containerItems.Remove(item);
                         Player.AddItem(player, item);
+                        container.containerItems.Remove(item);
+                       
 
                         var result = AvsAnLib.AvsAn.Query(item.name);
                         string article = result.Article;
