@@ -875,7 +875,19 @@ namespace MIMWebClient.Core.Events
                                     }
                                 }
                             }
-
+                            else if (rand == 3)
+                            {
+                
+                                if (defender.Equipment.Shield != "Nothing" && Skill.CheckPlayerHasSkill(defender, "Shield Block"))
+                                {
+                                    var chanceOfSuccess = Helpers.Rand(1, 100);
+                                    var skill = defender.Skills.FirstOrDefault(x => x.Name.Equals("Shield Block"));
+                                    if (skill != null && skill.Proficiency <= chanceOfSuccess)
+                                    {
+                                        Player.LearnFromMistake(defender, skill, 100);
+                                    }
+                                }
+                            }
 
 
 
@@ -1408,7 +1420,7 @@ namespace MIMWebClient.Core.Events
             var parry = player.Skills.FirstOrDefault(x => x.Name.Equals("Parry"));
             var block = player.Skills.FirstOrDefault(x => x.Name.Equals("Shield Block"));
 
-            double blockSkill = string.IsNullOrEmpty(player.Equipment.Shield) ? 0 : block?.Proficiency / (double)95 * 10 ?? 0;
+            double blockSkill = player.Equipment.Shield == "Nothing" ? 0 : block?.Proficiency / (double)95 * 10 ?? 0;
             double parrySkill = parry?.Proficiency / (double)95 * 10 ?? 0;
             double dodgeSkill = dodge?.Proficiency / (double)95 * 10 ?? 0;
 
