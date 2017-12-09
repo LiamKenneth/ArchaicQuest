@@ -143,11 +143,9 @@ namespace MIMWebClient.Core.Player.Classes
 
             #endregion
 
-            #region Lvl 8
+            #region Lvl 9
 
             var bash = Bash.BashAb();
-            bash.Learned = true;
-            bash.Proficiency = 50;
             fighter.Skills.Add(bash);
 
 
