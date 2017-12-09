@@ -222,6 +222,8 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("arr")]
         public int ArmorRating { get; set; }
 
+        public string DamageRating { get; set; }
+
         public int SpellResistance { get; set; } = 0;
 
         public SizeCategories SizeCategory { get; set; }
@@ -727,6 +729,52 @@ namespace MIMWebClient.Core.PlayerSetup
          
         }
 
+        public static void AddItem(Player player, Item item)
+        {
+            item.location = Item.ItemLocation.Inventory;
+            player.Inventory.Add(item);
+            player.Weight += item.Weight;
+
+            Score.UpdateUiInventory(player);
+            Score.ReturnScoreUI(player);
+
+            CheckEncumbrance(player);
+        }
+
+        public static void RemoveItem(Player player, Item item, Item.ItemLocation location)
+        {
+            item.location = location;
+            player.Inventory.Remove(item);
+            item.isHiddenInRoom = false;
+            player.Weight -= item.Weight;
+
+            if (player.Weight < 0)
+            {
+                player.Weight = 0;
+            }
+ 
+            Score.UpdateUiInventory(player);
+            Score.ReturnScoreUI(player);
+
+            CheckEncumbrance(player);
+
+        }
+
+
+        public static bool CheckEncumbrance(Player player)
+        {
+
+            if (player.Weight > player.MaxWeight)
+            {
+                HubContext.Instance.SendToClient("You are encumbered an unable to move.", player.HubGuid);
+
+                return true;
+            }
+
+            return false;
+
+        }
+
         public static void SetGodmode(Player player)
         {
             player.MaxMovePoints += 3000;
@@ -766,6 +814,8 @@ namespace MIMWebClient.Core.PlayerSetup
 
             Score.ReturnScoreUI(player);
         }
+
+
 
         public static void DebugPlayer(Player player)
         {

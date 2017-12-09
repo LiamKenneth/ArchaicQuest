@@ -485,6 +485,7 @@
 
  
         $('#player-armorDef').html(score.ArmorRating);
+        $('#player-damageRating').html(score.DamageRating);
         $('#player-magicDef').html(score.SpellResistance);
 
 

@@ -146,6 +146,15 @@ namespace MIMWebClient.Core.Player.Classes
 
             #endregion
 
+            #region Lvl 9
+
+            var bash = Bash.BashAb();
+            fighter.Skills.Add(bash);
+
+
+
+            #endregion
+
 
 
             #region  Give fighter Mount skill

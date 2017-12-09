@@ -41,7 +41,7 @@ namespace MIMWebClient.Core.World.Items.Armour.LightArmour.Clothing.Legs
                 {
                     Item.Item.ItemFlags.equipable
                 },
-                Weight = 0.2,
+                Weight = 2,
                 equipable = true
 
             };
@@ -71,7 +71,7 @@ namespace MIMWebClient.Core.World.Items.Armour.LightArmour.Clothing.Legs
                     Armour = 3,
                     Magic = 0
                 },
-                Weight = 0.2,
+                Weight = 2,
                 equipable = true,
                 stats = new Stats()
                 {

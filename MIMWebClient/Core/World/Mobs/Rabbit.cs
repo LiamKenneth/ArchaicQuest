@@ -48,7 +48,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
                   {
                       name = "rabbit fur",
                       Gold = 2,
-                      Weight = 0.1,
+                      Weight = 1,
                       description = new Description()
                       {
                           look = "Soft white fur."

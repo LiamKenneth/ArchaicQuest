@@ -185,7 +185,12 @@ namespace MIMWebClient.Core
 
                     dirtKicking.StartDirtKick(context, playerData, room, commandOptions);
                 }},
+                {"bash", () =>
+                {
+                    var bash = new Bash();
 
+                    bash.StartBash(context, playerData, room, commandOptions);
+                }},
                 {"punch", () => Punch.StartPunch(playerData, room)},
                 {"kick", () =>
                 {

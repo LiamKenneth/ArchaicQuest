@@ -90,7 +90,8 @@ namespace MIMWebClient.Core.Mob.Events
                         {
 
                             itemToBuy.location = Item.Item.ItemLocation.Inventory;
-                            player.Inventory.Add(itemToBuy);
+                         
+                            PlayerSetup.Player.AddItem(player,itemToBuy);
 
                   
                             HubContext.Instance.SendToClient(
@@ -200,15 +201,13 @@ namespace MIMWebClient.Core.Mob.Events
                                     HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
                                 }
                             }
-
-
-                   
+                        
 
                         HubContext.Instance.SendToClient(
                               "You sell " + article + " " + itemToSell.name + " to " + mob.Name + " for " + value + " gold.",
                               player.HubGuid);
-
-                        player.Inventory.Remove(itemToSell);
+ 
+                        PlayerSetup.Player.RemoveItem(player, itemToSell, Item.Item.ItemLocation.Inventory);
 
                         Cache.updatePlayer(oldPlayerInfo, player);
 

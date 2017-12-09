@@ -109,7 +109,9 @@ namespace MIMWebClient.Core.Mob.Events
                                                      qlog.RewardDialog.Message.Replace("$playerName", player.Name) +
                                                      "\"</span>", player.HubGuid);
 
-                    player.Inventory.Add(qlog.RewardItem);
+                  
+
+                    PlayerSetup.Player.AddItem(player, qlog.RewardItem);
 
                     if (qlog.RewardSkill != null)
                     {

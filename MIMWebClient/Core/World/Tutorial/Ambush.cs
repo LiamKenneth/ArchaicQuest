@@ -115,6 +115,7 @@ namespace MIMWebClient.Core.World.Tutorial
                 slot = Item.Item.EqSlot.Wielded,
                 location = Item.Item.ItemLocation.Inventory,
                 description = new Description(),
+                Weight = 2,
 
             };
 

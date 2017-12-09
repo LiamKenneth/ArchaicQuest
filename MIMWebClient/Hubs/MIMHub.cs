@@ -308,7 +308,8 @@ namespace MIMWebClient.Hubs
                 SizeCategory = Player.ReturnCharSize(race),
                 Type = Player.PlayerTypes.Player,
                 JoinedDate = DateTime.UtcNow,
-                LastCommandTime = DateTime.UtcNow
+                LastCommandTime = DateTime.UtcNow,
+                MaxWeight = raceStats.str * 4
             };
 
 

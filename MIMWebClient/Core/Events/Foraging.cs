@@ -156,10 +156,8 @@ namespace MIMWebClient.Core.Player.Skills
                 item.location = Item.Item.ItemLocation.Inventory;
                 item.type = Item.Item.ItemType.Food;
                 item.hidden = false;
-
-
-                player.Inventory.Add(item);
-
+                
+                PlayerSetup.Player.AddItem(player, item);
 
                 HubContext.Instance.SendToClient(YouFound, player.HubGuid);
 

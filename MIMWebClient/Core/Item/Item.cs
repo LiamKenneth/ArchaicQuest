@@ -190,8 +190,8 @@ namespace MIMWebClient.Core.Item
         public int Duration { get; set; } = -1;
         public int Gold { get; set; }
         public bool QuestItem { get; set; }
-        public ArmourRating ArmorRating { get; set; }   
-        public double Weight { get; set; }
+        public ArmourRating ArmorRating { get; set; }
+        public int Weight { get; set; } = 2;
         public int Condition { get; set; } = Helpers.Rand(75, 100);
 
         public ChoppingBlockType ChoppingBlock { get; set; }
