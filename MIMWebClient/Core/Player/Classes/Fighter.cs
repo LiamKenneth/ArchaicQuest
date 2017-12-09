@@ -139,7 +139,10 @@ namespace MIMWebClient.Core.Player.Classes
             var dirtKick = DirtKick.DirtKickAb();
             fighter.Skills.Add(dirtKick);
 
-
+            var kick = Kick.KickAb();
+            kick.Learned = true;
+            kick.Proficiency = 50;
+            fighter.Skills.Add(kick);
 
             #endregion
 
