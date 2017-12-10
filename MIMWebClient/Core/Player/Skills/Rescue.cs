@@ -212,6 +212,10 @@ namespace MIMWebClient.Core.Player.Skills
                             $"<span style='color:cyan'>{Helpers.ReturnName(attacker, target, null)} rescues you!</span>",
                             target.HubGuid);
 
+                        HubContext.Instance.SendToClient(
+                            $"<span style='color:cyan'>{Helpers.ReturnName(attacker, target, null)} rescues {Helpers.ReturnName(target, attacker, null).ToLower()}!</span>",
+                            target.Target.HubGuid);
+
 
                         foreach (var player in room.players)
                         {
@@ -226,11 +230,18 @@ namespace MIMWebClient.Core.Player.Skills
                         }
                     }
 
-                    attacker.Target = target.Target;
                     target.Target.Target = attacker;
+                    attacker.Target = target.Target;
+                    attacker.Status = Player.PlayerStatus.Fighting;
+                    attacker.ActiveFighting = false;
+                    attacker.Target.Target.ActiveFighting = false;
+
+                    
                     target.Target = null;
                     target.Status = Player.PlayerStatus.Standing;
-                    target.ActiveFighting = false;
+                    target.ActiveFighting = false;  
+
+                    Fight2.PerpareToFightBack(attacker, room, attacker.Target.Name, true);
 
                 }
                 else

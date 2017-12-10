@@ -213,6 +213,8 @@ namespace MIMWebClient.Core.PlayerSetup
         [BsonElement("st")]
         public PlayerStatus Status { get; set; }
 
+        public int GhostDuration { get; set; } = 8;
+
         public int StunDuration { get; set; } = 0;
 
         [JsonIgnore]

@@ -45,6 +45,19 @@ namespace MIMWebClient.Core.Update
                         UpdateMana(player, context);
 
                         UpdateEndurance(player, context);
+
+                        if (player.Status == Player.PlayerStatus.Ghost)
+                        {
+                            player.GhostDuration -= 1;
+
+                            if (player.GhostDuration <= 0)
+                            {
+                                player.Status = Player.PlayerStatus.Standing;
+                                player.GhostDuration = 8;
+
+                                context.SendToClient("You return to the land of the living.", player.HubGuid);
+                            }
+                        }
                     }
 
                     UpdateAffects(player, context);

@@ -386,6 +386,8 @@ namespace MIMWebClient.Hubs
                 //update hubID
                 player.HubGuid = id;
 
+                player.Target = null;
+
                 //check for duplicates
                 var alreadyLogged = _PlayerCache.FirstOrDefault(x => x.Value.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
 
