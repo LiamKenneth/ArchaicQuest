@@ -105,6 +105,7 @@ namespace MIMWebClient.Core.Player.Skills
                 if (_target.HitPoints <= 0)
                 {
                     context.SendToClient("You can't kick them as they are dead.", player.HubGuid);
+                    player.ActiveSkill = null;
                     return;
 
                 }

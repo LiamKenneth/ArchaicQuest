@@ -197,6 +197,11 @@ namespace MIMWebClient.Core
                     var kick = new Kick();
                     kick.StartKick(context, playerData, room, commandOptions);
                 }},
+                {"rescue", () =>
+                {
+                    var rescue = new Rescue();
+                    rescue.StartRescue(context, playerData, room, commandOptions);
+                }},
                 {"ride", () =>  Mount.StartMount(playerData, room, commandOptions)},
                 {"mount", () => Mount.StartMount(playerData, room, commandOptions)},
                 {"dismount", () => Mount.Dismount(playerData, room, commandOptions)},

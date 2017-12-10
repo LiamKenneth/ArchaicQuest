@@ -156,6 +156,18 @@ namespace MIMWebClient.Core.Player.Classes
             #endregion
 
 
+            #region Lvl 10
+
+            var rescue = Rescue.RescueAb();
+            rescue.Learned = true;
+            rescue.Proficiency = 70;
+            fighter.Skills.Add(rescue);
+
+
+
+            #endregion
+
+
 
             #region  Give fighter Mount skill
 
