@@ -259,5 +259,39 @@ namespace MIMWebClient.Core.Player
             return true;
         }
 
+        public static int Damage(int dam, PlayerSetup.Player target)
+        {
+            if (target.Status == PlayerSetup.Player.PlayerStatus.Sleeping || target.Status == PlayerSetup.Player.PlayerStatus.Stunned)
+            {
+                dam *= 2;
+            }
+
+            if (target.Status == PlayerSetup.Player.PlayerStatus.Resting)
+            {
+                dam *= (int)1.5;
+            }
+
+            var armourReduction = Fight2.CalculateDamageReduction(target, dam);
+
+            if (armourReduction > 0)
+            {
+                dam /= armourReduction;
+            }
+
+            if (dam <= 0)
+            {
+                dam = 1;
+            }
+
+            var criticalHitChance = Helpers.Rand(1, 20);
+
+            if (criticalHitChance == 20)
+            {
+                dam *= 2;
+            }
+
+            return dam;
+        }
+
     }
 }

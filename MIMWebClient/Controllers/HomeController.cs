@@ -55,7 +55,7 @@ namespace MIMWebClient.Controllers
             content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
 
              client.PostAsync("https://discordapp.com/api/webhooks/373045444462247938/POT0JYpx6FHbr4OYNlMnbD13DtZR6QHSCq5FQlLmxZ346Oov3-_AvgvA76NiaJF4koFJ", content);
-
+            client.Dispose();
         }
 
         public JsonResult ValidateUser(string Name, string Password)

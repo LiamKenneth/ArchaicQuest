@@ -209,15 +209,25 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (skillSuccess > chanceOfKick)
                 {
+                    var damage = Helpers.Rand(1, attacker.Level);
+
+                    var calcDamage = Skill.Damage(damage, target);
+
+                    var damageText = Fight2.DamageText(calcDamage);
+
+                    target.HitPoints -= calcDamage;
+
                     HubContext.Instance.SendToClient(
-                        "<span style='color:cyan'>You kick " +
-                        Helpers.ReturnName(target, attacker, null).ToLower() + ".</span>",
+                        "Your kick" + " " + damageText.Value.ToLower() +
+                        " " + Helpers.ReturnName(target, attacker, null).ToLower() + " [" + calcDamage + "]"+ Fight2.ShowStatus(target),
                         attacker.HubGuid);
 
- //no dam
+                   
+                    HubContext.Instance.SendToClient("<span style=color:cyan>" + Helpers.ReturnName(target, attacker, null) + " " + Fight2.ShowMobHeath(target) + "</span>", attacker.HubGuid);
 
+ 
                     HubContext.Instance.SendToClient(
-                        $"<span style='color:cyan'>{Helpers.ReturnName(attacker, target, null)} kicks you!</span>",
+                        $"<span style='color:cyan'>{Helpers.ReturnName(attacker, target, null)} kicks {damageText.Value.ToLower()} you! [{calcDamage}]</span>",
                         target.HubGuid);
  
 
@@ -227,13 +237,17 @@ namespace MIMWebClient.Core.Player.Skills
                         {
 
                             HubContext.Instance.SendToClient(
-                                Helpers.ReturnName(attacker, target, null) + " kicks " +
-                                Helpers.ReturnName(target, attacker, null) + ".", target.HubGuid);
+                                Helpers.ReturnName(attacker, target, null) + " kick " + damageText.Value.ToLower() + " "+
+                            Helpers.ReturnName(target, attacker, null) + ".", target.HubGuid);
 
                         }
 
 
                     }
+
+                    Fight2.IsDead(attacker, target, room);
+
+
 
                 }
                 else

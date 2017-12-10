@@ -121,13 +121,15 @@ namespace MIMWebClient.Core.Player.Classes
             var parry = Parry.ParryAb();
             fighter.Skills.Add(parry);
 
-         
+
             #endregion
 
 
             #region Lvl 6
 
-           
+            var shieldBlock = ShieldBlock.ShieldBlockAb();
+            fighter.Skills.Add(shieldBlock);
+
             var dodge = Dodge.DodgeAb();
             fighter.Skills.Add(dodge);
 
@@ -140,8 +142,6 @@ namespace MIMWebClient.Core.Player.Classes
             fighter.Skills.Add(dirtKick);
 
             var kick = Kick.KickAb();
-            kick.Learned = true;
-            kick.Proficiency = 50;
             fighter.Skills.Add(kick);
 
             #endregion

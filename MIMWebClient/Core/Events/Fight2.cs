@@ -479,7 +479,7 @@ namespace MIMWebClient.Core.Events
             return canAttack;
         }
 
-        public static int CalculateDamageReduction(Player attacker, Player defender, int damage)
+        public static int CalculateDamageReduction(Player defender, int damage)
         {
             int ArRating = ArmourRating(defender);
             var armourReduction = ArRating / (double)damage;
@@ -572,7 +572,7 @@ namespace MIMWebClient.Core.Events
                 damage = helper.dice(1, attacker.MobAttackStats.damMin, attacker.MobAttackStats.damMax);
             }
 
-            var armourReduction = CalculateDamageReduction(attacker, defender, damage);
+            var armourReduction = CalculateDamageReduction(defender, damage);
 
             var strengthMod = 0.5 + attacker.Strength / (double)100;
             var levelDif = attacker.Level - defender.Level <= 0 ? 1 : attacker.Level - defender.Level;
