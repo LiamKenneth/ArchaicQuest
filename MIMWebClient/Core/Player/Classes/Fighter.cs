@@ -160,7 +160,7 @@ namespace MIMWebClient.Core.Player.Classes
 
             var rescue = Rescue.RescueAb();
             rescue.Learned = true;
-            rescue.Proficiency = 70;
+            rescue.Proficiency = 95;
             fighter.Skills.Add(rescue);
 
 

@@ -173,7 +173,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             attacker.Status = PlayerSetup.Player.PlayerStatus.Busy;
 
-            await Task.Delay(500);
+           
 
             if (attacker.ManaPoints < RescueAb().MovesCost)
             {
@@ -228,20 +228,22 @@ namespace MIMWebClient.Core.Player.Skills
 
                             }
                         }
+
+                        var saveFromWhom = target.Target.Name;
+                        target.Target.Target = null;
+                        target.Target.ActiveFighting = false;
+                        target.Target.Target = null;
+
+                        target.Target = null;
+                        target.Status = Player.PlayerStatus.Standing;
+                        target.ActiveFighting = false;
+;
+                        Command.ParseCommand($"kill {saveFromWhom}", attacker, room);
                     }
 
-                    target.Target.Target = attacker;
-                    attacker.Target = target.Target;
-                    attacker.Status = Player.PlayerStatus.Fighting;
-                    attacker.ActiveFighting = false;
-                    attacker.Target.Target.ActiveFighting = false;
+                   
 
-                    
-                    target.Target = null;
-                    target.Status = Player.PlayerStatus.Standing;
-                    target.ActiveFighting = false;  
-
-                    Fight2.PerpareToFightBack(attacker, room, attacker.Target.Name, true);
+                   
 
                 }
                 else

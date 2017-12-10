@@ -120,7 +120,6 @@ namespace MIMWebClient.Core.Events
                 if (attacker.Target == null)
                 {
                     attacker.Target = defender;
-                    attacker.Status = Player.PlayerStatus.Fighting;
                 }
             }
 
@@ -190,7 +189,7 @@ namespace MIMWebClient.Core.Events
 
                         if (Effect.HasEffect(attacker, Effect.Blindness(defender).Name))
                         {
-                            toHit -= 25;
+                            toHit -= 35;
                         }
 
                         int chance = D100();
@@ -214,7 +213,7 @@ namespace MIMWebClient.Core.Events
 
         public static Player FindValidTarget(Room room, string defender, Player attacker)
         {
-
+  
             var findObject = Events.FindNth.Findnth(defender);
             int nth = findObject.Key;
             string itemToFind = findObject.Value;
@@ -298,6 +297,13 @@ namespace MIMWebClient.Core.Events
 
                     }
 
+                    //if (!attacker.ActiveFighting || !defender.ActiveFighting)
+                    //{
+                    //    return;
+                    //}
+
+
+
                     //check still here
                     Player target = FindValidTarget(room, defender.Name, attacker);
 
@@ -317,6 +323,8 @@ namespace MIMWebClient.Core.Events
 
                         if (attacker.Target == null)
                         {
+                            attacker.Status = Player.PlayerStatus.Standing;
+                            attacker.ActiveFighting = false;
                             return;
                         }
 
@@ -327,6 +335,8 @@ namespace MIMWebClient.Core.Events
 
                             if (attacker.Target == null)
                             {
+                                attacker.Status = Player.PlayerStatus.Standing;
+                                attacker.ActiveFighting = false;
                                 return;
                             }
 
