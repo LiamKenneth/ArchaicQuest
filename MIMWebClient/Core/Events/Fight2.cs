@@ -220,7 +220,8 @@ namespace MIMWebClient.Core.Events
 
             Player defendingPlayer = null;
 
-
+            //BUG: Can't find correct player of same name. e.g bill, billy. if billy want to kill bill we need to remove billy from the list so they don't find themseleves 1st.
+           
 
             if (nth == -1)
             {
@@ -434,7 +435,8 @@ namespace MIMWebClient.Core.Events
         /// <returns></returns>
         public static Player FindTarget(Room room, string defender)
         {
-
+            //BUG: Can't find correct player of same name. e.g bill, billy. if billy want to kill bill we need to remove billy from the list so they don't find themseleves 1st.
+            //BUG: no nth search here 2.billy
             Player target =
                 room.players.Where(x => x.HitPoints > 0).ToList().FirstOrDefault(
                     x => x.Name.StartsWith(defender, StringComparison.CurrentCultureIgnoreCase))
