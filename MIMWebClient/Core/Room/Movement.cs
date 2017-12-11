@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MIMWebClient.Core.Player;
 using MIMWebClient.Core.Player.Skills;
 using MIMWebClient.Core.World.Tutorial;
 using MIMWebClient.Hubs;
@@ -93,7 +94,12 @@ namespace MIMWebClient.Core.Room
                         if (room.players[i].HubGuid != null)
                         {
                             //don't show if sneaking
-                            HubContext.Instance.SendToClient(enterText, room.players[i].HubGuid);
+                            if (!Effect.HasEffect(room.players[i], "Sneak"))
+                            {
+                                HubContext.Instance.SendToClient(enterText, room.players[i].HubGuid);
+                            }
+ 
+                          
                         }
 
                     }
@@ -128,7 +134,12 @@ namespace MIMWebClient.Core.Room
 
                     if (player.Name != room.players[i].Name)
                     {
-                        HubContext.Instance.AddNewMessageToPage(room.players[i].HubGuid, exitText);
+                      
+                        //don't show if sneaking
+                        if (!Effect.HasEffect(room.players[i], "Sneak"))
+                        {
+                            HubContext.Instance.AddNewMessageToPage(room.players[i].HubGuid, exitText);
+                        }
 
                     }
                     else
