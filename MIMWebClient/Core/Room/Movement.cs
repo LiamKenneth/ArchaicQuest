@@ -92,6 +92,7 @@ namespace MIMWebClient.Core.Room
                     {
                         if (room.players[i].HubGuid != null)
                         {
+                            //don't show if sneaking
                             HubContext.Instance.SendToClient(enterText, room.players[i].HubGuid);
                         }
 

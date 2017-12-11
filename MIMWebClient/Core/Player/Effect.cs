@@ -77,5 +77,16 @@ namespace MIMWebClient.Core.Player
             };
         }
 
+        public static Effect Sneak(PlayerSetup.Player player)
+        {
+            return new Effect
+            {
+                Name = "Sneak",
+                Duration = player.Level,
+                AffectLossMessagePlayer = "You feel less sneaky.",
+                AffectLossMessageRoom = $"You become aware of ${player.Name}"
+            };
+        }
+
     }
 }

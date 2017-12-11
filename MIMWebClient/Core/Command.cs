@@ -147,7 +147,7 @@ namespace MIMWebClient.Core
 
                     foraging.StartForaging(playerData, room);
                 }},
-        
+
                 {"fish", () =>
                 {
                     var fishing = new Fishing();
@@ -191,6 +191,12 @@ namespace MIMWebClient.Core
 
                     bash.StartBash(context, playerData, room, commandOptions);
                 }},
+                 {"Shield bash", () =>
+                {
+                    var sbash = new ShieldBash();
+
+                    sbash.StartBash(context, playerData, room, commandOptions);
+                }},
                 {"punch", () => Punch.StartPunch(playerData, room)},
                 {"kick", () =>
                 {
@@ -202,10 +208,16 @@ namespace MIMWebClient.Core
                     var rescue = new Rescue();
                     rescue.StartRescue(context, playerData, room, commandOptions);
                 }},
+                 {"lunge", () =>
+                {
+                    var lunge = new Lunge();
+                    lunge.StartLunge(context, playerData, room, commandOptions);
+                }},
                 {"ride", () =>  Mount.StartMount(playerData, room, commandOptions)},
                 {"mount", () => Mount.StartMount(playerData, room, commandOptions)},
                 {"dismount", () => Mount.Dismount(playerData, room, commandOptions)},
                 { "trip", () => {new Trip().StartTrip(context, playerData, room, commandOptions); }},
+                {"sneak", () => Sneak.DoSneak(context, playerData)},
 
                 //
                 {"unlock", () => ManipulateObject.UnlockItem(room, playerData, commandOptions, commandKey)},

@@ -159,9 +159,50 @@ namespace MIMWebClient.Core.Player.Classes
             #region Lvl 10
 
             var rescue = Rescue.RescueAb();
-            rescue.Learned = true;
-            rescue.Proficiency = 95;
             fighter.Skills.Add(rescue);
+
+
+
+            #endregion
+
+            #region Lvl 11
+
+            var sneak = Sneak.SneakAb();
+            sneak.Learned = true;
+            sneak.Proficiency = 50;
+            fighter.Skills.Add(sneak);
+
+
+
+            #endregion
+
+
+            #region Lvl 12
+            fighter.Skills.Add(SecondAttack.SecondAttackAb());
+
+
+
+            #endregion
+
+
+            #region Lvl 13
+
+            var lunge = Lunge.LungeAb();
+            lunge.Learned = true;
+            lunge.Proficiency = 95;
+            fighter.Skills.Add(lunge);
+
+
+
+            #endregion
+
+
+            #region Lvl 14
+
+            var sbash = ShieldBash.ShieldBashAb();
+            sbash.Learned = true;
+            sbash.Proficiency = 95;
+            fighter.Skills.Add(sbash);
 
 
 

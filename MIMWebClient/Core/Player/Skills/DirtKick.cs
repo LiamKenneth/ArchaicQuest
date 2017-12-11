@@ -51,7 +51,7 @@ namespace MIMWebClient.Core.Player.Skills
             
         }
 
-        public   void StartDirtKick(IHubContext context, PlayerSetup.Player player, Room room, string target = "")
+        public  void StartDirtKick(IHubContext context, PlayerSetup.Player player, Room room, string target = "")
         {
             //Check if player has spell
             var hasSkill = Skill.CheckPlayerHasSkill(player, DirtKickAb().Name);

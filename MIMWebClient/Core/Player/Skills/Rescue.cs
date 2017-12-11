@@ -31,7 +31,7 @@ namespace MIMWebClient.Core.Player.Skills
                     Name = "Rescue",
                     CoolDown = 0,
                     Delay = 0,
-                    LevelObtained = 1,
+                    LevelObtained = 10,
                     Proficiency = 1,
                     MaxProficiency = 95,
                     Passive = false,

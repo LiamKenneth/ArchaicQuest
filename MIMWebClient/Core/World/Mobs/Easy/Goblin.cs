@@ -7,6 +7,7 @@ using MIMWebClient.Core.Mob;
 using MIMWebClient.Core.Player;
 using MIMWebClient.Core.Player.Skills;
 using MIMWebClient.Core.World.Items.Armour.LightArmour.Leather.Body;
+using MIMWebClient.Core.World.Items.Armour.LightArmour.Shields;
 using MIMWebClient.Core.World.Items.Weapons.Sword.Short;
 
 
@@ -23,6 +24,9 @@ namespace MIMWebClient.Core.World.Anker.Mobs.Easy
 
             var rustedSword = ShortSwordBasic.RustedShortSword();
             rustedSword.location = Item.Item.ItemLocation.Wield;
+
+            var shield = ShieldBasic.WoodenShield();
+            shield.location = Item.Item.ItemLocation.Worn;
  
             var WeakGoblin = new PlayerSetup.Player
             {
@@ -49,12 +53,15 @@ namespace MIMWebClient.Core.World.Anker.Mobs.Easy
                 Inventory = new ItemContainer()
                 {
                     leatherVest,
-                    rustedSword
+                    rustedSword,
+                    shield
+                    
                 },
                 Equipment = new Equipment()
                 {
                     Body = leatherVest.name,
-                    Wielded = rustedSword.name
+                    Wielded = rustedSword.name,
+                    Shield = shield.name
                 },
                 Trainer = false,
                 DialogueTree = new List<DialogTree>(),

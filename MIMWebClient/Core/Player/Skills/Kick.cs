@@ -228,7 +228,7 @@ namespace MIMWebClient.Core.Player.Skills
 
  
                     HubContext.Instance.SendToClient(
-                        $"<span style='color:cyan'>{Helpers.ReturnName(attacker, target, null)} kicks {damageText.Value.ToLower()} you! [{calcDamage}]</span>",
+                        $"<span style='color:cyan'>{Helpers.ReturnName(attacker, target, null)} kick {damageText.Value.ToLower()} you! [{calcDamage}]</span>",
                         target.HubGuid);
  
 
