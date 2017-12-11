@@ -168,8 +168,6 @@ namespace MIMWebClient.Core.Player.Classes
             #region Lvl 11
 
             var sneak = Sneak.SneakAb();
-            sneak.Learned = true;
-            sneak.Proficiency = 50;
             fighter.Skills.Add(sneak);
 
 
@@ -188,8 +186,6 @@ namespace MIMWebClient.Core.Player.Classes
             #region Lvl 13
 
             var lunge = Lunge.LungeAb();
-            lunge.Learned = true;
-            lunge.Proficiency = 95;
             fighter.Skills.Add(lunge);
 
 
@@ -200,8 +196,6 @@ namespace MIMWebClient.Core.Player.Classes
             #region Lvl 14
 
             var sbash = ShieldBash.ShieldBashAb();
-            sbash.Learned = true;
-            sbash.Proficiency = 95;
             fighter.Skills.Add(sbash);
 
 
