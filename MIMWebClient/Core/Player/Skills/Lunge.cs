@@ -30,13 +30,13 @@ namespace MIMWebClient.Core.Player.Skills
                     Name = "Lunge",
                     CoolDown = 0,
                     Delay = 0,
-                    LevelObtained = 1,
+                    LevelObtained = 13,
                     Proficiency = 1,
                     MaxProficiency = 95,
                     Passive = true,
                     UsableFromStatus = "Fighting",
                     Syntax = "Lunge <target>",
-                    MovesCost = 40,
+                    MovesCost = 10,
                     HelpText = new Help()
                     {
                         HelpText = "lunge help text",
@@ -212,12 +212,13 @@ namespace MIMWebClient.Core.Player.Skills
                 {
                     var weapon =
                         attacker.Inventory.FirstOrDefault(
-                            x => x.name == attacker.Equipment.Wielded && x.location == Item.Item.ItemLocation.Worn);
+                            x => x.name == attacker.Equipment.Wielded && x.location == Item.Item.ItemLocation.Worn ||x.name == attacker.Equipment.Wielded && x.location == Item.Item.ItemLocation.Wield);
 
                     if (weapon == null)
                     {
                        HubContext.Instance.SendToClient("You need a weapon to lunge", attacker.HubGuid);
                         attacker.ActiveSkill = null;
+                        attacker.Status = Player.PlayerStatus.Standing;
                         return;
                     }
 
@@ -259,6 +260,8 @@ namespace MIMWebClient.Core.Player.Skills
 
                     Fight2.IsDead(attacker, target, room);
 
+                    Fight2.PerpareToFightBack(attacker, room, target.Name, true);
+
 
 
                 }
@@ -286,6 +289,8 @@ namespace MIMWebClient.Core.Player.Skills
                                 observerMessage, player.HubGuid);
                         }
                     }
+                    Fight2.PerpareToFightBack(attacker, room, target.Name, true);
+
 
 
                 }
@@ -298,9 +303,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             PlayerSetup.Player.SetState(attacker);
 
-            Fight2.PerpareToFightBack(attacker, room, target.Name, true);
-
-
+        
             attacker.ActiveSkill = null;
 
         }

@@ -19,6 +19,9 @@ namespace MIMWebClient.Core.Room
         {
             var directionOrigin = oppositeDirection(direction, true);
 
+            var isSneaking = player.Effects?.FirstOrDefault(
+                                 x => x.Name.Equals("Sneak", StringComparison.CurrentCultureIgnoreCase)) != null;
+
             for (int i = 0; i < room.players.Count; i++)
             {
 
@@ -29,6 +32,12 @@ namespace MIMWebClient.Core.Room
 
                 if (teleported == false)
                 {
+                    if (isSneaking)
+                    {
+                        HubContext.Instance.AddNewMessageToPage(player.HubGuid, $"You sneak {direction}");
+                        break;
+                    }
+
                     string name = Helpers.ReturnName(player, room.players[i], string.Empty);
                     string movement = "walks in "; // runs, hovers, crawls. Steps out of a portal, appears?
 
@@ -53,7 +62,9 @@ namespace MIMWebClient.Core.Room
 
                         if (player.Name != room.players[i].Name)
                         {
-                            HubContext.Instance.AddNewMessageToPage(room.players[i].HubGuid, enterText);
+ 
+                          HubContext.Instance.SendToClient(enterText, room.players[i].HubGuid);
+        
                         }
                         else
                         {
@@ -83,23 +94,16 @@ namespace MIMWebClient.Core.Room
                             }
 
                         }
-
-                        var roomdata = LoadRoom.DisplayRoom(room, room.players[i].Name);
-                        Score.UpdateUiRoom(room.players[i], roomdata);
-
+ 
              
                     }
                     else
                     {
                         if (room.players[i].HubGuid != null)
                         {
-                            //don't show if sneaking
-                            if (!Effect.HasEffect(room.players[i], "Sneak"))
-                            {
-                                HubContext.Instance.SendToClient(enterText, room.players[i].HubGuid);
-                            }
  
-                          
+                                HubContext.Instance.SendToClient(enterText, room.players[i].HubGuid);
+   
                         }
 
                     }
@@ -115,11 +119,18 @@ namespace MIMWebClient.Core.Room
             var hasFly = player.Effects?.FirstOrDefault(
                              x => x.Name.Equals("Fly", StringComparison.CurrentCultureIgnoreCase)) != null;
 
+            var isSneaking = player.Effects?.FirstOrDefault(
+                                 x => x.Name.Equals("Sneak", StringComparison.CurrentCultureIgnoreCase)) != null;
 
             for (int i = 0; i < room.players.Count; i++)
             {
                 if (teleported == false)
                 {
+                    if (isSneaking)
+                    {                     
+                        HubContext.Instance.AddNewMessageToPage(player.HubGuid, $"You sneak {direction}");
+                        break;
+                    }
 
                     string name = Helpers.ReturnName(player, room.players[i], string.Empty);
                     string movement = "walks "; // runs, hovers, crawls. Steps out of a portal, appears?
@@ -136,7 +147,7 @@ namespace MIMWebClient.Core.Room
                     {
                       
                         //don't show if sneaking
-                        if (!Effect.HasEffect(room.players[i], "Sneak"))
+                        if (!isSneaking)
                         {
                             HubContext.Instance.AddNewMessageToPage(room.players[i].HubGuid, exitText);
                         }
@@ -156,9 +167,7 @@ namespace MIMWebClient.Core.Room
 
                 }
 
-                var roomdata = LoadRoom.DisplayRoom(room, room.players[i].Name);
-                Score.UpdateUiRoom(room.players[i], roomdata);
-
+              
             }
 
             if (teleported == false)
@@ -408,6 +417,8 @@ namespace MIMWebClient.Core.Room
 
             var isBlind = player.Effects?.FirstOrDefault(
                           x => x.Name.Equals("Blindness", StringComparison.CurrentCultureIgnoreCase)) != null;
+
+          
 
             if (player.MovePoints <= 0)
             {
