@@ -213,6 +213,11 @@ namespace MIMWebClient.Core
                     var lunge = new Lunge();
                     lunge.StartLunge(context, playerData, room, commandOptions);
                 }},
+                {"disarm", () =>
+                {
+                    var disarm = new Disarm();
+                    disarm.StartDisarm(context, playerData, room);
+                }},
                 {"ride", () =>  Mount.StartMount(playerData, room, commandOptions)},
                 {"mount", () => Mount.StartMount(playerData, room, commandOptions)},
                 {"dismount", () => Mount.Dismount(playerData, room, commandOptions)},

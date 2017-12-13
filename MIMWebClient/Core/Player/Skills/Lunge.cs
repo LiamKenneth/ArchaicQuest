@@ -212,7 +212,7 @@ namespace MIMWebClient.Core.Player.Skills
                 {
                     var weapon =
                         attacker.Inventory.FirstOrDefault(
-                            x => x.name == attacker.Equipment.Wielded && x.location == Item.Item.ItemLocation.Wield);
+                            x => x.name == attacker.Equipment.Wielded && x.location == Item.Item.ItemLocation.Worn);
 
                     if (weapon == null)
                     {

@@ -200,13 +200,20 @@ namespace MIMWebClient.Core.Player.Classes
             #region Lvl 14
 
             var sbash = ShieldBash.ShieldBashAb();
-            sbash.Learned = true;
-            sbash.Proficiency = 95;
             fighter.Skills.Add(sbash);
 
+            #endregion
 
+
+            #region Lvl 15
+
+            var disarm = Disarm.DisarmAb();
+            disarm.Learned = true;
+            disarm.Proficiency = 95;
+            fighter.Skills.Add(disarm);
 
             #endregion
+
 
 
 
