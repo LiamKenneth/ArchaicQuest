@@ -208,7 +208,7 @@ namespace MIMWebClient.Core.Player
         public static PlayerSetup.Player FindTarget(string target, Room.Room room)
         {
             //Find target if it's specified
-            if (target == "")
+            if (string.IsNullOrEmpty(target))
             {
                 return null;
             }

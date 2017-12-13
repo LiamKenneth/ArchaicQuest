@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using LiteDB;
 using Microsoft.Ajax.Utilities;
 using MIMWebClient.Core.Loging;
+using MIMWebClient.Core.Player.Skills;
 
 
 namespace MIMWebClient.Core.Events
@@ -582,6 +583,17 @@ namespace MIMWebClient.Core.Events
             if (attacker.Type == Player.PlayerTypes.Mob && attacker.MobAttackType != Player.MobAttackTypes.Punch)
             {
                 damage = helper.dice(1, attacker.MobAttackStats.damMin, attacker.MobAttackStats.damMax);
+            }
+
+            if (Skill.CheckPlayerHasSkill(attacker, EnhancedDamage.EnhancedDamageAb().Name))
+            {
+                var chanceOfSuccess = Helpers.Rand(1, 100);
+                var enhancedDamageSkill =attacker.Skills.FirstOrDefault(x => x.Name.Equals(EnhancedDamage.EnhancedDamageAb().Name));
+
+                if (enhancedDamageSkill !=  null && enhancedDamageSkill.Proficiency > chanceOfSuccess)
+                {
+                    damage = damage + enhancedDamageSkill.Proficiency / damage * 10;
+                }
             }
 
             var armourReduction = CalculateDamageReduction(defender, damage);

@@ -12,43 +12,43 @@ namespace MIMWebClient.Core.Player.Skills
     using MIMWebClient.Core.PlayerSetup;
     using MIMWebClient.Core.Room;
 
-    public class EnhancedDamage: Skill
+    public class ThirdAttack : Skill
     {
 
-        public static Skill EnhancedDamageSkill { get; set; }
-        public static Skill EnhancedDamageAb()
+        public static Skill ThirdAttackSkill { get; set; }
+        public static Skill ThirdAttackAb()
         {
-                  
-            if (EnhancedDamageSkill != null)
+
+            if (ThirdAttackSkill != null)
             {
-               return EnhancedDamageSkill;
+                return ThirdAttackSkill;
             }
             else
             {
                 var skill = new Skill
                 {
-                    Name = "Enhanced Damage",
+                    Name = "Third Attack",
                     CoolDown = 0,
                     Delay = 0,
-                    LevelObtained = 16,
+                    LevelObtained = 20,
                     Proficiency = 1,
                     MaxProficiency = 95,
                     Passive = true,
                     UsableFromStatus = "Fighting",
-                    Syntax = "Passive command",
+                    Syntax = "Passive",
                     HelpText = new Help()
                     {
-                        HelpText = "Enhanced Damage help text",
+                        HelpText = "Ability to attack three times in combat",
                         DateUpdated = new DateTime().ToShortDateString()
                     }
                 };
 
 
-                EnhancedDamageSkill = skill;
+                ThirdAttackSkill = skill;
             }
 
-            return EnhancedDamageSkill;
-            
+            return ThirdAttackSkill;
+
         }
 
     }

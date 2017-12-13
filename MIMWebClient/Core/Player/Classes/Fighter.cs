@@ -211,15 +211,29 @@ namespace MIMWebClient.Core.Player.Classes
             #endregion
 
 
+            #region Lvl 16
 
+            var enhancedDam = EnhancedDamage.EnhancedDamageAb();
+            fighter.Skills.Add(enhancedDam);
 
-            #region  Give fighter Mount skill
+            #endregion
+
+            #region Lvl 18
 
             var mount = Mount.MountAb();
-            mount.Proficiency = 95;
             fighter.Skills.Add(mount);
 
             #endregion
+
+            #region Lvl 20
+
+            var thirdAttk = ThirdAttack.ThirdAttackAb();
+            fighter.Skills.Add(thirdAttk);
+
+            #endregion
+
+
+ 
 
             fighter.ReclassOptions.Add(Ranger.RangerClass());
 

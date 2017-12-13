@@ -30,7 +30,7 @@ namespace MIMWebClient.Core.Player.Skills
                     Name = "Disarm",
                     CoolDown = 0,
                     Delay = 0,
-                    LevelObtained = 1,
+                    LevelObtained = 15,
                     Proficiency = 1,
                     MaxProficiency = 95,
                     MovesCost = 10,
@@ -70,7 +70,7 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
-             var target = player.Target.Name;
+             var target = player.Target?.Name;
              
 
             var _target = Skill.FindTarget(target, room);
@@ -96,7 +96,7 @@ namespace MIMWebClient.Core.Player.Skills
             if (_target != null)
             {
 
-                var weapon = _target.Inventory.FirstOrDefault( x => x.name == _target.Equipment.Wielded && x.location == Item.Item.ItemLocation.Wield);
+                var weapon = _target.Inventory.FirstOrDefault( x => x.name == _target.Equipment.Wielded && x.location == Item.Item.ItemLocation.Worn || x.name == player.Equipment.Wielded && x.location == Item.Item.ItemLocation.Wield);
 
                 if (weapon == null)
                 {
@@ -148,7 +148,7 @@ namespace MIMWebClient.Core.Player.Skills
                 else
                 {
                     player.ActiveSkill = null;
-                    HubContext.Instance.SendToClient($"You fail to disarm {Helpers.ReturnName(player, _target, string.Empty)}.",
+                    HubContext.Instance.SendToClient($"You fail to disarm {Helpers.ReturnName(_target, player, string.Empty)}.",
                         player.HubGuid);
                     PlayerSetup.Player.LearnFromMistake(player, DisarmAb(), 250);
 
@@ -199,16 +199,17 @@ namespace MIMWebClient.Core.Player.Skills
 
         private  void DoDisarm(Player player, Room room)
         {
-            player.Equipment.Wielded = "Nothing";
+           
 
-            var weapon = player.Inventory.FirstOrDefault(
-                          x => x.name == player.Equipment.Wielded && x.location == Item.Item.ItemLocation.Worn);
+            var weapon = player.Inventory.FirstOrDefault(x => x.name == player.Equipment.Wielded && x.location == Item.Item.ItemLocation.Worn || x.name == player.Equipment.Wielded && x.location == Item.Item.ItemLocation.Wield);
 
             if (weapon != null)
             {
+              
                 player.Inventory.Remove(weapon);
                 weapon.location = Item.Item.ItemLocation.Room;
                 room.items.Add(weapon);
+                player.Equipment.Wielded = "Nothing";
             }
         }
 
@@ -235,7 +236,7 @@ namespace MIMWebClient.Core.Player.Skills
             if (alive)
             {
                 var weapon = target.Inventory.FirstOrDefault(
-                        x => x.name == target.Equipment.Wielded && x.location == Item.Item.ItemLocation.Worn);
+                        x => x.name == attacker.Equipment.Wielded && x.location == Item.Item.ItemLocation.Worn || x.name == attacker.Equipment.Wielded && x.location == Item.Item.ItemLocation.Wield);
 
                 if (weapon == null)
                 {
@@ -308,12 +309,10 @@ namespace MIMWebClient.Core.Player.Skills
 
             }
 
-
-            Score.ReturnScoreUI(target);
             Score.ReturnScoreUI(attacker);
 
             attacker.ActiveSkill = null;
-
+            PlayerSetup.Player.SetState(attacker);
         }
 
     }
