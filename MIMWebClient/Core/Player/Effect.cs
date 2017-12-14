@@ -84,7 +84,18 @@ namespace MIMWebClient.Core.Player
                 Name = "Sneak",
                 Duration = player.Level,
                 AffectLossMessagePlayer = "You feel less sneaky.",
-                AffectLossMessageRoom = $"You become aware of ${player.Name}"
+                AffectLossMessageRoom = $"You become aware of {player.Name}"
+            };
+        }
+
+        public static Effect Hide(PlayerSetup.Player player)
+        {
+            return new Effect
+            {
+                Name = "Hidden",
+                Duration = player.Level,
+                AffectLossMessagePlayer = "",
+                AffectLossMessageRoom = string.Empty
             };
         }
 

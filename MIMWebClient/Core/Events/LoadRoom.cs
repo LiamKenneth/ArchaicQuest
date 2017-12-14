@@ -143,6 +143,12 @@ namespace MIMWebClient.Core.Events
                         continue;
                     }
 
+                    if (item.Effects?.FirstOrDefault(
+                                 x => x.Name.Equals("Hidden", StringComparison.CurrentCultureIgnoreCase)) != null)
+                    {
+                        continue;
+                    }
+
                     if (item.Name != playerName)
                     {
                         if (item.Status == Player.PlayerStatus.Standing)

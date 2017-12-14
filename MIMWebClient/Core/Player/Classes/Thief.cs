@@ -33,7 +33,107 @@ namespace MIMWebClient.Core.Player.Classes
                 StatBonusCon = 1
 
             };
+
+
+            #region  Lvl 1 skills
+
+            var longBlades = LongBlades.LongBladesAb();
+            longBlades.Learned = true;
+            thief.Skills.Add(longBlades);
+
+            var shortBlades = ShortBlades.ShortBladesAb();
+            shortBlades.Learned = true;
+            thief.Skills.Add(shortBlades);
+
+
+            var staff = Staff.StaffAb();
+            staff.Learned = true;
+            thief.Skills.Add(staff);
+
+            var handToHand = HandToHand.HandToHandAb();
+            handToHand.Learned = true;
+            thief.Skills.Add(handToHand);
+
+            var lightArmour = LightArmour.LightArmourAb();
+            lightArmour.Learned = true;
+            thief.Skills.Add(lightArmour);
+
+            #endregion
+
+            #region  Lvl 2 skills
+            var dodge = Player.Skills.Dodge.DodgeAb();
+            dodge.LevelObtained = 2;
+            thief.Skills.Add(dodge);
+
+            #endregion
+
+            #region  Lvl 3 skills
+            var sneak = Player.Skills.Sneak.SneakAb();
+            sneak.LevelObtained = 3;
+            thief.Skills.Add(dodge);
+
+            var exotic = Exotic.ExoticAb();
+            exotic.LevelObtained = 3;
+            thief.Skills.Add(exotic);
+
+            #endregion
+
+            #region  Lvl 4 skills
+            var kick = Player.Skills.Kick.KickAb();
+            kick.LevelObtained = 5;
+            thief.Skills.Add(kick);
+
+            #endregion
+
+
+            #region Lvl 5 skills
+
+            var blunt = BluntWeapons.BluntWeaponsAb();
+            blunt.LevelObtained = 5;
+            thief.Skills.Add(blunt);
+
+
+            #endregion
  
+
+            #region Lvl 7 skills
+
+            var trip = Trip.TripAb();
+            trip.LevelObtained = 7;
+            thief.Skills.Add(trip);
+            #endregion
+
+            #region Lvl 9 skills
+
+            var hide = Hide.HideAb();
+            hide.LevelObtained = 9;
+            thief.Skills.Add(hide);
+            #endregion
+
+            #region Lvl 14 skills
+
+            var dkick = DirtKick.DirtKickAb();
+            dkick.LevelObtained = 14;
+            thief.Skills.Add(dkick);
+            #endregion
+
+
+            #region Lvl 16 skills
+
+            var parry = Parry.ParryAb();
+            parry.LevelObtained = 16;
+            thief.Skills.Add(parry);
+            #endregion
+
+
+            #region Lvl 18 skills
+
+            var disarm = Disarm.DisarmAb();
+            disarm.LevelObtained = 18;
+            thief.Skills.Add(disarm);
+            #endregion
+
+
 
             thief.ReclassOptions.Add(Ranger.RangerClass());
 

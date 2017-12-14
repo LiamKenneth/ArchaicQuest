@@ -487,7 +487,7 @@ namespace MIMWebClient.Core.Update
                                 if (player != character && character.HubGuid != null)
                                 {
                                     HubContext.Instance.SendToClient(
-                                        Helpers.ReturnName(player, character, string.Empty) + " " +
+                                        Helpers.ReturnName(character, player, string.Empty) + " " +
                                         af.AffectLossMessageRoom, character.HubGuid);
 
                                 }

@@ -223,6 +223,7 @@ namespace MIMWebClient.Core
                 {"dismount", () => Mount.Dismount(playerData, room, commandOptions)},
                 { "trip", () => {new Trip().StartTrip(context, playerData, room, commandOptions); }},
                 {"sneak", () => Sneak.DoSneak(context, playerData)},
+                {"hide", () => Hide.DoHide(context, playerData)},
 
                 //
                 {"unlock", () => ManipulateObject.UnlockItem(room, playerData, commandOptions, commandKey)},
@@ -296,6 +297,15 @@ namespace MIMWebClient.Core
             {
                 HubContext.Instance.SendToClient("You need to enter a command, type help if you need it.", playerData.HubGuid);
                 return;
+            }
+
+            if (playerData.Effects?.FirstOrDefault(x => x.Name.Equals("Hidden", StringComparison.CurrentCultureIgnoreCase)) != null)
+            {
+                playerData.Effects.Remove(
+                    playerData.Effects?.FirstOrDefault(
+                        x => x.Name.Equals("Hidden", StringComparison.CurrentCultureIgnoreCase)));
+
+                Score.UpdateUiAffects(playerData);
             }
 
             //testing
