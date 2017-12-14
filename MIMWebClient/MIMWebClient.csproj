@@ -304,6 +304,7 @@
     <Compile Include="Core\Player\Skills\Cook.cs" />
     <Compile Include="Core\Player\Skills\Brewing.cs" />
     <Compile Include="Core\Player\Skills\Forge.cs" />
+    <Compile Include="Core\Player\Skills\Lore.cs" />
     <Compile Include="Core\Player\Skills\Repair.cs" />
     <Compile Include="Core\Player\Skills\ThirdAttack.cs" />
     <Compile Include="Core\Player\Skills\ShieldBash.cs" />
