@@ -224,6 +224,7 @@ namespace MIMWebClient.Core
                 { "trip", () => {new Trip().StartTrip(context, playerData, room, commandOptions); }},
                 {"sneak", () => Sneak.DoSneak(context, playerData)},
                 {"hide", () => Hide.DoHide(context, playerData)},
+                {"lore", () => Lore.DoLore(context, playerData, commandOptions)},
 
                 //
                 {"unlock", () => ManipulateObject.UnlockItem(room, playerData, commandOptions, commandKey)},

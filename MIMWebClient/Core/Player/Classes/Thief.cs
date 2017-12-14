@@ -103,6 +103,15 @@ namespace MIMWebClient.Core.Player.Classes
             thief.Skills.Add(trip);
             #endregion
 
+            #region Lvl 8 skills
+
+            var lore = Lore.LoreAb();
+            lore.LevelObtained = 1;
+            lore.Learned = true;
+            lore.Proficiency = 90;
+            thief.Skills.Add(lore);
+            #endregion
+
             #region Lvl 9 skills
 
             var hide = Hide.HideAb();
