@@ -123,6 +123,17 @@ namespace MIMWebClient.Core.Player.Classes
 
             var skick = SpinKick.KickAb();
             thief.Skills.Add(skick);
+
+            var peak = Peak.PeakAb();
+            thief.Skills.Add(peak);
+            #endregion
+
+            #region Lvl 11 skills
+
+            var steal = Steal.StealAb();
+            thief.Skills.Add(steal);
+
+       
             #endregion
 
 

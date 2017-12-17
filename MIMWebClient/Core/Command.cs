@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using MIMWebClient.Core.Mob.Events;
 
@@ -83,6 +84,8 @@ namespace MIMWebClient.Core
                 {"flee", () => Flee.fleeCombat(playerData, room)},
                 {"sacrifice", () => Harvest.Body(playerData, room, commandOptions)},
                 {"harvest", () => Harvest.Body(playerData, room, commandOptions)},
+                {"peak", () => Peak.DoPeak(context, playerData, room, commandOptions)},
+                {"steal", () => Steal.DoSteal(context, playerData, room, commandOptions)},
 
                 //spells
                 {"c magic missile", () =>  MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
@@ -298,7 +301,7 @@ namespace MIMWebClient.Core
         /// <param name="room">Current Room</param>
         public static void ParseCommand(string input, PlayerSetup.Player playerData, Room.Room room = null)
         {
-
+            Stopwatch stopwatch = Stopwatch.StartNew();
             if (string.IsNullOrEmpty(input.Trim()))
             {
                 HubContext.Instance.SendToClient("You need to enter a command, type help if you need it.", playerData.HubGuid);
@@ -378,6 +381,8 @@ namespace MIMWebClient.Core
 
             Score.UpdateUiPrompt(playerData);
 
+            stopwatch.Stop();
+            System.Diagnostics.Debug.WriteLine(stopwatch.ElapsedMilliseconds);
         }
 
     }
