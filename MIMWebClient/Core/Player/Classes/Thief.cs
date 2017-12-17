@@ -119,6 +119,19 @@ namespace MIMWebClient.Core.Player.Classes
             thief.Skills.Add(hide);
             #endregion
 
+            #region Lvl 10 skills
+
+            var skick = SpinKick.KickAb();
+            thief.Skills.Add(skick);
+            #endregion
+
+
+            #region Lvl 12 skills
+
+            var tumble = Tumble.TumbleAb();
+            thief.Skills.Add(tumble);
+            #endregion
+
             #region Lvl 14 skills
 
             var dkick = DirtKick.DirtKickAb();

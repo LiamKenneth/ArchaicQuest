@@ -912,6 +912,18 @@ namespace MIMWebClient.Core.Events
                                     }
                                 }
                             }
+                            else if (rand == 2)
+                            {
+                                if (Skill.CheckPlayerHasSkill(defender, "Tumble"))
+                                {
+                                    var chanceOfSuccess = Helpers.Rand(1, 100);
+                                    var skill = defender.Skills.FirstOrDefault(x => x.Name.Equals("Tumble"));
+                                    if (skill != null && skill.Proficiency <= chanceOfSuccess)
+                                    {
+                                        Player.LearnFromMistake(defender, skill, 100);
+                                    }
+                                }
+                            }
 
 
 
@@ -1443,16 +1455,19 @@ namespace MIMWebClient.Core.Events
             var dodge = player.Skills.FirstOrDefault(x => x.Name.Equals("Dodge"));
             var parry = player.Skills.FirstOrDefault(x => x.Name.Equals("Parry"));
             var block = player.Skills.FirstOrDefault(x => x.Name.Equals("Shield Block"));
+            var tumble = player.Skills.FirstOrDefault(x => x.Name.Equals("Tumble"));
 
             double blockSkill = player.Equipment.Shield == "Nothing" ? 0 : block?.Proficiency / (double)95 * 10 ?? 0;
             double parrySkill = parry?.Proficiency / (double)95 * 10 ?? 0;
             double dodgeSkill = dodge?.Proficiency / (double)95 * 10 ?? 0;
+            double tumbleSkill = tumble?.Proficiency / (double)95 * 10 ?? 0;
 
             if (player.Type == Player.PlayerTypes.Mob)
             {
                 blockSkill = 1;
                 parrySkill = 1;
                 dodgeSkill = 1;
+                tumbleSkill = 1;
             }
 
 
@@ -1470,7 +1485,7 @@ namespace MIMWebClient.Core.Events
 
             //((Agility / 5) + (Luck / 10)) * (0.75 + 0.5 * Current Fatigue / Maximum Fatigue)
 
-            double evade = blockSkill + parrySkill + dodgeSkill + (dexterity / (double)5) * (0.75 + 0.5 * (player.MovePoints / (double)player.MaxMovePoints));
+            double evade = blockSkill + parrySkill + dodgeSkill + tumbleSkill +(dexterity / (double)5) * (0.75 + 0.5 * (player.MovePoints / (double)player.MaxMovePoints));
 
             return evade;
         }

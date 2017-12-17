@@ -203,6 +203,11 @@ namespace MIMWebClient.Core
                     var kick = new Kick();
                     kick.StartKick(context, playerData, room, commandOptions);
                 }},
+                {"spin kick", () =>
+                {
+                    var skick = new SpinKick();
+                    skick.StartKick(context, playerData, room, commandOptions);
+                }},
                 {"rescue", () =>
                 {
                     var rescue = new Rescue();
