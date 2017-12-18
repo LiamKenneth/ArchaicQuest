@@ -143,6 +143,13 @@ namespace MIMWebClient.Core.Player.Classes
             thief.Skills.Add(tumble);
             #endregion
 
+
+            #region Lvl 13 skills
+
+            var picklock = LockPick.LockPickAb();
+            thief.Skills.Add(picklock);
+            #endregion
+
             #region Lvl 14 skills
 
             var dkick = DirtKick.DirtKickAb();
@@ -150,6 +157,12 @@ namespace MIMWebClient.Core.Player.Classes
             thief.Skills.Add(dkick);
             #endregion
 
+
+            #region Lvl 15 skills
+
+            var bstab = Backstab.BackstabAb();
+            thief.Skills.Add(bstab);
+            #endregion
 
             #region Lvl 16 skills
 

@@ -10,6 +10,17 @@ namespace MIMWebClient.Core.Item
 {
     public class BaseItem
     {
+
+
+        public enum lockPickDifficulty
+        {
+            Easy,
+            Simple,
+            Mid,
+            Hard,
+            Impossible
+        }
+
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonId]
         public ObjectId _id { get; set; }
@@ -21,8 +32,23 @@ namespace MIMWebClient.Core.Item
         public bool open { get; set; } = true;
         public bool canOpen{ get; set; }
         public bool canLock { get; set; }
+        /// <summary>
+        /// Key id must match key value
+        /// </summary>
         public string keyId { get; set; }
+        /// <summary>
+        /// Key value must match key id
+        /// </summary>
         public string keyValue { get; set; }
+        /// <summary>
+        /// Lock pick difficulty
+        /// Easy 1- 100
+        /// Simple 25 - 100
+        /// Mid 50 - 100
+        /// Hard 75- 100
+        /// impossible 100 -100
+        /// </summary>
+        public lockPickDifficulty LockPick { get; set; } = lockPickDifficulty.Simple;
         public bool hidden { get; set; }
         /// <summary>
         /// Wear is this item? Room, Inventory, worn

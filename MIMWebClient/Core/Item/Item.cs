@@ -43,7 +43,8 @@ namespace MIMWebClient.Core.Item
             Silver,
             Copper,
             Forage,
-            Repair
+            Repair,
+            LockPick
         }
 
         public enum ChoppingBlockType

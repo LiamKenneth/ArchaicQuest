@@ -303,6 +303,9 @@
     <Compile Include="Core\Player\Skills\Carving.cs" />
     <Compile Include="Core\Player\Skills\Cook.cs" />
     <Compile Include="Core\Player\Skills\Brewing.cs" />
+    <Compile Include="Core\Player\Skills\Backstab.cs" />
+    <Compile Include="Core\Player\Skills\Feint.cs" />
+    <Compile Include="Core\Player\Skills\LockPick.cs" />
     <Compile Include="Core\Player\Skills\Steal.cs" />
     <Compile Include="Core\Player\Skills\SpinKick.cs" />
     <Compile Include="Core\Player\Skills\Peak.cs" />

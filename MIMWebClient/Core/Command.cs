@@ -52,7 +52,7 @@ namespace MIMWebClient.Core
                 {"equipment", () => Equipment.ShowEquipment(playerData)},
                 {"garb", () => Equipment.ShowEquipment(playerData)},
                 {"loot", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item")},
-                {"pick up", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item")},
+                // {"pick up", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item")}, //clashes with pick lock 
                 {"plunder", () => ManipulateObject.GetItem(room, playerData, "all " + commandOptions, commandKey, "item")},
                 {"get", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item")},
                 {"take", () => ManipulateObject.GetItem(room, playerData, commandOptions, commandKey, "item")},
@@ -86,6 +86,7 @@ namespace MIMWebClient.Core
                 {"harvest", () => Harvest.Body(playerData, room, commandOptions)},
                 {"peak", () => Peak.DoPeak(context, playerData, room, commandOptions)},
                 {"steal", () => Steal.DoSteal(context, playerData, room, commandOptions)},
+                {"pick", () => LockPick.DoLockPick(context, playerData, room, commandOptions)},
 
                 //spells
                 {"c magic missile", () =>  MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
@@ -226,10 +227,15 @@ namespace MIMWebClient.Core
                     var disarm = new Disarm();
                     disarm.StartDisarm(context, playerData, room);
                 }},
+                {"backstab", () =>
+                {
+                    var bstab = new Backstab();
+                    bstab.StartBackstab(context, playerData, room, commandOptions);
+                }},
                 {"ride", () =>  Mount.StartMount(playerData, room, commandOptions)},
                 {"mount", () => Mount.StartMount(playerData, room, commandOptions)},
                 {"dismount", () => Mount.Dismount(playerData, room, commandOptions)},
-                { "trip", () => {new Trip().StartTrip(context, playerData, room, commandOptions); }},
+                {"trip", () => {new Trip().StartTrip(context, playerData, room, commandOptions); }},
                 {"sneak", () => Sneak.DoSneak(context, playerData)},
                 {"hide", () => Hide.DoHide(context, playerData)},
                 {"lore", () => Lore.DoLore(context, playerData, commandOptions)},
