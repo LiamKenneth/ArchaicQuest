@@ -142,7 +142,20 @@ namespace MIMWebClient.Core
                         var shockingGRasp = new ShockingGrasp();
 
                         shockingGRasp.StartShockingGrasp(playerData, room, commandOptions);
-                    }},
+                 }},
+
+                { "c cause light", () =>
+                {
+                    var causelight = new CauseLight();
+
+                    causelight.StartCauseLight(context, playerData, room, commandOptions);
+                }},
+                {"cast cause light", () =>
+                {
+                    var causelight = new CauseLight();
+
+                    causelight.StartCauseLight(context, playerData, room, commandOptions);
+                }},
 
                 //skills angle, line, trawl, lure, bob
                 {"forage", () =>

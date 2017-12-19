@@ -33,7 +33,24 @@ namespace MIMWebClient.Core.Player.Classes
                 StatBonusCon = 1
 
             };
- 
+
+            #region  Lvl 1 skills
+
+            var blunt = BluntWeapons.BluntWeaponsAb();
+            blunt.Learned = true;
+            blunt.Proficiency = 25;
+            cleric.Skills.Add(blunt);
+
+
+
+            var causeLight = CauseLight.causeLightAb();
+            causeLight.Learned = true;
+            causeLight.Proficiency = 50;
+            cleric.Skills.Add(causeLight);
+
+
+            #endregion
+
 
             cleric.ReclassOptions.Add(Ranger.RangerClass());
 

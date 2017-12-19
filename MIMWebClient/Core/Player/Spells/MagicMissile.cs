@@ -162,7 +162,7 @@ namespace MIMWebClient.Core.Player.Skills
                 var dam = die.dice(1, 4);
                 var toHit = Helpers.GetPercentage(attacker.Skills.Find(x => x.Name.Equals(MagicMissileAb().Name, StringComparison.CurrentCultureIgnoreCase)).Proficiency, 95); // always 5% chance to miss
                 int chance = die.dice(1, 100);
-                Fight2.ShowAttack(attacker, attacker.Target, room, toHit, chance, MagicMissileAb(), dam);
+                Fight2.ShowAttack(attacker, attacker.Target, room, toHit, chance, MagicMissileAb(), false, dam);
             }
 
             Fight2.PerpareToFightBack(attacker, room, attacker.Target.Name, true);

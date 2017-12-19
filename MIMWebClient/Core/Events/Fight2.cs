@@ -196,7 +196,7 @@ namespace MIMWebClient.Core.Events
                         int chance = D100();
 
 
-                        ShowAttack(attacker, defender, room, toHit, chance, null);
+                        ShowAttack(attacker, defender, room, toHit, chance, null, true);
 
                     }
 
@@ -369,7 +369,7 @@ namespace MIMWebClient.Core.Events
 
 
 
-                            ShowAttack(attacker, defender, room, toHit, chance, null);
+                            ShowAttack(attacker, defender, room, toHit, chance, null, true);
 
 
 
@@ -698,7 +698,7 @@ namespace MIMWebClient.Core.Events
                 if (weapon != null)
                 {
 
-                    return new KeyValuePair<string, string>(weapon.name, weapon.name);
+                    return new KeyValuePair<string, string>(weapon.name.ToLower(), weapon.name.ToLower());
                 }
 
                 return new KeyValuePair<string, string>("hit", "hit");
@@ -711,7 +711,7 @@ namespace MIMWebClient.Core.Events
 
 
             //Skill / spell name here
-            return new KeyValuePair<string, string>(skillUsed.Name, skillUsed.Name);
+            return new KeyValuePair<string, string>(skillUsed.Name.ToLower(), skillUsed.Name.ToLower());
 
         }
 
@@ -789,11 +789,12 @@ namespace MIMWebClient.Core.Events
         /// <param name="chance">Chance to hit value</param>
         /// <param name="skillUsed">This is used for skills and spells only</param>
         /// <param name="damage">This is used for skills and spells only</param>
-        public static void ShowAttack(Player attacker, Player defender, Room room, double toHit, int chance, Skill skillUsed, int damage = 0)
+        public static void ShowAttack(Player attacker, Player defender, Room room, double toHit, int chance, Skill skillUsed, bool autohit = false, int damage = 0)
         {
 
             var numberOfAttacks = 1;
-            if (attacker.Skills != null)
+
+            if (attacker.Skills != null && autohit)
             {
                 var secondAttack = attacker.Skills.FirstOrDefault(x => x.Name.Equals("Second Attack"));
                 var thirdAttack = attacker.Skills.FirstOrDefault(x => x.Name.Equals("Third Attack"));

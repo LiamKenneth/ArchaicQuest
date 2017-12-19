@@ -130,7 +130,7 @@ namespace MIMWebClient.Core.Player.Skills
             var toHit = Helpers.GetPercentage(attacker.Skills.Find(x => x.Name.Equals(ShockingGraspAb().Name, StringComparison.CurrentCultureIgnoreCase)).Proficiency, 95); // always 5% chance to miss
             int chance = die.dice(1, 100);
 
-            Fight2.ShowAttack(attacker, target, room, toHit, chance, ShockingGraspAb(), dam);
+            Fight2.ShowAttack(attacker, target, room, toHit, chance, ShockingGraspAb(), false, dam);
 
 
             Score.ReturnScoreUI(target);
