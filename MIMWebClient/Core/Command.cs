@@ -232,6 +232,11 @@ namespace MIMWebClient.Core
                     var bstab = new Backstab();
                     bstab.StartBackstab(context, playerData, room, commandOptions);
                 }},
+                {"feint", () =>
+                {
+                    var feint = new Feint();
+                    feint.StartFeint(context, playerData, room, commandOptions);
+                }},
                 {"ride", () =>  Mount.StartMount(playerData, room, commandOptions)},
                 {"mount", () => Mount.StartMount(playerData, room, commandOptions)},
                 {"dismount", () => Mount.Dismount(playerData, room, commandOptions)},

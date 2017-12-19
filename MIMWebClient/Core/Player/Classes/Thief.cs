@@ -106,9 +106,6 @@ namespace MIMWebClient.Core.Player.Classes
             #region Lvl 8 skills
 
             var lore = Lore.LoreAb();
-            lore.LevelObtained = 1;
-            lore.Learned = true;
-            lore.Proficiency = 90;
             thief.Skills.Add(lore);
             #endregion
 
@@ -177,6 +174,13 @@ namespace MIMWebClient.Core.Player.Classes
             var disarm = Disarm.DisarmAb();
             disarm.LevelObtained = 18;
             thief.Skills.Add(disarm);
+            #endregion
+
+            #region Lvl 20 skills
+
+            var feint = Feint.FeintAb();
+           
+            thief.Skills.Add(feint);
             #endregion
 
 

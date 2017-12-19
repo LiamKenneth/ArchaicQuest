@@ -24,7 +24,7 @@ namespace MIMWebClient.Core.Player.Skills
                 Name = "Feint",
                 CoolDown = 0,
                 Delay = 0,
-                LevelObtained = 1,
+                LevelObtained = 20,
                 Passive = false,
                 Proficiency = 1,
                 MaxProficiency = 95,
@@ -162,7 +162,7 @@ namespace MIMWebClient.Core.Player.Skills
 
         private int FeintSuccess(PlayerSetup.Player attacker, PlayerSetup.Player target)
         {
-            var success = 2 * attacker.Dexterity - target.Dexterity + (attacker.Level - target.Level) * 2;
+            var success = attacker.Dexterity - target.Wisdom + target.Dexterity + (attacker.Level - target.Level) * 2;
 
             if (attacker.Effects.FirstOrDefault(x => x.Name.Equals("Haste")) != null)
             {
@@ -191,7 +191,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (attacker.ManaPoints < FeintAb().MovesCost)
             {
-                context.SendToClient("You are too tired to Feint.", attacker.HubGuid);
+                context.SendToClient("You are too tired to feint.", attacker.HubGuid);
                 attacker.ActiveSkill = null;
                 PlayerSetup.Player.SetState(attacker);
                 return;
@@ -210,7 +210,23 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (skillSuccess > chanceOfFeint)
                 {
-                    var damage = Helpers.Rand(1, attacker.Level);
+
+                    var weapon =
+                        attacker.Inventory.FirstOrDefault(
+                            x => x.name == attacker.Equipment.Wielded && x.location == Item.Item.ItemLocation.Worn || x.name == attacker.Equipment.Wielded && x.location == Item.Item.ItemLocation.Wield);
+
+                    int damage;
+                    if (weapon == null)
+                    {
+                        damage = Helpers.Rand(1, attacker.Level / 3 + 1);
+                    }
+                    else
+                    {
+
+                        damage = Helpers.Rand(1, weapon.stats.damMax * 2);
+                    }
+
+                   
 
                     var calcDamage = Skill.Damage(damage, target);
 
@@ -219,7 +235,7 @@ namespace MIMWebClient.Core.Player.Skills
                     target.HitPoints -= calcDamage;
 
                     HubContext.Instance.SendToClient(
-                        "Your Feint" + " " + damageText.Value.ToLower() +
+                        "Your feint sends " + Helpers.ReturnName(target, attacker, null).ToLower() + " the wrong way. Your attack " + damageText.Value.ToLower() +
                         " " + Helpers.ReturnName(target, attacker, null).ToLower() + " [" + calcDamage + "]"+ Fight2.ShowStatus(target),
                         attacker.HubGuid);
 
@@ -228,7 +244,7 @@ namespace MIMWebClient.Core.Player.Skills
 
  
                     HubContext.Instance.SendToClient(
-                        $"<span style='color:cyan'>{Helpers.ReturnName(attacker, target, null)} Feint {damageText.Value.ToLower()} you! [{calcDamage}]</span>",
+                        $"<span style='color:cyan'>{Helpers.ReturnName(attacker, target, null)} feint leaves you wrong footed, their attack {damageText.Value.ToLower()} you! [{calcDamage}]</span>",
                         target.HubGuid);
  
 
@@ -238,8 +254,7 @@ namespace MIMWebClient.Core.Player.Skills
                         {
 
                             HubContext.Instance.SendToClient(
-                                Helpers.ReturnName(attacker, target, null) + " Feint " + damageText.Value.ToLower() + " "+
-                            Helpers.ReturnName(target, attacker, null) + ".", target.HubGuid);
+                                Helpers.ReturnName(attacker, target, null) + " tricks " + Helpers.ReturnName(target, attacker, null) + " leaving them wrong footed. " + Helpers.ReturnName(attacker, target, null) + " attack " + damageText.Value.ToLower() + Helpers.ReturnName(target, attacker, null), target.HubGuid);
 
                         }
 
@@ -253,15 +268,15 @@ namespace MIMWebClient.Core.Player.Skills
                 }
                 else
                 {
-                    var attackerMessage = "Your Feint <span style='color:olive'>misses</span> " +
+                    var attackerMessage = "Your feint <span style='color:olive'>fails</span> to trick " +
                                              Helpers.ReturnName(target, attacker, null);
 
                     var targetMessage = Helpers.ReturnName(attacker, target, null) +
-                                           "'s Feint <span style='color:olive'>misses</span> you ";
+                                           "tries to feint their attack.";
 
                     var observerMessage = Helpers.ReturnName(attacker, target, null) +
-                                             "'s Feint <span style='color:olive'>misses</span> " +
-                                             Helpers.ReturnName(target, attacker, null);
+                                             "tries to feint their attack. But " +
+                                             Helpers.ReturnName(target, attacker, null) + " see's through it.";
 
 
                     HubContext.Instance.SendToClient(attackerMessage, attacker.HubGuid);
