@@ -204,8 +204,6 @@ namespace MIMWebClient.Core.Player.Classes
             #region Lvl 15
 
             var disarm = Disarm.DisarmAb();
-            disarm.Learned = true;
-            disarm.Proficiency = 95;
             fighter.Skills.Add(disarm);
 
             #endregion

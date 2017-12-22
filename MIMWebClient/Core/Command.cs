@@ -157,6 +157,20 @@ namespace MIMWebClient.Core
                     causelight.StartCauseLight(context, playerData, room, commandOptions);
                 }},
 
+                { "c cure light", () =>
+                {
+                    var cureLight = new CureLight();
+
+                    cureLight.StartCureLight(context, playerData, room, commandOptions);
+                }},
+                {"cast cure light", () =>
+                {
+                    var cureLight = new CureLight();
+
+                    cureLight.StartCureLight(context, playerData, room, commandOptions);
+                }},
+
+
                 //skills angle, line, trawl, lure, bob
                 {"forage", () =>
                 {
@@ -361,10 +375,11 @@ namespace MIMWebClient.Core
                 else if (commandKey.Equals("c", StringComparison.InvariantCultureIgnoreCase) || commandKey.Equals("cast", StringComparison.InvariantCultureIgnoreCase) && commands.Length > 1)
                 {
                     commandKey = commands[0] + " " + commands[1];
-
-                    commandOptions =
-                        enteredCommand.Substring(enteredCommand.IndexOf(commands[0], StringComparison.Ordinal)).Trim();
-
+ 
+                        commandOptions =
+                            enteredCommand.Substring(enteredCommand.IndexOf(commands[0], StringComparison.Ordinal))
+                                .Trim();
+                    
                 }
                 else
                 {

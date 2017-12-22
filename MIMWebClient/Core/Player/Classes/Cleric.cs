@@ -51,6 +51,17 @@ namespace MIMWebClient.Core.Player.Classes
 
             #endregion
 
+            #region  Lvl 2 skills
+
+           
+            var cureLight = CureLight.CureLightAb();
+            cureLight.Learned = true;
+            cureLight.Proficiency = 50;
+            cleric.Skills.Add(cureLight);
+
+
+            #endregion
+
 
             cleric.ReclassOptions.Add(Ranger.RangerClass());
 

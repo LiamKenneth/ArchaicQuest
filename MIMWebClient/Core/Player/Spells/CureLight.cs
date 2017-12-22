@@ -10,18 +10,18 @@ namespace MIMWebClient.Core.Player.Skills
     using MIMWebClient.Core.PlayerSetup;
     using MIMWebClient.Core.Room;
 
-    public class CauseLight : Skill
+    public class CureLight : Skill
     {
         private static bool _taskRunnning = false;
-        public static CauseLight causeLightSkill { get; set; }
+        public static CureLight CureLightSkill { get; set; }
 
-        public static CauseLight causeLightAb()
+        public static CureLight CureLightAb()
         {
 
 
-            var skill = new CauseLight
+            var skill = new CureLight
             {
-                Name = "Cause Light",
+                Name = "Cure Light",
                 CoolDown = 0,
                 Delay = 0,
                 LevelObtained = 1,
@@ -30,13 +30,13 @@ namespace MIMWebClient.Core.Player.Skills
                 MaxProficiency = 95,
                 ManaCost = 10,
                 UsableFromStatus = "Staning",
-                Syntax = "Cause light <Target>"
+                Syntax = "cure light <Target>"
             };
 
 
             var help = new Help
             {
-                Syntax = "cause light <Victim>",
+                Syntax = "cure light <Victim>",
                 HelpText = "",
                 DateUpdated = "18/01/2017"
 
@@ -50,10 +50,10 @@ namespace MIMWebClient.Core.Player.Skills
 
         }
 
-        public void StartCauseLight(IHubContext context, PlayerSetup.Player player, Room room, string target = "")
+        public void StartCureLight(IHubContext context, PlayerSetup.Player player, Room room, string target = "")
         {
             //Check if player has spell
-            var hasSkill = Skill.CheckPlayerHasSkill(player, causeLightAb().Name);
+            var hasSkill = Skill.CheckPlayerHasSkill(player, CureLightAb().Name);
 
             if (hasSkill == false)
             {
@@ -68,18 +68,13 @@ namespace MIMWebClient.Core.Player.Skills
                 return;
             }
 
-            if (string.IsNullOrEmpty(target) && player.Target != null)
+            if (string.IsNullOrEmpty(target))
             {
-                target = player.Target.Name;
+                target = player.Name;
             }
 
-            var _target = Skill.FindTarget(target, room);
+            var _target = Skill.FindTarget(target, room) ?? player;
 
-            //Fix issue if target has similar name to user and they use abbrivations to target them
-            if (_target == player)
-            {
-                _target = null;
-            }
 
             if (player.ActiveSkill != null)
             {
@@ -90,7 +85,7 @@ namespace MIMWebClient.Core.Player.Skills
             }
             else
             {
-                player.ActiveSkill = causeLightAb();
+                player.ActiveSkill = CureLightAb();
             }
 
 
@@ -102,23 +97,23 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (_target.HitPoints <= 0)
                 {
-                    context.SendToClient("You can't cast cause light on them as they are dead.", player.HubGuid);
+                    context.SendToClient("You can't cast cure light on them as they are dead.", player.HubGuid);
                     player.ActiveSkill = null;
                     return;
 
                 }
 
-                if (player.MovePoints < causeLightAb().MovesCost)
+                if (player.MovePoints < CureLightAb().MovesCost)
                 {
 
 
-                    context.SendToClient("You are too tired to cast cause light.", player.HubGuid);
+                    context.SendToClient("You are too tired to cast cure light.", player.HubGuid);
                     player.ActiveSkill = null;
 
                     return;
                 }
 
-                player.ManaPoints -= causeLightAb().ManaCost;
+                player.ManaPoints -= CureLightAb().ManaCost;
 
                 Score.UpdateUiPrompt(player);
 
@@ -142,7 +137,7 @@ namespace MIMWebClient.Core.Player.Skills
 
             await Task.Delay(500);
 
-            if (attacker.ManaPoints < causeLightAb().ManaCost)
+            if (attacker.ManaPoints < CureLightAb().ManaCost)
             {
               context.SendToClient("You attempt to draw energy but fail", attacker.HubGuid);
                 attacker.ActiveSkill = null;
@@ -152,7 +147,7 @@ namespace MIMWebClient.Core.Player.Skills
 
 
             var chanceOfSuccess = Helpers.Rand(1, 100);
-            var skill = attacker.Skills.FirstOrDefault(x => x.Name.Equals("Cause Light"));
+            var skill = attacker.Skills.FirstOrDefault(x => x.Name.Equals("Cure Light"));
             if (skill == null)
             {
                 attacker.ActiveSkill = null;
@@ -163,17 +158,30 @@ namespace MIMWebClient.Core.Player.Skills
 
             if (skillProf >= chanceOfSuccess)
             {
-                var damage = Helpers.Rand(1, 8) / 3;
-                var toHit = Helpers.GetPercentage(attacker.Skills.Find(x => x.Name.Equals(causeLightAb().Name, StringComparison.CurrentCultureIgnoreCase)).Proficiency, 95); // always 5% chance to miss
+                var heal = Helpers.Rand(1, 8) / 3;
 
-                Fight2.ShowAttack(attacker, target, room, toHit, chanceOfSuccess, causeLightAb(), false, damage);
+                target.HitPoints += heal;
+
+                if (target.HitPoints > target.MaxHitPoints)
+                {
+                    target.HitPoints += target.MaxHitPoints;
+                }
+
+                if (target != attacker)
+                {
+                    HubContext.Instance.SendToClient($"{target.Name} looks better.", attacker.HubGuid);
+                }
+             
+                HubContext.Instance.SendToClient("You feel better.",  target.HubGuid);
+
+
             }
             else
             {
                 attacker.ActiveSkill = null;
                 HubContext.Instance.SendToClient("You lost your concerntration.",
                     attacker.HubGuid);
-                PlayerSetup.Player.LearnFromMistake(attacker, causeLightAb(), 250);
+                PlayerSetup.Player.LearnFromMistake(attacker, CureLightAb(), 250);
 
                 Score.ReturnScoreUI(attacker);
             }
@@ -182,9 +190,6 @@ namespace MIMWebClient.Core.Player.Skills
             Score.ReturnScoreUI(target);
 
             PlayerSetup.Player.SetState(attacker);
-
-            Fight2.PerpareToFightBack(attacker, room, target.Name, true);
-
 
             attacker.ActiveSkill = null;
 
