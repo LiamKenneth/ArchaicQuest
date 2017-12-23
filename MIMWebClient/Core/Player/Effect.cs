@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using MIMWebClient.Core.Events;
+using MIMWebClient.Core.PlayerSetup;
 
 namespace MIMWebClient.Core.Player
 {
@@ -66,6 +68,17 @@ namespace MIMWebClient.Core.Player
                 x => x.Name.Equals(effectName, StringComparison.CurrentCultureIgnoreCase)) != null;
         }
 
+        internal static Effect DetectInvis(PlayerSetup.Player player)
+        {
+            return new Effect
+            {
+                Name = "Detect Invis",
+                Duration = player.Level,
+                AffectLossMessagePlayer = "You no longer detect Invis.",
+                AffectLossMessageRoom = string.Empty
+            };
+        }
+
         public static Effect Blindness(PlayerSetup.Player player, bool magical = false)
         {
           return new Effect
@@ -99,5 +112,15 @@ namespace MIMWebClient.Core.Player
             };
         }
 
+        public static Effect Armour(PlayerSetup.Player player)
+        {
+            return new Effect
+            {
+                Name = "Armour",
+                Duration = player.Level,
+                AffectLossMessagePlayer = "You feel your magical armour fade away",
+                AffectLossMessageRoom = string.Empty
+            };
+        }
     }
 }

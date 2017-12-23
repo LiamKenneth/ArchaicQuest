@@ -62,6 +62,41 @@ namespace MIMWebClient.Core.Player.Classes
 
             #endregion
 
+            #region  Lvl 3 skills
+
+
+            var detectInvis = DetectInvis.DetectInvisAb();
+            detectInvis.Learned = true;
+            detectInvis.Proficiency = 50;
+            cleric.Skills.Add(detectInvis);
+
+
+            #endregion
+
+
+            #region  Lvl 5 skills
+
+
+            var armour = Armour.ArmourAb();
+            armour.Learned = true;
+            armour.LevelObtained = 1;
+            armour.Proficiency = 50;
+            cleric.Skills.Add(armour);
+
+            var flail = Flail.FlailAb();
+            flail.Learned = true;
+            flail.LevelObtained = 1;
+            flail.Proficiency = 50;
+            cleric.Skills.Add(flail);
+
+            var mount = Mount.MountAb();
+            mount.Learned = true;
+            mount.LevelObtained = 1;
+            mount.Proficiency = 50;
+            cleric.Skills.Add(mount);
+
+
+            #endregion
 
             cleric.ReclassOptions.Add(Ranger.RangerClass());
 

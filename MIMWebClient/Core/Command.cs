@@ -92,11 +92,24 @@ namespace MIMWebClient.Core
                 {"c magic missile", () =>  MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
                 {"cast magic missile", () => MagicMissile.StartMagicMissile(playerData, room, commandOptions)},
 
-                { "c armour", () => Armour.StartArmour(playerData, room, commandOptions)},
-                {"cast armour", () => Armour.StartArmour(playerData, room, commandOptions)},
+                { "c armour", () =>
+                {
+                    var armour = new Armour();
+                    armour.StartArmour(playerData, room, commandOptions);
+                }},
+                {"cast armour", () =>  {
+                    var armour = new Armour();
+                    armour.StartArmour(playerData, room, commandOptions);
+                }},
 
-                { "c armor", () => Armour.StartArmour(playerData, room, commandOptions)},
-                {"cast armor", () => Armour.StartArmour(playerData, room, commandOptions)},
+                { "c armor", () =>  {
+                    var armour = new Armour();
+                    armour.StartArmour(playerData, room, commandOptions);
+                }},
+                {"cast armor", () =>  {
+                    var armour = new Armour();
+                    armour.StartArmour(playerData, room, commandOptions);
+                }},
 
                 { "c continual light", () => ContinualLight.StarContinualLight(playerData, room, commandOptions)},
                 {"cast continual light", () => ContinualLight.StarContinualLight(playerData, room, commandOptions)},
@@ -168,6 +181,15 @@ namespace MIMWebClient.Core
                     var cureLight = new CureLight();
 
                     cureLight.StartCureLight(context, playerData, room, commandOptions);
+                }},
+
+                { "c detect invis", () =>
+                {
+                     DetectInvis.DoDetectInvis(context, playerData, room);
+                }},
+                {"cast detect invis", () =>
+                {
+                    DetectInvis.DoDetectInvis(context, playerData, room);
                 }},
 
 

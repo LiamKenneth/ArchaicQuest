@@ -466,6 +466,17 @@ namespace MIMWebClient.Core.Update
                             player.invis = false;
                         }
 
+                        if (af.Name == "Detect Invis")
+                        {
+                            player.DetectInvis = false;
+                        }
+
+
+                        if (af.Name == "Armour")
+                        {
+                            player.ArmorRating -= 20;
+                        }
+
                         if (af.Name == "Chill Touch")
                         {
                             player.Equipment.Wielded = "Nothing";

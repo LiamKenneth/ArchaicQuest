@@ -79,7 +79,7 @@ namespace MIMWebClient.Core.Events
 
             var itemList = string.Empty;
 
- 
+
             foreach (var item in room.items)
             {
                 if (item != null)
