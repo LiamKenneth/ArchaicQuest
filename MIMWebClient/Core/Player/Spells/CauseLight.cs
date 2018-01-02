@@ -120,6 +120,11 @@ namespace MIMWebClient.Core.Player.Skills
 
                 player.ManaPoints -= causeLightAb().ManaCost;
 
+                if (player.ManaPoints < 0)
+                {
+                    player.ManaPoints = 0;
+                }
+
                 Score.UpdateUiPrompt(player);
 
 
@@ -147,6 +152,12 @@ namespace MIMWebClient.Core.Player.Skills
               context.SendToClient("You attempt to draw energy but fail", attacker.HubGuid);
                 attacker.ActiveSkill = null;
                 PlayerSetup.Player.SetState(attacker);
+
+                if (attacker.ManaPoints < 0)
+                {
+                    attacker.ManaPoints = 0;
+                }
+
                 return;
             }
 

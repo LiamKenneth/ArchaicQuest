@@ -120,7 +120,7 @@ namespace MIMWebClient.Core.World.Anker.Mobs
             {
                 Id = "lance1b",
                 MatchPhrase = lance1b.Response,
-                Message = "Hmmm... The world is young $playerName but you can go north to the inn, Modo and Dysten may surprise you. North East houses the General shoppe and the blacksmith. Other than that you can walk around square walk. More changes happen everyday...",
+                Message = "Hmmm... The world is young $playerName but you can go north to the inn, Modo and Dyten may surprise you. North East houses the General shoppe and the blacksmith. Other than that you can walk around square walk. More changes happen everyday...",
                 PossibleResponse = new List<Responses>()
 
             };

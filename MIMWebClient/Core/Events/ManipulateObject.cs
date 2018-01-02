@@ -1182,7 +1182,7 @@ namespace MIMWebClient.Core.Events
                             HubContext.Instance.SendToClient("You gain " + quest.RewardGold + " gold pieces", player.HubGuid);
 
                             player.Experience += quest.RewardXp;
-                            player.Gold = quest.RewardGold;
+                            player.Gold += quest.RewardGold;
 
                             //check if player level
                             var xp = new Experience();

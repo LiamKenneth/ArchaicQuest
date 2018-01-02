@@ -68,7 +68,7 @@ namespace MIMWebClient.Core.Player
         public string QuestFindMob { get; set; }
 
 
-        public int RewardGold { get; set; }
+        public int RewardGold { get; set; } = 10;
         public int RewardXp { get; set; }
         public Item.Item RewardItem { get; set; }
         public Skill RewardSkill { get; set; } = null;
