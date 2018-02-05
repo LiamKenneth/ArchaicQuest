@@ -115,6 +115,11 @@ namespace MIMWebClient.Core.Player.Skills
 
                 player.ManaPoints -= CureLightAb().ManaCost;
 
+                if (player.ManaPoints < 0)
+                {
+                    player.ManaPoints = 0;
+                }
+
                 Score.UpdateUiPrompt(player);
 
 
@@ -142,6 +147,11 @@ namespace MIMWebClient.Core.Player.Skills
               context.SendToClient("You attempt to draw energy but fail", attacker.HubGuid);
                 attacker.ActiveSkill = null;
                 PlayerSetup.Player.SetState(attacker);
+
+                if (attacker.ManaPoints < 0)
+                {
+                    attacker.ManaPoints = 0;
+                }
                 return;
             }
 
@@ -164,7 +174,7 @@ namespace MIMWebClient.Core.Player.Skills
 
                 if (target.HitPoints > target.MaxHitPoints)
                 {
-                    target.HitPoints += target.MaxHitPoints;
+                    target.HitPoints = target.MaxHitPoints;
                 }
 
                 if (target != attacker)
@@ -179,8 +189,7 @@ namespace MIMWebClient.Core.Player.Skills
             else
             {
                 attacker.ActiveSkill = null;
-                HubContext.Instance.SendToClient("You lost your concerntration.",
-                    attacker.HubGuid);
+                HubContext.Instance.SendToClient("You lost your concerntration.", attacker.HubGuid);
                 PlayerSetup.Player.LearnFromMistake(attacker, CureLightAb(), 250);
 
                 Score.ReturnScoreUI(attacker);
