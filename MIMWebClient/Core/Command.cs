@@ -443,7 +443,7 @@ namespace MIMWebClient.Core
             Score.UpdateUiPrompt(playerData);
 
             stopwatch.Stop();
-            System.Diagnostics.Debug.WriteLine(stopwatch.ElapsedMilliseconds);
+            System.Diagnostics.Debug.WriteLine("Process command " + stopwatch.Elapsed);
         }
 
     }

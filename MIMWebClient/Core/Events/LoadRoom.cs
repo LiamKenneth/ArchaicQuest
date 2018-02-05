@@ -227,11 +227,11 @@ namespace MIMWebClient.Core.Events
 
                     if (item.Status == Player.PlayerStatus.Standing)
                     {
-                        mobList += "<p class='roomMob'>" + Helpers.FirstLetterToUpper(article) + " " + npcName + ".<p>";
+                        mobList += $"<p class='roomMob'>{Helpers.FirstLetterToUpper(article)} {npcName}.<p>";
                     }
                     else if (item.Status == Player.PlayerStatus.Fighting)
                     {
-                        mobList += "<p class='roomMob'>" + article + " " + item.Name + " is fighting " + item.Target.Name + ".</p>";
+                        mobList += $"<p class='roomMob'> {article} {item.Name} is fighting {item.Target.Name}.</p>";
                     }
                     else if (item.Status == Player.PlayerStatus.Stunned)
                     {
@@ -262,7 +262,8 @@ namespace MIMWebClient.Core.Events
             }
 
 
-            string displayRoom = "<p class='roomTitle'>" + roomTitle + "<p><p class='roomDescription'>" + roomDescription + "</p> <p class='RoomExits'>[ Exits: " + exitList.ToLower() + " ]</p>" + itemList + "\r\n" + playerList + "\r\n" + mobList;
+            string displayRoom =
+                $"<p class='roomTitle'>{roomTitle}<p><p class='roomDescription'>{roomDescription}</p> <p class='RoomExits'>[ Exits: {exitList.ToLower()} ]</p> {itemList} <br />{playerList}  <br />{mobList}";
        
             return displayRoom;
 

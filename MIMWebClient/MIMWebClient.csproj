@@ -322,6 +322,7 @@
     <Compile Include="Core\Player\Skills\Forage.cs" />
     <Compile Include="Core\Player\Skills\Fish.cs" />
     <Compile Include="Core\Player\Skills\Trip.cs" />
+    <Compile Include="Core\Player\Spells\CureBlindness.cs" />
     <Compile Include="Core\Player\Spells\DetectInvis.cs" />
     <Compile Include="Core\Player\Spells\CureLight.cs" />
     <Compile Include="Core\Player\Spells\CauseLight.cs" />

@@ -284,6 +284,8 @@ namespace MIMWebClient.Core.Events
 
                 if (attacker.Target == null)
                 {
+                    attacker.Status = Player.PlayerStatus.Standing;
+                    attacker.ActiveFighting = false;
                     return;
                 }
 
@@ -313,6 +315,8 @@ namespace MIMWebClient.Core.Events
                     if (target == null)
                     {
                         HubContext.Instance.SendToClient("No one here by that name", attacker.HubGuid);
+                        attacker.Status = Player.PlayerStatus.Standing;
+                        attacker.ActiveFighting = false;
                         return;
                     }
 

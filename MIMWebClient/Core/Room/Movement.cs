@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -402,6 +403,7 @@ namespace MIMWebClient.Core.Room
         /// <param name="direction"></param>
         public static void Move(Player player, Room room, string direction)
         {
+            Stopwatch stopwatch = Stopwatch.StartNew();
             if (player.Status == Player.PlayerStatus.Fighting)
             {
                 HubContext.Instance.SendToClient("You are fighting! Try fleeing.", player.HubGuid);
@@ -504,7 +506,7 @@ namespace MIMWebClient.Core.Room
                             }
 
                             //Show exits UI
-                            ShowUIExits(getNewRoom, player.HubGuid);
+                           // ShowUIExits(getNewRoom, player.HubGuid);
 
                             //NPC Enter event here
 
@@ -518,51 +520,51 @@ namespace MIMWebClient.Core.Room
                                 {
                                     // Event.ParseCommand("greet", player, mob, getNewRoom);
                                 }
-                              
 
-                                if (mob.MobTalkOnEnter && mob.DialogueTree != null && mob.DialogueTree.Count > 0)
+
+                                //if (mob.MobTalkOnEnter && mob.DialogueTree != null && mob.DialogueTree.Count > 0)
+                                //{
+                                //    var speak = mob.DialogueTree[0];
+
+                                //    HubContext.Instance.AddNewMessageToPage(player.HubGuid, "<span class='sayColor'>" + mob.Name + " says to you \"" + speak.Message + "\"</span>");
+                                //    var i = 1;
+                                //    foreach (var respond in speak.PossibleResponse)
+                                //    {
+                                //        var textChoice =
+                                //            "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
+                                //            respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " +
+                                //            respond.Response + "</a>";
+                                //        HubContext.Instance.AddNewMessageToPage(player.HubGuid, textChoice);
+                                //        i++;
+
+                                //    }
+                                //}
+
+
+                                if (mob.Aggro)
                                 {
-                                    var speak = mob.DialogueTree[0];
-
-                                    HubContext.Instance.AddNewMessageToPage(player.HubGuid, "<span class='sayColor'>" + mob.Name + " says to you \"" + speak.Message + "\"</span>");
-                                    var i = 1;
-                                    foreach (var respond in speak.PossibleResponse)
-                                    {
-                                        var textChoice =
-                                            "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
-                                            respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " +
-                                            respond.Response + "</a>";
-                                        HubContext.Instance.AddNewMessageToPage(player.HubGuid, textChoice);
-                                        i++;
-
-                                    }
+                                    HubContext.Instance.SendToClient($"{mob.Name} screams and attacks you", player.HubGuid);
+                                    Player.MobAttack(player, mob, getNewRoom);
                                 }
 
-                                if (mob.EventOnEnter != null)
-                                {
-                                    Event.ParseCommand(mob.EventOnEnter, player, mob, room);
-                                }
+                                //if (mob.EventOnEnter != null)
+                                //{
+                                //    Event.ParseCommand(mob.EventOnEnter, player, mob, room);
+                                //}
 
 
 
-                                foreach (var quest in player.QuestLog.Where(x => x.Completed == false))
-                                {
-                                    if (quest.QuestHint != null && mob.Name == quest.QuestFindMob)
-                                    {
-                                        HubContext.Instance.SendToClient(quest.QuestHint, player.HubGuid);
-                                    }
-                                }
+                                //foreach (var quest in player.QuestLog.Where(x => x.Completed == false))
+                                //{
+                                //    if (quest.QuestHint != null && mob.Name == quest.QuestFindMob)
+                                //    {
+                                //        HubContext.Instance.SendToClient(quest.QuestHint, player.HubGuid);
+                                //    }
+                                //}
+
 
                             }
-
-                            foreach (var mob in getNewRoom.mobs.Where(x => x.Aggro).ToList())
-                            {
-                                HubContext.Instance.SendToClient($"{mob.Name} screams and attacks you", player.HubGuid);
-                                Player.MobAttack(player, mob, getNewRoom);
-                            }
-
-
-
+ 
                             if (!string.IsNullOrEmpty(getNewRoom.EventOnEnter))
                             {
                                 Event.ParseCommand(getNewRoom.EventOnEnter, player, null, room);
@@ -571,6 +573,9 @@ namespace MIMWebClient.Core.Room
 
                             Score.ReturnScoreUI(player);
                         }
+
+                        stopwatch.Stop();
+                        System.Diagnostics.Debug.WriteLine("Move room command speed: " + stopwatch.Elapsed);
                     }
                     catch (Exception e)
                     {
