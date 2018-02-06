@@ -437,7 +437,7 @@ namespace MIMWebClient.Controllers
                         level = player.Level,
                         name = player.Name,
                         race = player.Race,
-                        location = Areas.ListOfRooms().FirstOrDefault(x => x.areaId == player.AreaId && x.area == player.Area && x.region == player.Region).title ?? "Unknown",
+                        location = Startup.ReturnRooms.FirstOrDefault(x => x.areaId == player.AreaId && x.area == player.Area && x.region == player.Region).title ?? "Unknown",
                         playingTime = Math.Round((DateTime.Now - player.LastLoginTime).TotalHours) + " hours(s)",
                         idle = Math.Round((DateTime.Now - player.LastCommandTime).TotalMinutes) + " minutes(s)"
 

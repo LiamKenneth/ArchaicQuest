@@ -84,7 +84,7 @@ namespace MIMWebClient.Core.AI
         ////starting path?
         //       var list = new List<Pathfinding>();
         //       var prevStep = mob.AreaId;
-        //       var areass = Areas.ListOfRooms().OrderByDescending(i => i.areaId == mob.AreaId).ToList();
+        //       var areass = Startup.ReturnRooms.OrderByDescending(i => i.areaId == mob.AreaId).ToList();
         //       foreach (var searchRoom in areass)
 
         //           foreach (var exit in searchRoom.exits.OrderBy(x => Helpers.Rand(0, searchRoom.exits.Count)).ToList())
@@ -158,7 +158,7 @@ namespace MIMWebClient.Core.AI
         {
 
             var newExit = new Dictionary<string, int>();
-            var getNewRoom = Areas.ListOfRooms().FirstOrDefault(x => x.area == exit.area && x.areaId == exit.areaId);
+            var getNewRoom = Startup.ReturnRooms.FirstOrDefault(x => x.area == exit.area && x.areaId == exit.areaId);
 
             if (getNewRoom != null)
             {

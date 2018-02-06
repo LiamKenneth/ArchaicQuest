@@ -13,7 +13,7 @@ namespace MIMWebClient.Core.Update
     using MIMWebClient.Core.Item;
     using MIMWebClient.Core.PlayerSetup;
     using MIMWebClient.Core.Room;
-    using MIMWebClient.Core.World.Anker;
+
 
     public static class RestoreVitals
     {
@@ -133,7 +133,7 @@ namespace MIMWebClient.Core.Update
                                     x =>
                                         x.areaId == corpse.Recall.AreaId && x.area == corpse.Recall.Area &&
                                         x.region == corpse.Recall.Region);
-                            var originalArea = World.Areas.ListOfRooms().FirstOrDefault(x =>
+                            var originalArea = Startup.ReturnRooms.FirstOrDefault(x =>
                                 x.area == mobRoomOrigin.area && x.areaId == mobRoomOrigin.areaId &&
                                 x.region == mobRoomOrigin.region);
 
@@ -214,45 +214,45 @@ namespace MIMWebClient.Core.Update
 
                     #region add Items back
 
-                    for (int j = World.Areas.ListOfRooms().Count - 1; j >= 0; j--)
+                    for (int j = Startup.ReturnRooms.Count - 1; j >= 0; j--)
                     {
-                        if (World.Areas.ListOfRooms()[j].area == room.area &&
-                            World.Areas.ListOfRooms()[j].areaId == room.areaId &&
-                            World.Areas.ListOfRooms()[j].region == room.region)
+                        if (Startup.ReturnRooms[j].area == room.area &&
+                            Startup.ReturnRooms[j].areaId == room.areaId &&
+                            Startup.ReturnRooms[j].region == room.region)
                         {
 
-                            for (int k = World.Areas.ListOfRooms()[j].items.Count - 1; k >= 0; k--)
+                            for (int k = Startup.ReturnRooms[j].items.Count - 1; k >= 0; k--)
                             {
                                 var itemAlreadyThere =
-                                    room.items.Find(x => x.name.Equals(World.Areas.ListOfRooms()[j].items[k].name));
+                                    room.items.Find(x => x.name.Equals(Startup.ReturnRooms[j].items[k].name));
 
                                 if (itemAlreadyThere == null)
                                 {
-                                    room.items.Add(World.Areas.ListOfRooms()[j].items[k]);
+                                    room.items.Add(Startup.ReturnRooms[j].items[k]);
                                 }
 
-                                if (room.items.Count(x => x.name.Equals(World.Areas.ListOfRooms()[j].items[k].name)) < World.Areas.ListOfRooms()[j].items.Count(x => x.name.Equals(World.Areas.ListOfRooms()[j].items[k].name)))
+                                if (room.items.Count(x => x.name.Equals(Startup.ReturnRooms[j].items[k].name)) < Startup.ReturnRooms[j].items.Count(x => x.name.Equals(Startup.ReturnRooms[j].items[k].name)))
                                 {
-                                    room.items.Add(World.Areas.ListOfRooms()[j].items[k]);
+                                    room.items.Add(Startup.ReturnRooms[j].items[k]);
                                 }
 
                                 if (itemAlreadyThere?.container == true)
                                 {
 
 
-                                    for (int l = World.Areas.ListOfRooms()[j].items[k].containerItems.Count - 1; l >= 0; l--)
+                                    for (int l = Startup.ReturnRooms[j].items[k].containerItems.Count - 1; l >= 0; l--)
                                     {
 
                                         var containerItemAlreadyThere =
                                             itemAlreadyThere.containerItems.Find(
                                                 x =>
                                                     x.name.Equals(
-                                                        World.Areas.ListOfRooms()[j].items[k].containerItems[l].name));
+                                                        Startup.ReturnRooms[j].items[k].containerItems[l].name));
 
                                         if (containerItemAlreadyThere == null)
                                         {
                                             itemAlreadyThere.containerItems.Add(
-                                                World.Areas.ListOfRooms()[j].items[k].containerItems[l]);
+                                                Startup.ReturnRooms[j].items[k].containerItems[l]);
                                         }
 
                                     }

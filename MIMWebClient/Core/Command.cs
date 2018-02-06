@@ -26,7 +26,7 @@ namespace MIMWebClient.Core
         {
             var context = HubContext.Instance;
 
-            var commandList = new Dictionary<String, Action>
+            var commandList = new Dictionary<string, Action>
             {
                 {"north", () => Movement.Move(playerData, room, "North")},
                 {"south", () => Movement.Move(playerData, room, "South")},

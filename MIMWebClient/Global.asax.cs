@@ -25,7 +25,7 @@ namespace MIMWebClient
             UpdateWorld.UpdateMob();
             PlayerName.GenerateHumanNames();
 
-            foreach (var area in Areas.ListOfRooms())
+            foreach (var area in Startup.ReturnRooms)
             {
 
                 var room = new Tuple<string, string, int>(area.region, area.area, area.areaId);

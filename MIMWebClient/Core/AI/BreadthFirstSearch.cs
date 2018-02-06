@@ -11,7 +11,7 @@ namespace MIMWebClient.Core.AI
     public class BreadthFirstSearch
     {
         //Contains all the areas in the game
-        private static List<Room.Room> AreaList { get; set; } = Areas.ListOfRooms();
+        private static List<Room.Room> AreaList { get; set; } = Startup.ReturnRooms;
         private List<Room.Room> CompletedRooms { get; set; } = new List<Room.Room>();
 
         /// <summary>
@@ -29,11 +29,11 @@ namespace MIMWebClient.Core.AI
 
             if (string.IsNullOrEmpty(area) || string.IsNullOrEmpty(region))
             {
-                  startingLoc = Areas.ListOfRooms().FirstOrDefault(x => x.areaId == 0 && x.area == area);
+                  startingLoc = Startup.ReturnRooms.FirstOrDefault(x => x.areaId == 0 && x.area == area);
             }
             else
             {
-                AreaList = Areas.ListOfRooms().Where(x => x.area == area && x.region == region).ToList();
+                AreaList = Startup.ReturnRooms.Where(x => x.area == area && x.region == region).ToList();
                 startingLoc = AreaList.FirstOrDefault(x => x.areaId == 0 && x.area == area);
 
                
