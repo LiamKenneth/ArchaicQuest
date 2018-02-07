@@ -24,6 +24,7 @@ namespace MIMWebClient
             UpdateWorld.CleanRoom();
             UpdateWorld.UpdateMob();
             PlayerName.GenerateHumanNames();
+            var x = Startup.SetMappedRooms;
 
             foreach (var area in Startup.ReturnRooms)
             {

@@ -26,6 +26,32 @@ namespace MIMWebClient.Core
         {
             var context = HubContext.Instance;
 
+            // WIP: move Dictionary to switch
+            switch (commandKey)
+            {
+                case "north":
+                    Movement.Move(playerData, room, "North");
+                    break;
+                case "east":
+                    Movement.Move(playerData, room, "East");
+                    break;
+                case "south":
+                    Movement.Move(playerData, room, "South");
+                    break;
+                case "west":
+                    Movement.Move(playerData, room, "West");
+                    break;
+                case "Up":
+                    Movement.Move(playerData, room, "Up");
+                    break;
+                case "Down":
+                    Movement.Move(playerData, room, "Down");
+                    break;
+                case "Look":
+                    Movement.Move(playerData, room, "Look");
+                    break;
+            }
+
             var commandList = new Dictionary<string, Action>
             {
                 {"north", () => Movement.Move(playerData, room, "North")},

@@ -8088,7 +8088,10 @@ pre {
   color: #000; }
 
 .roomMob {
-  color: magenta; }
+  color: magenta;
+  padding: 0;
+  font-family: Verdana,Geneva,sans-serif !important;
+  font-size: inherit !important; }
 
 li.Active:before, li.Shop:before, li.River:before, li.Guild:before, li.Room:before, li.Stairs:before {
   display: inline-block;

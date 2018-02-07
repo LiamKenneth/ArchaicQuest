@@ -445,18 +445,18 @@ namespace MIMWebClient.Core.Room
             }
 
 
-            Room roomData = room;
+           
 
-            if (roomData.exits == null)
+            if (room.exits == null)
             {
                 room.exits = new List<Exit>();
             }
 
 
             //Find Exit
-            if (roomData.exits != null)
+            if (room.exits != null)
             {
-                var exit = roomData.exits.Find(x => x.name == direction);
+                var exit = room.exits.Find(x => x.name == direction);
 
 
                 if (exit != null)
@@ -468,10 +468,10 @@ namespace MIMWebClient.Core.Room
                     }
 
                     //remove player from old room
-                    PlayerManager.RemovePlayerFromRoom(roomData, player);
+                    PlayerManager.RemovePlayerFromRoom(room, player);
 
                     //exit message
-                    ExitRoom(player, roomData, direction);
+                    ExitRoom(player, room, direction);
 
                     //change player Location
                     player.Area = exit.area;
@@ -505,40 +505,33 @@ namespace MIMWebClient.Core.Room
                                 HubContext.Instance.SendToClient("You can't see a thing.", player.HubGuid);
                             }
 
-                            //Show exits UI
-                           // ShowUIExits(getNewRoom, player.HubGuid);
-
-                            //NPC Enter event here
-
-
-                 
-
+                        
                             foreach (var mob in getNewRoom.mobs)
                             {
 
                                 if (mob.Greet)
                                 {
-                                    // Event.ParseCommand("greet", player, mob, getNewRoom);
+                                     Event.ParseCommand("greet", player, mob, getNewRoom);
                                 }
 
 
-                                //if (mob.MobTalkOnEnter && mob.DialogueTree != null && mob.DialogueTree.Count > 0)
-                                //{
-                                //    var speak = mob.DialogueTree[0];
+                                if (mob.MobTalkOnEnter && mob.DialogueTree != null && mob.DialogueTree.Count > 0)
+                                {
+                                    var speak = mob.DialogueTree[0];
 
-                                //    HubContext.Instance.AddNewMessageToPage(player.HubGuid, "<span class='sayColor'>" + mob.Name + " says to you \"" + speak.Message + "\"</span>");
-                                //    var i = 1;
-                                //    foreach (var respond in speak.PossibleResponse)
-                                //    {
-                                //        var textChoice =
-                                //            "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
-                                //            respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " +
-                                //            respond.Response + "</a>";
-                                //        HubContext.Instance.AddNewMessageToPage(player.HubGuid, textChoice);
-                                //        i++;
+                                    HubContext.Instance.AddNewMessageToPage(player.HubGuid, "<span class='sayColor'>" + mob.Name + " says to you \"" + speak.Message + "\"</span>");
+                                    var i = 1;
+                                    foreach (var respond in speak.PossibleResponse)
+                                    {
+                                        var textChoice =
+                                            "<a class='multipleChoice' href='javascript:void(0)' onclick='$.connection.mIMHub.server.recieveFromClient(\"say " +
+                                            respond.Response + "\",\"" + player.HubGuid + "\")'>" + i + ". " +
+                                            respond.Response + "</a>";
+                                        HubContext.Instance.AddNewMessageToPage(player.HubGuid, textChoice);
+                                        i++;
 
-                                //    }
-                                //}
+                                    }
+                                }
 
 
                                 if (mob.Aggro)
@@ -547,20 +540,20 @@ namespace MIMWebClient.Core.Room
                                     Player.MobAttack(player, mob, getNewRoom);
                                 }
 
-                                //if (mob.EventOnEnter != null)
-                                //{
-                                //    Event.ParseCommand(mob.EventOnEnter, player, mob, room);
-                                //}
+                                if (mob.EventOnEnter != null)
+                                {
+                                    Event.ParseCommand(mob.EventOnEnter, player, mob, room);
+                                }
 
 
 
-                                //foreach (var quest in player.QuestLog.Where(x => x.Completed == false))
-                                //{
-                                //    if (quest.QuestHint != null && mob.Name == quest.QuestFindMob)
-                                //    {
-                                //        HubContext.Instance.SendToClient(quest.QuestHint, player.HubGuid);
-                                //    }
-                                //}
+                                foreach (var quest in player.QuestLog.Where(x => x.Completed == false))
+                                {
+                                    if (quest.QuestHint != null && mob.Name == quest.QuestFindMob)
+                                    {
+                                        HubContext.Instance.SendToClient(quest.QuestHint, player.HubGuid);
+                                    }
+                                }
 
 
                             }

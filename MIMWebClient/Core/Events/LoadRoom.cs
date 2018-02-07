@@ -72,10 +72,10 @@ namespace MIMWebClient.Core.Events
 
             if (player != null && player.Status == Player.PlayerStatus.Sleeping)
             {
-                return "You can't see anything while asleep." ;
+                return "You can't see anything while asleep.";
             }
 
-           
+
 
             var itemList = string.Empty;
 
@@ -105,7 +105,7 @@ namespace MIMWebClient.Core.Events
                             {
                                 itemList += $"<p class='roomItems'>{item.description.room}<p>";
                             }
-                           
+
                         }
                         else
                         {
@@ -117,19 +117,19 @@ namespace MIMWebClient.Core.Events
                             {
                                 itemList += $"<p class='roomItems'>{article} {item.name} is on the floor here.<p>";
                             }
-                               
+
                         }
 
-                        
+
                     }
                 }
             }
 
-           
+
             var playerList = string.Empty;
             if (room.players != null)
             {
-               
+
 
                 foreach (var item in room.players)
                 {
@@ -172,9 +172,9 @@ namespace MIMWebClient.Core.Events
                         else if (item.Status == Player.PlayerStatus.Stunned)
                         {
 
-                          
-                                playerList += "<p>" + LoadRoom.ShowObjectEffects(item) + " is  stunned.</p>";
-                     
+
+                            playerList += "<p>" + LoadRoom.ShowObjectEffects(item) + " is  stunned.</p>";
+
                         }
                         else if (item.Status == PlayerSetup.Player.PlayerStatus.Resting)
                         {
@@ -192,7 +192,7 @@ namespace MIMWebClient.Core.Events
                         {
                             playerList += "<p>" + LoadRoom.ShowObjectEffects(item) + " is here.</p>";
                         }
-   
+
                     }
 
                 }
@@ -223,48 +223,48 @@ namespace MIMWebClient.Core.Events
                         article = string.Empty;
                     }
 
-                    var npcName = !string.IsNullOrEmpty(item.NPCLongName) ?item.NPCLongName : $"{item.Name} is here";
+                    var npcName = !string.IsNullOrEmpty(item.NPCLongName) ? item.NPCLongName : $"{item.Name} is here";
 
                     if (item.Status == Player.PlayerStatus.Standing)
                     {
-                        mobList += $"<p class='roomMob'>{Helpers.FirstLetterToUpper(article)} {npcName}.<p>";
+                        mobList += $"{Helpers.FirstLetterToUpper(article)} {npcName}.\r\n";
                     }
                     else if (item.Status == Player.PlayerStatus.Fighting)
                     {
-                        mobList += $"<p class='roomMob'> {article} {item.Name} is fighting {item.Target.Name}.</p>";
+                        mobList += $"{article} {item.Name} is fighting {item.Target.Name}.\r\n";
                     }
                     else if (item.Status == Player.PlayerStatus.Stunned)
                     {
 
-                        mobList += "<p class='roomMob'>" + article + " " + item.Name +  " is stunned.</p>";
+                        mobList += article + " " + item.Name + " is stunned. \r\n";
 
                     }
                     else if (item.Status == PlayerSetup.Player.PlayerStatus.Resting)
                     {
-                        mobList += "<p class='roomMob'>" + article + " " + item.Name + " is resting.<p>";
+                        mobList += article + " " + item.Name + " is resting. \r\n";
                     }
                     else if (item.Status == PlayerSetup.Player.PlayerStatus.Sleeping)
                     {
                         if (!string.IsNullOrEmpty(item.Pose))
                         {
-                            mobList += "<p class='roomMob'>" + item.Pose +"<p>";
+                            mobList += item.Pose + "\r\n";
                         }
                         else
                         {
-                            mobList += "<p class='roomMob'>" + article + " " + item.Name + " is sleeping.<p>";
+                            mobList += article + " " + item.Name + " is sleeping. \r\n";
                         }
                     }
-                    else 
+                    else
                     {
-                        mobList += "<p class='roomMob'>" + article + " " + npcName + "<p>";
+                        mobList += article + " " + npcName + "\r\n";
                     }
                 }
             }
 
 
             string displayRoom =
-                $"<p class='roomTitle'>{roomTitle}<p><p class='roomDescription'>{roomDescription}</p> <p class='RoomExits'>[ Exits: {exitList.ToLower()} ]</p> {itemList} <br />{playerList}  <br />{mobList}";
-       
+                $"<p class='roomTitle'>{roomTitle}<p><p class='roomDescription'>{roomDescription}</p> <p class='RoomExits'>[ Exits: {exitList.ToLower()} ]</p> {itemList} {playerList} <pre class='roomMob'>{mobList}</pre>";
+
             return displayRoom;
 
         }
@@ -309,7 +309,7 @@ namespace MIMWebClient.Core.Events
                 return;
             }
 
- 
+
 
             CheckEvent.FindEvent(CheckEvent.EventType.Look, player, "look");
 
@@ -367,7 +367,7 @@ namespace MIMWebClient.Core.Events
                     roomData.players = new List<Player>();
                 }
 
-                var playerDescription =  (n == -1)
+                var playerDescription = (n == -1)
                                           ? roomData.players.Find(x => x.Name.ToLower().Contains(commandOptions))
                                           : roomData.players.FindAll(x => x.Name.ToLower().Contains(item))
                                                 .Skip(n - 1)
@@ -438,7 +438,7 @@ namespace MIMWebClient.Core.Events
                     }
                     else
                     {
-      
+
                         HubContext.Instance.SendToClient("You see nothing special about the " + roomDescription.name + ".", player.HubGuid);
                     }
 
@@ -474,12 +474,12 @@ namespace MIMWebClient.Core.Events
                                 HubContext.Instance.SendToClient("You look into the " + itemDescription.name + " but it is empty", player.HubGuid);
                             }
 
-                            
+
                             foreach (var character in room.players)
                             {
                                 if (player != character)
                                 {
-                                    
+
                                     var roomMessage = $"{ Helpers.ReturnName(player, character, string.Empty)} looks in a {itemDescription.name}";
 
                                     HubContext.Instance.SendToClient(roomMessage, character.HubGuid);
@@ -540,9 +540,9 @@ namespace MIMWebClient.Core.Events
                     if (!string.IsNullOrEmpty(descriptionText))
                     {
                         HubContext.Instance.SendToClient(descriptionText, player.HubGuid);
-                     
+
                         Equipment.ShowEquipmentLook(mobDescription, player);
-                  
+
 
                         foreach (var character in room.players)
                         {
@@ -682,17 +682,17 @@ namespace MIMWebClient.Core.Events
                         newRoom.id = roomExitDescription.areaId;
                         newRoom.Region = roomExitDescription.region;
 
-                         adjacentRoom = newRoom.LoadRoomFile();
+                        adjacentRoom = newRoom.LoadRoomFile();
 
                         //add to cache?
 
                     }
 
-                  var showNextRoom = LoadRoom.DisplayRoom(adjacentRoom, player.Name);
+                    var showNextRoom = LoadRoom.DisplayRoom(adjacentRoom, player.Name);
 
 
 
-                     HubContext.Instance.SendToClient(showNextRoom, player.HubGuid);
+                    HubContext.Instance.SendToClient(showNextRoom, player.HubGuid);
 
                     player.AreaId = currentAreaId;
 
