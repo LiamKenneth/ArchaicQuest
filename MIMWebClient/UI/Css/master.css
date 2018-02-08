@@ -7743,7 +7743,10 @@ h1, h2, h3, h4, h5, h6 {
   #discussion .questColor {
     color: #f6d437; }
   #discussion .RoomExits {
-    color: #2ecc71; }
+    color: #2ecc71;
+    padding: 0;
+    font-family: Verdana,Geneva,sans-serif !important;
+    font-size: inherit !important; }
   #discussion .roomItems {
     margin: 0; }
   #discussion .roomItems:first-letter {

@@ -65,7 +65,7 @@ namespace MIMWebClient.Core.Events
             var exitList = string.Empty;
             foreach (var exit in room.exits)
             {
-                exitList += exit.name + " ";
+                exitList += exit.name + (exit.name == "East" || exit.name == "West" ? "  - " : " - ") + Startup.ReturnRooms.FirstOrDefault(x => x.areaId == exit.areaId && x.area == exit.area && x.region == exit.region).title + "\r\n";
             }
 
             var player = room.players.FirstOrDefault(x => x.Name.Equals(playerName));
@@ -263,7 +263,7 @@ namespace MIMWebClient.Core.Events
 
 
             string displayRoom =
-                $"<p class='roomTitle'>{roomTitle}<p><p class='roomDescription'>{roomDescription}</p> <p class='RoomExits'>[ Exits: {exitList.ToLower()} ]</p> {itemList} {playerList} <pre class='roomMob'>{mobList}</pre>";
+                $"<p class='roomTitle'>{roomTitle}<p><p class='roomDescription'>{roomDescription}</p> <pre class='RoomExits'>Exits: \r\n{exitList.ToLower()}</pre> {itemList} {playerList} <pre class='roomMob'>{mobList}</pre>";
 
             return displayRoom;
 

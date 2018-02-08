@@ -72,85 +72,88 @@ body {
         background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iaGVpZ2h0OiA1MTJweDsgd2lkdGg6IDUxMnB4OyI+PHBhdGggZD0iTTAgMGg1MTJ2NTEySDB6IiBmaWxsPSJyZ2JhKDAsIDAsIDAsIDEpIj48L3BhdGg+PGcgY2xhc3M9IiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCwwKSIgc3R5bGU9InRvdWNoLWFjdGlvbjogbm9uZTsiPjxwYXRoIGZpbGw9InJnYmEoMjU0LCAyMTcsIDEwMywgMSkiIGQ9Ik0yMzQuODc1IDE4Ljc4Yy0yNi4wODcgMi4zNjctNTEuNTU3IDguNTYtNzQuODc1IDE4Ljc4MiAxNS4zNyAzMi43NjMgMTQuMjIyIDY2LjcwNi02LjcyIDgyLjQwNy0yMC44MzUgMTUuNjE3LTU0LjA1NSA3Ljk2NS04MS4xMjQtMTUuNjktMTYuMjQ2IDE5LjQ1Mi0yOS4zMzYgNDEuMzYtMzguODc1IDY1LjYyNiAzMy44MyAxMi4zMzMgNTYuNjM1IDM3LjY2NSA1Mi45NCA2My41LTMuNjk4IDI1LjgzNS0zMi42OTcgNDMuNzQtNjguNjI2IDQ2LjA5NCAyLjMzOCAyNS43OTYgOC45MSA1MC43NzggMTguOTM3IDczLjg3NSAxNy44MS04LjE4MiAzNS43OTMtMTEuMDkgNTEuMDk1LTguOTM4IDEzLjAzMiAxLjg3IDIzLjkyNyA3LjAxNSAzMS4xNTYgMTYuNjU3IDE1LjgxNyAyMS4wOTcgNy42MDMgNTQuNzEzLTE2Ljc4IDgxLjk3IDE5LjUxNiAxNi4zNSA0Mi4yMTYgMjkuNDQ0IDY2LjU5NCAzOS4wMyAxMi4zMy0zMy44MjggMzcuNjU1LTU2LjYzNCA2My41LTUyLjkzOCAyNS44NDQgMy42OTcgNDMuNzQgMzIuNjk2IDQ2LjA5NCA2OC42MjUgMjYuMDg3LTIuMzY1IDUxLjU1Ny04LjU1NSA3NC44NzUtMTguNzgtMTUuNzY2LTMyLjk5Ny0xNC4yNi02Ny41ODggNi44NDMtODMuNDA2IDkuNjQtNy4yMyAyMi41NjgtOS4wMjIgMzUuNTk0LTcuMTI1IDE1LjExMiAyLjE2IDMxLjE5IDEwLjI1IDQ1LjU2MyAyMi43OCAxNi4wODgtMTkuMzQ1IDI5LjQtNDEuNTEgMzguODc1LTY1LjU5NC0zMy44My0xMi4zMzItNTYuNjM1LTM3LjY1My01Mi45MzgtNjMuNSAzLjY5Ny0yNS44NDYgMzIuNjY1LTQzLjc3MiA2OC41OTQtNDYuMTI1LTIuMzYtMjUuOTQ0LTguNzc0LTUwLjY2My0xOC45MDYtNzMuODc0LTMyLjYxMiAxNS4xMTctNjYuNjYgMTMuMTQ1LTgyLjI4Mi03LjY4Ny0xNS42OTYtMjAuOTQ0LTcuMjUyLTUzLjg2IDE2LjY4OC04MS0xOS41Mi0xNi4zNTItNDIuMjQ4LTI5LjQ0Ny02Ni42MjUtMzkuMDMyLTEyLjMzMiAzMy44MjgtMzcuNjU3IDU2LjY2LTYzLjUgNTIuOTY4LTI1Ljg0Ni0zLjY5My00My43NDQtMzIuNjk2LTQ2LjA5NS02OC42MjV6bTIxLjY1NiA5NS4xMjZjNzkuNjI2IDAgMTQ0LjM3NiA2NC43NTIgMTQ0LjM3NiAxNDQuMzc1IDAgNzkuNjI2LTY0Ljc1IDE0NC4zNzYtMTQ0LjM3NSAxNDQuMzc2LTc5LjYyNCAwLTE0NC4zNzQtNjQuNzUtMTQ0LjM3NC0xNDQuMzc1IDAtNzkuNjI0IDY0Ljc1LTE0NC4zNzQgMTQ0LjM3NS0xNDQuMzc0em0wIDE4LjY4OGMtNjkuNTI0IDAtMTI1LjY4NiA1Ni4xNjItMTI1LjY4NiAxMjUuNjg3IDAgNjkuNTI2IDU2LjE2MiAxMjUuNjkgMTI1LjY4NyAxMjUuNjkgNjkuNTI2IDAgMTI1LjY5LTU2LjE2NCAxMjUuNjktMTI1LjY5IDAtNjkuNTIyLTU2LjE2NC0xMjUuNjg2LTEyNS42OS0xMjUuNjg2em0uMDMzIDE1LjEyNWM2MS4wOTQgMCAxMTAuNjI1IDQ5LjUzIDExMC42MjUgMTEwLjYyNCAwIDYxLjA5NS00OS41MyAxMTAuNjI1LTExMC42MjUgMTEwLjYyNXMtMTEwLjYyNS00OS41My0xMTAuNjI1LTExMC42MjZjMC02MS4wOTUgNDkuNTMtMTEwLjYyNSAxMTAuNjI1LTExMC42MjV6Ij48L3BhdGg+PC9nPjwvc3ZnPg==);
     }
 
-    #discussion {
-        position: relative;
-        font-size: 12px;
+#discussion {
+    position: relative;
+    font-size: 12px;
 
 
-        tr td {
+    tr td {
+        padding: 5px;
+    }
+
+    tr:nth-child(even) {
+        background: #444;
+    }
+
+    @media screen and (min-width: 768px) {
+        font-size: 13px;
+    }
+
+    @media screen and (min-width: 992px) {
+        font-size: 13px;
+    }
+
+
+    @media screen and (min-width: 1200px) {
+        font-size: 13px;
+    }
+
+    p {
+        max-width: 560px;
+    }
+
+    p:empty {
+        display: none;
+    }
+
+    .roomTitle {
+        color: #2ecc71;
+        border-bottom: 1px dashed #555;
+        padding-bottom: 5px;
+    }
+
+    .sayColor {
+        color: #00ffff;
+    }
+
+    .questColor {
+        color: #f6d437;
+    }
+
+    .RoomExits {
+        color: #2ecc71;
+        padding: 0;
+        font-family: Verdana,Geneva,sans-serif !important;
+        font-size: inherit !important;
+    }
+
+    .roomItems {
+        margin: 0;
+    }
+
+    .roomItems:first-letter {
+        text-transform: uppercase;
+    }
+
+    .multipleChoice {
+        margin: 0;
+        padding: 0;
+        color: #F7CA18;
+        cursor: pointer;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    thead {
+        border-bottom: 1px dashed #fff;
+
+        td {
             padding: 5px;
         }
-
-        tr:nth-child(even) {
-            background: #444;
-        }
-
-        @media screen and (min-width: 768px) {
-            font-size: 13px;
-        }
-
-        @media screen and (min-width: 992px) {
-            font-size: 13px;
-        }
-
-
-        @media screen and (min-width: 1200px) {
-            font-size: 13px;
-        }
-
-        p {
-            max-width: 560px;
-        }
-
-        p:empty {
-            display: none;
-        }
-
-        .roomTitle {
-            color: #2ecc71;
-            border-bottom: 1px dashed #555;
-            padding-bottom: 5px;
-        }
-
-        .sayColor {
-            color: #00ffff;
-        }
-
-        .questColor {
-            color: #f6d437;
-        }
-
-        .RoomExits {
-            color: #2ecc71;
-        }
-
-        .roomItems {
-            margin: 0;
-        }
-
-        .roomItems:first-letter {
-            text-transform: uppercase;
-        }
-
-        .multipleChoice {
-            margin: 0;
-            padding: 0;
-            color: #F7CA18;
-            cursor: pointer;
-        }
-
-        table {
-            width: 100%;
-        }
-
-        thead {
-            border-bottom: 1px dashed #fff;
-
-            td {
-                padding: 5px;
-            }
-        }
     }
+}
 
     pre {
         background: #272624;
@@ -404,6 +407,7 @@ body {
     #sendmessage {
         color: #000;
     }
+
 
 .roomMob {
     color: magenta;
