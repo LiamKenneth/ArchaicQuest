@@ -359,6 +359,65 @@ namespace MIMWebClient.Core
                 case "who":
                     Who.Connected(playerData);
                     break;
+                case "affects":
+                    Effect.Show(playerData);
+                    break;
+                case "follow":
+                    Follow.FollowThing(playerData, room, commandOptions);
+                    break;
+                case "nofollow":
+                    Follow.FollowThing(playerData, room, "noFollow");
+                    break;
+                case "quit":
+                    HubContext.Instance.Quit(playerData.HubGuid, room);
+                    break;
+                case "craft":
+                    Craft.CraftItem(playerData, room, commandOptions, CraftType.Craft);
+                    break;
+                case "chop":
+                    Craft.CraftItem(playerData, room, commandOptions, CraftType.Chop);
+                    break;
+                case "cook":
+                    Craft.CraftItem(playerData, room, commandOptions, CraftType.Cook);
+                    break;
+                case "brew":
+                    Craft.CraftItem(playerData, room, commandOptions, CraftType.Brew);
+                    break;
+                case "forge":
+                    Craft.CraftItem(playerData, room, commandOptions, CraftType.Forge);
+                    break;
+                case "carve":
+                    Craft.CraftItem(playerData, room, commandOptions, CraftType.Carve);
+                    break;
+                case "knit":
+                    Craft.CraftItem(playerData, room, commandOptions, CraftType.Knitting);
+                    break;
+                case "make":
+                case "build":
+                    Craft.CraftItem(playerData, room, commandOptions, CraftType.Craft);
+                    break;
+                case "show crafts":
+                case "craftlist":
+                    Craft.CraftList(playerData);
+                    break;
+                case "set up camp":
+                    Camp.SetUpCamp(playerData, room);
+                    break;
+                case "repair":
+                    Events.Repair.RepairItem(playerData, room, commandOptions);
+                    break;
+                case "/debug":
+                    PlayerSetup.Player.DebugPlayer(playerData);
+                    break;
+                case "/setGold":
+                    PlayerSetup.Player.SetGold(playerData, commandOptions);
+                    break;
+                case "/setAc":
+                    PlayerSetup.Player.SetAC(playerData, commandOptions);
+                    break;
+                case "/map":
+                    SigmaMap.DrawMap(playerData.HubGuid); //not what you think it does
+                    break;
                 default:
                     HubContext.Instance.SendToClient("Sorry you can't do that. Try help commands or ask on the discord channel.", playerData.HubGuid);
                     var log = new Error.Error
@@ -372,39 +431,6 @@ namespace MIMWebClient.Core
                     break;
             }
 
-
-
-  
-  
-          
-            //    {"affects", () => Effect.Show(playerData)},
-            //    {"follow", () => Follow.FollowThing(playerData, room, commandOptions) },
-            //    {"nofollow", () => Follow.FollowThing(playerData, room, "noFollow") },
-            //    {"quit", () => HubContext.Instance.Quit(playerData.HubGuid, room)},
-            //    {"craft", () => Craft.CraftItem(playerData, room, commandOptions, CraftType.Craft)},
-            //    {"chop", () => Craft.CraftItem(playerData, room, commandOptions, CraftType.Chop)},
-            //    {"cook", () => Craft.CraftItem(playerData, room, commandOptions, CraftType.Cook)},
-            //    {"brew", () => Craft.CraftItem(playerData, room, commandOptions, CraftType.Brew)},
-            //    {"forge", () => Craft.CraftItem(playerData, room, commandOptions, CraftType.Forge)},
-            //    {"carve", () => Craft.CraftItem(playerData, room, commandOptions, CraftType.Carve)},
-            //    {"knit", () => Craft.CraftItem(playerData, room, commandOptions, CraftType.Knitting)},
-            //    {"make", () => Craft.CraftItem(playerData, room, commandOptions, CraftType.Craft)},
-            //    {"build", () => Craft.CraftItem(playerData, room, commandOptions, CraftType.Craft)},
-            //    {"show crafts", () => Craft.CraftList(playerData)},
-            //    {"craftlist", () => Craft.CraftList(playerData)},
-            //    {"set up camp", () => Camp.SetUpCamp(playerData, room)},
-            //    {"repair", () => Events.Repair.RepairItem(playerData, room, commandOptions)}, 
-
-            //    //admin
-            //    {"/debug", () => PlayerSetup.Player.DebugPlayer(playerData) },
-            //    {"/setGold", () => PlayerSetup.Player.SetGold(playerData, commandOptions) },
-            //    {"/setAc", () => PlayerSetup.Player.SetAC(playerData, commandOptions) },
-            //    {"/godmode", () => SigmaMap.DrawMap(playerData.HubGuid) },
-            //    {"/map", () => SigmaMap.DrawMap(playerData.HubGuid) }
-            //};
-
-
-            //return commandList;
         }
 
 
