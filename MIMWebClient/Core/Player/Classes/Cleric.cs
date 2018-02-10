@@ -98,6 +98,19 @@ namespace MIMWebClient.Core.Player.Classes
 
             #endregion
 
+
+            #region  Lvl 6 skills
+
+
+            var cureBlind = CureBlindness.CureBlindnessAb();
+            cureBlind.Learned = true;
+            cureBlind.LevelObtained = 1;
+            cureBlind.Proficiency = 50;
+            cleric.Skills.Add(cureBlind);
+ 
+
+            #endregion
+
             cleric.ReclassOptions.Add(Ranger.RangerClass());
 
             return cleric;

@@ -120,6 +120,8 @@ namespace MIMWebClient
             {"cast cure light", "cast cure light"},
             { "c detect invis", "c detect invis"},
             {"cast detect invis", "cast detect invis"},
+            { "c cure blindness", "c cure blindness"},
+            {"cure blindness", "cure blindness"},
 
             //skills angle, line, trawl, lure, bob
             {"forage", "forage"},

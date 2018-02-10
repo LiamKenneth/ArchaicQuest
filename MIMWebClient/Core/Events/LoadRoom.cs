@@ -65,7 +65,7 @@ namespace MIMWebClient.Core.Events
             var exitList = string.Empty;
             foreach (var exit in room.exits)
             {
-                exitList += exit.name + (exit.name == "East" || exit.name == "West" ? "  - " : " - ") + Startup.ReturnRooms.FirstOrDefault(x => x.areaId == exit.areaId && x.area == exit.area && x.region == exit.region).title + "\r\n";
+                exitList += exit.name + (exit.name == "East" || exit.name == "West" ? "  - " : " - ") + Helpers.FirstLetterToUpper(Startup.ReturnRooms.FirstOrDefault(x => x.areaId == exit.areaId && x.area == exit.area && x.region == exit.region).title) + "\r\n";
             }
 
             var player = room.players.FirstOrDefault(x => x.Name.Equals(playerName));
@@ -75,10 +75,7 @@ namespace MIMWebClient.Core.Events
                 return "You can't see anything while asleep.";
             }
 
-
-
             var itemList = string.Empty;
-
 
             foreach (var item in room.items)
             {
@@ -117,20 +114,14 @@ namespace MIMWebClient.Core.Events
                             {
                                 itemList += $"<p class='roomItems'>{article} {item.name} is on the floor here.<p>";
                             }
-
                         }
-
-
                     }
                 }
             }
 
-
             var playerList = string.Empty;
             if (room.players != null)
             {
-
-
                 foreach (var item in room.players)
                 {
                     if (item.invis == true && player.DetectInvis == false || item.hidden == true && player.DetectHidden == false)

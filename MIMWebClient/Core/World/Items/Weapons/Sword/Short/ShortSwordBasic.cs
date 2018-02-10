@@ -134,7 +134,7 @@ namespace MIMWebClient.Core.World.Items.Weapons.Sword.Short
                 attackType = Item.Item.AttackType.Slash,
                 stats = new Stats()
                 {
-                    damMax = 8,
+                    damMax = 3,
                     damMin = 1,
                     damRoll = 0,
                     minUsageLevel = 1,

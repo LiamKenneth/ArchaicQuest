@@ -227,6 +227,9 @@ namespace MIMWebClient.Core
                 case "cast cure light":
                     new CureLight().StartCureLight(context, playerData, room, commandOptions);
                     break;
+                case "cure blindness":
+                    new CureBlindness().StartCureBlindness(context, playerData, room, commandOptions);
+                    break;
                 case "c detect invis":
                 case "cast detect invis":
                     DetectInvis.DoDetectInvis(context, playerData, room);
@@ -476,11 +479,11 @@ namespace MIMWebClient.Core
                     commandOptions = enteredCommand.Substring(enteredCommand.IndexOf(commands[2], StringComparison.Ordinal)).Trim();
                 }
                 else if (commandKey.Equals("c", StringComparison.InvariantCultureIgnoreCase) || commandKey.Equals("cast", StringComparison.InvariantCultureIgnoreCase) && commands.Length > 1)
-                {
-                    commandKey = commands[0] + " " + commands[1];
+                {// rework
+                    commandKey = commands[1] + " " + commands[2];
 
                     commandOptions =
-                        enteredCommand.Substring(enteredCommand.IndexOf(commands[0], StringComparison.Ordinal))
+                        enteredCommand.Substring(enteredCommand.IndexOf(commands[3], StringComparison.Ordinal))
                             .Trim();
 
                 }

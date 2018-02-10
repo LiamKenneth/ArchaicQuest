@@ -236,9 +236,9 @@
             var name = char.Name.toLowerCase();
             name = name.charAt(0).toUpperCase() + name.slice(1);
 
+            console.log(char)
 
-
-            server.login($.connection.hub.id, name, char.password);
+            server.login($.connection.hub.id, name, char.Password);
 
               document.getElementById('signUpModal').style.display = "none";
 
@@ -985,6 +985,7 @@
 
                 var $this = $(this);
                 var frmValues = $this.serialize();
+                console.log(frmValues);
                 $.ajax({
                         type: $this.attr('method'),
                         url: $this.attr('action'),

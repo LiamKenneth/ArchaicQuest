@@ -378,6 +378,12 @@ namespace MIMWebClient.Hubs
 
             var player = Save.GetPlayer(name);
 
+            if (password != player.Password)
+            {
+                HubContext.Instance.SendToClient("<h2 style='color:red'>Error: Incorrect password, refresh page and try again.</h2>", id);
+                return;
+            }
+
             if (player != null)
             {
 
