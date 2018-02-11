@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using MIMWebClient.Core.Mob.Events;
 
 namespace MIMWebClient.Core
@@ -227,7 +228,7 @@ namespace MIMWebClient.Core
                 case "cast cure light":
                     new CureLight().StartCureLight(context, playerData, room, commandOptions);
                     break;
-                case "cure blindness":
+                case "c cure blindness":
                     new CureBlindness().StartCureBlindness(context, playerData, room, commandOptions);
                     break;
                 case "c detect invis":
@@ -479,12 +480,33 @@ namespace MIMWebClient.Core
                     commandOptions = enteredCommand.Substring(enteredCommand.IndexOf(commands[2], StringComparison.Ordinal)).Trim();
                 }
                 else if (commandKey.Equals("c", StringComparison.InvariantCultureIgnoreCase) || commandKey.Equals("cast", StringComparison.InvariantCultureIgnoreCase) && commands.Length > 1)
-                {// rework
-                    commandKey = commands[1] + " " + commands[2];
+                {
+                    commandKey = commands[0] + " " + commands[1] + " ";
 
-                    commandOptions =
-                        enteredCommand.Substring(enteredCommand.IndexOf(commands[3], StringComparison.Ordinal))
-                            .Trim();
+                    var reg = new Regex("'.*?'");
+                    var match = reg.Match(enteredCommand);
+
+                    if (match.Success)
+                    {
+                        commandKey = commands[0] + " " + commands[1].Replace("'", "") + " " +
+                                     commands[2].Replace("'", "");
+
+                        var hasTarget = commands.Length >= 4;
+                         
+                        commandOptions =
+                            enteredCommand.Substring(enteredCommand.IndexOf(commands[2], StringComparison.Ordinal))
+                                .Trim();
+                    }
+                    else
+                    {
+                        commandOptions =
+                            enteredCommand.Substring(enteredCommand.IndexOf(commands[0], StringComparison.Ordinal))
+                                .Trim();
+                    }
+
+                 
+
+                   
 
                 }
                 else
@@ -496,7 +518,7 @@ namespace MIMWebClient.Core
 
             }
 
-            var command = Startup.CommandKey.FirstOrDefault(x => x.Key.StartsWith(commandKey, StringComparison.InvariantCultureIgnoreCase));
+            var command = Startup.CommandKey.FirstOrDefault(x => x.Key.StartsWith(commandKey.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
             Command.Commands(commandOptions, command.Value, playerData, room);
 
