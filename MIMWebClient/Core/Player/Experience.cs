@@ -133,6 +133,7 @@ namespace MIMWebClient.Core.Player
 
                 var discordBot = new HomeController();
                 discordBot.PostToDiscord(discordToSay);
+                discordBot.Dispose();
             }
         }
 

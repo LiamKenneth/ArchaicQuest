@@ -369,8 +369,8 @@ namespace MIMWebClient.Hubs
             var discordToSay = "A new character called, " + PlayerData.Name + " has entered the realm.";
 
             var discordBot = new HomeController();
-             discordBot.PostToDiscord(discordToSay);
-
+            discordBot.PostToDiscord(discordToSay);
+            discordBot.Dispose();
         }
 
         public void Login(string id, string name, string password)
@@ -453,7 +453,7 @@ namespace MIMWebClient.Hubs
 
                 var discordBot = new HomeController();
                 discordBot.PostToDiscord(discordToSay);
-
+                discordBot.Dispose();
 
 
             }
