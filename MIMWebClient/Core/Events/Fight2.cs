@@ -116,7 +116,7 @@ namespace MIMWebClient.Core.Events
                 defender.Status = Player.PlayerStatus.Fighting;
             }
 
-            if (IsAlive(defender, attacker))
+            if (IsAlive(attacker, defender))
             {
                 if (attacker.Target == null)
                 {
@@ -124,7 +124,7 @@ namespace MIMWebClient.Core.Events
                 }
             }
 
-            StartFight(defender, attacker, room);
+            StartFight(attacker, defender, room);
 
         }
 
@@ -163,7 +163,7 @@ namespace MIMWebClient.Core.Events
                 if (!defender.ActiveFighting)
                 {
                     defender.ActiveFighting = true;
-                    Task.Run(() => HitTarget(defender, attacker, room, 2000));
+                    Task.Run(() => HitTarget(attacker, defender, room, 2000));
 
                 }
 

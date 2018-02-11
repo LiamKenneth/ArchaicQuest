@@ -23,7 +23,7 @@ namespace MIMWebClient.Core.Room
 
             var newRoomData = room;
 
-            Cache.updateRoom(oldRoomData, newRoomData);
+            Cache.updateRoom(newRoomData, oldRoomData);
         }
 
         public static void RemovePlayerFromRoom(Room room, Player player)
@@ -53,7 +53,7 @@ namespace MIMWebClient.Core.Room
 
             var newRoomData = room;
 
-            Cache.updateRoom(oldRoomData, newRoomData);
+            Cache.updateRoom(newRoomData, oldRoomData);
         }
 
         public static void RemoveMobFromRoom(Room room, Player mob)
@@ -68,7 +68,7 @@ namespace MIMWebClient.Core.Room
 
             var newRoomData = room;
 
-            Cache.updateRoom(oldRoomData, newRoomData);
+            Cache.updateRoom(newRoomData, oldRoomData);
 
         }
 
