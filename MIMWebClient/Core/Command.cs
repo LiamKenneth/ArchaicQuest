@@ -479,7 +479,7 @@ namespace MIMWebClient.Core
                     commandKey = commands[0] + " " + commands[1];
                     commandOptions = enteredCommand.Substring(enteredCommand.IndexOf(commands[2], StringComparison.Ordinal)).Trim();
                 }
-                else if (commandKey.Equals("c", StringComparison.InvariantCultureIgnoreCase) || commandKey.Equals("cast", StringComparison.InvariantCultureIgnoreCase) && commands.Length > 1)
+                else if ((commandKey.Equals("c", StringComparison.InvariantCultureIgnoreCase) || commandKey.Equals("cast", StringComparison.InvariantCultureIgnoreCase)) && commands.Length > 1)
                 {
                     commandKey = commands[0] + " " + commands[1] + " ";
 
